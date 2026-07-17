@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Create Profile — Verde Talent</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right{font-size:13px;color:var(--t3);}
+.nav-right a{color:var(--t2);text-decoration:none;}
+.nav-right a:hover{color:var(--grn);}
+.note-banner{background:rgba(79,179,255,0.08);border-bottom:0.5px solid rgba(79,179,255,0.25);padding:.7rem 1.5rem;font-size:12px;color:var(--blu);text-align:center;}
+.body{display:grid;grid-template-columns:1fr 265px;gap:1.5rem;padding:1.75rem 1.5rem;align-items:start;max-width:1180px;margin:0 auto;}
+.form-section{background:var(--card);border:0.5px solid var(--bdr);border-radius:16px;padding:1.5rem;margin-bottom:14px;}
+.form-section:last-child{margin-bottom:0;}
+.fs-title{font-size:15px;font-weight:500;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.fs-title i{font-size:18px;color:var(--grn);}
+.fs-hint{font-size:12px;font-weight:400;color:var(--t3);}
+.upload-box{border:1.5px dashed var(--bdr2);border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;position:relative;transition:border-color .15s,background .15s;}
+.upload-box:hover{border-color:rgba(34,224,154,0.5);background:rgba(34,224,154,0.04);}
+.upload-box.has-file{border-color:rgba(34,224,154,0.4);background:rgba(34,224,154,0.05);}
+.upload-box i.upload-icon{font-size:24px;color:var(--t3);margin-bottom:6px;display:block;}
+.upload-box.has-file i.upload-icon{color:var(--grn);}
+.upload-box p{font-size:13px;color:var(--t2);}
+.upload-box small{font-size:11px;color:var(--t3);margin-top:4px;display:block;}
+.upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.avatar-row{display:flex;align-items:center;gap:1.25rem;margin-bottom:1.25rem;}
+.avatar-upload{width:72px;height:72px;border-radius:50%;background:#1A1A1A;border:1.5px dashed var(--bdr2);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;position:relative;overflow:hidden;}
+.avatar-upload input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.avatar-upload i{font-size:20px;color:var(--t3);}
+.avatar-hint{font-size:11px;color:var(--t3);margin-top:4px;}
+.avatar-info{font-size:13px;color:var(--t2);}
+.avatar-info small{display:block;font-size:11px;color:var(--t3);margin-top:3px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-row.full{grid-template-columns:1fr;}
+.field label{display:block;font-size:12px;color:var(--t3);margin-bottom:5px;}
+.field input,.field select,.field textarea{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 13px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);transition:border-color .15s;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(34,224,154,0.5);}
+.field input::placeholder,.field textarea::placeholder{color:var(--t3);}
+.field select option{background:#1A1A1A;}
+.field textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.char-count{font-size:11px;color:var(--t3);text-align:right;margin-top:4px;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px;min-height:28px;}
+.skill-tag{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:12px;border:0.5px solid rgba(34,224,154,0.35);color:var(--grn);background:rgba(34,224,154,0.08);}
+.skill-tag i{cursor:pointer;font-size:12px;}
+.skill-sugg{padding:4px 11px;border-radius:20px;font-size:12px;border:0.5px solid var(--bdr2);color:var(--t3);cursor:pointer;display:inline-block;margin:3px 3px 3px 0;background:none;font-family:var(--font-sans);}
+.skill-sugg:hover{border-color:rgba(34,224,154,0.4);color:var(--grn);}
+.sugg-label{font-size:11px;color:var(--t3);margin-bottom:6px;margin-top:10px;}
+.sector-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.sector-pill{padding:8px 6px;border-radius:10px;font-size:12px;border:0.5px solid var(--bdr2);color:var(--t2);cursor:pointer;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .15s;background:none;font-family:var(--font-sans);}
+.sector-pill i{font-size:17px;}
+.sector-pill.on{border-color:rgba(34,224,154,0.4);color:var(--grn);background:rgba(34,224,154,0.08);}
+.exp-card{background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:12px;padding:1rem 1.1rem;margin-bottom:8px;}
+.exp-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.exp-title-text{font-size:14px;font-weight:500;}
+.exp-co{font-size:13px;color:var(--t2);margin-top:2px;}
+.exp-dates{font-size:12px;color:var(--t3);margin-top:2px;}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--t3);font-size:16px;padding:2px;}
+.icon-btn:hover{color:var(--cor);}
+.add-btn{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--t3);cursor:pointer;padding:8px 0;background:none;border:none;font-family:var(--font-sans);}
+.add-btn:hover{color:var(--grn);}
+.add-form{background:#1A1A1A;border:0.5px solid rgba(34,224,154,0.3);border-radius:12px;padding:1rem;margin-bottom:8px;display:none;}
+.add-form .form-row{margin-bottom:8px;}
+.add-form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px;}
+.add-form-actions button{font-size:12px;padding:6px 12px;border-radius:7px;cursor:pointer;font-family:var(--font-sans);}
+.af-cancel{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.af-save{background:var(--grn);border:none;color:#052e1e;font-weight:500;}
+.empty-note{font-size:12px;color:var(--t3);padding:.5rem 0;}
+.sidebar{display:flex;flex-direction:column;gap:10px;position:sticky;top:16px;}
+.prefs-card{background:#121212;border:0.5px solid rgba(255,255,255,0.11);border-top:2px solid rgba(255,181,71,0.4);border-radius:14px;padding:1.1rem;}
+.prefs-title{font-size:13px;font-weight:500;color:var(--t1);display:flex;align-items:center;gap:6px;margin-bottom:2px;}
+.prefs-title i{font-size:15px;color:rgba(255,181,71,0.55);}
+.prefs-sub{font-size:11px;color:var(--t3);margin-bottom:1rem;}
+.pf{margin-bottom:9px;}
+.pf:last-child{margin-bottom:0;}
+.pf label{display:block;font-size:10px;color:var(--t3);margin-bottom:4px;}
+.pf select,.pf input{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--t1);outline:none;font-family:var(--font-sans);}
+.pf select option{background:#1A1A1A;}
+.ws-pills{display:flex;gap:4px;}
+.ws-pill{flex:1;padding:6px 3px;border-radius:7px;font-size:11px;border:0.5px solid var(--bdr2);color:var(--t3);cursor:pointer;text-align:center;background:none;font-family:var(--font-sans);}
+.ws-pill.on{border-color:rgba(255,181,71,0.4);color:rgba(255,181,71,0.9);background:rgba(255,181,71,0.06);}
+.salary-row{display:flex;gap:6px;align-items:center;}
+.salary-row input{text-align:center;}
+.salary-row span{font-size:11px;color:var(--t3);}
+.links-card{background:#121212;border:0.5px solid rgba(255,255,255,0.11);border-top:2px solid rgba(79,179,255,0.4);border-radius:14px;padding:1.1rem;}
+.links-title{font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;margin-bottom:2px;}
+.links-title i{font-size:15px;color:rgba(79,179,255,0.5);}
+.links-sub{font-size:11px;color:var(--t3);margin-bottom:.9rem;}
+.link-row{display:flex;align-items:center;gap:7px;margin-bottom:7px;}
+.link-row:last-child{margin-bottom:0;}
+.link-row i{font-size:14px;color:rgba(79,179,255,0.4);width:16px;flex-shrink:0;}
+.link-row input{flex:1;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:7px;padding:6px 9px;font-size:12px;color:var(--t1);outline:none;font-family:var(--font-sans);}
+.link-row input::placeholder{color:var(--t3);}
+.visibility-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1rem;}
+.vis-title{font-size:12px;font-weight:500;margin-bottom:10px;}
+.vis-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:9px;}
+.vis-row:last-child{margin-bottom:0;}
+.tog{width:30px;height:16px;border-radius:8px;position:relative;flex-shrink:0;cursor:pointer;border:none;padding:0;}
+.tog.on{background:var(--grn);}
+.tog.off{background:rgba(255,255,255,0.1);}
+.tog::after{content:'';position:absolute;width:10px;height:10px;background:#fff;border-radius:50%;top:3px;transition:left .15s,right .15s;}
+.tog.on::after{right:3px;}
+.tog.off::after{left:3px;}
+.btn-grn{background:var(--grn);color:#052e1e;border:none;padding:10px 22px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;width:100%;font-family:var(--font-sans);}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);padding:10px 18px;border-radius:9px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;font-family:var(--font-sans);}
+.form-actions{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-top:0.5px solid var(--bdr);max-width:1180px;margin:0 auto;}
+.submit-note{font-size:11px;color:var(--t3);margin-top:8px;text-align:center;}
+@media (max-width:820px){.body{grid-template-columns:1fr;}.sidebar{position:static;}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right">Already have an account? <a href="login.html">Sign in</a></div>
+</nav>
+<div class="note-banner"><i class="ti ti-info-circle" style="vertical-align:-2px;"></i> This page is new: submitting creates a real account and saves your profile directly to our candidate database. Nothing here is fabricated — every field is exactly what you type.</div>
+<div class="body">
+  <div>
+    <div class="form-section">
+      <div class="fs-title"><i class="ti ti-lock"></i>Account</div>
+      <div class="form-row">
+        <div class="field"><label>Email</label><input type="email" id="acc-email" placeholder="you@example.com"/></div>
+        <div class="field"><label>Password</label><input type="password" id="acc-password" placeholder="At least 6 characters"/></div>
+      </div>
+      <div style="font-size:12px;color:var(--t3);">This becomes your login — use it to sign back in and update your profile later.</div>
+    </div>
+    <div class="form-section">
+      <div class="fs-title"><i class="ti ti-user"></i>Basic information</div>
+      <div class="avatar-row">
+        <div class="avatar-upload" id="avatarUpload">
+          <input type="file" accept="image/*" id="inp-avatar"/>
+          <i class="ti ti-camera" id="avatarIcon"></i>
+        </div>
+        <div class="avatar-info">Add a profile photo<small>JPG or PNG · Max 5 MB</small><small id="avatarFilename" style="color:var(--grn);"></small></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>First name</label><input type="text" id="inp-first" placeholder="Jamie"/></div>
+        <div class="field"><label>Last name</label><input type="text" id="inp-last" placeholder="Reyes"/></div>
+      </div>
+      <div class="form-row full">
+        <div class="field"><label>Professional headline</label><input type="text" id="inp-headline" placeholder="e.g. Senior Solar Design Engineer · Open to remote"/></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Location</label><input type="text" id="inp-loc" placeholder="City, State or Country"/></div>
+        <div class="field"><label>Years of experience</label>
+          <select id="inp-exp"><option value="">Select…</option><option value="Less than 1 year">Less than 1 year</option><option value="1–3 years">1–3 years</option><option value="3–5 years">3–5 years</option><option value="5–10 years">5–10 years</option><option value="10+ years">10+ years</option></select>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="field"><label>Bio</label>
+          <textarea id="inp-bio" maxlength="500" placeholder="Tell companies who you are and what drives you…"></textarea>
+          <div class="char-count" id="bio-count">0 / 500</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="fs-title"><i class="ti ti-file-text"></i>Resume / CV</div>
+      <div class="upload-box" id="resumeBox">
+        <input type="file" accept=".pdf,.doc,.docx" id="inp-resume"/>
+        <i class="ti ti-upload upload-icon" id="resumeIcon"></i>
+        <p id="resumeText">Drag and drop your resume, or <span style="color:var(--grn);">browse files</span></p>
+        <small>PDF or DOCX · Max 10 MB</small>
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:var(--t3);display:flex;align-items:center;gap:5px;"><i class="ti ti-lock" style="font-size:13px;"></i>Your resume is only shared with companies you apply to.</div>
+    </div>
+    <div class="form-section">
+      <div class="fs-title"><i class="ti ti-solar-panel"></i>Sectors you work in</div>
+      <div class="sector-grid" id="sectorGrid">
+        <button type="button" class="sector-pill" data-sector="Solar"><i class="ti ti-solar-panel"></i>Solar</button>
+        <button type="button" class="sector-pill" data-sector="Wind"><i class="ti ti-wind"></i>Wind</button>
+        <button type="button" class="sector-pill" data-sector="Storage"><i class="ti ti-battery-charging"></i>Storage</button>
+        <button type="button" class="sector-pill" data-sector="Grid"><i class="ti ti-bolt"></i>Grid</button>
+        <button type="button" class="sector-pill" data-sector="EV"><i class="ti ti-plug"></i>EV</button>
+        <button type="button" class="sector-pill" data-sector="Hydrogen"><i class="ti ti-atom"></i>Hydrogen</button>
+        <button type="button" class="sector-pill" data-sector="Policy"><i class="ti ti-building-bank"></i>Policy</button>
+        <button type="button" class="sector-pill" data-sector="Sustainability"><i class="ti ti-leaf"></i>Sustainability</button>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="fs-title"><i class="ti ti-tools"></i>Skills</div>
+      <div class="field" style="margin-bottom:12px;"><label>Add a skill</label><input type="text" id="skillInput" placeholder="Type a skill and press Enter…"/></div>
+      <div class="skill-tags" id="skillTags"></div>
+      <div class="sugg-label">Suggested:</div>
+      <div id="suggArea">
+        <button type="button" class="skill-sugg" data-skill="NABCEP certified">+ NABCEP certified</button>
+        <button type="button" class="skill-sugg" data-skill="AutoCAD">+ AutoCAD</button>
+        <button type="button" class="skill-sugg" data-skill="PVsyst">+ PVsyst</button>
+        <button type="button" class="skill-sugg" data-skill="Grid interconnection">+ Grid interconnection</button>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="fs-title"><i class="ti ti-briefcase"></i>Work experience</div>
+      <div id="expList"><div class="empty-note" id="expEmpty">No experience added yet.</div></div>
+      <div class="add-form" id="expForm">
+        <div class="form-row"><div class="field"><label>Job title</label><input type="text" id="exp-title" placeholder="Solar Design Engineer"/></div><div class="field"><label>Company</label><input type="text" id="exp-co" placeholder="Company · City, State"/></div></div>
+        <div class="field"><label>Dates</label><input type="text" id="exp-dates" placeholder="e.g. Jan 2022 — Present"/></div>
+        <div class="add-form-actions"><button type="button" class="af-cancel" onclick="toggleForm('expForm',false)">Cancel</button><button type="button" class="af-save" onclick="addExperience()">Add</button></div>
+      </div>
+      <button type="button" class="add-btn" onclick="toggleForm('expForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add experience</button>
+    </div>
+    <div class="form-section">
+      <div class="fs-title"><i class="ti ti-school"></i>Education</div>
+      <div id="eduList"><div class="empty-note" id="eduEmpty">No education added yet.</div></div>
+      <div class="add-form" id="eduForm">
+        <div class="form-row"><div class="field"><label>Degree</label><input type="text" id="edu-degree" placeholder="B.S. Electrical Engineering"/></div><div class="field"><label>School</label><input type="text" id="edu-school" placeholder="University name"/></div></div>
+        <div class="field"><label>Dates</label><input type="text" id="edu-dates" placeholder="e.g. 2018 — 2022"/></div>
+        <div class="add-form-actions"><button type="button" class="af-cancel" onclick="toggleForm('eduForm',false)">Cancel</button><button type="button" class="af-save" onclick="addEducation()">Add</button></div>
+      </div>
+      <button type="button" class="add-btn" onclick="toggleForm('eduForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add education</button>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="prefs-card">
+      <div class="prefs-title"><i class="ti ti-settings"></i>Your preferences</div>
+      <div class="prefs-sub">Help employers understand what you're looking for</div>
+      <div class="pf"><label>Work style</label><div class="ws-pills" id="wsPills">
+        <button type="button" class="ws-pill" data-ws="Remote">Remote</button>
+        <button type="button" class="ws-pill" data-ws="Hybrid">Hybrid</button>
+        <button type="button" class="ws-pill" data-ws="On-site">On-site</button>
+      </div></div>
+      <div class="pf"><label>Job type</label><select id="pf-jobtype"><option>Full-time</option><option>Contract</option><option>Either</option></select></div>
+      <div class="pf"><label>Open to relocation?</label><select id="pf-reloc"><option>Yes — anywhere</option><option>Yes — US only</option><option>No</option></select></div>
+      <div class="pf"><label>Target salary range (USD/yr)</label><div class="salary-row"><input type="number" id="pf-sal-min" placeholder="Min" step="5000"/><span>—</span><input type="number" id="pf-sal-max" placeholder="Max" step="5000"/></div></div>
+      <div class="pf"><label>Availability</label><select id="pf-avail"><option>Actively looking</option><option>Open to opportunities</option><option>Not currently looking</option></select></div>
+    </div>
+    <div class="links-card">
+      <div class="links-title"><i class="ti ti-link"></i>Links</div>
+      <div class="links-sub">Optional, but recommended</div>
+      <div class="link-row"><i class="ti ti-brand-linkedin"></i><input type="text" id="link-linkedin" placeholder="linkedin.com/in/you"/></div>
+      <div class="link-row"><i class="ti ti-world"></i><input type="text" id="link-site" placeholder="yoursite.com"/></div>
+      <div class="link-row"><i class="ti ti-brand-github"></i><input type="text" id="link-github" placeholder="github.com/username"/></div>
+    </div>
+    <div class="visibility-card">
+      <div class="vis-title">Visibility</div>
+      <div class="vis-row"><span style="color:var(--t2);">Open to recruiters</span><button type="button" class="tog on" data-vis="recruiters"></button></div>
+      <div class="vis-row"><span style="color:var(--t2);">Show salary range</span><button type="button" class="tog on" data-vis="salary"></button></div>
+      <div class="vis-row"><span style="color:var(--t2);">Show current employer</span><button type="button" class="tog off" data-vis="employer"></button></div>
+      <div class="vis-row"><span style="color:var(--t2);">Profile searchable</span><button type="button" class="tog on" data-vis="searchable"></button></div>
+    </div>
+    <button type="button" class="btn-grn" id="submitBtn">Submit profile →</button>
+    <div class="submit-note" id="submitNote">Saves everything above to our candidate database.</div>
+  </div>
+</div>
+<div class="form-actions">
+  <a class="btn-ghost" href="index.html"><i class="ti ti-arrow-left" style="margin-right:6px;"></i>Back</a>
+</div>
+<script>
+// --- Skills ---
+const skills = [];
+function renderSkills(){
+  const wrap = document.getElementById('skillTags');
+  wrap.innerHTML = skills.map((s,i)=>`<div class="skill-tag">${s} <i class="ti ti-x" onclick="removeSkill(${i})"></i></div>`).join('');
+}
+function addSkill(name){
+  name = name.trim();
+  if(!name || skills.includes(name)) return;
+  skills.push(name);
+  renderSkills();
+}
+function removeSkill(i){ skills.splice(i,1); renderSkills(); }
+document.getElementById('skillInput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); addSkill(this.value); this.value=''; }
+});
+document.querySelectorAll('.skill-sugg').forEach(btn=>{
+  btn.addEventListener('click', function(){ addSkill(this.dataset.skill); });
+});
+
+// --- Sectors ---
+const sectors = new Set();
+document.querySelectorAll('.sector-pill').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    this.classList.toggle('on');
+    const s = this.dataset.sector;
+    if(this.classList.contains('on')) sectors.add(s); else sectors.delete(s);
+  });
+});
+
+// --- Work style (multi-select pills) ---
+const workStyles = new Set();
+document.querySelectorAll('.ws-pill').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    this.classList.toggle('on');
+    const w = this.dataset.ws;
+    if(this.classList.contains('on')) workStyles.add(w); else workStyles.delete(w);
+  });
+});
+
+// --- Visibility toggles ---
+document.querySelectorAll('.tog').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    this.classList.toggle('on');
+    this.classList.toggle('off');
+  });
+});
+
+// --- Bio char count ---
+document.getElementById('inp-bio').addEventListener('input', function(){
+  document.getElementById('bio-count').textContent = this.value.length + ' / 500';
+});
+
+// --- Avatar + resume file selection (real filename capture, no fake parsing) ---
+document.getElementById('inp-avatar').addEventListener('change', function(){
+  const name = this.files[0]?.name;
+  document.getElementById('avatarFilename').textContent = name || '';
+  document.getElementById('avatarIcon').className = name ? 'ti ti-check' : 'ti ti-camera';
+});
+document.getElementById('inp-resume').addEventListener('change', function(){
+  const name = this.files[0]?.name;
+  const box = document.getElementById('resumeBox');
+  if(name){
+    box.classList.add('has-file');
+    document.getElementById('resumeIcon').className = 'ti ti-check upload-icon';
+    document.getElementById('resumeText').innerHTML = `Selected: <span style="color:var(--grn);">${name}</span>`;
+  }
+});
+
+// --- Experience / education add-forms ---
+function toggleForm(id, show){ document.getElementById(id).style.display = show ? 'block' : 'none'; }
+const experience = [];
+const education = [];
+function addExperience(){
+  const title = document.getElementById('exp-title').value.trim();
+  const co = document.getElementById('exp-co').value.trim();
+  const dates = document.getElementById('exp-dates').value.trim();
+  if(!title || !co) return;
+  experience.push({title, co, dates});
+  renderExperience();
+  document.getElementById('exp-title').value='';
+  document.getElementById('exp-co').value='';
+  document.getElementById('exp-dates').value='';
+  toggleForm('expForm', false);
+}
+function removeExperience(i){ experience.splice(i,1); renderExperience(); }
+function renderExperience(){
+  const list = document.getElementById('expList');
+  document.getElementById('expEmpty').style.display = experience.length ? 'none' : 'block';
+  list.querySelectorAll('.exp-card').forEach(c=>c.remove());
+  experience.forEach((e,i)=>{
+    const card = document.createElement('div');
+    card.className = 'exp-card';
+    card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${e.title}</div><div class="exp-co">${e.co}</div><div class="exp-dates">${e.dates}</div></div><button class="icon-btn" onclick="removeExperience(${i})"><i class="ti ti-trash"></i></button></div>`;
+    list.appendChild(card);
+  });
+}
+function addEducation(){
+  const degree = document.getElementById('edu-degree').value.trim();
+  const school = document.getElementById('edu-school').value.trim();
+  const dates = document.getElementById('edu-dates').value.trim();
+  if(!degree || !school) return;
+  education.push({degree, school, dates});
+  renderEducation();
+  document.getElementById('edu-degree').value='';
+  document.getElementById('edu-school').value='';
+  document.getElementById('edu-dates').value='';
+  toggleForm('eduForm', false);
+}
+function removeEducation(i){ education.splice(i,1); renderEducation(); }
+function renderEducation(){
+  const list = document.getElementById('eduList');
+  document.getElementById('eduEmpty').style.display = education.length ? 'none' : 'block';
+  list.querySelectorAll('.exp-card').forEach(c=>c.remove());
+  education.forEach((e,i)=>{
+    const card = document.createElement('div');
+    card.className = 'exp-card';
+    card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${e.degree}</div><div class="exp-co">${e.school}</div><div class="exp-dates">${e.dates}</div></div><button class="icon-btn" onclick="removeEducation(${i})"><i class="ti ti-trash"></i></button></div>`;
+    list.appendChild(card);
+  });
+}
+
+// --- Submit: create a real account, upload the resume, and save the profile ---
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+
+document.getElementById('submitBtn').addEventListener('click', async function(){
+  const btn = this;
+  const note = document.getElementById('submitNote');
+  const first = document.getElementById('inp-first').value.trim();
+  const last = document.getElementById('inp-last').value.trim();
+  const email = document.getElementById('acc-email').value.trim();
+  const password = document.getElementById('acc-password').value;
+
+  if(!first || !last){
+    note.textContent = 'Add your first and last name first.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+  if(!email || !email.includes('@')){
+    note.textContent = 'Enter a valid email to create your account.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+  if(!password || password.length < 6){
+    note.textContent = 'Choose a password with at least 6 characters.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Creating account…';
+  note.textContent = '';
+  note.style.color = 'var(--t3)';
+
+  try {
+    // 1. Create the account
+    const signupRes = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const signupData = await signupRes.json();
+    if(!signupRes.ok){
+      throw new Error(signupData?.msg || signupData?.error_description || 'Could not create account — that email may already be registered. Try signing in instead.');
+    }
+    const accessToken = signupData.access_token;
+    const userId = signupData.user?.id;
+    if(!accessToken || !userId){
+      throw new Error('Account created, but email confirmation is required before you can finish your profile. Check your inbox, confirm, then sign in.');
+    }
+
+    // 2. Upload the resume (if provided) into a folder scoped to this user
+    const resumeFile = document.getElementById('inp-resume').files[0];
+    let resumePath = null;
+    if(resumeFile){
+      btn.textContent = 'Uploading resume…';
+      resumePath = `${userId}/${resumeFile.name}`;
+      const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/resumes/${resumePath}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': resumeFile.type || 'application/octet-stream',
+        },
+        body: resumeFile,
+      });
+      if(!uploadRes.ok){
+        const errText = await uploadRes.text();
+        throw new Error(`Account created, but the resume upload failed: ${errText}`);
+      }
+    }
+
+    // 3. Save the profile, linked to the new account
+    btn.textContent = 'Saving profile…';
+    const salMin = document.getElementById('pf-sal-min').value;
+    const salMax = document.getElementById('pf-sal-max').value;
+    const payload = {
+      user_id: userId,
+      first_name: first,
+      last_name: last,
+      headline: document.getElementById('inp-headline').value.trim() || null,
+      location: document.getElementById('inp-loc').value.trim() || null,
+      years_experience: document.getElementById('inp-exp').value || null,
+      bio: document.getElementById('inp-bio').value.trim() || null,
+      sectors: [...sectors],
+      skills: skills,
+      experience: experience,
+      education: education,
+      work_style: [...workStyles],
+      job_type: document.getElementById('pf-jobtype').value,
+      relocation: document.getElementById('pf-reloc').value,
+      salary_min: salMin ? Number(salMin) : null,
+      salary_max: salMax ? Number(salMax) : null,
+      availability: document.getElementById('pf-avail').value,
+      linkedin_url: document.getElementById('link-linkedin').value.trim() || null,
+      website_url: document.getElementById('link-site').value.trim() || null,
+      github_url: document.getElementById('link-github').value.trim() || null,
+      resume_filename: resumeFile?.name || null,
+      resume_path: resumePath,
+      visibility_recruiters: document.querySelector('[data-vis="recruiters"]').classList.contains('on'),
+      visibility_salary: document.querySelector('[data-vis="salary"]').classList.contains('on'),
+      visibility_employer: document.querySelector('[data-vis="employer"]').classList.contains('on'),
+      visibility_searchable: document.querySelector('[data-vis="searchable"]').classList.contains('on'),
+    };
+
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/candidates`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(payload),
+    });
+    if(!res.ok){
+      const errText = await res.text();
+      throw new Error(errText || res.statusText);
+    }
+    btn.textContent = 'Submitted ✓';
+    note.textContent = 'Account created and profile saved. You can sign in anytime to update it.';
+    note.style.color = 'var(--grn)';
+  } catch(err){
+    btn.disabled = false;
+    btn.textContent = 'Submit profile →';
+    note.textContent = err.message || 'Something went wrong — please try again.';
+    note.style.color = 'var(--cor)';
+    console.error('Candidate submit failed:', err);
+  }
+});
+</script>
+</body>
+</html>

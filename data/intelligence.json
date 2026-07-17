@@ -1,0 +1,434 @@
+{
+  "generated_at": "2026-07-06T15:41:14.669504+00:00",
+  "totals": {
+    "total_postings_tracked": 1892,
+    "open_postings": 1892,
+    "closed_postings": 0,
+    "tracking_since": "2026-07-01T16:52:50.568698+00:00"
+  },
+  "taxonomy_coverage": {
+    "sector_unmapped_count": 852,
+    "sector_unmapped_pct": 45.0,
+    "occupation_unmapped_count": 1778,
+    "occupation_unmapped_pct": 94.0
+  },
+  "demand_trend_by_sector": {
+    "Wind": {
+      "2026-07": 47
+    },
+    "Grid": {
+      "2026-07": 150
+    },
+    "Solar": {
+      "2026-07": 380
+    },
+    "Policy": {
+      "2026-07": 2
+    },
+    "Storage": {
+      "2026-07": 222
+    },
+    "Hydrogen": {
+      "2026-07": 239
+    }
+  },
+  "competitor_heatmap": {
+    "AES Corporation": {
+      "Wind": 4,
+      "Grid": 9,
+      "Solar": 10,
+      "Policy": 1,
+      "Storage": 1
+    },
+    "Arcadia": {
+      "Grid": 11
+    },
+    "Avangrid Renewables": {
+      "Grid": 10,
+      "Wind": 12,
+      "Solar": 1
+    },
+    "Baker Electric Solar": {
+      "Solar": 2
+    },
+    "Blattner Energy": {
+      "Solar": 1,
+      "Grid": 1,
+      "Storage": 1,
+      "Wind": 2
+    },
+    "Bloom Energy": {
+      "Hydrogen": 239
+    },
+    "Commonwealth Fusion Systems": {
+      "Grid": 62
+    },
+    "Duke Energy": {
+      "Grid": 6
+    },
+    "Enphase Energy": {
+      "Solar": 3,
+      "Storage": 15
+    },
+    "Eversource Energy": {
+      "Grid": 35
+    },
+    "Fluence Energy": {
+      "Storage": 99
+    },
+    "GE Vernova": {
+      "Wind": 4
+    },
+    "Invenergy": {
+      "Solar": 19,
+      "Grid": 4,
+      "Wind": 20,
+      "Storage": 2
+    },
+    "Palmetto": {
+      "Solar": 2
+    },
+    "Redwood Materials": {
+      "Storage": 91
+    },
+    "Semper Solaris": {
+      "Solar": 1
+    },
+    "Siemens Gamesa / Siemens Energy": {
+      "Wind": 1,
+      "Grid": 1
+    },
+    "Sky Climber Renewables": {
+      "Wind": 3
+    },
+    "Stem Inc": {
+      "Storage": 12
+    },
+    "Sunrun": {
+      "Solar": 340
+    },
+    "Trinity Solar": {
+      "Solar": 1
+    },
+    "Wartsila Energy Storage & Optimization": {
+      "Storage": 1
+    },
+    "Xcel Energy": {
+      "Grid": 11,
+      "Policy": 1,
+      "Wind": 1
+    }
+  },
+  "fastest_growing_roles": {
+    "roles": [],
+    "note": "Only 1 month(s) of history tracked so far (2026-07) - need at least two full months to compute a period-over-period trend."
+  },
+  "posting_duration": {
+    "sample_size_closed": 0,
+    "avg_days_listed": null,
+    "note": "No closed postings recorded yet - closure tracking only started with this schema change, so at least one more crawl run is needed before any posting can be observed disappearing from its board."
+  },
+  "region_breakdown": {
+    "Midwest": 263,
+    "West": 518,
+    "South": 225,
+    "Northeast": 394,
+    "Unknown": 188,
+    "International": 261,
+    "Remote": 43
+  },
+  "salary_benchmarks": {
+    "source": "BLS OEWS, fetched 2026-07-06T15:31:24.512415+00:00",
+    "roles": [
+      {
+        "role": "Solar Photovoltaic Installer",
+        "soc_code": "47-2231",
+        "precision": "exact",
+        "national_median_wage": 53140.0,
+        "national_mean_wage": 57900.0,
+        "state_median_wage": {
+          "TX": 48240.0,
+          "IL": 59630.0
+        },
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Wind Turbine Service Technician",
+        "soc_code": "49-9081",
+        "precision": "exact",
+        "national_median_wage": 64120.0,
+        "national_mean_wage": 68980.0,
+        "state_median_wage": {
+          "NY": 81330.0,
+          "TX": 61950.0,
+          "IA": 74880.0,
+          "OR": 61820.0,
+          "PA": 60830.0,
+          "CA": 77910.0
+        },
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Electrical Engineer",
+        "soc_code": "17-2071",
+        "precision": "exact",
+        "national_median_wage": 120630.0,
+        "national_mean_wage": 125100.0,
+        "state_median_wage": {
+          "SC": 98440.0,
+          "TX": 129450.0,
+          "CT": 104160.0,
+          "IL": 107860.0,
+          "NV": 107400.0,
+          "OH": 100620.0,
+          "MN": 109510.0,
+          "CA": 144040.0,
+          "NY": 119010.0,
+          "CO": 120760.0
+        },
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Software Engineer",
+        "soc_code": "15-1252",
+        "precision": "exact",
+        "national_median_wage": 135980.0,
+        "national_mean_wage": 148100.0,
+        "state_median_wage": {
+          "NV": 128810.0,
+          "CA": 174410.0,
+          "MA": 165210.0,
+          "CT": 134120.0
+        },
+        "scraped_salary_observations": 1
+      },
+      {
+        "role": "Project Manager",
+        "soc_code": "13-1082",
+        "precision": "exact",
+        "national_median_wage": 102320.0,
+        "national_mean_wage": 110740.0,
+        "state_median_wage": {
+          "NY": 121040.0,
+          "CO": 110050.0,
+          "MA": 114190.0,
+          "TX": 98440.0,
+          "NC": 100820.0,
+          "DE": 122190.0,
+          "ME": 101830.0,
+          "IL": 103470.0,
+          "PA": 100150.0,
+          "WA": 124160.0,
+          "CA": 120910.0,
+          "MN": 97860.0
+        },
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Solar Design Engineer",
+        "soc_code": "17-2071",
+        "precision": "broad",
+        "national_median_wage": 120630.0,
+        "national_mean_wage": 125100.0,
+        "state_median_wage": {
+          "SC": 98440.0,
+          "TX": 129450.0,
+          "CT": 104160.0,
+          "IL": 107860.0,
+          "NV": 107400.0,
+          "OH": 100620.0,
+          "MN": 109510.0,
+          "CA": 144040.0,
+          "NY": 119010.0,
+          "CO": 120760.0
+        },
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Wind Turbine Engineer",
+        "soc_code": "17-2071",
+        "precision": "broad",
+        "national_median_wage": 120630.0,
+        "national_mean_wage": 125100.0,
+        "state_median_wage": {
+          "SC": 98440.0,
+          "TX": 129450.0,
+          "CT": 104160.0,
+          "IL": 107860.0,
+          "NV": 107400.0,
+          "OH": 100620.0,
+          "MN": 109510.0,
+          "CA": 144040.0,
+          "NY": 119010.0,
+          "CO": 120760.0
+        },
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Battery / Storage Engineer",
+        "soc_code": "17-2199",
+        "precision": "broad",
+        "national_median_wage": 122930.0,
+        "national_mean_wage": 125330.0,
+        "state_median_wage": {
+          "NV": 103780.0,
+          "CA": 130850.0,
+          "CO": 132590.0
+        },
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Grid / Interconnection Analyst",
+        "soc_code": "17-2071",
+        "precision": "broad",
+        "national_median_wage": 120630.0,
+        "national_mean_wage": 125100.0,
+        "state_median_wage": {
+          "SC": 98440.0,
+          "TX": 129450.0,
+          "CT": 104160.0,
+          "IL": 107860.0,
+          "NV": 107400.0,
+          "OH": 100620.0,
+          "MN": 109510.0,
+          "CA": 144040.0,
+          "NY": 119010.0,
+          "CO": 120760.0
+        },
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "EV Infrastructure PM",
+        "soc_code": "11-9199",
+        "precision": "broad",
+        "national_median_wage": 141900.0,
+        "national_mean_wage": 153890.0,
+        "state_median_wage": {},
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Energy Policy Analyst",
+        "soc_code": "19-3099",
+        "precision": "broad",
+        "national_median_wage": 101110.0,
+        "national_mean_wage": 107690.0,
+        "state_median_wage": {},
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Sustainability / ESG Analyst",
+        "soc_code": "13-1199",
+        "precision": "broad",
+        "national_median_wage": 83050.0,
+        "national_mean_wage": 93970.0,
+        "state_median_wage": {},
+        "scraped_salary_observations": 0
+      },
+      {
+        "role": "Solar O&M Technician",
+        "soc_code": "49-9071",
+        "precision": "broad",
+        "national_median_wage": 49590.0,
+        "national_mean_wage": 53780.0,
+        "state_median_wage": {},
+        "scraped_salary_observations": 0
+      }
+    ],
+    "note": "National/state figures are BLS OEWS wage data joined by SOC code. 'broad' precision roles (see taxonomy/occupations.py) share a wage number with other occupations in that catch-all SOC category, not this role specifically. scraped_salary_observations is our own postings' salary text and is shown only as a secondary sample size, not a benchmark."
+  },
+  "fill_difficulty": {
+    "source": "BLS JOLTS, fetched 2026-07-06T15:31:25.379161+00:00",
+    "by_industry": {
+      "national": {
+        "latest_openings_rate": 4.5,
+        "latest_hires_rate": 3.7,
+        "as_of": "2026-05",
+        "openings_to_hires_ratio": 1.22
+      },
+      "construction": {
+        "latest_openings_rate": 3.8,
+        "latest_hires_rate": 4.3,
+        "as_of": "2026-05",
+        "openings_to_hires_ratio": 0.88
+      }
+    },
+    "note": "Macro, industry-wide context only - 'national' is total nonfarm, 'construction' is the Construction supersector (relevant to solar/wind installation labor). Not role- or company-specific. A higher openings-to-hires ratio suggests jobs are opening faster than they're being filled - a directional signal, not a precise difficulty score."
+  },
+  "top_skills": {
+    "top_skills": [
+      {
+        "skill": "energy storage systems",
+        "count": 22,
+        "pct_of_described_postings": 5.2
+      },
+      {
+        "skill": "NERC",
+        "count": 17,
+        "pct_of_described_postings": 4.0
+      },
+      {
+        "skill": "permitting",
+        "count": 13,
+        "pct_of_described_postings": 3.1
+      },
+      {
+        "skill": "SCADA",
+        "count": 10,
+        "pct_of_described_postings": 2.4
+      },
+      {
+        "skill": "PSS/E",
+        "count": 7,
+        "pct_of_described_postings": 1.6
+      },
+      {
+        "skill": "interconnection studies",
+        "count": 7,
+        "pct_of_described_postings": 1.6
+      },
+      {
+        "skill": "Aspen",
+        "count": 6,
+        "pct_of_described_postings": 1.4
+      },
+      {
+        "skill": "Python",
+        "count": 6,
+        "pct_of_described_postings": 1.4
+      },
+      {
+        "skill": "PLC",
+        "count": 5,
+        "pct_of_described_postings": 1.2
+      },
+      {
+        "skill": "FERC",
+        "count": 4,
+        "pct_of_described_postings": 0.9
+      }
+    ],
+    "described_postings": 425,
+    "total_postings": 1892,
+    "note": "Counts mentions from a fixed keyword list (taxonomy/skills.py) in posting descriptions, not NLP - misses synonyms/phrasing it doesn't know about. Only postings with a non-null description are counted, and description coverage varies a lot by crawler source, so this skews toward employers whose career sites happen to expose full posting text."
+  },
+  "macro_context": {
+    "report": "2025 U.S. Energy & Employment Report (USEER)",
+    "publisher": "U.S. Department of Energy",
+    "data_year": 2024,
+    "published": "2025-08",
+    "source_url": "https://www.energy.gov/policy/2025-us-energy-employment-report-useer",
+    "figures": {
+      "clean_energy_total_jobs": 3400000,
+      "renewable_energy_generation_jobs": 560000,
+      "solar_jobs": 370556,
+      "solar_yoy_growth_pct": 2.0,
+      "solar_wind_combined_jobs": 380000,
+      "clean_energy_yoy_growth_pct": 3.0,
+      "overall_us_workforce_yoy_growth_pct": 1.0,
+      "clean_energy_5yr_jobs_added": 520000,
+      "clean_energy_5yr_growth_pct": 17.0
+    },
+    "note": "Manually entered from DOE's published USEER summary figures - this report is published roughly annually as a PDF, not available via API, so it isn't refreshed automatically like the BLS caches. Use as macro, national sanity-check context only; it is not derived from this project's own scraped postings and isn't broken out by our sector taxonomy."
+  },
+  "pending": []
+}

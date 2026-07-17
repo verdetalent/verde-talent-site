@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Candidate Browser (Admin) — Verde Talent</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right{font-size:13px;color:var(--t3);}
+.nav-right a{color:var(--t2);text-decoration:none;}
+.badge{font-size:10px;color:var(--cor);border:0.5px solid rgba(255,112,85,0.4);background:rgba(255,112,85,0.08);padding:2px 8px;border-radius:20px;margin-left:8px;}
+
+/* Gate */
+.wrap-gate{max-width:420px;margin:3.5rem auto;padding:0 1.5rem;}
+.card{background:var(--card);border:0.5px solid var(--bdr);border-radius:16px;padding:1.75rem;}
+.card h1{font-size:19px;font-weight:500;margin-bottom:6px;}
+.card p.sub{font-size:13px;color:var(--t3);margin-bottom:1.5rem;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;color:var(--t3);margin-bottom:5px;}
+.field input{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 13px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);}
+.field input:focus{border-color:rgba(34,224,154,0.5);}
+.btn-grn{background:var(--grn);color:#052e1e;border:none;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;width:100%;font-family:var(--font-sans);margin-top:4px;}
+.btn-ghost-sm{background:none;border:none;color:var(--t3);font-size:12px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;margin-top:10px;width:100%;text-align:center;padding:4px;}
+.note{font-size:12px;color:var(--t3);margin-top:12px;text-align:center;}
+
+/* Browser view */
+.browser{display:none;max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem;}
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+.toolbar h1{font-size:18px;font-weight:500;}
+.toolbar .count{font-size:13px;color:var(--t3);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.cand-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.1rem;}
+.cand-name{font-size:15px;font-weight:500;}
+.cand-headline{font-size:12px;color:var(--t2);margin-top:2px;margin-bottom:10px;}
+.cand-row{font-size:12px;color:var(--t3);margin-bottom:5px;}
+.cand-row b{color:var(--t2);font-weight:400;}
+.tag-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.tag{font-size:10px;padding:2px 8px;border-radius:20px;border:0.5px solid rgba(34,224,154,0.35);color:var(--grn);background:rgba(34,224,154,0.08);}
+.cand-actions{margin-top:12px;display:flex;gap:8px;}
+.resume-link{font-size:12px;color:var(--blu);text-decoration:none;display:inline-flex;align-items:center;gap:4px;}
+.resume-link:hover{text-decoration:underline;}
+.no-resume{font-size:12px;color:var(--t3);}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--t3);font-size:13px;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right">Admin only<span class="badge">Internal</span></div>
+</nav>
+
+<div class="wrap-gate" id="gateWrap">
+  <div class="card">
+    <h1 id="gateTitle">Admin sign in</h1>
+    <p class="sub" id="gateSub">Internal candidate browser. Not linked from the public site.</p>
+    <div class="field"><label>Email</label><input type="email" id="ad-email" placeholder="you@example.com"/></div>
+    <div class="field"><label>Password</label><input type="password" id="ad-password" placeholder="Password"/></div>
+    <button type="button" class="btn-grn" id="adSignin">Sign in →</button>
+    <button type="button" class="btn-ghost-sm" id="adToggleMode">First time here? Create your admin account</button>
+    <div class="note" id="adNote"></div>
+  </div>
+</div>
+
+<div class="browser" id="browserWrap">
+  <div class="toolbar">
+    <h1>Candidate profiles</h1>
+    <div class="count" id="candCount"></div>
+  </div>
+  <div class="grid" id="candGrid"></div>
+  <div class="empty-state" id="emptyState" style="display:none;">No candidate profiles yet.</div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+let isSignupMode = false;
+
+document.getElementById('adToggleMode').addEventListener('click', function(){
+  isSignupMode = !isSignupMode;
+  document.getElementById('gateTitle').textContent = isSignupMode ? 'Create admin account' : 'Admin sign in';
+  document.getElementById('adSignin').textContent = isSignupMode ? 'Create account →' : 'Sign in →';
+  this.textContent = isSignupMode ? 'Already have an admin account? Sign in' : 'First time here? Create your admin account';
+  document.getElementById('adNote').textContent = '';
+});
+
+document.getElementById('adSignin').addEventListener('click', async function(){
+  const btn = this;
+  const note = document.getElementById('adNote');
+  const email = document.getElementById('ad-email').value.trim();
+  const password = document.getElementById('ad-password').value;
+  if(!email || !password){
+    note.textContent = 'Enter email and password.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+  btn.disabled = true;
+  note.textContent = '';
+  try {
+    let accessToken;
+    if(isSignupMode){
+      btn.textContent = 'Creating account…';
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data?.msg || data?.error_description || 'Could not create account.');
+      accessToken = data.access_token;
+      if(!accessToken) throw new Error('Account created. If email confirmation is required, confirm it, then sign in.');
+    } else {
+      btn.textContent = 'Signing in…';
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data?.error_description || data?.msg || 'Incorrect email or password.');
+      accessToken = data.access_token;
+    }
+
+    const listRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${accessToken}` },
+    });
+    const candidates = await listRes.json();
+    if(!listRes.ok) throw new Error('Signed in, but this account is not authorized to view candidates.');
+
+    renderCandidates(candidates, accessToken);
+    document.getElementById('gateWrap').style.display = 'none';
+    document.getElementById('browserWrap').style.display = 'block';
+  } catch(err){
+    btn.disabled = false;
+    btn.textContent = isSignupMode ? 'Create account →' : 'Sign in →';
+    note.textContent = err.message || 'Something went wrong.';
+    note.style.color = 'var(--cor)';
+    console.error(err);
+  }
+});
+
+function renderCandidates(list, accessToken){
+  document.getElementById('candCount').textContent = `${list.length} profile${list.length === 1 ? '' : 's'}`;
+  document.getElementById('emptyState').style.display = list.length ? 'none' : 'block';
+  const grid = document.getElementById('candGrid');
+  grid.innerHTML = '';
+  list.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'cand-card';
+    const sectors = (c.sectors || []).map(s => `<span class="tag">${s}</span>`).join('');
+    const skills = (c.skills || []).map(s => `<span class="tag">${s}</span>`).join('');
+    card.innerHTML = `
+      <div class="cand-name">${c.first_name} ${c.last_name}</div>
+      <div class="cand-headline">${c.headline || ''}</div>
+      <div class="cand-row"><b>Location:</b> ${c.location || '—'}</div>
+      <div class="cand-row"><b>Experience:</b> ${c.years_experience || '—'}</div>
+      <div class="cand-row"><b>Availability:</b> ${c.availability || '—'}</div>
+      ${sectors ? `<div class="tag-list">${sectors}</div>` : ''}
+      ${skills ? `<div class="tag-list">${skills}</div>` : ''}
+      <div class="cand-actions">
+        ${c.resume_path ? `<a href="#" class="resume-link" data-path="${c.resume_path}"><i class="ti ti-file-text"></i>View resume</a>` : '<span class="no-resume">No resume uploaded</span>'}
+      </div>
+    `;
+    grid.appendChild(card);
+    const link = card.querySelector('.resume-link');
+    if(link){
+      link.addEventListener('click', async function(e){
+        e.preventDefault();
+        const path = this.dataset.path;
+        const signRes = await fetch(`${SUPABASE_URL}/storage/v1/object/sign/resumes/${path}`, {
+          method: 'POST',
+          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ expiresIn: 3600 }),
+        });
+        const signData = await signRes.json();
+        if(signRes.ok && signData.signedURL){
+          window.open(`${SUPABASE_URL}/storage/v1${signData.signedURL}`, '_blank');
+        }
+      });
+    }
+  });
+}
+</script>
+</body>
+</html>

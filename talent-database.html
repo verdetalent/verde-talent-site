@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Resume Vault — Verde Talent Admin</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;display:flex;flex-direction:column;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:0.5px solid var(--bdr);flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--grn);}
+.admin-badge{font-size:11px;background:rgba(255,181,71,0.15);color:var(--amb);border:0.5px solid rgba(255,181,71,0.3);padding:2px 8px;border-radius:6px;margin-left:6px;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;color:var(--t2);}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-links a.active{color:var(--t1);}
+.nav-group.grn .nav-links a.active{color:var(--grn);}
+.nav-group.amb .nav-links a.active{color:var(--amb);}
+.nav-groups{display:flex;align-items:flex-end;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn-sm{padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;border:none;white-space:nowrap;}
+.btn-grn{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.threshold-banner{background:rgba(255,181,71,0.07);border-bottom:0.5px solid rgba(255,181,71,0.2);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.tb-left{display:flex;align-items:center;gap:12px;}
+.tb-icon{width:34px;height:34px;border-radius:9px;background:rgba(255,181,71,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tb-icon i{font-size:17px;color:var(--amb);}
+.tb-text{font-size:13px;font-weight:500;}
+.tb-sub{font-size:12px;color:var(--t3);margin-top:2px;}
+.tb-bar-wrap{flex:1;max-width:280px;margin-left:16px;}
+.tb-bar-track{height:5px;background:rgba(255,255,255,0.08);border-radius:3px;}
+.tb-bar-fill{height:5px;background:var(--amb);border-radius:3px;width:57.4%;}
+.tb-pct{font-size:12px;color:var(--amb);margin-top:4px;}
+.tb-right{display:flex;align-items:center;gap:8px;}
+.layout{display:flex;flex:1;overflow:hidden;}
+.sidebar{width:220px;border-right:0.5px solid var(--bdr);padding:1.25rem 1rem;flex-shrink:0;overflow-y:auto;}
+.sf-title{font-size:11px;color:var(--t3);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;margin-top:16px;}
+.sf-title:first-child{margin-top:0;}
+.sf-check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t2);margin-bottom:7px;cursor:pointer;}
+.sf-check input{accent-color:var(--grn);}
+.sf-pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--bdr2);color:var(--t3);cursor:pointer;margin:3px 2px;}
+.sf-pill.on{border-color:rgba(34,224,154,0.4);color:var(--grn);background:rgba(34,224,154,0.08);}
+.sf-pill.blu{border-color:rgba(79,179,255,0.4);color:var(--blu);background:rgba(79,179,255,0.08);}
+.sf-pill.amb{border-color:rgba(255,181,71,0.4);color:var(--amb);background:rgba(255,181,71,0.08);}
+.sf-pill.pur{border-color:rgba(181,136,255,0.4);color:var(--pur);background:rgba(181,136,255,0.08);}
+.sf-pill.cor{border-color:rgba(255,112,85,0.4);color:var(--cor);background:rgba(255,112,85,0.08);}
+.main{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;}
+.top-bar{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;}
+.search-wrap{flex:1;position:relative;}
+.search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--t3);}
+.search-wrap input{width:100%;background:var(--card2);border:0.5px solid var(--bdr2);border-radius:10px;padding:10px 13px 10px 38px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);}
+.search-wrap input::placeholder{color:var(--t3);}
+.search-wrap input:focus{border-color:rgba(34,224,154,0.4);}
+.sort-sel{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:9px;padding:9px 13px;font-size:13px;color:var(--t2);outline:none;font-family:var(--font-sans);}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem;}
+.stat-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:12px;padding:.9rem 1rem;}
+.sc-num{font-size:22px;font-weight:500;}
+.sc-label{font-size:12px;color:var(--t3);margin-top:3px;}
+.sc-delta{font-size:11px;margin-top:4px;}
+.sc-delta.up{color:var(--grn);}
+.sc-delta.down{color:var(--cor);}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;}
+.rh-count{font-size:13px;color:var(--t2);}
+.rh-actions{display:flex;gap:8px;}
+.candidate-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1rem 1.1rem;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;cursor:pointer;transition:border-color .15s;}
+.candidate-card:hover{border-color:var(--bdr2);}
+.avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;flex-shrink:0;}
+.cc-body{flex:1;min-width:0;}
+.cc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.cc-name{font-size:15px;font-weight:500;}
+.cc-title{font-size:13px;color:var(--t2);margin-top:2px;}
+.cc-loc{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--t3);margin-top:3px;}
+.cc-loc i{font-size:13px;}
+.cc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;}
+.cc-tag{font-size:11px;padding:3px 9px;border-radius:10px;border:0.5px solid var(--bdr2);color:var(--t3);}
+.cc-tag.grn{border-color:rgba(34,224,154,0.3);color:var(--grn);background:rgba(34,224,154,0.07);}
+.cc-tag.blu{border-color:rgba(79,179,255,0.3);color:var(--blu);background:rgba(79,179,255,0.07);}
+.cc-tag.amb{border-color:rgba(255,181,71,0.3);color:var(--amb);background:rgba(255,181,71,0.07);}
+.cc-tag.pur{border-color:rgba(181,136,255,0.3);color:var(--pur);background:rgba(181,136,255,0.07);}
+.cc-tag.cor{border-color:rgba(255,112,85,0.3);color:var(--cor);background:rgba(255,112,85,0.07);}
+.cc-meta{display:flex;align-items:center;gap:10px;flex-shrink:0;font-size:12px;color:var(--t3);}
+.avail-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.avail-dot.open{background:var(--grn);}
+.avail-dot.passive{background:var(--amb);}
+.avail-dot.closed{background:rgba(255,255,255,0.2);}
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:1.5rem;}
+.page-btn{width:32px;height:32px;border-radius:7px;border:0.5px solid var(--bdr2);background:none;color:var(--t3);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.page-btn.active{background:rgba(34,224,154,0.12);border-color:rgba(34,224,154,0.35);color:var(--grn);}
+.gate{position:fixed;inset:0;background:var(--blk);z-index:1000;display:flex;align-items:center;justify-content:center;}
+.gate-card{width:100%;max-width:320px;padding:2rem;text-align:center;}
+.gate-icon{width:48px;height:48px;border-radius:14px;background:rgba(255,181,71,0.12);border:0.5px solid rgba(255,181,71,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;}
+.gate-icon i{font-size:22px;color:var(--amb);}
+.gate-card h1{font-size:18px;font-weight:600;margin-bottom:.4rem;}
+.gate-card p{font-size:13px;color:var(--t3);margin-bottom:1.4rem;line-height:1.5;}
+.gate-card input{width:100%;background:var(--card2);border:0.5px solid var(--bdr2);border-radius:9px;padding:11px 13px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);margin-bottom:.7rem;}
+.gate-card input:focus{border-color:rgba(34,224,154,0.4);}
+.gate-card button{width:100%;padding:11px;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;background:var(--grn);color:#052e1e;}
+.gate-error{font-size:12px;color:var(--cor);margin-top:.6rem;min-height:16px;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+footer a:hover{color:var(--grn);}
+.footer-links{display:flex;gap:1.25rem;}
+</style>
+</head>
+<body>
+<div class="gate" id="admin-gate">
+  <div class="gate-card">
+    <div class="gate-icon"><i class="ti ti-lock"></i></div>
+    <h1>Verde Talent Admin</h1>
+    <p>This candidate database is internal-only. Enter the admin password to continue.</p>
+    <input type="password" id="gate-password" placeholder="Password" onkeydown="if(event.key==='Enter')checkGatePassword()"/>
+    <button onclick="checkGatePassword()">Unlock</button>
+    <div class="gate-error" id="gate-error"></div>
+  </div>
+</div>
+<div id="admin-content" style="display:none;">
+<nav class="nav">
+  <div style="display:flex;align-items:center;gap:1.15rem;">
+    <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"><span class="admin-badge">Admin</span></a>
+    <div class="nav-groups">
+      <div class="nav-group grn">
+        <div class="nav-group-label grn">Candidates</div>
+        <div class="nav-links">
+          <a href="jobs.html">Jobs</a>
+          <a href="companies.html">Companies</a>
+          <a href="professional-development.html">Training</a>
+        </div>
+      </div>
+      <div class="nav-group amb">
+        <div class="nav-group-label amb">Employers</div>
+        <div class="nav-links">
+          <a href="talent-database.html" class="active">Resume Vault</a>
+          <a href="intelligence.html">Intelligence</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label"></div>
+        <div class="nav-links">
+          <a href="news.html">News</a>
+          <a href="about.html">About</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="btn-sm btn-ghost"><i class="ti ti-download" style="font-size:14px;margin-right:4px;"></i>Export CSV</button>
+    <button class="btn-sm btn-ghost"><i class="ti ti-mail" style="font-size:14px;margin-right:4px;"></i>Email list</button>
+  </div>
+</nav>
+<div class="threshold-banner">
+  <div class="tb-left">
+    <div class="tb-icon"><i class="ti ti-users"></i></div>
+    <div><div class="tb-text">287 profiles collected</div><div class="tb-sub">Reach 500 to unlock client access to the Resume Vault</div></div>
+    <div class="tb-bar-wrap">
+      <div class="tb-bar-track"><div class="tb-bar-fill"></div></div>
+      <div class="tb-pct">287 / 500 — 57% there</div>
+    </div>
+  </div>
+  <div class="tb-right">
+    <span style="font-size:12px;color:var(--t3);">213 more needed</span>
+    <button class="btn-sm btn-ghost" style="font-size:12px;">Edit threshold</button>
+  </div>
+</div>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sf-title">Availability</div>
+    <label class="sf-check"><input type="checkbox" checked/> Actively looking (91)</label>
+    <label class="sf-check"><input type="checkbox" checked/> Open to offers (142)</label>
+    <label class="sf-check"><input type="checkbox"/> Not looking (54)</label>
+    <div class="sf-title">Sector</div>
+    <div><span class="sf-pill on">Solar (178)</span><span class="sf-pill blu">Wind (89)</span><span class="sf-pill amb">Storage (112)</span><span class="sf-pill">Grid (67)</span><span class="sf-pill pur">EV (55)</span><span class="sf-pill">Hydrogen (31)</span><span class="sf-pill cor">Policy (44)</span><span class="sf-pill">Sust. (76)</span></div>
+    <div class="sf-title">Experience</div>
+    <label class="sf-check"><input type="checkbox"/> &lt; 2 years (38)</label>
+    <label class="sf-check"><input type="checkbox" checked/> 2–5 years (89)</label>
+    <label class="sf-check"><input type="checkbox" checked/> 5–10 years (112)</label>
+    <label class="sf-check"><input type="checkbox"/> 10+ years (48)</label>
+    <div class="sf-title">Work style</div>
+    <label class="sf-check"><input type="checkbox" checked/> Remote (189)</label>
+    <label class="sf-check"><input type="checkbox" checked/> Hybrid (134)</label>
+    <label class="sf-check"><input type="checkbox"/> On-site only (41)</label>
+    <div class="sf-title">Submitted</div>
+    <label class="sf-check"><input type="checkbox" checked/> Last 30 days (67)</label>
+    <label class="sf-check"><input type="checkbox"/> Last 90 days (154)</label>
+    <label class="sf-check"><input type="checkbox"/> All time (287)</label>
+  </div>
+  <div class="main">
+    <div class="top-bar">
+      <div class="search-wrap"><i class="ti ti-search"></i><input type="text" placeholder="Search by name, skill, title, company…"/></div>
+      <select class="sort-sel"><option>Most recent</option><option>Most relevant</option><option>Years exp: high</option><option>Name A–Z</option></select>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="sc-num" style="color:var(--grn);">287</div><div class="sc-label">Total profiles</div><div class="sc-delta up"><i class="ti ti-arrow-up" style="font-size:10px;"></i> +24 this week</div></div>
+      <div class="stat-card"><div class="sc-num" style="color:var(--blu);">91</div><div class="sc-label">Actively looking</div><div class="sc-delta up"><i class="ti ti-arrow-up" style="font-size:10px;"></i> +8 this week</div></div>
+      <div class="stat-card"><div class="sc-num" style="color:var(--amb);">7.2 yrs</div><div class="sc-label">Avg. experience</div><div class="sc-delta up"><i class="ti ti-arrow-up" style="font-size:10px;"></i> +0.3 vs last mo.</div></div>
+      <div class="stat-card"><div class="sc-num" style="color:var(--pur);">Solar</div><div class="sc-label">Top sector</div><div class="sc-delta" style="color:var(--t3);">62% of profiles</div></div>
+    </div>
+    <div class="results-header">
+      <div class="rh-count">Showing 233 of 287 candidates</div>
+      <div class="rh-actions">
+        <button class="btn-sm btn-ghost" style="font-size:12px;"><i class="ti ti-grid-dots" style="font-size:13px;"></i></button>
+        <button class="btn-sm btn-ghost" style="font-size:12px;"><i class="ti ti-list" style="font-size:13px;"></i></button>
+      </div>
+    </div>
+    <!-- Candidate cards -->
+    <div class="candidate-card">
+      <div class="avatar" style="background:rgba(34,224,154,0.15);color:var(--grn);">JR</div>
+      <div class="cc-body">
+        <div class="cc-top">
+          <div><div class="cc-name">Jamie Reyes</div><div class="cc-title">Senior Solar Design Engineer</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Boston, MA · Remote preferred</div></div>
+          <div class="cc-meta"><div class="avail-dot open"></div><span style="color:var(--grn);">Actively looking</span></div>
+        </div>
+        <div class="cc-tags"><span class="cc-tag grn">Solar</span><span class="cc-tag">Grid</span><span class="cc-tag amb">Storage</span><span class="cc-tag">8 yrs exp</span><span class="cc-tag">PVsyst</span><span class="cc-tag">NABCEP</span><span class="cc-tag">Helioscope</span></div>
+      </div>
+    </div>
+    <div class="candidate-card">
+      <div class="avatar" style="background:rgba(79,179,255,0.15);color:var(--blu);">SK</div>
+      <div class="cc-body">
+        <div class="cc-top">
+          <div><div class="cc-name">Sofia Kim</div><div class="cc-title">Offshore Wind Project Manager</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Providence, RI · Open to hybrid</div></div>
+          <div class="cc-meta"><div class="avail-dot open"></div><span style="color:var(--grn);">Actively looking</span></div>
+        </div>
+        <div class="cc-tags"><span class="cc-tag blu">Wind</span><span class="cc-tag">12 yrs exp</span><span class="cc-tag">Permitting</span><span class="cc-tag">BOEM</span><span class="cc-tag cor">Policy</span></div>
+      </div>
+    </div>
+    <div class="candidate-card">
+      <div class="avatar" style="background:rgba(255,181,71,0.15);color:var(--amb);">ML</div>
+      <div class="cc-body">
+        <div class="cc-top">
+          <div><div class="cc-name">Marcus Lee</div><div class="cc-title">Battery Storage Systems Engineer</div><div class="cc-loc"><i class="ti ti-map-pin"></i>San Jose, CA · On-site</div></div>
+          <div class="cc-meta"><div class="avail-dot passive"></div><span style="color:var(--amb);">Open to offers</span></div>
+        </div>
+        <div class="cc-tags"><span class="cc-tag amb">Storage</span><span class="cc-tag grn">Solar</span><span class="cc-tag">5 yrs exp</span><span class="cc-tag">BESS</span><span class="cc-tag">BMS</span><span class="cc-tag">Python</span></div>
+      </div>
+    </div>
+    <div class="candidate-card">
+      <div class="avatar" style="background:rgba(181,136,255,0.15);color:var(--pur);">AP</div>
+      <div class="cc-body">
+        <div class="cc-top">
+          <div><div class="cc-name">Aisha Patel</div><div class="cc-title">EV Infrastructure Lead</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Detroit, MI · Hybrid</div></div>
+          <div class="cc-meta"><div class="avail-dot open"></div><span style="color:var(--grn);">Actively looking</span></div>
+        </div>
+        <div class="cc-tags"><span class="cc-tag pur">EV</span><span class="cc-tag">Grid</span><span class="cc-tag">6 yrs exp</span><span class="cc-tag">EVSE</span><span class="cc-tag">SAE J1772</span><span class="cc-tag">Fleet electrification</span></div>
+      </div>
+    </div>
+    <div class="candidate-card">
+      <div class="avatar" style="background:rgba(255,112,85,0.15);color:var(--cor);">TW</div>
+      <div class="cc-body">
+        <div class="cc-top">
+          <div><div class="cc-name">Tyler Webb</div><div class="cc-title">Energy Policy Analyst</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Washington, DC · Remote</div></div>
+          <div class="cc-meta"><div class="avail-dot passive"></div><span style="color:var(--amb);">Open to offers</span></div>
+        </div>
+        <div class="cc-tags"><span class="cc-tag cor">Policy</span><span class="cc-tag">Regulatory</span><span class="cc-tag">4 yrs exp</span><span class="cc-tag">FERC</span><span class="cc-tag">IRA tax credits</span></div>
+      </div>
+    </div>
+    <div class="candidate-card">
+      <div class="avatar" style="background:rgba(34,224,154,0.15);color:var(--grn);">LN</div>
+      <div class="cc-body">
+        <div class="cc-top">
+          <div><div class="cc-name">Lily Nguyen</div><div class="cc-title">Sustainability & ESG Manager</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Seattle, WA · Remote preferred</div></div>
+          <div class="cc-meta"><div class="avail-dot passive"></div><span style="color:var(--amb);">Open to offers</span></div>
+        </div>
+        <div class="cc-tags"><span class="cc-tag">Sustainability</span><span class="cc-tag grn">ESG</span><span class="cc-tag">9 yrs exp</span><span class="cc-tag">GRI</span><span class="cc-tag">CDP reporting</span><span class="cc-tag">Net zero strategy</span></div>
+      </div>
+    </div>
+    <div class="pagination">
+      <button class="page-btn"><i class="ti ti-chevron-left" style="font-size:14px;"></i></button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <span style="color:var(--t3);font-size:13px;padding:0 4px;">…</span>
+      <button class="page-btn">12</button>
+      <button class="page-btn"><i class="ti ti-chevron-right" style="font-size:14px;"></i></button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+// Client-side-only gate - a convenience speed bump, not real access control.
+// The password and the page content are both still present in this file's
+// source, so anyone who views-source or reads the network response can get
+// past it. Fine for keeping this off casual visitors' radar for now; swap for
+// real authentication before this data or "paid member" access needs to be
+// actually secure.
+const ADMIN_GATE_PASSWORD = "Lsdwku145421!";
+
+// Deliberately does not remember a previous unlock (no sessionStorage/localStorage) -
+// the password prompt should appear every time this page is opened, not just once
+// per browser session.
+function checkGatePassword() {
+  const input = document.getElementById("gate-password");
+  if (input.value === ADMIN_GATE_PASSWORD) {
+    unlockAdmin();
+  } else {
+    document.getElementById("gate-error").textContent = "Incorrect password.";
+  }
+}
+
+function unlockAdmin() {
+  document.getElementById("admin-gate").style.display = "none";
+  document.getElementById("admin-content").style.display = "";
+}
+</script>
+<footer>
+  <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
+  <div class="footer-links">
+    <a href="jobs.html">Jobs</a>
+    <a href="resume-vault.html">Resume Vault</a>
+    <a href="companies.html">Companies</a>
+    <a href="intelligence.html">Intelligence</a>
+    <a href="news.html">News</a>
+    <a href="professional-development.html">Training</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="talent-database.html" style="opacity:.5;">Admin</a>
+  </div>
+  <div>© 2026 Verde Talent · <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
+</footer>
+</body>
+</html>

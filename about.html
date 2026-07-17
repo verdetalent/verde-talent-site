@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About — Verde Talent</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--grn);}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-links a.active{color:var(--t1);}
+.nav-group.grn .nav-links a.active{color:var(--grn);}
+.nav-group.amb .nav-links a.active{color:var(--amb);}
+.nav-groups{display:flex;align-items:flex-end;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+/* Hero */
+.hero{position:relative;padding:5rem 2rem 3rem;text-align:center;overflow:hidden;border-bottom:0.5px solid var(--bdr);}
+.hero-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.hero h1{font-size:36px;font-weight:700;line-height:1.2;max-width:600px;margin:0 auto .9rem;letter-spacing:-0.02em;position:relative;}
+.hero h1 span{color:var(--grn);}
+.hero p{font-size:16px;color:var(--t2);max-width:480px;margin:0 auto;line-height:1.65;position:relative;}
+/* Mission */
+.mission-card{margin:2.5rem 2rem;background:rgba(34,224,154,0.05);border:0.5px solid rgba(34,224,154,0.2);border-left:3px solid var(--grn);border-radius:14px;padding:1.5rem 1.75rem;}
+.mission-card p{font-size:16px;line-height:1.7;color:var(--t1);}
+/* By the numbers */
+.numbers-section{padding:0 2rem 2.5rem;border-bottom:0.5px solid var(--bdr);}
+.section-label{font-size:11px;color:var(--t3);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.9rem;}
+.numbers-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.num-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1rem 1.1rem;text-align:center;}
+.num-val{font-size:24px;font-weight:700;margin-bottom:.25rem;}
+.num-label{font-size:12px;color:var(--t3);}
+/* Story */
+.story-section{padding:2.5rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:720px;margin:0 auto;}
+.story-text h2{font-size:22px;font-weight:600;margin-bottom:1rem;}
+.story-para{font-size:14px;color:var(--t2);line-height:1.72;margin-bottom:.9rem;}
+/* Founder */
+.team-section{padding:2.5rem 2rem;border-bottom:0.5px solid var(--bdr);}
+.team-grid{display:flex;justify-content:center;}
+.team-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.75rem;text-align:center;max-width:340px;width:100%;}
+.team-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin:0 auto .9rem;}
+.team-name{font-size:16px;font-weight:600;}
+.team-title{font-size:13px;color:var(--t3);margin-top:3px;}
+.team-bio{font-size:13px;color:var(--t2);margin-top:.8rem;line-height:1.6;}
+/* Values */
+.values-section{padding:2.5rem 2rem;border-bottom:0.5px solid var(--bdr);}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.val-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.25rem;}
+.val-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;}
+.val-icon i{font-size:20px;}
+.val-title{font-size:15px;font-weight:600;margin-bottom:.4rem;}
+.val-desc{font-size:13px;color:var(--t2);line-height:1.6;}
+/* CTA */
+.cta-section{margin:2.5rem 2rem;background:linear-gradient(135deg,rgba(34,224,154,0.1),rgba(79,179,255,0.06));border:0.5px solid rgba(34,224,154,0.25);border-radius:16px;padding:3rem 2rem;text-align:center;}
+.cta-section h2{font-size:26px;font-weight:700;margin-bottom:.5rem;}
+.cta-section p{font-size:15px;color:var(--t2);margin-bottom:1.5rem;}
+.cta-btns{display:flex;align-items:center;justify-content:center;gap:10px;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+footer a:hover{color:var(--grn);}
+.footer-links{display:flex;gap:1.25rem;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div style="display:flex;align-items:center;gap:1.15rem;">
+    <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
+    <div class="nav-groups">
+      <div class="nav-group grn">
+        <div class="nav-group-label grn">Candidates</div>
+        <div class="nav-links">
+          <a href="jobs.html">Find jobs</a>
+          <a href="companies.html">Companies</a>
+          <a href="professional-development.html">Training</a>
+        </div>
+      </div>
+      <div class="nav-group amb">
+        <div class="nav-group-label amb">Employers</div>
+        <div class="nav-links">
+          <a href="resume-vault.html">Resume Vault</a>
+          <a href="intelligence.html">Intelligence</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label"></div>
+        <div class="nav-links">
+          <a href="news.html">News</a>
+          <a href="about.html" class="active">About</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="mailto:contact@verdetalent.com?subject=Post%20a%20job%20on%20Verde%20Talent" style="text-decoration:none;"><button class="btn btn-grn">Post a job</button></a>
+  </div>
+</nav>
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <!-- energy grid nodes -->
+    <circle cx="200" cy="100" r="2.5" fill="rgba(34,224,154,0.4)"/>
+    <circle cx="500" cy="60" r="2" fill="rgba(79,179,255,0.35)"/>
+    <circle cx="780" cy="120" r="2.5" fill="rgba(34,224,154,0.3)"/>
+    <circle cx="1000" cy="80" r="2" fill="rgba(255,181,71,0.35)"/>
+    <circle cx="350" cy="200" r="1.5" fill="rgba(181,136,255,0.3)"/>
+    <circle cx="650" cy="180" r="2" fill="rgba(34,224,154,0.25)"/>
+    <circle cx="900" cy="200" r="1.5" fill="rgba(79,179,255,0.3)"/>
+    <!-- connecting lines -->
+    <line x1="200" y1="100" x2="500" y2="60" stroke="rgba(34,224,154,0.1)" stroke-width="1"/>
+    <line x1="500" y1="60" x2="780" y2="120" stroke="rgba(79,179,255,0.08)" stroke-width="1"/>
+    <line x1="780" y1="120" x2="1000" y2="80" stroke="rgba(34,224,154,0.08)" stroke-width="1"/>
+    <line x1="350" y1="200" x2="650" y2="180" stroke="rgba(181,136,255,0.07)" stroke-width="1"/>
+    <line x1="650" y1="180" x2="900" y2="200" stroke="rgba(34,224,154,0.07)" stroke-width="1"/>
+    <line x1="200" y1="100" x2="350" y2="200" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    <line x1="500" y1="60" x2="650" y2="180" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    <!-- center glow -->
+    <ellipse cx="600" cy="200" rx="400" ry="180" fill="rgba(34,224,154,0.03)"/>
+  </svg>
+  <h1>We exist to <span>accelerate</span> the clean energy transition</h1>
+  <p>Verde Talent connects the people building the renewable energy future with the companies that need them most.</p>
+</div>
+<div class="mission-card">
+  <p>"The energy transition will require millions of skilled workers over the next decade. We built Verde Talent to make sure those workers can find their place in it — and that energy companies can find the talent to move fast enough."</p>
+</div>
+<div class="numbers-section">
+  <div class="section-label">Where things stand today</div>
+  <div class="numbers-strip">
+    <div class="num-card"><div class="num-val" style="color:var(--grn);">2026</div><div class="num-label">Founded</div></div>
+    <div class="num-card"><div class="num-val" style="color:var(--blu);">1,892</div><div class="num-label">Job postings tracked</div></div>
+    <div class="num-card"><div class="num-val" style="color:var(--amb);">30</div><div class="num-label">Companies tracked</div></div>
+    <div class="num-card"><div class="num-val" style="color:var(--pur);">8</div><div class="num-label">Sectors covered</div></div>
+  </div>
+</div>
+<div class="story-section">
+  <div class="story-text">
+    <h2>Our story</h2>
+    <div class="story-para">The clean energy industry is growing faster than almost any other part of the U.S. economy — but the hiring infrastructure for it hasn't caught up. Job seekers with hard-won energy credentials are stuck applying on generic boards built around oil & gas and tech. Employers hiring for solar, wind, storage, and grid roles are stuck posting into the same crowded feeds as every other industry.</div>
+    <div class="story-para">Verde Talent is a brand-new hiring platform built to fix that gap — job postings pulled directly from clean energy employers' own career pages, organized around the roles and sectors that actually make up this industry, paired with real labor-market data (compensation, hiring trends, fill-difficulty) sourced from public data including the U.S. Bureau of Labor Statistics.</div>
+    <div class="story-para">Right now, that's a solo effort: one person building the product, running the job crawler, and talking to every company and candidate directly. It's early days — the goal is to grow this into the default hiring layer for the energy transition.</div>
+  </div>
+</div>
+<div class="team-section">
+  <div class="section-label">Founder</div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar" style="background:rgba(34,224,154,0.12);color:var(--grn);">A</div>
+      <div class="team-name">Adam</div>
+      <div class="team-title">Founder</div>
+    </div>
+  </div>
+</div>
+<div class="values-section">
+  <div class="section-label">Our values</div>
+  <div class="values-grid">
+    <div class="val-card">
+      <div class="val-icon" style="background:rgba(34,224,154,0.1);"><i class="ti ti-leaf" style="color:var(--grn);"></i></div>
+      <div class="val-title">Planet first</div>
+      <div class="val-desc">Every decision we make runs through a simple filter: does this help more clean energy get built? We're not neutral on climate — we're explicitly on the side of the transition.</div>
+    </div>
+    <div class="val-card">
+      <div class="val-icon" style="background:rgba(79,179,255,0.1);"><i class="ti ti-eye" style="color:var(--blu);"></i></div>
+      <div class="val-title">Transparency</div>
+      <div class="val-desc">We show salary ranges on every job and publish our own hiring and market data in the open, including in our Intelligence reports. As this grows, that stays true — no black boxes.</div>
+    </div>
+    <div class="val-card">
+      <div class="val-icon" style="background:rgba(255,181,71,0.1);"><i class="ti ti-world" style="color:var(--amb);"></i></div>
+      <div class="val-title">Accessibility</div>
+      <div class="val-desc">Clean energy jobs shouldn't only be findable by people with the right LinkedIn network. Verde Talent is free for job seekers, always, and designed to surface opportunities regardless of background.</div>
+    </div>
+  </div>
+</div>
+<div class="cta-section">
+  <h2>Building the future of climate careers</h2>
+  <p>Whether you're hiring your next solar engineer or looking for your first offshore wind role — Verde Talent is where the transition workforce connects.</p>
+  <div class="cta-btns">
+    <a href="jobs.html" style="text-decoration:none;"><button class="btn btn-grn" style="padding:12px 24px;font-size:14px;">Browse open roles →</button></a>
+    <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost" style="padding:12px 24px;font-size:14px;">Create a candidate profile</button></a>
+    <a href="mailto:contact@verdetalent.com" style="text-decoration:none;"><button class="btn btn-ghost" style="padding:12px 24px;font-size:14px;">Talk to our team →</button></a>
+  </div>
+</div>
+<footer>
+  <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
+  <div class="footer-links">
+    <a href="jobs.html">Jobs</a>
+    <a href="resume-vault.html">Resume Vault</a>
+    <a href="companies.html">Companies</a>
+    <a href="intelligence.html">Intelligence</a>
+    <a href="news.html">News</a>
+    <a href="professional-development.html">Training</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="talent-database.html" style="opacity:.5;">Admin</a>
+  </div>
+  <div>© 2026 Verde Talent · <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sign In — Verde Talent</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right{font-size:13px;color:var(--t3);}
+.nav-right a{color:var(--t2);text-decoration:none;}
+.nav-right a:hover{color:var(--grn);}
+.wrap{max-width:440px;margin:3rem auto;padding:0 1.5rem;}
+.card{background:var(--card);border:0.5px solid var(--bdr);border-radius:16px;padding:1.75rem;}
+.card h1{font-size:19px;font-weight:500;margin-bottom:6px;}
+.card p.sub{font-size:13px;color:var(--t3);margin-bottom:1.5rem;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;color:var(--t3);margin-bottom:5px;}
+.field input{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 13px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);}
+.field input:focus{border-color:rgba(34,224,154,0.5);}
+.btn-grn{background:var(--grn);color:#052e1e;border:none;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;width:100%;font-family:var(--font-sans);margin-top:6px;}
+.btn-grn:disabled{opacity:0.6;cursor:default;}
+.note{font-size:12px;color:var(--t3);margin-top:12px;text-align:center;}
+.foot-link{font-size:13px;color:var(--t3);text-align:center;margin-top:1.25rem;}
+.foot-link a{color:var(--grn);text-decoration:none;}
+
+/* Profile view (shown after successful login) */
+.profile-card{display:none;}
+.profile-card .row{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:0.5px solid var(--bdr);}
+.profile-card .row:last-child{border-bottom:none;}
+.profile-card .row span:first-child{color:var(--t3);}
+.profile-card .row span:last-child{text-align:right;max-width:60%;}
+.tag-list{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;}
+.tag{font-size:11px;padding:3px 9px;border-radius:20px;border:0.5px solid rgba(34,224,154,0.35);color:var(--grn);background:rgba(34,224,154,0.08);}
+.resume-link{display:inline-flex;align-items:center;gap:6px;color:var(--blu);text-decoration:none;font-size:13px;margin-top:14px;}
+.resume-link:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right"><a href="index.html">← Back to Verde Talent</a></div>
+</nav>
+<div class="wrap">
+  <div class="card" id="loginCard">
+    <h1>Sign in</h1>
+    <p class="sub">View the profile you created with Verde Talent.</p>
+    <div class="field"><label>Email</label><input type="email" id="li-email" placeholder="you@example.com"/></div>
+    <div class="field"><label>Password</label><input type="password" id="li-password" placeholder="Your password"/></div>
+    <button type="button" class="btn-grn" id="loginBtn">Sign in →</button>
+    <div class="note" id="loginNote"></div>
+    <div class="foot-link">Don't have a profile yet? <a href="create-profile.html">Create one</a></div>
+  </div>
+
+  <div class="card profile-card" id="profileCard">
+    <h1 id="pf-name">—</h1>
+    <p class="sub" id="pf-headline"></p>
+    <div class="row"><span>Location</span><span id="pf-loc">—</span></div>
+    <div class="row"><span>Experience</span><span id="pf-exp">—</span></div>
+    <div class="row"><span>Sectors</span><span class="tag-list" id="pf-sectors"></span></div>
+    <div class="row"><span>Skills</span><span class="tag-list" id="pf-skills"></span></div>
+    <div class="row"><span>Availability</span><span id="pf-avail">—</span></div>
+    <a href="#" class="resume-link" id="pf-resume" style="display:none;"><i class="ti ti-file-text"></i>View my resume</a>
+    <div class="note" style="text-align:left;margin-top:1.25rem;">Editing your profile from here is coming soon. For changes in the meantime, email <a href="mailto:contact@verdetalent.com" style="color:var(--grn);">contact@verdetalent.com</a>.</div>
+  </div>
+</div>
+<script>
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+
+document.getElementById('loginBtn').addEventListener('click', async function(){
+  const btn = this;
+  const note = document.getElementById('loginNote');
+  const email = document.getElementById('li-email').value.trim();
+  const password = document.getElementById('li-password').value;
+  if(!email || !password){
+    note.textContent = 'Enter your email and password.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+  note.textContent = '';
+
+  try {
+    const tokenRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const tokenData = await tokenRes.json();
+    if(!tokenRes.ok){
+      throw new Error(tokenData?.error_description || tokenData?.msg || 'Incorrect email or password.');
+    }
+    const accessToken = tokenData.access_token;
+    const userId = tokenData.user?.id;
+
+    const profileRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?user_id=eq.${userId}&select=*`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${accessToken}` },
+    });
+    const profiles = await profileRes.json();
+    if(!profileRes.ok || !profiles.length){
+      throw new Error('Signed in, but no profile was found on this account.');
+    }
+    const p = profiles[0];
+
+    document.getElementById('pf-name').textContent = `${p.first_name} ${p.last_name}`;
+    document.getElementById('pf-headline').textContent = p.headline || '';
+    document.getElementById('pf-loc').textContent = p.location || '—';
+    document.getElementById('pf-exp').textContent = p.years_experience || '—';
+    document.getElementById('pf-sectors').innerHTML = (p.sectors || []).map(s=>`<span class="tag">${s}</span>`).join('') || '—';
+    document.getElementById('pf-skills').innerHTML = (p.skills || []).map(s=>`<span class="tag">${s}</span>`).join('') || '—';
+    document.getElementById('pf-avail').textContent = p.availability || '—';
+
+    if(p.resume_path){
+      const signRes = await fetch(`${SUPABASE_URL}/storage/v1/object/sign/resumes/${p.resume_path}`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expiresIn: 3600 }),
+      });
+      const signData = await signRes.json();
+      if(signRes.ok && signData.signedURL){
+        const link = document.getElementById('pf-resume');
+        link.href = `${SUPABASE_URL}/storage/v1${signData.signedURL}`;
+        link.target = '_blank';
+        link.style.display = 'inline-flex';
+      }
+    }
+
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('profileCard').style.display = 'block';
+  } catch(err){
+    btn.disabled = false;
+    btn.textContent = 'Sign in →';
+    note.textContent = err.message || 'Something went wrong — please try again.';
+    note.style.color = 'var(--cor)';
+    console.error('Login failed:', err);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Training V2 (Live data prototype) — Verde Talent</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--grn);}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-links a.active{color:var(--t1);}
+.nav-group.grn .nav-links a.active{color:var(--grn);}
+.nav-group.amb .nav-links a.active{color:var(--amb);}
+.nav-groups{display:flex;align-items:flex-end;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+/* Hero */
+.hero{padding:4rem 2rem 2.5rem;text-align:center;border-bottom:0.5px solid var(--bdr);}
+.hero h1{font-size:32px;font-weight:700;line-height:1.25;max-width:620px;margin:0 auto .9rem;letter-spacing:-0.02em;}
+.hero h1 span{color:var(--grn);}
+.hero p{font-size:15px;color:var(--t2);max-width:520px;margin:0 auto;line-height:1.65;}
+/* Early-stage note */
+.note-card{margin:1.75rem 2rem 0;background:rgba(255,181,71,0.06);border:0.5px solid rgba(255,181,71,0.22);border-radius:12px;padding:.9rem 1.2rem;font-size:13px;color:var(--t2);line-height:1.6;max-width:760px;margin-left:auto;margin-right:auto;}
+.note-card b{color:var(--t1);}
+/* Sections */
+.pd-section{padding:2.25rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1040px;margin:0 auto;}
+.pd-section-title{font-size:19px;font-weight:600;margin-bottom:.3rem;}
+.pd-section-sub{font-size:13px;color:var(--t3);margin-bottom:1.4rem;}
+.pd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.pd-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.25rem 1.35rem;}
+.pd-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:2px 8px;border-radius:6px;margin-bottom:.65rem;}
+.pd-tag.grn{color:var(--grn);background:rgba(34,224,154,0.12);border:0.5px solid rgba(34,224,154,0.3);}
+.pd-tag.blu{color:var(--blu);background:rgba(79,179,255,0.12);border:0.5px solid rgba(79,179,255,0.3);}
+.pd-tag.amb{color:var(--amb);background:rgba(255,181,71,0.12);border:0.5px solid rgba(255,181,71,0.3);}
+.pd-tag.pur{color:var(--pur);background:rgba(181,136,255,0.12);border:0.5px solid rgba(181,136,255,0.3);}
+.pd-tag.cor{color:var(--cor);background:rgba(255,112,85,0.12);border:0.5px solid rgba(255,112,85,0.3);}
+.pd-tag.t3{color:var(--t3);background:rgba(255,255,255,0.05);border:0.5px solid var(--bdr2);}
+.pd-role{font-size:15px;font-weight:600;margin-bottom:.6rem;}
+.pd-pathway-label{font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-bottom:3px;}
+html{scroll-behavior:smooth;}
+.jump-nav{display:flex;flex-wrap:wrap;gap:8px;padding:1.25rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1040px;margin:0 auto;}
+.jump-nav a{font-size:13px;padding:6px 12px;border-radius:9px;border:0.5px solid var(--bdr2);color:var(--t2);text-decoration:none;}
+.jump-nav a:hover{border-color:rgba(34,224,154,0.4);color:var(--grn);}
+.jump-nav a.blu:hover{border-color:rgba(79,179,255,0.4);color:var(--blu);}
+.jump-nav a.amb:hover{border-color:rgba(255,181,71,0.4);color:var(--amb);}
+.jump-nav a.pur:hover{border-color:rgba(181,136,255,0.4);color:var(--pur);}
+.jump-nav a.cor:hover{border-color:rgba(255,112,85,0.4);color:var(--cor);}
+.jump-nav a.neu:hover{border-color:var(--bdr2);color:var(--t1);}
+.jump-nav a.muted{color:var(--t3);}
+.sector-header{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:600;margin-bottom:1.4rem;scroll-margin-top:24px;}
+.train-list{margin-top:14px;padding-top:14px;border-top:0.5px solid var(--bdr);display:flex;flex-direction:column;gap:8px;}
+.train-list-label{font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-bottom:2px;}
+.train-item{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;color:var(--t2);text-decoration:none;padding:3px 0;}
+.train-item:hover{color:var(--t1);}
+.train-item.soon{color:var(--t3);}
+.prog-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;}
+.prog-tag.featured{color:var(--t3);background:rgba(255,255,255,0.05);border:0.5px solid var(--bdr2);}
+.prog-tag.affiliate{color:var(--grn);background:rgba(34,224,154,0.12);border:0.5px solid rgba(34,224,154,0.3);}
+.prog-tag.soon{color:var(--amb);background:rgba(255,181,71,0.12);border:0.5px solid rgba(255,181,71,0.3);}
+.disclosure{font-size:11px;color:var(--t3);margin-top:.6rem;}
+.pd-pathway-text{font-size:13px;color:var(--t2);line-height:1.55;}
+/* CTA */
+.cta-section{margin:2.5rem 2rem;background:linear-gradient(135deg,rgba(34,224,154,0.1),rgba(79,179,255,0.06));border:0.5px solid rgba(34,224,154,0.25);border-radius:16px;padding:2.5rem 2rem;text-align:center;}
+.cta-section h2{font-size:23px;font-weight:700;margin-bottom:.5rem;}
+.cta-section p{font-size:14px;color:var(--t2);margin-bottom:1.4rem;}
+.cta-btns{display:flex;align-items:center;justify-content:center;gap:10px;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+footer a:hover{color:var(--grn);}
+.footer-links{display:flex;gap:1.25rem;}
+@media (max-width:820px){.pd-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.pd-grid{grid-template-columns:1fr;}}
+
+.tstat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:1.2rem;}
+.tstat{background:var(--card);border:0.5px solid var(--bdr);border-radius:10px;padding:10px 14px;}
+.tstat-num{font-size:20px;font-weight:600;}
+.tstat-label{font-size:11px;color:var(--t3);margin-top:2px;}
+.tstat-note{font-size:11px;color:var(--t3);margin-bottom:1.2rem;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div style="display:flex;align-items:center;gap:1.15rem;">
+    <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
+    <div class="nav-groups">
+      <div class="nav-group grn">
+        <div class="nav-group-label grn">Candidates</div>
+        <div class="nav-links">
+          <a href="jobs.html">Find jobs</a>
+          <a href="companies.html">Companies</a>
+          <a href="professional-development.html" class="active">Training</a>
+        </div>
+      </div>
+      <div class="nav-group amb">
+        <div class="nav-group-label amb">Employers</div>
+        <div class="nav-links">
+          <a href="resume-vault.html">Resume Vault</a>
+          <a href="intelligence.html">Intelligence</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label"></div>
+        <div class="nav-links">
+          <a href="news.html">News</a>
+          <a href="about.html">About</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <button class="btn btn-grn">Post a job</button>
+  </div>
+</nav>
+<div style="max-width:1040px;margin:1rem auto 0;padding:.6rem 1.2rem;background:rgba(79,179,255,0.08);border:0.5px solid rgba(79,179,255,0.3);border-radius:10px;font-size:12px;color:var(--blu);">
+  <b>Prototype 2 of 3 — live job data (all numbers below are real, computed from our own crawl + BLS).</b> The live Training page is untouched. Compare:
+  <a href="professional-development.html" style="color:var(--blu);">Original</a> ·
+  <a href="training-v1-pathways.html" style="color:var(--blu);">V1 Pathways</a> ·
+  <a href="training-v2-livedata.html" style="color:var(--blu);">V2 Live data</a> ·
+  <a href="training-v3-quiz.html" style="color:var(--blu);">V3 Quiz</a>
+</div>
+
+<div class="hero">
+  <h1>Build the credentials <span>employers are hiring for</span></h1>
+  <p>Every role we track maps to a real certification, license, or training pathway. Here's what to pursue for each one — and what candidates with it should highlight.</p>
+</div>
+<div class="note-card">
+  <b>This page is new.</b> We're starting with the credentialing pathways already built into our role data — real, well-known programs, not a course catalog we run ourselves. We'll keep expanding this as Verde Talent grows.
+  <div class="disclosure">Programs marked "Coming soon" aren't yet linked.</div>
+</div>
+
+<div class="jump-nav">
+  <a href="#sector-solar">Solar</a>
+  <a href="#sector-wind" class="blu">Wind</a>
+  <a href="#sector-storage" class="amb">Storage</a>
+  <a href="#sector-grid" class="pur">Grid</a>
+  <a href="#sector-ev" class="cor">EV</a>
+  <a href="#sector-policy" class="cor">Policy</a>
+  <a href="#sector-sustainability">Sustainability</a>
+  <a href="#sector-cross" class="muted neu">Cross-functional</a>
+</div>
+
+<div class="pd-section" id="sector-solar">
+  <div class="sector-header"><i class="ti ti-solar-panel" style="font-size:18px;color:var(--grn);"></i>Solar</div>
+  <div class="tstat-strip"><div class="tstat"><div class="tstat-num" style="color:var(--grn);">436</div><div class="tstat-label">open roles right now</div></div><div class="tstat"><div class="tstat-num" style="color:var(--t1);">10</div><div class="tstat-label">companies hiring</div></div><div class="tstat"><div class="tstat-num" style="color:var(--blu);">$53,140</div><div class="tstat-label">US median wage (BLS)</div></div></div><a href="jobs.html" style="font-size:12px;color:var(--grn);text-decoration:none;">See all Solar jobs →</a>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <span class="pd-tag grn">Solar</span>
+      <div class="pd-role">Solar Photovoltaic Installer</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">NABCEP-certified installer training programs — the industry-standard credential for PV installation.</div>
+    </div>
+    <div class="pd-card">
+      <span class="pd-tag grn">Solar</span>
+      <div class="pd-role">Solar Design Engineer</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">NABCEP PV Design Specialist-track programs, on top of a standard engineering background.</div>
+    </div>
+    <div class="pd-card">
+      <span class="pd-tag grn">Solar</span>
+      <div class="pd-role">Solar O&amp;M Technician</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">NABCEP-certified O&amp;M and field-service training programs.</div>
+    </div>
+  </div>
+  <div class="train-list">
+    <div class="train-list-label">Where to train</div>
+    <a class="train-item" href="https://www.solarenergy.org/nabcep/" target="_blank" rel="noopener"><span>Solar Energy International (SEI)</span><span class="prog-tag featured">Featured</span></a>
+    <a class="train-item" href="https://midwestrenew.org/" target="_blank" rel="noopener"><span>Midwest Renewable Energy Association (MREA)</span><span class="prog-tag featured">Featured</span></a>
+  </div>
+</div>
+
+<div class="pd-section" id="sector-wind">
+  <div class="sector-header"><i class="ti ti-wind" style="font-size:18px;color:var(--blu);"></i>Wind</div>
+  <div class="tstat-strip"><div class="tstat"><div class="tstat-num" style="color:var(--blu);">68</div><div class="tstat-label">open roles right now</div></div><div class="tstat"><div class="tstat-num" style="color:var(--t1);">9</div><div class="tstat-label">companies hiring</div></div><div class="tstat"><div class="tstat-num" style="color:var(--blu);">$64,120</div><div class="tstat-label">US median wage (BLS)</div></div></div><a href="jobs.html" style="font-size:12px;color:var(--grn);text-decoration:none;">See all Wind jobs →</a>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <span class="pd-tag blu">Wind</span>
+      <div class="pd-role">Wind Turbine Service Technician</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">Wind turbine technician certificate programs at community and technical colleges.</div>
+    </div>
+    <div class="pd-card">
+      <span class="pd-tag blu">Wind</span>
+      <div class="pd-role">Wind Turbine Engineer</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">Wind energy engineering programs, typically paired with PE-track licensure.</div>
+    </div>
+  </div>
+  <div class="train-list">
+    <div class="train-list-label">Where to train</div>
+    <div class="train-item soon"><span>Iowa Lakes Community College</span><span class="prog-tag soon">Coming soon</span></div>
+    <div class="train-item soon"><span>Kalamazoo Valley Community College</span><span class="prog-tag soon">Coming soon</span></div>
+    <div class="train-item soon"><span>Mitchell Technical College</span><span class="prog-tag soon">Coming soon</span></div>
+  </div>
+</div>
+
+<div class="pd-section" id="sector-storage">
+  <div class="sector-header"><i class="ti ti-battery-charging" style="font-size:18px;color:var(--amb);"></i>Storage</div>
+  <div class="tstat-strip"><div class="tstat"><div class="tstat-num" style="color:var(--amb);">259</div><div class="tstat-label">open roles right now</div></div><div class="tstat"><div class="tstat-num" style="color:var(--t1);">8</div><div class="tstat-label">companies hiring</div></div></div><a href="jobs.html" style="font-size:12px;color:var(--grn);text-decoration:none;">See all Storage jobs →</a>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <span class="pd-tag amb">Storage</span>
+      <div class="pd-role">Battery / Storage Engineer</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">Battery safety and storage-systems certificate programs, typically paired with PE-track licensure.</div>
+    </div>
+  </div>
+  <div class="train-list">
+    <div class="train-list-label">Where to train</div>
+    <a class="train-item" href="https://www.nabcep.org/certifications/energy-storage-installation-professional-esip/" target="_blank" rel="noopener"><span>NABCEP Energy Storage Installation Professional (ESIP)</span><span class="prog-tag featured">Featured</span></a>
+    <a class="train-item" href="https://midwestrenew.org/" target="_blank" rel="noopener"><span>Midwest Renewable Energy Association (MREA)</span><span class="prog-tag featured">Featured</span></a>
+  </div>
+</div>
+
+<div class="pd-section" id="sector-grid">
+  <div class="sector-header"><i class="ti ti-bolt" style="font-size:18px;color:var(--pur);"></i>Grid</div>
+  <div class="tstat-strip"><div class="tstat"><div class="tstat-num" style="color:var(--pur);">259</div><div class="tstat-label">open roles right now</div></div><div class="tstat"><div class="tstat-num" style="color:var(--t1);">12</div><div class="tstat-label">companies hiring</div></div><div class="tstat"><div class="tstat-num" style="color:var(--pur);">7%</div><div class="tstat-label">of postings mention NERC</div></div></div><a href="jobs.html" style="font-size:12px;color:var(--grn);text-decoration:none;">See all Grid jobs →</a>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <span class="pd-tag pur">Grid</span>
+      <div class="pd-role">Grid / Interconnection Analyst</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">NERC certification and reliability-training programs.</div>
+    </div>
+  </div>
+  <div class="train-list">
+    <div class="train-list-label">Where to train</div>
+    <a class="train-item" href="https://www.nerc.com/programs/system-operator-certification--credential-maintenance" target="_blank" rel="noopener"><span>NERC System Operator Certification</span><span class="prog-tag featured">Featured</span></a>
+    <a class="train-item" href="https://www.inpowerd.com/nerc-bootcamp" target="_blank" rel="noopener"><span>INPOWERD — NERC 693/O&amp;P Boot Camp</span><span class="prog-tag featured">Featured</span></a>
+  </div>
+</div>
+
+<div class="pd-section" id="sector-ev">
+  <div class="sector-header"><i class="ti ti-plug" style="font-size:18px;color:var(--cor);"></i>EV</div>
+  <div class="tstat-note">Job-count stats coming once EV postings are classified as their own sector in our crawl.</div>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <span class="pd-tag cor">EV</span>
+      <div class="pd-role">EV Infrastructure PM</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">EVITP (Electric Vehicle Infrastructure Training Program) graduates.</div>
+    </div>
+  </div>
+  <div class="train-list">
+    <div class="train-list-label">Where to train</div>
+    <a class="train-item" href="https://evitp.org/" target="_blank" rel="noopener"><span>EVITP</span><span class="prog-tag featured">Featured</span></a>
+    <div class="train-item soon"><span>IBEW-NECA Joint Apprenticeship &amp; Training Centers</span><span class="prog-tag soon">Coming soon</span></div>
+  </div>
+</div>
+
+<div class="pd-section" id="sector-policy">
+  <div class="sector-header"><i class="ti ti-building-bank" style="font-size:18px;color:var(--cor);"></i>Policy</div>
+  <div class="tstat-strip"><div class="tstat"><div class="tstat-num" style="color:var(--cor);">4</div><div class="tstat-label">open roles right now</div></div><div class="tstat"><div class="tstat-num" style="color:var(--t1);">3</div><div class="tstat-label">companies hiring</div></div></div><a href="jobs.html" style="font-size:12px;color:var(--grn);text-decoration:none;">See all Policy jobs →</a>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <span class="pd-tag cor">Policy</span>
+      <div class="pd-role">Energy Policy Analyst</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">No single certification — backgrounds range from public/environmental policy degrees to direct government-affairs experience.</div>
+    </div>
+  </div>
+  <div class="train-list">
+    <div class="train-list-label">Where to train</div>
+    <a class="train-item" href="https://kleinmanenergy.upenn.edu/education/certificate-program/" target="_blank" rel="noopener"><span>UPenn Kleinman Center Energy Policy Certificate</span><span class="prog-tag featured">Featured</span></a>
+    <a class="train-item" href="https://ecampus.oregonstate.edu/online-degrees/graduate/energy-policy/" target="_blank" rel="noopener"><span>Oregon State Ecampus — Energy Policy Grad Certificate</span><span class="prog-tag featured">Featured</span></a>
+    <a class="train-item" href="https://eap.wisc.edu/" target="_blank" rel="noopener"><span>UW–Madison Energy Analysis and Policy Certificate</span><span class="prog-tag featured">Featured</span></a>
+  </div>
+</div>
+
+<div class="pd-section" id="sector-sustainability">
+  <div class="sector-header"><i class="ti ti-leaf" style="font-size:18px;color:var(--grn);"></i>Sustainability</div>
+  <div class="tstat-note">Job-count stats coming once Sustainability postings are classified as their own sector in our crawl.</div>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <span class="pd-tag grn">Sustainability</span>
+      <div class="pd-role">Sustainability / ESG Analyst</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">GRI/SASB reporting credentials and the LEED Green Associate certification.</div>
+    </div>
+  </div>
+  <div class="train-list">
+    <div class="train-list-label">Where to train</div>
+    <a class="train-item" href="https://www.globalreporting.org/academy/certification/" target="_blank" rel="noopener"><span>GRI Academy — Certified Sustainability Professional</span><span class="prog-tag featured">Featured</span></a>
+    <a class="train-item" href="https://www.usgbc.org/credentials/exam-preparation" target="_blank" rel="noopener"><span>USGBC — LEED Green Associate exam prep</span><span class="prog-tag featured">Featured</span></a>
+    <a class="train-item" href="https://gbes.com/" target="_blank" rel="noopener"><span>GBES (Green Building Education Services)</span><span class="prog-tag featured">Featured</span></a>
+  </div>
+</div>
+
+<div class="pd-section" id="sector-cross">
+  <div class="pd-section-title">Cross-functional roles</div>
+  <div class="pd-section-sub">Roles that show up across every sector we track, where hiring leans more on experience than a single credential.</div>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <span class="pd-tag t3">Cross-sector</span>
+      <div class="pd-role">Electrical Engineer</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">PE (Professional Engineer) licensure, often alongside IEEE student-chapter involvement earlier in a career.</div>
+    </div>
+    <div class="pd-card">
+      <span class="pd-tag t3">Cross-sector</span>
+      <div class="pd-role">Project Manager</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">No universal requirement, though a PMP (Project Management Professional) credential is common and well-regarded.</div>
+    </div>
+    <div class="pd-card">
+      <span class="pd-tag t3">Cross-sector</span>
+      <div class="pd-role">Software Engineer</div>
+      <div class="pd-pathway-label">Recommended pathway</div>
+      <div class="pd-pathway-text">No standard certification path — hiring here is driven by demonstrated experience and relevant technical skills, not credentials.</div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>Hiring for one of these roles?</h2>
+  <p>See real compensation, supply and demand, and sourcing strategy for every role we track in Verde Talent Intelligence.</p>
+  <div class="cta-btns">
+    <a href="intelligence.html" style="text-decoration:none;"><button class="btn btn-grn" style="padding:12px 24px;font-size:14px;">Explore Intelligence →</button></a>
+    <a href="jobs.html" style="text-decoration:none;"><button class="btn btn-ghost" style="padding:12px 24px;font-size:14px;">Browse open roles</button></a>
+  </div>
+</div>
+<footer>
+  <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
+  <div class="footer-links">
+    <a href="jobs.html">Jobs</a>
+    <a href="resume-vault.html">Resume Vault</a>
+    <a href="companies.html">Companies</a>
+    <a href="intelligence.html">Intelligence</a>
+    <a href="news.html">News</a>
+    <a href="professional-development.html">Training</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="talent-database.html" style="opacity:.5;">Admin</a>
+  </div>
+  <div>© 2026 Verde Talent · <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
+</footer>
+</body>
+</html>
