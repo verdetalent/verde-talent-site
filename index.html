@@ -14,7 +14,8 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
 .logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
 .logo-img{height:104px;width:auto;display:block;}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--grn);}
@@ -36,7 +37,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .btn-amb{background:var(--amb);color:#3d2200;font-weight:500;}
 .btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
 /* Hero */
-.hero{padding:2.25rem 2rem 1.5rem;text-align:center;position:relative;overflow:hidden;}
+.hero{padding:2.25rem 2rem 1.5rem;text-align:center;position:relative;overflow:hidden;max-width:1400px;margin:0 auto;}
 .hero-bg{position:absolute;inset:0;pointer-events:none;}
 .hero h1{font-size:48px;font-weight:700;line-height:1.15;max-width:680px;margin:0 auto .9rem;letter-spacing:-0.02em;}
 .hero h1 span{color:var(--grn);}
@@ -56,13 +57,14 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .s-chip.pur:hover,.s-chip.pur.on{border-color:rgba(181,136,255,0.4);color:var(--pur);background:rgba(181,136,255,0.07);}
 .s-chip.cor:hover,.s-chip.cor.on{border-color:rgba(255,112,85,0.4);color:var(--cor);background:rgba(255,112,85,0.07);}
 /* Stats strip */
-.stats{display:flex;justify-content:center;gap:0;border-top:0.5px solid var(--bdr);border-bottom:0.5px solid var(--bdr);}
-.stat{flex:1;max-width:180px;text-align:center;padding:1.25rem .5rem;border-right:0.5px solid var(--bdr);}
+.stats-outer{border-top:0.5px solid var(--bdr);border-bottom:0.5px solid var(--bdr);}
+.stats{display:flex;justify-content:center;gap:0;max-width:1400px;margin:0 auto;}
+.stat{flex:1;max-width:260px;text-align:center;padding:1.25rem .5rem;border-right:0.5px solid var(--bdr);}
 .stat:last-child{border-right:none;}
-.stat-num{font-size:22px;font-weight:600;}
-.stat-label{font-size:12px;color:var(--t3);margin-top:3px;}
+.stat-num{font-size:28px;font-weight:600;}
+.stat-label{font-size:13px;color:var(--t3);margin-top:4px;}
 /* Featured jobs */
-.section{padding:2.5rem 2rem;}
+.section{padding:2.5rem 2rem;max-width:1400px;margin:0 auto;}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
 .section-title{font-size:20px;font-weight:600;}
 .see-all{font-size:13px;color:var(--grn);text-decoration:none;}
@@ -95,19 +97,19 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .co-sector{font-size:11px;color:var(--t3);margin-top:3px;}
 .co-roles{font-size:12px;margin-top:.5rem;color:var(--grn);}
 /* Seeker CTA */
-.seeker-cta{margin:0 2rem 2rem;background:linear-gradient(135deg,rgba(34,224,154,0.08) 0%,rgba(79,179,255,0.05) 100%);border:0.5px solid rgba(34,224,154,0.2);border-radius:16px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
+.seeker-cta{width:calc(100% - 4rem);max-width:1400px;margin:0 auto 2rem;background:linear-gradient(135deg,rgba(34,224,154,0.08) 0%,rgba(79,179,255,0.05) 100%);border:0.5px solid rgba(34,224,154,0.2);border-radius:16px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;box-sizing:border-box;}
 .sc-left h2{font-size:22px;font-weight:600;margin-bottom:.5rem;}
 .sc-left p{font-size:14px;color:var(--t2);line-height:1.6;max-width:460px;}
 .sc-right{display:flex;gap:10px;flex-shrink:0;}
 /* Slim profile banner (hero) */
-.profile-banner-slim{margin:0 2rem 2rem;background:linear-gradient(135deg,rgba(34,224,154,0.07) 0%,rgba(79,179,255,0.04) 100%);border:0.5px solid rgba(34,224,154,0.18);border-radius:12px;padding:.9rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.profile-banner-slim{width:calc(100% - 4rem);max-width:1400px;margin:0 auto 2rem;background:linear-gradient(135deg,rgba(34,224,154,0.07) 0%,rgba(79,179,255,0.04) 100%);border:0.5px solid rgba(34,224,154,0.18);border-radius:12px;padding:.9rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;box-sizing:border-box;}
 .pbs-left{display:flex;align-items:center;gap:10px;}
 .pbs-icon{width:32px;height:32px;border-radius:9px;background:rgba(34,224,154,0.14);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .pbs-icon i{font-size:15px;color:var(--grn);}
 .pbs-text-title{font-size:14px;font-weight:600;}
 .pbs-text-sub{font-size:12px;color:var(--t3);}
 /* Slim intelligence banner (business clients) */
-.intel-banner-slim{margin:1.5rem 2rem 0;background:linear-gradient(135deg,rgba(79,179,255,0.08) 0%,rgba(181,136,255,0.05) 100%);border:0.5px solid rgba(79,179,255,0.2);border-radius:12px;padding:.9rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.intel-banner-slim{width:calc(100% - 4rem);max-width:1400px;margin:1.5rem auto 0;background:linear-gradient(135deg,rgba(79,179,255,0.08) 0%,rgba(181,136,255,0.05) 100%);border:0.5px solid rgba(79,179,255,0.2);border-radius:12px;padding:.9rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;box-sizing:border-box;}
 .ibs-left{display:flex;align-items:center;gap:10px;}
 .ibs-icon{width:32px;height:32px;border-radius:9px;background:rgba(79,179,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .ibs-icon i{font-size:15px;color:var(--blu);}
@@ -119,6 +121,32 @@ footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;display:flex;align-
 footer a{color:var(--t3);text-decoration:none;}
 footer a:hover{color:var(--grn);}
 .footer-links{display:flex;gap:1.25rem;}
+
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:64px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right .btn{padding:7px 12px;font-size:12px;}
+  .nav-right .btn-ghost{display:none;}
+  .hero h1{font-size:34px;max-width:100%;}
+  .hero p{font-size:15px;max-width:100%;}
+  .search-box{flex-direction:column;align-items:stretch;}
+  .sb-divider{display:none;}
+  .stats{flex-wrap:wrap;}
+  .stat{flex:1 1 33%;max-width:none;}
+  .seeker-cta{flex-direction:column;align-items:flex-start;text-align:left;padding:1.5rem;}
+  .jobs-grid{grid-template-columns:1fr;}
+  .co-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:560px){
+  .co-grid{grid-template-columns:1fr;}
+  .stat{flex:1 1 50%;}
+}
 </style>
 </head>
 <body>
@@ -153,8 +181,14 @@ footer a:hover{color:var(--grn);}
   <div class="nav-right">
     <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
     <a href="mailto:contact@verdetalent.com?subject=Post%20a%20job%20on%20Verde%20Talent" style="text-decoration:none;"><button class="btn btn-grn">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
   </div>
 </nav>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.querySelector('.nav-groups').classList.toggle('open');
+});
+</script>
 <div class="hero">
   <!-- SVG background glow -->
   <svg class="hero-bg" viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -194,12 +228,14 @@ footer a:hover{color:var(--grn);}
   </div>
   <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-grn" style="padding:9px 18px;font-size:13px;">Create your profile →</button></a>
 </div>
+<div class="stats-outer">
 <div class="stats">
   <div class="stat"><div class="stat-num" id="stat-jobs" style="color:var(--grn);">2,700+</div><div class="stat-label">Active jobs</div></div>
   <div class="stat"><div class="stat-num" id="stat-companies" style="color:var(--blu);">39</div><div class="stat-label">Energy companies</div></div>
   <div class="stat"><div class="stat-num" style="color:var(--amb);">287</div><div class="stat-label">Profiles</div></div>
   <div class="stat"><div class="stat-num" id="stat-states" style="color:var(--cor);">45</div><div class="stat-label">States covered</div></div>
   <div class="stat"><div class="stat-num" style="color:var(--pur);">8</div><div class="stat-label">Sectors</div></div>
+</div>
 </div>
 <div class="intel-banner-slim">
   <div class="ibs-left">
