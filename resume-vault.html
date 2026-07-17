@@ -25,7 +25,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .nav-links a.active{color:var(--t1);}
 .nav-group.grn .nav-links a.active{color:var(--grn);}
 .nav-group.amb .nav-links a.active{color:var(--amb);}
-.nav-groups{display:flex;align-items:flex-end;}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;}
 .nav-group{display:flex;flex-direction:column;gap:6px;}
 .nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
 .nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
@@ -121,7 +121,7 @@ footer a:hover{color:var(--grn);}
 </head>
 <body>
 <nav class="nav">
-  <div style="display:flex;align-items:center;gap:1.15rem;">
+  <div style="display:flex;align-items:center;gap:1.15rem;flex:1;">
     <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
     <div class="nav-groups">
       <div class="nav-group grn">
