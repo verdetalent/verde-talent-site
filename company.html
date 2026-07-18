@@ -216,7 +216,7 @@ function renderCompany(c) {
         <span class="co-sector-badge" style="background:${colorVar(color)}22;color:${colorVar(color)};">${escapeHtml(c.sector || "Uncategorized")}</span>
         <div class="header-loc"><i class="ti ti-map-pin" style="font-size:13px;"></i>${escapeHtml(headerLoc)}</div>
         <div class="header-actions">
-          ${c.career_url ? `<a href="${c.career_url}" target="_blank" rel="noopener" style="text-decoration:none;"><button class="btn btn-grn">Visit their careers page →</button></a>` : ""}
+          ${c.open_postings_count ? `<a href="jobs.html?company=${encodeURIComponent(c.name)}" style="text-decoration:none;"><button class="btn btn-grn">See open roles on Verde Talent →</button></a>` : ""}
         </div>
       </div>
     </div>

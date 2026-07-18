@@ -628,6 +628,13 @@ document.getElementById("sort-select").addEventListener("change", render);
   buildEmploymentTypeControls();
   buildSkillsControls();
   syncScopeSwitch();
+
+  const params = new URLSearchParams(window.location.search);
+  const companyParam = params.get("company");
+  if (companyParam) {
+    document.getElementById("job-search").value = companyParam;
+  }
+
   render();
 })();
 </script>
