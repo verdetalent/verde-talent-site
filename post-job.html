@@ -162,7 +162,14 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
   note.textContent = '';
 
   try {
+    // Generated client-side rather than asking Supabase to hand the row
+    // back after insert (Prefer: return=representation) - the anon key has
+    // no SELECT policy on this table (only INSERT, and only ever paid rows
+    // are readable, via the separate public view), so asking PostgREST to
+    // re-select what it just inserted would itself get blocked by RLS.
+    const jobPostingId = crypto.randomUUID();
     const payload = {
+      id: jobPostingId,
       company_name: companyName,
       company_email: companyEmail,
       job_title: jobTitle,
@@ -182,12 +189,11 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
         'apikey': SUPABASE_ANON_KEY,
         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
         'Content-Type': 'application/json',
-        'Prefer': 'return=representation',
+        'Prefer': 'return=minimal',
       },
       body: JSON.stringify(payload),
     });
     if (!insertRes.ok) throw new Error(await insertRes.text());
-    const [row] = await insertRes.json();
 
     btn.textContent = 'Redirecting to payment…';
     const checkoutRes = await fetch(CHECKOUT_FUNCTION_URL, {
@@ -197,7 +203,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ job_posting_id: row.id, duration_days: selectedDays }),
+      body: JSON.stringify({ job_posting_id: jobPostingId, duration_days: selectedDays }),
     });
     const checkoutData = await checkoutRes.json();
     if (!checkoutRes.ok || !checkoutData.url) throw new Error(checkoutData.error || 'Could not start checkout.');
