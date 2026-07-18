@@ -122,7 +122,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 <script>
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
-const CHECKOUT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/create-checkout-session`;
+// Deployed under an auto-generated slug ("clever-service") rather than the
+// name typed at creation time - Supabase's Edge Functions "Name" field is
+// just a display label, not the actual routing slug used in the URL.
+const CHECKOUT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/clever-service`;
 
 if (new URLSearchParams(location.search).get('canceled')) {
   document.getElementById('cancelNote').style.display = 'block';
