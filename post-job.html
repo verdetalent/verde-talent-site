@@ -157,14 +157,56 @@ if (window.pdfjsLib) {
 }
 
 async function extractTextFromPdf(arrayBuffer) {
+  // Groups text items into lines by their Y position instead of joining
+  // everything on the page into one run-on paragraph - a PDF has no
+  // semantic "this is a bullet list" markup the way a .docx does, but
+  // preserving line breaks keeps whatever bullet characters/indentation
+  // the original document actually used intact and on their own lines.
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
   const pageTexts = [];
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
-    pageTexts.push(content.items.map(item => item.str).join(' '));
+    const lines = [];
+    let currentLine = [];
+    let lastY = null;
+    for (const item of content.items) {
+      const y = item.transform[5];
+      if (lastY !== null && Math.abs(y - lastY) > 2) {
+        lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+        currentLine = [];
+      }
+      currentLine.push(item.str);
+      lastY = y;
+    }
+    if (currentLine.length) lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+    pageTexts.push(lines.filter(Boolean).join('\n'));
   }
   return pageTexts.join('\n\n');
+}
+
+// Converts mammoth's HTML output (paragraphs, headings, bullet/numbered
+// lists) into plain text a <textarea> can actually show, with each list
+// item on its own "• " line and each paragraph separated by a blank line -
+// mammoth.extractRawText() alone would flatten all of that structure away,
+// same failure mode the crawler's old clean_text() had.
+function htmlToStructuredText(html) {
+  const container = document.createElement('div');
+  container.innerHTML = html;
+  const lines = [];
+  for (const node of container.children) {
+    const tag = node.tagName.toLowerCase();
+    if (tag === 'ul' || tag === 'ol') {
+      for (const li of node.querySelectorAll(':scope > li')) {
+        const text = li.textContent.replace(/\s+/g, ' ').trim();
+        if (text) lines.push('• ' + text);
+      }
+    } else {
+      const text = node.textContent.replace(/\s+/g, ' ').trim();
+      if (text) lines.push(text);
+    }
+  }
+  return lines.join('\n\n');
 }
 
 function withTimeout(promise, ms, message) {
@@ -180,11 +222,11 @@ async function extractDescriptionFromFile(file) {
   if (ext === 'docx') {
     const arrayBuffer = await file.arrayBuffer();
     const result = await withTimeout(
-      mammoth.extractRawText({ arrayBuffer }),
+      mammoth.convertToHtml({ arrayBuffer }),
       15000,
       'Reading that .docx file took too long — try re-saving it from Word, or paste the text in manually instead.'
     );
-    return result.value;
+    return htmlToStructuredText(result.value);
   }
   if (ext === 'pdf') {
     const arrayBuffer = await file.arrayBuffer();
