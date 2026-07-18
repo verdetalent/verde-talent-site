@@ -150,7 +150,7 @@ footer a:hover{color:var(--grn);}
   </div>
   <div class="nav-right" style="display:flex;gap:10px;flex-shrink:0;align-items:center;">
     <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
-    <a href="mailto:contact@verdetalent.com?subject=Post%20a%20job%20on%20Verde%20Talent" style="text-decoration:none;"><button class="btn btn-grn">Post a job</button></a>
+    <a href="post-job.html" style="text-decoration:none;"><button class="btn btn-grn">Post a job</button></a>
     <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
   </div>
 </nav>
@@ -618,9 +618,52 @@ document.getElementById("scope-switch").addEventListener("click", (e) => {
 document.getElementById("job-search").addEventListener("input", render);
 document.getElementById("sort-select").addEventListener("change", render);
 
-(function main() {
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+
+// Paid employer postings live in Supabase, not the crawler's static data -
+// fetched fresh on every page load and merged in alongside it so a job
+// shows up the moment it's paid for, not just after the next scheduled
+// crawl re-export. Failure here (network hiccup, etc.) shouldn't block the
+// rest of the page - it just means that page load misses employer listings.
+async function fetchEmployerPostings() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/public_job_postings?select=*`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+    });
+    if (!res.ok) return [];
+    const rows = await res.json();
+    return rows.map(p => ({
+      job_title: p.job_title,
+      company: p.company_name,
+      job_url: p.apply_url || `mailto:${p.company_email}?subject=${encodeURIComponent('Application: ' + p.job_title)}`,
+      location: p.location || "Location not listed",
+      region: null,
+      is_remote: /remote/i.test(p.location || ""),
+      sector_bucket: p.sector || null,
+      occupation: null,
+      job_category: null,
+      seniority_level: null,
+      work_style: null,
+      employment_type: p.employment_type || null,
+      skills: [],
+      description_snippet: (p.job_description || "").replace(/\*\*/g, "").replace(/•/g, "").replace(/\s+/g, " ").trim().slice(0, 180),
+      salary: null,
+      posted_date: p.paid_at,
+      first_seen: p.paid_at,
+      page_slug: null,
+    }));
+  } catch (err) {
+    console.error("Could not load employer postings:", err);
+    return [];
+  }
+}
+
+(async function main() {
   const dataEl = document.getElementById("job-listings-data");
-  ALL_JOBS = JSON.parse(dataEl.textContent);
+  const crawledJobs = JSON.parse(dataEl.textContent);
+  const employerJobs = await fetchEmployerPostings();
+  ALL_JOBS = employerJobs.concat(crawledJobs);
   buildSectorControls();
   buildJobCategoryControls();
   buildDateControls();

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Post a Job — Verde Talent</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right a{color:var(--t2);text-decoration:none;font-size:13px;}
+.nav-right a:hover{color:var(--grn);}
+.wrap{max-width:720px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+.hero{text-align:center;margin-bottom:2rem;}
+.hero h1{font-size:28px;font-weight:700;margin-bottom:.5rem;}
+.hero p{font-size:14px;color:var(--t2);max-width:480px;margin:0 auto;line-height:1.6;}
+.form-section{background:var(--card);border:0.5px solid var(--bdr);border-radius:16px;padding:1.5rem;margin-bottom:14px;}
+.fs-title{font-size:15px;font-weight:500;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;}
+.fs-title i{font-size:18px;color:var(--grn);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-row.full{grid-template-columns:1fr;}
+.field label{display:block;font-size:12px;color:var(--t3);margin-bottom:5px;}
+.field .req{color:var(--cor);}
+.field input,.field select,.field textarea{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 13px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(34,224,154,0.5);}
+.field textarea{resize:vertical;min-height:160px;line-height:1.6;}
+.field small{display:block;font-size:11px;color:var(--t3);margin-top:4px;}
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.plan-card{background:#1A1A1A;border:1.5px solid var(--bdr2);border-radius:12px;padding:1.1rem;cursor:pointer;text-align:center;transition:border-color .15s;}
+.plan-card:hover{border-color:rgba(34,224,154,0.4);}
+.plan-card.on{border-color:var(--grn);background:rgba(34,224,154,0.06);}
+.plan-days{font-size:13px;color:var(--t2);margin-bottom:4px;}
+.plan-price{font-size:26px;font-weight:700;}
+.plan-note{font-size:11px;color:var(--t3);margin-top:4px;}
+.btn-grn{background:var(--grn);color:#052e1e;border:none;padding:13px 22px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;width:100%;font-family:var(--font-sans);}
+.btn-grn:disabled{opacity:.6;cursor:default;}
+.submit-note{font-size:12px;color:var(--t3);margin-top:10px;text-align:center;}
+.note-banner{background:rgba(79,179,255,0.08);border:0.5px solid rgba(79,179,255,0.25);border-radius:10px;padding:.8rem 1rem;font-size:12px;color:var(--blu);margin-bottom:1.5rem;line-height:1.6;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right"><a href="index.html">← Back to Verde Talent</a></div>
+</nav>
+<div class="wrap">
+  <div class="hero">
+    <h1>Post a job to Verde Talent</h1>
+    <p>Reach candidates actively looking for renewable energy roles. Your listing goes live immediately after payment.</p>
+  </div>
+
+  <div class="note-banner" id="cancelNote" style="display:none;">
+    <i class="ti ti-info-circle" style="vertical-align:-2px;"></i> Checkout was canceled — your job wasn't posted, and you weren't charged. Fill out the form again whenever you're ready.
+  </div>
+
+  <div class="form-section">
+    <div class="fs-title"><i class="ti ti-building"></i>Company</div>
+    <div class="form-row">
+      <div class="field"><label>Company name <span class="req">*</span></label><input type="text" id="company-name" placeholder="Acme Solar"/></div>
+      <div class="field"><label>Contact email <span class="req">*</span></label><input type="email" id="company-email" placeholder="hiring@acmesolar.com"/></div>
+    </div>
+    <div class="form-row full">
+      <div class="field"><label>Application link (optional)</label><input type="text" id="apply-url" placeholder="https://acmesolar.com/careers/123"/>
+        <small>Leave blank and applicants will be told to email your contact address above instead.</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="fs-title"><i class="ti ti-briefcase"></i>Role details</div>
+    <div class="form-row">
+      <div class="field"><label>Job title <span class="req">*</span></label><input type="text" id="job-title" placeholder="Senior Solar Design Engineer"/></div>
+      <div class="field"><label>Location</label><input type="text" id="job-location" placeholder="Austin, TX or Remote"/></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label>Sector</label>
+        <select id="job-sector">
+          <option value="">Select…</option>
+          <option>Solar</option><option>Wind</option><option>Storage</option><option>Grid</option>
+          <option>EV</option><option>Hydrogen</option><option>Policy</option><option>Sustainability</option>
+        </select>
+      </div>
+      <div class="field"><label>Employment type</label>
+        <select id="job-type"><option>Full-time</option><option>Contract</option><option>Part-time</option><option>Internship</option></select>
+      </div>
+    </div>
+    <div class="form-row full">
+      <div class="field"><label>Job description <span class="req">*</span></label>
+        <textarea id="job-description" placeholder="Paste or write the full job description…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="fs-title"><i class="ti ti-calendar"></i>Choose a plan</div>
+    <div class="plan-grid">
+      <div class="plan-card on" data-days="30" data-cents="10000">
+        <div class="plan-days">30 days</div>
+        <div class="plan-price">$100</div>
+        <div class="plan-note">Standard listing</div>
+      </div>
+      <div class="plan-card" data-days="60" data-cents="15000">
+        <div class="plan-days">60 days</div>
+        <div class="plan-price">$150</div>
+        <div class="plan-note">Extended reach</div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn-grn" id="submitBtn">Continue to payment →</button>
+  <div class="submit-note" id="submitNote">You'll enter payment details on Stripe's secure checkout page next.</div>
+</div>
+<script>
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+const CHECKOUT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/create-checkout-session`;
+
+if (new URLSearchParams(location.search).get('canceled')) {
+  document.getElementById('cancelNote').style.display = 'block';
+}
+
+let selectedDays = 30;
+document.querySelectorAll('.plan-card').forEach(card => {
+  card.addEventListener('click', function(){
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('on'));
+    this.classList.add('on');
+    selectedDays = Number(this.dataset.days);
+  });
+});
+
+document.getElementById('submitBtn').addEventListener('click', async function(){
+  const btn = this;
+  const note = document.getElementById('submitNote');
+
+  const companyName = document.getElementById('company-name').value.trim();
+  const companyEmail = document.getElementById('company-email').value.trim();
+  const jobTitle = document.getElementById('job-title').value.trim();
+  const jobDescription = document.getElementById('job-description').value.trim();
+
+  if (!companyName || !companyEmail || !jobTitle || !jobDescription) {
+    note.textContent = 'Fill in company name, contact email, job title, and description first.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+  if (!companyEmail.includes('@')) {
+    note.textContent = 'Enter a valid contact email.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Saving job details…';
+  note.textContent = '';
+
+  try {
+    const payload = {
+      company_name: companyName,
+      company_email: companyEmail,
+      job_title: jobTitle,
+      job_description: jobDescription,
+      location: document.getElementById('job-location').value.trim() || null,
+      sector: document.getElementById('job-sector').value || null,
+      employment_type: document.getElementById('job-type').value || null,
+      apply_url: document.getElementById('apply-url').value.trim() || null,
+      duration_days: selectedDays,
+      price_cents: selectedDays === 60 ? 15000 : 10000,
+      status: 'pending_payment',
+    };
+
+    const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/job_postings`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation',
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!insertRes.ok) throw new Error(await insertRes.text());
+    const [row] = await insertRes.json();
+
+    btn.textContent = 'Redirecting to payment…';
+    const checkoutRes = await fetch(CHECKOUT_FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ job_posting_id: row.id, duration_days: selectedDays }),
+    });
+    const checkoutData = await checkoutRes.json();
+    if (!checkoutRes.ok || !checkoutData.url) throw new Error(checkoutData.error || 'Could not start checkout.');
+
+    window.location.href = checkoutData.url;
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Continue to payment →';
+    note.textContent = 'Something went wrong — please try again. If it keeps happening, email contact@verdetalent.com.';
+    note.style.color = 'var(--cor)';
+    console.error('Post-job submit failed:', err);
+  }
+});
+</script>
+</body>
+</html>
