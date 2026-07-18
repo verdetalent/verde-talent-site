@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Post a Job — Verde Talent</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -33,6 +35,18 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .field input,.field select,.field textarea{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 13px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(34,224,154,0.5);}
 .field textarea{resize:vertical;min-height:160px;line-height:1.6;}
+.upload-box{border:1.5px dashed var(--bdr2);border-radius:12px;padding:1rem;text-align:center;cursor:pointer;position:relative;transition:border-color .15s,background .15s;}
+.upload-box:hover{border-color:rgba(34,224,154,0.5);background:rgba(34,224,154,0.04);}
+.upload-box.has-file{border-color:rgba(34,224,154,0.4);background:rgba(34,224,154,0.05);}
+.upload-box.parsing{border-color:rgba(255,181,71,0.4);background:rgba(255,181,71,0.05);}
+.upload-box.error{border-color:rgba(255,112,85,0.4);background:rgba(255,112,85,0.05);}
+.upload-box i.upload-icon{font-size:20px;color:var(--t3);margin-bottom:6px;display:block;}
+.upload-box.has-file i.upload-icon{color:var(--grn);}
+.upload-box.parsing i.upload-icon{color:var(--amb);}
+.upload-box.error i.upload-icon{color:var(--cor);}
+.upload-box p{font-size:13px;color:var(--t2);}
+.upload-box small{font-size:11px;color:var(--t3);margin-top:4px;display:block;}
+.upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .field small{display:block;font-size:11px;color:var(--t3);margin-top:4px;}
 .plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .plan-card{background:#1A1A1A;border:1.5px solid var(--bdr2);border-radius:12px;padding:1.1rem;cursor:pointer;text-align:center;transition:border-color .15s;}
@@ -94,8 +108,15 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       </div>
     </div>
     <div class="form-row full">
-      <div class="field"><label>Job description <span class="req">*</span></label>
-        <textarea id="job-description" placeholder="Paste or write the full job description…"></textarea>
+      <div class="field">
+        <label>Job description <span class="req">*</span></label>
+        <div class="upload-box" id="descUploadBox">
+          <input type="file" id="desc-file" accept=".txt,.docx,.pdf"/>
+          <i class="ti ti-upload upload-icon" id="descUploadIcon"></i>
+          <p id="descUploadText">Drop a .txt, .docx, or .pdf file here to fill this in automatically, or type below</p>
+          <small>Always double-check the extracted text before submitting — formatting from PDFs in particular can come through imperfectly.</small>
+        </div>
+        <textarea id="job-description" placeholder="Paste or write the full job description…" style="margin-top:10px;"></textarea>
       </div>
     </div>
   </div>
@@ -130,6 +151,81 @@ const CHECKOUT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/clever-service`;
 if (new URLSearchParams(location.search).get('canceled')) {
   document.getElementById('cancelNote').style.display = 'block';
 }
+
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+}
+
+async function extractTextFromPdf(arrayBuffer) {
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const pageTexts = [];
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    pageTexts.push(content.items.map(item => item.str).join(' '));
+  }
+  return pageTexts.join('\n\n');
+}
+
+function withTimeout(promise, ms, message) {
+  const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms));
+  return Promise.race([promise, timeout]);
+}
+
+async function extractDescriptionFromFile(file) {
+  const ext = file.name.toLowerCase().split('.').pop();
+  if (ext === 'txt') {
+    return await file.text();
+  }
+  if (ext === 'docx') {
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await withTimeout(
+      mammoth.extractRawText({ arrayBuffer }),
+      15000,
+      'Reading that .docx file took too long — try re-saving it from Word, or paste the text in manually instead.'
+    );
+    return result.value;
+  }
+  if (ext === 'pdf') {
+    const arrayBuffer = await file.arrayBuffer();
+    return await withTimeout(
+      extractTextFromPdf(arrayBuffer),
+      15000,
+      'Reading that PDF took too long — try pasting the text in manually instead.'
+    );
+  }
+  throw new Error('Unsupported file type — use .txt, .docx, or .pdf.');
+}
+
+const descUploadBox = document.getElementById('descUploadBox');
+const descUploadIcon = document.getElementById('descUploadIcon');
+const descUploadText = document.getElementById('descUploadText');
+
+document.getElementById('desc-file').addEventListener('change', async function(){
+  const file = this.files[0];
+  if (!file) return;
+
+  descUploadBox.classList.remove('has-file', 'error');
+  descUploadBox.classList.add('parsing');
+  descUploadIcon.className = 'ti ti-loader-2 upload-icon';
+  descUploadText.textContent = `Reading ${file.name}…`;
+
+  try {
+    const text = (await extractDescriptionFromFile(file)).trim();
+    if (!text) throw new Error('Could not find any text in that file.');
+    document.getElementById('job-description').value = text;
+    descUploadBox.classList.remove('parsing');
+    descUploadBox.classList.add('has-file');
+    descUploadIcon.className = 'ti ti-check upload-icon';
+    descUploadText.innerHTML = `Loaded from <span style="color:var(--grn);">${file.name}</span> — review the text below before submitting`;
+  } catch (err) {
+    console.error('Description file parsing failed:', err);
+    descUploadBox.classList.remove('parsing');
+    descUploadBox.classList.add('error');
+    descUploadIcon.className = 'ti ti-alert-triangle upload-icon';
+    descUploadText.textContent = err.message || 'Could not read that file — try pasting the text manually instead.';
+  }
+});
 
 let selectedDays = 30;
 document.querySelectorAll('.plan-card').forEach(card => {
