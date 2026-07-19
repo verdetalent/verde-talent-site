@@ -7,16 +7,19 @@
 // Env vars required (set via `supabase secrets set`):
 //   STRIPE_SECRET_KEY         - same key create-checkout-session uses
 //   STRIPE_WEBHOOK_SECRET     - from the Stripe Dashboard webhook endpoint (whsec_...)
+//   RESEND_API_KEY            - same key send-application uses
 //   SUPABASE_URL              - auto-provided by Supabase
 //   SUPABASE_SERVICE_ROLE_KEY - auto-provided by Supabase
 
 import Stripe from "npm:stripe@17";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { Resend } from "npm:resend@4";
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
   apiVersion: "2024-06-20",
 });
 const webhookSecret = Deno.env.get("STRIPE_WEBHOOK_SECRET")!;
+const resend = new Resend(Deno.env.get("RESEND_API_KEY")!);
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -46,7 +49,7 @@ Deno.serve(async (req) => {
 
     const { data: posting, error: fetchError } = await supabase
       .from("job_postings")
-      .select("duration_days, status")
+      .select("duration_days, status, company_name, company_email, job_title, manage_token")
       .eq("id", jobPostingId)
       .single();
 
@@ -80,6 +83,26 @@ Deno.serve(async (req) => {
     if (updateError) {
       console.error("Failed to mark job posting paid", jobPostingId, updateError);
       return new Response("Database update failed", { status: 500 });
+    }
+
+    const manageUrl = `https://verdetalent.com/manage-posting.html?id=${jobPostingId}&token=${posting.manage_token}`;
+    const { error: emailError } = await resend.emails.send({
+      from: "Verde Talent <postings@updates.verdetalent.com>",
+      to: posting.company_email,
+      subject: `Your job posting is live: ${posting.job_title}`,
+      text: [
+        `Your posting "${posting.job_title}" at ${posting.company_name} is now live on Verde Talent for ${posting.duration_days} days.`,
+        ``,
+        `To remove it early at any time, use this link:`,
+        manageUrl,
+        ``,
+        `Keep this email - this link is the only way to manage this posting.`,
+      ].join("\n"),
+    });
+    if (emailError) {
+      // Non-fatal: the posting is already live and paid; just log it so
+      // the employer can be helped manually if they never got the link.
+      console.error("Failed to send manage-link email", jobPostingId, emailError);
     }
   }
 

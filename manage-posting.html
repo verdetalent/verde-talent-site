@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manage your job posting — Verde Talent</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
+.nav{display:flex;align-items:center;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:64px;width:auto;display:block;}
+.wrap{max-width:560px;margin:0 auto;padding:3rem 2rem 4rem;}
+.card{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.75rem;}
+h1{font-size:22px;font-weight:700;margin-bottom:.5rem;}
+.co-line{font-size:14px;color:var(--t2);margin-bottom:1.25rem;}
+.status-row{font-size:13px;color:var(--t3);margin-bottom:1.5rem;}
+.status-row .status{font-weight:600;}
+.status.paid{color:var(--grn);}
+.status.removed{color:var(--cor);}
+.btn-remove{background:transparent;color:var(--cor);border:1px solid rgba(255,112,85,0.4);padding:11px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);}
+.btn-remove:hover{background:rgba(255,112,85,0.08);}
+.btn-remove:disabled{opacity:.5;cursor:default;}
+.note{font-size:13px;color:var(--t3);margin-top:12px;line-height:1.6;}
+.note.error{color:var(--cor);}
+.note.success{color:var(--grn);}
+.state-note{font-size:14px;color:var(--t3);padding:3rem 0;text-align:center;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
+</nav>
+<div class="wrap" id="wrap">
+  <div id="content" class="state-note">Loading…</div>
+</div>
+<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+const MANAGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/manage-posting`;
+
+function escapeHtml(str) {
+  return (str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+const params = new URLSearchParams(location.search);
+const id = params.get('id');
+const token = params.get('token');
+const content = document.getElementById('content');
+
+async function callManage(action) {
+  const res = await fetch(MANAGE_FUNCTION_URL, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, token, action }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+  return data;
+}
+
+function renderCard(posting) {
+  const statusLabel = posting.status === 'paid' ? 'Live' : posting.status === 'removed' ? 'Removed' : posting.status;
+  const statusClass = posting.status === 'paid' ? 'paid' : posting.status === 'removed' ? 'removed' : '';
+  const expiresLine = posting.expires_at ? `Runs through ${new Date(posting.expires_at).toLocaleDateString()}` : '';
+
+  content.outerHTML = `
+    <div class="card" id="content">
+      <h1>${escapeHtml(posting.job_title)}</h1>
+      <div class="co-line">${escapeHtml(posting.company_name)}</div>
+      <div class="status-row">Status: <span class="status ${statusClass}">${escapeHtml(statusLabel)}</span>${expiresLine ? ' · ' + expiresLine : ''}</div>
+      ${posting.status === 'paid'
+        ? `<button type="button" class="btn-remove" id="removeBtn">Remove this posting</button><div class="note" id="manageNote"></div>`
+        : `<div class="note">This posting is no longer live.</div>`}
+    </div>
+  `;
+
+  const removeBtn = document.getElementById('removeBtn');
+  if (removeBtn) {
+    removeBtn.addEventListener('click', async () => {
+      if (!confirm('Remove this posting from Verde Talent? This cannot be undone.')) return;
+      const note = document.getElementById('manageNote');
+      removeBtn.disabled = true;
+      removeBtn.textContent = 'Removing…';
+      try {
+        await callManage('delete');
+        removeBtn.textContent = 'Removed';
+        note.className = 'note success';
+        note.textContent = 'Your posting has been taken down.';
+      } catch (err) {
+        removeBtn.disabled = false;
+        removeBtn.textContent = 'Remove this posting';
+        note.className = 'note error';
+        note.textContent = err.message;
+      }
+    });
+  }
+}
+
+(async function main() {
+  if (!id || !token) {
+    content.textContent = 'This link is missing information — please use the link from your confirmation email.';
+    return;
+  }
+  try {
+    const data = await callManage('get');
+    renderCard(data.posting);
+  } catch (err) {
+    content.textContent = err.message || 'Could not load this posting.';
+  }
+})();
+</script>
+</body>
+</html>
