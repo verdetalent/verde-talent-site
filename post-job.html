@@ -107,6 +107,23 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
         <select id="job-type"><option>Full-time</option><option>Contract</option><option>Part-time</option><option>Internship</option></select>
       </div>
     </div>
+    <div class="form-row">
+      <div class="field"><label>Salary (optional)</label>
+        <select id="salary-period">
+          <option value="">Prefer not to say</option>
+          <option value="hour">Hourly</option>
+          <option value="year">Annual</option>
+        </select>
+      </div>
+      <div class="field" id="salaryRangeField" style="display:none;">
+        <label>Range</label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="number" id="salary-min" placeholder="Min" min="0"/>
+          <span style="color:var(--t3);">–</span>
+          <input type="number" id="salary-max" placeholder="Max" min="0"/>
+        </div>
+      </div>
+    </div>
     <div class="form-row full">
       <div class="field">
         <label>Job description <span class="req">*</span></label>
@@ -269,6 +286,10 @@ document.getElementById('desc-file').addEventListener('change', async function()
   }
 });
 
+document.getElementById('salary-period').addEventListener('change', function(){
+  document.getElementById('salaryRangeField').style.display = this.value ? 'block' : 'none';
+});
+
 let selectedDays = 30;
 document.querySelectorAll('.plan-card').forEach(card => {
   card.addEventListener('click', function(){
@@ -298,6 +319,22 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     return;
   }
 
+  const salaryPeriod = document.getElementById('salary-period').value || null;
+  const salaryMinRaw = document.getElementById('salary-min').value.trim();
+  const salaryMaxRaw = document.getElementById('salary-max').value.trim();
+  const salaryMin = salaryMinRaw ? Number(salaryMinRaw) : null;
+  const salaryMax = salaryMaxRaw ? Number(salaryMaxRaw) : null;
+  if (salaryPeriod && (!salaryMin || !salaryMax)) {
+    note.textContent = 'Enter both a min and max salary, or set salary back to "Prefer not to say".';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+  if (salaryPeriod && salaryMin > salaryMax) {
+    note.textContent = 'Min salary can\'t be greater than max salary.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+
   btn.disabled = true;
   btn.textContent = 'Saving job details…';
   note.textContent = '';
@@ -319,6 +356,9 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       sector: document.getElementById('job-sector').value || null,
       employment_type: document.getElementById('job-type').value || null,
       apply_url: document.getElementById('apply-url').value.trim() || null,
+      salary_min: salaryPeriod ? salaryMin : null,
+      salary_max: salaryPeriod ? salaryMax : null,
+      salary_period: salaryPeriod,
       duration_days: selectedDays,
       price_cents: selectedDays === 60 ? 15000 : 10000,
       status: 'pending_payment',

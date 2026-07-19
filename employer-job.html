@@ -169,6 +169,12 @@ async function handleApplyClick(btn, jobPostingId) {
     const metaParts = [];
     metaParts.push(`<span><i class="ti ti-map-pin"></i>${escapeHtml(job.location || 'Location not listed')}</span>`);
     if (job.employment_type) metaParts.push(`<span><i class="ti ti-briefcase"></i>${escapeHtml(job.employment_type)}</span>`);
+    if (job.salary_min && job.salary_max && job.salary_period) {
+      const salaryText = job.salary_period === 'hour'
+        ? `$${job.salary_min}–$${job.salary_max}/hr`
+        : `$${Math.round(job.salary_min / 1000)}k–$${Math.round(job.salary_max / 1000)}k/yr`;
+      metaParts.push(`<span><i class="ti ti-currency-dollar"></i>${escapeHtml(salaryText)}</span>`);
+    }
 
     const sectorTag = job.sector ? `<span class="tag sector">${escapeHtml(job.sector)}</span>` : '';
 

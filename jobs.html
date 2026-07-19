@@ -671,7 +671,11 @@ async function fetchEmployerPostings() {
       employment_type: p.employment_type || null,
       skills: [],
       description_snippet: (p.job_description || "").replace(/\*\*/g, "").replace(/•/g, "").replace(/\s+/g, " ").trim().slice(0, 180),
-      salary: null,
+      // Built in the same "min - max (per period)" shape fmtSalary() already
+      // parses for crawler-sourced jobs, so both use one rendering path.
+      salary: (p.salary_min && p.salary_max && p.salary_period)
+        ? `${p.salary_min} - ${p.salary_max} (per ${p.salary_period})`
+        : null,
       posted_date: p.paid_at,
       first_seen: p.paid_at,
       page_slug: null,
