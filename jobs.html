@@ -365,6 +365,12 @@ function render() {
   });
 
   filtered = filtered.slice().sort((a, b) => {
+    // Paid employer postings float to the top of whatever results the
+    // current search/filters produce - they only compete with each other
+    // and with the rest of the list once both are in (or both out of)
+    // that pinned group.
+    const pinDiff = (b.is_employer_posted ? 1 : 0) - (a.is_employer_posted ? 1 : 0);
+    if (pinDiff) return pinDiff;
     if (sortBy === "title") return (a.job_title || "").localeCompare(b.job_title || "");
     return (jobDate(b) || "").localeCompare(jobDate(a) || "");
   });
@@ -644,6 +650,7 @@ async function fetchEmployerPostings() {
     if (!res.ok) return [];
     const rows = await res.json();
     return rows.map(p => ({
+      is_employer_posted: true,
       job_title: p.job_title,
       company: p.company_name,
       job_url: p.apply_url || null,
