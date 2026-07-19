@@ -95,6 +95,12 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .jc-tag.remote{border-color:rgba(34,224,154,0.3);color:var(--grn);background:rgba(34,224,154,0.07);}
 .jc-meta-right{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--t3);}
 .jc-salary{font-size:13px;color:var(--t2);}
+.jc-apply-row{margin-top:10px;padding-top:10px;border-top:0.5px solid var(--bdr);}
+.jc-apply-btn{background:var(--grn);color:#052e1e;border:none;padding:9px 16px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-sans);}
+.jc-apply-btn:disabled{opacity:.6;cursor:default;}
+.jc-apply-note{font-size:12px;color:var(--t3);margin-top:6px;}
+.jc-apply-note.error{color:var(--cor);}
+.jc-apply-note.success{color:var(--grn);}
 .load-more{display:block;width:100%;padding:11px;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;font-size:14px;color:var(--t2);cursor:pointer;margin-top:4px;font-family:var(--font-sans);}
 .empty-note{font-size:13px;color:var(--t3);padding:2rem 0;text-align:center;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;font-size:12px;color:var(--t3);}
@@ -319,8 +325,7 @@ function jobCardHtml(job) {
   if (job.region === "International") badgeTags.push(`<span class="jc-tag intl">International</span>`);
   if (job.is_remote) badgeTags.push(`<span class="jc-tag remote">Remote</span>`);
   const salary = fmtSalary(job.salary);
-  return `
-  <a class="job-card" style="border-left:3px solid ${colorVar(color)};" href="${job.page_slug ? `jobs/${job.page_slug}.html` : (job.job_url || 'javascript:void(0)')}">
+  const inner = `
     <div class="jc-row1">
       <div class="co-icon" style="background:${bgTint(color)};color:${colorVar(color)};">${initial}</div>
       <div class="jc-info">
@@ -332,7 +337,25 @@ function jobCardHtml(job) {
     <div class="jc-row2">
       <div class="jc-tags">${categoryTags.join("")}${skillTags.join("")}${badgeTags.join("")}</div>
       <div class="jc-meta-right">${salary ? `<span class="jc-salary">${salary}</span>` : ""}<span>${fmtRelativeDate(jobDate(job))}</span></div>
+    </div>`;
+
+  // A paid posting with no external apply_url - applying means sending the
+  // resume through our own system, not just navigating somewhere, so this
+  // renders as a real button with a click handler instead of a plain link.
+  if (job.job_posting_id) {
+    return `
+  <div class="job-card" style="border-left:3px solid ${colorVar(color)};cursor:default;">
+    ${inner}
+    <div class="jc-apply-row" data-job-posting-id="${job.job_posting_id}">
+      <button type="button" class="jc-apply-btn" onclick="handleApplyClick(this)">Apply with Verde Talent profile →</button>
+      <div class="jc-apply-note"></div>
     </div>
+  </div>`;
+  }
+
+  return `
+  <a class="job-card" style="border-left:3px solid ${colorVar(color)};" href="${job.page_slug ? `jobs/${job.page_slug}.html` : (job.job_url || 'javascript:void(0)')}">
+    ${inner}
   </a>`;
 }
 
@@ -636,7 +659,13 @@ async function fetchEmployerPostings() {
     return rows.map(p => ({
       job_title: p.job_title,
       company: p.company_name,
-      job_url: p.apply_url || `mailto:${p.company_email}?subject=${encodeURIComponent('Application: ' + p.job_title)}`,
+      job_url: p.apply_url || null,
+      // Set only when there's no external apply_url - the card renders a
+      // real "Apply" button for these instead of a plain link, since
+      // applying means sending the signed-in candidate's resume through
+      // our own send-application function rather than just navigating
+      // somewhere.
+      job_posting_id: p.apply_url ? null : p.id,
       location: p.location || "Location not listed",
       region: null,
       is_remote: /remote/i.test(p.location || ""),
@@ -656,6 +685,61 @@ async function fetchEmployerPostings() {
   } catch (err) {
     console.error("Could not load employer postings:", err);
     return [];
+  }
+}
+
+const SEND_APPLICATION_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/send-application`;
+
+function getStoredSession() {
+  try {
+    const raw = localStorage.getItem('vt_session');
+    if (!raw) return null;
+    const session = JSON.parse(raw);
+    if (!session.access_token || session.expires_at < Date.now()) return null;
+    return session;
+  } catch {
+    return null;
+  }
+}
+
+async function handleApplyClick(btn) {
+  const row = btn.closest('.jc-apply-row');
+  const note = row.querySelector('.jc-apply-note');
+  const jobPostingId = row.dataset.jobPostingId;
+  note.className = 'jc-apply-note';
+  note.textContent = '';
+
+  const session = getStoredSession();
+  if (!session) {
+    note.className = 'jc-apply-note error';
+    note.innerHTML = 'Log in or <a href="create-profile.html" style="color:var(--grn);">create a profile</a> to apply with your resume — <a href="login.html" style="color:var(--grn);">sign in →</a>';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending your application…';
+
+  try {
+    const res = await fetch(SEND_APPLICATION_FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ job_posting_id: jobPostingId }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Could not send your application.');
+
+    btn.textContent = 'Application sent ✓';
+    note.className = 'jc-apply-note success';
+    note.textContent = 'Your resume was sent to the employer.';
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Apply with Verde Talent profile →';
+    note.className = 'jc-apply-note error';
+    note.textContent = err.message || 'Something went wrong — please try again.';
   }
 }
 

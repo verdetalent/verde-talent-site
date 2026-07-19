@@ -428,6 +428,16 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       throw new Error('Account created, but email confirmation is required before you can finish your profile. Check your inbox, confirm, then sign in.');
     }
 
+    // Persisted so jobs.html's "Apply" flow knows this candidate is already
+    // signed in right after they finish creating their profile.
+    localStorage.setItem('vt_session', JSON.stringify({
+      access_token: accessToken,
+      refresh_token: signupData.refresh_token,
+      user_id: userId,
+      email,
+      expires_at: Date.now() + (signupData.expires_in || 3600) * 1000,
+    }));
+
     // 2. Upload the resume (if provided) into a folder scoped to this user
     const resumeFile = document.getElementById('inp-resume').files[0];
     let resumePath = null;

@@ -105,6 +105,19 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
     const accessToken = tokenData.access_token;
     const userId = tokenData.user?.id;
 
+    // Persisted so other pages (e.g. the "Apply" flow on jobs.html) can
+    // tell a candidate is already signed in without asking them to log in
+    // again on every page - refresh_token is included so a future version
+    // can silently renew an expired access_token instead of forcing a
+    // re-login the moment the 1-hour token lifetime is up.
+    localStorage.setItem('vt_session', JSON.stringify({
+      access_token: accessToken,
+      refresh_token: tokenData.refresh_token,
+      user_id: userId,
+      email: tokenData.user?.email,
+      expires_at: Date.now() + (tokenData.expires_in || 3600) * 1000,
+    }));
+
     const profileRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?user_id=eq.${userId}&select=*`, {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${accessToken}` },
     });
