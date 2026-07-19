@@ -93,7 +93,12 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="fs-title"><i class="ti ti-briefcase"></i>Role details</div>
     <div class="form-row">
       <div class="field"><label>Job title <span class="req">*</span></label><input type="text" id="job-title" placeholder="Senior Solar Design Engineer"/></div>
-      <div class="field"><label>Location <span class="req">*</span></label><input type="text" id="job-location" placeholder="Austin, TX or Remote"/></div>
+      <div class="field"><label>Location <span class="req">*</span></label><input type="text" id="job-location" placeholder="Austin, TX or Remote"/>
+        <small style="display:flex;align-items:center;gap:6px;margin-top:8px;">
+          <input type="checkbox" id="job-international" style="width:auto;"/>
+          <label for="job-international" style="margin:0;font-size:11px;color:var(--t2);">This role is based outside the U.S.</label>
+        </small>
+      </div>
     </div>
     <div class="form-row">
       <div class="field"><label>Sector</label>
@@ -354,6 +359,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       job_title: jobTitle,
       job_description: jobDescription,
       location: jobLocation,
+      is_international: document.getElementById('job-international').checked,
       sector: document.getElementById('job-sector').value || null,
       employment_type: document.getElementById('job-type').value || null,
       apply_url: document.getElementById('apply-url').value.trim() || null,

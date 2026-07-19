@@ -661,7 +661,7 @@ async function fetchEmployerPostings() {
       // somewhere.
       job_posting_id: p.apply_url ? null : p.id,
       location: p.location || "Location not listed",
-      region: null,
+      region: p.is_international ? "International" : null,
       is_remote: /remote/i.test(p.location || ""),
       sector_bucket: p.sector || null,
       occupation: null,
