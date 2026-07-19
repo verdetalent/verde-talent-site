@@ -93,7 +93,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="fs-title"><i class="ti ti-briefcase"></i>Role details</div>
     <div class="form-row">
       <div class="field"><label>Job title <span class="req">*</span></label><input type="text" id="job-title" placeholder="Senior Solar Design Engineer"/></div>
-      <div class="field"><label>Location</label><input type="text" id="job-location" placeholder="Austin, TX or Remote"/></div>
+      <div class="field"><label>Location <span class="req">*</span></label><input type="text" id="job-location" placeholder="Austin, TX or Remote"/></div>
     </div>
     <div class="form-row">
       <div class="field"><label>Sector</label>
@@ -306,10 +306,11 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
   const companyName = document.getElementById('company-name').value.trim();
   const companyEmail = document.getElementById('company-email').value.trim();
   const jobTitle = document.getElementById('job-title').value.trim();
+  const jobLocation = document.getElementById('job-location').value.trim();
   const jobDescription = document.getElementById('job-description').value.trim();
 
-  if (!companyName || !companyEmail || !jobTitle || !jobDescription) {
-    note.textContent = 'Fill in company name, contact email, job title, and description first.';
+  if (!companyName || !companyEmail || !jobTitle || !jobLocation || !jobDescription) {
+    note.textContent = 'Fill in company name, contact email, job title, location, and description first.';
     note.style.color = 'var(--cor)';
     return;
   }
@@ -352,7 +353,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       company_email: companyEmail,
       job_title: jobTitle,
       job_description: jobDescription,
-      location: document.getElementById('job-location').value.trim() || null,
+      location: jobLocation,
       sector: document.getElementById('job-sector').value || null,
       employment_type: document.getElementById('job-type').value || null,
       apply_url: document.getElementById('apply-url').value.trim() || null,
