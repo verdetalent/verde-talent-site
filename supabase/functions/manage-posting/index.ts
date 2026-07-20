@@ -37,7 +37,7 @@ function jsonResponse(body: unknown, status = 200) {
 
 // Lean field set for the dashboard's list view - no job_description, since
 // that can be long and isn't needed to render a summary card.
-const LIST_FIELDS = "id, company_name, job_title, status, duration_days, paid_at, expires_at, employer_user_id, company_email, manage_token";
+const LIST_FIELDS = "id, company_name, job_title, status, duration_days, created_at, paid_at, expires_at, employer_user_id, company_email, manage_token";
 
 async function getAuthedUser(req: Request) {
   const authHeader = req.headers.get("Authorization");
