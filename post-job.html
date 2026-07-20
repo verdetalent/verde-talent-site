@@ -158,7 +158,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 
   <div class="form-section">
     <div class="fs-title"><i class="ti ti-calendar"></i>Choose a plan</div>
-    <div class="plan-grid">
+    <div class="plan-grid" id="planGrid">
       <div class="plan-card on" data-days="30" data-cents="10000">
         <div class="plan-days">30 days</div>
         <div class="plan-price">$100</div>
@@ -168,6 +168,11 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
         <div class="plan-days">60 days</div>
         <div class="plan-price">$150</div>
         <div class="plan-note">Extended reach</div>
+      </div>
+      <div class="plan-card" id="creditPlanCard" data-credit="1" style="display:none;grid-column:1 / -1;">
+        <div class="plan-days"><i class="ti ti-ticket" style="vertical-align:-2px;"></i> Use a posting credit</div>
+        <div class="plan-price" id="creditBalanceText">—</div>
+        <div class="plan-note">30-day listing, no payment needed</div>
       </div>
     </div>
   </div>
@@ -367,13 +372,40 @@ document.getElementById('salary-period').addEventListener('change', function(){
 });
 
 let selectedDays = 30;
+let useCredit = false;
 document.querySelectorAll('.plan-card').forEach(card => {
   card.addEventListener('click', function(){
     document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('on'));
     this.classList.add('on');
-    selectedDays = Number(this.dataset.days);
+    useCredit = this.dataset.credit === '1';
+    selectedDays = useCredit ? 30 : Number(this.dataset.days);
   });
 });
+
+const MANAGE_CREDITS_URL = `${SUPABASE_URL}/functions/v1/manage-credits`;
+
+async function checkCreditBalance() {
+  const session = getEmployerSession();
+  if (!session) return;
+  try {
+    const res = await fetch(MANAGE_CREDITS_URL, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ action: 'list' }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.totalAvailable) return;
+    document.getElementById('creditBalanceText').textContent = `${data.totalAvailable} available`;
+    document.getElementById('creditPlanCard').style.display = 'block';
+  } catch (err) {
+    console.error('Could not check credit balance:', err);
+  }
+}
+checkCreditBalance();
 
 document.getElementById('submitBtn').addEventListener('click', async function(){
   const btn = this;
@@ -438,7 +470,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       salary_max: salaryPeriod ? salaryMax : null,
       salary_period: salaryPeriod,
       duration_days: selectedDays,
-      price_cents: selectedDays === 60 ? 15000 : 10000,
+      price_cents: useCredit ? 0 : (selectedDays === 60 ? 15000 : 10000),
       status: 'pending_payment',
       employer_user_id: getEmployerSession()?.user_id || null,
     };
@@ -454,6 +486,25 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       body: JSON.stringify(payload),
     });
     if (!insertRes.ok) throw new Error(await insertRes.text());
+
+    if (useCredit) {
+      btn.textContent = 'Publishing with your credit…';
+      const session = getEmployerSession();
+      const redeemRes = await fetch(MANAGE_CREDITS_URL, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action: 'redeem', job_posting_id: jobPostingId }),
+      });
+      const redeemData = await redeemRes.json();
+      if (!redeemRes.ok || !redeemData.success) throw new Error(redeemData.error || 'Could not redeem a credit.');
+
+      window.location.href = 'post-job-success.html';
+      return;
+    }
 
     btn.textContent = 'Redirecting to payment…';
     const checkoutRes = await fetch(CHECKOUT_FUNCTION_URL, {

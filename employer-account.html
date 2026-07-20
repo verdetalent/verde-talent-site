@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CNGTGW71QP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CNGTGW71QP');
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Your Account — Verde Talent</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right{display:flex;gap:20px;align-items:center;font-size:13px;}
+.nav-right a{color:var(--t2);text-decoration:none;}
+.nav-right a:hover{color:var(--grn);}
+.wrap{max-width:760px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+.hero h1{font-size:26px;font-weight:700;}
+.hero p{font-size:13px;color:var(--t3);margin-top:4px;}
+
+.note-banner{background:rgba(79,179,255,0.08);border:0.5px solid rgba(79,179,255,0.25);border-radius:10px;padding:.8rem 1rem;font-size:12px;color:var(--blu);margin:1.25rem 0;line-height:1.6;}
+.note-banner.success{background:rgba(34,224,154,0.08);border-color:rgba(34,224,154,0.25);color:var(--grn);}
+
+.balance-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:16px;padding:1.5rem;margin:1.5rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.balance-num{font-size:34px;font-weight:700;line-height:1;}
+.balance-label{font-size:12px;color:var(--t3);margin-top:4px;}
+.balance-detail{font-size:12px;color:var(--t3);text-align:right;}
+
+.section-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--t3);margin:2rem 0 .75rem;}
+
+.pack-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.pack-card{background:var(--card);border:1.5px solid var(--bdr2);border-radius:14px;padding:1.25rem;text-align:center;}
+.pack-size{font-size:13px;color:var(--t2);margin-bottom:4px;}
+.pack-price{font-size:28px;font-weight:700;}
+.pack-per{font-size:11px;color:var(--t3);margin:4px 0 1rem;}
+.btn-buy{background:var(--grn);color:#052e1e;border:none;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;width:100%;font-family:var(--font-sans);}
+.btn-buy:disabled{opacity:.6;cursor:default;}
+
+.batch-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:0.5px solid var(--bdr);font-size:13px;}
+.batch-row:last-child{border-bottom:none;}
+.batch-row .muted{color:var(--t3);font-size:12px;}
+.state-note{font-size:13px;color:var(--t3);padding:1rem 0;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);margin-top:2rem;}
+footer a{color:var(--t3);text-decoration:none;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right">
+    <a href="employer-dashboard.html">Your postings</a>
+    <a href="post-job.html">Post a job</a>
+    <a href="#" id="signOutLink">Sign out</a>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="hero">
+    <h1>Your account</h1>
+    <p id="accountEmail"></p>
+  </div>
+
+  <div class="note-banner success" id="successNote" style="display:none;">
+    <i class="ti ti-check" style="vertical-align:-2px;"></i> Payment received — your credits are being added now and should show up below within a minute or two.
+  </div>
+  <div class="note-banner" id="cancelNote" style="display:none;">
+    <i class="ti ti-info-circle" style="vertical-align:-2px;"></i> Checkout was canceled — you weren't charged.
+  </div>
+
+  <div class="balance-card">
+    <div>
+      <div class="balance-num" id="balanceNum">—</div>
+      <div class="balance-label">job-posting credits available</div>
+    </div>
+    <div class="balance-detail" id="balanceDetail"></div>
+  </div>
+
+  <div class="section-title">Buy more credits</div>
+  <div class="pack-grid">
+    <div class="pack-card">
+      <div class="pack-size">5 postings</div>
+      <div class="pack-price">$450</div>
+      <div class="pack-per">$90 per posting · 12-month expiry</div>
+      <button type="button" class="btn-buy" data-pack="5">Buy 5-pack</button>
+    </div>
+    <div class="pack-card">
+      <div class="pack-size">10 postings</div>
+      <div class="pack-price">$850</div>
+      <div class="pack-per">$85 per posting · 12-month expiry</div>
+      <button type="button" class="btn-buy" data-pack="10">Buy 10-pack</button>
+    </div>
+  </div>
+  <div class="state-note" id="buyNote"></div>
+
+  <div class="section-title">Credit batches</div>
+  <div id="batchList" class="state-note">Loading…</div>
+</div>
+<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+const MANAGE_CREDITS_URL = `${SUPABASE_URL}/functions/v1/manage-credits`;
+const CREATE_CREDIT_CHECKOUT_URL = `${SUPABASE_URL}/functions/v1/create-credit-checkout-session`;
+
+function escapeHtml(str) {
+  return (str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function getEmployerSession() {
+  try {
+    const raw = localStorage.getItem('vt_employer_session');
+    if (!raw) return null;
+    const session = JSON.parse(raw);
+    if (!session.access_token || session.expires_at < Date.now()) return null;
+    return session;
+  } catch {
+    return null;
+  }
+}
+
+const session = getEmployerSession();
+if (!session) {
+  window.location.href = 'employer-login.html';
+} else {
+  document.getElementById('accountEmail').textContent = session.email;
+}
+
+document.getElementById('signOutLink').addEventListener('click', function(e){
+  e.preventDefault();
+  localStorage.removeItem('vt_employer_session');
+  window.location.href = 'employer-login.html';
+});
+
+const params = new URLSearchParams(location.search);
+if (params.get('credits_success')) document.getElementById('successNote').style.display = 'block';
+if (params.get('canceled')) document.getElementById('cancelNote').style.display = 'block';
+
+async function callCredits(body) {
+  const res = await fetch(MANAGE_CREDITS_URL, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${session.access_token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+  return data;
+}
+
+function batchRowHtml(batch) {
+  const isActive = batch.status === 'paid' && batch.credits_remaining > 0 && batch.expires_at && new Date(batch.expires_at) > new Date();
+  const label = batch.status !== 'paid'
+    ? 'Payment pending'
+    : (isActive
+        ? `${batch.credits_remaining} of ${batch.pack_size} remaining`
+        : (batch.credits_remaining === 0 ? 'Fully used' : 'Expired'));
+  const expiresLine = batch.expires_at ? `expires ${new Date(batch.expires_at).toLocaleDateString()}` : '';
+  return `
+    <div class="batch-row">
+      <span>${batch.pack_size}-pack</span>
+      <span class="muted">${escapeHtml(label)}${expiresLine ? ' · ' + expiresLine : ''}</span>
+    </div>`;
+}
+
+async function loadCredits() {
+  const balanceNum = document.getElementById('balanceNum');
+  const balanceDetail = document.getElementById('balanceDetail');
+  const batchList = document.getElementById('batchList');
+  try {
+    const data = await callCredits({ action: 'list' });
+    balanceNum.textContent = data.totalAvailable;
+    balanceDetail.textContent = data.totalAvailable
+      ? 'Use one any time from the "Post a job" form instead of paying again.'
+      : 'Buy a pack below to post without paying per-job.';
+
+    if (!data.batches.length) {
+      batchList.innerHTML = `<div class="state-note">You haven't bought any credit packs yet.</div>`;
+      return;
+    }
+    batchList.innerHTML = data.batches.map(batchRowHtml).join('');
+  } catch (err) {
+    balanceNum.textContent = '—';
+    batchList.textContent = err.message || 'Could not load your credits.';
+  }
+}
+
+document.querySelectorAll('.btn-buy').forEach(btn => {
+  btn.addEventListener('click', async function(){
+    const packSize = Number(this.dataset.pack);
+    const note = document.getElementById('buyNote');
+    document.querySelectorAll('.btn-buy').forEach(b => b.disabled = true);
+    this.textContent = 'Redirecting to payment…';
+    note.textContent = '';
+
+    try {
+      const purchaseId = crypto.randomUUID();
+      const priceCents = packSize === 10 ? 85000 : 45000;
+      const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/employer_credit_purchases`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify({
+          id: purchaseId,
+          employer_user_id: session.user_id,
+          pack_size: packSize,
+          price_cents: priceCents,
+          credits_remaining: 0,
+          status: 'pending_payment',
+        }),
+      });
+      if (!insertRes.ok) throw new Error(await insertRes.text());
+
+      const checkoutRes = await fetch(CREATE_CREDIT_CHECKOUT_URL, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ purchase_id: purchaseId }),
+      });
+      const checkoutData = await checkoutRes.json();
+      if (!checkoutRes.ok || !checkoutData.url) throw new Error(checkoutData.error || 'Could not start checkout.');
+
+      window.location.href = checkoutData.url;
+    } catch (err) {
+      document.querySelectorAll('.btn-buy').forEach(b => b.disabled = false);
+      this.textContent = packSize === 10 ? 'Buy 10-pack' : 'Buy 5-pack';
+      note.textContent = err.message || 'Something went wrong — please try again.';
+      note.style.color = 'var(--cor)';
+      console.error('Credit purchase failed:', err);
+    }
+  });
+});
+
+if (session) loadCredits();
+</script>
+</body>
+</html>
