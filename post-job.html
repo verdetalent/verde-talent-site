@@ -73,7 +73,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 <body>
 <nav class="nav">
   <a class="logo" href="index.html"><img src="logo.png" alt="Verde Talent" class="logo-img"></a>
-  <div class="nav-right"><a href="index.html">← Back to Verde Talent</a></div>
+  <div class="nav-right"><a href="employer-dashboard.html" style="margin-right:16px;">Manage your postings</a><a href="index.html">← Back to Verde Talent</a></div>
 </nav>
 <div class="wrap">
   <div class="hero">
@@ -178,6 +178,18 @@ const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
 // name typed at creation time - Supabase's Edge Functions "Name" field is
 // just a display label, not the actual routing slug used in the URL.
 const CHECKOUT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/clever-service`;
+
+function getEmployerSession() {
+  try {
+    const raw = localStorage.getItem('vt_employer_session');
+    if (!raw) return null;
+    const session = JSON.parse(raw);
+    if (!session.access_token || session.expires_at < Date.now()) return null;
+    return session;
+  } catch {
+    return null;
+  }
+}
 
 if (new URLSearchParams(location.search).get('canceled')) {
   document.getElementById('cancelNote').style.display = 'block';
@@ -378,6 +390,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       duration_days: selectedDays,
       price_cents: selectedDays === 60 ? 15000 : 10000,
       status: 'pending_payment',
+      employer_user_id: getEmployerSession()?.user_id || null,
     };
 
     const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/job_postings`, {
