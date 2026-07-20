@@ -92,11 +92,18 @@ footer a{color:var(--t3);text-decoration:none;}
     </div>
     <a class="btn-grn" href="post-job.html"><i class="ti ti-plus"></i>Post another job</a>
   </div>
-  <div class="month-row" id="monthRow" style="display:none;">
-    <label for="monthSelect">Month</label>
-    <select class="month-select" id="monthSelect"></select>
-  </div>
   <div id="content" class="state-note">Loading…</div>
+
+  <div id="historySection" style="display:none;margin-top:1.25rem;">
+    <div class="section-title" style="justify-content:space-between;">
+      <span>Expired &amp; removed <span class="section-count" id="historyCount">0</span></span>
+      <div class="month-row" style="margin-bottom:0;">
+        <label for="monthSelect">Month</label>
+        <select class="month-select" id="monthSelect"></select>
+      </div>
+    </div>
+    <div id="historyContent"></div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -217,35 +224,8 @@ function monthKey(iso) {
 
 let allPostings = [];
 
-// Only the selected month's postings are ever rendered - older months
-// stay collapsed behind the dropdown instead of all loading in one long
-// list, so a long-running account's history doesn't turn into an
-// ever-growing wall of mostly-irrelevant past postings.
-function renderMonth(key) {
-  const content = document.getElementById('content');
-  const monthPostings = allPostings.filter(p => monthKey(p.created_at) === key);
-
-  if (!monthPostings.length) {
-    content.innerHTML = `<div class="state-note">No postings in ${escapeHtml(MONTH_LABEL.format(new Date(key + '-02')))}.</div>`;
-    return;
-  }
-
-  const active = monthPostings.filter(p => !isInactive(p));
-  const inactive = monthPostings.filter(isInactive);
-
-  let html = `<div class="section-title">Active <span class="section-count">${active.length}</span></div>`;
-  html += active.length
-    ? active.map(activeCardHtml).join('')
-    : `<div class="empty-inline">Nothing currently live or pending this month.</div>`;
-
-  html += `<div class="section-title">Expired &amp; removed <span class="section-count">${inactive.length}</span></div>`;
-  html += inactive.length
-    ? inactive.map(inactiveCardHtml).join('')
-    : `<div class="empty-inline">Nothing here this month.</div>`;
-
-  content.innerHTML = html;
-
-  content.querySelectorAll('[data-action="remove"]').forEach(btn => {
+function attachRemoveHandlers(container, afterRemove) {
+  container.querySelectorAll('[data-action="remove"]').forEach(btn => {
     btn.addEventListener('click', async function(){
       const card = this.closest('.card');
       const id = card.dataset.id;
@@ -257,7 +237,7 @@ function renderMonth(key) {
         await callManage({ action: 'delete', id });
         const posting = allPostings.find(p => p.id === id);
         if (posting) posting.status = 'removed';
-        renderMonth(document.getElementById('monthSelect').value);
+        afterRemove();
       } catch (err) {
         this.disabled = false;
         this.textContent = 'Remove';
@@ -268,14 +248,50 @@ function renderMonth(key) {
   });
 }
 
+// Active postings are always a small, bounded list - however long you've
+// been using the platform, you only ever have a handful live at once - so
+// there's no reason to hide any of them behind a month filter. It's the
+// expired/removed history that grows without bound over time and actually
+// benefits from being chunked by month instead of one long scroll.
+function renderActive() {
+  const content = document.getElementById('content');
+  const active = allPostings.filter(p => !isInactive(p));
+
+  let html = `<div class="section-title">Active <span class="section-count">${active.length}</span></div>`;
+  html += active.length
+    ? active.map(activeCardHtml).join('')
+    : `<div class="empty-inline">Nothing currently live or pending.</div>`;
+  content.innerHTML = html;
+
+  attachRemoveHandlers(content, () => { renderActive(); renderHistoryMonth(document.getElementById('monthSelect').value); });
+}
+
+// Only the selected month's expired/removed postings are ever rendered -
+// older months stay collapsed behind the dropdown rather than all loading
+// in one long list.
+function renderHistoryMonth(key) {
+  const historyContent = document.getElementById('historyContent');
+  const historyCount = document.getElementById('historyCount');
+  const monthPostings = allPostings.filter(p => isInactive(p) && monthKey(p.created_at) === key);
+
+  historyCount.textContent = monthPostings.length;
+  historyContent.innerHTML = monthPostings.length
+    ? monthPostings.map(inactiveCardHtml).join('')
+    : `<div class="empty-inline">Nothing here in ${escapeHtml(MONTH_LABEL.format(new Date(key + '-02')))}.</div>`;
+}
+
 function buildMonthSelector() {
+  const inactivePostings = allPostings.filter(isInactive);
+  document.getElementById('historySection').style.display = inactivePostings.length ? 'block' : 'none';
+  if (!inactivePostings.length) return;
+
   const counts = {};
-  allPostings.forEach(p => {
+  inactivePostings.forEach(p => {
     const key = monthKey(p.created_at);
     counts[key] = (counts[key] || 0) + 1;
   });
   const currentKey = monthKey(new Date().toISOString());
-  if (!counts[currentKey]) counts[currentKey] = 0; // always offer the current month, even with nothing posted yet
+  if (!counts[currentKey]) counts[currentKey] = 0; // always offer the current month, even with nothing expired/removed yet
 
   const keys = Object.keys(counts).sort().reverse();
   const select = document.getElementById('monthSelect');
@@ -283,9 +299,9 @@ function buildMonthSelector() {
     `<option value="${key}">${escapeHtml(MONTH_LABEL.format(new Date(key + '-02')))} (${counts[key]})</option>`
   ).join('');
   select.value = currentKey;
-  document.getElementById('monthRow').style.display = keys.length > 1 ? 'flex' : 'none';
 
-  select.addEventListener('change', () => renderMonth(select.value));
+  select.addEventListener('change', () => renderHistoryMonth(select.value));
+  renderHistoryMonth(currentKey);
 }
 
 async function loadPostings() {
@@ -297,8 +313,8 @@ async function loadPostings() {
       return;
     }
     allPostings = data.postings;
+    renderActive();
     buildMonthSelector();
-    renderMonth(document.getElementById('monthSelect').value);
   } catch (err) {
     content.textContent = err.message || 'Could not load your postings.';
   }
