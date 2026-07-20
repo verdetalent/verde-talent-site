@@ -44,6 +44,14 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .btn-sm{padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;border:none;white-space:nowrap;}
 .btn-grn{background:var(--grn);color:#052e1e;font-weight:500;}
 .btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .hero{max-width:560px;margin:0 auto;text-align:center;padding:3rem 1.5rem 1.5rem;}
 .lock-icon{width:56px;height:56px;border-radius:16px;background:rgba(255,181,71,0.12);border:0.5px solid rgba(255,181,71,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;}
 .lock-icon i{font-size:26px;color:var(--amb);}
@@ -112,6 +120,15 @@ footer a{color:var(--t3);text-decoration:none;}
 footer a:hover{color:var(--grn);}
 .footer-links{display:flex;gap:1.25rem;}
 
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  #signinToggle{padding:6px 10px;}
+}
+
 @media (max-width:940px){
   .nav-toggle{display:flex;}
   .logo-img{height:64px;}
@@ -122,7 +139,6 @@ footer a:hover{color:var(--grn);}
   .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
   .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
   .nav-right .btn-sm{padding:6px 10px;font-size:12px;}
-  .nav-right .btn-sm.btn-ghost{display:none;}
   .social-strip{grid-template-columns:1fr;}
   .feat-grid{grid-template-columns:1fr;}
 }
@@ -158,7 +174,15 @@ footer a:hover{color:var(--grn);}
     </div>
   </div>
   <div class="nav-right">
-    <button class="btn-sm btn-ghost">Sign in</button>
+    <div class="signin-wrap">
+      <button type="button" class="btn-sm btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="employer-login.html">Sign in</a>
+      </div>
+    </div>
     <a href="post-job.html" style="text-decoration:none;"><button class="btn-sm btn-grn">Post a job</button></a>
     <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
   </div>
@@ -166,6 +190,13 @@ footer a:hover{color:var(--grn);}
 <script>
 document.getElementById('navToggle').addEventListener('click', function(){
   document.querySelector('.nav-groups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
 });
 </script>
 <div class="hero">

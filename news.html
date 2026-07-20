@@ -44,6 +44,14 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
 .btn-grn{background:var(--grn);color:#052e1e;font-weight:500;}
 .btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 /* Category filter bar */
 .filter-bar{display:flex;align-items:center;gap:0;border-bottom:0.5px solid var(--bdr);padding:0 2rem;overflow-x:auto;}
 .fcat{display:flex;align-items:center;gap:5px;padding:.85rem 1rem;font-size:13px;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;}
@@ -155,6 +163,16 @@ footer a{color:var(--t3);text-decoration:none;}
 footer a:hover{color:var(--grn);}
 .footer-links{display:flex;gap:1.25rem;flex-wrap:wrap;}
 
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+
 @media (max-width:940px){
   .nav-toggle{display:flex;}
   .logo-img{height:64px;}
@@ -202,6 +220,15 @@ footer a:hover{color:var(--grn);}
     </div>
   </div>
   <div class="nav-right" style="display:flex;gap:10px;flex-shrink:0;align-items:center;">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="employer-login.html">Sign in</a>
+      </div>
+    </div>
     <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
     <a href="post-job.html" style="text-decoration:none;"><button class="btn btn-grn">Post a job</button></a>
     <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
@@ -210,6 +237,13 @@ footer a:hover{color:var(--grn);}
 <script>
 document.getElementById('navToggle').addEventListener('click', function(){
   document.querySelector('.nav-groups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
 });
 </script>
 
