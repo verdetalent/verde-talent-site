@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>¿Te gustaría trabajar en la empresa líder del sector de la energía, impulsando la transformación tecnológica de los sistemas de negocio y contribuyendo a la evolución digital de una organización global?</p><p>¿Te apasiona liderar la estrategia tecnológica, definir soluciones innovadoras y coordinar equipos multidisciplinares para responder a las necesidades del negocio?</p><p>¿Quieres desarrollar tu carrera en un entorno internacional, participando en iniciativas estratégicas con impacto directo en la gestión del talento y la experiencia del empleado?</p><p><strong>¿Qué vas a hacer?</strong></p><p>Como responsable de programas de digitalización, serás <strong>referente tecnológico</strong> dentro del ámbito de la <strong>Gestión Recursos Humanos (HR)</strong> a <strong>nivel global en Iberdrola</strong>, formando parte del equipo de <strong>Digital HR</strong>, dentro de la Dirección de <strong>Global Business Services</strong>.</p><p><strong>Tu foco se centrará, inicialmente, en la gestión de los programas digitales de Talento y Performance a nivel global</strong>, siendo el <strong>líder de la evolución digital</strong> de los procesos bajo tu ámbito de responsabilidad y <strong>especialista referente</strong> en las plataformas digitales empleadas por Iberdrola, especialmente <strong>Workday</strong>.</p><p>Como <strong>responsable del programa</strong>, <strong>liderarás los proyectos, evolutivos y mejoras planificadas</strong>, proponiendo activamente optimizaciones que aporten valor al negocio. Serás responsable de <strong>gestionar directamente los servicios de partners externos</strong> que sean requeridos para aportar funciones de configuración y expertise, supervisando el <strong>diseño y la calidad</strong>de las soluciones entregadas.</p><p>Entre tus principales funciones te encargarás de:</p><ul><li><strong>Liderar la evolución digital de los procesos</strong> de HR bajo tu ámbito de responsabilidad, especialmente en los módulos de Talento y Performance, en las plataformas tecnológicas de Iberdrola, principalmente Workday.</li><li><strong>Planificar la hoja de ruta y la estrategia de digitalización de los programas</strong> bajo tu responsabilidad en colaboración estrecha con los responsables funcionales de los procesos (Global y Local Process Owners).</li><li><strong>Asegurar la coherencia funcional y tecnológica</strong> de las soluciones, priorizando iniciativas en función del valor aportado al negocio y de su <strong>escalabilidad global</strong>.</li><li><strong>Liderar la ejecución de los proyectos y evolutivos end to end</strong>: toma de requisitos, diseño de soluciones, supervisión del desarrollo, validación de entrega, despliegue y gestión del cambio.</li><li><strong>Dirigir y coordinar los servicios de partners técnicos externos a tu cargo</strong>, responsables de la configuración en Workday, asegurando una ejecución eficiente y alineada con el diseño definido, así como gestionando las dependencias de otros recursos y equipos cuando éstas sean necesarias.</li><li><strong>Innovar y explorar</strong>, identificando oportunidades de mejora y proponiendo iniciativas que impulsen la evolución y adopción del proceso, manteniéndote al día de las novedades disponibles ofrecidas tanto por Workday (funcionalidades, agentes) como por cualquier otro sistema o tecnología (IA).</li><li><strong>Comunicar y fomentar la adopción</strong> de los cambios implementados mediante una dinámica de transparencia y comunicación clara con stakeholders y usuarios.</li></ul><p><strong>¿Qué estamos buscando?</strong></p><p>Buscamos una persona capaz de asumir la<strong>gestión y liderazgo de programas de digitalización en el ámbito de HR</strong>, combinando una <strong>excelente base de especialización en Workday</strong> con un <strong>avanzado conocimiento funcional</strong> y <strong>orientación a producto y usuario</strong>.</p><p>Requisitos imprescindibles:</p><ul><li>Grado en Ingeniería Industrial, Telecomunicaciones, Informática, Eléctrica, Ciencias Físicas, Matemáticas o similar.</li><li>Mínimo 3 años de experiencia en <strong>Workday en roles técnico-funcionales, preferiblemente con certificaciones</strong>, especialmente en los módulos de <strong>Talent y Performance</strong>y su modelo de <strong>seguridad</strong> asociado.</li><li>Experiencia de al menos 3 años en el <strong>liderazgo de programas o proyectos de transformación, especialmente en entornos internacionales o globales.</strong></li><li>Capacidad de coordinación y liderazgo de <strong>equipos,</strong> <strong>partners o proveedores externos.</strong></li><li>Capacidades de colaboración y gestión de <strong>múltiples stakeholders</strong> en entornos complejos, con orientación al cliente interno y construcción de relaciones de confianza.</li><li><strong>Conocimiento funcional de los procesos de Recursos Humanos</strong> en empresas internacionales.</li><li>Capacidad de diseño y <strong>traducción de necesidades de negocio a soluciones digitales</strong>.</li><li><strong>Excelente nivel de autonom</strong><strong>ía y criterio para tomar decisiones</strong> en entornos complejos, cambiantes y de alta exigencia.</li><li><strong>Proactividad e innovación</strong>, proponiendo mejoras de forma continua y con una actitud de investigación, autoformación y participación en eventos y comunidades de conocimiento.</li><li>Nivel alto de <strong>inglés (C1 o superior).</strong></li></ul><p><strong>Se valorará:</strong></p><ul><li>Postgrado o máster en Inteligencia Artificial, Data &amp; Analytics, Transformación Digital, Arquitectura Empresarial o disciplinas afines.</li><li>Conocimiento e interés por la aplicación de la <strong>Inteligencia Artificial</strong> en el ámbito de HR y Workday, así como nuevas tendencias en el ámbito de Recursos Humanos (Skills-Based Organization, Agentic HR, etc.).</li><li>Conocimiento general y experiencia trabajando con<strong>plataformas digitales de Recursos Humanos</strong>(<strong>SAP HCM, Oracle, ServiceNow, Qualtrics, etc.).</strong></li><li>Nivel medio de portugués.</li></ul><p><strong>Qué ofrecemos</strong></p><ul><li>Te incorporarás a una empresa líder con presencia internacional y más de 40.000 empleados.</li><li>Te desarrollarás en una empresa concienciada con la lucha contra el cambio climático y líder mundial en energías renovables.</li><li>Disfrutarás de un salario competitivo, beneficios sociales, medidas de conciliación, jornada continua todo el año y horario flexible de entrada y salida.</li><li>Trabajarás en un equipo dinámico y altamente cualificado, participando en proyectos innovadores y de referencia en el sector, con impacto global.</li><li>Contarás con formación continua para conocer a fondo el sector y la empresa a nivel global.</li></ul><p><strong>Nuestro proceso de selección</strong></p><p>En Iberdrola la diversidad, equidad e inclusión son puntos esenciales en nuestro día a día. Nos enorgullecemos de ser una compañía donde hay igualdad de oportunidades y donde todas las personas son bienvenidas, valoradas y respetadas independientemente de sexo, discapacidad, raza, religión, orientación sexual, edad, estado civil, nacionalidad o identidad de género.</p><p><strong>Fecha de finalización de la publicación:</strong></p><p>31-07-2026</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

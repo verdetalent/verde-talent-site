@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Thursday, July 23, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p>Depending upon the desired qualifications of the successful applicant, the hiring manager may elect to fill this position at a higher level within the job hierarchy</p><p>The Fire Protection Engineer is responsible for supporting the fleet Fire Protection team at the Oconee Nuclear Station. The position may be filled at the Engineer III or Senior Engineer level, depending on the candidate’s experience. Additionally, the role requires providing support to other nuclear plants within the Duke Energy Nuclear Fleet as needed.</p><p><strong>Responsibilities</strong></p><ul><li>Serve as the fire protection subject matter expert, ensuring compliance with NFPA codes, regulatory requirements, fleet/site procedures, and plant licensing standards.</li><li>Provide engineering and field support to identify, analyze, and resolve fire protection program issues.</li><li>Support Fire PRAs, NSCA updates, surveillance testing, pre-plans, impairment monitoring, and engineering calculations.</li><li>Prepare for and support NRC, INPO, NEIL, NSRB, and NOS inspections and audits.</li><li>Monitor fire protection system performance, review engineering changes, respond to industry operating experience, and represent the company professionally.</li></ul><p><strong>Basic/Required Qualifications</strong></p><p>Senior Engineer</p><ul><li>Bachelor of Science or master’s degree in engineering from an ABET-accredited program.</li><li>At least 6 years of engineering experience.</li><li>Demonstrated ability to complete work with minimal supervision.</li></ul><p>Engineer III</p><ul><li>Bachelor of Science or master’s degree in engineering from an ABET-accredited program.</li><li>Minimum of 4 years of engineering experience.</li></ul><p><strong>Desired Qualifications</strong></p><ul><li>Bachelor of Science in Fire Protection from an ABET-accredited program.</li><li>At least three years of experience in Fire Protection Engineering responsibilities.</li><li>Nuclear Power Plant experience</li><li>Registered Professional Engineer</li></ul><p><strong>Working Conditions</strong></p><ul><li>Hybrid – Work will be performed from both remote and onsite locations after the onboarding period. However, hybrid employees should live within a reasonable commute to the designated Duke Energy facility. Reliable, consistent transportation is required to ensure timely arrival at the applicable facility.</li><li>Work is performed in both office and plant environments, requiring walking, light lifting, occasional climbing, and exposure to temperature, noise, and radiation.</li><li>The role operates within a procedural and process-oriented structure due to stringent regulatory requirements.</li><li>Must be available to work some weekends, holidays, and overtime as required.</li><li>On-call duty responsibilities are part of the position.</li><li>Must be able to conduct field walk-downs in an operating plant environment.</li><li>Occasional travel outside the Duke Energy system may be necessary.</li></ul><p><strong>Specific Requirements</strong></p><ul><li>Ability to achieve nuclear site Unescorted Access/Security clearance.</li><li>May be required to participate in the Emergency Response Organization (ERO), which could involve callouts with a specified response time and inclusion in an on-call duty rotation requiring the employee to be Fit for Duty.</li><li>Able to wear personal protective equipment such as hard-hat, safety glasses, and fall protection as needed.</li><li>Work is conducted in both office and plant environments.</li><li>Additional hours may be required based on workload and business needs.</li><li>Occasional overnight travel</li></ul><p>#LI-LF1</p><p><strong>**Travel Requirements</strong>**</p><p>5-15%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>Yes</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Wednesday, July 29, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>Job Summary</strong></p><p>The Product Analyst supports Duke Energy Florida’s Demand Response portfolio by helping convert known operational pain points, data gaps, and manual workarounds into organized trackers, clearer workflows, and measurable execution improvements. Reporting directly to the manager, this role supports issue resolution, process cleanup, reporting, action tracking, and follow-through on assigned priorities, with financial tracking as a supporting responsibility. The ideal candidate is organized, detail-oriented, comfortable working with data and business systems, and able to help improve existing workflows by reducing manual errors, rework, and follow-up gaps.</p><p><strong>Responsibilities</strong></p><p>Key Responsibilities:</p><ul><li>Organize already identified operational choke points into draft project plans, including proposed owners, deadlines, status updates, and follow-up actions, for review and collaborative refinement with the manager and appropriate team members.</li><li>Help organize historical artifacts such as vendor invoices, regulatory data requests, contractor purchase orders, invoices, and related program documents into a shared repository with clear naming, ownership, and retrieval structure.</li><li>Support improvements to existing tools and workflows by documenting current pain points, tracking enhancement requests, coordinating follow-up with users and system owners, and helping validate updates related to IntelliSOURCE, customer contact and scheduling tools, Salesforce pipeline visibility, DR calendar enhancements, and related reporting needs.</li><li>Track and organize information related to existing assets, planned inspections, replacements, upgrades, retirements, inventory readiness, equipment lifecycle needs, and supply chain ordering requirements to support review and follow-up by the manager, field coordinators, and appropriate team members.</li><li>Support rates, regulatory, IRP, new program development, technology initiatives, white papers, and business case work by gathering data, tracking requests, documenting assumptions, and summarizing results for review.</li><li>Track estimated O&amp;M savings, recovered value, avoided cost, RMA activity, warranty returns, refunds, vendor credits, budget impacts, projections, true-ups, and marketing cost-per-acquisition analysis.</li></ul><p>Key Deliverables:</p><ul><li>Operational issue tracker showing priorities, owners, deadlines, status, barriers, and completed actions.</li><li>Contractor comparison tracker covering pricing, work quality, responsiveness, completion performance, and supporting notes for vendor discussions.</li><li>Continuous improvement tracker for existing system upgrades, scheduling/customer contact tools, Salesforce pipeline cleanup, DR calendar enhancements, and related reporting needs.</li><li>Commercial asset inspection tracking, replacement, and equipment lifecycle calendar tied to field coordinator assignments, work management follow-up, inventory readiness, and supply chain ordering.</li><li>Savings, recovery, budget, projection, and true-up tracker documenting assumptions, estimated value, responsible parties, open questions, and follow-up actions.</li><li>RMA, warranty, and inventory closeout log tracking device movement, returned equipment, replacement status, vendor credits, refunds, aging items, and unresolved exceptions.</li><li>Update recurring dashboard or status summary showing completed work, open issues, estimated savings, recovered value, risks, and next actions</li></ul><p>​<strong>Basic/Required Qualifications</strong></p><ul><li>Bachelor’s degree in business, industrial engineering, information technology, or other related degree</li><li>2 years minimum related work experience</li><li>In lieu of degree, a High School Diploma/GED and 6 years minimum related work experience</li></ul><p><strong>Desired Qualifications</strong></p><ul><li>Experience in utility customer programs, demand response, energy efficiency, operations support, finance, analytics, process improvement, or related business functions.</li><li>Experience tracking operational savings, inventory movement, warranty claims, RMAs, refunds, vendor credits, purchase orders, invoices, or related financial follow-through items.</li><li>Experience using Excel, Power BI, enterprise reporting tools, operational databases, or customer/program management systems to organize data and support decisions.</li><li>Strong attention to detail, follow-through, and willingness to learn program operations, systems, and reporting requirements.</li><li>Practical problem-solving skills with a focus on improving existing operations, reducing manual errors, minimizing rework, and making work easier to track and manage.</li><li>Ability to organize data, review information for accuracy, identify basic trends or exceptions, and summarize findings clearly.</li><li>Ability to manage assigned tasks, track deadlines, follow up on open items, and keep operational improvement work moving with moderate supervision.</li><li>Proficiency with Microsoft Office tools, especially Excel, Word, PowerPoint, and Outlook.</li><li>Ability to learn enterprise systems, reporting tools, dashboards, and operational databases used to support day-to-day program execution.</li></ul><p><strong>Key Skills and Competencies</strong></p><ul><li>Operational problem solving</li><li>Issue tracking and follow-through</li><li>Process documentation and improvement</li><li>Dashboard and tracker maintenance</li><li>Cross-functional coordination</li><li>Data analysis and reporting</li><li>Attention to detail and work organization</li></ul><p><strong>**Working Conditions</strong>**</p><ul><li>Hybrid Mobility Classification – Work will be performed from both remote and onsite locations after the onboarding period. However, hybrid employees should live within a reasonable daily commute to the designated Duke Energy facility.</li><li>3 days per week in office</li></ul><p>#LI-JM1</p><p><strong>**Travel Requirements</strong>**</p><p>5-15%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

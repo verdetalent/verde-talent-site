@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>About Us</strong></p><p>With electric vehicles expected to be nearly 30% of new vehicle sales by 2025 and more than 50% by 2040, electric mobility is becoming a reality. ChargePoint (NYSE: CHPT) is at the center of this revolution, powering one of the world’s leading EV charging networks and a comprehensive set of hardware, software and mobile solutions for every charging need across North America and Europe. We bring together drivers, businesses, automakers, policymakers, utilities and other stakeholders to make e-mobility a global reality.</p><p>Since our founding in 2007, ChargePoint has focused solely on making the transition to electric easy for businesses, fleets and drivers. ChargePoint offers a once-in-a-lifetime opportunity to create an all-electric future and a trillion-dollar market.</p><p>At ChargePoint, we foster a positive and productive work environment by committing to live our values of Be Courageous, Charge Together, Love our Customers, Operate with Openness, and Relentlessly Pursue Awesome. These values guide how we show up every day, align, and work together to build a brighter future for all of us.</p><p>Join the team that is building the EV charging industry and make your mark on how people and goods will get everywhere they need to go, in any context, for generations to come.</p><p><strong>Reports To</strong></p><p>Director, NOC Delivery &amp; Automation</p><p><strong>What You Will Be Doing</strong></p><ul><li>Design, develop &amp; maintain cloud native solutions &amp; analytics dashboards related to proactive monitoring and network hygiene</li><li>Ensures appropriate documentation for all development and modification.</li><li>Ensures integrity and security of institutional data.</li><li>Design Data flow diagrams to define work flow and data structure diagrams to refine data base needs in a simple system.</li></ul><p><strong>What You Will Bring to ChargePoint</strong></p><ul><li>Solid grasp on architecture principles, design principles and design patterns</li><li>Ability to translate software requirements to low level design.</li><li>Evangelize clean architecture, clean code practices and follow the same.</li><li>Comprehensive understanding of the current state of web technologies and best practices</li><li>Operate with a security and reliability-first mindset</li><li>Have a playbook for running agile teams with minimal overhead</li><li>Have the skills to create simple solutions for complex problems quickly; often benefiting from tried-and-true techniques</li><li>Put user value before tech, learn quickly, work iteratively and naturally seek collaboration</li><li>Strong communication skills</li><li>Comfortable working as a team, helping train, guide, and lead others in building projects start to finish</li><li>Perform code reviews</li></ul><p><strong>Requirements</strong></p><ul><li>7+ years Engineer experience, extensively with Django/Flask, React and relational databases in microservice based architecture</li><li>Bachelor’s degree in Computer Science, Computer Engineering preferred</li><li>Strong experience with AWS technologies, including Route53, CloudFront, API Gateway, Aurora RDS, DynamoDB, ElasticCache, EKS, ECS, S3, AWS SDK, Lambda,and SQS</li><li>Proficient in writing unit and integration test cases and hands-on experience with complete CI/CD tooling, including GIT, CICD tools, and security scans</li><li>Knowledge of Linux administration, adept at using console commands, scripting, and utilities such as Python and BASH</li><li>Demonstrated experience in building REST APIs and utilizing OpenAPI/Swagger Spec</li><li>Knowledge in Kafka or Flink</li><li>Proven experience with Agile Development, CI/CD tools, project tracking tools, and familiarity with GRPC, GraphQL, and automation tools like Ansible, Chef, Puppet.</li><li>Experience in 3 party integrations and custom application development and deployment</li><li>Proficient in SQL/NoSQL and other databases/persistent stores including: MySQL, Postgres, Redis, DynamoDB, ElasticSearch and MongoDB</li><li>Experience with BI Tools like Tableau, PowerBI</li></ul><p><strong>Experiences desired:</strong></p><ul><li>Experience dealing with large scale, technologically complex accounts which are constantly challenging product capabilities</li><li>Demonstrated ability to communicate, present and influence credibly and effectively at all levels of the organization.</li></ul><p><strong>Location</strong></p><p><strong>Bangalore, India</strong></p><p>We are committed to an inclusive and diverse team. ChargePoint is an equal opportunity employer. We do not discriminate based on race, color, ethnicity, ancestry, national origin, religion, sex, gender, gender identity, gender expression, sexual orientation, age, disability, veteran status, genetic information, marital status or any legally protected status.</p><p>If there is a match between your experiences/skills and the Company needs, we will contact you directly.</p><p>ChargePoint is committed to fostering an inclusive workplace that welcomes and supports all qualified individuals. In alignment with this commitment, we ensure that persons with disabilities are provided with reasonable accommodations throughout the employment process.</p><p>If you need a reasonable accommodation to participate in the application or interview process, to perform essential job functions, or to access any other benefits and privileges of employment, please contact us at <strong>accommodations@chargepoint.com</strong>.</p><p>ChargePoint is an equal opportunity employer.</p><p>Applicants only - Recruiting agencies do not contact.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

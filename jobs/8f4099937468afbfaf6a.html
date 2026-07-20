@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Fluence (Nasdaq: FLNC) is a global market leader delivering intelligent energy storage and optimization software for renewables and storage. Our solutions and operational services are helping to create a more resilient grid and unlock the full potential of renewable portfolios. With gigawatts of successful implementations across nearly 50 markets, we are transforming the way we power our world for a more sustainable future. For more information, please visit fluenceenergy.com.</p><p><strong>Job Description:</strong></p><p><strong>Role Overview</strong></p><p>Fluence is seeking a Director of IR to join the Investor Relations team. Reporting directly to the VP of Investor Relations, this role will serve as a senior leader within the IR function and act as a key partner to the CFO, executive leadership team, Finance, Legal, Accounting, FP&amp;A, Corporate Communications, and business unit leaders.</p><p>The Director of IR will help shape and execute Fluence’s investor relations strategy, lead core IR workstreams, manage critical components of the quarterly earnings process, and represent the company with investors, analysts, banks, and other capital markets stakeholders. This role requires strong financial acumen, public-company judgment, executive presence, and the ability to translate complex financial, strategic, and operational information into clear, compelling messaging for the investment community.</p><p><strong>Key Responsibilities</strong></p><p><strong>Investor Relations Strategy &amp; Narrative</strong></p><ul><li>Lead the development and execution of key components of Fluence’s investor relations strategy in alignment with the company’s growth objectives, financial priorities, and external positioning.</li><li>Own and refine the company’s investor narrative, ensuring messaging is clear, consistent, data-driven, and aligned with executive leadership priorities.</li><li>Serve as a senior internal advisor on investor perspectives, market expectations, analyst sentiment, and potential investor reaction to business performance, strategic decisions, and external announcements.</li><li>Partner with the VP of IR, CFO, and executive leadership to prepare investor messaging, leadership briefing materials, talking points, and external communication themes.</li><li>Develop executive- and board-level materials summarizing investor feedback, shareholder trends, analyst views, market activity, and implications for Fluence’s positioning.</li></ul><p><strong>Earnings, Disclosure &amp; Capital Markets Execution</strong></p><ul><li>Lead the planning and execution of the quarterly earnings process, including timeline management, cross-functional coordination, earnings materials, executive scripts, Q&amp;A preparation, disclosure review, and post-earnings investor follow-up.</li><li>Partner closely with Finance, Accounting, Legal, FP&amp;A, Corporate Communications, and business leaders to ensure investor communications are accurate, timely, consistent, and compliant with SEC disclosure requirements, Reg FD, and public-company governance expectations.</li><li>Own preparation of investor-facing materials, including earnings presentations, investor decks, conference materials, roadshow materials, fact sheets, analyst materials, and leadership briefing documents.</li><li>Support capital markets activity, strategic transactions, and other high-impact initiatives by developing investor messaging, market analysis, and executive-ready materials.</li><li>Establish and improve IR processes, tools, reporting, calendars, and operating rhythms to increase consistency, quality, and scalability across the IR function.</li></ul><p><strong>Investor &amp; Analyst Engagement</strong></p><ul><li>Serve as a senior representative of the Investor Relations function with institutional investors, sell-side analysts, banks, and other capital markets stakeholders.</li><li>Develop and manage the annual investor engagement strategy and calendar, including roadshows, conferences, investor meetings, analyst touchpoints, and targeted shareholder outreach.</li><li>Build and maintain strong relationships with institutional investors, sell-side analysts, and external capital markets partners.</li><li>Manage inbound investor and analyst inquiries, ensuring timely, accurate, and high-quality responses aligned with approved messaging and disclosure requirements.</li><li>Partner with the VP of IR and CFO to prepare executives for investor meetings, analyst calls, conferences, earnings calls, and other external engagements.</li><li>Capture, synthesize, and communicate investor feedback to senior leadership to inform messaging, strategy, and market positioning.</li></ul><p><strong>Market Intelligence &amp; Executive Advisory</strong></p><ul><li>Lead market intelligence efforts, including monitoring shareholder base, analyst sentiment, peer performance, trading activity, industry trends, macroeconomic developments, and capital markets activity.</li><li>Provide regular insights and recommendations to the CFO, VP of IR, and executive leadership regarding investor sentiment, market perception, peer positioning, and emerging risks or opportunities.</li><li>Analyze analyst reports, investor feedback, peer disclosures, valuation trends, and market developments to identify themes that may affect Fluence’s external narrative and investor confidence.</li><li>Develop recurring reporting for senior leadership on investor activity, analyst views, shareholder composition, peer performance, and capital markets trends.</li><li>Advise senior leaders on how company performance, strategic decisions, financial results, and external developments may be perceived by investors and analysts.</li></ul><p><strong>Cross-Functional Leadership</strong></p><ul><li>Lead cross-functional IR workstreams across Finance, Accounting, FP&amp;A, Legal, Corporate Communications, Strategy, and business units.</li><li>Influence stakeholders across the organization to ensure alignment, accuracy, and readiness for investor-facing communications.</li><li>Serve as a trusted partner to senior leaders by bringing strong judgment, discretion, financial expertise, and external market perspective.</li><li>Manage external partners, vendors, consultants, surveillance providers, conference organizers, and other IR-related resources as needed.</li><li>Lead, coach, or coordinate direct or indirect resources supporting IR deliverables, as applicable.</li></ul><p><strong>Required Qualifications &amp; Experience</strong></p><ul><li>Bachelor’s degree in Finance, Economics, Business, Accounting, or related field required; MBA, CFA, or CPA preferred.</li><li>8+ years of relevant experience in Investor Relations, Investment Banking, Equity Research, Buy-Side or Sell-Side Analysis, Corporate Finance, Capital Markets, or a related public-company environment.</li><li>Demonstrated experience supporting or leading public-company earnings cycles, investor communications, financial messaging, and executive-level preparation.</li><li>Strong understanding of SEC reporting, Reg FD, disclosure controls, financial reporting, capital markets, and public-company communication standards.</li><li>Experience engaging directly with institutional investors, sell-side analysts, banks, and/or other capital markets stakeholders.</li><li>Strong financial analysis skills, including the ability to interpret financial statements, operating metrics, valuation trends, analyst models, and peer performance.</li><li>Demonstrated ability to translate complex financial, strategic, and operational information into clear, compelling investor-facing messaging.</li><li>Executive presence, sound judgment, discretion, and confidence to engage credibly with senior leaders, investors, analysts, and external stakeholders.</li><li>Exceptional written and verbal communication skills, with strong attention to detail, accuracy, and consistency.</li><li>Ability to lead cross-functional workstreams, influence without authority, and manage time-sensitive deliverables in a fast-paced public-company environment.</li><li>High level of integrity, business judgment, and professionalism when handling confidential, market-sensitive, and regulated information.</li><li>Ability to travel for investor meetings, conferences, roadshows, and other external engagements as needed.</li></ul><p><strong>Our Culture</strong></p><p>At Fluence, our culture is the foundation that drives our ambitious growth strategy and fuels our mission to transform the future of energy. Our core cultural pillars empower us to innovate, collaborate, and lead with purpose, ensuring we continue to deliver unparalleled value to our customers and the world.</p><p><strong>Unleash Voices</strong></p><p>We believe every voice matters. We encourage openness, active listening, and decisive action to create a culture where everyone has the opportunity to contribute to our success. We foster an environment where diverse perspectives are heard and valued, driving innovation and progress.</p><p><strong>Customer Fluent</strong></p><p>Our customers are at the heart of everything we do. We’re committed to delivering exceptional value that exceeds expectations by understanding our customers&#39; needs and adapting swiftly to meet them. Our deep focus on customer satisfaction drives us to continuously improve and innovate.</p><p><strong>Infinite Impact</strong></p><p>We are committed to creating the impossible. We push boundaries to deliver sustainable, game-changing solutions that shape a brighter, more energy-efficient future for all. Our team is passionate about making a lasting impact that will resonate for generations to come.</p><p><strong>All In</strong></p><p>We are all in for growth. Our teams are relentlessly focused on identifying and seizing opportunities that propel us forward. We embrace an ownership mindset, pushing ourselves and each other to accelerate progress and create lasting success.</p><p>Equal Opportunity Employer</p><p>At Fluence, we believe great teams are built on a collaborative and connected culture. We’re proud to be an Equal Opportunity Employer and welcome qualified applicants of all backgrounds. Employment decisions are made without regard to race, color, religion, sex, sexual orientation, national origin, age, disability, veteran status, gender identity or expression, genetic information, or any other status protected by law.</p><p>Work Authorization</p><p>To join our team, you’ll need to be legally authorized to work in the United States at the time of application and throughout your employment, without the need for employer sponsorship. Please note that Fluence does not sponsor work visas for this position.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

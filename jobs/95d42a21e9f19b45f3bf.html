@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Senior Substation Main Plant Specialist (Drawing Office)</strong></p><p><strong>Location:</strong> Cambuslang/Hybrid Working</p><p><strong>Salary:</strong> From £55,000 + Excellent Benefits</p><p><strong>Closing Date:</strong>23rd July 2026</p><p><strong>What you’ll be doing</strong></p><p>ScottishPower’s Drawing Office is expanding to support growing investment across the Transmission Network, and we are seeking a <strong>Senior Substation Main Plant Specialist</strong>to join our team.</p><p>In this role, you will be a technical focal point for the production and coordination of <strong>substation plant design deliverables</strong>, playing a key role in the development of transmission infrastructure projects from concept through to construction.</p><p>Your primary focus will be the creation, development, and assurance of detailed plant design drawings for high-voltage substations, including equipment layouts, general arrangements, sections, elevations, busbar arrangements, equipment clearances, and plant-specific installation details.</p><p>Reporting to the Plant Discipline Lead, you will be responsible for ensuring all plant design outputs are delivered to the highest standards of quality, accuracy, safety, and compliance. You will work closely with Plant Engineers and multidisciplinary design teams to develop practical, constructable designs that meet technical specifications, operational requirements, and client expectations.</p><p>Using your extensive knowledge of <strong>substation plant design</strong>, you will lead the production and checking of engineering drawings, ensuring the correct application of industry standards, design clearances, equipment interfaces, and site-specific constraints. You will support the integration of primary plant equipment including transformers, switchgear, reactors, instrument transformers, steel structures, and associated plant systems within complex transmission environments.</p><p>We are looking for a highly motivated individual with a strong background in <strong>HV substation plant layout and design</strong>, excellent CAD and digital engineering skills, and a thorough understanding of transmission network infrastructure. You will bring a proactive approach to problem-solving, drive technical excellence within the Drawing Office, and support the development of plant design capability through mentoring and knowledge sharing.</p><p>At Scottish Power, you will be part of a collaborative engineering environment where innovation, safety, and continuous improvement are at the heart of everything we do. This is an exciting opportunity to play a key role in delivering critical transmission projects while helping to shape and develop best practice in plant design across the business.</p><p><strong>Responsibilities</strong></p><ul><li>Act as a technical authority, providing expert guidance on complex engineering drawing and modelling challenges.</li><li>Lead delivery of drawing and BIM outputs for high-complexity transmission projects.</li><li>Review, validate, and approve engineering drawings and models to ensure full compliance with standards.</li><li>Mentor and develop CAD Designers, driving best practice and consistency across the team.</li><li>Support and plan team workload.</li><li>Act as a key contact for stakeholders, resolving technical queries and coordinating across disciplines.</li><li>Take ownership of QA processes and ensure compliance with audited standards (e.g. ISO / BS EN 9001).</li><li>Define and improve drawing standards, BIM processes, templates, and workflows.</li><li>Lead BIM coordination strategy including clash detection oversight and model governance.</li><li>Oversee design change control, ensuring traceability and robust documentation.</li><li>Drive continuous improvement and innovation within the Drawing Office.</li><li>Identify and manage risks, ensuring timely and high-quality project delivery.</li></ul><p><strong>What you’ll bring</strong></p><ul><li>Extensive experience in CAD/BIM within transmission, utilities, or complex infrastructure projects.</li><li>Expert-level proficiency in Autodesk tools including Revit, AutoCAD, Navisworks, and Vault.</li><li>Proven ability to lead and approve complex engineering design deliverables.</li><li>Strong knowledge of engineering design standards, construction methods, and BIM Level 2 workflows.</li><li>Experience mentoring and developing junior designers.</li><li>Ability to define and improve CAD/BIM standards and workflows.</li><li>Strong stakeholder engagement skills across multidisciplinary teams.</li><li>Experience leading BIM coordination and clash resolution.</li><li>High level of accountability with strong organisational and delivery skills.</li><li>Proactive approach to problem solving, risk management, and continuous improvement.</li><li>Excellent communication skills for technical and non-technical audiences.</li></ul><p><strong>What’s in it for you</strong></p><p>As well as a competitive salary which is reviewed annually, you can also enjoy a number of other benefits. With our pension scheme, we’ll double match your contribution up to a company contribution of 10%.</p><p>At Scottish Power, we believe it’s the little things we do in life that make a big difference. From helping you look after your family’s wellbeing, save for your future and take personal steps for climate action – our benefits are designed to help you do just that - so that you have everything you need to take care of your world – today and tomorrow. That’s why our benefits include:</p><ul><li>36 days annual leave</li><li>Holiday purchase – perfect your work/life balance with extra annual leave</li><li>Share Incentive Plan and Sharesave Scheme</li><li>Payroll giving and charity matched funding</li><li>Technology Vouchers – save more and spread the cost of your technology purchases</li><li>Count us in – pledge to reduce carbon emissions and help fight climate change</li><li>Electric Vehicle Schemes – to help you transition to green/clean driving</li><li>Cycle to Work scheme and public transport season ticket loans</li><li>Options to purchase dental insurance, private medical insurance, health cash plan and annual health assessments</li><li>Life Assurance (4x salary)</li><li>Access to ‘nudge’ financial wellbeing support</li><li>Plus shopping, leisure, restaurant and gym discounts, and unique employee deals on travel insurance and more</li></ul><p><strong>Why SP Energy Networks</strong></p><p>SP Energy Networks is part of the Iberdrola Group, one of the world’s largest integrated utility companies and a world leader in wind energy. We keep electricity flowing to homes and businesses through Central and Southern Scotland, North Wales and in the Northwest of England. We operate over 4000km of cables and lines that make-up the transmission network – connecting infrastructure like wind farms into the electricity system. It’s a role that puts us right at the heart of Scotland’s ambition to be Net Zero by 2044. And we’re taking it very seriously.</p><p>We’re investing &gt;£5.5 billion into our transmission network, directly supporting the rapid growth needed in renewable energy. With diverse opportunities across our businesses and a commitment to invest in our own internal talent, Scottish Power can offer people real career opportunities that meet personal and professional goals, in a global organisation.</p><p>Inclusion, diversity, and a social purpose are at the heart of everything we do. Together with our values, they bring us together into a stronger, more sustainable business with direct links to the communities we serve. It takes all kinds of people to build a large-scale business like ours, so whatever your background, you’ll fit right in.</p><p>We are committed to providing reasonable support or adjustments in our recruiting processes for candidates with disabilities, long term conditions, mental health conditions, or who are neurodivergent or require pregnancy-related support. If you need support, please reach out to careers@scottishpower.com.</p><p><strong>Mobility</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country. If/when required, the Company will support the employee with the necessary Immigration requirements.</p><p><strong>IMPORTANT</strong></p><p>Advert will close at 23:59 GMT the day before <strong>Job Posting End Date</strong> below</p><p>July-24-2026</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

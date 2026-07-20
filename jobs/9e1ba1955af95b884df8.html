@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Ever since we started in 2007, Sunrun has been at the forefront of connecting people to the cleanest energy on Earth. It’s why we’ve become the #1 home solar and battery company in America. Today, we’re on a mission to change the way the world interacts with energy, and we’re building a company and brand that puts power at the center of life. And we’re doing it by designing a dynamic culture where employee development, well-being, and safety come first. We’re unlike any other solar company. Our vertically integrated model gives us total control over every part of the energy lifecycle – from sale through installation and beyond – so you can find endless opportunities for growth. Come join a career you can grow in and a culture you can run with.</p><p>The Senior Escalations Expert works directly with Sunrun Customer Care, Collections, Field Service, Consumer Compliance,  Legal, and Executives with a focus on customer satisfaction in order to effectively de-escalate priority, complex, and high risk customer disputes and prevent similar situations in the future. This person will be laser focused on customer communications, internal coordination,  case management, and above all, being the beloved and trusted partner for our customers. The Senior Escalations Expert will be responsible for highly prioritized customer issues related, but not limited, to executive escalations, sensitive accounts, certain legal specialties, pre-activation cases, and other sensitive, high risk escalation categories.</p><p>ESSENTIAL DUTIES AND RESPONSIBILITIES</p><ul><li>Manage and resolve all escalated customer issues consistent with Sunrun guidelines, serving as the customer’s single point of contact.</li><li>Requires no oversight or instruction when directly interacting with executives in a professional and concise manner.</li><li>Begins forming positive relationships with important third parties, actioning feedback and highlighting Sunrun’s best practices and speedy resolutions.</li><li>Works directly with Staff Prevention SMEs to contribute to, and enforce, processes, training, and consequences based on customer escalation insights.</li><li>Deliver world-class customer experience for customers led by empathy and a “can do” attitude.</li><li>Set and achieve customer expectations through all points of contact, providing regular proactive communication on case and project status, timelines, and next steps.</li><li>Provide accurate and timely resolution to customer questions and requests, thinking outside the box about complex issues, providing a seamless customer experience with little or no handoffs between team members or other departments.</li><li>Work with customers and internal scheduling teams to schedule site visit appointments, ensure completion, and appropriate follow-up.</li><li>Obtain signatures on time sensitive and confidential documents.</li><li>Document all relevant information, customer interactions, findings, insights, and resolutions  in accordance with standard processes.</li><li>Maintain a current understanding of all aspects of the solar journey, including, but not limited to, Sunrun agreement terms and obligations, billing, system and battery performance.</li><li>Maintain a current understanding of all resolution tools consistent with Sunrun guidelines.</li><li>Discuss customer feedback and solicit customer satisfaction feedback post escalation resolution.</li></ul><p>REQUIREMENTS (EDUCATION, EXPERIENCE, CERTIFICATIONS, AND OTHER SKILLS)</p><ul><li>Strong knowledge of Escalations &amp; Prevention processes and procedures.</li><li>Regularly receives five star ratings and/or consistent positive feedback from customers.</li><li>High school diploma or equivalent education; Bachelor’s degree preferred.</li><li>5+ years of relevant work experience, preferably with customer success, project management, planning, and in-house legal department or coordination experience.</li><li>Excellent written and oral communication skills, and an ability to effectively explain complex issues to various audiences via email, conference call, one-on-one, and group settings.</li><li>History of working as a team to accomplish goals and fosters a collaborative and supportive environment; Your co-workers know that they can rely on you to pitch in regardless of the subject matter or time constraints.</li><li>Ability to work independently on multiple cases with minimal supervision in a fast-paced environment, and able to manage and prioritize multiple deadlines.</li><li>Must be comfortable interacting with all levels of management, building relationships across teams and with key stakeholders to facilitate the resolution of cases, many of whom will be distributed across the country.</li><li>Strong proficiency with Google Suite, Excel, and PowerPoint, Salesforce knowledge preferred.</li><li>Excellent organizational and time management skills.</li><li>Meticulous attention to detail, passionate about diving into the “fine print,” and interested in learning and acquiring new skills.</li><li>You work best when given complete responsibility and ownership over issues, even if they’re new to you.</li><li>You dig in - there is nothing you’re not willing to learn and master - and you sweat the details.</li></ul><p><strong>Recruiter:</strong></p><p>Danielle Levitan (danielle.levitan@sunrun.com)</p><p>Please note that the compensation information is made in good faith for this position only.  It assumes that the successful candidate will be located in markets within the United States that warrant the compensation.  Please speak with your recruiter to learn more.</p><p>Starting salary/wage for this opportunity:</p><p>$64,852.52 to $86,470.02</p><p>Compensation decisions will not be based on a candidate&#39;s salary history. You can learn more here.</p><p>This job description outlines the primary responsibilities, some essential job functions, and qualifications for the role. It may not include all essential functions, tasks, or requirements. If you are a qualified individual with a disability and you need reasonable accommodation during the hiring process or to perform this role, please contact us at candidateaccommodations@sunrun.com.</p><p>Sunrun is proud to be an equal opportunity employer that does not tolerate discrimination or harassment of any kind.  We believe that empowering people and valuing their differences are essential for our mission of connecting people to the cleanest energy on earth. Learn more here: EEO | Sunrun</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

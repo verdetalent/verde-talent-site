@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p><strong>Our Team</strong></p><p>We have an exciting leadership role in our Transmission Project Controls Risk Management and EVM Team.  The responsible person will lead and supervise a team of Project Controls Analysts and Specialists to support and oversee the risk management and EVM processes and initiatives within the Project Controls Department. This includes developing and providing procedures, processes, practices, tools, dashboards, reports and systems necessary to effectively and proactively manage, control and report on the risk and EVM performance for projects managed by the Transmission Organization.</p><p>This role supports the development, maintenance and reporting of Key Project Indicators (KPI’s) for progress measurement, risk management and EVM, and other key metrics.  The goal is to use these to continuously drive effectiveness, efficiencies and performance in support of the Project Management Organization.</p><p>This role in a risk management capacity facilitates the production of a variety of complex reports and analyses in support of Eversource’s project initiation, planning, execution, control, compliance and close-out initiatives.</p><p>The lead will work closely with all functional departments and tasked with ensuring adherence to Eversource’s policies, procedures, and standards and directly supervises Project Controls team members.</p><p><strong>The role can be based out of Hartford, CT, or Hookset, NH</strong></p><p><strong>Essential Functions:</strong></p><ul><li>Supports the development, implementation, management and continuous improvement for Project Risk and Earned Value Management, Project Performance processes, methodologies, procedures and services including, but not limited to:</li><li>Builds and leads a diverse, cohesive team to meet the department and strategic needs of Eversource.</li><li>Provides direction and coaching as needed to the Risk and EVM team members.</li><li>Evaluates team performance, training needs and provides development opportunities as appropriate.</li><li>Supports the development and maintenance of risk management and EVM policies and procedures.</li><li>Review and update the Project Risk Management (PRM) and Earned Value Management (EVM) Plans in collaboration with relevant stakeholders.</li><li>Lead in initiating and coordinating all PRM and EVM activities, including reviewing risk register, risk requiring action (RRAs) reviews, EVM project and portfolio performance, forensic analysis of cost and schedule and status reporting. Facilitate cross-functional collaboration and ensure timely completion of all deliverables.</li><li>Ensure compliance of the Risk Registers being maintained in the system of record as a central repository of all identified risks, their attributes, and corresponding response plans.</li><li>Work with project stakeholders to:</li><li>Update the Risk Register to reflect changes in risk exposure, mitigation efforts, and residual risks</li><li>Evaluate EVM performance, establish Project Controls recommendations for corrective actions</li><li>Implement risk management and EVM tools and provide training sessions and ongoing guidance to project team members and stakeholders on the project risk management and EVM processes, including management principles, techniques, and tools.</li><li>Foster a culture within the project environment that drives a proactive approach in risk management and achieving high levels EVM performance.</li><li>Works with project stakeholders including but not limited to Project Management, Investment Planning, Operations, Contract Administration, Planning &amp; Scheduling, Engineering, Procurement, Materials Management, Estimating and Project Performance to ensure risk management and EVM Performance Measurement methodologies are in alignment with corporate goals and strategies.</li><li>Work with other stakeholders and management teams to oversee the quantitative risk analysis process and tools, which include techniques such as Earned Value Management (EVM), Monte Carlo simulation, sensitivity analysis, and probabilistic modeling.</li><li>Collaborate with relevant stakeholders to ensure the accuracy and reliability of risk assessment and EVM results.</li><li>Produce risk and EVM metrics, interpret the results of quantitative risk analysis, CPI &amp; SPI performance and other monitoring activities to identify trends, emerging risks, and areas of concern.</li><li>Provide insightful recommendations based on EVM performance, risk levels, risk and EVM response strategies, and project control actions based on these findings.</li><li>Responsible for monitoring risk and EVM against the Transmission Capital Portfolio and execution readiness.</li><li>Perform forensic, deep dive root cause analysis of risk and EVM performance (cost, schedule and scope) driving visibility and corrective or preventive actions to assure compliance to the project plan.</li><li>Prepare written reports, presentations and correspondence as requested.</li></ul><p><strong>Technical Knowledge/Skill/Education/Licenses/Certifications:</strong></p><ul><li>Possess a robust understanding of project management principles, processes, methodologies, and practices acquired through experience in project delivery roles.</li><li>Knowledge of the utility energy delivery industry.</li><li>Knowledge of risk management, EVM, finance, and analytics.</li><li>Ability to anticipate, define and manage solutions to complex, interrelated risk management, EVM, finance and /or regulatory issues.</li><li>Experience with implementing systems, Migrating and integrating data from several source systems.</li><li>Exhibit proficiency in quantitative techniques associated with risk management, such as Monte Carlo analysis, statistical modeling, and data-driven decision-making.</li><li>Interpret numerical data accurately and derive actionable insights to inform risk mitigation and EVM corrective action strategies.</li><li>Must be able to facilitate discussions, gain consensus, develop action plans and drive implementation.</li><li>Ability to think and act strategically in a fast-paced environment with frequently shifting and/or conflicting priorities.</li><li>Ability to work effectively with various levels within the organization.</li><li>Ability to monitor and analyze risk and EVM information and make recommendations.</li><li>Excellent verbal and written communication skills and the ability to present in front of large audiences</li><li>The individual must be self-reliant with a strong sense of self-motivation, possess good communication skills, and demonstrate the ability to set priorities and support diverse needs.</li><li>Previous experience as a people leader and / or working in team environments as well as supporting process improvements and group facilitation.</li><li>This position requires a working knowledge of the fundamentals of project management, risk management, cost controls, scheduling techniques, and any PMIS systems.</li></ul><p><strong>Education:</strong></p><ul><li>Bachelor’s degree in engineering, economics, IT, accounting, finance, business/management or related degree is required</li><li>Equivalent experience in lieu of a bachelor’s degree will be considered</li><li>Advanced degree in related field is highly desirable</li></ul><p><strong>Experience:</strong></p><ul><li>Minimum of 10 years of related experience is required</li><li>Minimum 1 year of leadership experience</li><li>Experience in Utility and Energy Delivery is preferred</li><li>Oracle Primavera P6 or OPC scheduling is preferred</li></ul><p><strong>Licenses &amp; Certifications:</strong></p><ul><li>Project Management certification (PMP) is highly desirable</li><li>Risk Management Certification (RMP and ISO 31000) is highly desirable</li><li>Six Sigma is highly desirable</li></ul><p><strong>Working Conditions:</strong></p><ul><li>Must be available to work emergency restoration assignment as required.</li><li>Must be available to travel between MA/CT/NH as necessary</li><li><strong>Hybrid Schedule:</strong> Eversource supports work-life balance by offering hybrid schedules for certain roles. Eligibility is based on job responsibilities, operational needs, nature of work and team dynamics. Current guidelines require employees to work at least three days in the office, including Tuesdays and Wednesdays, with the third day set by the employee and supervisor based on department needs. These guidelines apply to roles approved for remote work and are subject to change, based on managerial discretion and work performance. All applicants must be able to work for up to five days in the office if needed (for example: emergencies, training, or other business needs) or should the policy change.</li></ul><p>​</p><p>#LI-ES3</p><p>#LI-Hybrid</p><p>#tranajd</p><p>#LI-BC1</p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p><strong>Compensation and Benefits:</strong></p><p>Eversource offers a competitive total rewards program. Check out our careers site for an overview of our benefits programs. Salary is commensurate with your experience. This position is eligible for a potential incentive. The annual salary range for this position is:</p><p>$147,600.00-$164,000.00</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>1</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement</strong>:</p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

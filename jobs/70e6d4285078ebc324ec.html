@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Invenergy is North America’s largest privately held developer, owner, and operator of power infrastructure. With 25 years of trusted execution, we deliver reliable, affordable energy through a diverse portfolio that includes natural gas, solar, land-based wind, energy storage, transmission, and domestic manufacturing. Headquartered in Chicago, we develop, own, and operate large scale projects that power communities and support the energy future.</p><p>This position will be open for application for at least 3 calendar days from the posting date. This position will remain open for application based on business need, which may be before or after the 3-day posting window.</p><p><strong>Job Description</strong></p><p>The Manager, Data and Integrations is responsible for overseeing the enterprise integration program and the operational management of data pipelines, analytics platforms, and integration workflows. This role manages the technology stack spanning Azure, Databricks, Synapse, SQL Server, and Boomi, ensuring secure, reliable, and high‑performing data and integration operations. The manager will develop program roadmaps, govern standards, lead cross‑functional collaboration, and ensure seamless flow of data across applications, systems, and business processes.</p><p>This role provides technical leadership, operational oversight, and strategic direction to a team of analysts and integration specialists, as well as external vendors. The Manager, Data &amp; Integrations partners closely with business teams to understand data and analytics needs, supports data exploration, and ensures governance, compliance, and efficient operations across the enterprise data ecosystem.</p><p><strong>Responsibilities</strong></p><p><strong>**Program Leadership &amp; Strategy</strong>**</p><ul><li>Lead the enterprise application integration and data operations program, including roadmap development, governance, standards, and strategic planning.</li><li>Provide regular updates to IT and business leadership regarding program progress, performance, risks, and planned improvements.</li><li>Drive continuous improvement of integration and data platform operations through process optimization, automation, and adoption of industry best practices.</li></ul><p><strong>**Platform &amp; Data Pipeline Operations</strong>**</p><ul><li>Oversee daily operations and monitoring of data pipelines and platforms across Azure, Databricks, Synapse, SQL Server, and Boomi.</li><li>Ensure reliability, availability, and performance of integration workflows and data processing pipelines.</li><li>Direct and support root-cause analysis of operational issues and establish preventative practices, alerts, and dashboards.</li><li>Manage system configuration, access provisioning, workspace/environment administration, and routine platform health checks.</li></ul><p><strong>**Integration Management</strong>**</p><ul><li>Lead and supervise the design, development, deployment, and maintenance of application integrations using Boomi and other integration technologies.</li><li>Ensure integrations are properly cataloged, documented, secure, and aligned with enterprise architecture principles.</li><li>Improve support processes by reducing escalations through standard resolutions, documentation, and knowledge transfer to the IT Service Desk.</li><li>Oversee QA, UAT, and regression testing for all new or enhanced integrations.</li></ul><p><strong>**Data Governance, Quality &amp; Compliance</strong>**</p><ul><li>Contribute to enterprise data governance practices, including metadata management, lineage documentation, and catalog upkeep.</li><li>Ensure integrations and data pipelines adhere to governance, security, and compliance requirements.</li><li>Support data quality practices by identifying data anomalies, coordinating remediation efforts, and implementing automated validation checks.</li></ul><p><strong>**Cross‑Functional Partnership &amp; Business Enablement</strong>**</p><ul><li>Collaborate with business teams to understand analytics and reporting needs, supporting data exploration and enabling self-service usage of enterprise data.</li><li>Partner with application teams, enterprise architecture, and functional IT groups to ensure integrations align with application roadmaps and business priorities.</li><li>Communicate change management plans, ensuring integration owners are informed and changes are tested and validated before deployment.</li></ul><p><strong>**Team Leadership &amp; Vendor Management</strong>**</p><ul><li>Manage a team of system analysts, data operations specialists, and third‑party vendors responsible for integrations and data platform operations.</li><li>Provide coaching, development, and guidance on integration patterns, data engineering best practices, and operational excellence.</li><li>Oversee vendor coordination for integration support, new capability delivery, and escalation resolution.</li></ul><p><strong>**Operational Administration</strong>**</p><ul><li>Maintain operational tasks including cost center updates, distribution list management, access reviews, and platform usage monitoring.</li><li>Develop metrics, dashboards, and weekly status reports to communicate operational performance and guide decision making.</li><li>Maintain shared repositories of system documentation, SOPs, architecture diagrams, training materials, and support guides.</li></ul><p><strong>**Required Qualifications</strong>**</p><ul><li>Bachelor’s degree in Computer Science, Information Systems, or related field.</li><li>2+ years managing integration programs and technical teams.</li><li>5+ years of experience working with modern integration platforms (Boomi, Azure Integration Services, MuleSoft).</li><li>5+ years of experience working with modern data platforms (Databricks, Azure Data Factory, FiveTran).</li><li>7+ years designing and implementing integration solutions (REST, SOAP, APIs, file-based integrations).</li><li>Hands-on experience managing Azure, SQL Server, Azure SQL, Databricks, or Synapse environments.</li><li>Experience supporting or implementing integrations with SaaS platforms such as Oracle Cloud, Workday, Hexagon EAM, etc.</li><li>Strong understanding of data flows, business processes, and technical interfaces.</li><li>Knowledge of common protocols and formats: XML, JSON, REST, SOAP, JDBC/ODBC, SFTP, PGP encryption.</li><li>Strong communication, organizational, and stakeholder management skills.</li><li>Ability to manage project delivery and multiple changing priorities.</li><li>Eligible to work in the United States without the need for employer sponsorship.</li></ul><p><strong>**Preferred Qualifications</strong>**</p><ul><li>PMP or similar project management certification.</li><li>Hands‑on experience with Boomi AtomSphere administration and monitoring.</li><li>Familiarity with Python, JavaScript, or NodeJS.</li><li>Experience with Power BI or other analytics/data visualization tools.</li><li>Experience with advanced Excel for data validation and manipulation.</li><li>Understanding of Azure Fabric, Unity Catalog, or modern data governance tools.</li></ul><p>#LI-ONSITE</p><p><strong>Base Pay</strong></p><p>139,000.00 - 165,000.00 USD Annual</p><p>Bonus: 25% - 40%</p><p>The base pay range reflects the minimum and maximum target salary for the position. Invenergy considers a number of factors when determining base pay offers such as the scope and responsibilities of the position and the candidate&#39;s experience, education and skills.</p><p>In addition to base pay, the total annual compensation package may also include eligibility to participate in our bonus program(s) which are designed to reward individual and company performance. Your recruiter can share more about bonus eligibility for this position during the hiring process.</p><p>Invenergy offers a variety of other benefits including medical, dental and vision insurance, 401k, paid time off, etc.</p><p>Invenergy LLC is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to, among other things, race, color, religion, sex, sexual orientation, gender identity, national origin, age, status as a protected veteran, or disability.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

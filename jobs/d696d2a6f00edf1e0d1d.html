@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Sunday, July 19, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>**Position Summary</strong>**</p><p>This position can be located at any Duke Energy location that has vacancy. The exact location will be determined at the time of offer based on business needs.</p><p>The Lead Portfolio Management Specialist serves as the Portfolio Manager for assigned areas of responsibility and is accountable for end‑to‑end coordination, integration, and quality assurance of the Power Grid Operations (PGO) capital investment planning process, with a primary focus on the Enterprise Capital Optimization (ECO) cycle and the rolling five‑year capital plan. This role works closely with Portfolio Owners, Investment Owners, PGO leadership, regulatory partners, Finance, and cross‑functional stakeholders to ensure capital plans reflect true business need, meet governance and timing requirements, and are prepared for functional and jurisdictional executive funding reviews and endorsement decisions.</p><p>In addition, this role serves as a centralized governance and integration point for PGO capital planning, ensuring transparency, consistency, and risk‑informed decision‑making in an inherently capital‑constrained funding environment. The role translates complex funding tradeoffs and associated risks into decision‑ready insights through expert‑level process guidance, stakeholder coordination, and analytics support critical to effective capital planning and allocation.</p><p><strong>**Responsibilities</strong>**</p><p><strong>Capital Planning Governance &amp; Oversight</strong></p><ul><li>Lead initial data collection for the five-year Distribution Capital Plan, including planning cycle kickoff meetings, timelines, and communications with key stakeholders such as Portfolio Owners, Investment Owners, Program Managers, and other cross-functional partners.</li><li>Serve as a subject matter expert for the PGO capital planning process, including value scoring support, prioritization discussions, and adherence to defined planning frameworks, governance requirements, and milestones.</li><li>Provide clear guidance, instructions, and ongoing status updates to Investment Owners to ensure all required templates and inputs are fully completed, quality checked, validated, and submitted by required deadlines.</li><li>Maintain tracking tools and contact lists for program inputs; proactively identify gaps, risks, or inconsistencies in scope, data quality, or assumptions, and work with stakeholders to resolve them.</li><li>Consolidate project and program investments to support input submission, scoring, portfolio optimization, re-slotting, tradeoff evaluation, and funding decisions.</li><li>Develop and maintain a thorough understanding of portfolio‑level risks associated with funding decisions, including reliability, operational, regulatory, customer, and financial risks resulting from deferred or unfunded investment needs.</li><li>Translate funding tradeoffs and associated risk exposure into clear, decision‑ready insights to support leadership prioritization, re‑slotting, and capital allocation decisions in an inherently capital‑constrained funding environment.</li><li>Ensure all ECO deliverables are completed accurately, on time, and aligned with Corporate Policies, enterprise strategy, and business unit objectives.</li></ul><p><strong>**Regional Distribution Portfolio Manager</strong>**</p><ul><li>Perform the Portfolio Manager role for assigned functional and regional responsibilities, with a primary Distribution focus.</li><li>Act as the PGO capital planning centralized governance and integration point for regional Portfolio Owners, Transmission Portfolio Managers, PGO Leadership, Finance, regulatory partners, and other key stakeholders.</li><li>Serve as the primary point of accountability for the regional Distribution capital portfolio, maintaining a deep understanding of local system needs, investment drivers, constraints, and jurisdiction‑specific considerations.</li><li>Ensure consistency and comparability of capital plans across regions and jurisdictions, while appropriately reflecting regional priorities, risks, and operating conditions within planning frameworks.</li><li>Proactively engage with regional leadership and stakeholders to surface emerging needs, risks, and tradeoffs, and to align regional inputs with enterprise funding assumptions and targets.</li><li>Schedule, prepare for, and facilitate capital plan review meetings throughout the capital planning cycle; ensure funding decisions, actions, and changes are clearly and timely documented, communicated and understood.</li><li>Advise leadership on regional funding tradeoffs and associated risks, including the implications of deferred or unfunded investments on reliability, safety, regulatory outcomes, customer experience, and long‑term cost.</li><li>Respond rapidly to ad hoc data requests, leadership questions, and scenario analyses related to funding, scope, and portfolio impacts.</li></ul><p><strong>Additional responsibilities may include, but not be limited to, leading and/or significantly contributing to initiatives and workstreams in the following areas:</strong></p><ul><li>Power BI and management reporting development, analytics, and enhancements</li><li>Business case development, economic analysis, and documentation governance</li><li>Regulatory Cost-Benefit Analysis (CBA) development, governance, and data request responses and expert witness testimony support</li><li>Value framework strategy, including continuous refinement and calibration across functions</li><li>Utility industry peer working groups and/or consortiums</li><li>Utility industry customer research initiatives and survey coordination</li><li>Asset Investment Planning (AIP) software strategy and refinement</li></ul><p><strong>**Required/Basic Qualifications</strong>**</p><ul><li>Bachelor&#39;s degree</li><li>In addition to required degree, eight (8) years related work experience</li><li>In lieu of Bachelor&#39;s degree(s) AND 8 year(s) related work experience listed above, High School/GED AND 12 year(s) related work experience</li></ul><p><strong>**Desired Qualifications:</strong>**</p><ul><li>Four-year BS/BA degree in Finance, Accounting, Economics, Engineering, or related Business or Technical discipline preferred.</li><li>MBA or other related advanced degree preferred.</li><li>Expert knowledge of capital investment planning, portfolio management, and governance processes within a regulated utility environment, including prior experience across Distribution and/or Transmission functions.</li><li>Demonstrated experience with capital budget planning, complex financial analysis, cost-benefit analysis, portfolio optimization, and capital investment planning tools or models.</li><li>Strong facilitation and stakeholder management skills in a matrixed organization with competing priorities, with the ability to lead complex initiatives through collaboration and influence.</li><li>Proven ability to translate complex financial, technical, and program data into clear, portfolio‑level insights that inform leadership decision-making.</li><li>High attention to detail with strong quality assurance, organization, and deadline management capabilities across multiple concurrent workstreams.</li><li>Advanced proficiency with Excel and Power BI, with the ability to interpret, explain, and communicate analytical outputs to non‑technical audiences.</li><li>Ability to operate independently, manage ambiguity, and perform effectively under tight timelines while delivering high-quality, accurate work products.</li><li>Strong interpersonal communication skills, both written and verbal, with the ability to convey complex concepts clearly and concisely to diverse audiences.</li><li>Familiarity and exposure to electric utility asset management programs and concepts.</li><li>Familiarity and exposure to electric utility field operations or project management experience supporting field operations</li><li>Ability to work effectively and stay aligned across functions such as capital planning, asset management, project development, engineering governance, project controls, finance, legal, and regulatory affairs while facilitating problem solving and joint development of work products.</li></ul><p><strong>**Working Condition:</strong>**</p><ul><li>Hybrid – Work will be performed from both remote and onsite locations after the onboarding period. However, hybrid employees should live within a reasonable commute to a designated Duke Energy facility</li></ul><p><strong>**Travel Requirements</strong>**</p><p>5-15%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p><strong>Basic Job Functions:</strong></p><p>The Senior Manager for Marketing and Brand leads First Solar’s marketing strategy —spanning customer, product, and political advocacy — and its execution. The role is accountable for building, reinforcing, and protecting First Solar’s reputation and ensuring that every aspect of the company’s engagement with its external audiences and stakeholders aligns seamlessly with its brand and positions.</p><p>This role also leads the strategic integration of AI and large language models (LLMs) into First Solar’s marketing operations, content development, and campaign execution. The Senior Manager is responsible for identifying opportunities to leverage emerging technologies to enhance efficiency, creativity, and impact across the brand and marketing ecosystem.</p><p>The associate will:</p><ul><li>Apply intellectual horsepower to both problem solving and leveraging opportunities.</li><li>Be highly motivated, effectively combining passion for the company’s mission and for the role, with the ability to persevere in the face of challenges and ambiguity.</li><li>Be adept at independently managing multiple stakeholders and internal customers.</li><li>Bring to the table a high level of attention to detail, modeling strategic thought and execution excellence.</li><li>Demonstrate extreme ownership, effectively keeping their ego in check and prioritizing the company’s mission and objectives.</li><li>Embrace First Solar’s principles and its values of accountability, agility, and collaboration.</li><li>Exemplify creative thinking and disciplined execution.</li><li>Fully subscribe to the company’s vision and mission, delivering results with a strong sense of purpose.</li><li>Independently identify opportunities, secure buy-in, and deliver results.</li><li>Rapidly develop an understanding of the company and its operating environment that is both broad and deep.</li><li>Champion the use of AI and LLMs to drive innovation in marketing strategy and execution.</li><li>Mentor and guide team members in the adoption of AI tools and emerging technologies.</li><li>Ensure brand consistency and governance across all external content and campaigns.</li><li>Lead cross-functional efforts to align messaging, tone, and style with First Solar’s brand identity.</li></ul><p><strong>Education/Experience:</strong></p><ul><li>Bachelor’s degree.</li><li>10+ years of experience, including experience in an agency/consultancy environment; international/multi-market experience strongly desirable; political marketing experience an advantage.</li></ul><p><strong>Required Skills/Competencies:</strong></p><ul><li>Ability to adjust quickly to shifting priorities and work demands.</li><li>Affinity for numbers and complex technical stories.</li><li>Ability to manage and prioritize multiple projects simultaneously.</li><li>Creative and entrepreneurial mindset combined with strong planning and project management capabilities.</li><li>Demonstrated ability to take ownership of delivering results.</li><li>Expertise in customer, content, and product marketing; political marketing experience considered advantageous.</li><li>Extensive experience in managing, anticipating the needs of, and providing robust counsel to multiple stakeholders.</li><li>Excellent interpersonal skills, with the ability to listen and be curious.</li><li>Experienced in developing and managing high-performing teams.</li><li>Fluency in English with strong writing skills.</li><li>Process driven with the ability to be agile in adapting to changing circumstances.</li><li>Self-motivated and capable of independent thinking/direction.</li><li>Skilled at managing by influence.</li><li>Willingness to adapt rapidly to change and see ambiguity as an opportunity.</li><li>Strategic understanding of AI and LLM applications in marketing and communications.</li><li>Experience implementing AI tools for campaign optimization, content creation, and stakeholder engagement.</li><li>Ability to lead cross-functional teams through digital transformation and innovation initiatives.</li></ul><p><strong>Essential Responsibilities:</strong></p><p><strong>Brand &amp; Corporate Marketing</strong></p><ul><li>Expand/evolve First Solar’s brand platforms.</li><li>Elevate First Solar’s digital presence, including its websites and social media channels.</li><li>Ensure alignment on brand positioning with other external-facing functions including business development, community engagement, corporate communications, government affairs, and talent acquisition.</li><li>Establish and manage corporate events and sponsorship strategies.</li><li>Develop methods to measure perceptions of the First Solar brand.</li></ul><p><strong>Customer Marketing</strong></p><ul><li>Define the customer brand experience, identifying opportunities for touchpoints and feedback.</li><li>Develop deep understanding of First Solar’s customers, their motivations, values, and behaviors.</li><li>Lead the development of a cohesive customer marketing and engagement strategy working closely with business development leadership and account leads.</li><li>Establish methodologies for measuring customer feedback and satisfaction.</li><li>Oversee support of the business development team’s customer engagement efforts.</li></ul><p><strong>Political Advocacy Marketing</strong></p><ul><li>Devise targeted strategies to promote First Solar’s positions and narratives to political stakeholders and their constituents.</li><li>Develop and leverage storytelling techniques to engage audiences with compelling content.</li><li>Work closely with the policy and corporate communications functions to ensure rapid responses to advocacy opportunities.</li></ul><p><strong>Product Marketing</strong></p><ul><li>Apply storytelling principles to First Solar’s technology innovation and product expertise, developing narratives delivered through compelling content.</li><li>Collaborate with the manufacturing, product management and marketing, and research and development teams to flesh out narrative opportunities.</li></ul><p><strong>AI &amp; Innovation Leadership</strong></p><ul><li>Identify and evaluate AI and LLM tools for marketing applications.</li><li>Lead pilot programs and scale successful AI initiatives across the team.</li><li>Collaborate with IT, data, and creative teams to integrate AI into workflows.</li><li>Monitor industry trends and assess relevance to First Solar’s brand strategy.</li></ul><p><strong>Brand Governance &amp; Strategic Messaging</strong></p><ul><li>Define and enforce brand governance standards across all external-facing functions.</li><li>Ensure consistency in tone, style, and messaging across platforms and teams.</li><li>Use LLMs to support rapid content development and stakeholder engagement.</li></ul><p><strong>People Management</strong></p><ul><li>Effectively manage a team of multi-disciplinary professionals.</li><li>Establish and manage quality/service delivery benchmarks and implement control measures.</li><li>Optimize team structures, identify and fill skills gaps, and opportunities for growth.</li><li>Reinforce project management and prioritization processes to ensure delivery excellence.</li><li>Support an open and continuous feedback culture addressing issues as early as possible.</li></ul><p><strong>Other Duties</strong></p><ul><li>Other duties as assigned.</li><li>Job description subject to change at any time.</li></ul><p><strong>Reporting Relationships:</strong></p><ul><li>Reports to Director of Global Brand, Corporate, and Marketing Communications.</li><li>This position will have direct reports.</li></ul><p><strong>Travel:</strong></p><ul><li>20% - 30%</li></ul><p><strong>Estimated Salary Range:</strong></p><ul><li>$131,200-$187,000 Annually.</li></ul><p><strong>US Physical Requirements:</strong></p><p>Office Physical Requirements:</p><p>All positions in our office require interaction with people and technology while either standing or sitting. To best service our customers, internal and external, all associates must be able to communicate face-to-face and on the phone with or without reasonable accommodation. First Solar is committed to compliance with its obligations under all applicable state and federal laws prohibiting employment discrimination. In keeping with this commitment, it attempts to reasonably accommodate applicants and employees in accordance with the requirements of the disability discrimination laws. It also invites individuals with disabilities to participate in a good faith, interactive process to identify reasonable accommodations that can be made without imposing an undue hardship.</p><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role. All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Thursday, July 30, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>Depending upon the desired qualifications of the successful applicant, the hiring manager may elect to fill this position at a higher level within the job hierarchy.</strong></p><p><strong>**Position Summary</strong>**</p><p>The position is responsible for the day-to-day overall cost management, accounting and financial analysis, business planning and all key operational finance functions to support the organization from a jurisdictional and functional basis. This position will provide direct support to the senior leadership within the organization.</p><ul><li><strong>RRE (Regulated Renewable Energy)</strong> is responsible for operating and maintaining over 43,000 MWs of generating capacity (approximately 80% of Duke Energy’s total regulated generating capacity), including Coal, Combined Cycle, Combustion Turbine, Hydro-Electric and Regulated Solar Energy generation across six states. Total annual budget is approximately $3 billion between O&amp;M, Capital, ARO and Cost of Removal (COR).</li><li><strong>SPC (System Planning &amp; Construction)</strong> is responsible for the long-term planning of generation, transmission and fuel supply. SPC is also responsible for the company’s energy infrastructure project development and construction, ensuring reliable, efficient energy delivery and strategic growth. SPC’s responsibilities include resource planning and execution, generation technology determinations, renewables and battery energy storage project development, grid planning and integration, fuel procurement, system optimization, major project management and construction. These efforts are critical in supporting operations of Duke Energy’s existing 55,000-megawatt fleet and realizing its ambitious energy modernization goals, while keeping reliability and customer value in the forefront. This role will support work activities across all (6) jurisdictions. Total annual budget is approximately $4-6 billion between O&amp;M, Capital and Study and is expected to increase with all the expected growth in new generation. In addition, the SPC Finance team supports the Carolinas One Utility program, which is targeted to combine the Duke Energy Carolinas and Duke Energy Progress utilities at the beginning of 2027.</li><li><strong>ESEE (Environmental Services and Enterprise Excellence)</strong> is responsible for a variety of different support organizations: Environmental, Health &amp; Safety (EH&amp;S), Coal Combustion Products (CCP), Enterprise Operational Excellence and Enterprise Training.  The ESEE organization manages the safety and environmental compliance and coal ash activities within Duke Energy’s six (6) jurisdictions and as such this position will support all work activities in all jurisdictions. The ESEE Finance team supports consolidated total annual budget of ~$700M (O&amp;M, Capital, COR, ERL and ARO). In addition, team supports the ARO life to date forecasted spend of ~$10 billion for the next 30-40 years as well as the cost recovery via rate cases.</li></ul><p>Position will frequently interface with different departments within the company, such as Asset Accounting, Corporate Controllers &amp; Accounting, Rates &amp; Regulatory, Tax, Forecasting, internal/external auditors and all corporate finance departments for issues/resolution on financial/cost management items.</p><p>This position requires a blended knowledge of operational, technical and functional financial reporting and analysis skills. This position works closely with the organization to analyze and report variances, trends and plans. This position will analyze and develop the financials for jurisdictional reporting and forecasting. This position also helps ensure adherence to GAAP, internal company financial policies and procedures (i.e. Capital and O&amp;M Charging guidelines, etc.) particularly related to collaborating with CARG (Corporate Accounting Research Group) and Fixed Assets as needed. This position is responsible for the maintenance and accuracy of standard financial reports and requires timely response to end user inquiries/issues.</p><p><strong>Responsibilities</strong></p><p>Ensure timely and accurate analysis and reporting:</p><ul><li>Provide and present accurate and relevant financial analysis and management reporting to the RRE Organization and respective senior management to enable strategic decision-making</li><li>Analyze and consolidate management financial reporting including actuals, budgets and forecasting/projecting year end impacts including variance explanations.</li><li>Analyze data, identify and correct errors to ensure accuracy and integrity of financial information.</li><li>Coordinate and support the month-end close activities.</li><li>Prepare, check and/or post journal entries and accruals on an as needed basis.</li><li>Assist in the preparation and review of governmental filings, including quarterly and annual FERC reports, rate case support, insurance claims and recoverables as needed.</li><li>Work with internal &amp; external auditors; provide necessary information &amp; answer questions as needed.</li><li>Assist in SOX documentation updates and management testing.</li><li>Maintain good working knowledge of accounting policies and impacts as required.</li></ul><p>Ensure effective budget &amp; business planning process:</p><ul><li>Support the budget and business planning process including communication of budget guidance, assumptions, and calendars for assigned sections.</li><li>Validate budgets uploaded to correct target amounts.</li><li>Develop and support department budget, strategic plan and related presentation material.</li><li>Work closely with and at the direction of appropriate management during the business planning process for input and dialogue on business plan and budget content.</li><li>Coordinate the preparation of annual budgets utilizing Hyperion Planning/One Stream Planning tool.</li></ul><p>Leading and building relationships:</p><ul><li>Build relationships &amp; promote two-way communication with business partners and Finance peers.</li><li>Help provide guidance to team on complex accounting issues.</li><li>Proactively help identify cost reduction opportunities through independent analysis.</li><li>Actively seek to identify and meet customer needs with a sense of urgency, taking ownership of customer issues and problems until resolved.</li><li>Assist in defining and executing initiatives to drive a culture of accountability for financial management in their business partner’s organization.</li></ul><p>Other and miscellaneous duties:</p><ul><li>Coordinate &amp; manage various projects &amp; initiatives that arise throughout the normal course of business.</li><li>Identify, develop and implement continuous process improvement opportunities.</li><li>Lead and/or assist with special projects and requests as required</li><li>Participate in peer teams when identified to ensure consistency in processes and reporting, and sharing of best practices throughout the organization</li><li>Overtime may be required during monthly/quarterly/annual closing and business planning processes as well as rollout of new and/or changes processes.</li><li>Perform other ad hoc requests as necessary.</li></ul><p><strong>Note: This posting is for three open positions. Dependent on relevant experience, the level to which a candidate is aligned is outlined below.</strong></p><p><strong>**Required/Basic Qualifications (Finance Associate)</strong>**</p><ul><li>Bachelor’s degree in (Accounting/Finance/Economics) OR a Bachelor’s degree in a similar discipline with prior (accounting/finance/economics) work experience</li></ul><p><strong>**Required/Basic Qualifications (Financial Analyst</strong><strong>I)</strong>**</p><ul><li>Bachelor’s degree in (Accounting/Finance/Economics) OR a Bachelor’s degree in a similar discipline with prior (accounting/finance/economics) work experience</li><li>One (1) years or more of increasingly diverse or complex experience in related field in addition to degree</li></ul><p><strong>**Desired Qualifications</strong>**</p><ul><li>CPA, CIS, CFA or CMA Certifications (or working toward certification)</li><li>Master’s in Accounting, Finance or Business Administration</li><li>Experience in interfacing with executive leadership</li><li>Strong oral and written communication skills</li><li>Demonstrated ability to effectively perform at the lead level by serving as a subject matter expert, developing process improvements, recommending best practices based on expertise &amp; knowledge</li><li>Demonstrated ability to work independently with proactive recommendations and limited supervision</li><li>Broad knowledge of utility environment and its business units/operations</li><li>Ability to analyze and understand financial information, recognize significant variances, trends, and irregularities and summarize clearly and concisely to management</li><li>Ability to work in a team environment &amp; foster good relationship with teammates &amp; business partners</li><li>Ability to build and maintain productive working relationships at all levels within the organization</li><li>Proven analytical and skills</li><li>Ability to meet stated deadlines and respond quickly to changing needs through a teamwork approach</li><li>Possesses and applies comprehensive and strategic knowledge of accounting and finance principles, practices, and procedures to complete complex assignments</li><li>Experience with financial applications (i.e., PeopleSoft, WebI, Power Plant, Analysis Services etc.)</li><li>Proficient use of Power BI, PowerPivot, Power Query and Microsoft products such as Excel, Word, &amp; Power Point</li></ul><p><strong>**Working Conditions</strong>**</p><ul><li>Hybrid Mobility Classification – Work will be performed from both remote and onsite locations after the onboarding period. However, hybrid employees should live within a reasonable daily commute to the assigned Duke Energy facility</li><li>M-F 5-8s - hybrid schedule with 3 days in-office at Duke Energy Plaza</li><li>Office Environment</li></ul><p><strong>**Specific Requirements</strong>**</p><ul><li>Years of prior equivalent work-related experience in lieu of a degree is N/A unless grandfathered in and requires CFO Staff approval</li></ul><p>#LI-BM1</p><p>#LI-Hybrid</p><p><strong>**Travel Requirements</strong>**</p><p>5-15%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

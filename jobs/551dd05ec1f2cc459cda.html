@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Job Title</strong> Senior O&amp;M Engineer (Wind Turbines)</p><p><strong>Location</strong> Lowestoft, London or Glasgow</p><p><strong>Salary from £59,200, up to 15% bonus and health cover</strong></p><p><strong>Flexible Working Pattern</strong></p><p><strong>Help us create a better future, quicker</strong></p><p>The Senior O&amp;M Engineer is a critical role within O&amp;M of the Offshore Business focussing on the delivery of O&amp;M scope of works in the UK and potentially overseas (USA, Germany, France...),</p><p>working with Contractors, Multinational Joint Ventures and multiple departments within Offshore O&amp;M, Offshore Operations and Global Services to ensure that SPR’s/ Iberdrola long term asset</p><p>value and production revenue is maximised.</p><p>Belonging to the Asset Integrity Management Department Team, and reporting to a Lead O&amp;M Engineer or the Department Manager, the Senior O&amp;M Engineer will be responsible for defining</p><p>O&amp;M Strategies and plans, tendering (technical), negotiating (technical) and being technical lead for small-scale offshore O&amp;M campaigns/installations including management of contractors and</p><p>associated interfaces, and ensuring quality, best practices and excellent H&amp;SE performance are applied.</p><p>The Senior O&amp;M Engineer is a qualified experienced professional providing advice &amp; expertise within a specific technical discipline on a particular scope of O&amp;M work affecting combined OPEX</p><p>of up to £6m/year.</p><p>The individual will be working as part of a global business with activities in many countries across Europe and the rest of the world. The position may require frequent travel to various locations in</p><p>the UK and overseas and during development, contracting and delivery of a scope of works the individual should be able to coordinate with teams working at different project locations.</p><p><strong>What you’ll be doing</strong></p><p>· Technical/engineering lead of small-scale offshore O&amp;M campaigns/installations with a number</p><p>of interfaces and coordination to manage within one or more of Iberdrola’s offshore projects</p><p>mainly in UK and Ireland - and working within staff in a number of countries throughout Europe</p><p>(Germany, France, Spain…) and USA</p><p>· Providing O&amp;M engineering support, assistance and recommendations to ensure delivery of</p><p>mid to large scale O&amp;M works within time, to budget and quality following industry best practice</p><p>and observing the maximum respect for Health, Safety and the Environment to ensure</p><p>regulatory and legal compliance.</p><p>· Implement offshore standards, procedures, tools, best practices and quality requirements.</p><p>· Evaluate O&amp;M solutions / risk levels affecting technical integrity or asset performance and give</p><p>mitigation recommendations to the Lead O&amp;M Engineers or Department Manager of either AIM</p><p>or the sites or the readiness teams, to ensure that cost effective O&amp;M solutions are identified,</p><p>fully evaluated and the risk profile can be reduced appropriately by the O&amp;M teams.</p><p>· Ensure that all assessment, advice and recommendations are fully documented in accordance</p><p>with all internal procedures and industry best practice, and that sufficient technical and</p><p>commercial due diligence (whether internal or external) exists to support those business</p><p>decisions.</p><p>· Assist O&amp;M teams in accordance with agreed SPR business processes.</p><p>· Evaluate the best course of action for technical interventions and present the case for it to internal leads and Managers or external contractors based on the analysed asset integrity status, Electricity production and other KPIs</p><p>· Provide key and strategic advice, assessment and recommendations to the business giving input and support to the projects throughout the whole life cycle (development to decommissioning)</p><p>· Provide input on appropriate bid levels / commercial strategies and commercial agreements relative to projects. Provide key input in the preparation of investment dossiers for all funding requests for projects.</p><p>· Assist an O&amp;M scope of works team and coordinate with employees working within a number of countries throughout Europe (UK, Germany, France, Spain…) and USA to ensure project execution with intelligent and cost effective resourcing. · Work with the HSE team to develop HSE strategy for O&amp;M works and ensure a high standard of health and safety awareness is maintained..</p><p>· Ensure recommendations for improvement are fed into lessons learnt regarding offshore wind farm operation and Maintenance for sharing across the different Offshore Projects.</p><p><strong>What you’ll bring</strong></p><p>· Good knowledge and some industrial experience of a relevant area of technical speciality (eg. Wind turbines, cables, High Voltage, Scada, Drivetrains, Electronics, Data analysis).</p><p>· Some experience in analysing failures and test reports</p><p>· Some experience in defining maintenance scope of works</p><p>· Ability to manage people effectively to deliver required outputs in a timely manner.</p><p>· Competent in future planning.</p><p>· Competent communication and interpersonal skills. Ability to influence and develop key project and business decisions.</p><p>· Developed report writing, presentation skills and ability to summarize key parameters and drivers impacting the project and business.</p><p>· Good organizational and operational skills with the ability to link this awareness to</p><p>· Technical judgement and decision making.</p><p>· Good planning and analysis skills with the ability to look forward and anticipate problems and thereafter plan and implements mitigating solutions to negate the effect of such problems.</p><p>· Ability to work, manage teams and manage decision making process under pressure and to tight deadlines</p><p>· Ability to support the management of a scope of works which require interface and coordination.</p><p>· Ability to manage change and experience of leading others through change.</p><p>· Contribute (or ensure resources are available) to early development projects, giving advice to development teams on repairability/ maintenance issues.· Recruit staff necessary to deliver O&amp;M works over the above timescales.</p><p>· Advice on the impact of technical/ specialist risks and issues and the viability of solutions recommended.</p><p>· Balance technical detail with commercial needs and provide recommendations, taking into account all relevant risks.</p><p>· Develop and apply knowledge of European/local country standards</p><p>· Some experience of offshore operations.</p><p><strong>What’s in it for you</strong></p><p>As well as a competitive salary which is reviewed annually, you can also enjoy a number of other benefits. With our pension scheme, we’ll double match your contribution up to a company contribution of 10%.</p><p>At ScottishPower, we believe it’s the little things we do in life that make a big difference. From helping you look after your family’s wellbeing, save for your future and take personal steps for climate action – our benefits are designed to help you do just that - so that you have everything you need to take care of your world – today and tomorrow. That’s why our benefits include:</p><ul><li>36 days annual leave</li><li>Holiday Purchase – perfect your work/life balance with extra annual leave</li><li>Share Schemes</li><li>Payroll Giving and Charity Matched Funding</li><li>Technology Vouchers – save more and spread the cost of your technology purchases</li><li>Electric Vehicle Schemes – to help you transition to green/clean driving</li><li>Cycle to Work scheme and Public Transport Season Ticket Loans</li><li>Healthcare benefit options including: Dental Insurance, Private Medical Insurance, Health Cash Plan and annual Health Assessments</li><li>Life Assurance (4x salary)</li><li>Access to Savesmart financial wellbeing support</li><li>Plus shopping, leisure, restaurant and gym discounts, and unique employee deals on travel insurance and more</li></ul><p><strong>Why ScottishPower</strong></p><p>ScottishPower is part of the Iberdrola Group, one of the world’s largest integrated utility companies and a world leader in wind energy. With a commitment to generate all of our energy from renewable resources and a drive to create the energy infrastructure of the future, we’re at the forefront of the journey to Net Zero and investing over £6m every working day to make this happen. With diverse opportunities across our businesses and a commitment to invest in our own internal talent, ScottishPower can offer people real career opportunities that meet personal and professional goals, in a global organisation.</p><p>Inclusion, diversity, and a social purpose are at the heart of everything we do. Together with our values, they bring us together into a stronger, more sustainable business with direct links to the communities we serve. It takes all kinds of people to build a large-scale business like ours, so whatever your background, you’ll fit right in.</p><p>ScottishPower is committed to providing reasonable support or adjustments in our recruiting processes for candidates with disabilities, long term conditions, mental health conditions, or who are neurodivergent or require pregnancy-related support. If you need support, please reach out to careers@scottishpower.com.</p><p><strong>Mobility</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country. If/when required, the Company will support the employee with the necessary Immigration requirements.</p><p><strong>IMPORTANT</strong></p><p>Advert will close at 23:59 GMT the day before <strong>Job Posting End Date</strong> below</p><p>July-25-2026</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Fluence (Nasdaq: FLNC) is a global market leader delivering intelligent energy storage and optimization software for renewables and storage. Our solutions and operational services are helping to create a more resilient grid and unlock the full potential of renewable portfolios. With gigawatts of successful implementations across nearly 50 markets, we are transforming the way we power our world for a more sustainable future. For more information, please visit fluenceenergy.com.</p><p><strong>Job Description:</strong></p><p><strong>Role Overview</strong></p><p>As a Senior Manager, Pricing at Fluence, you will own and continuously evolve Fluence’s pricing approach across our global business. This includes developing pricing frameworks, consolidating market and internal data signals, and translating insights into actionable pricing strategies that drive competitiveness, margin, and win rates.</p><p>This role sits at the intersection of strategy, analytics, and deal execution. You will partner closely with Sales, Product, Finance, and regional teams to ensure pricing is both data-driven and effectively operationalized across all markets.</p><p>Given the importance of pricing to Fluence’s commercial success, this role has high visibility and direct impact on executive decision-making and business performance.</p><p><strong>Key Responsibilities</strong></p><p><strong>Pricing Strategy &amp; Governance</strong></p><ul><li>Own Fluence’s global pricing frameworks, including guardrails, escalation processes, and deal support mechanisms</li><li>Define how pricing decisions are made across regions, ensuring consistency and alignment with business objectives</li></ul><p><strong>Pricing Intelligence &amp; Insights</strong></p><ul><li>Develop and manage a centralized system for collecting and synthesizing internal and external pricing data (market benchmarks, deal data, competitor insights)</li><li>Analyze large datasets and translate findings into clear, actionable commercial recommendations</li><li>Present pricing trends, insights, and recommendations to senior leadership</li></ul><p><strong>Deal Support &amp; Execution</strong></p><ul><li>Support complex and strategic deal pricing, including exception management and executive-level decision support</li><li>Ensure pricing strategies are effectively implemented across regions and embedded in day-to-day sales execution</li></ul><p><strong>Commercial Tool Development</strong></p><ul><li>Lead the development and continuous improvement of pricing and value-based selling tools (e.g., pricing calculators, TCO/IRR models, Salesforce/CPQ workflows)</li><li>Ensure tools are scalable, user-friendly, and widely adopted by global sales teams</li><li>Drive automation and standardization of pricing workflows where possible</li></ul><p><strong>Cross-Functional Leadership</strong></p><ul><li>Partner with Sales, Sales Engineering, Product, Finance, and regional teams to align pricing with market realities and product strategy</li><li>Act as the central owner of pricing across functions, ensuring alignment and accountability</li></ul><p><strong>Team Development &amp; Representation</strong></p><ul><li>Mentor and develop junior team members, fostering a culture of innovation and strong commercial acumen</li><li>Represent pricing and the Commercial team’s approach across the organization</li></ul><p><strong>Required Qualifications &amp; Experience</strong></p><ul><li>Bachelor’s degree in Business, Finance, Engineering, or related field; MBA or advanced degree preferred</li><li>3 -5+ years of experience in pricing, commercial strategy, deal support, or a related function, ideally in energy, infrastructure, or complex B2B environments</li><li>Strong background in financial modeling, pricing analysis, and commercial decision support</li><li>Demonstrated ability to translate data and analysis into actionable business decisions</li><li>Experience working cross-functionally in a global organization and influencing senior stakeholders</li><li>Exceptional analytical skills, including experience working with large datasets</li><li>Proficiency in Excel, Salesforce, and data visualization tools</li><li>Exposure to automation, scripting, or coding (e.g., Python, SQL) is a strong plus</li><li>High degree of initiative, ownership mindset, and ability to operate in a fast-paced environment</li></ul><p><strong>Additional Skills</strong></p><ul><li>Experience with BESS or renewable energy project economics and financial modeling preferred</li><li>Familiarity with vendor pricing, procurement, or cost benchmarking</li><li>Strong project management and stakeholder communication skills</li></ul><p><strong>Our Culture</strong></p><p>At Fluence, our culture is the foundation that drives our ambitious growth strategy and fuels our mission to transform the future of energy. Our core cultural pillars empower us to innovate, collaborate, and lead with purpose, ensuring we continue to deliver unparalleled value to our customers and the world.</p><p><strong>Unleash Voices</strong></p><p>We believe every voice matters. We encourage openness, active listening, and decisive action to create a culture where everyone has the opportunity to contribute to our success. We foster an environment where diverse perspectives are heard and valued, driving innovation and progress.</p><p><strong>Customer Fluent</strong></p><p>Our customers are at the heart of everything we do. We’re committed to delivering exceptional value that exceeds expectations by understanding our customers&#39; needs and adapting swiftly to meet them. Our deep focus on customer satisfaction drives us to continuously improve and innovate.</p><p><strong>Infinite Impact</strong></p><p>We are committed to creating the impossible. We push boundaries to deliver sustainable, game-changing solutions that shape a brighter, more energy-efficient future for all. Our team is passionate about making a lasting impact that will resonate for generations to come.</p><p><strong>All In</strong></p><p>We are all in for growth. Our teams are relentlessly focused on identifying and seizing opportunities that propel us forward. We embrace an ownership mindset, pushing ourselves and each other to accelerate progress and create lasting success.</p><p>Equal Opportunity Employer</p><p>At Fluence, we believe great teams are built on a collaborative and connected culture. We’re proud to be an Equal Opportunity Employer and welcome qualified applicants of all backgrounds. Employment decisions are made without regard to race, color, religion, sex, sexual orientation, national origin, age, disability, veteran status, gender identity or expression, genetic information, or any other status protected by law.</p><p>Work Authorization</p><p>To join our team, you’ll need to be legally authorized to work in the United States at the time of application and throughout your employment, without the need for employer sponsorship. Please note that Fluence does not sponsor work visas for this position.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Invenergy is North America’s largest privately held developer, owner, and operator of power infrastructure. With 25 years of trusted execution, we deliver reliable, affordable energy through a diverse portfolio that includes natural gas, solar, land-based wind, energy storage, transmission, and domestic manufacturing. Headquartered in Chicago, we develop, own, and operate large scale projects that power communities and support the energy future.</p><p>This position will be open for application for at least 3 calendar days from the posting date. This position will remain open for application based on business need, which may be before or after the 3-day posting window.</p><p><strong>Job Description</strong></p><p><strong>Position Overview:</strong></p><p>As a Senior Project Manager, Geothermal Project Management, you will be responsible for leading the efforts of a geothermal power plant. You will manage and coordinate efforts across multiple teams inside the organization, from development to the commercial operation date (COD). In this position, you will lead and direct resources to support the project execution, drilling and construction efforts, while coordinating all other technical, economic, and commercial aspects of the project. Under your leadership, you will manage a team of specialists to develop, design, and build geothermal projects utilizing enhanced geothermal systems (EGS) and organic rankine cycles (ORC), amongst other technologies. This position requires a technical background, with demonstrated past working experience in other geosciences (i.e., geology, geophysics, hydrogeology, vulcanology, and other related fields), drilling experience and/or similar technologies. This role will encompass collaboration from project the development phase, including permitting, to management and leadership during the engineering, procurement and construction phases, along with budget, risk, and schedule management to ensure the project is completed on time, within scope and budget. This position will be based in the Invenergy office in Chicago, IL. Technical supervision during site surveys, exploratory drilling and project execution, specifically construction and commissioning phases, including travel to the project site, will also be required.</p><p><strong>General Responsibilities:</strong></p><ul><li>Lead all efforts in the project throughout its lifecycle, from development to COD, to deliver the project according to the required scope, meeting budget and schedule.</li><li>Manage workload and resources across multiple teams assigned to a specific project, promoting seamless coordination across different disciplines.Collaborate with technical team on the feasibility of projects based on available geothermal technologies and project constraints.</li><li>Represent the company in discussions with third parties, stakeholders, regulatory bodies, permitting agencies, and the project’s customer.</li><li>Manage project interfaces across multiple contractors and work packages to promote coordination through adequate cooperation, ensuring adherence to project budget and schedule.</li><li>Manage and report project risks, performance, progress and schedule to management.</li></ul><p><strong>Specific Responsibilities:</strong></p><ul><li>Project management</li><li>Coordinate project meetings and communications to ensure project goals.</li><li>Participate and coordinate the evaluation of proposals.</li><li>Collaborate with the commercial and finance teams to provide necessary cost modeling inputs for cost optimization.</li><li>Identify and evaluate risks and prevent flaws in the project.</li><li>Provide periodic reports for management and the client as needed.</li><li>Implement and keep a good track record of lessons learned.</li><li>Ensure record keeping for the entire project by adhering to company document management policies.</li><li>Engineering</li><li>Provide guidance to the engineering team during the design process to make sure the technical team meets project goals and client’s expectations.</li><li>Collaborate with the relevant engineering areas to optimize the design, layout, CAPEX, and OPEX of this infrastructure.</li><li>Supervise technical documentation for requisitions and solicitations to be used with contractors and other third parties.</li><li>Collaborate with the GIS and technical teams in the understanding of geothermal favorability maps and reservoir modelling.</li><li>Procurement</li><li>Liaise with the procurement team in the preparation of SOIs, RFIs, RFPs, RFQs, or any other documents.</li><li>Participate in the evaluation of suppliers’ technical and economic proposals.</li><li>Participate in discussions with manufacturers and vendors, as needed, in coordination with the procurement team.</li><li>Participate in the preparation of contracts with OEMs, suppliers, and contractors.</li><li>Permitting, interconnection, and real estate</li><li>Collaborate with the real estate team to coordinate efforts for rights-of-way and easements.</li><li>Collaborate with the development team to prepare the required documentation package to secure permits and electrical interconnection.</li><li>Oversee the permitting and approval process while working with the regulatory and engineering teams to ensure all required permits are secured in accordance with the project plan.</li><li>Coordinate with interconnecting utilities to align with project objectives during project execution.</li><li>Construction and commissioning</li><li>Lead negotiations with EPC contractors and prepare agreements, understanding concerns and constraints, providing solutions to those in collaboration with other groups of the organization (legal, risk, project controls, etc.).</li><li>Manage periodic calls and meetings with contractors to organize work in the most efficient way.</li><li>Analyze technical and construction risks proactively, providing solutions for those.</li><li>Monitor project activities and progress from the main office and at the project site, as needed.</li><li>Analyze progress reports to correct deviations and deficiencies.</li><li>Travel to the project site during drilling and construction to oversee progress and resolve technical issues and other concerns.</li><li>Assist and participate in the commissioning phase.</li><li>Manage multiple interfaces across packages and contractors, including external parties and stakeholders.</li><li>Ensure adherence to scope, quality, safety, and all environmental requirements and policies.</li><li>Legal and contract management:</li><li>Experience negotiating construction agreements.</li><li>Manage internal interfaces with legal and contract management groups.</li><li>Manage variation of scope and change orders.</li><li>Identify and manage risks during contract negotiations and project execution.</li><li>Finance, insurance, legal and other corporate areas</li><li>Provide inputs to define CAPEX, OPEX and size project contingency.</li><li>Identify financial impacts of identified risks in the design and execution phases.</li><li>Liaise with other internal departments as required.</li><li>Interface with lenders and their independent engineers.</li></ul><p><strong>Minimum Qualifications:</strong></p><ul><li>Bachelor’s degree in mechanical, civil, electrical, structural or petroleum engineering with relevant experience in the geothermal, oil &amp; gas or power generation industry. Bachelor’s degree in geology, geophysics, or related geosciences with relevant experience in related fields are also preferred.</li><li>8+ years of experience in power plants, with relevant experience in turbines are required. In addition, 4+ years of experience in drilling for geothermal or oil &amp; gas projects are preferred.</li><li>Proven track record of managing and delivering large-scale power plants, from development to commercial operation.</li><li>Site experience in projects under construction.</li><li>Experience managing interfaces between contractors and contract negotiation.</li><li>Proficient with Microsoft Office products, including Excel, Word, and PowerPoint.</li><li>Ability to travel up to 25% is required, and travel frequency must be adjusted during the project execution phase.</li></ul><p><strong>Preferred Qualifications:</strong></p><ul><li>Master’s degree in mechanical, civil, electrical, structural or petroleum engineering with relevant experience in the power generation or oil &amp; gas industry.</li><li>Ability to multi-task and manage deliverables for multiple packages of the same project at a time.</li><li>Experience using GIS tools and mapping for geothermal purposes (e.g., QGIS, Global Mapper, ESRI Enterprise/ArcGIS Pro).</li><li>Desire to work in a dynamic environment alongside people with multiple interests and backgrounds.</li><li>Excellent organizational, writing, and interpersonal skills.</li><li>Strong verbal skills are required, including being an effective leader and communicator.</li><li>High degree of integrity and understanding of ethical industry standards.</li></ul><p><strong>Base Pay</strong></p><p>$155,000.00 - $185,000.00 USD Annual</p><p>Bonus: 25% - 40%</p><p>The base pay range reflects the minimum and maximum target salary for the position. Invenergy considers a number of factors when determining base pay offers such as the scope and responsibilities of the position and the candidate&#39;s experience, education and skills.</p><p>In addition to base pay, the total annual compensation package may also include eligibility to participate in our bonus program(s) which are designed to reward individual and company performance. Your recruiter can share more about bonus eligibility for this position during the hiring process.</p><p>Invenergy offers a variety of other benefits including medical, dental and vision insurance, 401k, paid time off, etc.</p><p>Invenergy LLC is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to, among other things, race, color, religion, sex, sexual orientation, gender identity, national origin, age, status as a protected veteran, or disability.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

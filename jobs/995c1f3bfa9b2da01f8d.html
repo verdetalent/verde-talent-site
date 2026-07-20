@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Enterprise Customer Solutions Manager</strong></p><p><strong>Company Introduction</strong></p><p>Our mission is to enable every organization to be climate conscious and positive with the world’s best climate software and data products. Persefoni is creating an all-in-one platform that allows organizations to measure, analyze, and reduce their Enterprise Carbon Footprint. Our goal is to provide our customers unprecedented visibility and insights into the impact their organization has on the environment. Leveraging the latest breakthroughs in data science and software, our technology will empower teams and leaders to mobilize their organizations to continuously improve their greenhouse gas emissions metrics.</p><p><strong>About The Role (What you will get to do)</strong></p><p>Our Customer Solutions team is looking for a proven Enterprise Customer Solutions Manager to guide our enterprise customers through an environmental sustainability digital transformation. The objective will be to drive business and technical value for customers in varying maturity stages of their environmental sustainability journey. You will understand the Persefoni product in great depth to foster customer engagement and user adoption. The goal will be to quickly onboard new customers and ensure they get the most from the Persefoni product and support.</p><p>In Customer Solutions, you will be proactive in defining the strategic direction and operational strategies for your accounts. You will act on the customer’s behalf to ensure they achieve their carbon and sustainability goals, and you will champion their product needs as the voice of the customer. There will be opportunities to identify areas for continuous improvement, contribute to process definition and most importantly develop the talent within our department.</p><p>If you are a customer champion, passionate about solving problems, advising customers, and making the world more sustainable, you will bring tremendous value to our customers and team!</p><p><strong>Responsibilities (What we expect)</strong></p><ul><li>Cultivate the successful accelerated adoption and onboarding of the Persefoni platform at key organizations to help customers realize the business value of our partnership and offerings.</li><li>Own the customer journey as the main point of contact, defining a success plan with deliverables, and ensuring clear communication across all activities of the customers’ post-sale journey.</li><li>Provide coaching and education to improve adoption of the Persefoni product.</li><li>Identify, clearly communicate, and manage risk throughout the year through proactive touchpoints and taking the lead in developing resolution strategies.</li><li>Identify successful customers and turn them into advocates, measured by participation in reference calls, case studies, webinars, and blogs.</li><li>Partner with Sales, Solution Architecture, Marketing, and Executives to help ensure expansion opportunities are identified and closed successfully.</li><li>Support subscription renewal plan by ensuring on-time invoicing and onboarding all customers to project managing potential development or functional improvements.</li></ul><p><strong>Qualifications (What you bring to the role)</strong></p><ul><li>3+ years CSM or Account Management experience and preferably within the SaaS industry.</li><li>Experience working closely with C-level / SVP-level executives.</li><li>Experience with executive business reviews.</li><li>Experience in ESG performance, sustainability management, or environmental consulting is a plus.</li><li>Experience in technical training and adoption.</li><li>Engaging phone &amp; video presence: enthusiastic and high energy, but also poised, confident, and extremely professional.</li><li>Comfortable in a fast-paced, global team.</li></ul><p><strong>How You&#39;ll Know You’re on the Right Track</strong></p><ul><li>You will be able to articulate how Persefoni incorporates carbon accounting standards and sustainability reporting frameworks within our platform in your first 3 months.</li><li>You will demonstrate proficiency in the Persefoni platform and deliver an amazing customer onboarding experience in the first 3 months.</li><li>You will be capable of using Persefoni systems and processes (including SFDC, ChurnZero, Zendesk, etc.) to appropriately track and report on relevant customer activities and information within your first 3 months.</li><li>You will ensure customer health is high for renewal purposes and mitigate any risk on the account that could result in churn within your first 3 months.</li></ul><p><strong>**Job Type:</strong>**</p><p>Full-time position located in Ho Chi Minh City, Vietnam governed by Vietnam labour regulations, with the Persefoni entity being established in Vietnam.</p><p><strong>**Interview Process</strong>**</p><ul><li><strong>Step 1: Interview with Talent Acquisition</strong></li><li><strong>Step 2: Interview with Vietnam Customer Solutions team</strong></li><li><strong>Step 3: Interview with Director, Customer Solutions</strong></li><li><strong>Step 4: Interview with VP, Customer Solutions</strong></li><li><strong>Step 5: Offer extended</strong></li><li><strong>Step 6: Background check and onboarding</strong></li></ul><p><strong>Persefoni is an Equal Opportunity employer</strong></p><p>We are committed to valuing and respecting people and organizations of all backgrounds. We proudly bring this to life by fostering a culture of innovation, creativity, diversity of thought, and inclusion.</p><p>We strive for each of our team members to be able to show up for work every day as their genuine selves. Similar to the reverence given to Earth’s biodiversity, we recognize the vast potential that exists when all of the facets of diversity within our team are appreciated and illuminated. This policy extends to all aspects of our employment practices.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

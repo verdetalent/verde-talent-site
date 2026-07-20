@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Job Title: Program Manager – Environmental Remediation</strong></p><p><strong>Location:</strong>Rochester, NY; Binghamton, NY.</p><p><strong>Number of Positions:</strong> 1</p><p><strong>Work type:</strong>Office</p><p>The salary range for this position is dependent upon experience, ranging from<strong>$116,640</strong>to <strong>$145,800.</strong></p><p><strong>What We Offer:</strong></p><ul><li>Competitive benefits and growth opportunities</li><li>Generous performance‑based bonuses</li><li>12% 401(k) match</li><li>Comprehensive health, dental, and vision insurance</li><li>Tuition reimbursement</li><li>Professional development and clear career‑advancement pathways</li></ul><p><strong>For more information, please visit:</strong><strong>Benefits - Avangrid</strong></p><p><strong>Job Summary</strong></p><p>The Environmental Remediation Program Manager is responsible for self-directing and managing and coordinating all aspects of multiple assigned site investigation &amp; remediation projects (SIR) projects to maintain regulatory requirements with applicable local, state, and federal environmental regulations and agreements.  Projects are primarily located in New York State with primary office location in Rochester or Binghamton, NY.</p><p>SIR projects include but are not limited: to site characterization; remedial investigation; remedial feasibility / alternatives studies; remedial design &amp; action; operation monitoring &amp; maintenance; and long-term site management. Primary focus is on former manufactured gas plant (MGP) sites, with other sites including superfund (CERCLA), legacy waste disposal sites, PCB, Phase II, property due diligence, hazardous building material assessments, demolition and PRP (potentially responsible party) projects.</p><p>The Position has direct responsibility for engaging and maintaining relationships with internal stakeholders, regulatory agencies, municipalities and third parties (developers, property owners, etc.) to facilitate implementation of SIR projects in the SIR portfolio and SIR project needs for other business groups.  Holds self-accountable for performance and results.  Ensures projects are executed within agreed upon schedules, prudent utilization of resources and in conformance to quality, engineering standards, and regulatory requirements. Additionally, the position is responsible to lead and/or support various aspects of rate cases and other regulatory &amp; programmatic requirements.</p><p><strong>Responsibilities</strong></p><ul><li>Self-directs in the day-to-day project planning and execution of SIR projects (i.e., site identification, conceptual development and planning, implementation, including regulatory interface and negotiation).</li><li>Manages contractors (professional consultants, contractors, technical experts, etc.) performing services. Sets milestones and direction to align with project needs to accomplish goals and regulatory commitments.</li><li>Proactive approach to overseeing work, measures progress and takes actions to ensure projects are delivered safely, within scope, on time and within agreed upon budgets.</li><li>Reviews and approves project plans, executes contract strategies to undertake work and controls and authorizes expenditures. Follows internal purchasing procedures to procure external vendors.</li><li>Participates in site investigation scoping and engineering design review and planning meetings.</li><li>Review consultant technical / cost proposals to ensure cost effectiveness and responsiveness to the project needs.</li><li>Conducts thorough review of consultant deliverables including, correctness, accuracy, format, clarity of narrative and overall presentation of the data and information.</li><li>Resolves field challenges during investigation and remediation work.</li><li>Responsible for project budget management and proactively forecasts potential changes due to site/project conditions and informs management.</li><li>Coordinates work with other departments, consultants, attorneys, utilities, regulatory agencies, government agencies, and customers.</li><li>Develop and implement outreach and communication approaches with internal and external stakeholders including negotiating and influencing agreements with third parties such as property owners, municipalities, state and county agencies.</li><li>Maintains project liability estimates throughout the project life cycle for financial reporting.</li><li>Leads, supports and/or participates in regulatory inquiries and proceedings (rate cases).</li><li>Represent the company in regulatory and public forums (i.e., Federal, State or local agency or municipal meetings).</li><li>Interfaces with various stakeholders including municipal officials and representatives, local permitting agencies, state and federal agency staff and leaders, internal team members, managers, legal, vendors, community members, etc.</li><li>Supports programmatic initiatives, activities and enhancements.</li><li>Coaches and supports Remediation staff in their growth, knowledge and understanding of regulations and field application of various technologies.</li><li>Perform other tasks and assignments as required, including but not limited to group/corporate initiatives, providing support for annual program reporting (Annual SIR Report) to the PSC and Rate Case documentation (spend projections, site write-ups, etc.).</li></ul><p><strong>Required Qualifications:</strong></p><ul><li>Bachelor’s Degree in Engineering or Environmental Related Science (geology, hydrogeology, etc.) or other Major (chemistry, Project Management, Sustainability, etc.) with requisite experience.</li><li>The candidate shall have a minimum of eight (8) years of demonstrated experience working on all phases of challenging, multi-year, multi-media impacted site investigation and remedial projects. The candidate must be flexible to work on a wide range of projects (small to large) to meet the needs and dynamics of the program.</li><li>Direct experience with MGP sites, third party sites, PRP groups, and experience on PCB impacted sites and building demolition a considerable plus.</li><li>Direct experience working with state and/or federal regulatory agencies to resolve conflicts in professional opinions and finding agreeable approaches consistent with regulatory requirements.</li><li>Direct experience with large scale projects (scope and value), complex project settings and/or with dynamic stakeholder engagement.</li><li>Direct experience with contract review and coordinating contract documents for competitive bidding and working understanding of typical environmental SIR contractual terms &amp; conditions.</li><li>Experience with environmental financial liability reporting.</li><li>Solid knowledge of environmental SIR technologies and applications, practices, strategies, trends, construction methods and environmental forensics of various media including soil, groundwater, bedrock, sediment and soil vapor.</li><li>Solid understanding and application of superfund (CERCLA), and Robust knowledge of primary work State environmental regulations is a must.</li><li>Experience with Consent Orders, Brownfield Programs, and multi-site programs and third-party sites and PRP groups a plus.</li><li>Experience with regulatory (rate case) proceedings and testimony.</li><li>Direct knowledge of relevant industry standards, guidance and regulations (state and federal) and regulatory trends and developments within the industry.</li><li>Strong understanding of Project Management.</li><li>Strong verbal and written communication skills, including the ability to communicate with a wide variety of stakeholders from technical teams to upper management to town/city leaders to community members and residents.</li><li>Public presentation skills and ability to clearly summarize concepts and data.</li><li>Must demonstrate a strong commitment to excellence and understanding of the vital importance of personal accountability with an ability to render good technical &amp; business decisions</li><li>Results &amp; Team oriented.</li><li>Ability to adapt to changing scopes and requirements, and flexibility to take on new assignments.</li><li>Proficient in Microsoft Excel, Word, Office, Teams.</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>PMP or CHMM Certification</li><li>MS in Environmental Related Discipline helpful</li><li>OSHA 40-hr HAZWOPER Certification</li><li>DOT HM-126F.</li></ul><p>#LI-NB1</p><p>#LI-office</p><p><strong>Company:</strong></p><p>NY STATE ELECTRIC &amp; GAS CORP</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p><p>August-9-2026</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Requisition ID:</strong>  94576</p><p>NextEra Energy Resources is one of America’s largest wholesale electricity generators, harnessing diverse energy sources to power progress. We deliver tailored energy solutions that fuel economic growth, strengthen communities, and help customers achieve their energy goals. Ready to make a lasting impact? Take the next step in your career with us!</p><p><strong>Position Specific Description</strong></p><p>NextEra Energy is advancing a significant gas generation development portfolio, and Engineering &amp; Construction is at the center of that work. We are seeking a Director to lead E&amp;C&#39;s engagement across all gas project development activities — from technology due diligence and FEED studies to construction readiness within NextEra&#39;s federal hub portfolio.</p><p>This is a high-visibility, cross-functional leadership role operating at the intersection of Generation Development, Integrated Supply Chain (ISC), and E&amp;C. The ideal candidate is comfortable leading without full organizational authority, thrives in an origination-driven environment with competing urgencies, and brings a disciplined approach to budget, scope and schedule management, risk identification, and team leadership.</p><p><strong>What You&#39;ll Do</strong></p><p><strong>Gas Technology and Commercial Due Diligence:</strong></p><ul><li>Lead E&amp;C&#39;s participation in gas technology and commercial due diligence, evaluating achievable commercial commitments, constructability, site integration complexity, utility interconnection requirements (electrical, gas, water, etc.), and preliminary cost positioning across competing technologies and configurations (combined cycle, simple cycle, peaking)</li><li>Identify and document E&amp;C-specific technology and commercial risks, including balance-of-plant configuration alternatives, supply chain maturity and availability for major equipment and contractors, and site-specific civil and interconnection constraints</li><li>Develop and maintain E&amp;C due diligence frameworks and evaluation criteria to support technology and configuration down-select decisions in coordination with Generation Development leadership</li><li>Provide E&amp;C technical and commercial input into OEM and contractor meetings, site visits, and technology assessments, ensuring construction and engineering perspectives are represented early in the selection process</li><li>Coordinate with E&amp;C SMEs to evaluate technology-specific balance-of-plant and electrical interconnection requirements, including switchyard and transmission infrastructure, gas and water supply requirements, and waste water and air emissions compliance requirements</li></ul><p><strong>Gas Project Development, Technical Oversight &amp; Risk Identification:</strong></p><ul><li>Lead E&amp;C participation in Technology Review, capital estimate and project schedule development, and Preliminary Engineering phases across active gas development projects</li><li>Own the development and continuous improvement of E&amp;C gas project estimating and scheduling tools, ensuring cost and schedule benchmarks reflect current scope and project execution assumptions, equipment pricing, and risk contingencies</li><li>Maintain a living E&amp;C Risk Register, tracking scope, schedule, cost, and constructability risks across all active gas project work streams</li><li>Proactively identify when Development-driven scope changes introduce E&amp;C cost or schedule risk</li><li>Establish clear accountability at the E&amp;C scope boundary, distinguishing risks originating within E&amp;C from those introduced by Generation Development or Integrated Supply Chain decisions</li><li>Coordinate E&amp;C SME resources in support of gas project site configuration reviews and risk assessments</li><li>Lead E&amp;C&#39;s participation in commercial offtake agreement negotiation, site permitting, and interconnection processes, ensuring construction-phase dependencies are identified and tracked against development and regulatory milestones</li></ul><p><strong>Procurement &amp; Integrated Supply Chain Coordination:</strong></p><ul><li>Partner with Integrated Supply Chain on procurement support activities — including RFQ input, commercial and technical scope review, and bid evaluation for major gas project equipment and EPC/EPCM scopes</li><li>Lead bid evaluation activities, including cost comparison analysis between E&amp;C estimates and contractor proposals, flagging material variances as risk indicators requiring scope alignment review</li><li>Identify and escalate scope discrepancies between E&amp;C estimating inputs and contractor bids before award decisions</li><li>Flag procurement risks associated with long-lead equipment (combustion turbines, steam turbines, HRSGs, transformers, switchgear) and supply chain constraints in a capacity-constrained OEM market</li><li>Lead bid recommendation and contract negotiation activities to execute the highest value contracts supporting project goals with acceptable levels of risk, while managing portfolio-level relationships.</li></ul><p><strong>Project Controls &amp; Reporting:</strong></p><ul><li>Drive schedule development, cost benchmarking, cashflow modeling, and risk-adjusted cost positioning in support of project sanction decisions</li><li>Maintain and report on the E&amp;C gas project risk register, ensuring leadership has timely visibility into emerging risks, mitigation actions, and residual exposure</li><li>Champion process improvement within E&amp;C project development workflows, including integration of project data and risk tracking into project management platforms</li></ul><p><strong>Leadership:</strong></p><ul><li>Build and lead a high-performing gas project development team within E&amp;C, supporting a single federal hub Program Director and their engineering and construction leads</li><li>Provide strategic clarity on sequencing, resourcing, and risk tolerance in an origination-driven environment with competing priorities</li><li>Foster a proactive risk culture — ensuring risks are surfaced early rather than discovered at sanction or construction</li></ul><p><strong>What You&#39;ll Need:</strong></p><ul><li>Bachelor&#39;s degree in Engineering, Construction Management, or related field</li><li>12+ years of experience in energy project development or large capital construction, with demonstrated leadership in complex, multi-stakeholder environments</li><li>Deep expertise in EPC/EPCM project delivery, cost estimating, schedule development, and project risk management for gas generation projects</li><li>Deep expertise in major equipment and EPC/EPCM contract procurement including bid preparation, evaluation, negotiation and award</li><li>Proven ability to lead through ambiguity in early-stage, origination-led development programs</li><li>Proven ability to effectively communicate with internal and external stakeholders including executive management and public officials</li><li>Experience with balance-of-plant scopes including electrical interconnection, switchyard, and transmission infrastructure, natural gas supply, water supply and waste water disposal</li><li>Demonstrated experience conducting commercial and technical due diligence and risk assessments on gas generation technologies</li></ul><p><strong>Preferred:</strong></p><ul><li>Experience with combined cycle or simple cycle gas development across multiple geographies and regulatory environments</li><li>Familiarity with MISO, PJM, or ERCOT interconnection processes and associated E&amp;C scope implications</li><li>Experience managing long-lead equipment procurement in constrained OEM markets (GE Vernova, Siemens, Mitsubishi)</li></ul><p><strong>What Sets You Apart:</strong></p><ul><li>You lead across organizational boundaries without direct authority and make it look seamless</li><li>You surface risks before they become problems — and you build teams that do the same</li><li>You bring structure and discipline to early-stage development environments that others find ambiguous</li><li>You are equally comfortable in an OEM technical meeting, a leadership budget review or County Commissioner hearing</li><li>You have a sharp eye for cost — you know when a bid is telling you something about scope alignment, not just price</li></ul><p><strong>Job Overview</strong></p><p>This position is responsible for the overall management of assigned organization and projects, to ensure compliance within required budgetary, scheduling, and safety goals. Employees in this role coordinate and manage construction work performed by contractors and/or vendors at the project site or pre-construction efforts at the home office. The successful candidate manages the engineering, procurement and construction oversight-activities necessary to develop, license/permit, erect, start-up, and commence commercial operations.</p><p><strong>Job Duties &amp; Responsibilities</strong></p><ul><li>Works collaboratively with resources in various disciplines to determine project priorities and work plans</li><li>Meets corporate objectives with limited project management, scheduling and estimating resource</li><li>Manages department resources to provide effective early-stage project development support</li><li>Ensures projects are efficiently, effectively and safely implemented in accordance with department procedures and policies</li><li>Verifies constructability, ensures proper resource allocations, assesses field status and resolves issues as needed</li><li>Leads project meetings and reviews budget, risk tracker, and contingency allocations</li><li>Interfaces with project&#39;s designated management committees, or acts as Executive Director of project activities</li><li>Supervises activities and/or coordinates activities or groups, such as safety programs, engineering, construction, budget, and analysis and contract administration</li><li>Oversees commissioning activities to meet corporate objectives, with limited project management, scheduling and estimating resources</li><li>Performs other job-related duties as assigned</li></ul><p><strong>Required Qualifications</strong></p><ul><li>High School Grad / GED</li><li>Bachelor&#39;s or Equivalent Experience</li><li>Experience: 8+ years</li><li>Supervisory/Management experience: 4+ years</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>None</li></ul><p>NextEra Energy offers a wide range of benefits to support our employees and their eligible family members. Click <strong>here</strong> to learn more.</p><p><strong>Employee Group:</strong>  Exempt</p><p><strong>Employee Type:</strong>  Full Time</p><p><strong>Job Category:</strong>  Maintenance/Construction</p><p><strong>Organization:</strong>  NextEra Energy Project Management, LLC</p><p><strong>Relocation Provided:</strong>  Yes, if applicable</p><p>NextEra Energy is an Equal Opportunity Employer. Qualified applicants are considered for employment without regard to race, color, age, national origin, religion, marital status, sex, sexual orientation, gender identity, gender expression, genetics, disability, protected veteran status or any other basis prohibited by law.</p><p>NextEra Energy provides reasonable accommodation in its application and selection process for qualified individuals, including accommodations related to compliance with conditional job offer requirements, consistent with federal, state, and local laws. Supporting medical or religious documentation will be required where applicable and permitted by applicable law. To request a reasonable accommodation, please send an e-mail to recruiting-coordinator.sharedmailbox@nexteraenergy.com, providing your name, telephone number and the best time for us to reach you.</p><p>NextEra Energy will not discharge or in any other manner discriminate against employees or applicants because they have inquired about, discussed, or disclosed their own pay or the pay of another employee or applicant. However, employees who have access to the compensation information of other employees or applicants as a part of their essential job functions cannot disclose the pay of other employees or applicants to individuals who do not otherwise have access to compensation information, unless the disclosure is (a) in response to a formal complaint or charge, (b) in furtherance of an investigation, proceeding, hearing, or action, including an investigation conducted by the employer, or (c) consistent with the contractor’s legal duty to furnish information.</p><p>NextEra Energy <strong>does not</strong> accept any unsolicited resumes or referrals from <strong>any third-party recruiting firms or agencies</strong>. Please see our policy for more information.</p><p>#LI-JN2</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

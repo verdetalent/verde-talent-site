@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>At Bloom Energy, our vision for a world powered by clean, reliable, and affordable energy is more than just a dream—we’re making it reality.</p><p>For over two decades, we’ve been at the forefront of the global energy transition, pioneering solutions that empower critical industries to thrive in a rapidly digitizing, energy-intensive world. From revolutionizing power for AI-driven data centers to ensuring resilience for hospitals, electric grids, manufacturing facilities, and utilities, our solid oxide fuel cell (SOFC) and solid oxide electrolyzer (SOEC) technologies are redefining what’s possible by delivering energy abundance for all. With more than 30,000 fuel cell modules deployed worldwide, we are the trusted partner for Fortune 100 companies and innovators alike. Our cutting-edge solutions enable unparalleled “time-to-power” capabilities, reliability, and sustainability, ensuring our customers remain ahead in a world where soaring energy demand and intensifying energy scarcity are rapidly becoming the new norm.</p><p>At Bloom, we thrive on collaboration, bold thinking, and relentless innovation. We believe that, together, we can create a brighter, more sustainable future while tackling the most pressing challenges of the 21st century.</p><p>We are looking for a <strong>Senior Director, Electrical Engineering &amp; Microgrids</strong>to join our team in one of today’s most exciting technologies. This role will report to VP, Engineering and is based in <strong>San Jose, CA</strong>. This is a fully on-site, in office role 5 days a week.</p><p>The Senior Director, Electrical Engineering &amp; Microgrids is a senior technical execution leader responsible for the design, delivery, and operational performance of complex electrical and microgrid systems in Bloom Energy. This role owns end‑to‑end technical execution, from system architecture and detailed engineering through product development and deployment ensuring solutions meet safety, reliability, performance, schedule, and cost objectives.</p><p>The role provides deep technical leadership across medium‑ and low‑voltage power systems, inverter‑based generation, fuel cells, energy storage, protection, controls, communications, and utility interconnection. As the senior technical authority, the Senior Director is accountable for engineering decisions, design quality, system validation, and resolution of complex technical and field issues.</p><p><strong>Key Responsibilities</strong></p><p><strong>Leadership &amp; Strategy</strong></p><ul><li>Own the technical vision, strategy, and roadmap for electrical engineering and microgrid systems, aligned with company objectives and market needs</li><li>Contribute to enterprise‑level strategy and translate it into clear, cross‑functional engineering priorities</li><li>Anticipate technology, market, and regulatory trends impacting long‑term company positioning</li><li>Serve as a senior technical interface with executives, customers, and customer‑facing commercial teams and support commercial opportunities through technical due diligence, architectural proposals and presentations</li><li>Interface with customers, utilities, partners, and regulators on large, complex systems</li><li>Evaluate new technologies, vendors, and partnerships to improve performance and cost</li></ul><p><strong>Technical Leadership</strong></p><ul><li>Provide technical leadership for complex, multi‑disciplinary electrical and microgrid systems across the full life cycle, from concept and design through deployment, commissioning and operations</li><li>Lead architecture, design, and validation of microgrids, including medium‑ and low‑voltage power systems, fuel‑cell‑based generation, energy storage systems (BESS and supercapacitors), protection, controls, and communications</li><li>Ensure designs meet safety, reliability, performance, and cost objectives</li><li>Ensure compliance with applicable codes and standards (NEC, IEEE, UL, IEC, and utility interconnection requirements)</li><li>Own technical risk management, design reviews, and root‑cause analysis for field and system issues</li><li>Drive continuous improvement in design quality, safety, and repeatability</li></ul><p><strong>People &amp; Execution</strong></p><ul><li>Build, mentor, and scale high‑performing electrical engineering and microgrid controls teams</li><li>Foster a culture of engineering rigor, accountability, collaboration, and innovation</li><li>Partner closely with Operations, Site Installation, and Commercial teams to ensure successful execution</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Bachelor’s degree in Electrical Engineering or a related field (Master’s or PhD preferred)</li><li>15+ years of progressive experience in electrical power systems, microgrids, inverter‑based systems, or distributed energy resources (DERs)</li><li>7+ years of experience in engineering leadership roles with people and technical accountability</li><li>Deep expertise in:</li><li>Electrical engineering fundamentals</li><li>Microgrid controls, protection, and system integration</li><li>Utility interconnection requirements and grid codes</li><li>Energy storage systems and integration</li><li>Power system design and analysis</li><li>Proven track record delivering complex, multi‑disciplinary engineering programs from concept through deployment</li><li>Strong understanding of field execution, commissioning, and operational considerations</li><li>Strategic thinker with strong execution focus and engineering judgment</li><li>Comfortable operating at both deep technical levels and executive leadership levels</li><li>Collaborative leader who thrives in fast‑paced, cross‑functional environment</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Experience with grid‑interactive and/or islanded microgrid systems</li><li>Background in power electronics, inverter technologies, or controls software</li><li>Experience scaling engineering teams in growth‑stage or product‑driven organizations</li><li>Familiarity with microgrids for data centers, utilities, commercial &amp; industrial (C&amp;I), campuses, or critical infrastructure</li><li>Professional Engineer (PE) license</li></ul><p>Bloom Energy is an equal opportunity employer and makes employment decisions on the basis of merit. We are committed to compliance with all applicable laws providing equal employment opportunities. All qualified applicants, will receive consideration for employment without regard to race, sex, color, religion, national origin, protected veteran status, or on the basis of disability. Bloom Energy makes reasonable accommodations, consistent with applicable laws, for the known physical or mental limitations of an otherwise qualified applicant or employee</p><p>with a disability, who can perform the essential job functions, unless undue hardship would result.</p><p>Bloom Energy is committed to fair and equitable compensation practices. The total compensation for this position includes standard company benefits and is based on various factors including, but not limited to, relevant skills and experience.</p><p><strong>#LI-BC1</strong></p><p><strong>Salary Ranges:</strong></p><p>$260,800.00 - $375,200.00</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Requisition ID:</strong>  95520</p><p>NextEra Energy Resources is one of America’s largest wholesale electricity generators, harnessing diverse energy sources to power progress. We deliver tailored energy solutions that fuel economic growth, strengthen communities, and help customers achieve their energy goals. Ready to make a lasting impact? Take the next step in your career with us!</p><p><strong>Position Specific Description</strong></p><p>A highly experienced, Senior/Principal Transmission Line Engineer responsible for leading the planning, design, and execution of high-voltage transmission line projects, with a strong emphasis on generation interconnection (gen-tie) systems supporting gas-fired power plants. This role combines technical leadership, project oversight, and cross-functional coordination to deliver reliable, compliant, and cost-effective transmission infrastructure.</p><p><strong>Key Responsibilities</strong></p><p><strong>Technical Leadership &amp; Design:</strong></p><ul><li>Lead the engineering design of high-voltage transmission lines (typically 69 kV–500 kV), including routing, structure selection, and conductor specification.</li><li>Oversee structural loading, sag &amp; tension analysis, and line optimization using industry-standard tools (e.g., PLS-CADD, PLS-TOWER).</li><li>Provide expertise in gen-tie line design connecting gas-fired generation facilities to the grid, including switchyard interface considerations including any impact of islanding/behind the meter impacts if islanding occurs across the transmission lines and/or to interconnected facilities if the islanded entity is partially grid tied.</li><li>Review and approve engineering calculations, drawings, and specifications to ensure compliance with codes and standards (NESC, IEEE, ASCE, utility-specific criteria).</li><li>Write, conform and adapt Engineer of Record (EOR), Engineering Consultant, Early Stage Engineering, Construction, Engineer/Procure/Construct (EPC) and Owner furnished equipment specifications and other technical contract documents as needed for each project to put contracts in place (self-performed in areas of expertise, seeks appropriate in-house guidance in areas outside of immediate expertise, and where needed uses 3rd party engineering consultants).</li><li>Reviews Engineer of Record (EOR), Engineering Consultant, Early-Stage Engineering, Contractor, Engineer/Procure/Construct (EPC) and Owner furnished equipment deliverables for contract compliance, adequacy, and completeness (self-performed in areas of expertise, seeks appropriate in-house guidance in areas outside of immediate expertise, and where needed uses third party engineering consultants when necessary).</li><li>Working with company purchasing department to ensure that purchase orders adequately define the specified requirements and contracts are put in place.</li></ul><p><strong>Generation Interconnection (Gen-Tie):</strong></p><ul><li>Design and coordinate transmission interconnection solutions for gas plant generation projects.</li><li>Collaborate with generation developers, EPC contractors, and utilities to ensure seamless integration into the grid.</li><li>Support interconnection studies, including load flow, short circuit, and stability coordination with planning teams.</li><li>Ensure compliance with ISO/RTO requirements (e.g., PJM, ERCOT, MISO, SERC regions depending on location).</li></ul><p><strong>Project Management &amp; Execution:</strong></p><ul><li>Serve as technical lead across multiple projects, ensuring schedule, budget, and quality objectives are met.</li><li>Coordinate with external engineering consultants and internal electrical, civil, structural, substation, and environmental SME teams for integrated project delivery.</li><li>Review contractor/vendor designs and manage engineering deliverables through all project phases (conceptual, preliminary, detailed design, construction support).</li><li>Provide construction support, including field issue resolution and design modifications.</li></ul><p><strong>Regulatory &amp; Compliance:</strong></p><ul><li>Ensure all designs meet federal, state, and local regulatory requirements.</li><li>Interface with permitting agencies and support environmental reviews.</li><li>Maintain adherence to safety standards and utility best practices.</li></ul><p><strong>Client &amp; Stakeholder Engagement:</strong></p><ul><li>Act as a technical advisor to clients, including utilities, independent power producers (IPPs), and developers.</li><li>Participate in client meetings, technical presentations, and proposal development.</li><li>Mentor junior engineers and contribute to organizational knowledge development.</li></ul><p><strong>Preferred Qualifications:</strong></p><ul><li>Bachelor’s degree in electrical engineering, Civil/Structural Engineering, or related field.</li><li>Active Professional Engineer (PE) license (multi-state licensure preferred or ability to obtain via comity).</li><li>6 –15+ years of experience in transmission line engineering.</li><li>Demonstrated experience with generation interconnection (gen-tie) projects, particularly for gas-fired power plants.</li><li>Proficiency in transmission line design tools (e.g., PLS-CADD suite).</li><li>Strong knowledge of ASCE 48, NESC, IEEE, ASCE 74, and utility design standards.</li><li>Experience working with major utilities or EOR firms.</li><li>Familiarity with ISO/RTO interconnection processes.</li><li>Experience in substation interface design for generation tie-ins.</li><li>Project management experience (PMP certification is a plus).</li><li>Advanced degree (Master’s) in engineering or related field.</li><li>Demonstrated experience with generation interconnection (gen-tie) projects, for Wind, Solar, Battery Energy, and data center is a PLUS.</li></ul><p><strong>Core Competencies:</strong></p><ul><li>Advanced technical expertise in transmission systems</li><li>Strong leadership and mentoring capability</li><li>Cross-disciplinary coordination</li><li>Problem-solving in complex, high-risk environments</li><li>Effective communication with technical and non-technical stakeholders</li></ul><p><strong>Work Environment &amp; Impact:</strong></p><ul><li>This role operates out of Juno Beach office with occasional travel to project field and plays a critical part in enabling reliable power delivery by connecting generation assets to the transmission grid.</li></ul><p><strong>Job Overview</strong></p><p>This job is responsible for applying diversified knowledge of engineering principles and practices to a broad variety of assignments and related fields. Employees in this role evaluate, select, and apply standard techniques, procedures, and criteria to perform a task or sequence of tasks for conventional projects. This position conducts analysis on system performance and reliability strategy and provides recommendations.</p><p><strong>Job Duties &amp; Responsibilities</strong></p><p>•   Provides engineering, design and environmental support</p><p>•   Tracks and reports on project negotiations and performance</p><p>•   Delivers company standards, policies, training, and support of organization</p><p>•   Prepares communications, presentations and provides support at meetings</p><p>•   Formulates researches, and develops improvement measures</p><p>•   Works with other departments within the organization to establish customer requirements and project costs</p><p>•   Ability to meet attendance and storm duty requirements</p><p>•   Ability to work extended hours</p><p>•   Performs other job-related duties as assigned</p><p><strong>Required Qualifications</strong></p><ul><li>Valid Driver&#39;s License (NON CDL)</li><li>Bachelor’s degree in Engineering (non-Engineering Technology), OR</li><li>Master’s degree in Engineering, if the bachelor’s degree is not in a pure engineering field</li><li>At least one degree (Bachelor’s or Master’s) must be from an ABET-accredited program</li><li>Experience: 7+ years post-Bachelor’s degree in engineering</li></ul><p><strong>Preferred Qualifications</strong></p><p>•  Certified Professional Engineer (PE)</p><p>•  Six Sigma Black Belt Certified</p><p>•  Six Sigma Green Belt Certified</p><p>•  Master&#39;s Degree</p><p>•  Six Sigma Yellow Belt Certified</p><p>•  Six Sigma Master Black Belt</p><p>NextEra Energy offers a wide range of benefits to support our employees and their eligible family members. Click <strong>here</strong> to learn more.</p><p><strong>Employee Group:</strong>  Exempt</p><p><strong>Employee Type:</strong>  Full Time</p><p><strong>Job Category:</strong>  Engineering</p><p><strong>Organization:</strong>  NextEra Energy Project Management, LLC</p><p><strong>Relocation Provided:</strong>  Yes, if applicable</p><p>NextEra Energy is an Equal Opportunity Employer. Qualified applicants are considered for employment without regard to race, color, age, national origin, religion, marital status, sex, sexual orientation, gender identity, gender expression, genetics, disability, protected veteran status or any other basis prohibited by law.</p><p>NextEra Energy provides reasonable accommodation in its application and selection process for qualified individuals, including accommodations related to compliance with conditional job offer requirements, consistent with federal, state, and local laws. Supporting medical or religious documentation will be required where applicable and permitted by applicable law. To request a reasonable accommodation, please send an e-mail to recruiting-coordinator.sharedmailbox@nexteraenergy.com, providing your name, telephone number and the best time for us to reach you.</p><p>NextEra Energy will not discharge or in any other manner discriminate against employees or applicants because they have inquired about, discussed, or disclosed their own pay or the pay of another employee or applicant. However, employees who have access to the compensation information of other employees or applicants as a part of their essential job functions cannot disclose the pay of other employees or applicants to individuals who do not otherwise have access to compensation information, unless the disclosure is (a) in response to a formal complaint or charge, (b) in furtherance of an investigation, proceeding, hearing, or action, including an investigation conducted by the employer, or (c) consistent with the contractor’s legal duty to furnish information.</p><p>NextEra Energy <strong>does not</strong> accept any unsolicited resumes or referrals from <strong>any third-party recruiting firms or agencies</strong>. Please see our policy for more information.</p><p>#LI-JN2</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

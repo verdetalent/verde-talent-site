@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Senior Manager - Emergency Operations</strong></p><p>Location: Binghamton, NY</p><p>Reports to: Sr Director - Emergency Management</p><p>Work Type: Office</p><p>The salary range for this position is based on experience level ranging from <strong>$134,000 to $168,000 plus up to 16% bonus</strong></p><p><strong>What We Offer:</strong></p><p>Competitive benefits and growth opportunities</p><p>Generous performance‑based bonuses</p><p>12% 401(k) match</p><p>Comprehensive health, dental, and vision insurance</p><p>Tuition reimbursement</p><p>Professional development and clear career advancement pathways</p><p>For more information please visit: Benefits - Avangrid</p><p><strong>Job Summary:</strong></p><p>Works collaboratively and independently as a team leader to create, develop, and implement the Avangrid emergency management program. This role significantly contributes to the company&#39;s overall preparedness to emergencies, both in planning and preparation before an event and execution during an event. The position is primarily responsible for ensuring an effective and efficient Avangrid response to emergencies that impact the distribution of services to Avangrid’s customers and/or company operations. This position supports both electric and natural gas utilities. Main duties include:</p><ul><li>Manage jurisdictional Emergency Operations team members including the delegation of assignments, management of personnel, and ensuring projects are completed successfully.</li><li>Collaborate with business areas across the company to ensure emergency response capabilities are maintained and matured for all hazards.</li><li>Create and prepare appropriate plans, procedures, SOP’s and checklists for severe weather, emergencies, and other risks/hazards.</li><li>Assist in the development and delivery of emergency response trainings and exercises.</li><li>Provide subject matter expertise in emergency management during the response to actual events to ensure an effective and coordinated response.</li><li>Provide operating company executives with briefings on departmental initiatives and response operations as needed.</li><li>Serve as departmental lead for jurisdictional regulatory interactions including ensuring all compliance filings and requests are completed in an accurate and timely manner.</li><li>Serve as departmental lead for interactions with state and/or regional mutual assistance mechanisms used to supplement resources during emergency responses.</li><li>Act as a liaison with neighboring utilities, local stakeholders, and state officials to coordinate preparedness and response activities.</li><li>Provide emergency management subject matter expertise to further the department’s strategic and tactical initiatives.</li></ul><p><strong>Key Responsibilities:</strong></p><ul><li>This senior manager position will play a critical role in the creation, development, and implementation of the Avangrid emergency management program. Responsibilities include pre and post emergency response activities as well as supporting the established ICS structure to manage and conduct operations during the actual emergency event.</li><li>Responsible for driving strategy, continuous improvement, and execution of emergency management activities.</li><li>Leads development of effective emergency management policies and procedures to ensure preparedness for future events.</li><li>Ensures internal alignment and training for emergency response.</li><li>May serve as the Avangrid representative for various governmental and/or regulatory entities.</li><li>Will work with external entities, companies and organizations for relationship building, cooperative projects and to ensure best practices.</li><li>Works as consultant with Vice Presidents, Senior Director, and Directors of critical business areas (Electric Operations, Gas Operations, etc.) to provide strategic direction regarding emergency management and setting short-term and long-term program objectives.</li><li>Will work creativity and innovatively to ensure that there is ongoing, continuous improvement throughout Avangrid, and the operating companies in emergency management.</li></ul><p><strong>Required Qualifications:</strong></p><ul><li>Bachelor’s degree with minimum of 10 years relevant experience required.</li><li>Experience in utility system operations, planning, restoration, emergency management or engineering.</li><li>Experience in O&amp;M and/or capital budgets.</li></ul><p><strong>Knowledge/Skills:</strong></p><ul><li>Strong ability to work collaboratively and contribute as a team leader to develop the emergency management program within Avangrid.</li><li>Must be highly organized, self-directed, and capable of managing multiple responsibilities and deliverables to successful completion.</li><li>Strong organizational, communication (verbal and written), interpersonal and influencing skills.</li><li>Proven ability to manage a team of professionals, innovatively, and creatively.</li><li>Ability and desire to work across organizational lines throughout Avangrid and with senior management.</li><li>Ability to collaborate with external entities to achieve mutual gains and foster cooperative relationships. These include emergency management and public officials, other utilities and regulatory agencies.</li><li>Experience in (or ability to) reviewing, analyzing and influencing state statutory and regulatory actions.</li><li>Advanced problem solving, analytical, and decision-making skills. Able to analyze complex information, distill salient items and create appropriate action plans.</li><li>Knowledge of regulatory requirements regarding emergency management planning, readiness, and execution.</li><li>Knowledge of the Incident Command System (ICS) and its application in emergency response by utilities.</li><li>Ability to identify business risks and to develop and execute mitigating strategies.</li><li>Provides strategic input to management team and business areas based on sound analytical decision making.</li><li>Knowledge of SAP, company websites and other applicable business systems.</li><li>Budget and/or cost management experience.</li></ul><p>#LI-OFFICE</p><p>#LI-JO1</p><p><strong>Company:</strong></p><p>NY STATE ELECTRIC &amp; GAS CORP</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p><p>August-2-2026</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

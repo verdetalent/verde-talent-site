@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p><strong>Basic Job Functions:</strong></p><p>The Manager, Commercial Transactions is a senior individual contributor that supports First Solar’s Americas Global Business Development team by drafting, negotiating, executing, and managing customer-facing sales contracts that support First Solar objectives for bookings and profitability while balancing, commercial, legal and execution risk. Principal customer facing agreements include Module Sale Agreements but also include various post-contract instruments (for example; change orders, amendments, consents, assignments, estoppels, notices of default, force majeure notices). This position works closely with the origination, legal, contract management, and fulfilment teams and is the principal customer interface responsible for drafting and negotiating contracts and post-contract documentation that align with First Solar’s commercial objectives, execution capabilities, and that achieve consistency with commercial and risk management guidelines.</p><p>The Manager, Commercial Transactions interacts extensively with First Solar Vice Presidents and Directors, the legal team and all relevant subject matter experts and is responsible for obtaining cross-functional buy-in on the compromises necessary to secure and maintain the business and for ensuring that the contract management, fulfillment, and other various functional  teams are aware of the commercial obligations in the contracts.</p><p><strong>Education/Experience:</strong></p><ul><li>B.A. degree in Business, Technical or Legal related field or combination of Education, Certificate (Legal / Contract Management focus) and 5+ years’ experience in fulfilling contracts.</li><li>Master’s degree in Business Administration, preferred.</li><li>Juris Doctor or equivalent career experience, a plus.</li><li>A minimum of 5 years of experience managing contractual documentation, in aggregate, of $100 MM per annum or more</li><li>Proven experience and skills in drafting commercial contract terms is a must</li><li>Experience and detailed commercial and legal knowledge of the principal customer-facing agreements/terms</li><li>Proven success in commercial deal structuring, pricing strategy, and contract development, drafting and negotiation</li><li>ERP and CLM experience strongly desired</li><li>Strong leadership, vision, business acumen and exemplary work ethic</li></ul><p><strong>Required Skills/Competencies:</strong></p><ul><li>Strong cross-functional leadership skills</li><li>Exemplary customer service skills, interfacing directly with company heads, vice presidents, and legal counsel on “the other side of the table”</li><li>Business acumen, including excellent critical thinking and analytical ability, along with strong organizational and risk assessment skills, and demonstrated time management ability</li><li>Strong ability to identify, evaluate, and allocate risks.</li><li>Exceptional attention to detail with the ability to discern subtle requirements, nuances, and differences within complex commercial and legal documents</li><li>Solid technical acumen and/or in-depth knowledge of solar power plant technology, construction, operation, maintenance, and performance</li><li>Commitment to Scope of Authority and Business Code of Conduct; act and guide others with integrity</li><li>Exceptional written and oral communication skills</li><li>Highly effective time management skills, with the ability to execute on multiple negotiations and business objectives simultaneously</li><li>Aptitude to quickly learn new business applications, processes, and provide recommendations for improvements</li></ul><p><strong>Essential Responsibilities:</strong></p><ul><li>Lead drafting and negotiation of principal customer facing contracts, including original contracts as well as post-contract agreements/documents.</li><li>Develop and maintain relationships with customers’ commercial counterparts.</li><li>Work with team members to ensure the contracting nuances of risk management, warranties, deliverables, tax, accounting, revenue recognition, bonuses, damages, costs, and schedule are understood and are consistent with SoA policies and procedures.</li><li>Represent transactions Deal Review Committee process.</li><li>Interface closely with Executive Leadership Team, legal, finance, accounting, tax, risk management, internal audit, and other critical functions essential to deal negotiations and approvals</li><li>Develop and maintain a streamlined negotiation process to minimize risk and reduce legal costs, while ensuring strict adherence to First Solar’s Scope of Authority (SoA) policies and procedures</li><li>Follow procedures that ensure a timely and complete handover of executed commercial agreements to the fulfilment teams responsible for delivering on contractual obligations.</li><li>Provide effective leadership to direct and indirect reports in support of commercial transactions</li><li>Work closely with cross-functional deal teams including Warranties to eliminate gaps, manage risk and deliver a cohesive set of agreements</li><li>Responsible for the timely preparation of draft agreements; ensuring that the legal, commercial, and operational obligations meet performance and profitability targets</li><li>Coordinate reviews of customer draft agreements and seek replacement with First Solar forms if possible; if not possible, understand and document deviations from First Solar’s standard agreements and obtain SoA approvals as required</li><li>Ensure timely preparation and review of requests for proposals, term sheets, exhibits, warranties, guarantees, and other agreement documents to meet deal closing deadlines and customer schedules</li><li>Travel to customer locations as necessary for negotiations and relationship development; domestic and international travel required.</li><li>Other duties as assigned.</li></ul><p><strong>Reporting Relationships:</strong></p><ul><li>Reports to  Sr. Director, Commercial Transactions</li><li>No direct reports</li></ul><p><strong>Travel:</strong></p><ul><li>Travel to customer locations as necessary for negotiations and relationship development; domestic and international travel required.</li><li>15 – 25%</li></ul><p><strong>Estimated Salary Range:</strong></p><ul><li>$84,200.00- $120,000.00 Annually</li></ul><p><strong>US Physical Requirements:</strong></p><p>Office Physical Requirements:</p><p>All positions in our office require interaction with people and technology while either standing or sitting. In order to best service our customers, internal and external, all associates must be able to communicate face-to-face and on the phone with or without reasonable accommodation. First Solar is committed to compliance with its obligations under all applicable state and federal laws prohibiting employment discrimination. In keeping with this commitment, it attempts to reasonably accommodate applicants and employees in accordance with the requirements of the disability discrimination laws. It also invites individuals with disabilities to participate in a good faith, interactive process to identify reasonable accommodations that can be made without imposing an undue hardship.</p><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role.  All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce.  It is the policy of the company to recruit, hire, train, and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity.  We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

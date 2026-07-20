@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>At Bloom Energy, our vision for a world powered by clean, reliable, and affordable energy is more than just a dream—we’re making it reality.</p><p>For over two decades, we’ve been at the forefront of the global energy transition, pioneering solutions that empower critical industries to thrive in a rapidly digitizing, energy-intensive world. From revolutionizing power for AI-driven data centers to ensuring resilience for hospitals, electric grids, manufacturing facilities, and utilities, our solid oxide fuel cell (SOFC) and solid oxide electrolyzer (SOEC) technologies are redefining what’s possible by delivering energy abundance for all. With more than 30,000 fuel cell modules deployed worldwide, we are the trusted partner for Fortune 100 companies and innovators alike. Our cutting-edge solutions enable unparalleled “time-to-power” capabilities, reliability, and sustainability, ensuring our customers remain ahead in a world where soaring energy demand and intensifying energy scarcity are rapidly becoming the new norm.</p><p>At Bloom, we thrive on collaboration, bold thinking, and relentless innovation. We believe that, together, we can create a brighter, more sustainable future while tackling the most pressing challenges of the 21st century.</p><p>We are looking for a <strong>Sr. Operations Manager</strong>to join our team in one of today’s most exciting technologies.</p><p>This role will be <strong>based in a field office (Vineland, Cumberland County, NJ)</strong>. This is a <strong>fully on-site, in office role 5 days a week when not traveling.</strong></p><p>The Sr. Operations Manager is responsible for the end-to-end operation, maintenance, and service execution of Bloom Energy’s Solid Oxide Fuel Cell installations at customer sites. This role ensures safe, reliable, and compliant operation of the Bloom Energy Server while also owning 24/7 on-site service responsiveness, troubleshooting execution, and coordination of field service activities. The position serves as the single operational owner at site level, interfacing with customers and coordinating with Remote Monitoring, Engineering, Field Service, and Fulfillment teams to meet uptime, efficiency, SLA, and contractual commitments.</p><p><strong>Key Responsibilities:</strong></p><p><strong>Site Operations Leadership</strong></p><ul><li>Serve as the primary operational owner for the assigned O&amp;M site.</li><li>Act as the single point of contact for customer facility and operations teams.</li><li>Lead daily O&amp;M routines, inspections, system monitoring, and reporting.</li><li>Ensure operational discipline, site readiness, and adherence to standard work practices.</li></ul><p><strong>Operations, Maintenance &amp; Service Execution</strong></p><ul><li>Accountable for prioritization, coordination, and site-level outcomes</li><li>Oversee preventive, corrective, and predictive maintenance activities.</li><li>Ensure timely execution of preventive maintenance schedules and efficient handling of service events and failures.</li><li>Coordinate on-site troubleshooting, repairs, upgrades, and component replacements.</li><li>Validate work orders, job plans, and maintenance documentation in the systems</li></ul><p><strong>Fleet Health &amp; Performance Monitoring</strong></p><ul><li>Monitor system KPIs including power output, efficiency, fuel usage, degradation trends, and alarms.</li><li>Collaborate with Remote Monitoring and Engineering teams to diagnose and resolve performance deviations.</li><li>Support advanced diagnostics and root cause analysis for recurring issues.</li></ul><p><strong>Safety, Quality &amp; Compliance</strong></p><ul><li>Ensure compliance with all EHS requirements, permits, and safety procedures.</li><li>Lead safety briefings, toolbox talks, audits, and contractor safety management.</li><li>Maintain audit readiness for regulatory, customer, and internal inspections.</li><li>Promote a strong safety and quality culture across all site activities</li></ul><p><strong>Customer Communication &amp; Stakeholder Management</strong></p><ul><li>Proactively communicate planned maintenance, outages, and performance updates to customers.</li><li>Support customer queries related to power availability, output, and operational performance.</li><li>Represent Bloom Energy professionally at site level and build strong customer relationships.</li></ul><p><strong>Performance &amp; Reliability Management</strong></p><ul><li>Track site uptime, SLA compliance, response times, and key operational KPIs.</li><li>Drive improvements in system reliability, service response, and operational efficiency.</li><li>Analyze incident trends, conduct root cause analysis, and implement corrective and preventive action</li></ul><p><strong>Work Coordination &amp; Vendor Management</strong></p><ul><li>Coordinate activities with contractors, service partners, utility providers, and fuel suppliers.</li><li>Ensure availability of spares, tools, and consumables required for uninterrupted operations.</li><li>Monitor quality, safety, and timeliness of outsourced maintenance and service work.</li></ul><p><strong>Documentation &amp; Reporting</strong></p><ul><li>Maintain accurate operational logs, maintenance records, and safety documentation.</li><li>Submit weekly and monthly site performance and service reports.</li><li>Provide insights, lessons learned, and recommendations to regional and global leadership.</li></ul><p><strong>Qualifications:</strong></p><ul><li>Bachelor’s degree in Engineering, Operations</li><li>10–15 years in plant operations, power generation, or industrial O&amp;M with strict SLA requirements.</li><li>Strong understanding of electromechanical, thermal, and control systems.</li><li>Experience in site operations, vendor management, and customer interaction.</li><li>Ability to interpret engineering drawings and system performance data</li><li>Demonstrated experience leading managers and influencing global, matrixed teams across regions and functions</li></ul><p><strong>Preferred</strong></p><ul><li>Experience with fuel cells, CHP, microgrids, or distributed energy systems.</li><li>Exposure to solid-oxide or high-temperature electrochemical systems.</li><li>Safety certifications (NEBOSH/HSE) or electrical operations certifications.</li><li>Familiarity with SCADA systems.</li></ul><p>#BEI2024</p><p>#LI-SH1</p><p><strong>Salary Ranges:</strong></p><p>$178,800.00 - $257,200.00</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Are you looking for an exciting job where you can put your skills and talents to work at a company you can feel proud to be a part of? Do you want a workplace that will challenge you and offer you opportunities to learn and grow?  A  position at Xcel Energy could be just what you’re looking for.</p><p><strong>Position Summary</strong></p><p>The Wildfire Command Center (WCC) Specialist will conduct monitoring of wildfire activity and threat across XE service territory.  The WCC Specialist will monitor multiple electronic sources/feeds that relate to wildfires, wildfire conditions, wildfire threat, wildfire staffing constraints, fuels conditions, and weather conditions. This data will then be contextualized to form a picture of overall wildfire threat to XE.  Data will be organized and displayed for larger visualization and informational briefings. Data will be tracked and recorded and then analyzed, evaluated for risk threat, confirmed and passed along to leadership. The WCC specialist will also display, post, share wildfire data collected and disseminate to internal operations and leadership. The WCC specialist will work closely with the Meteorological team and PSPS teams for potential wildfire EPSS/PSPS events. The WCC Specialist will work closely with the Investigations team and Public Safety Specialists during events, wildfires, PSPS or as needed to address wildfire threat.  As needed communication with Emergency Preparedness and Emergency Response partners is an ongoing job duty. WCC Specialist will support PSPS events with updates from all sources and provide real time wildfire information to DCC/ECC and other emergency XE functions that initiate and coordinate operational wildfire action or response. This includes the development and management of day-to-day wildfire command activities including creating standard operating procedures, planning, organizing, exercising and training, to ensure the center is prepared to track and respond to catastrophic incidents.</p><p>The WCC Specialist is part of the Situational Awareness team that includes the Public Safety Power Shutoff Team, Investigations Team, and the Public Safety Specialist Team.   Close coordination with wildfire mitigation programs and daily interaction with wildfire leadership and other Xcel functions will be part of position responsibilities.</p><p><strong>Essential Responsibilities</strong></p><ul><li>Develop and maintain partnerships, build and maintain external relationships with internal and external emergency management and wildfire partners.</li><li>Assist training and develop of company personnel on emergency management concepts.</li><li>Monitor wildfire information from numerous resources that impact XE.</li><li>Monitor and visualize Wildfire Mitigation and Response program activities.</li><li>Maintain familiarity with specialized software, tools and processes.</li><li>Maintain and implement Wildfire and WCC response plans, playbooks, standard operating procedures and job aids and support the development of emergency operations plans.</li><li>Provide support for ICS during exercises and real-world incidents.</li><li>Routinely communicate with external partners to ensure stakeholders are aware of and understand the company&#39;s Wildfire Mitigation or response strategy. Interface with state/county emergency management officials.</li><li>Facilitate training and exercises consistent with Homeland Security Exercise Evaluation program (HSEEP) as they relate to WCC operations.</li><li>Participate in state, county, federal, industry and peer meetings, workshops, briefings, events, training, and facilitate company participation in external exercises.</li><li>Work with internal business areas to ensure operational alignment around emergency preparedness for WCC operations, Wildfires and PSPS events consistent with National Incident Management System (NIMS), and Incident Command Structure (ICS) fundamentals.</li><li>Maintain exceptional interpersonal and liaison skills.</li><li>Maintain and document Wildfire and PSPS event response information to include developing incident action plans and situational awareness briefings and dashboards.</li><li>Maintain awareness of current and potential wildfire risks to the company.</li><li>Deliver tactical departmental goals to achieve overall Wildfire group strategic plans, objectives.</li><li>Comply with internal and sector policies and regulatory requirements.</li></ul><p><strong>Minimum Requirements</strong></p><ul><li>5+ years experience working in emergency or disaster management, fire science, homeland security or related field or equivalent education and experience required.</li><li>Strong verbal/written communication and presentation skills.</li><li>Strong ability to work across organization boundaries and influence others.</li><li>Strong investigative, analysis, conflict resolution, and negotiation skills.</li><li>A valid state driver’s license is required.</li><li>Knowledge and experience with National Incident Management System (NIMS), Incident Command Structure (ICS), Emergency Operations Center (EOC) operations, and Incident Management Team (IMT) operations.</li><li>Self-directed and comfortable navigating ambiguity.</li><li>Ability to work well across teams in high stress environments.</li><li>Ability to build relationships and manage multiple opinions.</li><li>Ability to understand complex technical and/or business information.</li><li>Ability to define and manage internal projects and milestones.</li><li>Associate’s degree in emergency or Disaster Management, Fire Science, Homeland Security or related field is desirable.</li><li>Emergency Management, Wildfire, and Energy Sector related professional certifications are desirable.</li><li>Experience in Wildfire Response is desirable.</li><li>Experience is dispatch or control center is preferable.</li><li>Experience in Energy Sector at a large Western utility provider is desirable.</li></ul><p><strong>Preferred Requirements:</strong></p><p>Candidates should be comfortable supporting a flexible scheduling model.</p><p>This is a full-time salaried position supporting the <strong>weekday</strong> operations of the 24/7, 365-day Wildfire Command Center. Scheduled shift assignments rotate and vary based on team needs, preferred schedules, individual strengths, and development goals.</p><ul><li>Standard weekday shifts are 8 hours and are staggered between 7:00 a.m. and 7:00 p.m. Shifts may adjust during periods of elevated wildfire risk or active response operations. Weekend and PM shifts are covered by dedicated PM and Weekend staff.</li><li>This position supports limited rotational weekend on-call coverage, typically one weekend every two months. Weekend support is traditionally remote and focused on providing oversight and backup to the dedicated weekend monitoring team.</li><li>Staff support occasional holidays in coordination with the team and external staffing support if available.</li><li>The Wildfire Command Center uses a hybrid staffing structure. Staff may work in the office or remotely depending on their weekly role, fire risk, and operational needs, after demonstrating the ability to follow virtual operations procedures.</li><li>The schedule expectations outlined above reflect normal operating conditions; however, salaried staff may be expected to remain available when wildfire risk, active incidents, or other operational needs require additional support, including increased hours outside of normal schedules during escalated operations.</li></ul><p>Under normal staffing conditions, the team maintains meaningful schedule flexibility, and adjustments are made collaboratively to balance operational coverage with individual needs while maintaining effective command center coverage.</p><p>As a leading combination electricity and natural gas energy company, Xcel Energy offers a comprehensive portfolio of energy-related products and services to 3.4 million electricity and 1.9 million natural gas customers across eight Western and Midwestern states. At Xcel Energy, we strive to be the preferred and trusted provider of the energy our customers need. If you’re ready to be a part of something big, we invite you to join our team.</p><p>All qualified applicants will receive consideration for employment without regard to age, race, color, religion, sex, sexual orientation, gender identity, national origin, disability, or status as a protected veteran.</p><p>Individuals with a disability who need an accommodation to apply please contact us at recruiting@xcelenergy.com.</p><p>Non-BargainingThe anticipated starting base pay for this position is: $85,000.00 to $120,000.00 per yearThis position is eligible for the following benefits: Annual Incentive Program, Medical/Pharmacy Plan, Dental, Vision, Life Insurance, Dependent Care Reimbursement Account, Health Care Reimbursement Account, Health Savings Account (HSA) (if enrolled in eligible health plan), Limited-Purpose FSA (if enrolled in eligible health plan and HSA), Transportation Reimbursement Account, Short-term disability (STD), Long-term disability (LTD), Employee Assistance Program (EAP), Fitness Center Reimbursement (if enrolled in eligible health plan), Tuition reimbursement, Transit programs, Employee recognition program, Pension, 401(k) plan, Paid time off (PTO), Holidays, Volunteer Paid Time Off (VPTO), Parental Leave</p><p>Benefit plans are subject to change and Xcel Energy has the right to end, suspend, or amend any of its plans, at any time, in whole or in part.</p><p>In any materials you submit, you may redact or remove age-identifying information including but not limited to dates of school attendance and graduation.  You will not be penalized for redacting or removing this information.</p><p>Deadline to Apply: 07/31/26</p><p>EEO is the Law | EEO is the Law Supplement | Pay Transparency Nondiscrimination | Equal Opportunity Policy (PDF) | Employee Rights (PDF)</p><p>All Xcel Energy employees and contractors share responsibility for protecting the company&#39;s information and systems by adhering to cybersecurity policies, standards, and best practices, recognizing that cybersecurity is everyone&#39;s responsibility.</p><p><strong>ACCESSIBILITY STATEMENT</strong></p><p>Xcel Energy endeavors to make https://www.xcelenergy.com/ accessible to any and all users. If you would like to contact us regarding the accessibility of our website or need assistance completing the application process, please contact Xcel Energy Talent Acquisition at recruiting@xcelenergy.com. This contact information is for accommodation requests only and cannot be used to inquire about the status of applications.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

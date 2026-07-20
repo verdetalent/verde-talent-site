@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Requisition ID:</strong>  96076</p><p>NextEra Energy, Inc. is America&#39;s leading energy company, delivering more electricity to homes and businesses than any other company in the nation. We are dedicated to meeting the country’s growing energy demands through a diverse mix of energy sources. Our focus is on growing the economy, keeping customer bills as low as possible and supporting the communities where our projects are located. Through technology and innovation, we deliver cutting-edge solutions, serving Americans across nearly all 50 states. Are you ready to shape America’s energy future? Join us today.</p><p><strong>Position Specific Description</strong></p><p>The Aviation Business Operations Manager is a newly created, cross-functional leadership role responsible for infrastructure, logistics, inventory, and strategic projects. This position is designed to enhance operational effectiveness, improve workload distribution, and strengthen readiness for upcoming organizational transitions, including leadership changes and integration activities.</p><p><strong>Position Structure</strong></p><p>Reports to the Sr. Maintenance Manager and provides functional oversight of facilities contractors, inventory management, and aviation support programs. This position will manage the Aviation Services Specialist.</p><p><strong>Key Responsibilities</strong></p><p><strong>1. Facilities &amp; Infrastructure Management</strong></p><ul><li>Oversee all aviation-related facilities operations, capital project planning and tracking</li><li>Manage aviation facility operating budgets, forecasts, and capital expenditure tracking</li><li>Coordinate maintenance, vendor relationships, and facility improvements</li><li>Ensure compliance with applicable FAA, environmental, safety, and corporate standards</li><li>Manage department vehicle including all lease and maintenance issues</li></ul><p><strong>2. Inventory, Stockroom &amp; Parts Management</strong></p><ul><li>Manage stockroom operations, including parts inventory, consumables, tracking, and replenishment</li><li>Oversee CAMP inventory systems and ensure accurate parts receiving and documentation</li><li>Implement controls to improve inventory visibility and efficiency</li></ul><p><strong>3. Operational Support</strong></p><ul><li>Maintain all GSE equipment and maintenance</li><li>Coordinate aircraft corrosion control, appearance, preservation, and related vendor services</li><li>Help rebalance workload distribution, particularly relieving non-core responsibilities from maintenance leadership</li><li>Provide backup operational and dispatch support to ensure seamless daily aviation activities</li></ul><p><strong>4. Project &amp; Cross-Functional Support</strong></p><ul><li>Support aviation-related projects, including continuous improvement initiatives</li><li>Assist with merger integration activities impacting aviation operations</li><li>Partner across functions (IT, operations, maintenance) to drive execution of critical initiatives</li></ul><p><strong>5. Storm Planning &amp; Emergency Readiness</strong></p><ul><li>Lead or support storm planning and execution efforts for aviation operations</li><li>Ensure preparedness protocols, coordination plans, and response activities are in place</li></ul><p><strong>6. IT Coordination &amp; Systems Support</strong></p><ul><li>Act as liaison between Aviation and IT for system needs, issue resolution, and enhancements</li><li>Support operational systems tied to inventory, dispatch, and facilities</li></ul><p><strong>Highly Preferred Qualifications</strong></p><ul><li>Bachelor’s degree or equivalent experience in Aviation Management, Operations, Business, or related field</li><li>FAA Part 91 operational experience preferred</li><li>Experience supporting  aviation maintenance and logistics operations</li><li>5+ years of experience in aviation operations, or a related operational role</li><li>Strong cross-functional leadership and project management capabilities</li><li>Experience with aviation inventory systems (e.g., CAMP or similar) preferred</li><li>Demonstrated ability to manage both operational execution and strategic initiatives</li></ul><p><strong>Strategic Purpose of the Role</strong></p><ul><li>Strengthen aviation operational effectiveness by addressing gaps in facilities and operational support</li><li>Reduce administrative and non-core burden on the Maintenance Manager, enabling greater focus on core maintenance activities</li><li>Provide continuity and stability ahead of planned leadership transitions within the department</li><li>Enhance the department’s ability to support integration and enterprise projects</li></ul><p><strong>Success Profile</strong></p><ul><li>Operationally disciplined with strong execution focus</li><li>Comfortable working across multiple functions and priorities</li><li>Proactive problem solver with strong organizational skills</li><li>Ability to operate effectively in a dynamic, evolving environment</li></ul><p><strong>Job Overview</strong></p><p>The Aviation Business Operations Manager is a  cross-functional leadership role responsible for infrastructure, logistics, inventory, and strategic projects. This position is designed to enhance operational effectiveness, improve workload distribution, and strengthen readiness for upcoming organizational transitions, including leadership changes and integration activities. Additionally, the Aviation Business Operations Manager provides functional oversight of facilities contractors, inventory management, and aviation support programs.</p><p><strong>Job Duties &amp; Responsibilities</strong></p><ul><li>Oversee aviation facilities, infrastructure, capital projects, and vendor relationships to ensure safe, efficient, and compliant operations</li><li>Manage facility operating budgets, capital expenditures, department vehicles, and related operational resources</li><li>Direct stockroom operations, inventory control, parts tracking, and replenishment to maintain accurate and efficient inventory management</li><li>Administer aviation inventory systems, including parts receiving, documentation, and inventory process improvements</li><li>Coordinate ground support equipment maintenance, aircraft appearance, corrosion control, and related vendor services</li><li>Provide operational support by balancing departmental workloads and serving as backup for aviation operations and dispatch activities</li><li>Lead and support cross-functional projects, continuous improvement initiatives, and aviation integration efforts</li><li>Develop and coordinate storm preparedness, emergency response plans, and operational readiness activities</li><li>Serve as the primary liaison between Aviation and IT to support operational systems, resolve issues, and implement technology enhancements</li><li>Supervise the Aviation Services Specialist while providing cross-functional leadership to strengthen operational performance and strategic execution</li><li>Performs other job-related duties as assigned</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Education: Bachelor’s degree or equivalent experience in Aviation Management, Operations, Business, or related field</li><li>Experience: 5+ years of experience in aviation operations, or a related operational role</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Experience:</li><li>FAA Part 91 operational experience</li><li>Experience with aviation inventory systems (e.g., CAMP or similar)</li><li>Experience supporting aviation maintenance and logistics operations</li></ul><p>NextEra Energy offers a wide range of benefits to support our employees and their eligible family members. Click <strong>here</strong> to learn more.</p><p><strong>Employee Group:</strong>  Exempt</p><p><strong>Employee Type:</strong>  Full Time</p><p><strong>Job Category:</strong>  Aviation</p><p><strong>Organization:</strong>  NextEra Energy, Inc.</p><p><strong>Relocation Provided:</strong>  No</p><p>NextEra Energy is an Equal Opportunity Employer. Qualified applicants are considered for employment without regard to race, color, age, national origin, religion, marital status, sex, sexual orientation, gender identity, gender expression, genetics, disability, protected veteran status or any other basis prohibited by law.</p><p>NextEra Energy provides reasonable accommodation in its application and selection process for qualified individuals, including accommodations related to compliance with conditional job offer requirements, consistent with federal, state, and local laws. Supporting medical or religious documentation will be required where applicable and permitted by applicable law. To request a reasonable accommodation, please send an e-mail to recruiting-coordinator.sharedmailbox@nexteraenergy.com, providing your name, telephone number and the best time for us to reach you.</p><p>NextEra Energy will not discharge or in any other manner discriminate against employees or applicants because they have inquired about, discussed, or disclosed their own pay or the pay of another employee or applicant. However, employees who have access to the compensation information of other employees or applicants as a part of their essential job functions cannot disclose the pay of other employees or applicants to individuals who do not otherwise have access to compensation information, unless the disclosure is (a) in response to a formal complaint or charge, (b) in furtherance of an investigation, proceeding, hearing, or action, including an investigation conducted by the employer, or (c) consistent with the contractor’s legal duty to furnish information.</p><p>NextEra Energy <strong>does not</strong> accept any unsolicited resumes or referrals from <strong>any third-party recruiting firms or agencies</strong>. Please see our policy for more information.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Are you looking for an exciting job where you can put your skills and talents to work at a company you can feel proud to be a part of? Do you want a workplace that will challenge you and offer you opportunities to learn and grow?  A  position at Xcel Energy could be just what you’re looking for.</p><p><strong>Position Summary</strong></p><p>The Balancing Authority Operator position is responsible for the real-time monitoring and operation of Xcel Energy&#39;s Balancing Authority Area/Local Balancing Authority Area. Monitor the Xcel Balancing Authority Area and take independent actions to ensure the security and reliability is consistent with NERC and RRO requirements. Ensure the accuracy of Energy Management System data relating to Balancing Authority Area interchange, load, and generation; and Transmission service schedules; and interconnected tie lines. The Balancing Authority Operator has the independent authority to perform necessary actions to maintain reliability, including emergency generation replacement, unscheduled load relief, firm load shedding, and black-start recovery.</p><p><strong>Essential Responsibilities</strong></p><ul><li>Monitor the Xcel Balancing Authority Area and take necessary steps to ensure the security and reliability of the Balancing Authority Area consistent with NERC requirements.</li><li>Ensure Xcel Energy Balancing Authority Area operation parameters are within internal operating guidelines, NERC and RRO standards, and when applicable, RTO guidelines.</li><li>Ensure adequate energy supply for the Xcel Energy Balancing Authority Area by managing spinning and operating reserves, balancing generation to load, planning to meet load forecasts, and through generation commitments.</li><li>Take appropriate steps to ensure replacement of lost resources due to generation unit trips.</li><li>Ensure the accuracy of Energy Management System data relating to Balancing Authority Area interchange, load, and generation; and Transmission service schedules; and interconnected tie lines.</li><li>Implement Xcel Energy Balancing Authority Area and Transmission Provider energy tagging function. Implement Xcel Energy Balancing Authority Area scheduling system and provide appropriate interface with the RTO when required.</li><li>Perform nightly checkout with the adjacent Balancing Authority Area for Actual and Scheduled Interchange, as well as with the RTO as appropriate.</li><li>Perform nightly checkout for transmission Energy Accounting.</li><li>Implement Emergency Procedures including, but not limited to, emergency generation replacement, unscheduled flow relief, emergency firm load shedding and black-start recovery.</li><li>Order Balancing Authority Area generation on-line or order re-dispatch as necessary to maintain Balancing Authority Area security.</li><li>Work with Network or other customers to ensure proper implementation of peak day interruptible loads.</li><li>Work with the Transmission System Operator and Xcel Energy generating plants in system restoration.</li><li>Maintain close communications with Generator Operators to ensure safety, reliability and regulatory compliance with respect to transmission operations.</li><li>Jointly develop, review and approve plans to return the Balancing Authority Area to recognized system parameters.</li><li>Monitor transmission system conditions using available tools, such as the Energy Management System, Energy Accounting System, and other data systems.</li><li>Communicate system status to the Reliability Coordinator, affected electric transmission systems and Balancing Authority Areas, and Xcel Energy management.</li><li>Work with network customers to ensure generation and scheduling needs are met.</li><li>Write and maintain a chronological log of Balancing Authority Area events including, but not limited to, transmission service curtailments and requests for emergency energy.</li><li>Monitor proper tagging of OASIS transmission service requests for Xcel Energy and all other relevant tariffs.</li><li>Back-up the Transmission System Operator and the Network Reliability Leader (NRL) relating to transmission service requests and help resolve transmission service request problems.</li><li>Maintain thorough knowledge and understanding of Balancing Authority Area operation, including but not limited to new operating practices, NERC compliance issues, Xcel Energy and regional tariffs, FERC, RRO and RTO requirements.</li><li>Participate in annual training plans designed to enhance expertise and assist other team members in expanding overall knowledge.</li><li>Maintain NERC Certification through completion of required training is a condition of continued employment. Other duties as assigned.</li></ul><p>**Balancing Authority Operator (Pay Range: $41.05- $57.41) ​</p><p>Minimum Requirements**</p><ul><li>High school diploma or equivalent. Successful completion of certificate program in Electric Power Technology or equivalent program preferred.</li><li>Minimum of 3 years utility operations experience in electric distribution, transmission or power generation OR 3 years experience working with high-voltage auxiliary electrical systems, instrumentation &amp; control or relay systems in manufacturing, refinery or chemical plant environment.</li><li>Successful completion of Edison Electric Institute (EEI) System Operator / Power Dispatching (SOPD) screening test is required.</li><li>NERC certification required or ability to successfully obtain the NERC Certification that is applicable for Balancing Authority Area operation within 6 months of position start date.</li><li>Demonstrated ability to successfully complete the initial qualifications as defined in the training program for the Balancing Authority Operator position.</li><li>Demonstrated ability to respond quickly and appropriately in a real-time, stressful environment.</li><li>Demonstrated ability to prioritize job tasks. Strong communication skills required.</li><li>Knowledge of or ability to learn Xcel Energy, NERC, and FERC requirements.</li><li>This position requires working rotating shifts.</li></ul><p><strong>Senior Balancing Authority Operator (Pay Range: $47.05-$65.78)</strong></p><p><strong>Minimum Requirements</strong></p><ul><li>HS diploma or equivalent. Successful completion of certificate program in Electric Power Technology or equivalent program preferred.</li><li>Minimum 3 yrs Transmission Control Center Operations experience.</li><li>Minimum 3 yrs utility operations experience in electric distribution, transmission or power generation OR 3 yrs experience working with high-voltage auxiliary electrical systems, instrumentation &amp; control or relay systems in manufacturing, refinery or chemical plant environment.</li><li>Demonstrated success as Balancing Authority Operator. Demonstrated superior skill &amp; knowledge level in ability to maintain security &amp; reliability of Balancing Authority Area without direct supervision.</li><li>Successful completion of Edison Electric Institute (EEI) System Operator / Power Dispatching (SOPD) screening test required.</li><li>Current NERC certification applicable for Balancing Authority Area operation required.</li><li>Demonstrated ability to respond quickly &amp; appropriately in real-time, stressful environment.</li><li>Demonstrated ability to prioritize job tasks. Strong verbal &amp; written communication skills required.</li><li>Working knowledge of Xcel Energy, NERC &amp; FERC requirements. Understands connection of Balancing Authority Operator tasks to Energy Accounting activities, including real-time &amp; after-the-fact calculations.</li><li>Understands physical metering equipment &amp; communication systems needed to get information back to EMS.</li><li>Ability to develop &amp; conduct training required. This position requires working rotating shifts.</li></ul><p>As a leading combination electricity and natural gas energy company, Xcel Energy offers a comprehensive portfolio of energy-related products and services to 3.4 million electricity and 1.9 million natural gas customers across eight Western and Midwestern states. At Xcel Energy, we strive to be the preferred and trusted provider of the energy our customers need. If you’re ready to be a part of something big, we invite you to join our team.</p><p>All qualified applicants will receive consideration for employment without regard to age, race, color, religion, sex, sexual orientation, gender identity, national origin, disability, or status as a protected veteran.</p><p>Individuals with a disability who need an accommodation to apply please contact us at recruiting@xcelenergy.com.</p><p>Non-BargainingThe anticipated starting base pay for this position is: $41.05 to $65.00 per hourThis position is eligible for the following benefits: Spot On Bonus, Medical/Pharmacy Plan, Dental, Vision, Life Insurance, Dependent Care Reimbursement Account, Health Care Reimbursement Account, Health Savings Account (HSA) (if enrolled in eligible health plan), Limited-Purpose FSA (if enrolled in eligible health plan and HSA), Transportation Reimbursement Account, Short-term disability (STD), Long-term disability (LTD), Employee Assistance Program (EAP), Fitness Center Reimbursement (if enrolled in eligible health plan), Tuition reimbursement, Transit programs, Employee recognition program, Pension, 401(k) plan, Paid time off (PTO), Holidays, Volunteer Paid Time Off (VPTO), Parental Leave</p><p>Benefit plans are subject to change and Xcel Energy has the right to end, suspend, or amend any of its plans, at any time, in whole or in part.</p><p>In any materials you submit, you may redact or remove age-identifying information including but not limited to dates of school attendance and graduation.  You will not be penalized for redacting or removing this information.</p><p>Deadline to Apply: 07/12/26</p><p>EEO is the Law | EEO is the Law Supplement | Pay Transparency Nondiscrimination | Equal Opportunity Policy (PDF) | Employee Rights (PDF)</p><p>All Xcel Energy employees and contractors share responsibility for protecting the company&#39;s information and systems by adhering to cybersecurity policies, standards, and best practices, recognizing that cybersecurity is everyone&#39;s responsibility.</p><p><strong>ACCESSIBILITY STATEMENT</strong></p><p>Xcel Energy endeavors to make https://www.xcelenergy.com/ accessible to any and all users. If you would like to contact us regarding the accessibility of our website or need assistance completing the application process, please contact Xcel Energy Talent Acquisition at recruiting@xcelenergy.com. This contact information is for accommodation requests only and cannot be used to inquire about the status of applications.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

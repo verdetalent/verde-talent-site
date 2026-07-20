@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Sunday, July 19, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p>Provides Occupational Health and First Aid Case Management services at assigned Duke Energy locations.  Services include assessing, planning, and delivering first aid care to all employees in a timely fashion, with a focus on the prevention of escalation to OSHA recordable events. Nurses are responsible to perform physical exams for regulatory compliance (Nuclear specific), completing required recordkeeping, and consulting with local management to ensure the case management process is followed. Writing and communication skills are necessary for nurses to communicate effectively with employees, and while presenting at required safety meetings.  Occupational Health nurses take calls as needed to field work related injuries and occupational health questions during non-working hours. Nurse will travel as needed to assess employees in area of support.</p><p><strong>Performance of physical examinations for compliance with NRC, OSHA, and other regulatory requirements per directives of Corporate Medical Director (CMD).</strong></p><ul><li>Determines type of mandated physicals required.</li><li>Schedules appropriate physical exams and medical tests.</li><li>Evaluates employee medical condition and ability to perform specific job functions.</li><li>Recommends medical clearance when results are within guidelines of CMD directives, and obtain physician concurrence on clearances as required.</li><li>Make appropriate referrals for those who are not medically cleared, while maintaining medical confidentiality</li><li>Function independently and provide medical direction within scope to the OHN position</li></ul><p><strong>Medical Documentation</strong></p><ul><li>Appropriately document all medical examinations, tests, consultations, and evaluations.</li><li>Maintain confidential employee medical files.</li><li>Retrieve and provide medical information to employees and corporate legal staff only when appropriately released to do so.</li><li>Perform audits of medical records and files to ensure compliance with NRC regulations</li></ul><p><strong>First Aid and Case Management</strong></p><ul><li>Assess injuries and illnesses to determine appropriate treatment (first aid, basic life support, treatment or referral).</li><li>Provide first aid for injuries and illnesses during normal working hours.</li><li>Document initial assessment/treatment and each subsequent treatment/contact until healed/released.</li><li>Alert Duke Energy WC Coordinator of employee injuries referred off-site.</li><li>Alert vendor’s management of vendor visit for injury or illness.</li><li>Notify off-site medical facility of injury coming to them for evaluation/treatment.</li></ul><p><strong>Scheduling</strong></p><ul><li>Schedule physical exams and medical tests to meet business needs and regulatory due dates.</li></ul><p><strong>Health &amp; Wellness issues and EAP referrals</strong></p><ul><li>Serve as resource to employees for personal health issues and concerns</li><li>Refer employees to external health and medical agencies for consultation and information regarding specific medical conditions.</li><li>Provide medical review on Return to Work forms for management.</li><li>Discuss medical, health and wellness issues as needed, making appropriate medical and EAP referrals when necessary</li></ul><p><strong>Effectively communicate health education</strong></p><ul><li>Provide education to employees by writing health related articles for the company, and creating PowerPoint presentations.</li><li>Actively participate in safety meetings throughout areas of support.</li><li>Performing hands-on ergonomic evaluations for employees.</li><li>Supporting corporate Quick Fit stretching program.</li><li>Establish healthy working relationships with employees/site management.</li></ul><p><strong>Medical documentation</strong></p><ul><li>Appropriately document all work related and non-work related events in nursing log.</li><li>Maintain organization to ensure case management protocols are followed.</li><li>Keep confidentiality of employee health records in compliance with State and Federal law, including HIPAA.</li></ul><p><strong>First aid and case management</strong></p><ul><li>Assess all work-related injuries and illnesses to ensure the best treatment is given.</li><li>Assess, plan, and deliver first-aid care to all employees in a timely fashion, with a focus on the prevention of escalation to OSHA recordable incidents</li><li>Alert site management and safety of all work-related events, and provide update to stakeholders per case management protocols.</li><li>Provide first aid for injuries and illnesses during normal working hours, and on-call afterhours.</li></ul><p><strong>Travel as needed to assess employees</strong></p><ul><li>Willing to travel overnight to support emergency deployments (storm duty) if needed.</li><li>Provide medical support for special events, training, etc.</li><li>Actively participate in safety meetings, trainings, meetings, etc.</li></ul><p><strong>Health &amp; Wellness issues and EAP referrals</strong></p><ul><li>Serve as resource to employees for personal health issues and concerns.</li><li>Refer employees to external health and medical agencies for consultation and information regarding specific medical conditions.</li><li>Discuss medical, health and wellness issues as needed, making appropriate medical and EAP referrals when necessary.</li></ul><p><strong>Basic Qualifications</strong></p><ul><li>Associates degree in Nursing AND Two years of work experience as Occupational Health Nurse or two years hospital experience.</li><li>Require valid Registered Nurse license in state of practice AND Basic Life Support (CPR) Certification.</li></ul><p><strong>Job-specific knowledge, skills or abilities:</strong></p><ul><li>Knowledgeable of ADA, FMLA, OSHA, and WC laws with ability to make sound medical decisions in each area.</li><li>Knowledgeable of HIPAA requirements and handles confidential medical information appropriately.</li><li>Experienced in use of computers, email, MS Word, MS Excel, and Occupational Health data programs.</li><li>Able to work independently with minimal supervision &amp; outside help.</li><li>Excellent people skills and high level of attention to detail.</li></ul><p><strong>Preferred Qualifications:</strong></p><ul><li>BSN.</li><li>Knowledgeable of NRC regulations (Nuclear Specific).</li><li>Knowledgeable of OSHA requirements with ability to make sound medical decisions in each area.</li><li>Experienced in use of computers for electronic Occupational Health data programs.</li><li>Certifications in Audiometric and Spirometry testing</li><li>Certified Occupational Health Nurse (COHN)</li></ul><p><strong>Working Conditions:</strong></p><ul><li>Basic function is performed in a medical office</li><li>Emergency work may be performed during outage or storm deployment.</li><li>Interstate highway travel to remote sites to provide first aid case management</li><li>Normal physical effort to conduct nurse assessments and medical testing (Nuclear specific)</li><li>Day shift is primary schedule but there are emergency call-out duty for back-shift and weekends and outage response</li></ul><p><strong>EEO Statement:</strong></p><p>Duke Energy is an equal opportunity employer and does not discriminate against any employee or applicant for employment because of race, color, sex, pregnancy, religion, national origin, ethnicity, citizenship, sexual orientation, age, marital status, disability, genetic information, status as a Vietnam Era, disabled veteran, special disabled veteran, Armed Forces Services Medal Veteran, recently separated or other protected veteran.  Duke Energy also complies with all applicable state, federal and local laws, regulations and ordinances prohibiting discrimination in places where Duke Energy operates.</p><p><strong>Disclaimer:</strong></p><p>This job description is not intended to be all-inclusive.  Employee may perform other related duties to meet the ongoing needs of the organization.</p><p><strong>**Travel Requirements</strong>**</p><p>15-25%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

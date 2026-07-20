@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>**Staff Site Reliability Engineer</strong>**</p><p><strong>**Who we are:</strong>**</p><p>Arcadia is the AI-powered energy intelligence platform for businesses. We replace fragmented tools and manual workflows with one platform to pay utility bills, buy energy, and advance sustainability — across every location, at enterprise scale.</p><p>Trusted by Fortune 2000 companies, Arcadia combines unified data, AI-powered analytics, and expert advisory to help enterprise teams save money, mitigate risk, and <strong>cut carbon</strong>.</p><p>We deliver this through three comprehensive solutions:</p><ul><li><strong>Utility Bill Management:</strong> Automating the entire utility bill lifecycle — from data capture and validation to payment processing and auditing.</li><li><strong>Energy Procurement Advisory</strong>: Bringing together comprehensive data, AI-powered analytics, market expertise, and a strong partner network to make sophisticated procurement options accessible to all. .</li><li><strong>Sustainability Reporting</strong> — Verified emissions data with seamless integration into leading sustainability platforms.</li></ul><p>Tackling the world&#39;s most complex energy challenges requires diverse thinking. We&#39;re building teams of people from different backgrounds, industries, and disciplines — united by a belief that energy management should be simple, intelligent, and a genuine driver of business value.</p><p><strong>**What we’re looking for:</strong>**</p><p>We are seeking a <strong>Staff Site Reliability Engineer (L4)</strong> to join our SRE/Platform Engineering team in India. This is a senior technical leadership role — not people management, but engineering leadership through execution, mentorship, and architectural ownership.</p><p>Our India SRE team is growing, and this role is central to that growth. As we scale, we need a technical anchor in the India timezone who can independently own multi-week SRE projects from problem statement to production, make sound architectural decisions under ambiguity, and elevate the team around them. You will be the person engineers lean on for design reviews, debugging escalations, and “how should we approach this?” conversations. You’ll bring the depth and experience to drive execution autonomously in the India timezone while collaborating closely with US-based SRE leadership on roadmap priorities, incident response, and platform strategy.</p><p>This is a role for someone who doesn’t wait for direction — you identify reliability gaps, propose solutions, build consensus, and ship.</p><p>Our infrastructure is primarily AWS-based, managed by Terraform and CloudFormation, and deployed using CI/CD best practices. In your application, please include a link to GitHub or another place where your code is published, though we understand that not everyone has public code online.</p><p><strong>**What you’ll do:</strong>**</p><ul><li><strong>Own and deliver SRE projects end-to-end</strong> — from scoping and design through implementation, testing, rollout, and documentation</li><li><strong>Serve as a technical anchor for the India SRE team</strong> — conduct design reviews, pair on complex debugging, and mentor engineers to develop the judgment to work through ambiguous problems independently</li><li><strong>Design and implement infrastructure solutions</strong> across AWS (EKS, VPC, RDS, IAM, CloudWatch, CloudTrail, GuardDuty, S3, CloudFront, Lambda, SQS) using Terraform and CloudFormation, with an emphasis on making the right tradeoffs between speed, reliability, and cost</li><li><strong>Lead Kubernetes operations</strong> including cluster upgrades, capacity planning, CNI troubleshooting, workload scaling, Helm chart packaging, and GitOps deployments — and build the runbooks and automation so these become repeatable rather than one-off heroics</li><li><strong>Evolve CI/CD pipelines</strong> across Jenkins (Groovy scripting), GitHub Actions, AWS CodePipeline, ArgoCD, and FluxCD — with an emphasis on reducing manual deployment steps and improving rollback safety</li><li><strong>Drive observability stack enhancements</strong> — deliver the infrastructure and architectural direction necessary for engineering teams to leverage Prometheus, Grafana, and CloudWatch effectively</li><li><strong>Identify and execute FinOps initiatives</strong> — find zombie resources, right-size instances, enforce tagging standards, and present cost-reduction recommendations with data to back them up</li><li><strong>Manage database reliability</strong> across MySQL and PostgreSQL including backup validation, performance tuning, replication health, failover testing, and operational runbooks</li><li><strong>Strengthen security posture</strong> through IAM least-privilege enforcement, CSPM reviews, GuardDuty/CloudTrail monitoring, secrets management (Vault, AWS Secrets Manager, Parameter Store), and audit readiness</li><li><strong>Troubleshoot complex cross-cutting production issues</strong> spanning networking, Kubernetes, compute, databases, and CI/CD — and then turn the fix into a runbook or automation so the same issue doesn’t require the same person next time</li><li><strong>Write the documentation the team actually needs</strong> — architecture decision records, operational runbooks, troubleshooting guides, and post-incident action items that get closed, not just filed</li><li><strong>Collaborate daily with US-based SRE leadership</strong> on incident reviews, migration planning, roadmap execution, and platform strategy — bringing context and recommendations, not just status updates</li><li><strong>Participate in on-call rotations</strong> and drive post-incident analysis with a focus on systemic fixes over individual blame</li></ul><p><strong>**What will help you succeed:</strong>**</p><p><strong>**Must-haves:</strong>**</p><ul><li><strong>8–14 years of experience in SRE/DevOps/Cloud Engineering</strong>, with a demonstrated progression from task execution to project ownership — we’re looking for evidence that you have independently scoped, designed, and delivered infrastructure projects end-to-end</li><li><strong>Deep, hands-on expertise with AWS</strong> — EKS, IAM, RDS, EC2, VPC, CloudWatch, CloudTrail, GuardDuty, Lambda, SQS. You should be able to architect a multi-AZ, multi-account solution and explain why you made the choices you made</li><li><strong>Strong Terraform skills</strong> with experience managing complex, multi-environment state, writing reusable modules, and reviewing others’ IaC for correctness and maintainability</li><li><strong>Advanced Kubernetes knowledge</strong> — you don’t just deploy to K8s, you troubleshoot networking issues at the CNI level, tune resource requests and limits based on actual usage data, and can plan and execute cluster upgrades with minimal downtime</li><li><strong>CI/CD pipeline design and ownership</strong> across Jenkins (Groovy), GitHub Actions, ArgoCD, or FluxCD — with a track record of improving deployment reliability and reducing manual steps</li><li><strong>Observability stack experience</strong> with Prometheus, Grafana, Datadog, or equivalent — including defining SLOs/SLIs, building meaningful dashboards, and tuning alerting to reduce noise</li><li><strong>Proven mentorship ability</strong> — you have helped less experienced engineers grow. This could be formal (tech lead role, code review ownership) or informal (the person everyone goes to when they’re stuck). We will ask you about this in interviews</li><li><strong>Strong written and verbal communication skills</strong> — you will interact with US-based teams daily, present proposals asynchronously, and write documentation that others can actually follow</li><li><strong>Automation-first mindset</strong> — your instinct when you do something manually is to immediately think about how to script it. You have a track record of reducing operational toil through scripting and tooling</li><li><strong>Incident management experience</strong> — you have led or significantly contributed to incident response and post-incident reviews in production environments, and you understand the difference between fixing the symptom and fixing the system</li><li><strong>Ability to operate with autonomy</strong> — you don’t need daily direction. Given a problem space and constraints, you can propose an approach, pressure-test it with peers, and execute</li></ul><p><strong>**Nice-to-haves:</strong>**</p><ul><li>Experience with FinOps practices — cloud cost analysis, rightsizing, tagging governance, reserved instance planning</li><li>Exposure to secrets management platforms (HashiCorp Vault, AWS Secrets Manager)</li><li>Experience with event-driven architectures using AWS Lambda, CloudWatch Events, SQS, and SNS</li><li>Exposure to AI-enabled tooling (automation assistants, MCP, RAG pipelines, LLM-based debugging)</li><li>Experience with data warehouses (Snowflake) and their operational requirements</li><li>Experience with n8n or similar workflow automation platforms</li><li>Industry certifications — AWS Solutions Architect Professional, CNCF CKA/CKS, HashiCorp Terraform Associate, or equivalent</li><li>Experience working in a company that has grown through acquisitions, with exposure to consolidating disparate infrastructure environments</li></ul><p><strong>Benefits:</strong></p><ul><li>Competitive compensation based on market standards</li><li>We are working on a hybrid model with remote first policy</li><li>Apart from Fixed Base Salary potential candidates are eligible for following benefits</li><li>Flexible Leave Policy</li><li>Office located in the heart of the city in case you need to step in for any purpose</li><li>We provide comprehensive coverage including accident policy and life insurance.</li><li>Medical Insurance (1+5 Family Members)</li><li>Flexible Benefit Plan</li><li>Awards and Bonus</li><li>Annual performance cycle</li><li>Quarterly engagement activities</li></ul><p>A supportive engineering culture that values diversity, empathy, teamwork, trust, and efficiency</p><p><strong>Eliminating carbon footprints, eliminating carbon copies.</strong></p><p>Here at Arcadia, we cultivate diversity, celebrate individuality, and believe unique perspectives are key to our collective success in creating a clean energy future. Arcadia is committed to equal employment opportunities regardless of race, color, religion, gender, sexual orientation, gender identity or expression, national origin, age, disability, genetic information, protected veteran status, or any status protected by applicable federal, state, or local law.</p><p>Thank you</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

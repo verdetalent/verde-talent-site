@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Requisition ID:</strong>  96150</p><p>NextEra Analytics offers energy consulting services using industry-leading scientific analysis for planning, siting, forecasting and optimizing all forms of energy projects. Our optimization and analytics platforms integrate open-source technologies to leverage massive, diverse sets of utility operating data. This enables rapid development of operational solutions. Applying expertise in advanced mathematics, data and physical sciences, we solve some of the hardest problems facing the energy industry.</p><p><strong>Position Specific Description</strong></p><p>We are seeking a high-caliber <strong>Senior Software Development Engineer</strong> to join a team building customer-centric solutions for the business. This role is designed for a top-tier engineer who combines deep technical expertise with strong product intuition, business acumen, and an ownership mindset. You thrive in ambiguity, partnering directly with business leaders to understand problems before designing solutions. You rapidly translate ideas into working software, validate assumptions through iteration, and evolve prototypes into scalable production systems. You act as the technical bridge between business strategy and engineering execution, ensuring technology investments deliver measurable customer and business value.</p><p><strong>Key Responsibilities &amp; Expectations</strong></p><p><strong>1. Execution &amp; Business Ownership</strong></p><ul><li><strong>Drive Outcomes:</strong> Take ownership of delivering meaningful business results, managing scope responsibly, and communicating technical risks early.</li><li><strong>Technical Translation:</strong> Partner closely with business leaders. Articulate complex architectural decisions and tradeoffs in clear, outcome oriented terms.</li><li><strong>Cross Functional Partnership:</strong> Engage security, risk, compliance, and platform teams early, communicate technical tradeoffs clearly, and advocate for alternative approaches when a project requires them.</li><li><strong>Strategic Technology Advisor:</strong> Build trusted relationships with business leaders by translating technical possibilities into business capabilities and clearly communicating tradeoffs, risks, and investment decisions.</li></ul><p><strong>2. Engineering &amp; System Design</strong></p><ul><li><strong>Solve Business Problems:</strong> Work directly with business stakeholders to understand operational challenges, identify root causes, and design software that creates measurable business impact.</li><li><strong>Architect in Ambiguity:</strong> Translate loosely defined business problems into clean, robust architectures while anticipating edge cases.</li><li><strong>Rapid Delivery:</strong> Where appropriate, deliver products quickly to stakeholders to validate ideas, gather feedback, and accelerate iteration.</li><li><strong>Full Stack Delivery:</strong> Own features end to end across services, data, and user interfaces, making pragmatic technology choices while avoiding unnecessary complexity.</li></ul><p><strong>3. Engineering Productivity with AI</strong></p><ul><li><strong>AI Assisted Development:</strong> Use agentic AI tools throughout the software development lifecycle (SDLC) to accelerate delivery while maintaining full accountability for code quality, correctness, and security.</li><li><strong>Feedback Loops for Coding Agents:</strong> Design quality gates, specification driven workflows, and deterministic checks that identify agent errors before they reach human review.</li><li><strong>Evaluate Emerging Technology:</strong> Continuously assess AI capabilities and engineering practices, adopting approaches that measurably improve delivery speed, software quality, and developer experience.</li></ul><p><strong>4. Reliability &amp; DevSecOps</strong></p><ul><li><strong>Security First Mindset:</strong> Embed security and compliance into every stage of the development lifecycle, proactively mitigating vulnerabilities through secure design.</li><li><strong>Production Standards:</strong> Build well tested, maintainable software. Implement CI/CD pipelines to ensure systems are resilient, scalable, and optimized for an exceptional end user experience.</li><li><strong>Operational Readiness:</strong> Make production systems measurable, debuggable, and recoverable by building observability, alerting, runbooks, and recovery mechanisms from the outset.</li></ul><p><strong>5. Culture</strong></p><ul><li><strong>Customer Obsession:</strong> Start with customer and business needs, using technology as the means, not the end, to deliver value.</li><li><strong>High Performance:</strong> Maintain high standards, embrace continuous learning, and foster collaborative problem solving in an environment where talented individuals thrive alongside exceptional teammates.</li><li><strong>Ownership &amp; Accountability:</strong> Take ownership of your work, exercise thoughtful judgment, and consistently follow through on commitments.</li><li><strong>Collaborative Autonomy:</strong> Operate with a high degree of trust and autonomy while working together to make decisions aligned with business, customer, and operational goals.</li></ul><p><strong>Job Overview</strong></p><p>This position writes and tests software to aid in development and support of products.  Individuals in this role work with Technical Leads on software system architecture and service design and typically leads a module in the system.  This position participates in required product development process ceremonies.  Employees in this role are responsible for writing and refining technical requirements and technical design documentation.</p><p><strong>Job Duties &amp; Responsibilities</strong></p><ul><li>Codes in multiple languages in support of software products and the development of software products</li><li>Conducts system testing and codes unit tests and support features</li><li>Documents technical requirement and other technical documentation</li><li>Works with product team to refine product requirements</li><li>Collaborates on high level software design projects and software system architecture and creates effective component level architectures</li><li>Leads software module construction from architecture and design to implementation and may lead a small team of engineers in building the module</li><li>Performs other job-related duties as assigned</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Bachelor’s Degree or equivalent work experience</li><li>Experience: 7+ years</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Bachelor’s - Engineering</li></ul><p>The estimated base pay for this position is $122,400.00 to $183,600.00 per year. Starting pay will be based on several factors including, but not limited to, experience, qualifications, job-related and industry knowledge and skills and education/training.</p><p>NextEra Energy offers a wide range of benefits to support our employees and their eligible family members. Click <strong>here</strong> to learn more.</p><p><strong>Employee Group:</strong>  Exempt</p><p><strong>Employee Type:</strong>  Full Time</p><p><strong>Job Category:</strong>  Science, Research, and Technology</p><p><strong>Organization:</strong>  NextEra Analytics, Inc</p><p><strong>Relocation Provided:</strong>  Yes, if applicable</p><p>NextEra Energy is an Equal Opportunity Employer. Qualified applicants are considered for employment without regard to race, color, age, national origin, religion, marital status, sex, sexual orientation, gender identity, gender expression, genetics, disability, protected veteran status or any other basis prohibited by law.</p><p>NextEra Energy provides reasonable accommodation in its application and selection process for qualified individuals, including accommodations related to compliance with conditional job offer requirements, consistent with federal, state, and local laws. Supporting medical or religious documentation will be required where applicable and permitted by applicable law. To request a reasonable accommodation, please send an e-mail to recruiting-coordinator.sharedmailbox@nexteraenergy.com, providing your name, telephone number and the best time for us to reach you.</p><p>NextEra Energy will not discharge or in any other manner discriminate against employees or applicants because they have inquired about, discussed, or disclosed their own pay or the pay of another employee or applicant. However, employees who have access to the compensation information of other employees or applicants as a part of their essential job functions cannot disclose the pay of other employees or applicants to individuals who do not otherwise have access to compensation information, unless the disclosure is (a) in response to a formal complaint or charge, (b) in furtherance of an investigation, proceeding, hearing, or action, including an investigation conducted by the employer, or (c) consistent with the contractor’s legal duty to furnish information.</p><p>NextEra Energy <strong>does not</strong> accept any unsolicited resumes or referrals from <strong>any third-party recruiting firms or agencies</strong>. Please see our policy for more information.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

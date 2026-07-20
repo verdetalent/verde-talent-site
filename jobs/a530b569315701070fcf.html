@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Service &gt; Global Service Operations &gt; Technical Support and Quality</strong></p><p>Join an efficient team supporting the delivery of tools and materials to some of the world&#39;s largest offshore wind projects. We are looking for reliable and practical material handler to help ensure smooth operations in our Taiwan - Taichung facility.</p><p><strong>Responsibilities</strong></p><p>Material Management</p><p>•Manage construction project site interactions related to material supply</p><p>•Prioritize and expedite critical material orders to prevent delays</p><p>•Oversee the receipt and processing of direct shipments for materials</p><p>•Evaluate and process material return requests from construction sites</p><p>Collaboration and Support</p><p>•Collaborate with Construction Site Managers and Project Management</p><p>•Provide proactive supply chain support to construction sites</p><p>•Track order statuses and ensure timely delivery of materials</p><p>•Communicate complex supply chain information simply</p><p>Order Processing</p><p>•Ensure timely creation of Purchase orders and delivery schedules</p><p>•Process construction Purchase Requisitions (PRs) on time</p><p>•Measure and report on key performance indicators (KPIs) related to supply chain support</p><p>•Independently identify and expedite urgent material requirements</p><p><strong>Qualifications</strong></p><ul><li>Strong willingness to learn and develop new skills</li><li>Positive attitude and eagerness to contribute to a team environment</li><li>Proficiency in English, both spoken and written</li><li>Consistent, structured, and detail-oriented</li><li>Comfortable working in a warehouse environment and following standard processes</li></ul><p><strong>Competencies</strong></p><ul><li>Demonstrating noteworthy organizational skills and attention to detail</li><li>Ability to manage tasks responsibly and as part of a team</li><li>Comfortable with digital systems and documentation</li><li>Effective communicator across cultures and languages</li></ul><p><strong>What We Offer</strong></p><ul><li>Be part of a highly skilled team</li><li>Will be working with people locally and abroad</li><li>Working for one of the biggest Renewable Green Energy Company&#39;s in the world</li></ul><p><strong>Additional Benefit</strong></p><ul><li>National Statutory Insurance Program</li><li>Group Insurance for Employee and Dependents</li><li>Annual merit review</li><li>Leave (Additional annual leave, paid sick/ medical leave (provide regular pay for first 15 days of sick leave), additional maternity leave (120 days), additional pregnancy checkups accompaniment leave and paternity leave to statutory (10 days), menstruation leave)</li><li>New employee medical examination/Annual medical examination</li><li>Company laptop and mobile phone</li><li>Flexible working schedule and remote work</li><li>Variety of employee activities</li><li>Diverse and open work environment</li><li>Highly value career development of employees, support internal transfer and promotion</li></ul><p><strong>Additional Information</strong></p><p>We do amend or withdraw our jobs and reserve the right to do so at any time, including prior to the advertised closing date. Please be advised to apply on or before the 17th of Aug. 2026.</p><p><strong>DEIB-Erklärung</strong></p><p>Bei Vestas sind wir überzeugt, dass Vielfalt, Gleichberechtigung und Inklusion entscheidend für Innovation und Erfolg sind. Wir heißen alle Menschen willkommen, unabhängig von Hintergrund, Identität oder Lebensweg – und ermutigen besonders diejenigen, die vielleicht zögern, sich zu bewerben.</p><p>Wie unser CEO, Henrik Andersen, sagt: „Expertise und Talent kommen in vielen Formen. Ein vielfältiges Arbeitsumfeld ermöglicht es uns, anders zu denken und die komplexen Herausforderungen unserer Branche zu meistern“. Deine Perspektive macht den Unterschied: Hilf uns, eine nachhaltige, grüne Energiezukunft voranzutreiben.</p><p><strong>Über Vestas</strong></p><p>Vestas ist der globale Partner für nachhaltige Energielösungen. Unsere weltweit 35.000 Kolleg:innen sind spezialisiert auf die Entwicklung, Herstellung, Installation und Wartung von Windenergieanlagen – Onshore und Offshore. Gemeinsam treiben wir die Energiewende voran: Mit über 190 GW installierter Leistung in 88 Ländern ist Vestas führend in der Windenergie.</p><p>Werde Teil unseres Teams und arbeite mit uns an einer nachhaltigeren Zukunft für alle.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

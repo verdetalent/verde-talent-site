@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p><strong>Basic Job Functions:</strong></p><p>Evaluates, designs, and implements projects for controlling and interfacing with the manufacturing processes. This includes designing and developing related data visualization and user input systems, database structures, procedures, and reports. Works with the MES architects and controls engineers to ensure solutions integrate seamlessly with the MES hardware and software systems to support enterprise design goals. Provides execution system technical knowledge and resources to the MES development team. Provides the final level of support for First Solar’s manufacturing execution systems, data architectures, and data collection. This MES operations lead is responsible for ensuring timely response to manufacturing MES Software Issues as well as identifying and implanting proactive measures to minimize downtime. Directs MES Ops Developer Team in providing support and solutions for existing equipment on the production floor for strategic partners of the MES group. Drives and manages capacity expansion projects in existing or new plants.</p><p><strong>Education/Experience:</strong></p><ul><li>Bachelor’s degree in Information Technology or related field or equivalent years of work experience.</li><li>Minimum 6 years of work experience.</li><li>6+ years in either manufacturing systems or on software development teams using Microsoft .NET technologies.</li><li>4+ years of experience with manufacturing control systems, shop floor interface/automation systems, programmable logic controllers (PLCs), or OPC data transfer.</li></ul><p><strong>Required Skills/Competencies:</strong></p><ul><li>Proven Organizational and Project Managerial skills.</li><li>Demonstrated expertise with manufacturing software architecture and execution systems.</li><li>Successful leadership of software development projects and processes.</li><li>Strong C# development skills.</li><li>Proven Microsoft SQL Server design and development expertise.</li><li>Demonstrated success in application support.</li><li>Excellent understanding of computer operating systems and software applications.</li><li>Excellent understanding of enterprise data systems.</li><li>Proven employee and customer relations skills.</li><li>Proven interpersonal communications, including the ability to drive international projects with multinational team members.</li><li>Proven understanding of fundamental AI development concepts and experience developing AI-based solutions</li><li>Proven experience with Kubernetes, Docker, and containerization concepts, including both platform-based development and deployment expertise</li></ul><p><strong>Essential Responsibilities:</strong></p><ul><li>Evaluate, configure, and deploy execution system software for controlling manufacturing processes and tool data collection.</li><li>Design and develop data visualization and user input systems for manufacturing and related processes.</li><li>Design and develop database structures and procedures to operate and maintain software systems.</li><li>Supplies manufacturing data and operation reports based on production data to strategic MES partners and supports ongoing data collection operations.</li><li>Develop software and database applications on a variety of platforms.</li><li>Manages outsourced software development work.</li><li>Ensures good QA standards for software development.</li><li>Manages transitions from the developers (solutions group) to the support group.</li><li>Oversees local MES operation development activities to support business objectives.</li><li>Coordinate activities and development of the Local MES Support Team members, including on-call rotations and escalation procedures.</li><li>Maintains focus on team programs and key changes requests.</li><li>Interfaces with solutions/project teams to ensure smooth support hand-off of new or modified applications.</li><li>Fosters collaboration, open communication, and team building.</li></ul><p><strong>Key Competencies:</strong></p><ul><li>Undertakes analytical activities and delivers analysis outputs, in accordance with customer needs and conforming to agreed standards.</li><li>Maintains knowledge of specific technical specialists provides detailed advice regarding their application and executes specialized tasks. The specialism can be any area of information or communication technology, technique, method, product or application area.</li><li>Monitors the market to gain knowledge and understanding of currently emerging technologies. Identifies new and emerging hardware and software technologies and products based on own area of expertise, assesses their relevance and potential value to the organization, contributes to briefings of staff and management.</li><li>Promotes and ensures use of appropriate techniques, methodologies and tools.</li><li>Applies data analysis, data modeling, and quality assurance techniques, based upon a detailed understanding of business processes, to establish, modify or maintain data structures and associated components (entity descriptions, relationship descriptions, attribute definitions). Advises database designers and other application development team members on the details of data structures and associated components.</li><li>Specifies user/system interfaces, and translates logical designs into physical designs taking account of target environment, performance requirements and existing systems. Produces detailed designs and documents all work using required standards, methods and tools, including prototyping tools where appropriate.</li><li>Develops specialist knowledge of database concepts, object and data modeling techniques and design principles. Translates object and data models into appropriate database schemas within design constraints. Interprets installation standards to meet project needs and produces database components as required. Evaluates potential solutions, demonstrating, installing and commissioning selected products.</li><li>Designs, codes, tests, correct and documents large and/or complex programs and program modifications from supplied specifications using agreed standards and tools, to achieve a well-engineered result. Takes part in reviews of own work and leads reviews of colleagues&#39; work.</li><li>Selects and uses tools and methods to establish, clarify and communicate the user experience, users&#39; characteristics and tasks, and identifies the technical, organizational and physical environment in which complex products or systems will operate.</li><li>Defines the integration build, accepts software modules from software developers, and produces software builds for loading onto the target environment. Configures the hardware environment, produces integration test specifications, and conducts tests, recording details of any failures and carrying out fault diagnosis.</li><li>Assesses and analyses release components. Provides input to scheduling. Carries out the builds and tests in coordination with testers and component specialists maintaining and administering the tools and methods – manual or automatic - and ensuring, where possible, information exchange with configuration management. Ensures release processes and procedures are maintained.</li><li>Identifies and resolves issues with applications, following agreed procedures. Uses application management software and tools to collect agreed performance statistics. Carries out agreed applications maintenance tasks.</li><li>Investigates problems in systems and services. Assists with the implementation of agreed remedies and preventative measures.</li><li>Uses appropriate methods and tools in the development, maintenance, control and distribution of quality and environmental standards. Makes technical changes to quality and environmental standards according to documented procedures. Distributes new and revised standards.</li><li>Leads in the introduction and use of techniques, methodologies and tools to match overall business requirements.</li><li>Maintain defined communication channels and/or stakeholder groups, acting as a single point of contact. Gather information from stakeholders to understand their needs and detailed requirements. Facilitate open communication between stakeholders. Facilitate planning and implementation of changes and maintain contact with stakeholders throughout to ensure requirements are met.</li><li>Other duties as assigned.</li><li>Job description subject to change at any time.</li></ul><p><strong>Reporting Relationships:</strong></p><ul><li>This position will have direct reports.</li></ul><p><strong>Travel:</strong></p><ul><li>5% - 10%</li></ul><p><strong>Estimated Salary Range:</strong></p><ul><li>$112,300 - $160,000, Annually</li></ul><p><strong>US Physical Requirements:</strong></p><p><strong>Hybrid Physical Requirements:</strong></p><ul><li>Will sit, stand or walk short distances for up to the entire duration of a shift.</li><li>Will climb stairs on an occasional basis.</li><li>Will lift, push or pull up to 37 pounds on an occasional basis.</li><li>Required to use hands to grasp, lift, handle, carry or feel objects on a frequent basis.</li><li>20/40 vision in both eyes together, with or without correction, is required.</li><li>Must be able to comply with all safety standards and procedures.</li><li>May reach above shoulder heights and below the waist on a frequent basis.</li><li>May stoop, kneel, or bend, on an occasional basis.</li><li>Ability to wear personal protective equipment is required (including but not limited to; steel-toed shoes, gloves, safety glasses, hearing protection, protective jacket or apron and arm guards, and a condition of employment and continued employment (requires little or no facial hair) for those requiring respirator use.</li></ul><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role. All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

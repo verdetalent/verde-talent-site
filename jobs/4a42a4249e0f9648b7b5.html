@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p><strong>Basic Job Functions:</strong></p><p>Complete the day-to-day reliability operations and test in Reliability Lab in a safe manner to ensure that the product meets performance and warranty commitments without failure under ambient outdoor exposure extremes.  Support Reliability Engineers with multi-task assignments related to second source supplier qualifications, product reliability monitoring, product/process qualification programs and test/equipment development.</p><p><strong>Education/Experience:</strong></p><ul><li>Bachelor’s degree in technical discipline (Electrical preferred) OR</li><li>Associates Degree or equivalent in a technical discipline (Electrical preferred) OR</li><li>High School Diploma with a minimum of 3 years’ working experience in a manufacturing or lab environment.</li><li>High School Diploma with a minimum of 1 year of experience working in First Solar lab environment as a contractor.</li><li>Calibration/testing/measurement experience is an added advantage.</li></ul><p><strong>Required Skills/Competencies:</strong></p><ul><li>Basic ability using tools and operating equipment required.</li><li>Ability to learn the basic operation of simulators required.</li><li>Ability to operate a forklift required.</li><li>Must have good glass handling skills.</li><li>Must possess good communication skills.</li><li>Must have the ability to follow directions and use work instructions.</li><li>Must be motivated to work independently.</li><li>Must be able to demonstrate problem solving abilities when a test or equipment faults.</li><li>Must be able to analyze data enough to determine if testing was run properly.</li><li>Must be able to analyze data to determine if results fit inside a control plan.</li><li>Must be able to follow control plan OCAP steps if module seems to be out of spec.</li><li>Must be able to select and run the correct recipes for testing across multiple tools.</li><li>Must be able to locate a module in a test plan and determine the measurements needs and next test for that module.</li><li>Must always be organized and keep a clean and orderly work area.</li><li>Basic experience using electrical test and measurement equipment desired.</li><li>Proven communications skills and attention to detail.</li><li>Intermediate computer skills (Word, Excel, Outlook, SQL is a plus).</li><li>Good team player.</li><li>Experience in using tools and operating equipment is an added advantage (micrometers, multimeters, power supplies and data loggers).</li><li>Ensure waste materials are discarded in their designated containers.</li><li>Ensure hazardous waste containers stay closed except when adding or removing waste.</li><li>Ensure satellite accumulation containers stay in their designated locations.</li></ul><p><strong>Essential Responsibilities:</strong></p><ul><li>Responsible to perform baseline and posttest measurement for all standard Reliability tests.</li><li>Responsible for safely loading and operating all standard Reliability Stress Test equipment.</li><li>Responsible for processing warranty returns.</li><li>Perform data entry for Reliability testing.</li><li>Responsible for ensuring that all the tests and measurements are complete by the schedule.</li><li>Responsible for communicating immediately any abnormal findings on the product or testing equipment.</li><li>Willing to work long hours and weekends to support any testing or measurement.</li><li>Adheres to all safety procedures and good housekeeping standards.</li><li>Responsible for assisting in any other task or job assigned by supervisor.</li><li>Responsible for training new technicians in module testing and measurements, handling, loading and unloading from test equipment.</li><li>Consistently demonstrates efficient and effective methods to deliver quality test results.</li><li>Identify durability/stability defects and issues and communicate to appropriate personnel (Level 1 failure analysis and troubleshooting).</li><li>Responsible for identifying when a test ran incorrectly and suggesting a root cause or an action plan.</li><li>Other duties as assigned.</li><li>Job description subject to change at any time.</li></ul><p><strong>Reporting Relationships:</strong></p><ul><li>Reports to the Supervisor, Lab Operations.</li></ul><p><strong>Travel:</strong></p><ul><li>0-5% travel required.</li></ul><p><strong>Estimated Salary Range:</strong></p><ul><li>6%, $18.89-$26.44</li></ul><p><strong>US Physical Requirements:</strong></p><ul><li>Will sit, stand, or walk short distances for up to 12 hours per day.</li><li>Will climb stairs or steps on a frequent basis.</li><li>Will lift up to 58 pounds on an occasional basis, according to work instruction.</li><li>Will lift up to 37 pounds on a frequent basis.</li><li>Will push or pull up to 50 pounds of force on an occasional basis.</li><li>Will push or pull up to 37 pounds of force on a frequent basis.</li><li>Required to use hands to grasp, lift, handle, carry or feel objects on a frequent basis.</li><li>20/40 vision in both eyes (with or without correction) and the ability to distinguish between red, yellow, and green is required.</li><li>May reach above shoulder heights and below the waist on a frequent basis.</li><li>May stoop, kneel, or bend, on an occasional basis.</li><li>Must comply with all safety standards and procedures.</li><li>Ability to wear personal protective equipment is required (including, but not limited to: steel-toed shoes, cut-resistant gloves, jackets, aprons &amp;/or arm guards, safety glasses or goggles, hearing protection &amp; respirators) and a condition of employment and continued employment (may require little or no facial hair).</li></ul><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role.   All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>The base salary for this position is dependent upon experience and location.</p><p>Location: Klamath Falls, OR</p><p>Salary Range: $152,000 to $160,400</p><p><strong>Job Summary</strong></p><p>The Klamath Cogeneration Project is a 500 MW state-of-the-art gas-fired combined cycle cogeneration facility and a 100 MW Peaking Facility adjacent to the City of Klamath Falls, Oregon. These facilities operate as a flexible dispatch combined cycle merchant plant and a fast start peaking plant supplying power to California and the Pacific Northwest, as well as steam to the adjacent Collins Products manufacturing facility.</p><p><strong>Key Responsibilities</strong></p><ul><li>Day-to-day operations management of the facility in a safe, environmentally compliant, and fuel-efficient manner.</li><li>Recruiting, testing, training, development and direct supervision of approximately 10 multi-skilled plant operations technicians.</li><li>Coordinates with Asset Management and Trading staff in Portland and Plant O&amp;M staff in Klamath to implement daily and/or hourly production targets, and ensure these targets are achieved in a safe and environmentally compliant manner.</li><li>Ensures a continuous supply of steam is safely delivered to host Collins in the most economical method practicable.</li><li>Has a leadership role in plant safety program and at times participates in knowledge sharing with other operational groups such as the wind and gas storage businesses.</li><li>Ensures the plant-wide computerized maintenance management system is utilized by plant operations.</li><li>Coordinates plant staff, outside contractors and OEM&#39;s to minimize O&amp;M costs and optimize plant availability and reliability.</li><li>Responsible for operations coordination of scheduled and unscheduled outages.</li><li>Assists in the planning and execution of the operations portion of the facility O&amp;M budget and provides input to the plant maintenance budget.</li><li>Responsible for the monitoring of facility heat rate, operating performance of plant equipment, and taking action when necessary to optimize overall facility performance.</li><li>Responsible for identification and cost-benefit analyses of plant betterment projects that improve plant efficiency, reduce O &amp; M costs, or both.</li><li>Provide input for modifications and alterations that are required to conform to new or unique demands by corporate, plant requirements or regulatory agencies.</li><li>Assist in the addition or modification of computer controls to improve operational functionality of the facility.</li><li>Plans, manages and executes the design, engineering, procurement and construction of new projects.</li><li>Takes manager on call duties on a rotating basis.</li><li>Additional Responsibilities</li><li>Perform as team leader and be responsible for the safe and proper operation of the plant. Some duties include: work order oversight, coordination of maintenance activity, efficient operation of the plant, maintaining proper water chemistry and supervising Operations Technicians.</li><li>Responsible for the operations activities for environmental permit compliance.</li><li>Continually evaluate and prioritize plant conditions (steady- state, transient, &amp; upset) and act to control, contain, and restore plant operations in a safe, appropriate, and environmentally compliant manner.</li><li>Monitor and interpret plant emissions and discharges and act to maintain compliance with all applicable laws, permits, provisions and orders.</li><li>Responsible for analyzing individual performance of Operations Technicians and providing guidance and feedback.</li><li>Develop a fundamental understanding of the merchant power business, and utilize that knowledge in decision-making, suggesting changes, or improvements to the overall plant operation.</li><li>Communicate regularly with Avangrid Power energy and asset management representatives, and on-site staff to optimize plant generation and achieve heat rate targets.</li><li>Responsible for capturing, analyzing, validating, interpreting and reporting all production data and statistics, both internal and external, as required.</li><li>Other duties as required</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Bachelor’s degree in engineering is required.</li><li>Minimum 3 years management experience in power generation or related field required.</li><li>Experience in power plant combined cycle operations is required.</li><li>Management skills including the ability to manage multiple projects and priorities, implement mission-critical programs, set expectations for and follow up with staff, recommend and oversee improvement of plant specific processes and systems.</li><li>Ability to perform and coordinate root cause analysis of plant/equipment problems and to implement corrective action, in a timely, safe and cost-effective manner.</li><li>Experienced in contract management and administration.</li><li>Ability to fulfill all customer expectations in an economical manner.</li><li>Ability to solicit and utilize 360° input, get buy-in, and, at times, be able to make decisions alone with the commensurate degree of urgency while maintaining an overall sense of ownership and teamwork within the organization. This includes being in the &quot;Manager-on-call&quot; rotation.</li><li>Decisions regularly affect the achievement of plant objectives, efficiency, morale, and financial performance.</li><li>Possess a high level of system and integrated process knowledge of power generation equipment.</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Minimum 7 years power plant experience, 10 or more years is preferred.</li><li>10 years power plant experience.</li><li>Computerized maintenance management systems.</li><li>Plant and turbine distributed control systems.</li><li>Boiler and Cooling Tower water chemistry.</li><li>Environmental Permits, regulations and compliance reporting.</li><li>Microsoft Office programs (Excel, Word, Access, Outlook).</li></ul><p>Additional Success Factors</p><ul><li>Ability to foster and participate in a productive team environment by establishing and maintaining effective working relationships with co-workers, managers, customers, contractors, and vendors.</li><li>Ability to analyze project risks and proactively identify solutions with a flexible, creative, and solution-focused outlook on problem solving.</li><li>Maintains effectiveness during procedural/organizational changes and when dealing with varying personality styles and tasks.</li><li>Effectively provides and receives information orally in individual and group situations. Written expression is clear, concise, and conveys the desired message.</li><li>Ability to navigate and succeed in a highly matrixed reporting structure, preferably at an international company.</li></ul><p>Competencies</p><ul><li>Growth &amp; Continuous Improvement</li><li>Initiative &amp; Change</li><li>Focused on Results</li><li>Customer Centric (internal and/or external)</li><li>Communication</li><li>Collaboration</li><li>Leadership (people managers/leaders)</li></ul><p>Disclaimer</p><p>AVANGRID is committed to a diverse and inclusive workplace. AVANGRID is an equal opportunity employer and does not discriminate on the basis of an individual’s sex, gender, gender identification, gender expression, race, color, religion, national origin, age, ancestry, genetic information, medical condition, physical or mental disability, marital status, sexual orientation, military or veteran status, or other characteristics or conditions protected by law.</p><p>Click here for Additional Disclaimer Information</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within AVANGRD Network and Corporate functions. This does not include those that will work for Avangrid Power.</p><p>#LI-TI1</p><p><strong>Company:</strong></p><p>PPM TECHNICAL SERVICES, INC</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p><p>July-31-2026</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

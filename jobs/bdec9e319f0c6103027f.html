@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Program Manager - NYISO Interconnection &amp; CIAC Compliance</strong></p><p>Location: Binghamton or Rochester, NY</p><p>Reports to: Sr Director - Transmission Services</p><p>Work Type: Office</p><p>The salary range for this position is based on experience level ranging from <strong>$106,000 to $132,500 plus up to 16% bonus</strong></p><p><strong>What We Offer:</strong></p><p>Competitive benefits and growth opportunities</p><p>Generous performance‑based bonuses</p><p>12% 401(k) match</p><p>Comprehensive health, dental, and vision insurance</p><p>Tuition reimbursement</p><p>Professional development and clear career advancement pathways</p><p>For more information please visit: Benefits - Avangrid</p><p><strong>Job Summary</strong></p><p>The Program Manager – NYISO Interconnection CIAC Compliance is responsible for managing all CIAC-related issues and compliance for generation and load projects that interconnect to the NYSEG and RG&amp;E transmission system under the New York Independent System Operator (NYISO) interconnection process. This position will be the subject matter expert on Contributions-in-Aid-of-Construction (CIAC) and their associated customer billing requirements in accordance with the NYSEG/RGE tariff and policies and the NYISO Open Access Transmission Tariff (OATT). In this role, the successful candidate will:</p><ul><li>Provide cost reconciliation, billing and settlement with NYISO generation and load developers, including accounting for costs subject to the NYISO Interconnection Process and managing security instruments (surety bonds/parent guarantees/SLOCs).</li><li>Resolve disputes and lead mediation efforts as needed.</li><li>Manage and coordinate the tasks between internal departments to establish appropriate work orders and accounting structures, track and report construction costs, and analyze variances.</li><li>Proactively communicate with stakeholders (Engineering, Customer Funded Development, Transmission Planning, Management) on a regular basis to ensure accurate billing procedures are adhered to and develop processes around CIAC projects. Complete periodic auditing and tracking.</li><li>Collaborate with other NY utilities as a regulatory subject matter expert in developer billing and policies.</li><li>Lead compliance initiatives, such as audits and regulatory compliance matters such as regulatory pricing allocation procedures by performing analytical studies focusing on project actuals vs. planned costs and their associated funding classification (CAPEX, OPEX), provide NYISO or FERC-mandated reporting and interact with Avangrid Legal and the NYISO to resolve developer concerns or disputes.</li><li>Provide annual training to affected stakeholders on policy and pricing policies and criteria to ensure compliance with CIAC projects.</li><li>Manage receipt, review and approval of SLOCs through the Risk Management, Legal and Sales Administration process, track and report expiration dates.</li></ul><p><strong>Key Responsibilities</strong></p><ul><li>Business Leadership: Energizing leader that promotes a culture of collaboration, efficiency, innovation, growth, and development to advance business objectives.</li><li>Strategic and Technical Leadership: Provides leadership and facilitates collaborative decision to develop, modify and implement policy and training materials along with conducting annual training to Customer Funded Development and other supporting departments on NYSISO OATT, FERC Order 2023 and NYSEG/RG&amp;E Billing Policy.</li><li>Strong leadership, problem-solving skills, leveraging customer relationships and attention to detail will be critical in resolving issues that arise during the project lifecycle.</li><li>Communicate, influence, and motivate: Use of excellent verbal and written communication skills with all levels of management to inform and influence others, providing strategic input for business plans and decision making on regulatory and policy issues to advance business objectives. Serves as Avangrid NY regulatory Subject Matter Expert (Customer Contributions, Billing, NYISO OATT and Use of SLOCs).</li><li>National and Regional Strategy &amp; Regulatory: Provides input into the development of processes and strategies for the business unit that reflect knowledge of national, regional, and local dockets, orders and regulations, especially FERC Order 2023 and related Orders. Anticipates impacts of legislative and regulatory changes to tariffs, investment rate recovery and business strategies and plans.</li><li>Company Representation: Represent NYSEG and RG&amp;E in regional forums related to regulatory knowledge of CIAC billing and reconciliation issues, NYISO OATT, NYISO Cluster Study process and the use of security instruments; notably the relevant NYISO Committees such as OC/TPAS.</li><li>Documentation Management: Perform all job functions in strict compliance with the NYISO OATT and Order 2023. Ability to adequately document and interpret tariffs documentation, review and monitor engineering cost estimates done by others upon having a strong knowledge in Regulatory and Compliance Environment with Federal and State Regulatory Standards and Requirements (NYISO, NY DPS, etc.).</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Bachelor’s degree in engineering, technology, business, accounting or related field required with at least eight (8) years of practical experience with working knowledge in utility disciplines.</li><li>Broad range of competencies in areas such as regulatory matters, accounting design, and/or tariffs and policies.</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Demonstrated ability to lead, train, and develop others on NYISO OATT, FERC, and New York State policy and regulatory matters.</li><li>Ability to analyze, interpret, and report on complex projects with a particular focus on Contributions in Aid of Construction (CIAC) Projects, the NYISO OATT Cluster Study process, and the development and monitoring of cost allocation standards and practices.</li><li>Excellent written and oral communication skills and the ability to collaboratively lead teams across multiple business areas.</li><li>Regular interactions with outside regulatory agencies (e.g., NY DPS, FERC, NYISO) and internal departments is a must.</li><li>Experience in government and/or utility affairs with an advanced understanding of revenue requirements and cost recovery mechanisms.</li><li>Demonstrated ability to oversee, prepare, and deliver concise communications to all levels including internal Executives and Senior Leadership as well as external Regulators, customers and other key stakeholders.</li><li>Candidates with additional expertise in project/program management, distribution field design, cost estimate development are preferred</li></ul><p>#LI-OFFICE</p><p>#LI-JO1</p><p><strong>Company:</strong></p><p>NY STATE ELECTRIC &amp; GAS CORP</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p><p>August-1-2026</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>About Terawatt Infrastructure</p><p>The once-in-a-century transition to autonomous and electric vehicles is underway and will require a multi-trillion-dollar investment in energy and charging infrastructure, and the real estate to site it on. Terawatt is the leader in delivering large-scale, turnkey charging solutions for companies rapidly deploying AV and EV fleets. Whether it’s an urban mobility hub or a carefully located multi-fleet hub for semi-trucks, Terawatt brings the talent, capabilities, and capital to create reliable, cost-effective solutions for customers on the leading edge of the transition to the next generation of transport.</p><p>With a growing portfolio of sites across the US in urban hubs and along key logistics and transportation corridors and logistics hubs, Terawatt is building the permanent transportation and logistics infrastructure of tomorrow through a robust combination of capital, real estate, development, and site operations solutions. The company develops, finances, owns, and operates charging solutions that take the cost and complexity out of electrifying fleets.</p><p>At Terawatt, we execute humbly and with urgency to provide tailored solutions for fleets that delight our clients and support the transition of transportation.</p><p>Role Description: One of Terawatt&#39;s Core Values is to “Own the Outcome”. As an Accounting Manager, you will be a key contributor within Terawatt’s finance department as we scale. The core focus of this role is external consolidated financial reporting; candidates with deep technical reporting expertise are strongly encouraged to apply, with structured coaching and development provided on the treasury side.</p><p>Reporting directly to the VP Controller, this position requires the ability to navigate a fast-moving scale-up environment with an agile, solutions-oriented mindset, comfort with ambiguity, and rapid project pivots across a dynamic capital structure. This is an opportunity to contribute meaningfully to Terawatt&#39;s growth in the clean energy transition. Core Responsibilities: Financial Reporting &amp; Policy</p><ul><li>Own preparation of  monthly, quarterly, and annual corporate and consolidated reporting packages for multiple entities - including Balance Sheet, Profit and Loss, Statement of Equity, Segmented Reporting, Annual Financial Statement of Notes, and Management’s Discussion and Analysis, with a strong commitment to data integrity and reporting accuracy</li><li>Manage end-to-end preparation of audit packages and serve as the primary liaison for external auditors.</li><li>Conduct accounting policy research and author policy memos for complex transactions.</li><li>Build and maintain a SOX-standard control matrix and embed best practices into the reporting framework</li><li>Partner with Operational Accounting and FP&amp;A leads to ensure reporting accuracy and strategic alignment.</li></ul><p>Treasury &amp; Dept Managerment</p><ul><li>Support daily treasury operations and develop weekly cash flow forecasting models.</li><li>Assist with monitoring debt covenants, ensuring timely compliance reporting and proactive risk mitigation.</li><li>Contribute to the development  of an updated treasury policy to optimize returns on passive cash</li><li>Support the VP Controller on special projects related to capital raises and scaling initiatives. Minimum Qualifications: • Bachelor’s degree in Finance, Accounting or a related field.</li><li>Active CPA designation is required.</li><li>Minimum of 5 years of post-designation experience.</li><li>Demonstrated experience in complex accounting research, policy writing, and full-cycle financial reporting.</li><li>Deep US GAAP understanding and hands-on experience</li><li>Experience in cash management, forecasting and debt covenant monitoring.</li><li>Familiarity with SOX framework.</li><li>Demonstrated ability to take ownership of complex workstreams from inception to completion with minimal direction. Preferred Qualifications: • Master’s degree in Finance, Accounting or a related field.</li><li>Background in audit or consulting experience in a Big 4 firm is preferred.</li><li>IFRS experience would be considered a plus</li><li>ASC 946 experience would be an asset</li><li>Experience in cash management, forecasting, or debt covenant monitoring</li><li>Systems: Experience with NetSuite ERP is highly preferred</li><li>AI: Claude and Gemini experience is an asset.</li></ul></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

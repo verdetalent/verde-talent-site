@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Senior Manager, Sales Development</strong></p><p>At Bloom Energy, our vision for a world powered by clean, reliable, and affordable energy is more than just a dream—we’re making it reality.</p><p>For over twenty-five years, we’ve been at the forefront of the global energy transition by providing onsite power to critical industries to help them thrive in a rapidly digitizing, energy-intensive world. From revolutionizing power for AI-driven data centers to ensuring resilience for hospitals, retailers, manufacturers, utilities—and many more industries—our fuel cells are redefining what’s possible by delivering energy abundance for all. With systems deployed worldwide, we are the trusted partner for Fortune 100 companies and innovators alike. Our cutting-edge solutions enable unparalleled “time-to-power” capabilities, reliability, and sustainability, ensuring our customers remain ahead in a world where soaring energy demand and intensifying energy scarcity are rapidly becoming the new norm.</p><p>At Bloom, we thrive on collaboration, bold thinking, and relentless innovation. We believe that, together, we can create a brighter, more sustainable future while tackling the most pressing challenges of the 21st century.</p><p>Position Overview</p><p>The Senior Manager, Sales Development will be a foundational leader, directly responsible for building, scaling, and leading a high-performing global Business Development Representative (SDR) organization. Your primary mission will be to drive top-of-funnel pipeline generation and align inbound and outbound efforts with broader business goals. You will lead, coach, and develop a team of highly driven SDRs, ensuring operational excellence, accountability, and empower them to uncover high-value sales opportunities and execute our market strategy. Success in this role requires a seasoned leader who can define the outbound prospecting strategy, establish effective KPIs, and partner closely with Sales Directors and Marketing to maximize pipeline creation and revenue impact.</p><p><strong>Leadership and People Management</strong></p><ul><li><strong>Direct Management:</strong>Directly manage and mentor a team of Sales and Account Development Representatives. Own the Sales Development strategy and execution across target accounts and defined territories. Coach reps on how to drive effective sales process while leveraging modern AI‑powered research and enrichment tools to improve targeting, personalize outreach, and optimize workflow efficiency. Continuously analyze pipeline metrics (conversion rates, cycle time, MQL/SQL quality) to identify and execute levers for accelerated growth.</li><li><strong>Talent Development:</strong> Implement a strong coaching program focused on prospecting, vertical expertise, product knowledge, and career pathing.</li><li><strong>Recruitment &amp; Retention:</strong>Partner with HR and Recruiting to attract, hire, and onboard top-tier Sales Development talent, ensuring a low attrition rate and strong team culture. Teach new hires how to incorporate AI‑driven prospecting into their workflow, ensuring they understand best practices, ethical use of automation, and how to maintain creativity and critical thinking alongside technology.</li><li><strong>Performance Management:</strong> Conduct regular 1:1 meetings, performance reviews, and building and developing a high performing team with metrics aligned to sales revenue, fostering a culture of accountability and excellence. Provide accurate, timely, and detailed weekly forecasting and pipeline analysis to senior leadership, clearly articulating performance drivers, risks, and mitigation strategies.</li></ul><p><strong>Strategy</strong></p><ul><li><strong>Go-to-Market Strategy:</strong>Design and execute the regional SDR strategy, including market segmentation, account prioritization, and targeting based on ideal customer profiles (ICP). Use AI‑powered market intelligence to inform segmentation, identify white space, refine ICP definitions, and prioritize accounts.</li><li><strong>Process Optimization:</strong>Continuously evaluate and optimize the entire SDR operational workflow, including territory planning, lead qualification criteria (e.g., MEDDPICC, BANT), and hand-off processes to the Account Executive (AE) teams.</li><li><strong>Incentive Design:</strong> Work with Sales Leadership to design compensation plans and SPIFFs that motivate high performance, align with company goals, and drive consistent pipeline growth.</li></ul><p><strong>Performance and Reporting</strong></p><ul><li><strong>Pipeline Generation:</strong>Own the team&#39;s monthly and quarterly quota for qualified meetings, pipeline creation, and revenue influence. Leverage AI‑driven insights to identify which markets, personas, and message angles produce the strongest results. Teach the team how to interpret AI recommendations and apply them creatively.</li><li><strong>Forecasting &amp; Analysis:</strong> Provide accurate weekly and monthly forecasts for qualified opportunities generated. Analyze key performance indicators (KPIs) such as conversion rates, call activity, email metrics, and average opportunity value.</li><li><strong>Cross-functional Alignment:</strong> Act as the primary link between Sales, Marketing, and Operations to maintain a seamless lead‑to‑opportunity flow and consistent messaging. Define and enforce SLAs for lead response, MQL‑to‑SQL handoff, and pipeline hygiene. Partner closely with Marketing leadership to plan, launch, and measure targeted outbound campaigns aligned with GTM priorities.</li></ul><p><strong>Training &amp; Enablement:</strong></p><p>Partner cross functionally to design and deliver onboarding and ongoing training programs covering messaging, objection handling, product knowledge, and competitive positioning.</p><p>Basic Qualifications</p><ul><li>Minimum of 10 years of experience in Enterprise Technology Sales, including a proven, quantifiable track record of exceeding targets in a high-velocity sales environment.</li><li>Minimum of 5 years of direct, hands-on management experience leading Sales Development (SDR) or Demand Generation teams within a high-growth technology company.</li><li>Demonstrated success in defining, implementing, and optimizing sales processes (e.g., qualification criteria, cadence structures, lead management) that resulted in scalable pipeline growth.</li><li>Expert proficiency with Salesforce CRM and a working knowledge of the Sales Development Tech Stack and AI tools (e.g., Outreach, Clay, Intent Data tools). Proven ability to derive actionable insights from pipeline data.</li><li>Exceptional cross-functional collaboration skills, specifically working with Marketing, Sales Operations, and Account Executive leadership to drive alignment on GTM strategy and SLAs.</li><li>A proactive, coaching-centric leadership style with a passion for mentorship and developing early-career talent into future sales leaders.</li></ul><p><strong>Salary Ranges:</strong></p><p>$134,500.00 - $193,500.00</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

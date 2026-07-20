@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p>Basic Job Functions:</p><ul><li>Mid-level corporate controls. Requires to take a lead role in the global implementation and development of electrical controls systems/designs, PLC/HMI programing, perform vendor equipment check-out, equipment/system start-ups, data collection and optimization of control systems.</li></ul><p>Education/Experience:</p><ul><li>Bachelor’s degree in Electrical Engineering, Computer Engineering, or related field; or equivalent years of work experience.</li><li>Minimum 6 years of manufacturing equipment controls engineering experience.</li></ul><p>Required Skills/Competencies:</p><ul><li>Proven understanding/knowledge and experience in controls engineering techniques and practices which would be required for global facilities including North America, Asian, and European countries.</li><li>Proven understanding/knowledge and ability to trouble-shoot electrical/electronic control systems.</li><li>Proven understanding/knowledge of global manufacturing processes and safety requirements.</li><li>Proven experience using Auto Desk AutoCad drafting software to create electrical schematic and panel layouts.</li><li>Good understanding/knowledge programming of Rockwell Automation Logix platform PLC’s, including ladder and function block diagram.</li><li>Good understanding/knowledge programming Rockwell Automation Human Machine Interfaces (HMI) including PanelView Plus, PanelView Plus CE, and RSView SE.</li><li>Good understanding/knowledge designing, programming, and commissioning at least two control network including ControlNet, DeviceNet, Profibus and/or Ethernet.</li><li>Proven understanding/knowledge of robotic systems including programming, safety requirements, and design/implementation practices.</li><li>Good understanding/knowledge of motion controls including stepper motors, servo motors, and AC/DC Drives.</li><li>Good understanding/knowledge of Cognex vision camera configuration and programming experience.</li><li>Proven understanding of computer hardware/applications and the Microsoft Office family.</li><li>Some knowledge of working in server environment.</li><li>Some Microsoft SQL Server Database configuration experience.</li><li>Experience in at least one multi-tiered architecture using C#, VB.NET, HTML, XML and SQL.</li><li>Understanding/knowledge of Corporate Ethernet architectures and systems.</li><li>Excellent communications skills both oral and written.</li><li>Good problem-solving skills.</li></ul><p>Essential Responsibilities:</p><ul><li>Primary Responsibilities:</li><li>Responsible for global support of manufacturing facilities.</li><li>Responsible to assist with global coordination of new equipment installation and implementation.</li><li>Responsible to assist with global communication between manufacturing process equipment and SQL database.</li><li>Responsible for maintaining and updating of manufacturing process tool electrical drawings globally, ensuring the tracking of equipment changes is documented and drawings are kept current.</li><li>Responsible for the successful design and theory behind majority of manufacturing control systems, ensuring new process tools adhere to corporate controls standards and best practices.</li><li>Responsible for globally troubleshooting and problem solving equipment controls related issues and recommending controls policy/standard changes, if possible, to prevent future issues with new manufacturing process tools.</li><li>Responsible to interface with multiple departments within the organization and external suppliers to ensure corporate controls policies/standards are understood and being adhered to.</li><li>Evaluates new proposed equipment controls systems to MES requirements and provides recommendations to vendor and/or internally.</li><li>Maintain effective global communications levels and fosters team building.</li><li>Ensures adherence to all safety procedures and good housekeeping standards.</li><li>Responsible for designing, programming, and coordination of small, mid, and some large scale control systems and projects.</li><li>Key Competencies:</li><li>Takes responsibility for understanding client requirements, collecting data, delivering analysis and problem resolution. Identifies, evaluates and recommends options, implementing if required. Collaborates with, and facilitates stakeholder groups, as part of formal or informal consultancy agreements. Seeks to fully address client needs, enhancing the capabilities and effectiveness of client personnel, by ensuring that proposed solutions are properly understood and appropriately exploited.</li><li>Maintains knowledge of specific technical specialisms, provides detailed advice regarding their application and executes specialized tasks. The specialism can be any area of information or communication technology, technique, method, product or application area.</li><li>Agrees research goals and generates original and worthwhile ideas in a specialized IT field. Develops, reviews and constructively criticizes ideas, possibly leading a small research team, making necessary observations and tests and carrying them through to a full practical demonstration, wherever viable and feasible. Where necessary, designs data collection tools and techniques for both qualitative and quantitative data. Presents papers at conferences, writes papers of publication quality, and presents reports to clients.</li><li>Actively monitors for, and seeks, opportunities, new methods and trends in IT capabilities and products to the advancement of the organization. Clearly articulates, and formally reports their benefits.</li><li>Maintains awareness of opportunities provided by new technology to address challenges or to enable new ways of working. Within own sphere of influence, works to further organizational goals, by the use of emerging technologies and products. Contributes to briefings and presentations about their relevance and potential value to the organization.</li><li>Recommends/designs structures and tools for systems which meet business needs. Delivers technical visualization of proposed applications for approval by customer and execution by system developers. Translates logical designs into physical designs, and produces detailed design documentation. Maps work to user specification and removes errors and deviations from specification to achieve user-friendly processes.</li><li>Designs, codes, tests, corrects, and documents moderately complex programs and program modifications from supplied specifications, using agreed standards and tools. Conducts reviews of supplied specifications, with others as appropriate.</li><li>Contributes to the identification, analysis and documentation of hazards, and to the capture, evaluation and specification of safety requirements. Analyses and documents safety validation results. Contributes to the development and maintenance of project safety assurance plans, and gathers safety assurance evidence for safety case preparation.</li><li>Designs systems, services and components that meet required levels of sustainability and specific profiles of materials consumption.</li><li>Accepts responsibility for creation of test cases using own in-depth technical analysis of both functional and non-functional specifications (such as reliability, efficiency, usability, maintainability and portability). Creates traceability records, from test cases back to requirements. Produces test scripts, materials and regression test packs to test new and amended software or services. Specifies requirements for environment, data, resources and tools. Interprets, executes and documents complex test scripts using agreed methods and standards. Records and analyses actions and results, and maintains a defect register. Reviews test results and modifies tests if necessary. Provides reports on progress, anomalies, risks and issues associated with the overall project. Reports on system quality and collects metrics on test cases. Provides specialist advice to support others.</li><li>Plans and performs all types of evaluation. Interprets and presents the results of evaluations.</li><li>Defines the integration build, accepts software modules from software developers, and produces software builds for loading onto the target environment. Configures the hardware environment, produces integration test specifications, and conducts tests, recording details of any failures and carrying out fault diagnosis.</li><li>Configures software and equipment and tests platform-specific versions of one or more software products. Reports the outcome of testing and identifies potential improvements to the process and to the software products according to agreed designs and standards.</li><li>Installs or removes hardware and/or software, using supplied installation instructions and tools including, where appropriate, handover to the client. Conducts tests, corrects malfunctions, and documents results in accordance with agreed procedures. Reports details of all hardware/software items that have been installed and removed so that configuration management records can be updated. Provides assistance to users in a professional manner following agreed procedures for further help or escalation. Maintains accurate records of user requests, contact details and outcomes. Contributes to the development of installation procedures and standards.</li><li>Monitors service component capacity and initiates actions to resolve any shortfalls according to agreed procedures. Applies techniques to modify demand for a particular resource or service.</li><li>Contributes to the availability management process and its operation and performs defined availability management tasks. Analyses service and component availability, reliability, maintainability and serviceability. Ensures that services and components meet and continue to meet all of their agreed performance targets and service levels. Implements arrangements for disaster recovery and documents recovery procedures. Conducts testing of recovery procedures.</li><li>Reviews system software updates and identifies those that merit action. Tailors system software to maximize hardware functionality. Installs and tests new versions of system software. Investigates and coordinates the resolution of potential and actual service problems. Prepares and maintains operational documentation for system software. Advises on the correct and effective use of system software.</li><li>Identifies and resolves issues with applications, following agreed procedures. Uses application management software and tools to collect agreed performance statistics. Carries out agreed applications maintenance tasks.</li><li>Carries out agreed operational procedures, including network configuration, installation and maintenance. Uses network management tools to collect and report on network load and performance statistics. Contributes to the implementation of maintenance and installation work. Uses standard procedures and tools to carry out defined system backups, restoring data where necessary. Identifies operational problems and contributes to their resolution.</li><li>Identifies and resolves network problems following agreed procedures. Uses network management software and tools to collect agreed performance statistics. Carries out agreed network maintenance tasks.</li><li>Initiates and monitors actions to investigate and resolve problems in systems and services. Assists with the implementation of agreed remedies and preventative measures.</li><li>Receives and handles requests for support following agreed procedures. Responds to requests for support by providing information to enable incident resolution and promptly allocates unresolved calls as appropriate. Maintains records and advises relevant persons of actions taken.</li><li>Participates in assessments up to IEC 61508 Safety Integrity level 3 (or equivalent standard), and undertakes safety analyses on initial designs using HAZOPS, FMEA or similar methods.</li><li>Other duties as assigned.</li><li>Job description subject to change at any time.</li></ul><p>Reporting Relationships:</p><ul><li>This position reports to the Manager, Controls Engineering.</li><li>This position will not have direct reports.</li></ul><p>Travel:</p><ul><li>No travel is required.</li></ul><p>Estimated Salary Range:</p><ul><li>$80,700-$115,000 Annually.</li></ul><p>US Physical Requirements:</p><ul><li>Will sit, stand or walk short distances for up to the entire duration of a shift.</li><li>Will climb stairs on an occasional basis.</li><li>Will lift, push or pull up to 37 pounds on an occasional basis.</li><li>Required to use hands to grasp, lift, handle, carry or feel objects on a frequent basis.</li><li>20/40 vision in both eyes together, with or without correction, is required.</li><li>Must be able to comply with all safety standards and procedures.</li><li>May reach above shoulder heights and below the waist on a frequent basis.</li><li>May stoop, kneel, or bend, on an occasional basis.</li><li>Ability to wear personal protective equipment is required (including but not limited to; steel-toed shoes, gloves, safety glasses, hearing protection, protective jacket or apron and arm guards, and a condition of employment and continued employment (requires little or no facial hair) for those requiring respirator use.</li></ul><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role. All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

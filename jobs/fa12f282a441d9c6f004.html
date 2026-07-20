@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>At Bloom Energy, our vision for a world powered by clean, reliable, and affordable energy is more than just a dream—we’re making it reality.</p><p>For over two decades, we’ve been at the forefront of the global energy transition, pioneering solutions that empower critical industries to thrive in a rapidly digitizing, energy-intensive world. From revolutionizing power for AI-driven data centers to ensuring resilience for hospitals, electric grids, manufacturing facilities, and utilities, our solid oxide fuel cell (SOFC) and solid oxide electrolyzer (SOEC) technologies are redefining what’s possible by delivering energy abundance for all. With more than 30,000 fuel cell modules deployed worldwide, we are the trusted partner for Fortune 100 companies and innovators alike. Our cutting-edge solutions enable unparalleled “time-to-power” capabilities, reliability, and sustainability, ensuring our customers remain ahead in a world where soaring energy demand and intensifying energy scarcity are rapidly becoming the new norm.</p><p>At Bloom, we thrive on collaboration, bold thinking, and relentless innovation. We believe that, together, we can create a brighter, more sustainable future while tackling the most pressing challenges of the 21st century.</p><p>We are seeking a strategic, data-driven, and results-oriented Senior Manager, Field Marketing to build and lead integrated programs that drive pipeline and accelerate revenue across key customer segments. In this role, you will focus on creating pipeline using a variety of marketing vehicles and tactics including, account based marketing programs, regional targeted campaigns &amp; tradeshows, targeted field events, and direct mail.  You will serve as one of the primary liaisons between the sales team and Marketing. Working closely with the Marketing team, Account Executives, Sales Development Reps, and Segment Leaders, your main objective will be to move accounts through the sales pipeline and accelerate the sales cycle for prospects and customers by executing target account &amp; regional programs/plans. The role will be based in San Jose, CA.</p><p>The ideal candidate brings best practices from software B2B marketing—preferably in complex, technical, or industrial markets—and thrives in environments that blend strategic thinking with hands-on execution.</p><p>Role and Responsibilities:</p><ul><li>Multi-Channel Campaigns: Develop and continuously refine data-driven, customer obsessed campaigns that successfully engage key contacts at target accounts; and ultimately generate and accelerate sales opportunities and pipeline. Build events (owned and third-party) as part of the pipeline engine, with pre-, during-, and post-engagement flows. Develop regional field marketing programs. Build forecast to meet revenue requirements.</li><li>End to End Results &amp; Sales Toolkits: Write &amp; develop multi-touch programs to drive success before, during and after programs to increase engagement and response rates.  Including promotion and nurture emails, Landing pages, Direct Mail, ABM tactics, ads, and sales enablement. Create playbooks, nurture scripts, and collateral for sales &amp; BDRs to maximize marketing campaigns and programs. Manage lead handoff and ensure all leads from events are meeting SLAs and conversions.</li><li>Full Scope Event Ownership: Responsible for field event and program planning, pipeline/outcome forecasting, project management, and logistics, from research &amp; initial planning to post event/program follow up. This includes vendor management/negotiation, sales enablement, data cleansing/tracking, building &amp; tracking SFDC reports, Hubspot set up, archiving, and maintenance of all assets.</li><li>Program Management &amp; Ownership: Drive, project manage, &amp; collaborate across marketing, sales, &amp; design team to generate marketing content such as webpages, emails, direct mail, event content, etc. Build report</li><li>Marketing &amp; Sales Alignment: Orchestrate resources across Marketing to maximize integrated efforts and support the team in achieving shared goals. Primary liaison between Field Sales and Marketing. Communicate feedback from the Field back to Marketing to ensure the Field has the tools and messaging they need to maximize campaign outcomes.</li><li>Sales Partnership &amp; Voice of Field Team: Work hand in hand with sales to gain deep understanding of target accounts, segment/region needs, and effectively build out field events and account-based marketing programs to grow and accelerate pipeline.</li><li>Manage budget &amp; report quarterly results influence, pipeline, campaign performance and uncover insights to improve ROI.</li><li>Budget and resource management: Oversee the Field Marketing budget, ensuring smart allocation of resources to drive maximum impact and efficiency across programs and channels.</li><li>Account-based marketing: Lead the development and execution of a comprehensive ABM strategy, identifying, targeting, and engaging high-value segments with personalized, high-impact campaigns.</li><li>Sales alignment: Collaborate closely with sales leaders and frontline teams to ensure timely lead follow-up, campaign feedback loops, and integration of insights into ongoing campaign development.</li><li>Growth engine leadership: Build a high-functioning demand generation engine by aligning marketing, sales, BDRs, and RevOps around shared goals. Streamline operational workflows to drive efficiency and consistency in campaign execution and follow-up.</li></ul><p>Skills and Experience:</p><ul><li>BS/BA degree and 10+ years of experience in B2B Field Marketing role</li><li>Proven success in building pipeline and accelerating revenue within enterprise sales environments.</li><li>Experience with ABM strategy and execution, particularly for technical or complex sales cycles.</li><li>Proficient with marketing automation, CRM, and attribution platforms such as HubSpot, 6Sense, Salesforce.</li><li>Grasp of digital marketing channels, including paid media, email</li><li>Excellent cross-functional collaboration skills</li><li>Ability to handle moving parts, switch gears quickly, and juggle many projects at the same time</li><li>Highly analytical and metrics-driven; skilled in translating data into action.</li></ul><p>Other Requirements:</p><ul><li>Event management requires carrying, lifting, lowering assets weighing up to 50 lbs, which you should be comfortable with</li><li>Ability to travel up to 30%</li></ul><p>Bloom Energy is an equal opportunity employer and makes employment decisions on the basis of merit. We are committed to compliance with all applicable laws providing equal employment opportunities. All qualified applicants, will receive consideration for employment without regard to race, sex, color, religion, national origin, protected veteran status, or on the basis of disability. Bloom Energy makes reasonable accommodations, consistent with applicable laws, for the known physical or mental limitations of an otherwise qualified applicant or employee</p><p>with a disability, who can perform the essential job functions, unless undue hardship would result.</p><p>Bloom Energy is committed to fair and equitable compensation practices. The total compensation for this position includes standard company benefits and is based on various factors including, but not limited to, relevant skills and experience.</p><p>#LI-GL1</p><p><strong>Salary Ranges:</strong></p><p>$164,000.00 - $236,000.00</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Who We Are</strong></p><p>Arcadia is the AI-powered energy intelligence platform for businesses. We replace fragmented tools and manual workflows with one platform to pay utility bills, buy energy, and advance sustainability — across every location, at enterprise scale.</p><p>Trusted by Fortune 2000 companies, Arcadia combines unified data, AI-powered analytics, and expert advisory to help enterprise teams save money, mitigate risk, and cut carbon.</p><p>We deliver this through three comprehensive solutions:</p><ul><li><strong>Utility Bill Management:</strong> Automating the entire utility bill lifecycle — from data capture and validation to payment processing and auditing.</li><li><strong>Energy Procurement Advisory</strong>: Bringing together comprehensive data, AI-powered analytics, market expertise, and a strong partner network to make sophisticated procurement options accessible to all. .</li><li><strong>Sustainability Reporting</strong> — Verified emissions data with seamless integration into leading sustainability platforms.</li></ul><p>Tackling the world&#39;s most complex energy challenges requires diverse thinking. We&#39;re building teams of people from different backgrounds, industries, and disciplines — united by a belief that energy management should be simple, intelligent, and a genuine driver of business value.</p><p><strong>What we’re looking for:</strong></p><p>We are seeking a strategic and analytically rigorous Finance Business Partner to join the Strategic Finance / FP&amp;A team as our dedicated commercial finance lead for our Sales &amp; Marketing function. This individual will own revenue and sales forecasting, quota-setting, and commercial metrics for the combined Arcadia and ENGIE Impact go-to-market organization, serving as the connective tissue between Finance, Sales, Marketing, and Customer Success.</p><p><strong>#LI-REMOTE</strong></p><p>This is a high-visibility, high-impact role for a finance professional who thrives at the intersection of data and strategy. You will partner directly with the Chief Commercial Officer and GTM leadership to translate business performance into financial insight and financial targets into commercial plans. The ideal candidate combines rigorous quantitative skills and financial expertise with genuine curiosity about energy, climate, and the enterprise software businesses that are reshaping how companies manage their operations.</p><p>Arcadia is open to fully remote candidates and employees have access to co-working spaces.</p><p>#LI-REMOTE</p><p><strong>What you&#39;ll do:</strong></p><ul><li>Own the end-to-end revenue forecast model for the commercial organization, integrating pipeline data, bookings, churn, and expansion assumptions across all GTM segments.</li><li>Serve as the primary finance business partner to the CCO, VP of Sales, and GTM leadership, translating financial data into actionable insights that drive quota attainment, headcount decisions, and growth strategy.</li><li>Lead the annual quota-setting and territory planning process in close partnership with Sales Operations, ensuring alignment between top-down revenue targets and bottoms-up sales capacity modeling.</li><li>Build and maintain dashboards tracking key commercial metrics (ARR, NRR, ACV, win rates, CAC, LTV, payback period, pipeline coverage) and deliver regular reporting to the CFO and executive team.</li><li>Support QBRs, board materials, and investor-facing narratives with GTM financial performance analysis and forward-looking commentary.</li><li>Partner with Marketing to develop spend efficiency models, track CAC by channel and segment, and assess pipeline contribution from demand generation programs.</li><li>Drive financial integration work across the Arcadia and ENGIE Impact commercial teams, including harmonizing revenue definitions, CRM data standards, and go-to-market reporting.</li><li>Lead ad-hoc strategic analyses, including pricing and packaging scenarios, market expansion modeling, and M&amp;A revenue diligence — as the company scales post-acquisition.</li><li>Continuously improve FP&amp;A processes, tools, and automation in partnership with RevOps, Sales Ops, and the broader Finance team.</li></ul><p><strong>What will help you succeed:</strong></p><p><strong>Must-haves:</strong></p><ul><li>5+ years of progressive experience in FP&amp;A, strategic finance, investment banking, or management consulting; at least 2 years supporting a commercial or GTM organization in a SaaS, tech-enabled services, or B2B software environment.</li><li>Expert-level financial modeling skills - you can build a bottoms-up sales capacity model, a cohort-based ARR bridge, and a scenario-driven revenue forecast from scratch.</li><li>Deep fluency in SaaS and recurring revenue metrics: ARR/MRR, NRR, GRR, ACV, TCV, CAC, LTV, payback period, magic number, and pipeline coverage ratios.</li><li>Demonstrated experience supporting quota-setting, territory carving, or incentive compensation design in partnership with Sales Operations.</li><li>Strong data skills - proficiency in Excel/Google Sheets at a minimum; experience with Salesforce and BI tools (e.g., Tableau, PowerBI) strongly preferred.</li><li>Outstanding communication and executive presence - you are equally comfortable presenting to a CFO, a CRO, or a field sales rep.</li><li>A genuine interest in leveraging AI and automation to push FP&amp;A toward more scalable, tech-forward ways of working.</li><li>Ability to operate with high autonomy in a fast-moving, post-merger environment where structure is still being built.</li></ul><p><strong>Nice-to-haves:</strong></p><ul><li>Prior experience modeling revenue for businesses with mixed revenue types, including subscription, usage-based, non-recurring, and treasury revenue.</li><li>Prior experience at an energy, sustainability, or climate technology company, or financial partnership experience with a business that sells into enterprise sustainability, procurement, or facilities management buyers.</li><li>Familiarity with utility bill management, energy procurement, or sustainability reporting as a product category.</li><li>Experience supporting a commercial integration or go-to-market harmonization following an M&amp;A transaction.</li><li>Experience with financial planning tools (e.g. Abacum, Pigment, Adaptive Planning).</li><li>Experience identifying and implementing AI-driven automation opportunities within FP&amp;A workflows.</li><li>SQL and/or Python experience.</li><li>MBA or CFA designation.</li></ul><p><strong>Benefits:</strong></p><ul><li>&quot;Remote first&quot; culture - work anywhere in the US as long as you have a reliable internet connection</li><li>Flexible PTO - no accrued hours and no limit on the number of vacation days exempt employees can take each year</li><li>11 annual holidays</li><li>10 days sick leave</li><li>Up to 3 weeks bereavement leave</li><li>Up to 4 weeks of caregiver leave</li><li>Military leave for eligible services or events</li><li>2 volunteer days off</li><li>2 professional development days off</li><li>10 weeks paid parental bonding leave for all parents and additional medical recovery time for eligible employees</li><li>75-95% employer cost coverage for medical, dental, and vision benefits for employees and dependents</li></ul><p><strong>Celebrating Diversity and Inclusion</strong></p><p>Here at Arcadia, we cultivate diversity, celebrate individuality, and believe unique perspectives are key to our collective success in creating a clean energy future. Arcadia is committed to equal employment opportunities regardless of race, color, religion, gender, sexual orientation, gender identity or expression, national origin, age, disability, genetic information, protected veteran status, or any status protected by applicable federal, state, or local law.</p><p>We will ensure that individuals with disabilities are provided reasonable accommodation to participate in the job application or interview process, to perform essential job functions, and to receive other benefits and privileges of employment. Please contact us to request accommodation by emailing careers@arcadia.com prior to completing your application.</p><p>Target Annual Compensation Range for this role will be $97,000 to $175,000. There will also be a competitive benefits and bonus component to the package. The exact compensation at which this job is filled will be determined by the skills, experience, and location of the qualified candidate.</p><p>Please note that we are unable to offer visa sponsorship for this position at this time.</p><p><strong>Automated Screening:</strong> Arcadia uses AI-assisted technology to evaluate candidates on relevant skills, experience, and education as outlined in the job description. Human review is part of all hiring decisions. Candidates may request an alternative selection process by contacting careers@arcadia.com before submitting their application.</p><p><strong>Data Privacy &amp; California Residents:</strong> You voluntarily provide personal information (such as your resume, contact details, and assessment responses) when submitting an application. We may use this to evaluate your candidacy and derive inferences from this data to match your profile with open roles. For California Residents: This collection is consistent with the CCPA. You have the right to request access to or deletion of your data by contacting careers@arcadia.com.</p><p>Thank you</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

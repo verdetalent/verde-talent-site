@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Role Overview</p><p>Title: Platform Engineer, AI Agent Systems</p><p>Hours: Full-time; Salaried</p><p>Location: Salt Lake City, UT (hybrid in-office)</p><p>Benefits Eligible: Yes</p><p>Manager: Justin Hanselman</p><p>Mission – Why we exist and why we need you : Geothermal energy is the most abundant renewable energy source in the world. There is 2,300 times more energy in geothermal heat in the ground than in oil, gas, coal, and methane combined. However, historically it’s been hard to find and expensive to develop. At Zanskar, we’re using better technology to find and develop new geothermal resources in order to make geothermal a cheap and vital contributor to a carbon-free electrical grid.</p><p>Zanskar uses proprietary geophysical models and subsurface data to find geothermal resources faster than anyone else. We’re building the infrastructure that lets our team put AI agents to work on that data — safely. We need a Platform Engineer to own that infrastructure: the systems that let agents operate on sensitive company data and models without creating pathways for that data to be deleted, altered, or exfiltrated. The work isn’t theoretical — we have proprietary subsurface models and geophysical datasets that cannot leave our environment, and we need agents that can work with them in production today. Outcomes - Problems you’ll solve: Success in this role centers on two tightly related workstreams that share the same hard underlying problem: letting agents operate on sensitive company data and models safely. You&#39;ll design and operate the production systems that run agentic workflows inside our infrastructure as well as support a self-service layer for our internal teams to deploy agent-based tools and agent-built internal apps.</p><p>You&#39;ll own the access control architecture that governs what agents can read, write, and call in both production and sandboxed experiments — explicit trust boundaries, revocable credentials, and audit trails that hold up under scrutiny. Throughout, you&#39;ll partner directly with scientists, engineers, finance, legal, and comms to understand what they need, what they&#39;ll accidentally break, and how to make the on-ramp fast without compromising the guardrails.</p><p>Within six months, you&#39;ll have foundational agent-deployment infrastructure running in production, a sandbox environment that internal teams are actively using to build tools, and an access-control and observability model that lets Zanskar expand agent usage safely as the company grows. Competencies – What we’re looking for: • <strong>A Platform Engineer First:</strong>You have 3+ years building and operating internal APIs, platform services, or backend infrastructure. You reach for containerized environments naturally, think in terms of service-to-service auth and secrets management, and you know what observability actually requires — not just that it’s important.</p><ul><li><strong>Fluent in How Agents Fail:</strong>You have worked with LLM tool-use or function-calling in a production or near-production context. You understand hallucinated tool calls, unbounded loops, and context bleed — not just as concepts, but as things you’ve had to diagnose and contain. You have hands-on experience with at least one agentic framework and its operational tradeoffs.</li><li><strong>Security-Minded by Default:</strong>You don’t treat access controls as a bolt-on. You design systems where the path of least resistance is also the safe path. You’ve thought about what happens when a component is compromised, not just when it works correctly.</li><li><strong>Comfortable With Unsolved Problems:</strong>There is no playbook for safely deploying proprietary AI agents at the speed a small technical team needs. You’re the kind of engineer who figures out the right approach rather than waiting for one to arrive. You do your best work when the problem is real and the constraints are hard. Nice to have:: • Experience with multi-tenant systems where isolation between environments is a hard requirement, not a best-effort.</li><li>Familiarity with model serving infrastructure and the patterns that apply when the model itself is proprietary.</li><li>Experience with data access patterns in scientific or geospatial contexts — raster/vector data, large file stores, or similar environments where data sensitivity and file size create real engineering constraints.</li><li>Experience managing LLM provider integrations at the API layer — cost observability, rate limiting, failover logic, or gateway tooling. Single-provider depth is fine; understanding when and why you’d need to abstract to multi-model is what matters.</li><li>Familiarity with or interest in frontend development — the systems you’re building will help users deploy their apps to share across the company.</li><li>Experience in Python, TypeScript, Golang, Pulumi, or Kubernetes — you’ll be involved with infrastructure tooling that uses aspects of each while setting up frameworks for the company. Location, Salary, and Benefits: • The position is located in Salt Lake City, UT</li><li>Full-time; salaried</li><li>Paid holidays</li><li>18 days PTO + PTO accrual increase based on tenure</li><li>Medical, Dental &amp; Vision coverage</li><li>Equity Packages</li><li>401k</li><li>Paid Parental Leave</li><li>A direct impact in displacing carbon emissions, and growth opportunities in a growing startup environment</li></ul></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

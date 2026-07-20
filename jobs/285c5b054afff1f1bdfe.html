@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Fluence (Nasdaq: FLNC) is a global market leader delivering intelligent energy storage and optimization software for renewables and storage. Our solutions and operational services are helping to create a more resilient grid and unlock the full potential of renewable portfolios. With gigawatts of successful implementations across nearly 50 markets, we are transforming the way we power our world for a more sustainable future. For more information, please visit fluenceenergy.com.</p><p><strong>Job Description:</strong></p><p><strong>Job Title: </strong>Operations EHS Lead****</p><p>Location: Bangalore, India</p><p>Hours: 4 days a week or as mandated by the company</p><p>Reports To: Direct report to Sr. Manager EHS&amp;Facilities India</p><p><strong>About Fluence</strong></p><p>Fluence, a Siemens and AES company, stands as the global leader in energy storage technology solutions and services. The organization merges the dynamism of a fast-growing technology enterprise with the depth, vision, and financial strength of two industry giants. Building on the groundbreaking achievements of AES Energy Storage and Siemens in the field, Fluence aims to create a more sustainable future by revolutionizing the way the world is powered. The company provides reliable energy storage technology solutions tailored to the varied needs and challenges of customers in a rapidly evolving energy landscape, offering design, delivery, and integration services in over 160 countries. Fluence partners with customers throughout their journey, delivering advisory, financing, and project lifecycle services.</p><p><strong>Leadership</strong></p><p>Are you recognized for your subject matter expertise by others? Do you thrive in a high-energy environment and find motivation in working with purpose? Fluence is seeking an India Operations EHS Lead to play a vital role in supporting the implementation of corporate environmental, health, and safety policies and programs. As a member of the Global EHS &amp; Facility function, this position will provide EHS subject matter expertise to Fluence Operations in India including Global Innovation Center (GIC), Bangalore. The role is hands-on in EHS management, ensuring compliance for India operations.</p><p><strong>Role Overview and Responsibilities</strong></p><p>The successful candidate will apply developed subject matter expertise to resolve unique and moderately complex EHS implementation issues within established processes, recommending suitable solutions or alternative methods to ensure compliance. The India Operations EHS Lead will provide EHS oversight on operational activities, facilitate EHS decision-making in support of stakeholders, and support global initiatives including audits and evaluations as needed. Independence is required, with minimal day-to-day supervision, yet the ability to seek guidance for more complex decisions. Travel may be required.</p><p>This team member will assist EHS Operations for the Global Innovation Centre (GIC), Product Manufacturing, Project Delivery &amp; Services, and Test Lab management in India.</p><p>Responsibilities include:</p><ul><li>Developing and maintaining occupational EHS policies and programs for India EHS Operations, GIC, and associated regional stakeholders to foster a global and equitable EHS culture within the business.</li><li>Acting as a EHS advisor to the GIC and India test lab.</li><li>Assisting in Facility management related  operations in Fluence India Office.</li><li>Assisting in maintaining and conducting integrity checks on the Fluence India online EHS database for safety walks, inspections, stop work authority, incidents, training courses, and performing trend analysis on safety metrics.</li><li>Developing and implementing Fluence India EHS policy, programs, and technical documents to ensure compliance with Fluence global EHS policy and Indian regulatory requirements.</li><li>Assisting in developing training curriculum and conducting sessions to educate employees on safe and compliant work practices.</li><li>Leading and/or participating in GIC and regional site-related EHS operations, including inspections and audits.</li><li>Conducting audits, inspections and evaluations at GIC office, test lab, and regional project and manufacturing sites.</li><li>Leading, coordinating, and participating in RCA investigations of incidents, maintaining records, recommending corrective actions, and compiling analysis reports.</li><li>Assisting and participating in corporate internal and external certification and recertification audits.</li><li>Representing GIC on the EHS &amp; Social Performance Team Committee and participating in monthly meetings.</li><li>Participating in meetings - developing and presenting EHS information.</li><li>Managing and closing out EHS related corrective actions and preventative actions (CAPA).</li><li>Delivering GIC focused EHS training.</li><li>Assisting on a corporate enterprise level with various assigned tasks.</li></ul><p><strong>Accountability</strong></p><p>Fluence embodies a steadfast commitment to EHS, quality, and integrity. It emphasizes personal ownership, fostering trust in relationships with both internal and external stakeholders. The company values honest, transparent, and fair communication. The ideal candidate should possess strong administrative and communication skills, as reflected in the following attributes:</p><ul><li>Plans and manages work activities to achieve company, department, and position goals and objectives.</li><li>Handles multiple priorities, frequently interpreting programs and procedures.</li><li>Interprets, explains, advises, and makes recommendations on moderately complex issues to stakeholders.</li><li>Demonstrates strong team and leadership skills, mentoring, coaching, and building relationships internally and externally.</li><li>Exhibits strong verbal and written communication skills for effective interaction with customers.</li><li>Shows original and innovative thinking in achieving results and recommending process improvements.</li><li>Analyzes technical and regulatory information to make sound judgments and provide prudent recommendations.</li><li>Makes decisions using general methods and procedures, requiring frequent interpretation of programs and processes.</li><li>Conducts predictive trend analysis to determine corrective and preventative actions.</li><li>Thorough knowledge in environmental, health and safety regulations.</li><li>Proficient with computer-based EHS Management platforms and applications such as Microsoft 360, Word, Excel, and PowerPoint.</li><li>Strong compliance knowledge in high-risk activities, including working at heights, lifting and rigging, electrical safety, lockout/tagout, arc flash hazard analysis, hazardous materials, risk assessment, work permitting, emergency preparedness, ergonomics, and general safe work practices.</li><li>Strong knowledge of Indian national and regional EHS regulation and compliance requirements.</li></ul><p><strong>Agility</strong></p><p>Fluence is dedicated to continuous improvement, intellectual curiosity, and adaptability to the needs of customers and employees. Collaboration is essential, both internally and with partners. Fluence prioritizes efforts that create the greatest impact. The minimum job qualifications for candidates include:</p><ul><li>At least 10 years of work experience in high-risk industry.</li><li>Minimum 3 years of EHS Management experience in a field setting.</li><li>Global and/or regional EHS management oversight experience is considered a plus.</li><li>Experience in Facility Management with ability to manage vendors across sub functions of Facility Management. Basic understanding of hospitality will also be an advantage.</li><li>Strong EHS management expertise, with the ability to effectively manage offices.</li><li>A degree in occupational safety or equivalent fields.</li><li>Recognized safety certification, such as NEBOSH, IOSH, or equivalent, is considered a strong plus.</li><li>A proven track record of sustained implementation and overall management responsibility of statutory requirements mandated by relevant local and Central Government ministries and other local statutory bodies.</li><li>Must be able to travel as required for global/regional business, approximately 5% annually (passport required).</li></ul><p><strong>Culture and Work Environment</strong></p><p>Transforming a fundamental part of society is exciting and fulfilling. This environment demands creativity, diversity of ideas and backgrounds, and trust to drive change and move swiftly. Fluence respects coworkers and customers, values inclusivity, and actively listens to others.</p><p>The candidate should be willing to work out of the Bangalore, India office 4 days a week, or as mandated by the company.</p><p>Fluence is an equal opportunity employer and adheres to the principles of Equal Employment Opportunity, ensuring all applicants and employees are considered for hire, promotion, and job status without regard to race, color, religion, sex, national origin, age, disability, veteran status, sexual orientation, marital or familial status.</p><p><strong>Our Culture</strong></p><p>At Fluence, our culture is the foundation that drives our ambitious growth strategy and fuels our mission to transform the future of energy. Our core cultural pillars empower us to innovate, collaborate, and lead with purpose, ensuring we continue to deliver unparalleled value to our customers and the world.</p><p><strong>Unleash Voices</strong></p><p>We believe every voice matters. We encourage openness, active listening, and decisive action to create a culture where everyone has the opportunity to contribute to our success. We foster an environment where diverse perspectives are heard and valued, driving innovation and progress.</p><p><strong>Customer Fluent</strong></p><p>Our customers are at the heart of everything we do. We’re committed to delivering exceptional value that exceeds expectations by understanding our customers&#39; needs and adapting swiftly to meet them. Our deep focus on customer satisfaction drives us to continuously improve and innovate.</p><p><strong>Infinite Impact</strong></p><p>We are committed to creating the impossible. We push boundaries to deliver sustainable, game-changing solutions that shape a brighter, more energy-efficient future for all. Our team is passionate about making a lasting impact that will resonate for generations to come.</p><p><strong>All In</strong></p><p>We are all in for growth. Our teams are relentlessly focused on identifying and seizing opportunities that propel us forward. We embrace an ownership mindset, pushing ourselves and each other to accelerate progress and create lasting success.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

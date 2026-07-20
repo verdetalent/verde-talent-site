@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Basic Job Functions:</strong></p><p>Entry level Network administration</p><p><strong>Education/Experience:</strong></p><ul><li>Minimum 1-2 years of relevant working experience in a manufacturing environment</li><li>Bachelor’s degree in Information Technology or related field or equivalent years of work experience</li></ul><p><strong>Required Skills/Competencies:</strong></p><ul><li>Knowledge of Cisco IOS software upgrades/patch management best practices in an Enterprise Cisco environment.</li><li>WAN network infrastructure and protocols</li><li>Experience with Cisco Call Manager or another VoIP provider desired</li><li>Knowledgeable and experienced in ITIL practices and methodologies (i.e., Change Management).</li><li>Experience managing or assisting with the management of a Cisco production environment, including switches, routers, firewalls, VPN devices, QoS, network sniffers and network performance monitoring and wireless network.</li><li>WAN network infrastructure and protocols</li><li>Ability to quickly learn new technologies.</li><li>Ability to perform tasks with minimum supervision.</li><li>Good oral and written communication</li><li>Must be team orientated.</li><li>Must be customer orientated.</li><li>Possess good analytical thinking.</li><li>Possess good continuous thinking capability.</li></ul><p><strong>Essential Responsibilities:</strong></p><ul><li>Research, plan, implement, support, monitor, troubleshoot and maintain Global infrastructure services including Cisco Routers, PIX Firewall, VPN Concentrator, ASA, Catalyst Switches, CallManager, CallManager Express, Wireless, Storage Array Networks, Network Monitoring, Intrusion detection/prevention systems, LAN/WAN performance, WAN packet acceleration and many facets of the Microsoft BackOffice suite of products.</li><li>Strong project management skills while incorporating the ability to handle multiple projects with competing priorities across the globe.</li><li>Support network and internet protocols and applications including WINS, DNS, DHCP, TCP/IP, IIS, SNMP, SMTP, Routing, BGP, E/IGRP, H.323, Link Aggregation, Network Redundancy, PEAP, Spanning Tree and VLans utilizing a fiber/copper/MPLS backbone.</li><li>Evaluate, diagnose and troubleshoot complex hardware/software issues.</li><li>Create, modify and keep network documentation with an emphasis on detail.</li><li>Installs or removes hardware and/or software, and associated connections, using supplied installation instructions and tools. Conducts tests and corrects malfunctions, calling on help from more experienced colleagues if required. Documents results in accordance with agreed procedures. Assists with the evaluation of change requests. Contributes, as required, to investigations of problems and faults concerning the installation of hardware and/or software and confirms the correct working of installations.</li><li>Monitors service component capacity and initiates actions to resolve any shortfalls according to agreed procedures. Applies techniques to modify demand for a particular resource or service.</li><li>Monitors service delivery performance metrics and liaises with managers and customers to ensure that service level agreements are not breached without the stakeholders being given the opportunity of planning for deterioration in service.</li><li>Develops, documents and implements changes based on requests for change. Applies change control procedures.</li><li>Uses the tools and techniques for specific areas of release and deployment activities. Administers the recording of activities, logging of results and documents technical activity undertaken. May carry out early life support activities such as providing support advice to initial users.</li><li>Reviews system software updates and identifies those that merit action. Tailors’ system software to maximize hardware functionality. Installs and tests new versions of system software. Investigates and coordinates the resolution of potential and actual service problems. Prepares and maintains operational documentation for system software. Advises on the correct and effective use of system software.</li><li>Investigates minor security breaches in accordance with established procedures. Assists users in defining their access rights and privileges and operates agreed logical access controls and security systems. Maintains agreed security records and documentation.</li><li>Investigates problems in systems and services. Assists with the implementation of agreed remedies and preventative measures.</li><li>Collects and collates evidence as part of a formally conducted and planned review of activities, processes, products or services. Examines records as part of specified testing strategies for evidence of compliance with management directives, or the identification of abnormal occurrences.</li></ul><p><strong>Reporting Relationships</strong>:</p><ul><li>This position will report to the IT Infrastructure Operations Manager</li></ul><p><strong>Travel:</strong></p><ul><li>0-5%, as needed.</li><li>If hired during plant start up, you will be expected to travel to other First Solar locations for training.</li></ul><p><strong>Estimated Salary Range:</strong></p><ul><li>62,500 - 89,000, Annually</li></ul><p><strong>US Physical Requirements:</strong></p><p>All positions in our office require interaction with people and technology while either standing or sitting. In order to best service our customers, internal and external, all associates must be able to communicate face-to-face and on the phone with or without reasonable accommodation. First Solar is committed to compliance with its obligations under all applicable state and federal laws prohibiting employment discrimination. In keeping with this commitment, it attempts to reasonably accommodate applicants and employees in accordance with the requirements of the disability discrimination laws. It also invites individuals with disabilities to participate in a good faith, interactive process to identify reasonable accommodations that can be made without imposing an undue hardship.</p><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role.   All candidates receiving an offer of employment must successfully complete a background check band any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

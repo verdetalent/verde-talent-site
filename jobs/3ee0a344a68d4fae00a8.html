@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Friday, July 24, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>Job Summary</strong></p><p>This role is responsible for scaling participation and long-term value realization for Duke Energy’s Bring Your Own Thermostat (BYOT) and Grid-Connected Water Heater (GCWH) residential demand response programs across the Carolinas service territory.</p><p>The position serves as the strategic owner of program growth through channel expansion, partner ecosystem development, and customer experience optimization, with accountability for delivering measurable results across a complex, highly regulated environment.</p><p>A core focus is ensuring customers clearly understand and realize both the immediate financial benefits (e.g., enrollment incentives, rebates) and the ongoing value (bill savings, bill stability, and grid reliability contributions) associated with participation.</p><p>The successful candidate will combine strong program management discipline, data-driven decision making, and the ability to orchestrate cross-functional teams and external partners to deliver scalable, high-performing demand response programs.</p><p><strong>Key Responsibilities</strong></p><p><strong>Program Growth, Channel Development &amp; Customer Value Delivery</strong></p><ul><li>Lead development and execution of program growth strategies, with a primary focus on expanding participation through new channels and strategic partnerships</li><li>Identify, develop, and scale high-impact acquisition channels, including:</li><li>OEM/device manufacturers</li><li>Aggregators and DER platform providers</li><li>Trade ally networks and installers</li><li>Digital and direct-to-customer enrollment pathways</li><li>Build and manage a pipeline of strategic partnerships, leveraging integrations and co-marketing opportunities to drive scalable growth</li><li>Ensure all channels clearly communicate the full customer value proposition, including:</li><li>Up-front incentives and rebates</li><li>Ongoing bill savings and bill stability</li><li>Ease of participation and grid reliability benefits</li><li>Apply a data-driven growth mindset, using funnel analytics and channel performance insights to:</li><li>Optimize conversion rates across acquisition pathways</li><li>Evaluate OEM and partner performance</li><li>Improve cost efficiency and customer lifetime value</li><li>Partner with marketing and analytics teams to design and continuously refine customer acquisition funnels and segmentation strategies</li></ul><p><strong>Program Execution, Platform Oversight &amp; Customer Experience Management</strong></p><ul><li>Serve as the end-to-end program owner, accountable for both participation growth and customer experience quality across the full lifecycle</li><li>Lead cross-functional orchestration (non-negotiable) across product, IT, marketing, regulatory, operations, and vendor teams to ensure seamless program delivery</li><li>Oversee vendor and platform performance, including coordination across:</li><li>Demand response platform providers (e.g., EnergyHub or equivalent)</li><li>OEM/device ecosystems and integrations</li><li>Implementation and customer operations vendors</li><li>Apply disciplined execution and rigorous attention to detail, ensuring:</li><li>Accuracy in customer-facing messaging and incentive structures</li><li>Alignment across platforms (DERMS, CRM, vendor systems)</li><li>High-quality data integrity and reporting</li><li>Design and continuously improve the end-to-end customer journey, ensuring a seamless, transparent, and customer-friendly experience</li><li>Develop and track customer and program performance KPIs, including:</li><li>Channel-level enrollment contribution and conversion rates</li><li>Funnel performance and drop-off analysis</li><li>OEM and partner performance metrics</li><li>Time-to-enroll and activation success</li><li>Incentive fulfillment timelines</li><li>Customer satisfaction, retention, and event participation</li><li>Ensure incentive fulfillment processes are accurate, timely, and transparent, reinforcing customer trust and program credibility</li><li>Own and manage customer and participant escalations, ensuring:</li><li>Prompt, professional, and empathetic resolution</li><li>Root cause identification and corrective action implementation</li><li>Coordination across vendors, platforms, and internal teams to prevent recurrence</li><li>Manage program budgets (O&amp;M and capital), ensuring alignment with financial targets and regulatory requirements</li></ul><p><strong>Regulatory, EM&amp;V &amp; Compliance Leadership</strong></p><ul><li>Ensure program execution aligns with regulatory requirements and commitments across the Carolinas jurisdictions</li><li>Partner closely with regulatory and EM&amp;V teams to:</li><li>Support evaluation, measurement, and verification (EM&amp;V) activities</li><li>Provide accurate, defensible program data and documentation</li><li>Translate EM&amp;V findings into actionable program improvements</li><li>Maintain strong awareness of tariff structures, program eligibility rules, and compliance requirements, ensuring program integrity</li><li>Support regulatory filings, audits, and internal reviews with well-structured, transparent reporting</li></ul><p><strong>Strategic Partnerships &amp; Stakeholder Leadership</strong></p><ul><li>Serve as the primary relationship owner for OEMs, aggregators, and key partners</li><li>Build long-term, trust-based relationships that drive growth, performance, and customer experience outcomes</li><li>Align partners to clear expectations related to:</li><li>Enrollment growth</li><li>Customer experience quality</li><li>Messaging of financial and program benefits</li><li>Represent Duke Energy in partner and industry engagements, reinforcing leadership in demand response innovation</li></ul><p><strong>Desired Skills &amp; Leadership Characteristics</strong></p><p><strong>Core Capabilities</strong></p><ul><li>Strong foundation in program management fundamentals (planning, execution, risk management, stakeholder alignment)</li><li>Proven ability to drive participation growth through channel and partner development</li><li>Demonstrated experience in cross-functional orchestration across complex organizations</li><li>Strong analytical capabilities, including:</li><li>Funnel optimization</li><li>OEM/channel performance evaluation</li><li>Data-driven decision making</li><li>Experience managing vendor ecosystems and platform-based programs (e.g., DRMS, OEM integrations, SaaS platforms)</li><li>Solid understanding of regulatory and EM&amp;V frameworks within utility programs</li><li>Financial acumen, including budgeting, forecasting, and cost-performance evaluation</li></ul><p><strong>Differentiating Leadership Traits</strong></p><ul><li>Strategic Relationship Builder (Critical)</li></ul><p>Builds and scales high-impact partnerships that drive participation growth and enhance customer experience</p><ul><li>Detail-Oriented Execution Leader</li></ul><p>Applies disciplined execution and rigorous attention to detail, ensuring accuracy and accountability across data, incentives, and operations</p><ul><li>Data-Driven Growth Leader</li></ul><p>Leverages analytics, funnel performance insights, and experimentation to continuously improve program outcomes</p><ul><li>Cross-Functional Integrator</li></ul><p>Effectively orchestrates internal teams and external partners to deliver results in complex, interdependent environments</p><p><strong>Additional Qualifications</strong></p><ul><li>Experience in demand response, DERs, or customer energy programs strongly preferred</li><li>Experience managing OEM ecosystems, aggregators, or platform-based energy programs (e.g., EnergyHub)</li><li>Familiarity with Carolina regulatory environments and EM&amp;V processes strongly preferred</li><li>Proven success in vendor and partner performance management</li><li>Strong communication skills, including ability to engage executive and regulatory stakeholders</li></ul><p><strong>Working Conditions</strong></p><ul><li>Hybrid office environment based in the Charlotte area with limited travel required</li><li>Hybrid Mobility Classification – Work will be performed from both remote and onsite locations after the onboarding period. However, hybrid employees should live within a reasonable daily commute to the designated Duke Energy facility.</li><li>Participation in storm response and grid event operations as needed</li></ul><p>#LI-JM1</p><p><strong>**Travel Requirements</strong>**</p><p>5-15%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

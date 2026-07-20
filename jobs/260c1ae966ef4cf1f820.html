@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p>Eversource Energy, a Fortune 500 diversified electric, natural gas and water utility company with operations throughout New England, seeks to hire a full-time attorney. Eversource is committed to building a clean energy future for its customers, communities and employees as evidenced by its goal to reduce operational greenhouse gas (GHG) by 45% by 2035, and to achieve Net Zero emissions by 2050, as well as its strong support of renewables. Eversource fosters a collegial, supportive and inclusive work environment in which team members collaborate to provide our customers with safe, reliable and cost-effective service.</p><p><strong>HYBRID WORK POLICY</strong></p><p>Eversource supports work-life balance by offering hybrid schedules for certain roles. Eligibility is based on job responsibilities, operational needs, nature of work and team dynamics. Current guidelines require employees to work at least three days in the office, including Tuesdays and Wednesdays, with the third day set by the employee and supervisor based on department needs. These guidelines apply to roles approved for remote work and are subject to change,  based on managerial discretion and work performance. All applicants must be able to work up to five days in the office if needed (for example: emergencies, training, or other business needs) or should the policy change.</p><p>Eversource has an opening for an attorney with 5+ years of corporate and securities law experience, including substantial hands-on experience advising public companies on SEC reporting and disclosure obligations.  The ideal candidate is a detail-oriented, business-minded attorney who thrives in a collaborative environment and is comfortable advising senior leadership on complex disclosure and governance matters. The successful candidate will:</p><ul><li>Lead or play a key role in drafting and advising on filings with the Securities and Exchange Commission, including ’34 Act periodic reports on Forms 10-K, 10-Q and 8‑K, ’33 Act registration statements on Forms S-3 and S-8, proxy statements, and Section 16 filings, and ensuring compliance with SEC and NYSE rules and regulations.</li><li>Support and enhance disclosure controls and procedures and coordinate cross-functional disclosure processes.</li><li>Advise senior management and regularly interact with executive leadership on disclosure and governance matters, including coordinating the review of earnings and other press releases, presentations, significant internal communications and other announcements.</li><li>Advise the Treasury department on capital markets transactions, including underwritten debt and equity offerings, private placements, credit facilities, loan agreements, pension management and other Treasury matters.</li><li>Advise on and manage the preparation of Section 16 and Rule 144 filings and advise directors and executive officers on insider trading policy and Rule 10b5-1 plans as required.</li><li>Advise on and support general corporate and commercial matters, including reviewing and negotiating contracts, supporting business transactions, including mergers and acquisitions, asset and stock purchases, and joint venture arrangements.</li><li>Provide support on matters relating to the board of directors and senior management, including with respect to the annual meeting of stockholders, corporate governance matters and legal entity management.</li><li>Provide legal counsel on a diverse range of matters related to day-to-day operations of the Company, including investor relations, finance, treasury, internal audit and compliance efforts, including the development and ongoing review of policies and procedures and the implementation of training initiatives.</li></ul><p>The following experience is helpful but not necessary:</p><ul><li>Commercial transactional contract negotiation.</li><li>Executive compensation matters, including incentive plans and programs, equity administration and related public company disclosure considerations including CD&amp;A and say-on-pay disclosure.</li><li>ESG and sustainability reporting, including climate-related disclosures.</li></ul><p><strong>Technical Knowledge/Skill/Education/Licenses/Certifications:</strong></p><p>Technical Knowledge/Skill:</p><ul><li>Requires significant proficiency in at least one substantive area of the law</li><li>Ability to use PC desktop applications (e.g., Microsoft Word, Excel, Email)</li><li>Requires complex organizational and analytical skills</li><li>Must be a good team player, well organized, and able to identify business-oriented solutions to complex legal problems.</li></ul><p>Education:</p><ul><li>Requires a bachelor’s degree and Juris Doctor Degree</li></ul><p>Experience:</p><ul><li>Minimum of five (5) years in a law firm or corporate law department</li></ul><p>Licenses &amp; Certifications:</p><ul><li>Admission in good standing to the Massachusetts; Connecticut; and/or New Hampshire Bar and Federal Bars preferred</li><li>Candidates admitted to practice in another state and in good standing will be considered but will be required to gain admission to the appropriate state Bar within one year, required</li></ul><p><strong>Working Conditions:</strong></p><ul><li>Must be available to work emergency restoration assignment as required.</li><li>Must be available to travel between MA/CT/NH as necessary.</li><li>Work is performed primarily in an office environment with occasional time spent in field (right-of-way, take station, e.g.,) and in court or before administrative agencies, as necessary.</li></ul><p><strong>Mental Aspects</strong>:</p><ul><li>Work includes periodic involvement in time-sensitive projects having a potentially significant impact on Eversource success.  Often involved in adversarial/confrontational situations.</li><li>This role works in an environment that often requires the performance of multiple simultaneous activities, where deadlines need to be met and work is performed under pressure while involving significant business commitments and results.</li></ul><p>#LI-ES3</p><p>#corpajd</p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p><strong>Compensation and Benefits:</strong></p><p>Eversource offers a competitive total rewards program. Check out our careers site for an overview of our benefits programs. Salary is commensurate with your experience. This position is eligible for a potential incentive. The annual salary range for this position is:</p><p>$176,930.00-$196,590.00</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>1</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement</strong>:</p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

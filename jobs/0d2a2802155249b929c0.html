@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p><strong>Requisition ID:</strong>  96204</p><p>NextEra Energy Marketing is one of the nation’s leading electricity and natural gas marketers, and a key player in the energy markets in the United States and Canada. As a part of NextEra Energy Resources, we specialize in innovative energy strategies that maximize market value for our customers and stakeholders. Our team is skilled in market analysis, trading, risk management and delivering tailored customer solutions across North America. If you are a strategic thinker eager to make a significant impact in the fast-paced energy industry, join our team today.</p><p><strong>Position Specific Description</strong></p><p>NextEra Energy Marketing LLC seeks a Project Manager Market Analysis for developing long-term, fundamentals-based forecasts for energy, capacity, and ancillary service products. Overseeing and performing highly complex studies and forecast power prices for a period of 30 years. Working closely with internal and external technical and engineering teams to develop forecasts to support existing and new projects and/or technologies and serves as Subject Matter Expert regarding complex proprietary forecasting methodologies and modeling tools while maintaining process documentation and ensuring consistency with approved methodologies.</p><p><strong>Required Qualifications</strong></p><ul><li>High School Graduate/GED</li><li>Bachelor’s degree in Analytics or related field</li><li>6 years of experience in analytical roles or in the alternative</li><li>Master’s degree in Analytics or related field</li><li>4 years of experience in analytical roles.</li><li>4 years of experience with power system, market, historical and fundamental data analysis;</li><li>3 years of experience using power market simulation tools;</li><li>3 years of experience with maintaining electric sector models, performing simulations, developing forecasts and future power system planning in regional power markets; and</li><li>3 years of experience with Excel or similar spreadsheet tools.</li><li>A suitable combination of experience, training and education is acceptable.</li></ul><p><strong>Job Overview</strong></p><p>This position focuses on developing long term, fundamentals based forecasts for energy, capacity, and ancillary service products. Employees in this role oversee and perform highly complex studies and forecast power prices for a period of 30 years. This position works closely with internal and external technical and engineering teams to develop forecasts to support existing and new projects and/or technologies and serves as Subject Matter Expert regarding complex proprietary forecasting methodologies and modeling tools while maintaining process documentation and ensuring consistency with approved methodologies.</p><p><strong>Job Duties &amp; Responsibilities</strong></p><ul><li>Establishes and maintains working relationships with internal and external contacts in support of the development of data describing the key market factors</li><li>Formulates inputs to electric sector modeling tools and assists in modeling efforts</li><li>Maintains electric sector models and proprietary tools with up-to-date market intelligence</li><li>Performs market simulations and develops long-term power market forecasts in support of development, Merger and Acquisitions, and management of existing assets</li><li>Develops proprietary modeling tools and methodologies to analyze evolving markets and the impact on company businesses</li><li>Analyzes market, historical, and fundamental data to draw inferences and present results in a clear and understandable format to management and external customers</li><li>Provides training and supervision to junior modeling staff</li><li>Presents forecast results to management as needed</li><li>Performs other job-related duties as assigned</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Bachelor&#39;s Degree</li><li>Experience: 6+ years</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>None</li></ul><p>NextEra Energy offers a wide range of benefits to support our employees and their eligible family members. Click <strong>here</strong> to learn more.</p><p><strong>Employee Group:</strong>  Exempt</p><p><strong>Employee Type:</strong>  Full Time</p><p><strong>Job Category:</strong>  Energy Trading</p><p><strong>Organization:</strong>  NextEra Energy Marketing, LLC</p><p><strong>Relocation Provided:</strong>  Yes, if applicable</p><p>NextEra Energy is an Equal Opportunity Employer. Qualified applicants are considered for employment without regard to race, color, age, national origin, religion, marital status, sex, sexual orientation, gender identity, gender expression, genetics, disability, protected veteran status or any other basis prohibited by law.</p><p>NextEra Energy provides reasonable accommodation in its application and selection process for qualified individuals, including accommodations related to compliance with conditional job offer requirements, consistent with federal, state, and local laws. Supporting medical or religious documentation will be required where applicable and permitted by applicable law. To request a reasonable accommodation, please send an e-mail to recruiting-coordinator.sharedmailbox@nexteraenergy.com, providing your name, telephone number and the best time for us to reach you.</p><p>NextEra Energy will not discharge or in any other manner discriminate against employees or applicants because they have inquired about, discussed, or disclosed their own pay or the pay of another employee or applicant. However, employees who have access to the compensation information of other employees or applicants as a part of their essential job functions cannot disclose the pay of other employees or applicants to individuals who do not otherwise have access to compensation information, unless the disclosure is (a) in response to a formal complaint or charge, (b) in furtherance of an investigation, proceeding, hearing, or action, including an investigation conducted by the employer, or (c) consistent with the contractor’s legal duty to furnish information.</p><p>NextEra Energy <strong>does not</strong> accept any unsolicited resumes or referrals from <strong>any third-party recruiting firms or agencies</strong>. Please see our policy for more information.</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>

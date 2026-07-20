@@ -26,9 +26,31 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:64px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
@@ -52,11 +74,70 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .desc-body li{margin-bottom:.4rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;margin:0 .5rem;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:48px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav-right{gap:6px;}
+  .nav-right .btn{padding:6px 9px;font-size:11px;}
+}
 </style>
 </head>
 <body>
 <nav class="nav">
   <a class="logo" href="/index.html"><img src="/logo.png" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
 <div class="wrap">
   <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
@@ -77,5 +158,17 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="desc-body"><p>At Bloom Energy, our vision for a world powered by clean, reliable, and affordable energy is more than just a dream—we’re making it reality.</p><p>For over two decades, we’ve been at the forefront of the global energy transition, pioneering solutions that empower critical industries to thrive in a rapidly digitizing, energy-intensive world. From revolutionizing power for AI-driven data centers to ensuring resilience for hospitals, electric grids, manufacturing facilities, and utilities, our solid oxide fuel cell (SOFC) and solid oxide electrolyzer (SOEC) technologies are redefining what’s possible by delivering energy abundance for all. With more than 30,000 fuel cell modules deployed worldwide, we are the trusted partner for Fortune 100 companies and innovators alike. Our cutting-edge solutions enable unparalleled “time-to-power” capabilities, reliability, and sustainability, ensuring our customers remain ahead in a world where soaring energy demand and intensifying energy scarcity are rapidly becoming the new norm.</p><p>At Bloom, we thrive on collaboration, bold thinking, and relentless innovation. We believe that, together, we can create a brighter, more sustainable future while tackling the most pressing challenges of the 21st century.</p><p>We are looking for a Strategic Account Executive - Data Center Energy Solutions (at Director level) to join our team in one of today’s most exciting technologies. This role will report to Vice President Data Center Energy Solutions and based in San Jose, CA.</p><p>As a Sales Leader at Bloom Energy, you will focus on driving the adoption of Bloom’s innovative fuel cell and energy solutions within the data center sector. You’ll be responsible for building relationships with executives and senior decision-makers in data center operations, sustainability, and finance, guiding them to understand the unique value Bloom Energy provides in terms of reliable, sustainable, and cost-effective power. This high-impact, high-visibility role will involve identifying new business opportunities, customizing solutions to meet client needs, and delivering a strategic approach to address data center energy demand challenges.</p><p>This role will work from our San Jose, CA office and require office presence.</p><p><strong>Role and Responsibilities:</strong></p><p><strong>Business Development &amp; Account Management</strong></p><ul><li>Develop relationships and network with leadership (C-suite and N-1/2) in datacenter teams of the hyperscalers</li><li>Develop and execute strategies to target and engage data center operators and technology companies needing resilient and sustainable energy solutions.</li><li>Leverage existing industry networks and create new relationships across stakeholder groups to drive lead generation and expand Bloom Energy’s presence in the data center industry.</li><li>Maintain a robust pipeline by identifying and prioritizing opportunities aligned with Bloom Energy’s offerings.</li></ul><p><strong>Consultative Solution Selling &amp; Value Communication</strong></p><ul><li>Lead consultative sales conversations to understand the client’s energy requirements, including uptime, energy resilience, emissions reduction, priority markets, and sustainability goals.</li><li>Tailor Bloom’s advanced energy solutions—such as Bloom’s solid oxide fuel cells and on-site microgrid solutions—to the unique needs of data center facilities.</li><li>Demonstrate Bloom Energy’s value in reducing dependency on traditional power grids, improving energy efficiency, and enabling zero-emission operations.</li></ul><p><strong>Technical Solution Design &amp; Proposal Management</strong></p><ul><li>Collaborate closely with Bloom’s engineering, finance, and technical teams to develop detailed proposals, including ROI calculations, deployment timelines, and implementation frameworks.</li><li>Identify and partner with appropriate experts to share insights on fuel cell technology and its impact on power resilience, cost savings, and environmental footprint to client stakeholders.</li><li>Ensure all proposals align with client goals and Bloom’s value proposition, showcasing financial benefits, operational improvements, and alignment with environmental policies.</li></ul><p><strong>Contract Negotiation &amp; Deal Closure</strong></p><ul><li>Lead contract negotiations with a focus on establishing partnerships that drive long-term value for both Bloom Energy and the client.</li><li>Work to achieve or exceed sales targets by understanding client budgets, navigating procurement processes, and building consensus among stakeholders.</li><li>Collaborate with legal and finance teams to ensure all contract terms align with Bloom’s strategic and financial guidelines.</li></ul><p><strong>Go-to-Market &amp; Channel Partnerships</strong></p><ul><li>Build and maintain relationships across partner ecosystem, ensuring mutual understanding of how Bloom’s and partners’ capabilities can create an integrated solution for customers.</li><li>Serve as the point of contact for channel partner-related questions from Bloom Energy’s teams.</li><li>Identify potential partners for engaging key accounts and manage outreach and onboarding for new partners.</li></ul><p><strong>Market Analysis &amp; Thought Leadership</strong></p><ul><li>Stay informed on energy trends, regulatory changes, and technological advancements within the data center industry to address evolving client needs and industry shifts.</li><li>Represent Bloom Energy at industry conferences, events, and webinars to elevate the company’s profile and share insights on energy resilience and sustainability for data centers.</li><li>Provide regular feedback to Bloom Energy’s product and marketing teams to refine solution offerings and address emerging market demands.</li></ul><p><strong>Skills and Experience:</strong></p><p><strong>Qualifications:</strong></p><ul><li><strong>Experience</strong>: 10+ years in B2B sales, preferably in energy solutions, with a focus on data centers or critical infrastructure sectors. Experience with hyperscalers is a plus.</li><li><strong>Technical Expertise</strong>: Strong knowledge of alternative energy solutions, especially fuel cell technology, microgrids, and renewable integration for large-scale facilities.</li><li><strong>Sales Skills</strong>: Proven track record of meeting or exceeding sales targets, with expertise in consultative selling, negotiation, and value-based solution selling.</li><li><strong>Education</strong>: Bachelor’s degree in Engineering, Business, Energy Management, or related field; MBA or advanced technical degrees are a plus.</li><li><strong>Other</strong>: Frequent travel will be required</li></ul><p><strong>Core Competencies:</strong></p><ul><li><strong>Client-Focused Solutioning</strong>: Ability to understand the complex energy needs of data centers and translate these into tailored energy solutions with clear operational and financial benefits.</li><li><strong>Communication &amp; Influence</strong>: Ability to communicate technical concepts effectively to non-technical stakeholders and to influence purchasing decisions across various roles and departments.</li><li><strong>Analytical &amp; Financial Acumen</strong>: Ability to develop business cases, calculate ROI, and conduct cost-benefit analyses to demonstrate value for potential clients.</li><li><strong>Stakeholder Orientation:</strong>Ability to tailor communications and negotiations based on deep understanding of the customer’s business model and potential impact of Bloom Energy’s solutions.</li><li><strong>Strategic Coordination</strong>: Ability to proactively bring in and collaborate with executives, cross-functional teammates, and additional experts as needed to target key accounts.</li></ul><p>Bloom Energy is an equal opportunity employer and makes employment decisions on the basis of merit. We are committed to compliance with all applicable laws providing equal employment opportunities. All qualified applicants, will receive consideration for employment without regard to race, sex, color, religion, national origin, protected veteran status, or on the basis of disability. Bloom Energy makes reasonable accommodations, consistent with applicable laws, for the known physical or mental limitations of an otherwise qualified applicant or employee with a disability, who can perform the essential job functions, unless undue hardship would result.</p><p>Bloom Energy is committed to fair and equitable compensation practices. The total compensation for this position includes standard company benefits and is based on various factors including, but not limited to, relevant skills and experience.</p><p><strong>Salary Ranges:</strong></p><p>$164,000.00 - $246,000.00</p></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 </body>
 </html>
