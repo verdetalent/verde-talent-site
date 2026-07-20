@@ -35,7 +35,9 @@ function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 }
 
-const POSTING_FIELDS = "id, company_name, job_title, status, duration_days, paid_at, expires_at, employer_user_id, company_email, manage_token";
+// Lean field set for the dashboard's list view - no job_description, since
+// that can be long and isn't needed to render a summary card.
+const LIST_FIELDS = "id, company_name, job_title, status, duration_days, paid_at, expires_at, employer_user_id, company_email, manage_token";
 
 async function getAuthedUser(req: Request) {
   const authHeader = req.headers.get("Authorization");
@@ -64,7 +66,7 @@ Deno.serve(async (req) => {
 
       const { data: postings, error } = await supabase
         .from("job_postings")
-        .select(POSTING_FIELDS)
+        .select(LIST_FIELDS)
         .or(`employer_user_id.eq.${user.id},company_email.eq.${user.email}`)
         .order("created_at", { ascending: false });
       if (error) return jsonResponse({ error: "Could not load your postings." }, 500);
@@ -76,9 +78,12 @@ Deno.serve(async (req) => {
       return jsonResponse({ error: "Missing id." }, 400);
     }
 
+    // Full row here (not LIST_FIELDS) - "get" also backs the repost flow,
+    // which needs every fillable field (description, salary, sector, etc.)
+    // to prefill a new posting form from an old one.
     const { data: posting, error: fetchError } = await supabase
       .from("job_postings")
-      .select(POSTING_FIELDS)
+      .select("*")
       .eq("id", id)
       .single();
     if (fetchError || !posting) {
@@ -110,8 +115,9 @@ Deno.serve(async (req) => {
       return jsonResponse({ success: true });
     }
 
-    // Default action: just return the posting's current status for display.
-    const { manage_token: _omit, employer_user_id: _omit2, ...safePosting } = posting;
+    // Default action: return the posting for display (manage-posting.html)
+    // or repost prefill (post-job.html) - strip internal-only fields either way.
+    const { manage_token: _omit, employer_user_id: _omit2, stripe_checkout_session_id: _omit3, stripe_payment_intent_id: _omit4, ...safePosting } = posting;
     return jsonResponse({ posting: safePosting });
   } catch (err) {
     console.error(err);

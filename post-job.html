@@ -85,6 +85,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <i class="ti ti-info-circle" style="vertical-align:-2px;"></i> Checkout was canceled — your job wasn't posted, and you weren't charged. Fill out the form again whenever you're ready.
   </div>
 
+  <div class="note-banner" id="repostNote" style="display:none;">
+    <i class="ti ti-recycle" style="vertical-align:-2px;"></i> Reposting <strong id="repostTitle"></strong> — everything below is filled in from the original, edit anything you like, then continue to payment. This will be a brand new, separately paid listing.
+  </div>
+
   <div class="form-section">
     <div class="fs-title"><i class="ti ti-building"></i>Company</div>
     <div class="form-row">
@@ -194,6 +198,52 @@ function getEmployerSession() {
 if (new URLSearchParams(location.search).get('canceled')) {
   document.getElementById('cancelNote').style.display = 'block';
 }
+
+const MANAGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/manage-posting`;
+
+async function prefillFromRepost(id) {
+  const session = getEmployerSession();
+  if (!session) return; // repost requires being signed in - ownership is checked server-side anyway
+
+  try {
+    const res = await fetch(MANAGE_FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ action: 'get', id }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.posting) return;
+    const p = data.posting;
+
+    document.getElementById('company-name').value = p.company_name || '';
+    document.getElementById('company-email').value = p.company_email || '';
+    document.getElementById('apply-url').value = p.apply_url || '';
+    document.getElementById('job-title').value = p.job_title || '';
+    document.getElementById('job-location').value = p.location || '';
+    document.getElementById('job-international').checked = !!p.is_international;
+    document.getElementById('job-sector').value = p.sector || '';
+    if (p.employment_type) document.getElementById('job-type').value = p.employment_type;
+    document.getElementById('job-description').value = p.job_description || '';
+    if (p.salary_period) {
+      document.getElementById('salary-period').value = p.salary_period;
+      document.getElementById('salaryRangeField').style.display = 'block';
+      document.getElementById('salary-min').value = p.salary_min || '';
+      document.getElementById('salary-max').value = p.salary_max || '';
+    }
+
+    document.getElementById('repostTitle').textContent = p.job_title || 'your previous posting';
+    document.getElementById('repostNote').style.display = 'block';
+  } catch (err) {
+    console.error('Could not prefill from repost:', err);
+  }
+}
+
+const repostId = new URLSearchParams(location.search).get('repost');
+if (repostId) prefillFromRepost(repostId);
 
 if (window.pdfjsLib) {
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';

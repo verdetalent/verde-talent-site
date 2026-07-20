@@ -17,8 +17,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --blk:#0A0A0A;--card:#131313;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
-  --grn:#22E09A;--blu:#4FB3FF;--cor:#FF7055;
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--cor:#FF7055;
   --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
@@ -26,29 +26,47 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
 .logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
 .logo-img{height:104px;width:auto;display:block;}
-.nav-right{display:flex;gap:14px;align-items:center;font-size:13px;}
+.nav-right{display:flex;gap:20px;align-items:center;font-size:13px;}
 .nav-right a{color:var(--t2);text-decoration:none;}
 .nav-right a:hover{color:var(--grn);}
-.wrap{max-width:760px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
-.hero{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px;}
-.hero h1{font-size:24px;font-weight:700;}
-.btn-grn{background:var(--grn);color:#052e1e;border:none;padding:10px 18px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
-.card{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.25rem;margin-bottom:12px;}
-.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
-.card h2{font-size:16px;font-weight:600;margin-bottom:4px;}
+.wrap{max-width:800px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+.hero{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.75rem;flex-wrap:wrap;gap:12px;}
+.hero h1{font-size:26px;font-weight:700;}
+.hero p{font-size:13px;color:var(--t3);margin-top:4px;}
+.btn-grn{background:var(--grn);color:#052e1e;border:none;padding:11px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);white-space:nowrap;}
+.btn-ghost{background:transparent;color:var(--t1);border:0.5px solid var(--bdr2);padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);}
+.btn-ghost:hover{border-color:rgba(34,224,154,0.4);color:var(--grn);}
+
+.section-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--t3);margin:2rem 0 .75rem;display:flex;align-items:center;gap:8px;}
+.section-title:first-of-type{margin-top:0;}
+.section-count{background:var(--card2);border-radius:20px;padding:1px 9px;font-size:11px;color:var(--t2);}
+
+.card{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:10px;border-left:3px solid var(--grn);transition:border-color .15s;}
+.card.inactive{border-left-color:var(--bdr2);opacity:.85;}
+.card:hover{border-color:var(--bdr2);}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;}
+.card h2{font-size:16px;font-weight:600;margin-bottom:2px;}
 .co-line{font-size:13px;color:var(--t2);}
-.status-row{font-size:12px;color:var(--t3);margin-top:8px;}
-.status{font-weight:600;}
-.status.paid{color:var(--grn);}
-.status.removed{color:var(--cor);}
-.status.pending_payment{color:var(--t3);}
-.btn-remove{background:transparent;color:var(--cor);border:1px solid rgba(255,112,85,0.4);padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-sans);flex-shrink:0;}
+.card-actions{display:flex;gap:8px;flex-shrink:0;}
+.status-row{font-size:12px;color:var(--t3);margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;}
+.pill.paid{color:var(--grn);background:rgba(34,224,154,0.1);border:0.5px solid rgba(34,224,154,0.3);}
+.pill.pending_payment{color:var(--amb);background:rgba(255,181,71,0.1);border:0.5px solid rgba(255,181,71,0.3);}
+.pill.expired{color:var(--t3);background:rgba(255,255,255,0.05);border:0.5px solid var(--bdr2);}
+.pill.removed{color:var(--cor);background:rgba(255,112,85,0.08);border:0.5px solid rgba(255,112,85,0.25);}
+.pill i{font-size:11px;}
+
+.btn-remove{background:transparent;color:var(--cor);border:1px solid rgba(255,112,85,0.35);padding:7px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-sans);white-space:nowrap;}
 .btn-remove:hover{background:rgba(255,112,85,0.08);}
 .btn-remove:disabled{opacity:.5;cursor:default;}
+.btn-repost{background:rgba(34,224,154,0.1);color:var(--grn);border:1px solid rgba(34,224,154,0.35);padding:7px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-sans);white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;}
+.btn-repost:hover{background:rgba(34,224,154,0.18);}
+
 .card-note{font-size:12px;color:var(--t3);margin-top:8px;line-height:1.6;}
 .card-note.error{color:var(--cor);}
 .card-note.success{color:var(--grn);}
-.state-note{font-size:14px;color:var(--t3);padding:3rem 0;text-align:center;}
+.state-note{font-size:14px;color:var(--t3);padding:3rem 0;text-align:center;line-height:1.8;}
+.empty-inline{font-size:12px;color:var(--t3);padding:.5rem 0 .25rem;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
 </style>
@@ -63,8 +81,11 @@ footer a{color:var(--t3);text-decoration:none;}
 </nav>
 <div class="wrap">
   <div class="hero">
-    <h1>Your job postings</h1>
-    <a class="btn-grn" href="post-job.html">Post another job</a>
+    <div>
+      <h1>Your job postings</h1>
+      <p id="accountEmail"></p>
+    </div>
+    <a class="btn-grn" href="post-job.html"><i class="ti ti-plus"></i>Post another job</a>
   </div>
   <div id="content" class="state-note">Loading…</div>
 </div>
@@ -93,6 +114,8 @@ function getEmployerSession() {
 const session = getEmployerSession();
 if (!session) {
   window.location.href = 'employer-login.html';
+} else {
+  document.getElementById('accountEmail').textContent = session.email;
 }
 
 document.getElementById('signOutLink').addEventListener('click', function(e){
@@ -116,9 +139,34 @@ async function callManage(body) {
   return data;
 }
 
-function postingCardHtml(posting) {
-  const statusLabel = { paid: 'Live', removed: 'Removed', pending_payment: 'Payment pending', expired: 'Expired' }[posting.status] || posting.status;
+// A "paid" posting whose expires_at has passed reads as expired even
+// though nothing in the database ever flips its status column - the same
+// rule public_job_postings already applies to decide what's visible on
+// the live site, just evaluated here for display grouping instead.
+function isExpired(p) {
+  return p.status === 'paid' && p.expires_at && new Date(p.expires_at) < new Date();
+}
+function isInactive(p) {
+  return p.status === 'removed' || isExpired(p);
+}
+
+const STATUS_META = {
+  paid: { label: 'Live', icon: 'ti-circle-check' },
+  pending_payment: { label: 'Payment pending', icon: 'ti-clock' },
+  removed: { label: 'Removed', icon: 'ti-trash' },
+};
+
+function statusPill(posting) {
+  if (isExpired(posting)) {
+    return `<span class="pill expired"><i class="ti ti-hourglass-off"></i>Expired</span>`;
+  }
+  const meta = STATUS_META[posting.status] || { label: posting.status, icon: 'ti-info-circle' };
+  return `<span class="pill ${escapeHtml(posting.status)}"><i class="ti ${meta.icon}"></i>${escapeHtml(meta.label)}</span>`;
+}
+
+function activeCardHtml(posting) {
   const expiresLine = posting.expires_at ? `Runs through ${new Date(posting.expires_at).toLocaleDateString()}` : '';
+  const removeBtn = posting.status === 'paid' ? `<button type="button" class="btn-remove" data-action="remove">Remove</button>` : '';
   return `
     <div class="card" data-id="${posting.id}">
       <div class="card-top">
@@ -126,10 +174,29 @@ function postingCardHtml(posting) {
           <h2>${escapeHtml(posting.job_title)}</h2>
           <div class="co-line">${escapeHtml(posting.company_name)}</div>
         </div>
-        ${posting.status === 'paid' ? `<button type="button" class="btn-remove" data-action="remove">Remove</button>` : ''}
+        <div class="card-actions">${removeBtn}</div>
       </div>
-      <div class="status-row">Status: <span class="status ${escapeHtml(posting.status)}">${escapeHtml(statusLabel)}</span>${expiresLine ? ' · ' + expiresLine : ''}</div>
+      <div class="status-row">${statusPill(posting)}${expiresLine ? `<span>${expiresLine}</span>` : ''}</div>
       <div class="card-note"></div>
+    </div>`;
+}
+
+function inactiveCardHtml(posting) {
+  const endedLine = posting.expires_at
+    ? (isExpired(posting) ? `Expired ${new Date(posting.expires_at).toLocaleDateString()}` : `Removed`)
+    : '';
+  return `
+    <div class="card inactive" data-id="${posting.id}">
+      <div class="card-top">
+        <div>
+          <h2>${escapeHtml(posting.job_title)}</h2>
+          <div class="co-line">${escapeHtml(posting.company_name)}</div>
+        </div>
+        <div class="card-actions">
+          <a class="btn-repost" href="post-job.html?repost=${posting.id}"><i class="ti ti-recycle"></i>Repost &amp; pay</a>
+        </div>
+      </div>
+      <div class="status-row">${statusPill(posting)}${endedLine ? `<span>${endedLine}</span>` : ''}</div>
     </div>`;
 }
 
@@ -138,10 +205,25 @@ async function loadPostings() {
   try {
     const data = await callManage({ action: 'list' });
     if (!data.postings.length) {
-      content.innerHTML = `<div class="state-note">You haven't posted any jobs yet. <a href="post-job.html" style="color:var(--grn);">Post your first one →</a></div>`;
+      content.innerHTML = `<div class="state-note">You haven't posted any jobs yet.<br><a href="post-job.html" style="color:var(--grn);">Post your first one →</a></div>`;
       return;
     }
-    content.innerHTML = data.postings.map(postingCardHtml).join('');
+
+    const active = data.postings.filter(p => !isInactive(p));
+    const inactive = data.postings.filter(isInactive);
+
+    let html = `<div class="section-title">Active <span class="section-count">${active.length}</span></div>`;
+    html += active.length
+      ? active.map(activeCardHtml).join('')
+      : `<div class="empty-inline">Nothing currently live or pending.</div>`;
+
+    html += `<div class="section-title">Expired &amp; removed <span class="section-count">${inactive.length}</span></div>`;
+    html += inactive.length
+      ? inactive.map(inactiveCardHtml).join('')
+      : `<div class="empty-inline">Nothing here yet.</div>`;
+
+    content.innerHTML = html;
+
     content.querySelectorAll('[data-action="remove"]').forEach(btn => {
       btn.addEventListener('click', async function(){
         const card = this.closest('.card');
@@ -152,11 +234,7 @@ async function loadPostings() {
         this.textContent = 'Removing…';
         try {
           await callManage({ action: 'delete', id });
-          card.querySelector('.status').textContent = 'Removed';
-          card.querySelector('.status').className = 'status removed';
-          this.remove();
-          note.className = 'card-note success';
-          note.textContent = 'Posting removed.';
+          await loadPostings();
         } catch (err) {
           this.disabled = false;
           this.textContent = 'Remove';
