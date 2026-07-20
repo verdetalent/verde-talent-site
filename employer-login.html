@@ -51,7 +51,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 </nav>
 <div class="wrap">
   <div class="card">
-    <h1 id="cardTitle">Employer sign in</h1>
+    <h1 id="cardTitle"><span style="color:var(--amb);">Employer</span> sign in</h1>
     <p class="sub" id="cardSub">Manage the jobs you've posted to Verde Talent.</p>
     <div class="field"><label>Email</label><input type="email" id="li-email" placeholder="hiring@acmesolar.com"/></div>
     <div class="field"><label>Password</label><input type="password" id="li-password" placeholder="Your password"/></div>
@@ -77,12 +77,12 @@ toggleLink.addEventListener('click', function(e){
   if (e.target.tagName !== 'A') return;
   mode = mode === 'signin' ? 'signup' : 'signin';
   if (mode === 'signup') {
-    cardTitle.textContent = 'Create an employer account';
+    cardTitle.innerHTML = 'Create an <span style="color:var(--amb);">employer</span> account';
     cardSub.textContent = 'So you can manage your postings without hunting for an emailed link.';
     loginBtn.textContent = 'Create account →';
     toggleLink.innerHTML = 'Already have an account? <a>Sign in</a>';
   } else {
-    cardTitle.textContent = 'Employer sign in';
+    cardTitle.innerHTML = '<span style="color:var(--amb);">Employer</span> sign in';
     cardSub.textContent = "Manage the jobs you've posted to Verde Talent.";
     loginBtn.textContent = 'Sign in →';
     toggleLink.innerHTML = 'New here? <a>Create an employer account</a>';
