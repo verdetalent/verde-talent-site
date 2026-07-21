@@ -518,7 +518,7 @@ function renderSalaryBenchmarks(benchmarks) {
     <div class="sal-card">
       <div class="sal-role">${escapeHtml(r.role)}</div>
       <div class="sal-median">${fmtMoney(displayed)}</div>
-      <div class="sal-range">Average</div>
+      <div class="sal-range">National average</div>
       <div class="sal-locked">
         <i class="ti ti-lock" style="font-size:15px;color:var(--t3);"></i>
         <span>Metro-area breakdown is part of Pro</span>
@@ -530,7 +530,7 @@ function renderSalaryBenchmarks(benchmarks) {
     <div class="section-kicker"><span class="section-num">03</span><span class="section-title">Compensation benchmarks</span></div>
     <p class="section-lead">Average pay across the clean energy roles we track. ${topPaid ? `${escapeHtml(topPaid.role)} commands the highest average at ${fmtMoney(topPaid.national_mean_wage)}.` : ""} Free for every role; metro-area breakdowns are part of Pro.</p>
     <div class="chart-card" style="margin-bottom:14px;">
-      <h4>Average salary by role</h4>
+      <h4>National average salary by role</h4>
       <div class="chart-canvas-wrap tall"><canvas id="salary-ranking-chart"></canvas></div>
     </div>
     <div class="salary-grid">${cards}</div>
