@@ -126,12 +126,13 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       </div>
     </div>
     <div class="form-row">
-      <div class="field"><label>Salary (optional)</label>
+      <div class="field"><label id="salaryLabel">Salary (optional)</label>
         <select id="salary-period">
           <option value="">Prefer not to say</option>
           <option value="hour">Hourly</option>
           <option value="year">Annual</option>
         </select>
+        <small id="salaryRequiredNote" style="display:none;color:var(--cor);">This state requires salary disclosure on job postings.</small>
       </div>
       <div class="field" id="salaryRangeField" style="display:none;">
         <label>Range</label>
@@ -200,6 +201,26 @@ function getEmployerSession() {
   }
 }
 
+// States (plus DC) with a pay-transparency law requiring a salary range on
+// job postings - mirrors PAY_TRANSPARENCY_STATES in the crawler pipeline's
+// taxonomy/job_listings.py, applied here to employer-submitted postings
+// instead of scraped ones. Full names checked case-insensitively; two-letter
+// abbreviations checked case-SENSITIVELY (as whole words) since several of
+// them (hi, me, co, ma, or) are also common lowercase English words and
+// would otherwise false-match free-text location input.
+const PAY_TRANSPARENCY_STATE_NAMES = [
+  'California', 'Colorado', 'Hawaii', 'Illinois', 'Maryland', 'Massachusetts',
+  'Minnesota', 'New Jersey', 'New York', 'Rhode Island', 'Vermont',
+  'Washington', 'Maine', 'District of Columbia',
+];
+const PAY_TRANSPARENCY_STATE_ABBRS = ['CA', 'CO', 'HI', 'IL', 'MD', 'MA', 'MN', 'NJ', 'NY', 'RI', 'VT', 'WA', 'ME', 'DC'];
+
+function locationRequiresSalary(location) {
+  if (!location) return false;
+  if (PAY_TRANSPARENCY_STATE_NAMES.some(name => new RegExp(`\\b${name}\\b`, 'i').test(location))) return true;
+  return PAY_TRANSPARENCY_STATE_ABBRS.some(abbr => new RegExp(`\\b${abbr}\\b`).test(location));
+}
+
 if (new URLSearchParams(location.search).get('canceled')) {
   document.getElementById('cancelNote').style.display = 'block';
 }
@@ -229,6 +250,7 @@ async function prefillFromRepost(id) {
     document.getElementById('apply-url').value = p.apply_url || '';
     document.getElementById('job-title').value = p.job_title || '';
     document.getElementById('job-location').value = p.location || '';
+    updateSalaryRequirement();
     document.getElementById('job-international').checked = !!p.is_international;
     document.getElementById('job-sector').value = p.sector || '';
     if (p.employment_type) document.getElementById('job-type').value = p.employment_type;
@@ -371,6 +393,13 @@ document.getElementById('salary-period').addEventListener('change', function(){
   document.getElementById('salaryRangeField').style.display = this.value ? 'block' : 'none';
 });
 
+function updateSalaryRequirement() {
+  const required = locationRequiresSalary(document.getElementById('job-location').value.trim());
+  document.getElementById('salaryLabel').textContent = required ? 'Salary (required in this state)' : 'Salary (optional)';
+  document.getElementById('salaryRequiredNote').style.display = required ? 'block' : 'none';
+}
+document.getElementById('job-location').addEventListener('input', updateSalaryRequirement);
+
 let selectedDays = 30;
 let useCredit = false;
 document.querySelectorAll('.plan-card').forEach(card => {
@@ -440,6 +469,11 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
   }
   if (salaryPeriod && salaryMin > salaryMax) {
     note.textContent = 'Min salary can\'t be greater than max salary.';
+    note.style.color = 'var(--cor)';
+    return;
+  }
+  if (!salaryPeriod && locationRequiresSalary(jobLocation)) {
+    note.textContent = 'This state requires salary disclosure on job postings — please add a salary range before continuing.';
     note.style.color = 'var(--cor)';
     return;
   }
