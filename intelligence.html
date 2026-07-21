@@ -513,14 +513,12 @@ function renderSalaryBenchmarks(benchmarks) {
   }
   const topPaid = benchmarks.roles.slice().sort((a, b) => b.national_mean_wage - a.national_mean_wage)[0];
   const cards = benchmarks.roles.map(r => {
-    const hasLive = !!r.scraped_salary_median;
-    const displayed = hasLive ? r.scraped_salary_median : r.national_mean_wage;
-    const label = hasLive ? "Median from current postings" : "National average";
+    const displayed = r.scraped_salary_median || r.national_mean_wage;
     return `
     <div class="sal-card">
       <div class="sal-role">${escapeHtml(r.role)}</div>
       <div class="sal-median">${fmtMoney(displayed)}</div>
-      <div class="sal-range">${label}</div>
+      <div class="sal-range">Average</div>
       <div class="sal-locked">
         <i class="ti ti-lock" style="font-size:15px;color:var(--t3);"></i>
         <span>Metro-area breakdown is part of Pro</span>
@@ -530,9 +528,9 @@ function renderSalaryBenchmarks(benchmarks) {
   return `
   <div class="report-section">
     <div class="section-kicker"><span class="section-num">03</span><span class="section-title">Compensation benchmarks</span></div>
-    <p class="section-lead">Average pay across the clean energy roles we track. ${topPaid ? `${escapeHtml(topPaid.role)} commands the highest national average at ${fmtMoney(topPaid.national_mean_wage)}.` : ""} Where we have enough current postings, we show the actual median pay from what's posted on Verde Talent today; otherwise we show the national average. Free for every role; metro-area breakdowns are part of Pro.</p>
+    <p class="section-lead">Average pay across the clean energy roles we track. ${topPaid ? `${escapeHtml(topPaid.role)} commands the highest average at ${fmtMoney(topPaid.national_mean_wage)}.` : ""} Free for every role; metro-area breakdowns are part of Pro.</p>
     <div class="chart-card" style="margin-bottom:14px;">
-      <h4>National average salary by role</h4>
+      <h4>Average salary by role</h4>
       <div class="chart-canvas-wrap tall"><canvas id="salary-ranking-chart"></canvas></div>
     </div>
     <div class="salary-grid">${cards}</div>
