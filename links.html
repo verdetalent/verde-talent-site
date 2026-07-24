@@ -18,7 +18,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --blk:#0A0A0A;--card:#131313;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
   --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
   --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -45,17 +45,36 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
 .signin-menu.open{display:block;}
 .signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
-.signin-menu a:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.signin-menu a:hover{background:var(--card2);color:var(--t1);}
 .signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
 .signin-menu .si-label.grn{color:var(--grn);}
 .signin-menu .si-label.amb{color:var(--amb);}
-.wrap{max-width:480px;width:100%;margin:0 auto;padding:3rem 1.5rem 4rem;text-align:center;}
-.hero-logo{height:72px;width:auto;margin-bottom:.75rem;}
-h1{font-size:18px;font-weight:600;margin-bottom:.35rem;}
-.tagline{font-size:13px;color:var(--t2);margin-bottom:2rem;}
-.link-btn{display:block;background:var(--card);border:0.5px solid var(--bdr2);border-radius:12px;padding:14px 18px;margin-bottom:12px;color:var(--t1);text-decoration:none;font-size:14px;font-weight:500;transition:border-color .15s;}
-.link-btn:hover{border-color:var(--grn);}
-.link-btn.primary{background:var(--grn);color:#052e1e;border:none;font-weight:600;}
+/* Hero header for this page */
+.page-head{max-width:1200px;margin:0 auto;padding:1.75rem 2rem 0.5rem;}
+.page-head h1{font-size:22px;font-weight:700;margin-bottom:.35rem;letter-spacing:-0.01em;}
+.page-head .sub{font-size:13px;color:var(--t2);}
+/* Card grid - same shape as news.html's article-grid */
+.lk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:1200px;margin:0 auto;padding:1rem 2rem 2.5rem;}
+.lk-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;overflow:hidden;cursor:pointer;transition:border-color .15s;display:flex;flex-direction:column;text-decoration:none;color:inherit;}
+.lk-card:hover{border-color:var(--bdr2);}
+.lk-img{height:150px;position:relative;overflow:hidden;flex-shrink:0;background:#0c0c0c;}
+.lk-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.lk-img-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.25);font-size:32px;}
+.lk-body{padding:.9rem 1rem 1rem;flex:1;display:flex;flex-direction:column;gap:7px;}
+.lk-category{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 7px;border-radius:7px;font-weight:500;align-self:flex-start;}
+.lk-title{font-size:14px;font-weight:600;line-height:1.4;}
+.lk-excerpt{font-size:12px;color:var(--t2);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;}
+.lk-meta{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--t3);margin-top:auto;}
+.lk-source{color:var(--t2);font-weight:500;}
+.lk-dot{width:3px;height:3px;border-radius:50%;background:var(--t3);}
+.cat-grn{background:rgba(34,224,154,0.12);color:var(--grn);}
+.cat-blu{background:rgba(79,179,255,0.12);color:var(--blu);}
+.cat-amb{background:rgba(255,181,71,0.12);color:var(--amb);}
+.cat-pur{background:rgba(181,136,255,0.12);color:var(--pur);}
+.cat-cor{background:rgba(255,112,85,0.12);color:var(--cor);}
+.cat-neu{background:rgba(255,255,255,0.07);color:var(--t2);}
+.lk-cta-row{max-width:1200px;margin:0 auto;padding:0 2rem 2rem;}
+.lk-cta{display:block;text-align:center;background:var(--grn);color:#052e1e;border:none;padding:13px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
 footer a{color:var(--t3);text-decoration:none;}
 @media (max-width:1200px){
@@ -78,6 +97,7 @@ footer a{color:var(--t3);text-decoration:none;}
   .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
   .nav-right{gap:6px;}
   .nav-right .btn{padding:6px 9px;font-size:11px;}
+  .lk-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -123,21 +143,104 @@ footer a{color:var(--t3);text-decoration:none;}
     <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
   </div>
 </nav>
-<div class="wrap">
-  <img src="/logo.png" alt="Verde Talent" class="hero-logo">
-  <h1>Verde Talent</h1>
-  <div class="tagline">Renewable energy jobs &amp; industry news</div>
-  <a class="link-btn" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">📰 Spain Funds €165M Pumped Storage</a>
-  <a class="link-btn" href="https://verdetalent.com/jobs/70169c8c71d294de0c7c.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">🔋 Fluence — Storage NPI Engineer, India</a>
-  <a class="link-btn" href="https://verdetalent.com/jobs/9f61d50297358e1155ff.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">🔌 AES — Transmission Engineer, OH</a>
-  <a class="link-btn" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">📰 States Sue Over Wind Power Freeze</a>
-  <a class="link-btn" href="https://verdetalent.com/jobs/a24cdce92d883f99c2f8.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">⚡ Eversource — Grid Planning Manager, MA</a>
-  <a class="link-btn" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">📰 Offshore Wind Powers Through Heat Wave</a>
-  <a class="link-btn" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">📰 New Energy Career Pipelines Launch</a>
-  <a class="link-btn" href="https://verdetalent.com/jobs/33db1d036468216d2e4a.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">💨 Vestas — Wind Apprenticeship, Germany</a>
-  <a class="link-btn" href="https://verdetalent.com/jobs/4ec5467682f87e763a1a.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">☀️ NextEra — Solar Field Engineer, FL</a>
-  <a class="link-btn" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">📰 Solar Jobs Surpass 280,000</a>
-  <a class="link-btn primary" href="https://verdetalent.com/jobs.html?utm_source=instagram&utm_medium=social&utm_campaign=link_in_bio">Browse all open jobs &rarr;</a>
+<div class="page-head">
+  <h1>Latest from Verde Talent</h1>
+  <div class="sub">This week's featured stories and open roles &mdash; updated daily.</div>
+</div>
+<div class="lk-grid">
+  <a class="lk-card" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/rgrjS8TsEWkE-ss9Oo3xaQ/y0enYieRwVw4YVNSOzeKldTc9vbV6-BlHLf-A9UlcqFwImMIB1bI7T7OXxORaMv5ctbS8dJGjXIhyiVCsGBGtT1tyW6W64euPZfmozcsVKRZqQtERei7wZaicyhPxgdEY9usRhNo4KleOSlUxPYkxFevqHeS1Zmjls3aO-3AG264FYsqk5DnmkdCGzU5_DkG/EwCEf4ZVfW3cVDp3eTAQd54fAxLLKakpOvZ5h0Fyr9Q" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-amb"><i class="ti ti-battery-charging" style="font-size:10px;"></i> Storage</div>
+        <div class="lk-title">📰 Spain Funds €165M Pumped Storage</div>
+        <div class="lk-excerpt">Spain funded 2 GW of pumped storage — more capacity means more construction and O&amp;M jobs.</div>
+        <div class="lk-meta"><span class="lk-source">PV Magazine</span><div class="lk-dot"></div><span>July 29, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/jobs/70169c8c71d294de0c7c.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/emGU4yDSML1ioKvpnOBZTA/nbGgqQ2vERgZvUjx6q5OlTDhwN_CWRFrlA1B88iimIfytEbY3yToSHWouQ-dHCq04x3U8Iq1d81PFtLpGJ6CQDJg7LBtVaxkYoGDjOAT1GS-UIV2yaRgQjvWfZRNAG51PUBCWklCI-kqQCe7d-94VlTimXXso7SjbYvI-_QAEW8QKxnaCaVqyFK9LHV2QHxZ/jPMjqSpVlQgBmMsOFg2fgOu1Mk9fMGSEWK2DVU9lGPI" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-amb"><i class="ti ti-battery-charging" style="font-size:10px;"></i> Storage</div>
+        <div class="lk-title">🔋 Fluence — Storage NPI Engineer, India</div>
+        <div class="lk-excerpt">NPI engineer role bringing new battery storage hardware from design into production at scale.</div>
+        <div class="lk-meta"><span class="lk-source">Fluence Energy</span><div class="lk-dot"></div><span>July 29, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/jobs/9f61d50297358e1155ff.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/PYfSOXBwluUWx2aRqk-x_A/Qu23ipLLriMP0DNrNY44cDrIrR_EXnnXzmb-NDXP4w4_mb2rKT3DJM51zfnTMgv4WC9PAJZgPiMoEqfuDjQNRWhZ1U066puqPCbzVspzg6csCTr2Bp6pwosdlZ2Ev74Ra0f28i2C3OO81aEcH1eSCNvcrLzpyCqIhZIHj_Wp64yFE_3i1xP6_pUC_zSmDcx9/EyXJzgVox8CEM4ygRnrnKoI8YMeqrVINMBwlpe057ls" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-pur"><i class="ti ti-bolt" style="font-size:10px;"></i> Grid</div>
+        <div class="lk-title">🔌 AES — Transmission Engineer, OH</div>
+        <div class="lk-excerpt">Entry-level transmission line design engineer role in Dayton, OH, open to 2026 grads.</div>
+        <div class="lk-meta"><span class="lk-source">AES Corporation</span><div class="lk-dot"></div><span>July 28, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/AKGDiZ_qO7xN7T0v8hyJ0Q/arBcyXxJ9xA39iegm3p9uJk6zgsK1DE8BTGx6GXTTFc_L0Bd2FORjAUZq3GMRSax51mAjem28xP8VO5G0mtqmKpLRfmznJ6Bd-ccOfWCfAZnLd-JWfO4ZPkfVc6oYI5QhO21rZwdv4CzhGcxoJpJerzM0Z6a1f-g4168cV1cFxU/tR4rQo9boYX5Cb6iySSw23weyaqtssVroQoCsjILFvo" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-cor"><i class="ti ti-building-bank" style="font-size:10px;"></i> Policy</div>
+        <div class="lk-title">📰 States Sue Over Wind Power Freeze</div>
+        <div class="lk-excerpt">States are suing over the federal wind power freeze, citing jobs, tax revenue, and public health.</div>
+        <div class="lk-meta"><span class="lk-source">RTO Insider</span><div class="lk-dot"></div><span>July 28, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/jobs/a24cdce92d883f99c2f8.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/PiIMak9FiBUFmKvGMos7XQ/O5cUKVf48ma8yyOYuTOjJdX5C8-7uoLfp5yb8jRNl1aUAiMwbaP0MOlWKioD1JrsurkJFhoeWTQr8YMJcoLIaoXBRPSo0TEHMcTKLDO9sLZNJgE_KsdGTcNTbeq42MauSJw0IUAN9rJKxQyX3UtTCNknkaUyjUS91iQB7yJ9xzT55xe0u48ARI2VQunn86yO/FFR4C-sevMi5_qJ2yGMw-gvQLJE5UUkMM6BwMuFqDe8" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-pur"><i class="ti ti-bolt" style="font-size:10px;"></i> Grid</div>
+        <div class="lk-title">⚡ Eversource — Grid Planning Manager, MA</div>
+        <div class="lk-excerpt">Lead New England&#39;s transmission planning team — reliability, NERC compliance, and ISO-NE coordination.</div>
+        <div class="lk-meta"><span class="lk-source">Eversource Energy</span><div class="lk-dot"></div><span>July 27, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/vxmou3sdLCdx4QsQGhoLcg/pj5boJd40YAzcUASONlLUT3jYsHlFmJ5rdbEfnnUr3LjMetJEFal_V1e0_i0Hakf3o9CnlB_yotAlGUiR_iql4dfPADydKGYiZnGocq8FCXeFY35sNO1mtmcj-C5BPlRJTPPCZcoEDnxgUwCsEqklS5kXU3EBhAegOTeZCQsCQsVmFn0-stf0o9F7nknfwwf/yCKB1upAOG_-fS9xKRSdbwj0PvqAok5_Rl90KgH5aR8" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-blu"><i class="ti ti-wind" style="font-size:10px;"></i> Wind</div>
+        <div class="lk-title">📰 Offshore Wind Powers Through Heat Wave</div>
+        <div class="lk-excerpt">Offshore wind helped New England&#39;s grid survive a record heat wave after proving itself in winter storms.</div>
+        <div class="lk-meta"><span class="lk-source">Canary Media</span><div class="lk-dot"></div><span>July 27, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/hjb7Usc8RFt8ipYeYJPB6Q/FXlkS3As4eUIcoW3yzJ8dyf4_s58Cp3bJiMDVIg5apBhV2z6uetSxH7_l5Mzs3q-c5SozGRJC9ZeHiYcAwouQHLGvgXzN6Wagexua2-Ca-LkzdaRZAp27pgbp2lt1GpaBmq-fxdpU_nQg-xgHaecw0Qx4bQpsUPhVWoMaYyGBpewGLuGuI0uOsRva5j2ePas/lfnh0JRrdRY2CYsYZBIAzOxC3hqpIQliow7aTXATjGk" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-neu" style="background:rgba(255,255,255,0.07);color:var(--t2);"><i class="ti ti-briefcase" style="font-size:10px;"></i> Jobs &amp; Hiring</div>
+        <div class="lk-title">📰 New Energy Career Pipelines Launch</div>
+        <div class="lk-excerpt">New workforce coalitions are building direct pipelines from training into hired energy careers.</div>
+        <div class="lk-meta"><span class="lk-source">Renewable Energy World</span><div class="lk-dot"></div><span>July 24, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/jobs/33db1d036468216d2e4a.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/b5RnRoZTtE2QGniJ_tCcFQ/ERo79rZCSwkav7f312mmptpDqmFpt3R2_uosE6VWxOG5YUh1OHudO-vWqminI5K1Xqps1i7dfpIYxhkfqA2oEw4vY-ayFuiTj3qI5XBag3TC9C-sACQV_MaE4AyR9qg7NA0Yp6DuttXvRz7Q1Axrj9WZUmv_PpCndbNmVKQK2X0xLgyNrCuJ4VvF7to5U-IW/nHRCSxtSlaRfpRmciiXn8DftFULOhuZymUrJ5-2x1IE" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-blu"><i class="ti ti-wind" style="font-size:10px;"></i> Wind</div>
+        <div class="lk-title">💨 Vestas — Wind Apprenticeship, Germany</div>
+        <div class="lk-excerpt">Paid mechatronics apprenticeship starting Sept 2026 — a real entry point into wind turbine engineering.</div>
+        <div class="lk-meta"><span class="lk-source">Vestas</span><div class="lk-dot"></div><span>July 24, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/jobs/4ec5467682f87e763a1a.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=job_feature" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/3EBb0dLORhVOHE_cJIko4g/hMZrrFNjr61tRcGjhiMmsKQm1Kd-l6B9Z63AEOQbCqwfH1oWAzYdojZxNm6SNVCTd9Mdrdq-C2rUNsEb9LtLTim5wrhsKJkhV_jcuk6HcBtUoG0j6OL-_XwjlynvFmHjnBorVg83RfD3gxfR57qdVlDBk25v3tZQG5PQytCgRiw7NNhJ87Dd66I_4ojMjU5u/PPNZ7L5v5BJZdAr-4OywkTZ5FFdrwHSUnt3t3ALLvSA" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-grn"><i class="ti ti-solar-panel" style="font-size:10px;"></i> Solar</div>
+        <div class="lk-title">☀️ NextEra — Solar Field Engineer, FL</div>
+        <div class="lk-excerpt">Entry-level field engineer role maintaining solar and battery storage sites in North Florida.</div>
+        <div class="lk-meta"><span class="lk-source">NextEra Energy</span><div class="lk-dot"></div><span>July 23, 2026</span></div>
+      </div>
+    </a>
+  <a class="lk-card" href="https://verdetalent.com/news.html?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=content_queue" target="_blank" rel="noopener">
+      <div class="lk-img"><img src="https://v5.airtableusercontent.com/v3/u/55/55/1784923200000/N6N10Ud5qQ-czbIs2st5Vg/AXnAolDks5TfYLekImeQilipOWZRlIye3-3Q64tORyRAod_D68UIkQhkZT0v3ih8gov-Ik8y8Gfbjf4WzWE2BDmplnoS0BW2F9R2LyWZr1SWBvQ7JZ4SQ0PyLk8OG1nbZ3gRmRo2NL8UBRZ06M8c1UMNwg17-P0OkFWlCpp-lC59xW3Q6Tbf-30k1EXZtPRH/72AThD_Wi2GQ1dFBodG-KH4F0mnGbXVVaRX6jvT6xMM" alt="" loading="lazy"></div>
+      <div class="lk-body">
+        <div class="lk-category cat-grn"><i class="ti ti-solar-panel" style="font-size:10px;"></i> Solar</div>
+        <div class="lk-title">📰 Solar Jobs Surpass 280,000</div>
+        <div class="lk-excerpt">U.S. solar employed 280,000+ workers in 2024 — 460,000+ once storage roles are included.</div>
+        <div class="lk-meta"><span class="lk-source">Solar Power World</span><div class="lk-dot"></div><span>July 23, 2026</span></div>
+      </div>
+    </a>
+</div>
+<div class="lk-cta-row">
+  <a class="lk-cta" href="https://verdetalent.com/jobs.html?utm_source=instagram&utm_medium=social&utm_campaign=link_in_bio">Browse all open jobs &rarr;</a>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a> &middot; Updated 2026-07-24</footer>
 <script>
