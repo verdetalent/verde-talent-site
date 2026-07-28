@@ -205,6 +205,13 @@ document.addEventListener('click', function(){
 <div class="search-bar">
   <div class="sb-field"><i class="ti ti-search"></i><input type="text" id="job-search" placeholder="Job title or company"/></div>
   <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input type="text" id="location-search" placeholder="City, state, or ZIP (optional)"/></div>
+  <select class="sb-select" id="radius-select" style="max-width:150px;">
+    <option value="">Exact location</option>
+    <option value="25">Within 25 miles</option>
+    <option value="50">Within 50 miles</option>
+    <option value="100">Within 100 miles</option>
+    <option value="200">Within 200 miles</option>
+  </select>
   <select class="sb-select" id="sector-select"><option value="">All sectors</option></select>
   <div class="scope-switch" id="scope-switch">
     <button class="scope-btn" data-scope="us_remote">US + Remote</button>
@@ -429,7 +436,7 @@ function locationTokens(rawLocation) {
 function parseLocationQuery(raw) {
   const text = (raw || "").trim();
   if (!text) return null;
-  if (/^\d{5}$/.test(text)) return { zipState: resolveZipState(text) };
+  if (/^\d{5}$/.test(text)) return { zipState: resolveZipState(text), zip: text };
   if (text.toLowerCase() === "remote") return { isRemote: true };
 
   let city = null;
@@ -472,6 +479,92 @@ function matchesLocationQuery(job, parsed) {
   return true;
 }
 
+// --- Radius search (distance-based location filtering) ---------------------
+// Loaded lazily from two static reference files derived from GeoNames' public
+// -domain US ZIP code dataset (download.geonames.org/export/zip/US.zip):
+//  - zip3_centroids.json: avg lat/lon per 3-digit ZIP prefix (~926 entries) -
+//    used to resolve a typed ZIP to a rough point. A ZIP3 area is typically
+//    20-50 miles across, plenty precise for a 25-200 mile radius search.
+//  - us_cities_geo.json: avg lat/lon per "city|ST" pair (~29.5k entries) -
+//    used both to resolve a typed city/state query AND to place each job's
+//    own location, so distance can be computed either way.
+// ~1MB combined; fetched once and cached in memory. If they fail to load
+// (offline, blocked, etc.) radius search just falls back to the existing
+// exact-match text filtering - it never blocks or breaks the page.
+let CITY_GEO = null;
+let ZIP3_GEO = null;
+const JOB_GEO_CACHE = new Map();
+
+async function loadGeoData() {
+  try {
+    const [cities, zip3] = await Promise.all([
+      fetch("data/us_cities_geo.json").then(r => r.ok ? r.json() : null),
+      fetch("data/zip3_centroids.json").then(r => r.ok ? r.json() : null),
+    ]);
+    CITY_GEO = cities;
+    ZIP3_GEO = zip3;
+  } catch (err) {
+    console.error("Could not load geo data - radius search will fall back to exact-match text filtering:", err);
+  }
+}
+
+function haversineMiles(lat1, lon1, lat2, lon2) {
+  const toRad = d => (d * Math.PI) / 180;
+  const R = 3958.8; // Earth radius in miles
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.asin(Math.sqrt(a));
+}
+
+function cityLookup(city, state) {
+  if (!CITY_GEO || !city || !state) return null;
+  return CITY_GEO[`${city.toLowerCase()}|${state.toUpperCase()}`] || null;
+}
+
+// Resolves the parsed query (not a job) to a [lat, lon] anchor point.
+function resolveQueryLatLon(parsed) {
+  if (!parsed) return null;
+  if (parsed.zip && ZIP3_GEO) return ZIP3_GEO[parsed.zip.slice(0, 3)] || null;
+  if (parsed.city && parsed.state) return cityLookup(parsed.city, parsed.state);
+  return null;
+}
+
+// Resolves a job's own (possibly multi-location, semicolon-joined) location
+// string to the first place it can match in the city table. Caches per
+// distinct location string since render() re-evaluates this on every
+// keystroke across ~2,800 jobs.
+function resolveJobLatLon(job) {
+  if (JOB_GEO_CACHE.has(job.location)) return JOB_GEO_CACHE.get(job.location);
+  let best = null;
+  if (CITY_GEO) {
+    const segments = (job.location || "").split(";").map(s => s.trim()).filter(Boolean);
+    for (const seg of segments) {
+      const parts = seg.split(",").map(s => s.trim()).filter(Boolean);
+      if (parts.length < 2) continue; // no city to resolve (e.g. a bare "OH")
+      const city = parts[parts.length - 2];
+      const stateToken = parts[parts.length - 1];
+      const stateAbbr = US_STATE_ABBR_TO_NAME[stateToken.toUpperCase()]
+        ? stateToken.toUpperCase()
+        : (US_STATE_NAME_TO_ABBR[stateToken.toLowerCase()] || null);
+      if (!stateAbbr) continue;
+      const hit = cityLookup(city, stateAbbr);
+      if (hit) { best = hit; break; }
+    }
+  }
+  JOB_GEO_CACHE.set(job.location, best);
+  return best;
+}
+
+function matchesRadiusQuery(job, parsed, radiusMiles) {
+  const origin = resolveQueryLatLon(parsed);
+  if (!origin) return matchesLocationQuery(job, parsed); // can't geocode the query - fall back to exact-match text
+  if (job.is_remote) return true; // remote roles have no fixed distance - always surface them for a radius search
+  const jobLatLon = resolveJobLatLon(job);
+  if (!jobLatLon) return false; // can't place this job on the map, so can't confirm it's in range
+  return haversineMiles(origin[0], origin[1], jobLatLon[0], jobLatLon[1]) <= radiusMiles;
+}
+
 function jobCardHtml(job) {
   const color = colorFor(job.sector_bucket);
   const initial = (job.company || "?").charAt(0).toUpperCase();
@@ -511,6 +604,7 @@ function jobCardHtml(job) {
 function render() {
   const query = document.getElementById("job-search").value.trim().toLowerCase();
   const locationQuery = parseLocationQuery(document.getElementById("location-search").value);
+  const radiusMiles = parseInt(document.getElementById("radius-select").value, 10) || null;
   const sortBy = document.getElementById("sort-select").value;
   const dateBucket = DATE_BUCKETS.find(b => b.key === currentDateBucket);
   const salaryBucket = SALARY_BUCKETS.find(b => b.key === currentSalaryBucket);
@@ -526,7 +620,9 @@ function render() {
     if (currentWorkStyles.size && !currentWorkStyles.has(j.work_style)) return false;
     if (currentEmploymentTypes.size && !currentEmploymentTypes.has(j.employment_type)) return false;
     if (query && !(j.job_title || "").toLowerCase().includes(query) && !(j.company || "").toLowerCase().includes(query)) return false;
-    if (!matchesLocationQuery(j, locationQuery)) return false;
+    if (radiusMiles) {
+      if (!matchesRadiusQuery(j, locationQuery, radiusMiles)) return false;
+    } else if (!matchesLocationQuery(j, locationQuery)) return false;
     return true;
   });
 
@@ -824,6 +920,7 @@ document.getElementById("scope-switch").addEventListener("click", (e) => {
 
 document.getElementById("job-search").addEventListener("input", render);
 document.getElementById("location-search").addEventListener("input", render);
+document.getElementById("radius-select").addEventListener("change", render);
 document.getElementById("sort-select").addEventListener("change", render);
 
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
@@ -888,6 +985,13 @@ async function fetchEmployerPostings() {
   const crawledJobs = JSON.parse(dataEl.textContent);
   const employerJobs = await fetchEmployerPostings();
   ALL_JOBS = employerJobs.concat(crawledJobs);
+  // Fire-and-forget: don't block the initial render on a ~1MB fetch. If a
+  // radius is already selected by the time this resolves, re-render so the
+  // distance-based filter actually takes effect instead of silently falling
+  // back to exact-match text filtering forever.
+  loadGeoData().then(() => {
+    if (document.getElementById("radius-select").value) render();
+  });
   buildSectorControls();
   buildJobCategoryControls();
   buildDateControls();
