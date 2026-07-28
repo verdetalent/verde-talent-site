@@ -211,9 +211,6 @@ document.addEventListener('click', function(){
     <option value="100" selected>Within 100 miles</option>
     <option value="200">Within 200 miles</option>
   </select>
-  <label class="sb-checkbox" style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t2);white-space:nowrap;">
-    <input type="checkbox" id="include-remote-checkbox" checked/> Include remote
-  </label>
   <select class="sb-select" id="sector-select"><option value="">All sectors</option></select>
   <div class="scope-switch" id="scope-switch">
     <button class="scope-btn" data-scope="us_remote">US + Remote</button>
@@ -560,14 +557,14 @@ function resolveJobLatLon(job) {
   return best;
 }
 
-function matchesRadiusQuery(job, parsed, radiusMiles, includeRemote) {
+function matchesRadiusQuery(job, parsed, radiusMiles) {
   const origin = resolveQueryLatLon(parsed);
   if (!origin) return matchesLocationQuery(job, parsed); // can't geocode the query - fall back to exact-match text
-  // Remote roles have no fixed distance - with "Include remote" checked, always
-  // surface them for a radius search regardless of the company's listed city.
-  // Unchecked, a remote job is treated like any other and only shows if its
-  // own listed location happens to resolve within the radius.
-  if (includeRemote && job.is_remote) return true;
+  // Remote roles have no fixed distance - the scope switch (US + Remote /
+  // Remote / International) is what decides whether remote jobs are in play
+  // at all; once they are, always surface them for a radius search
+  // regardless of the company's nominally listed city.
+  if (job.is_remote) return true;
   const jobLatLon = resolveJobLatLon(job);
   if (!jobLatLon) return false; // can't place this job on the map, so can't confirm it's in range
   return haversineMiles(origin[0], origin[1], jobLatLon[0], jobLatLon[1]) <= radiusMiles;
@@ -619,7 +616,6 @@ function render() {
   const query = document.getElementById("job-search").value.trim().toLowerCase();
   const locationQuery = parseLocationQuery(document.getElementById("location-search").value);
   const radiusMiles = parseInt(document.getElementById("radius-select").value, 10) || null;
-  const includeRemote = document.getElementById("include-remote-checkbox").checked;
   // A resolvable location search defaults sorting to closest-first rather
   // than most-recent - but only until the user picks a sort themselves
   // (tracked by sortManuallyChanged), so we don't keep overriding their choice.
@@ -643,7 +639,7 @@ function render() {
     if (currentEmploymentTypes.size && !currentEmploymentTypes.has(j.employment_type)) return false;
     if (query && !(j.job_title || "").toLowerCase().includes(query) && !(j.company || "").toLowerCase().includes(query)) return false;
     if (radiusMiles) {
-      if (!matchesRadiusQuery(j, locationQuery, radiusMiles, includeRemote)) return false;
+      if (!matchesRadiusQuery(j, locationQuery, radiusMiles)) return false;
     } else if (!matchesLocationQuery(j, locationQuery)) return false;
     return true;
   });
@@ -951,7 +947,6 @@ document.getElementById("scope-switch").addEventListener("click", (e) => {
 document.getElementById("job-search").addEventListener("input", render);
 document.getElementById("location-search").addEventListener("input", render);
 document.getElementById("radius-select").addEventListener("change", render);
-document.getElementById("include-remote-checkbox").addEventListener("change", render);
 document.getElementById("sort-select").addEventListener("change", () => {
   sortManuallyChanged = true;
   render();
