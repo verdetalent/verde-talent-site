@@ -247,10 +247,10 @@ document.addEventListener('click', function(){
   <h1>The job board built for <span>clean energy</span> careers</h1>
   <p>Every role filtered for renewable energy. Solar, wind, storage, grid, EV, hydrogen — find your place in the transition.</p>
   <div class="search-box">
-    <div class="sb-field"><i class="ti ti-search"></i><input type="text" placeholder="Job title or keyword"/></div>
+    <div class="sb-field"><i class="ti ti-search"></i><input type="text" id="home-search-q" placeholder="Job title or keyword"/></div>
     <div class="sb-divider"></div>
-    <div class="sb-field" style="max-width:180px;"><i class="ti ti-map-pin"></i><input type="text" placeholder="Location or remote"/></div>
-    <button class="btn-search">Search jobs</button>
+    <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input type="text" id="home-search-location" placeholder="City, state, ZIP, or remote"/></div>
+    <button class="btn-search" id="home-search-btn">Search jobs</button>
   </div>
   <div class="sector-chips">
     <div class="s-chip"><i class="ti ti-solar-panel" style="font-size:13px;"></i>Solar</div>
@@ -388,6 +388,27 @@ function companyCardHtml(c) {
   document.getElementById("home-co-grid").innerHTML = companies.length
     ? companies.map(companyCardHtml).join("")
     : `<div style="color:var(--t3);font-size:13px;">No companies tracked yet.</div>`;
+})();
+
+// The hero search box doesn't filter in place - it hands off to the full
+// search/filter experience on jobs.html, passing along whatever was typed.
+// Location accepts a city+state, a state alone, a ZIP code, or "remote";
+// jobs.html's own location-search box does the actual parsing/matching.
+(function wireHomeSearch() {
+  function goToJobsSearch() {
+    const q = document.getElementById("home-search-q").value.trim();
+    const location = document.getElementById("home-search-location").value.trim();
+    const params = new URLSearchParams();
+    if (q) params.set("q", q);
+    if (location) params.set("location", location);
+    window.location.href = "jobs.html" + (params.toString() ? "?" + params.toString() : "");
+  }
+  document.getElementById("home-search-btn").addEventListener("click", goToJobsSearch);
+  ["home-search-q", "home-search-location"].forEach(id => {
+    document.getElementById(id).addEventListener("keydown", e => {
+      if (e.key === "Enter") goToJobsSearch();
+    });
+  });
 })();
 </script>
 <div class="seeker-cta">

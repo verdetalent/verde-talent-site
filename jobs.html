@@ -204,6 +204,7 @@ document.addEventListener('click', function(){
 </script>
 <div class="search-bar">
   <div class="sb-field"><i class="ti ti-search"></i><input type="text" id="job-search" placeholder="Job title or company"/></div>
+  <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input type="text" id="location-search" placeholder="City, state, or ZIP (optional)"/></div>
   <select class="sb-select" id="sector-select"><option value="">All sectors</option></select>
   <div class="scope-switch" id="scope-switch">
     <button class="scope-btn" data-scope="us_remote">US + Remote</button>
@@ -374,6 +375,103 @@ function matchesScope(job, scope) {
   return job.region !== "International";
 }
 
+// Compact USPS 3-digit ZIP-prefix -> state ranges, used only to resolve a
+// typed ZIP code to a state for the location search below. Not a full ZIP
+// database - a handful of border-area prefixes are genuinely split between
+// two states in reality, so this is a well-known-good approximation, not
+// meant to be authoritative down to the individual ZIP.
+const ZIP3_STATE_RANGES = [
+  [6, 9, "PR"], [10, 27, "MA"], [28, 29, "RI"], [30, 38, "NH"], [39, 49, "ME"],
+  [50, 59, "VT"], [60, 69, "CT"], [70, 89, "NJ"], [100, 149, "NY"],
+  [150, 196, "PA"], [197, 199, "DE"], [200, 205, "DC"], [206, 219, "MD"],
+  [220, 246, "VA"], [247, 268, "WV"], [270, 289, "NC"], [290, 299, "SC"],
+  [300, 319, "GA"], [320, 349, "FL"], [350, 369, "AL"], [370, 385, "TN"],
+  [386, 397, "MS"], [398, 399, "GA"], [400, 427, "KY"], [430, 459, "OH"],
+  [460, 479, "IN"], [480, 499, "MI"], [500, 528, "IA"], [530, 549, "WI"],
+  [550, 567, "MN"], [570, 577, "SD"], [580, 588, "ND"], [590, 599, "MT"],
+  [600, 629, "IL"], [630, 658, "MO"], [660, 679, "KS"], [680, 693, "NE"],
+  [700, 714, "LA"], [716, 729, "AR"], [730, 749, "OK"], [750, 799, "TX"],
+  [800, 816, "CO"], [820, 831, "WY"], [832, 838, "ID"], [840, 847, "UT"],
+  [850, 865, "AZ"], [870, 884, "NM"], [889, 898, "NV"], [900, 966, "CA"],
+  [967, 968, "HI"], [970, 979, "OR"], [980, 994, "WA"], [995, 999, "AK"],
+];
+function resolveZipState(zip) {
+  const n = parseInt(zip.slice(0, 3), 10);
+  const hit = ZIP3_STATE_RANGES.find(([lo, hi]) => n >= lo && n <= hi);
+  return hit ? hit[2] : null;
+}
+
+const US_STATE_ABBR_TO_NAME = {
+  AL: "alabama", AK: "alaska", AZ: "arizona", AR: "arkansas", CA: "california",
+  CO: "colorado", CT: "connecticut", DE: "delaware", FL: "florida", GA: "georgia",
+  HI: "hawaii", ID: "idaho", IL: "illinois", IN: "indiana", IA: "iowa",
+  KS: "kansas", KY: "kentucky", LA: "louisiana", ME: "maine", MD: "maryland",
+  MA: "massachusetts", MI: "michigan", MN: "minnesota", MS: "mississippi",
+  MO: "missouri", MT: "montana", NE: "nebraska", NV: "nevada", NH: "new hampshire",
+  NJ: "new jersey", NM: "new mexico", NY: "new york", NC: "north carolina",
+  ND: "north dakota", OH: "ohio", OK: "oklahoma", OR: "oregon", PA: "pennsylvania",
+  RI: "rhode island", SC: "south carolina", SD: "south dakota", TN: "tennessee",
+  TX: "texas", UT: "utah", VT: "vermont", VA: "virginia", WA: "washington",
+  WV: "west virginia", WI: "wisconsin", WY: "wyoming", DC: "district of columbia",
+};
+const US_STATE_NAME_TO_ABBR = Object.fromEntries(
+  Object.entries(US_STATE_ABBR_TO_NAME).map(([abbr, name]) => [name, abbr])
+);
+
+function locationTokens(rawLocation) {
+  // Splits both a single "City, ST" location and a multi-location posting
+  // ("US, Louisville, CO; US, New York, NY; ...") into flat, trimmed parts.
+  return (rawLocation || "").split(/[;,]/).map(s => s.trim()).filter(Boolean);
+}
+
+// Parses whatever the user typed into the location search box into
+// { city, state } or { zipState } or { isRemote }, for matchesLocationQuery.
+function parseLocationQuery(raw) {
+  const text = (raw || "").trim();
+  if (!text) return null;
+  if (/^\d{5}$/.test(text)) return { zipState: resolveZipState(text) };
+  if (text.toLowerCase() === "remote") return { isRemote: true };
+
+  let city = null;
+  let stateText = null;
+  const parts = text.split(",").map(s => s.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    [city, stateText] = parts;
+  } else {
+    const words = text.split(/\s+/);
+    const lastWord = words[words.length - 1];
+    if (words.length > 1 && (US_STATE_ABBR_TO_NAME[lastWord.toUpperCase()] || US_STATE_NAME_TO_ABBR[lastWord.toLowerCase()])) {
+      stateText = lastWord;
+      city = words.slice(0, -1).join(" ");
+    } else if (US_STATE_ABBR_TO_NAME[text.toUpperCase()] || US_STATE_NAME_TO_ABBR[text.toLowerCase()]) {
+      stateText = text;
+    } else {
+      city = text;
+    }
+  }
+  const stateAbbr = stateText
+    ? (US_STATE_ABBR_TO_NAME[stateText.toUpperCase()] ? stateText.toUpperCase() : (US_STATE_NAME_TO_ABBR[stateText.toLowerCase()] || null))
+    : null;
+  return { city: city ? city.toLowerCase() : null, state: stateAbbr };
+}
+
+function matchesLocationQuery(job, parsed) {
+  if (!parsed) return true;
+  if (parsed.isRemote) return !!job.is_remote;
+  const tokens = locationTokens(job.location);
+  if (parsed.zipState) {
+    if (job.is_remote) return true; // remote roles are reasonable to surface for any ZIP
+    const stateName = US_STATE_ABBR_TO_NAME[parsed.zipState];
+    return tokens.some(t => t.toUpperCase() === parsed.zipState || t.toLowerCase() === stateName);
+  }
+  if (parsed.city && !tokens.some(t => t.toLowerCase().includes(parsed.city))) return false;
+  if (parsed.state) {
+    const stateName = US_STATE_ABBR_TO_NAME[parsed.state];
+    if (!tokens.some(t => t.toUpperCase() === parsed.state || t.toLowerCase() === stateName)) return false;
+  }
+  return true;
+}
+
 function jobCardHtml(job) {
   const color = colorFor(job.sector_bucket);
   const initial = (job.company || "?").charAt(0).toUpperCase();
@@ -412,6 +510,7 @@ function jobCardHtml(job) {
 
 function render() {
   const query = document.getElementById("job-search").value.trim().toLowerCase();
+  const locationQuery = parseLocationQuery(document.getElementById("location-search").value);
   const sortBy = document.getElementById("sort-select").value;
   const dateBucket = DATE_BUCKETS.find(b => b.key === currentDateBucket);
   const salaryBucket = SALARY_BUCKETS.find(b => b.key === currentSalaryBucket);
@@ -427,6 +526,7 @@ function render() {
     if (currentWorkStyles.size && !currentWorkStyles.has(j.work_style)) return false;
     if (currentEmploymentTypes.size && !currentEmploymentTypes.has(j.employment_type)) return false;
     if (query && !(j.job_title || "").toLowerCase().includes(query) && !(j.company || "").toLowerCase().includes(query)) return false;
+    if (!matchesLocationQuery(j, locationQuery)) return false;
     return true;
   });
 
@@ -723,6 +823,7 @@ document.getElementById("scope-switch").addEventListener("click", (e) => {
 });
 
 document.getElementById("job-search").addEventListener("input", render);
+document.getElementById("location-search").addEventListener("input", render);
 document.getElementById("sort-select").addEventListener("change", render);
 
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
@@ -799,8 +900,15 @@ async function fetchEmployerPostings() {
 
   const params = new URLSearchParams(window.location.search);
   const companyParam = params.get("company");
+  const queryParam = params.get("q");
   if (companyParam) {
     document.getElementById("job-search").value = companyParam;
+  } else if (queryParam) {
+    document.getElementById("job-search").value = queryParam;
+  }
+  const locationParam = params.get("location");
+  if (locationParam) {
+    document.getElementById("location-search").value = locationParam;
   }
 
   render();
