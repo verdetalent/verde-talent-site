@@ -620,7 +620,9 @@ function render() {
   // than most-recent - but only until the user picks a sort themselves
   // (tracked by sortManuallyChanged), so we don't keep overriding their choice.
   const origin = radiusMiles ? resolveQueryLatLon(locationQuery) : null;
-  if (origin && !sortManuallyChanged) {
+  // Distance is meaningless for a remote-only search, so never auto-select
+  // it in that scope even if a location happens to be typed in.
+  if (origin && !sortManuallyChanged && currentScope !== "remote") {
     document.getElementById("sort-select").value = "distance";
   }
   const sortBy = document.getElementById("sort-select").value;
@@ -940,6 +942,13 @@ document.getElementById("scope-switch").addEventListener("click", (e) => {
   const btn = e.target.closest(".scope-btn");
   if (!btn) return;
   currentScope = btn.dataset.scope;
+  // Distance doesn't mean anything for a remote-only search - drop back to
+  // "Most recent" and let auto-switching resume if they later return to a
+  // scope where distance is meaningful again.
+  if (currentScope === "remote") {
+    document.getElementById("sort-select").value = "recent";
+    sortManuallyChanged = false;
+  }
   syncScopeSwitch();
   render();
 });
