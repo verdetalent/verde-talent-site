@@ -206,12 +206,14 @@ document.addEventListener('click', function(){
   <div class="sb-field"><i class="ti ti-search"></i><input type="text" id="job-search" placeholder="Job title or company"/></div>
   <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input type="text" id="location-search" placeholder="City, state, or ZIP (optional)"/></div>
   <select class="sb-select" id="radius-select" style="max-width:150px;">
-    <option value="">Exact location</option>
     <option value="25">Within 25 miles</option>
     <option value="50">Within 50 miles</option>
-    <option value="100">Within 100 miles</option>
+    <option value="100" selected>Within 100 miles</option>
     <option value="200">Within 200 miles</option>
   </select>
+  <label class="sb-checkbox" style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t2);white-space:nowrap;">
+    <input type="checkbox" id="include-remote-checkbox" checked/> Include remote
+  </label>
   <select class="sb-select" id="sector-select"><option value="">All sectors</option></select>
   <div class="scope-switch" id="scope-switch">
     <button class="scope-btn" data-scope="us_remote">US + Remote</button>
@@ -270,6 +272,7 @@ document.addEventListener('click', function(){
       <div class="rh-left" id="results-count"></div>
       <select class="sort-sel" id="sort-select">
         <option value="recent">Most recent</option>
+        <option value="distance">Closest first</option>
         <option value="title">Title A–Z</option>
       </select>
     </div>
@@ -371,6 +374,7 @@ let currentWorkStyles = new Set();
 let currentEmploymentTypes = new Set();
 let currentFiltered = [];
 let visibleCount = PAGE_SIZE;
+let sortManuallyChanged = false;
 
 function matchesScope(job, scope) {
   if (scope === "remote") return !!job.is_remote;
@@ -556,13 +560,23 @@ function resolveJobLatLon(job) {
   return best;
 }
 
-function matchesRadiusQuery(job, parsed, radiusMiles) {
+function matchesRadiusQuery(job, parsed, radiusMiles, includeRemote) {
   const origin = resolveQueryLatLon(parsed);
   if (!origin) return matchesLocationQuery(job, parsed); // can't geocode the query - fall back to exact-match text
-  if (job.is_remote) return true; // remote roles have no fixed distance - always surface them for a radius search
+  // Remote roles have no fixed distance - with "Include remote" checked, always
+  // surface them for a radius search regardless of the company's listed city.
+  // Unchecked, a remote job is treated like any other and only shows if its
+  // own listed location happens to resolve within the radius.
+  if (includeRemote && job.is_remote) return true;
   const jobLatLon = resolveJobLatLon(job);
   if (!jobLatLon) return false; // can't place this job on the map, so can't confirm it's in range
   return haversineMiles(origin[0], origin[1], jobLatLon[0], jobLatLon[1]) <= radiusMiles;
+}
+
+function jobDistanceFromOrigin(job, origin) {
+  if (!origin) return null;
+  const jobLatLon = resolveJobLatLon(job);
+  return jobLatLon ? haversineMiles(origin[0], origin[1], jobLatLon[0], jobLatLon[1]) : null;
 }
 
 function jobCardHtml(job) {
@@ -605,6 +619,14 @@ function render() {
   const query = document.getElementById("job-search").value.trim().toLowerCase();
   const locationQuery = parseLocationQuery(document.getElementById("location-search").value);
   const radiusMiles = parseInt(document.getElementById("radius-select").value, 10) || null;
+  const includeRemote = document.getElementById("include-remote-checkbox").checked;
+  // A resolvable location search defaults sorting to closest-first rather
+  // than most-recent - but only until the user picks a sort themselves
+  // (tracked by sortManuallyChanged), so we don't keep overriding their choice.
+  const origin = radiusMiles ? resolveQueryLatLon(locationQuery) : null;
+  if (origin && !sortManuallyChanged) {
+    document.getElementById("sort-select").value = "distance";
+  }
   const sortBy = document.getElementById("sort-select").value;
   const dateBucket = DATE_BUCKETS.find(b => b.key === currentDateBucket);
   const salaryBucket = SALARY_BUCKETS.find(b => b.key === currentSalaryBucket);
@@ -621,7 +643,7 @@ function render() {
     if (currentEmploymentTypes.size && !currentEmploymentTypes.has(j.employment_type)) return false;
     if (query && !(j.job_title || "").toLowerCase().includes(query) && !(j.company || "").toLowerCase().includes(query)) return false;
     if (radiusMiles) {
-      if (!matchesRadiusQuery(j, locationQuery, radiusMiles)) return false;
+      if (!matchesRadiusQuery(j, locationQuery, radiusMiles, includeRemote)) return false;
     } else if (!matchesLocationQuery(j, locationQuery)) return false;
     return true;
   });
@@ -634,6 +656,14 @@ function render() {
     const pinDiff = (b.is_employer_posted ? 1 : 0) - (a.is_employer_posted ? 1 : 0);
     if (pinDiff) return pinDiff;
     if (sortBy === "title") return (a.job_title || "").localeCompare(b.job_title || "");
+    if (sortBy === "distance") {
+      const da = jobDistanceFromOrigin(a, origin);
+      const db = jobDistanceFromOrigin(b, origin);
+      if (da == null && db == null) return (jobDate(b) || "").localeCompare(jobDate(a) || "");
+      if (da == null) return 1; // unresolvable locations sort last, not first
+      if (db == null) return -1;
+      return da - db;
+    }
     return (jobDate(b) || "").localeCompare(jobDate(a) || "");
   });
 
@@ -921,7 +951,11 @@ document.getElementById("scope-switch").addEventListener("click", (e) => {
 document.getElementById("job-search").addEventListener("input", render);
 document.getElementById("location-search").addEventListener("input", render);
 document.getElementById("radius-select").addEventListener("change", render);
-document.getElementById("sort-select").addEventListener("change", render);
+document.getElementById("include-remote-checkbox").addEventListener("change", render);
+document.getElementById("sort-select").addEventListener("change", () => {
+  sortManuallyChanged = true;
+  render();
+});
 
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
