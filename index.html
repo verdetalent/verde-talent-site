@@ -91,6 +91,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .stat:last-child{border-right:none;}
 .stat-num{font-size:28px;font-weight:600;}
 .stat-label{font-size:13px;color:var(--t3);margin-top:4px;}
+.stats-label{text-align:center;font-size:11px;color:var(--t3);font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:1.25rem 2rem 0;}
 /* Featured jobs */
 .section{padding:2.5rem 2rem;max-width:1400px;margin:0 auto;}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
@@ -285,6 +286,7 @@ document.addEventListener('click', function(){
   <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-grn" style="padding:9px 18px;font-size:13px;">Create your profile →</button></a>
 </div>
 <div class="stats-outer">
+<h2 class="stats-label">Verde Talent by the numbers</h2>
 <div class="stats">
   <div class="stat"><div class="stat-num" id="stat-jobs" style="color:var(--grn);">2,800+</div><div class="stat-label">Active jobs</div></div>
   <div class="stat"><div class="stat-num" id="stat-companies" style="color:var(--blu);">39</div><div class="stat-label">Energy companies</div></div>
@@ -305,14 +307,14 @@ document.addEventListener('click', function(){
 </div>
 <div class="section">
   <div class="section-header">
-    <div class="section-title">Featured jobs</div>
+    <h2 class="section-title">Featured jobs</h2>
     <a href="jobs.html" class="see-all">See all jobs →</a>
   </div>
   <div class="jobs-grid" id="home-jobs-grid"></div>
 </div>
 <div class="section" style="padding-top:0;">
   <div class="section-header">
-    <div class="section-title">Top companies hiring</div>
+    <h2 class="section-title">Top companies hiring</h2>
     <a href="companies.html" class="see-all">Browse all →</a>
   </div>
   <div class="co-grid" id="home-co-grid"></div>
