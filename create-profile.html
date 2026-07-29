@@ -151,8 +151,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-lock"></i>Account</div>
       <div class="form-row">
-        <div class="field"><label for="acc-email">Email</label><input type="email" id="acc-email" placeholder="you@example.com"/></div>
-        <div class="field"><label for="acc-password">Password</label><input type="password" id="acc-password" placeholder="At least 6 characters"/></div>
+        <div class="field"><label for="acc-email">Email</label><input type="email" id="acc-email" placeholder="you@example.com" autocomplete="email"/></div>
+        <div class="field"><label for="acc-password">Password</label><input type="password" id="acc-password" placeholder="At least 6 characters" autocomplete="new-password"/></div>
       </div>
       <div style="font-size:12px;color:var(--t3);">This becomes your login — use it to sign back in and update your profile later.</div>
     </div>
@@ -161,14 +161,14 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="avatar-row">
         <div class="avatar-upload" id="avatarUpload">
           <label for="inp-avatar" class="sr-only">Profile photo</label>
-          <input type="file" accept="image/*" id="inp-avatar"/>
+          <input type="file" accept="image/*" id="inp-avatar" autocomplete="photo"/>
           <i class="ti ti-camera" id="avatarIcon"></i>
         </div>
         <div class="avatar-info">Add a profile photo<small>JPG or PNG · Max 5 MB</small><small id="avatarFilename" style="color:var(--grn);"></small></div>
       </div>
       <div class="form-row">
-        <div class="field"><label for="inp-first">First name</label><input type="text" id="inp-first" placeholder="Jamie"/></div>
-        <div class="field"><label for="inp-last">Last name</label><input type="text" id="inp-last" placeholder="Reyes"/></div>
+        <div class="field"><label for="inp-first">First name</label><input type="text" id="inp-first" placeholder="Jamie" autocomplete="given-name"/></div>
+        <div class="field"><label for="inp-last">Last name</label><input type="text" id="inp-last" placeholder="Reyes" autocomplete="family-name"/></div>
       </div>
       <div class="form-row full">
         <div class="field"><label for="inp-headline">Professional headline</label><input type="text" id="inp-headline" placeholder="e.g. Senior Solar Design Engineer · Open to remote"/></div>
@@ -260,9 +260,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="links-card">
       <div class="links-title"><i class="ti ti-link"></i>Links</div>
       <div class="links-sub">Optional, but recommended</div>
-      <div class="link-row"><i class="ti ti-brand-linkedin"></i><input type="text" id="link-linkedin" placeholder="linkedin.com/in/you"/></div>
-      <div class="link-row"><i class="ti ti-world"></i><input type="text" id="link-site" placeholder="yoursite.com"/></div>
-      <div class="link-row"><i class="ti ti-brand-github"></i><input type="text" id="link-github" placeholder="github.com/username"/></div>
+      <div class="link-row"><i class="ti ti-brand-linkedin"></i><input type="text" id="link-linkedin" placeholder="linkedin.com/in/you" autocomplete="url"/></div>
+      <div class="link-row"><i class="ti ti-world"></i><input type="text" id="link-site" placeholder="yoursite.com" autocomplete="url"/></div>
+      <div class="link-row"><i class="ti ti-brand-github"></i><input type="text" id="link-github" placeholder="github.com/username" autocomplete="url"/></div>
     </div>
     <div class="visibility-card">
       <div class="vis-title">Visibility</div>
