@@ -64,6 +64,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .signin-menu .si-label.grn{color:var(--grn);}
 .signin-menu .si-label.amb{color:var(--amb);}
 /* Category filter bar */
+.page-head{max-width:1400px;margin:0 auto;padding:1.5rem 2rem 0;}
+.page-head h1{font-size:22px;font-weight:700;margin-bottom:.35rem;letter-spacing:-0.01em;}
+.page-head .sub{font-size:13px;color:var(--t2);}
 .filter-bar{display:flex;align-items:center;gap:0;border-bottom:0.5px solid var(--bdr);padding:0 2rem;overflow-x:auto;}
 .fcat{display:flex;align-items:center;gap:5px;padding:.85rem 1rem;font-size:13px;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;}
 .fcat:hover{color:var(--t2);}
@@ -258,6 +261,10 @@ document.addEventListener('click', function(){
 });
 </script>
 
+<div class="page-head">
+  <h1>Clean energy news</h1>
+  <div class="sub">The latest solar, wind, storage, grid, and policy stories.</div>
+</div>
 <div class="filter-bar" id="filter-bar">
   <div class="fcat active" data-category="All"><i class="ti ti-news"></i>All</div>
   <div class="fcat grn" data-category="Solar"><i class="ti ti-solar-panel"></i>Solar</div>

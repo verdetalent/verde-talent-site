@@ -62,6 +62,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
 .signin-menu .si-label.grn{color:var(--grn);}
 .signin-menu .si-label.amb{color:var(--amb);}
+.page-head{max-width:1400px;margin:0 auto;padding:1.5rem 2rem 0;}
+.page-head h1{font-size:22px;font-weight:700;margin-bottom:.35rem;letter-spacing:-0.01em;}
+.page-head .sub{font-size:13px;color:var(--t2);}
 .search-bar{padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);display:flex;gap:8px;align-items:center;flex-shrink:0;}
 .sb-field{flex:1;display:flex;align-items:center;gap:8px;background:var(--card2);border:0.5px solid var(--bdr2);border-radius:10px;padding:10px 14px;}
 .sb-field i{font-size:16px;color:var(--t3);}
@@ -205,6 +208,10 @@ document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
 </script>
+<div class="page-head">
+  <h1>Clean energy companies hiring now</h1>
+  <div class="sub">Browse employers actively posting jobs in solar, wind, storage, and grid.</div>
+</div>
 <div class="search-bar">
   <div class="sb-field"><i class="ti ti-search"></i><input type="text" id="co-search" placeholder="Company name or keyword…"/></div>
   <select class="sb-select" id="co-sector-select"><option value="">All sectors</option></select>
