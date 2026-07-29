@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 :root{
   --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
   --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
@@ -150,8 +151,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-lock"></i>Account</div>
       <div class="form-row">
-        <div class="field"><label>Email</label><input type="email" id="acc-email" placeholder="you@example.com"/></div>
-        <div class="field"><label>Password</label><input type="password" id="acc-password" placeholder="At least 6 characters"/></div>
+        <div class="field"><label for="acc-email">Email</label><input type="email" id="acc-email" placeholder="you@example.com"/></div>
+        <div class="field"><label for="acc-password">Password</label><input type="password" id="acc-password" placeholder="At least 6 characters"/></div>
       </div>
       <div style="font-size:12px;color:var(--t3);">This becomes your login — use it to sign back in and update your profile later.</div>
     </div>
@@ -159,26 +160,27 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="fs-title"><i class="ti ti-user"></i>Basic information</div>
       <div class="avatar-row">
         <div class="avatar-upload" id="avatarUpload">
+          <label for="inp-avatar" class="sr-only">Profile photo</label>
           <input type="file" accept="image/*" id="inp-avatar"/>
           <i class="ti ti-camera" id="avatarIcon"></i>
         </div>
         <div class="avatar-info">Add a profile photo<small>JPG or PNG · Max 5 MB</small><small id="avatarFilename" style="color:var(--grn);"></small></div>
       </div>
       <div class="form-row">
-        <div class="field"><label>First name</label><input type="text" id="inp-first" placeholder="Jamie"/></div>
-        <div class="field"><label>Last name</label><input type="text" id="inp-last" placeholder="Reyes"/></div>
+        <div class="field"><label for="inp-first">First name</label><input type="text" id="inp-first" placeholder="Jamie"/></div>
+        <div class="field"><label for="inp-last">Last name</label><input type="text" id="inp-last" placeholder="Reyes"/></div>
       </div>
       <div class="form-row full">
-        <div class="field"><label>Professional headline</label><input type="text" id="inp-headline" placeholder="e.g. Senior Solar Design Engineer · Open to remote"/></div>
+        <div class="field"><label for="inp-headline">Professional headline</label><input type="text" id="inp-headline" placeholder="e.g. Senior Solar Design Engineer · Open to remote"/></div>
       </div>
       <div class="form-row">
-        <div class="field"><label>Location</label><input type="text" id="inp-loc" placeholder="City, State or Country"/></div>
-        <div class="field"><label>Years of experience</label>
+        <div class="field"><label for="inp-loc">Location</label><input type="text" id="inp-loc" placeholder="City, State or Country"/></div>
+        <div class="field"><label for="inp-exp">Years of experience</label>
           <select id="inp-exp"><option value="">Select…</option><option value="Less than 1 year">Less than 1 year</option><option value="1–3 years">1–3 years</option><option value="3–5 years">3–5 years</option><option value="5–10 years">5–10 years</option><option value="10+ years">10+ years</option></select>
         </div>
       </div>
       <div class="form-row full">
-        <div class="field"><label>Bio</label>
+        <div class="field"><label for="inp-bio">Bio</label>
           <textarea id="inp-bio" maxlength="500" placeholder="Tell companies who you are and what drives you…"></textarea>
           <div class="char-count" id="bio-count">0 / 500</div>
         </div>
@@ -187,6 +189,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-file-text"></i>Resume / CV</div>
       <div class="upload-box" id="resumeBox">
+        <label for="inp-resume" class="sr-only">Resume file</label>
         <input type="file" accept=".pdf,.doc,.docx" id="inp-resume"/>
         <i class="ti ti-upload upload-icon" id="resumeIcon"></i>
         <p id="resumeText">Drag and drop your resume, or <span style="color:var(--grn);">browse files</span></p>
@@ -209,7 +212,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-tools"></i>Skills</div>
-      <div class="field" style="margin-bottom:12px;"><label>Add a skill</label><input type="text" id="skillInput" placeholder="Type a skill and press Enter…"/></div>
+      <div class="field" style="margin-bottom:12px;"><label for="skillInput">Add a skill</label><input type="text" id="skillInput" placeholder="Type a skill and press Enter…"/></div>
       <div class="skill-tags" id="skillTags"></div>
       <div class="sugg-label">Suggested:</div>
       <div id="suggArea">
@@ -223,8 +226,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="fs-title"><i class="ti ti-briefcase"></i>Work experience</div>
       <div id="expList"><div class="empty-note" id="expEmpty">No experience added yet.</div></div>
       <div class="add-form" id="expForm">
-        <div class="form-row"><div class="field"><label>Job title</label><input type="text" id="exp-title" placeholder="Solar Design Engineer"/></div><div class="field"><label>Company</label><input type="text" id="exp-co" placeholder="Company · City, State"/></div></div>
-        <div class="field"><label>Dates</label><input type="text" id="exp-dates" placeholder="e.g. Jan 2022 — Present"/></div>
+        <div class="form-row"><div class="field"><label for="exp-title">Job title</label><input type="text" id="exp-title" placeholder="Solar Design Engineer"/></div><div class="field"><label for="exp-co">Company</label><input type="text" id="exp-co" placeholder="Company · City, State"/></div></div>
+        <div class="field"><label for="exp-dates">Dates</label><input type="text" id="exp-dates" placeholder="e.g. Jan 2022 — Present"/></div>
         <div class="add-form-actions"><button type="button" class="af-cancel" onclick="toggleForm('expForm',false)">Cancel</button><button type="button" class="af-save" onclick="addExperience()">Add</button></div>
       </div>
       <button type="button" class="add-btn" onclick="toggleForm('expForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add experience</button>
@@ -233,8 +236,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="fs-title"><i class="ti ti-school"></i>Education</div>
       <div id="eduList"><div class="empty-note" id="eduEmpty">No education added yet.</div></div>
       <div class="add-form" id="eduForm">
-        <div class="form-row"><div class="field"><label>Degree</label><input type="text" id="edu-degree" placeholder="B.S. Electrical Engineering"/></div><div class="field"><label>School</label><input type="text" id="edu-school" placeholder="University name"/></div></div>
-        <div class="field"><label>Dates</label><input type="text" id="edu-dates" placeholder="e.g. 2018 — 2022"/></div>
+        <div class="form-row"><div class="field"><label for="edu-degree">Degree</label><input type="text" id="edu-degree" placeholder="B.S. Electrical Engineering"/></div><div class="field"><label for="edu-school">School</label><input type="text" id="edu-school" placeholder="University name"/></div></div>
+        <div class="field"><label for="edu-dates">Dates</label><input type="text" id="edu-dates" placeholder="e.g. 2018 — 2022"/></div>
         <div class="add-form-actions"><button type="button" class="af-cancel" onclick="toggleForm('eduForm',false)">Cancel</button><button type="button" class="af-save" onclick="addEducation()">Add</button></div>
       </div>
       <button type="button" class="add-btn" onclick="toggleForm('eduForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add education</button>
@@ -244,15 +247,15 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="prefs-card">
       <div class="prefs-title"><i class="ti ti-settings"></i>Your preferences</div>
       <div class="prefs-sub">Help employers understand what you're looking for</div>
-      <div class="pf"><label>Work style</label><div class="ws-pills" id="wsPills">
+      <div class="pf"><label id="ws-pills-label">Work style</label><div class="ws-pills" id="wsPills" role="group" aria-labelledby="ws-pills-label">
         <button type="button" class="ws-pill" data-ws="Remote">Remote</button>
         <button type="button" class="ws-pill" data-ws="Hybrid">Hybrid</button>
         <button type="button" class="ws-pill" data-ws="On-site">On-site</button>
       </div></div>
-      <div class="pf"><label>Job type</label><select id="pf-jobtype"><option>Full-time</option><option>Contract</option><option>Either</option></select></div>
-      <div class="pf"><label>Open to relocation?</label><select id="pf-reloc"><option>Yes — anywhere</option><option>Yes — US only</option><option>No</option></select></div>
-      <div class="pf"><label>Target salary range (USD/yr)</label><div class="salary-row"><input type="number" id="pf-sal-min" placeholder="Min" step="5000"/><span>—</span><input type="number" id="pf-sal-max" placeholder="Max" step="5000"/></div></div>
-      <div class="pf"><label>Availability</label><select id="pf-avail"><option>Actively looking</option><option>Open to opportunities</option><option>Not currently looking</option></select></div>
+      <div class="pf"><label for="pf-jobtype">Job type</label><select id="pf-jobtype"><option>Full-time</option><option>Contract</option><option>Either</option></select></div>
+      <div class="pf"><label for="pf-reloc">Open to relocation?</label><select id="pf-reloc"><option>Yes — anywhere</option><option>Yes — US only</option><option>No</option></select></div>
+      <div class="pf"><label for="pf-sal-min">Target salary range (USD/yr)</label><div class="salary-row"><input type="number" id="pf-sal-min" placeholder="Min" step="5000" aria-label="Minimum target salary"/><span>—</span><input type="number" id="pf-sal-max" placeholder="Max" step="5000" aria-label="Maximum target salary"/></div></div>
+      <div class="pf"><label for="pf-avail">Availability</label><select id="pf-avail"><option>Actively looking</option><option>Open to opportunities</option><option>Not currently looking</option></select></div>
     </div>
     <div class="links-card">
       <div class="links-title"><i class="ti ti-link"></i>Links</div>
