@@ -372,6 +372,7 @@ let currentEmploymentTypes = new Set();
 let currentFiltered = [];
 let visibleCount = PAGE_SIZE;
 let sortManuallyChanged = false;
+let scopeManuallyChanged = false;
 
 function matchesScope(job, scope) {
   if (scope === "remote") return !!job.is_remote;
@@ -426,6 +427,26 @@ const US_STATE_NAME_TO_ABBR = Object.fromEntries(
   Object.entries(US_STATE_ABBR_TO_NAME).map(([abbr, name]) => [name, abbr])
 );
 
+// Recognized so a bare country name (no state to pair it with) can still
+// auto-switch the scope switch to "International" instead of silently
+// returning zero results under the default "US + Remote" scope, which
+// excludes every International-region job regardless of location text.
+// Not exhaustive of every territory on Earth - covers the countries
+// realistically expected in renewable-energy job postings.
+const NON_US_COUNTRY_NAMES = new Set([
+  "argentina", "australia", "austria", "belgium", "brazil", "bulgaria",
+  "canada", "chile", "china", "colombia", "costa rica", "croatia", "cyprus",
+  "czech republic", "denmark", "egypt", "estonia", "finland", "france",
+  "germany", "greece", "hungary", "iceland", "india", "indonesia", "ireland",
+  "israel", "italy", "japan", "kenya", "latvia", "lithuania", "luxembourg",
+  "malaysia", "malta", "mexico", "morocco", "netherlands", "new zealand",
+  "nigeria", "norway", "pakistan", "panama", "peru", "philippines", "poland",
+  "portugal", "qatar", "romania", "saudi arabia", "singapore", "slovakia",
+  "slovenia", "south africa", "south korea", "spain", "sweden", "switzerland",
+  "taiwan", "thailand", "turkey", "ukraine", "united arab emirates",
+  "united kingdom", "uruguay", "vietnam",
+]);
+
 function locationTokens(rawLocation) {
   // Splits both a single "City, ST" location and a multi-location posting
   // ("US, Louisville, CO; US, New York, NY; ...") into flat, trimmed parts.
@@ -443,6 +464,12 @@ function parseLocationQuery(raw) {
   let city = null;
   let stateText = null;
   const parts = text.split(",").map(s => s.trim()).filter(Boolean);
+  // A bare (or comma-qualified, e.g. "Berlin, Germany") non-US country name
+  // has no US state to pair it with - flagged separately so the scope switch
+  // can auto-include International results instead of finding nothing under
+  // the default US-only-ish scope.
+  const isForeignCountry = NON_US_COUNTRY_NAMES.has(text.toLowerCase())
+    || parts.some(p => NON_US_COUNTRY_NAMES.has(p.toLowerCase()));
   if (parts.length >= 2) {
     [city, stateText] = parts;
   } else {
@@ -460,7 +487,7 @@ function parseLocationQuery(raw) {
   const stateAbbr = stateText
     ? (US_STATE_ABBR_TO_NAME[stateText.toUpperCase()] ? stateText.toUpperCase() : (US_STATE_NAME_TO_ABBR[stateText.toLowerCase()] || null))
     : null;
-  return { city: city ? city.toLowerCase() : null, state: stateAbbr };
+  return { city: city ? city.toLowerCase() : null, state: stateAbbr, isForeignCountry };
 }
 
 function matchesLocationQuery(job, parsed) {
@@ -616,6 +643,20 @@ function render() {
   const query = document.getElementById("job-search").value.trim().toLowerCase();
   const locationQuery = parseLocationQuery(document.getElementById("location-search").value);
   const radiusMiles = parseInt(document.getElementById("radius-select").value, 10) || null;
+  // The default "US + Remote" scope excludes every International-region job
+  // outright, so a location search for a non-US country would otherwise
+  // silently return nothing no matter how well it matches. Auto-switch scope
+  // to International when one is typed, and back when it no longer is -
+  // but only until the user picks a scope themselves.
+  if (!scopeManuallyChanged) {
+    if (locationQuery && locationQuery.isForeignCountry && currentScope !== "international") {
+      currentScope = "international";
+      syncScopeSwitch();
+    } else if ((!locationQuery || !locationQuery.isForeignCountry) && currentScope === "international") {
+      currentScope = "us_remote";
+      syncScopeSwitch();
+    }
+  }
   // A resolvable location search defaults sorting to closest-first rather
   // than most-recent - but only until the user picks a sort themselves
   // (tracked by sortManuallyChanged), so we don't keep overriding their choice.
@@ -942,6 +983,7 @@ document.getElementById("scope-switch").addEventListener("click", (e) => {
   const btn = e.target.closest(".scope-btn");
   if (!btn) return;
   currentScope = btn.dataset.scope;
+  scopeManuallyChanged = true;
   // Distance doesn't mean anything for a remote-only search - drop back to
   // "Most recent" and let auto-switching resume if they later return to a
   // scope where distance is meaningful again.
