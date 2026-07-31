@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#22E09A66;color:#22E09A;background:#22E09A1a;">Solar</span><span class="tag">Excel</span><span class="tag">MATLAB</span><span class="tag">Python</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1025046" target="_blank" rel="noopener">Apply on First Solar's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1025046">Apply on First Solar's site &rarr;</button>
     <div class="apply-note">Applying takes you to First Solar's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p><strong>Basic Job Functions:</strong></p><p>First Solar is seeking a self-driven computational scientist, scientific modeling engineer, applied physicist, or AI-augmented research engineer to help accelerate scientific learning and R&amp;D decision-making. The role combines physical reasoning, computation, data analysis, scientific software, and modern AI-assisted workflows to turn complex observations into practical insight.</p><p>This role sits at the intersection of scientific modeling, AI-assisted research workflows, data science, simulation, uncertainty analysis, and engineering decision support. The candidate will develop models, software tools, and analytical workflows that help transform scientific information and experimental results into practical engineering insight.</p><p><strong>Education/Experience:</strong></p><ul><li>Bachelor&#39;s degree and 10 years of experience, Master&#39;s degree and 8 years of experience, or Ph.D. (strongly preferred) and 5 years of experience in Engineering (Chemical, Electrical, Mechanical, or Computational Science and Engineering) or a related technical field (e.g., Applied Mathematics, Scientific Computing, Physics, Materials Science, Astronomy/Astrophysics, Computational Chemistry, or Computational Biology).</li><li>Relevant experience must include applying computational, physical, statistical, data-driven, or AI-enabled methods to scientific or engineering challenges.</li><li>Alternatively, candidates with 2 years of experience as a Development Engineer II at First Solar will be considered.</li><li>Helpful, but not necessary experience:</li><li>Experience creating models, software tools, or analytical workflows that influenced experimental decisions, process improvements, engineering decisions, or scientific strategy.</li><li>Experience building computational pipelines for complex experimental or observational data from microscopy, spectroscopy, scattering measurements, tomography, reliability testing, manufacturing systems, or field-performance monitoring.</li><li>Experience modeling one or more of the following: transport, diffusion, reaction kinetics, degradation, defect physics, semiconductor behavior, electrochemical systems, materials evolution, or coupled process-structure-property relationships.</li><li>Familiarity with materials science, photovoltaics, semiconductor devices, thin films, defect chemistry, energy materials, manufacturing process data, or field-performance modeling.</li></ul><p><strong>Required Skills/Competencies:</strong></p><ul><li>Strong written and verbal English communication skills, with the ability to participate effectively in cross-functional technical teams.</li><li>Experience using modern AI tools and integrating AI-assisted methods into scientific, engineering, or research workflows to accelerate modeling, simulation, software development, literature synthesis, data analysis, or technical decision-making.</li><li>Demonstrated ability to independently learn new scientific, computational, or analytical methods and apply them to unfamiliar technical problems.</li><li>Ability to work effectively in ambiguous research environments where the correct model, mechanism, or interpretation is not known in advance.</li><li>Candidates should demonstrate strength in the following areas:</li><li>Machine learning, AI-assisted scientific workflows, surrogate modeling, or simulation acceleration.</li><li>Scientific modeling of physical, chemical, materials, device, or engineering systems.</li><li>Data analysis, inference, uncertainty assessment, optimization, or model calibration.</li><li>Scientific software development in Python, Julia, C++, MATLAB, C#, or similar environments.</li><li>Integration of models and algorithms with experimental, operational, reliability, manufacturing, or field data.</li><li>Ability to connect scientific understanding with practical engineering decisions.</li><li>Evidence of scientific curiosity, creativity, intellectual independence, and ability to challenge assumptions constructively.</li></ul><p><strong>Essential Responsibilities:</strong></p><ul><li>Develop and apply machine-learning, generative AI, and physics-informed modeling approaches to explore complex structure–property–performance relationships, identify promising design directions, and accelerate scientific understanding of material systems.</li><li>Evaluate and apply AI-assisted tools and emerging computational methods that meaningfully improve scientific productivity, model development, data analysis, simulation workflows, or engineering decision quality.</li><li>Translate physical hypotheses, experimental observations, and engineering questions into scientific models, surrogate models, decision-support tools, and AI-enhanced analytical workflows that help researchers understand complex systems, evaluate competing hypotheses, prioritize opportunities, and guide R&amp;D decisions.</li><li>Implement scientific models and analysis workflows as reusable computational tools with attention to robustness, computational efficiency, documentation, and reproducibility.</li><li>Identify knowledge gaps, critical uncertainties, and high-value learning opportunities across research programs, to maximize information gained from experiments and simulations.</li><li>Use experimental data to support model calibration, parameter estimation, uncertainty assessment, sensitivity analysis, and model validation.</li><li>Work closely with process development, characterization, reliability, device physics, and other technical teams to improve scientific learning cycles, accelerate problem-solving, and convert research insights into practical engineering actions.</li><li>Communicate modeling assumptions, limitations, validation results, uncertainty, and technical conclusions clearly to both specialist and non-specialist audiences.</li></ul><p><strong>Reporting Relationships:</strong></p><ul><li>Report to Fellow, Advanced Research.</li><li>This position will not have direct reports.</li></ul><p><strong>Travel:</strong></p><ul><li>0% - 5% (On occasion/as needed for training, etc.)</li></ul><p><strong>Estimated Salary Range:</strong></p><ul><li>$80,700 - $135,000 Annually</li></ul><p><strong>Physical Requirements:</strong></p><p>All positions in our office require interaction with people and technology while either standing or sitting. To best service our customers, internal and external, all associates must be able to communicate face-to-face and on the phone with or without reasonable accommodation. First Solar is committed to compliance with its obligations under all applicable state and federal laws prohibiting employment discrimination. In keeping with this commitment, it attempts to reasonably accommodate applicants and employees in accordance with the requirements of the disability discrimination laws. It also invites individuals with disabilities to participate in a good faith, interactive process to identify reasonable accommodations that can be made without imposing an undue hardship.</p><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role. All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Development Engineer (AI-Augmented Scientific Modeling)",
+      company: "First Solar",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

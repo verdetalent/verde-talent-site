@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span><span class="tag">FERC</span><span class="tag">PSS/E</span><span class="tag">interconnection studies</span><span class="tag">load flow</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://aes.wd1.myworkdayjobs.com/AES_US/job/US-Houston-TX/SR-Manager--Transmission-Strategy---ERCOT_R1063489-1" target="_blank" rel="noopener">Apply on AES Corporation's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://aes.wd1.myworkdayjobs.com/AES_US/job/US-Houston-TX/SR-Manager--Transmission-Strategy---ERCOT_R1063489-1">Apply on AES Corporation's site &rarr;</button>
     <div class="apply-note">Applying takes you to AES Corporation's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Are you ready to be part of a company that&#39;s not just talking about the future, but actively shaping it? Join The AES Corporation, the largest US-based global power company with a team of 8,300 employees across 12 countries.</p><p>AES has been <strong>ranked #1 by BloombergNEF</strong>in renewable energy sales to corporations in the US and Americas for five consecutive years, providing electricity for <strong>millions of people worldwide.</strong></p><p>We are proud to foster a strong workplace culture, earning prominent positions in Great Place to Work™ rankings across the markets where we operate. AES was also named one of the World’s Most Ethical Companies for the 13th consecutive year in 2026, highlighting our dedication to integrity, transparency, and responsible business practices.</p><p>Our spirit of innovation continues to earn industry recognition. AES is the only seven-time winner of the Edison Electric Institute’s Edison Awards in the twenty-first century, a distinction honoring global leadership in advancing the electric power industry.</p><p>If you&#39;re ready to be part of a company that&#39;s not just adapting to change, but driving it, AES is the place for you. We&#39;re not just building a more sustainable future, we&#39;re powering it. Apply now and energize your career with a true leader in global energy.</p><p>AES Clean Energy (AES) is seeking a <strong>Transmission Strategy SR Manager</strong> for the ERCOT region, and possibly additional markets, to join our Transmission Strategy team. This role is responsible for both transmission planning and nodal production cost modeling.</p><p>AES is at the forefront of technical and strategic innovation. This team is central to continuing our industry leadership as one of the largest U.S. Independent Clean Power Producers, across Solar, Wind, and Storage.</p><p>This ERCOT SR Manager, Transmission Strategy role, will serve as the principal Transmission Strategy lead for ERCOT, and possibly additional continental US energy markets.</p><p>The Transmission Strategy team is responsible for setting a transmission focused market-wide strategy in all Continental U.S. energy markets, and integrating that strategy across AES teams, including Development, Commercial, and Execution teams, partnering with Development, Commercial, and Execution teams to apply transmission strategy at the project level. This strategy will be applied to prioritizing our greenfield efforts, prioritizing our project acquisition efforts, and prioritizing our existing project pipeline. The Transmission Strategy team is also responsible for facilitating transmission strategies in certain RTOs and with particular projects, project specific assessment of network impacts, and deliverability risks and opportunities.</p><p>This function is critical through all stages of development, from greenfield prospecting through late-stage interconnection studies and agreement execution.</p><p>The Transmission Strategy team relies on a combination of traditional transmission planning and load flow analysis, while pioneering innovative approaches to anticipate transmission network opportunities and risks. The team relies on a mix of conducting in-house and consultant-supported load flow studies.</p><p>We are looking for someone with the following experience:</p><ul><li>Deep relevant experience including transmission planning, market design, and interconnection policy is required. Experience with multiple Regional Transmission Organizations (RTO) and other non-RTO regions is a plus, but not a requirement. Experience with resource adequacy and/or market operations is preferred.</li><li>Demonstrated experience personally running power flow analysis with at least one of the industry-accepted tools (i.e. powerGEM TARA, Siemens PSS/E, GE PSLF) required. Ideally, demonstrated project management experience including some experience overseeing others to run power flow studies, and experience with contractors running power flow studies is preferred.</li><li>Familiarity with basic concepts in short circuit and stability analysis is beneficial.</li><li>Demonstrated experience personally running nodal production cost models with at least one of the industry-accepted tools (i.e., PROMOD, UPLAN, GE MAPS, Aurora) is required. Strong knowledge of power system economics including dispatch trends, curtailment trends, and locational marginal pricing trends is preferred.</li><li>Experience with FERC/ISO/RTO/TO Transmission Planning and Generation Interconnection processes required. Experience with reviewing and negotiating Transmission Services Agreements (TSAs) preferred. Experience with assessing strategies for wheeling across balancing authorities is beneficial.</li><li>Experience with renewable energy development is beneficial.</li><li>Ability to create a positive and productive teamwork environment.</li><li>Ability to communicate effectively in both commercial and technical venues. Ability to present complex technical content in a simplified and useful manner for a non-technical audience.</li><li>Ability to innovate and resolve complex challenges.</li><li>Willingness to travel as needed, which is not expected to exceed 10% of the time.</li><li>AI and/or Automation experience is a plus.</li><li>Vision for what is needed to achieve success and ability to implement an effective plan of action.</li></ul><p>AES is an Equal Opportunity Employer who is committed to building strength and delivering long-term sustainability through diversity and inclusion. Respecting all backgrounds, differences and perspectives enables us to improve the lives of our people, customers, suppliers, contractors, and the communities in which we live and work. All qualified applicants will receive consideration for employment without regard to sex, sexual orientation, gender, gender identity and/or expression, race, national origin, ethnicity, age, religion, marital status, physical or mental disability, pregnancy, childbirth, or related medical condition, military or veteran status, or any other characteristic protected under applicable law. E-Verify Notice: AES will provide the Social Security Administration (SSA) and if necessary, the Department of Homeland Security (DHS) with information from each new employee&#39;s I-9 to confirm work authorization.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "SR Manager, Transmission Strategy - ERCOT",
+      company: "AES Corporation",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

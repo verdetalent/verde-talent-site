@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/Spain-Madrid/Arquitecto-a-de-Aplicaciones_R-20540-1" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/Spain-Madrid/Arquitecto-a-de-Aplicaciones_R-20540-1">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>¿Te gustaría incorporarte a la empresa líder del sector eléctrico como Arquitecto/a de Aplicación?</p><p>¿Tienes experiencia en arquitectura de aplicaciones, evolución tecnológica y transformación digital en entornos TI?</p><p>¿Quieres aportar tu conocimiento para afrontar los nuevos retos del Negocio Comercial en el área de Sistemas Informacionales y Big Data?</p><p><strong>¡SUMA TU ENERGÍA AL FUTURO!</strong></p><p><strong>¿Qué vas a hacer?</strong></p><p>Como Arquitecto/a de Aplicación, serás una figura clave para impulsar la evolución tecnológica de las aplicaciones bajo tu responsabilidad y contribuir a la transformación tecnológica digital de la compañía. Aportarás soluciones al Negocio Comercial en el área de Sistemas Informacionales y Big Data.</p><p><strong>Funciones principales:</strong></p><ul><li>Liderar la consecución del roadmap tecnológico de las aplicaciones bajo tu responsabilidad.</li><li>Liderar el diseño técnico de las aplicaciones, en coordinación con el Responsable de Área de Arquitectura.</li><li>Identificar riesgos técnicos en las aplicaciones bajo tu responsabilidad y proponer soluciones de mitigación.</li><li>Definir y planificar la evolución técnica de las aplicaciones para dar soporte a los planes de negocio en el sector energético.</li><li>Analizar el impacto financiero de las alternativas tecnológicas y contribuir a la toma de decisiones.</li><li>Asegurar la aplicación de estándares, controles y procesos de TI, seguridad y construcción de software.</li><li>Colaborar con equipos multidisciplinares y áreas de negocio para garantizar soluciones tecnológicas alineadas con las necesidades comerciales.</li></ul><p><strong>¿Qué estamos buscando?</strong></p><ul><li>Ingeniería Superior Industrial, de Telecomunicaciones, Informática o estudios relacionados.</li><li>Más de 5 años de experiencia equivalente en TI, desempeñando el rol de arquitecto/a de aplicaciones.</li><li>Profundo conocimiento de tecnologías, su evolución y competencias relacionadas con TI.</li><li>Profundo conocimiento de las aplicaciones bajo responsabilidad técnica.</li><li>Conocimiento de los procesos y planes de negocio que afecten a las aplicaciones bajo responsabilidad técnica.</li><li>Capacidades avanzadas de comunicación y coordinación con equipos técnicos y de negocio.</li></ul><p><strong>Conocimientos específicos</strong></p><ul><li>Tecnologías Big Data y Analytics.</li><li>Soluciones de desarrollo como PWC, MSI, CDC, Hadoop u otras tecnologías relacionadas.</li><li>Estándares y controles de TI.</li><li>Arquitectura y evolución tecnológica de aplicaciones.</li><li>Procesos de seguridad aplicados a entornos tecnológicos.</li><li>Procesos de construcción de software y su impacto en la tecnología.</li><li>Metodologías ágiles: Scrum, Kanban u otras similares.</li></ul><p><strong>¿Qué ofrecemos?</strong></p><p>• Te incorporarás a una empresa del IBEX 35 con presencia internacional y más de 40.000 empleados/as.</p><p>•  Disfrutarás de un salario competitivo, beneficios sociales y medidas de conciliación.</p><p>•  Entre otras medidas de conciliación, trabajamos con jornada continuada todo el año.</p><p>•  Trabajarás en un equipo dinámico y altamente cualificado, en un entorno de trabajo internacional y con proyectos innovadores.</p><p>•  Tendrás un Programa de bienvenida, donde podrás conocer la empresa a nivel global y su funcionamiento.</p><p>•  Y por supuesto, un Programa de formación continua que podrás desarrollar en el Campus de Iberdrola.</p><p>. El proceso de selección se iniciará en septiembre.</p><p>En Iberdrola la diversidad, equidad e inclusión son puntos esenciales en nuestro día a día. Nos enorgullecemos de ser una compañía donde hay igualdad de oportunidades y donde todas las personas son bienvenidas, valoradas y respetadas independientemente de sexo, discapacidad, raza, religión, orientación sexual, edad, estado civil, nacionalidad o identidad de género.</p><p><strong>Fecha de finalización de la publicación:</strong></p><p>30-08-2026</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Arquitecto/a de Aplicaciones",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

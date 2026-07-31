@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">ArcGIS</span><span class="tag">permitting</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Portland-OR/Associate--Cultural-Resources-and-Tribal-Relations--Environmental-Compliance---Strategy_R11042-1" target="_blank" rel="noopener">Apply on Invenergy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Portland-OR/Associate--Cultural-Resources-and-Tribal-Relations--Environmental-Compliance---Strategy_R11042-1">Apply on Invenergy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Invenergy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Invenergy is North America’s largest privately held developer, owner, and operator of power infrastructure. With 25 years of trusted execution, we deliver reliable, affordable energy through a diverse portfolio that includes natural gas, solar, land-based wind, energy storage, transmission, and domestic manufacturing. Headquartered in Chicago, we develop, own, and operate large scale projects that power communities and support the energy future.</p><p>This position will be open for application for at least 3 calendar days from the posting date. This position will remain open for application based on business need, which may be before or after the 3-day posting window.</p><p><strong>Job Description</strong></p><p><strong>Position Overview</strong></p><p>As an Associate, Cultural Resources and Tribal Relations, you will assist Invenergy’s cultural resources management and Tribal relations program in support of projects throughout all stages including development, pre-construction planning, construction implementation, and operations. This position serves as a subject matter expert to project teams, as well as external parties, and assists on consultant engagement strategy for cultural resources and Tribal relations-related work to support the responsible development, construction and operation of utility-scale wind, solar, geothermal and thermal energy facilities, and transmission infrastructure, across the US.</p><p>This role will coordinate and support multiple internal teams including Development, Engineering, Environmental Compliance &amp; Strategy, Project Management, and Communications. The successful candidate will advise on the application of state and federal historic preservation laws, regulations, and policies, and will be required to ensure coordination with external cultural resources consultants, Tribal Nations, and regulatory agencies on successful compliance and implementation of cultural resources management practices.</p><p><strong>Responsibilities</strong></p><ul><li>Respond to internal requests to review technical reports including cultural resources desktop studies, pedestrian inventory and testing reports, monitoring reports, ethnographies, cultural landscape studies; interpret technical jargon and details into layman’s language so project teams can understand how to manage potential risks or make decisions on next steps.</li><li>Assist in developing requests for proposals for cultural resources and Tribal engagement support services, reviewing proposals, and oversee the consultant’s work to ensure it meets company expectations and the project’s goals.</li><li>Work to ensure that the cultural resources management firms and associated work product meet internal expectations and project goals. Advise on appropriate survey scope for the specifics of a project and provide feedback on proposals regarding scope, schedule, and budget.</li><li>Support the implementation of Section 106 of the National Historic Preservation Act, when necessary, by engaging with Tribal, state, and federal historic preservation agencies/departments on regulations and permitting requirements.</li><li>Respond to internal inquiries about when a project triggers a need for engagement with Tribal Nations, relating to federal, state, and county Tribal engagement requirements.</li><li>Manage consultant administrative items, which include purchase orders, change orders, service orders, invoice review, and budget tracking.</li><li>Identify and support the need, timing, development, and implementation for cultural and Tribal monitoring and unanticipated discovery planning while overseeing consultant efforts.</li><li>Work with internal teams to ensure confidentiality and avoidance measures of cultural resources through environmental management practices incorporating and aligning protection measures through spatial data and project specification documents.</li><li>Maintain and update record keeping systems to document, track cultural resource practices and Tribal engagement, as well as laws, regulations, policies, and requirements at the federal, state, and county level. Utilize information to support project permitting, populate permit matrices, review reports, strategic planning, and decision-making.</li><li>Maintain and regularly review internal cultural resources and Tribal information data standards and record keeping and data security protocols to ensure data are handled appropriately.</li></ul><p><strong>Minimum Qualifications</strong></p><ul><li>Bachelor’s degree in anthropology, archaeology, or related discipline.</li><li>Demonstrated 3+ years cultural resources management experience.</li><li>Ability to maintain strict confidentiality of sensitive materials, activities, and initiatives.</li><li>Excellent technical writing and communication skills assuring documents and communications are concise and accurate.</li><li>Experience preparing and reviewing technical deliverables including desktop and field survey reports for archaeological and historic above ground cultural reviews.</li><li>Demonstrated experience developing proposals and building cost estimates for cultural resources services, requests for proposals.</li><li>Ability to navigate ArcGIS to interpret cultural resources spatial data and identify potential project risks.</li><li>Knowledge of federal and state laws, regulations, and policies pertaining to cultural resources.</li><li>Comfort and experience working in a developing program area.</li><li>Strong critical thinking skills with the ability to identify and solve problems.</li><li>Must be self-directed and detail-oriented, with the ability to work effectively in a team environment.</li><li>Able to act and adapt to a fast-paced business environment with competing deadlines and quickly learn and implement internal processes.</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Advanced degree in anthropology, archaeology, or related discipline.</li><li>Experience conducting cultural resources inventories in the US including systematic pedestrian surveys with subsurface testing, and cultural resources monitoring.</li><li>Understanding of the Cultural Resource Management Industry nationwide.</li><li>Experience working with Tribal Nations on cultural resources and knowledge of Tribal sovereignty and Tribal treaty rights.</li></ul><p><strong>Base Pay</strong></p><p>$98,000.00 - $118,000.00 USD Annual</p><p>Bonus: 20% - 30%</p><p>The base pay range reflects the minimum and maximum target salary for the position. Invenergy considers a number of factors when determining base pay offers such as the scope and responsibilities of the position and the candidate&#39;s experience, education and skills.</p><p>In addition to base pay, the total annual compensation package may also include eligibility to participate in our bonus program(s) which are designed to reward individual and company performance. Your recruiter can share more about bonus eligibility for this position during the hiring process.</p><p>Invenergy offers a variety of other benefits including medical, dental and vision insurance, 401k, paid time off, etc.</p><p>Invenergy LLC is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to, among other things, race, color, religion, sex, sexual orientation, gender identity, national origin, age, status as a protected veteran, or disability.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Associate, Cultural Resources and Tribal Relations, Environmental Compliance & Strategy",
+      company: "Invenergy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

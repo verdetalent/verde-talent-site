@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Business-Applications-Analyst-III---Workflow---Automation-Platforms_R09967-1" target="_blank" rel="noopener">Apply on Invenergy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Business-Applications-Analyst-III---Workflow---Automation-Platforms_R09967-1">Apply on Invenergy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Invenergy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Invenergy is North America’s largest privately held developer, owner, and operator of power infrastructure. With 25 years of trusted execution, we deliver reliable, affordable energy through a diverse portfolio that includes natural gas, solar, land-based wind, energy storage, transmission, and domestic manufacturing. Headquartered in Chicago, we develop, own, and operate large scale projects that power communities and support the energy future.</p><p>This position will be open for application for at least 3 calendar days from the posting date. This position will remain open for application based on business need, which may be before or after the 3-day posting window.</p><p><strong>Job Description</strong></p><p><strong>Position Overview</strong></p><p>The Business Applications Analyst III – Workflow &amp; Automation Platforms will be responsible for the administration, maintenance, and technical support of assigned applications and processes within our organization, including analyzing and optimizing operational processes. Your primary objective will be to develop business requirements, implement technical solutions based on business requirements, and provide technical support on assigned applications.</p><p>As a Business Application Analyst III, you will play a crucial role in driving operational excellence, optimizing applications, implementing technology solutions to drive organizational improvement, ensuring the security of applications, and enhancing overall productivity within the organization. Your analytical mindset, technical skillset, attention to detail, and ability to streamline processes will contribute to the success and growth of the company.</p><p><strong>Responsibilities</strong></p><ul><li>Analyze Applications &amp; Processes: Conduct thorough evaluations of existing applications and business processes to identify inefficiencies, bottlenecks, and areas for improvement.</li><li>Business Requirements: Work with key stakeholders to develop business requirements and translate those requirements into technical requirements.</li><li>Change Management: Ensure change management process is followed including evaluating risk of the change, appropriate testing of the change, and effective communication with business users.</li><li>Collaboration: Collaborate with cross-functional teams, including other IT teams and business departments, to understand their requirements and identify opportunities for process enhancements.</li><li>Documentation: Create detailed documentation for applications including process maps, flowcharts, diagrams, user guides, and technical guides.</li><li>Implementation: Coordinate and facilitate the implementation of new technology solutions and changes to existing technology services, working closely with stakeholders to ensure smooth transitions and minimal disruption.</li><li>Industry Trends: Keep up-to-date with industry best practices and emerging technologies to drive innovation, increase efficiencies, and enable business growth.</li><li>Performance Measurement: Establish performance benchmarks and key performance indicators (KPIs) to assess the effectiveness of applications and identify trends to develop actionable insights.</li><li>Project Lead: Serve as project lead for small to medium sized technical projects.</li><li>Stakeholder Engagement: Regularly engage with business stakeholders for assigned applications including leading regular user group meetings and ensuring user feedback is added for future improvements.</li><li>Technical Management: Provide advanced technical support and subject matter expertise (SME) for assigned applications.</li><li>Testing: Develops, documents, and maintains user acceptance test scripts; performs user acceptance and other functional tests; and assists tracking and coordinating user acceptance testing.</li><li>Training and Documentation: Creates training materials, user guides, SOP’s, KB’s, and process documentation to ensure standardized workflow practices and support organizational knowledge sharing.</li><li>Vendor Coordination- Establish good working relationship with vendors and escalate to these vendors as needed for technical resolution and project implementation.</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Bachelor&#39;s degree in computer science, business administration, operations management, or a related field.</li><li>4+ years experience as a Business Application Analyst or similar role.</li><li>4+ years experience in a hands-on technical role supporting and implementing workflow and automation platforms such as Microsoft Power Apps, Microsoft Power Automate, Microsoft Forms, Pipefy, or other comparable workflow tools.</li><li>4+ years experience providing Tier 2/3 hands-on application technical support.</li><li>Strong technical knowledge and ability to own a technical issue until resolution.</li><li>Strong documentation skills including experience creating application knowledge base articles, diagrams, and guides for technical staff and end-users.</li><li>Strong interpersonal and communication skills, with the ability to collaborate effectively with stakeholders at all levels of the organization and vendors.</li><li>Eligible to work in the United States without the need for employer visa sponsorship now or in the future.</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>2+ years experience developing business requirements and translating those requirements into technical requirements.</li><li>Strong analytical and problem-solving skills with the ability to analyze data, draw insights, and make data-driven recommendations</li><li>Proficiency in process mapping tools and methodologies such as Visio.</li><li>Excellent organizational and time management skills with the ability to handle multiple projects simultaneously.</li><li>Experience managing small to medium-sized technology projects.</li><li>Knowledge of Lean Six Sigma or other process improvement methodologies.</li><li>Knowledge of Software Development Life Cycle (SDLC).</li><li>Knowledge of Information Technology Infrastructure Library (ITIL) 4.</li></ul><p>#LI-ONSITE</p><p><strong>Base Pay</strong></p><p>$85,000.00 - $115,000.00 USD Annual</p><p>Bonus: 20% - 30%</p><p>The base pay range reflects the minimum and maximum target salary for the position. Invenergy considers a number of factors when determining base pay offers such as the scope and responsibilities of the position and the candidate&#39;s experience, education and skills.</p><p>In addition to base pay, the total annual compensation package may also include eligibility to participate in our bonus program(s) which are designed to reward individual and company performance. Your recruiter can share more about bonus eligibility for this position during the hiring process.</p><p>Invenergy offers a variety of other benefits including medical, dental and vision insurance, 401k, paid time off, etc.</p><p>Invenergy LLC is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to, among other things, race, color, religion, sex, sexual orientation, gender identity, national origin, age, status as a protected veteran, or disability.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Business Applications Analyst III \u2013 Workflow & Automation Platforms",
+      company: "Invenergy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

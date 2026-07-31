@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span><span class="tag">FERC</span><span class="tag">NERC</span><span class="tag">Professional Engineer</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Manager--Transmission-System-Planning--Hybrid-Schedule-_R-031127" target="_blank" rel="noopener">Apply on Eversource Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Manager--Transmission-System-Planning--Hybrid-Schedule-_R-031127">Apply on Eversource Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Eversource Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p>Role and Scope of Position:</p><p>This position is accountable for managing Transmission System Planning’s compliance activities and ensuring multi-state long-term planning for the Eversource Transmission System. This role leads a group that covers the entire three-state Eversource service territory. The team performs planning assessments in accordance with NERC reliability standards, fulfills Transmission System Planning’s compliance activities and regulatory filings as required by national, regional and local standards and regulatory requirements. This position manages the long-term assessment of Eversource transmission system adequacy and reliability, defining the need, size, location, priority, timing and justification of major system projects. Provides a Transmission Planning Strategy for obtaining ISO project-technical and cost allocation approvals, ISO policy and other ISO issues that could affect the Eversource Transmission Business or its customers. Provides technical leadership, recognized as having technical expertise, elicits ideas for the solution of unique and/or complex engineering problems, and is accountable for major technical recommendations. Manages proposed transmission projects through Independent System Operators-NE (ISO-NE) working groups and New England Power Pool (NEPOOL) or Regional Transmission Organization (RTO) committees. Candidate should be well versed in the FERC orders relevant to transmission planning processes and all applicable reliability standards and operating procedures. Develops plans for solving major engineering problems and opportunities and has responsibility for interpreting, organizing, executing and coordinating assignments. Provides strategic and tactical leadership for regulatory and compliance filings. Assumes the role of Transmission Planning regulatory and compliance coordinator. Directs and prepares documents/testimony, written responses, and may make presentations/testify for local, state and regulatory requirements and proceedings for all jurisdictions. Interaction with internal and external stakeholders is critical, including ISO-NE, NPCC, and state regulatory agencies. Successful candidate is expected to coordinate effectively with numerous internal departments including Transmission Compliance, Transmission Policy and various engineering departments.</p><p><strong>Essential Functions:</strong></p><ul><li>Manages electric transmission system planning compliance with state, regional and NERC standards and regulations and environmental programs, policies, rules and regulations.</li><li>Leads the team to perform timely planning assessments to ensure compliance with NERC reliability standards, fulfill compliance requirements and activities</li><li>Oversees the management and maintenance of transmission planning models such as powerflow, stability, EMT&amp;GMD models and tools</li><li>Solves complex technical problems requiring recognized expertise in electric power systems, various engineering and operating disciplines, and resultant regulatory impacts, etc., to resolve major power facilities problems.  The desired solutions should be compatible and part of the overall business unit strategy.</li><li>Purses industry best practices on long-term transmission planning and formulates Eversource technical positions and recommends company policies and standards on various issues within expertise.</li><li>Presents, directs and/or prepares corporate testimony and written responses for rate cases and other local, state or federal regulatory proceedings.</li><li>Leads advocacy of governing transmission planning processes and standards, both within Eversource, ISO-NE and Northeast Power Coordinating Council (NPCC).</li><li>Interfaces with federal, state and local organizations external to Eversource on behalf of or as a representative of Eversource.</li><li>Serves on various Eversource internal committees and task forces to provide information and</li><li>Represents Eversource with respect to assigned area of transmission responsibilities on various industry and professional society committees and working groups.</li><li>Oversees the management and development of individual staff. Leads development of training program and materials to expand department staff’s technical expertise. Supervises, selects, coaches and develops individual staff.</li><li>Manages the group by establishing and monitoring individual goals, policies, plans, programs, performance objectives and budget.</li></ul><p><strong>Technical Knowledge/Skill/Education/Licenses/Certifications:</strong></p><p>Technical Knowledge/Skills:</p><ul><li>Requires thorough knowledge and experience in electric transmission planning, system analysis computer applications and modeling, operations support, budgeting, project analysis, working cross-functionally and communicating.</li><li>Deep knowledge in NERC, NPCC, ISO-NE compliance requirements, especially transmission planning responsibilities, reliability standards, planning and operating procedures</li><li>Familiar with FERC Order 1920 and state regulations pertinent to transmission in CT, MA and NH</li><li>Demonstrated leadership in strategic planning.</li><li>Thorough knowledge of transmission power system protection and control systems</li></ul><p>Education:</p><ul><li>Requires a Bachelor of Science Degree in Electrical Engineering. Advanced degree preferred.</li></ul><p>Experiences:</p><ul><li>10 years experience in transmission system planning or related field</li></ul><p>Licenses &amp; Certifications:</p><ul><li>Professional Engineer’s License preferred.</li></ul><p>#LI-ES3</p><p>#LI-Hybrid</p><p>#engajd</p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p><strong>Compensation and Benefits:</strong></p><p>Eversource offers a competitive total rewards program. Check out our careers site for an overview of our benefits programs. Salary is commensurate with your experience. This position is eligible for a potential incentive. The annual salary range for this position is:</p><p>$176,920.00-$196,580.00</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>0</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement</strong>:</p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Manager, Transmission System Planning (Hybrid Schedule)",
+      company: "Eversource Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

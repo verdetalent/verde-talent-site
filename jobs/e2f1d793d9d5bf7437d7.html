@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#4FB3FF66;color:#4FB3FF;background:#4FB3FF1a;">Wind</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://careers.vestas.com/job/Taichung-City-Electrical-Operations-Safety-Engineer-Taiw-43508/1407709633/" target="_blank" rel="noopener">Apply on Vestas's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://careers.vestas.com/job/Taichung-City-Electrical-Operations-Safety-Engineer-Taiw-43508/1407709633/">Apply on Vestas's site &rarr;</button>
     <div class="apply-note">Applying takes you to Vestas's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Vestas Offshore Service Support and Electrical Operations Department, is part of the overall Offshore Service Global business, working closely with the Operational Service Team, Sales, Special Projects and Construction. Responsible for the service site setup, support, and preparation, including long term strategic planning for the Global offshore service regions. You will work closely with Electrical operations, Electrical safety, Offshore Service Departments and stakeholders.</p><p>Responsibilities</p><ul><li>Authorized under Vestas SSoW (WTSR/ENSR) as an Authorizing Engineer/HVCP and support the Control of Hazardous Energy/electrical safety programme for V174 and V236.</li><li>Ensure documentations for High Voltage Switching under Vestas boundary.</li><li>Manage switching, testing, commissioning, fault diagnosis and maintaining of high voltage networks in liaison with client technical department and Site Offshore</li><li>Preparation and briefing of risk assessments and method statements for installation/commissioning and Service tasks. Ability to handle fault location activities.</li><li>Review and consolidate of Documentation required from a technical perspective for Project completion Handovers.</li><li>Follow, understand, and advise on local procedures on Control of Hazardous Energy / Electrical Safety standards, particularly to areas where alternative safe systems / methods of work may be applied.</li><li>Provide technical support to Site Management and technicians onshore as well as offshore, into mechanical / electrical related safety and operational issues.</li><li>Visit/Sail out Offshore in rotations based on local agreement and support to carry out Audit in turbine, Workshop, lead as AT(LT&amp;TS) for AE and continuous learning, Field/Offshore Test of AWPs.</li><li>Conduct peer and technical reviews according to the design project model.</li><li>Supplier management and review of supplier&#39;s design and report/documentation.</li><li>Participate in Audits at Service Sites as per SSoW (WTSR/ENSR).</li><li>Implementation of equipment to our turbine platform, electrical and mechanical operations.</li><li>On site WTG technical and SSoW (WTSR/ENSR) support in turbine/on-site.</li><li>Creating, reviewing and approving Approved Written Procedures in line with company&#39;s rules, support procedures, management instructions and site/regional requirements.</li><li>Review and approval of service procedures (Method Statements, Work Instructions, SIIs, SIFs) and Risk Assessments.</li><li>Verification of Point of Isolations (100% check on a WTG - either themself or in coordination with an appointed site technician), and Safety Precautions to ensure &quot;Safety from the System&quot;.</li><li>Reviewing tools as required to complete the work procedures.</li><li>Conducting on-site Technical/WTSR/ ENSR training/induction based on request/need.</li><li>Assisting the implementation of new procedures/processes.</li><li>Input to monthly customer report, as required by the site management.</li><li>Support to the regional service/construction &amp; commissioning team/ management during Project phase handing over.</li><li>Administration responsibilities and skills in their field of work.</li><li>Supporting wind farms in the creation and implementation of Vestas SSoW (WTSR/ENSR).</li><li>Supporting QSE department with regard to the electrical safety and associated incident investigations.</li><li>Participate in subject matter expert workgroups, internal and external in the industry, and share / gain knowledge.</li><li>Responsible for communicating SSoW (WTSR/ENSR) notifications to relevant stakeholders.</li><li>Provide ad-hoc SSoW (WTSR/ENSR) related support and assistance to the direct line management.</li><li>Responsible for communicating SSoW (WTSR/ENSR) notifications to relevant stakeholders.</li></ul><p>Qualifications</p><ul><li>University degree/Qualification in the field of electrical engineering (or electro-mechanical) or similar subject.</li><li>Previous experience within the energy sector, e.g. with a distribution system operator, an OEM or a wind farm developer in a similar role.</li><li>Profound operational experiences in the field of installation, servicing, and maintenance of the electrical systems. For example, relevant previous wind industry technical &amp; operational experience working with Vestas WTGs.</li><li>Good knowledge of low voltage, high voltage, and relevant policy knowledge in electrical networks.</li><li>Knowledge of operations management systems.</li><li>Good awareness for occupational safety.</li><li>Ability and fitness to visit offshore sites as well as working at height.</li><li>A structured and systematic approach to problem solving.</li><li>Fluency in the local language.</li></ul><p>Competencies</p><ul><li>Relevant previous Wind industry technical &amp; operational experience.</li><li>In depth knowledge and understanding of local electrical regulations and standards.</li><li>Ability to deliver training/workshop in the classroom or at the workplace.</li><li>Skilled Microsoft Office user.</li><li>Interpersonal skills and a development-oriented mind-set.</li><li>A structured, systematic approach to problem solving.</li><li>Open mind detailed and motivated vision.</li><li>Able to make professional decisions.</li><li>Safety conscious.</li><li>Ability to remain focused.</li><li>Ability to communicate effectively.</li><li>Ability to ask open questions.</li><li>A team-oriented person with the ability to lead or inspire.</li><li>Structured, well-organized person with good prioritization skills.</li><li>Tough and firm at the same time respectful and friendly.</li><li>Professional, engaged, and highly motivated.</li><li>Understanding of the support function in a global company.</li><li>Feels comfortable handling multiple activities at the same time.</li><li>Attention to detail and great oral and written communication skills.</li><li>Exhibits respectful and professional communication via phone, e-mail, and other channels.</li><li>Robust interpersonal skills with the ability to interact with colleagues at different levels.</li><li>Ability to work cross functionally.</li></ul><p>• A team-oriented person, who can guide and supervise others in a positive manner</p><ul><li>English language: at least business-level fluency (speaking, reading, writing)</li><li>local language: at least business-level fluency (speaking, reading, writing)</li><li>Possess a valid driving license in your country.</li><li>Willingness to travel or relocate to other sites when required or based on project need.</li></ul><p>What We Offer</p><p>We offer a new job with valuable opportunities for vocational and personal development at a major wind turbine manufacturer. You will become part of a highly professional environment in a highly expanding industry.</p><p>At Vestas Offshore Wind you will find exciting opportunities to work on commercial, technological and environmental development in the offshore market. We provide attractive opportunities for personal and career development with a diverse and global work environment in a growing industry.</p><p><strong>Our commitment to a fair hiring.</strong></p><p>At Vestas, we evaluate all candidates solely based on their professional experience, education, and relevant skills. To support a fair recruitment process, we kindly ask that you remove any photos, dates of birth or graduation, gender pronouns, marital status, or other personal information not relevant to the role before submitting your CV/resume. Your CV/resume should focus on your professional and educational background, along with the necessary contact details (email and phone number). We train our hiring teams in inclusive evaluation and regularly review process outcomes to ensure fairness.</p><p><strong>DEIB Statement</strong></p><p>At Vestas, we recognize the value of diversity, equity, and inclusion in driving innovation and success. We strongly encourage individuals from all backgrounds to apply, particularly those who may hesitate due to their identity or feel they do not meet every criterion. As our CEO states, &quot;Expertise and talent come in many forms, and a diverse workforce enhances our ability to think differently and solve the complex challenges of our industry&quot;. Your unique perspective is what will help us powering the solution for a sustainable, green energy future.</p><p><strong>BEWARE – RECRUITMENT FRAUD</strong></p><p>It has come to our attention that there are a number of fraudulent emails from people pretending to work for Vestas. Read more via this link, https://www.vestas.com/en/careers/our-recruitment-process</p><p><strong>About Vestas</strong></p><p>Vestas is the energy industry’s global partner on sustainable energy solutions. We are specialised in designing, manufacturing, installing, and servicing wind turbines, both onshore and offshore.</p><p>Across the globe, we have installed more wind power than anyone else. We consider ourselves pioneers within the industry, as we continuously aim to design new solutions and technologies to create a more sustainable future for all of us. With more than 200 GW of wind power installed worldwide and 40+ years of experience in wind energy, we have an unmatched track record demonstrating our expertise within the field.</p><p>With 39,000 employees globally, we are a diverse team united by a common goal: to power the solution – today, tomorrow, and far into the future.</p><p>Vestas promotes a diverse workforce which embraces all social identities and is free of any discrimination. We commit to create and sustain an environment that acknowledges and harvests different experiences, skills, and perspectives. We also aim to give everyone equal access to opportunity.</p><p>To learn more about our company and life at Vestas, we invite you to visit our website at www.vestas.com and follow us on our social media channels. We also encourage you to join our Talent Universe to receive notifications on new and relevant postings.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Electrical Operations Safety Engineer",
+      company: "Vestas",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

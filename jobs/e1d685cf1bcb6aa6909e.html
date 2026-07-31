@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">FERC</span><span class="tag">NERC</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Maine-Augusta/Lead-Engineer---Protection---Control_R-24298" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Maine-Augusta/Lead-Engineer---Protection---Control_R-24298">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>TITLE</strong>:Lead Engineer - Protection and Control</p><p><strong>SALARY RANGE</strong>: $ 111,332 to $145,800</p><p><strong>LOCATIONS</strong>: ME, Augusta or ME, Portland</p><p><strong>Work type</strong>: Office</p><p><strong>Job Summary</strong></p><p>Responsible for electric system protection technology platforms in both Maine (Central Maine Power and Maine Electric Power Company) and New York (NYSEG and RG&amp;E), including standards, training, and communication. The electric delivery system in Maine contains approximately 2,600 miles of transmission lines &amp; 317 substations. The electric delivery system in New York contains approximately 5,600 miles of transmission lines &amp; 621 substations (for a total of 8,200 miles and 965 substations). Consult and guide project engineers on protection engineering for electric transmission and substation system protection projects to ensure system reliability and safety. Guide engineering studies to evaluate equipment, system effectiveness, and protection system operations.</p><p>Lead and guide the Protection Engineering group across AVANGRID in their technical training and development. Evaluate and implement new and advanced technology platforms to increase reliability and efficiency. Ensure all protection system standards and designs meet applicable company, local, state, and national codes and standards (IEC, IEEE, NESC, FERC, NERC, NPCC, NYISO, ISO-NE, NY PSC, and ME PUC). Liaison across Operating Companies, across global affiliates, with different departments, and with outside groups and agencies. Contributes to the development of System Protection strategy.</p><p><strong>Key Responsibilities</strong></p><ul><li>Guide engineering design, estimating, and analysis of the electric transmission and substation protection systems in support of capital construction budget and keeping system performance enhancement in line with budget. Responsible for protection system platforms, including settings, testing, and commissioning developed both internally and by contractors and consultants. (20%)</li><li>Responsible for the development of the system protection platform for AVANGRID and coordination with global affiliates; including integration, settings, networking, engineering criteria, construction standards, design and equipment specifications, integration schemes, automation configurations, commissioning plans, and requirements for engineering suppliers and contractors. Oversee the evaluation and demonstration of new technology in terms of safety, cost and other efficiencies; and implement to enhance power system performance. (25%)</li><li>Oversee engineering studies to evaluate equipment and protection system performance and effectiveness and analyze operational issues in support of system reliability and operational efficiency. Develop and validate information needed for engineering analyses and apply engineering judgment to solve complex technical problems. (15%)</li><li>Provide expertise and guide the analysis of transmission fault event operations to ensure protection scheme operated as intended. Ensure clear and concise fault analysis reports to management depicting corrective actions and lessons learned when necessary. (15%)</li><li>Represent the company on regional and national committees. (10%)</li><li>Lead and guide the technical development of the Protection Engineering group. (15%)</li><li>Cross Company Responsibility:</li><li>As the primary protection engineering expert within the USA organization, provide a high level of consultation on diverse and highly complex problems, and on emerging technological, regulatory, or political issues.</li><li>Work across Operating Companies, global affiliates, and with different departments both within and outside the organization.</li><li>For Lead Engineers:</li><li>Utilize knowledge to influence and guide department engineers.</li><li>Provide technical leadership in complex projects that have a wide impact on the department</li><li>Mentor, develop and support team in technical skills</li><li>Ability to collaborate across departments</li><li>Liaison/ direct contractors on company policy, standards and best practices</li><li>Work independently with little supervision</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Education &amp; Experience Required:</li><li>Bachelor of Science Degree in Electrical Engineering or Electrical Engineering Technology.</li><li>Master’s Degree preferred</li><li>Professional engineering license preferred</li><li>A minimum of 7+ years of technical experience in protection engineering or related field</li><li>Expert knowledge of all aspects of engineering &amp; design, national and international standards, and compliance requirements associated with power system protection</li><li>Technical Skills/Competencies</li><li>Theoretical Engineering knowledge - Planning, Operations and Engineering Design, Analytic, modeling &amp; Calculation, understanding the business model; Global View of the Business (Values cross-functional collaboration, understands importance of growing knowledge and developing relationships and links across the organization</li><li>Practical engineering experience/application - Planning, Operations and Engineering Design, Construction, (e.g., field experience, standardization &quot;Perform economic analyses of engineering alternatives, develop business cases and defend in front of stakeholders.&quot;)</li><li>Engineering documentation - Ability to adequately document and interpret engineering documentation</li><li>Ability to review and approve engineering work done by others to ensure compliance with company standards, specifications, and contract requirements</li><li>Knowledge of Regulatory and Compliance Environment # Local, State and Federal Regulatory Standards and requirements</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Utilize knowledge to influence and guide department engineers.</li><li>Provide technical leadership in complex projects that have a wide impact on the department</li><li>Mentor, develop and support team in technical skills</li><li>Ability to collaborate across departments</li><li>Liaison/direct contractors on company policy, standards and best practices</li><li>Work independently with little supervision</li><li>Independent decision-making capability</li><li>Self-directed</li><li>Strong diagnostic and problem-solving skills to decipher the most perplexing technical and analytical problems</li><li>Strong communication skills and interpersonal to articulate highly technical concepts</li><li>Effective leadership skills to drive change and adoption of new technologies across Operating Companies and international affiliates</li><li>Expertise in performing complex protection coordination analysis</li><li>Demonstrate project management skills</li><li>Strong awareness and application of commercial implications, including cost estimating, budgeting, least cost planning etc.</li><li>Safety leadership by example in application of and adherence to all safety regulations in process and procedures development</li><li>Expertise in all aspects of power engineering theory, application, standards, design, test, commissioning, and analysis</li></ul><p><strong>Competencies</strong></p><ul><li>Growth &amp; Continuous Improvement</li><li>Initiative &amp; Change</li><li>Focused on Results</li><li>Customer Centric (internal and/or external)</li><li>Communication</li><li>Collaboration</li><li>Leadership (people managers/leaders)</li></ul><p><strong>What We Offer:</strong></p><ul><li><strong>Competitive benefits and growth opportunities</strong></li><li><strong>Generous performance‑based bonuses</strong></li><li><strong>12% 401(k) match</strong></li><li><strong>Comprehensive health, dental, and vision insurance</strong></li><li><strong>Tuition reimbursement</strong></li><li><strong>Professional development and clear career‑advancement pathways</strong></li></ul><p><strong>For more information, please visit: Benefits - Avangrid</strong></p><p>#LI-Onsite; #LI-CH1</p><p><strong>Company:</strong></p><p>CENTRAL MAINE POWER CO</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p><p>August-7-2026</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Lead Engineer - Protection & Control",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

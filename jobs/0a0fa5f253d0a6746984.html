@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://jobs.lever.co/cfsenergy/df3fb9f6-b8a3-47ee-91a3-217e9434e9b9" target="_blank" rel="noopener">Apply on Commonwealth Fusion Systems's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://jobs.lever.co/cfsenergy/df3fb9f6-b8a3-47ee-91a3-217e9434e9b9">Apply on Commonwealth Fusion Systems's site &rarr;</button>
     <div class="apply-note">Applying takes you to Commonwealth Fusion Systems's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>About Commonwealth Fusion Systems:</p><p>Commonwealth Fusion Systems is on a mission to deliver the urgent transition to fusion energy.</p><p>Combining decades of research, top talent, and new technologies, we’re designing and building commercially viable fusion power plants. And we&#39;re working with policymakers and suppliers to build the energy industry of the future.</p><p>We’re in the best position to make it happen. Since 2018, we’ve raised nearly $3 billion in capital, making us the largest and leading private fusion company in the world.</p><p>Now we’re looking for more thinkers, doers, builders, and makers to join us. People who’ll bring new perspectives, solve tough problems, and thrive as part of a team.</p><p>If that’s you and this role fits, we want to hear from you.</p><p>Join the power movement as Senior Director, SPARC Plant Operations</p><p>The individual selected for this role will function as the leader of the SPARC Plant Operations team and will be accountable for the safe and reliable operation of the SPARC Plant, which comprises all the various mechanical and electrical plant systems that enable operation of the tokamak.  The SPARC Operations Director will be accountable to establish a high performing Operations and Maintenance team as well as continuous improvement of the processes and procedures that govern their work.  This role collaborates extensively with the Plasma Physics Program and Engineering teams to maximize experimental time and to maintain facility integrity.</p><p>What you&#39;ll do:: • <strong>Plant Utilization</strong></p><ul><li>Develop and manage shift schedules, on-call rotations and vacation planning to ensure 24/7 operational coverage and readiness</li><li>Collaborate with the SPARC Plant Engineering and SPARC Plasma Operations team to ensure the plant is functionally ready to execute operational experiments</li><li>Oversee all daily pre-operational checks and plant startup/shutdown procedures</li><li>Manage all operational consumables and spares (e.g. gases, cryogens, chemicals, diesel fuel, equipment spare parts)</li><li><strong>Operations Programs</strong></li><li>Develop and maintain plant operations manuals, procedures, and emergency response protocols</li><li>Develop and implement comprehensive training programs, including initial qualification, continuing training, and specialized skill development</li><li>Develop and implement plant operations work controls, energy control procedures, and simultaneous operations coordination processes</li><li>Develop and implement robust alarm and notification systems and standards for efficient operator response to maintain facility integrity and personnel safety</li><li><strong>Maintenance and Asset Management</strong></li><li>Develop and execute a comprehensive plant maintenance strategy, incorporating preventive, predictive, and corrective maintenance</li><li>Plan and manage the schedule for all maintenance windows, minimizing downtime and maximizing plant availability</li><li>Oversee the execution of all maintenance activities, ensuring work is performed safely, to a high standard, and documented correctly</li><li>Work with the Engineering team to plan and carry out necessary maintenance and upgrades in between scheduled usage</li><li><strong>Continuous Improvement and Performance</strong></li><li>Track key reliability metrics to understand overall performance</li><li>Champion a culture of continuous improvement by actively identifying opportunities to enhance safety, reduce operational costs, and increase plant efficiency and reliability</li><li>Lead cross-functional teams to execute continuous improvement projects using Root Cause Analysis and other similar methodologies</li><li>Develop and monitor key performance indicators (KPIs) for plant operations and use data-driven insights to guide improvement initiatives</li><li><strong>Team</strong></li><li>Recruit, hire, and onboard a high-performing team of plant operators, technicians, and support staff</li><li>Foster a strong, positive, and safety-first culture within the operations team</li><li><strong>Authorities</strong></li><li>Approve and enforce all operating procedures, training manuals, and protocols</li><li>Execute maintenance work orders and direct the execution of scheduled maintenance and upgrade projects planned in coordination with the SPARC Engineering Director</li><li>Make decisions regarding hiring and mentoring of the Operations Team</li><li>Manage and direct the utilization of external maintenance contracts to provide surge support and specialized maintenance</li><li>Shutdown operation of the machine if immediate personnel safety or facility integrity is compromised</li><li><strong>Accountabilities</strong></li><li>Accountable for the safe, reliable, and efficient operation of the SPARC facility strictly within design basis operating parameters</li><li>Accountable for maintaining 24/7 operational readiness and full staffing coverage of all critical shifts</li><li>Accountable for the quality, accuracy, and standardization of all operations and maintenance procedures</li><li>Accountable for effective collaboration with the SPARC Engineering team to execute scheduled maintenance and maximize facility availability for experiments What we’re looking for:: • Bachelor&#39;s degree in an engineering field or equivalent experience</li><li>15+ years experience managing operations of large process facilities, such as power plants, scientific facilities, or process manufacturing facilities</li><li>Experience with operating large process systems, such as a power plant, chemicals, oil/gas, cryogenics, or others</li><li>Experienced managing salaried and hourly staff</li><li>Strong people management skills of both small and large teams</li><li>Leadership, team-building, and mentoring skills for both engineers and technicians</li><li>Demonstrated ability to build trust with front line employees and identify issues first hand</li><li>Executes long-term departmental strategy using sound judgment to align tactical initiatives with overall organizational goals</li><li>Ensures cross-functional alignment through proven, effective communication with diverse stakeholders and executive leadership</li><li>Ability to adapt to a rapidly changing environment</li><li>Strong attention to safety and the creation of a safety culture Bonus points for: : • Operational experience with first-of-a-kind facilities or other new technology</li><li>Experience with commissioning of plant process systems</li><li>Experience working in radiation controlled environments Must-have requirements: : • Perform activities such as stooping, climbing, typing standing or sitting for extended periods of time</li><li>Willingness to occasionally travel or work required nights/weekends/on-call</li><li>Work in a facility that contains industrial hazards including heat, cold, noise, fumes, strong magnets, lead (Pb), high voltage, high current, pressure systems, and cryogenics</li></ul></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Senior Director, SPARC Plant Operations",
+      company: "Commonwealth Fusion Systems",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

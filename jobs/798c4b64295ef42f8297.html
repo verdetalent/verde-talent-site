@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">NERC</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Massachusetts-Boston/Director---Solution---Process-Governance_R-30839-1" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Massachusetts-Boston/Director---Solution---Process-Governance_R-30839-1">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>The base salary range for this position is dependent upon experience and location, ranging from:</strong></p><p><strong>Boston, MA - $170,000 - $213,000</strong></p><p><strong>Orange, CT - $163,000 - $204,000</strong></p><p><strong>What We Offer:</strong></p><ul><li><strong>Competitive benefits and growth opportunities</strong></li><li><strong>Generous performance‑based bonuses</strong></li><li><strong>12% 401(k) match</strong></li><li><strong>Comprehensive health, dental, and vision insurance</strong></li><li><strong>Tuition reimbursement</strong></li><li><strong>Professional development and clear career‑advancement pathways</strong></li></ul><p><strong>For more information, please visit:</strong><strong>Benefits - Avangrid</strong></p><p><strong>Job Summary:</strong></p><p>Director – Solution and Process Governance leading enterprise alignment of business processes and technology across Avangrid. Oversees end-to-end delivery of the S/4HANA transformation across seven operating companies, ensuring consistent execution and risk management. Drives standardization of processes across jurisdictions to enable scalable, compliant operations. Establishes governance frameworks that align business and technology to a unified enterprise model. Partners across IT, operations, and regulatory teams to deliver coordinated transformation outcomes. Focuses on simplifying end-to-end processes to reduce complexity and improve operational efficiency. Ultimately enhances customer experience by streamlining journeys, reducing friction, and enabling more consistent and reliable service.</p><p><strong>Key Responsibilities:</strong></p><p><strong>Define and Lead Governance Strategy:</strong> Develop and implement an enterprise governance framework that aligns business processes and enabling technologies, with direct oversight of the S/4HANA transformation across seven operating companies.</p><p><strong>Oversee Process and Solution Alignment:</strong>Drive harmonization of business processes and technology platforms, ensuring alignment to S/4HANA standards and enabling scalable, consistent operations across jurisdictions.</p><p><strong>Align Governance Roadmaps with Business Goals:</strong> Translate corporate and S/4HANA program objectives into actionable governance roadmaps, ensuring alignment across business units, IT, and implementation partners.</p><p><strong>Manage and Mentor Governance Teams:</strong>Lead cross-functional governance forums and Design Authority, providing direction and stewardship to ensure consistent decision-making and execution across the program.</p><p><strong>Foster Cross-Functional Collaboration:</strong>Partner across IT, Operations, Regulatory, Legal, and Customer Experience teams to deliver integrated process and technology outcomes aligned to S/4HANA implementation.</p><p><strong>Champion Standardization and Optimization:</strong>Promote adoption of fit-to-standard processes and minimize OpCo-specific deviations to enable efficiency, scalability, and long-term sustainability.</p><p><strong>Drive Agile Governance Practices:</strong>Embed Agile principles within governance and transformation activities to support iterative delivery, transparency, and responsiveness.</p><p><strong>Monitor Governance and Program Effectiveness:</strong>Track performance through KPIs, program milestones, and risk indicators to ensure successful delivery of S/4HANA outcomes at scale.</p><p><strong>Manage Stakeholder Expectations:</strong>Act as a key interface between executive leadership, program leadership, and OpCos, ensuring alignment, transparency, and effective decision-making.</p><p><strong>Ensure Financial Stewardship:</strong> Oversee governance-related investments and resource allocation, ensuring the S/4HANA program delivers measurable value, efficiency, and improved customer outcomes.</p><p><strong>Required Qualifications:</strong></p><p><strong>Education &amp; Experience Required:</strong></p><ul><li>Bachelor’s degree in Business, Digital, Technology, or related field.</li><li>10+ years of experience in process governance or digital transformation, Minimum of 3 years of experience in a regulated utility preferred.</li><li>Strong understanding of governance frameworks, process standardization, and cross-functional alignment in complex or regulated environments.</li></ul><p><strong>Skills/Abilities:</strong></p><p><strong>Leadership &amp; Strategic Thinking:</strong></p><p>Demonstrated ability to set enterprise-wide governance vision, lead cross-functional teams, drive change management, and communicate effectively with executive stakeholders in complex environments.</p><p><strong>Process &amp; Solution Governance:</strong></p><p>Expertise in business process management, governance frameworks, enterprise architecture, and technology alignment, including process mapping, optimization, and standardization.</p><p><strong>Customer-Centric Operational Alignment:</strong></p><p>Strong capability to design governance models that integrate regulatory requirements and customer needs, ensuring compliance and enhanced customer experience.</p><p><strong>Analytical &amp; Financial Acumen:</strong></p><p>Proficient in data-driven decision-making, performance analysis, ROI evaluation, and budget management for governance initiatives.</p><p><strong>Communication &amp; Influence:</strong></p><p>Exceptional written and verbal communication skills with the ability to present complex governance concepts to executive audiences and influence decisions across the organization.</p><p><strong>Regulatory &amp; Industry Awareness:</strong></p><p>Comprehensive understanding of utility sector regulations, compliance requirements, and emerging trends in energy and digital transformation.</p><p><strong>Vendor &amp; Partner Management:</strong></p><p>Experienced in managing third-party vendors and technology partners, including RFP development, contract negotiation, and performance oversight.</p><p><strong>Innovation &amp; Market Awareness:</strong></p><p>Knowledgeable in emerging technologies (IoT, AI, smart grid) and global governance trends, with the ability to identify and implement innovative practices that enhance agility and operational excellence.</p><p><strong>Preferred Qualifications:</strong></p><ul><li>MBA or related advanced degree.</li><li>Experience working in a global company or matrix reporting organization.</li></ul><p>#LI-On-Site</p><p>#LI-JM1</p><p><strong>Company:</strong></p><p>AVANGRID SERVICE COMPANY</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Director - Solution & Process Governance",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

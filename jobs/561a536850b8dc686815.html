@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#22E09A66;color:#22E09A;background:#22E09A1a;">Sustainability</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://job-boards.greenhouse.io/quaise/jobs/4282734009" target="_blank" rel="noopener">Apply on Quaise Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://job-boards.greenhouse.io/quaise/jobs/4282734009">Apply on Quaise Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Quaise Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Quaise Energy is unlocking Earth’s deep heat to deliver clean, reliable, baseload energy at scale – almost anywhere in the world. As both a technology innovator and project developer, Quaise builds and operates solutions that harness superhot geothermal energy far below the surface, enabling power generation that can rival the output of today’s most efficient fossil fuel and nuclear plants. Leveraging millimeter wave drilling, developed after more than a decade of research at MIT, Quaise’s mission is to make superhot geothermal a backbone of the modern energy system, offering affordable, zero-carbon power and true energy independence for communities and nations everywhere.</p><p>Quaise is seeking a Mechanical Engineer II to lead component-level design and development for lab-scale and field-ready mmW drilling systems. This role is intended for engineers capable of independently executing moderately complex mechanical design and testing activities while contributing across a broad range of experimental and product development efforts.</p><p>The Mechanical Engineer II will own the design and analysis of components and subsystems from concept through manufacturing and testing. Working closely with cross-functional engineering, manufacturing, and testing teams, this role contributes to the rapid development and deployment of directed energy drilling systems through hands-on engineering, analysis, prototyping, and experimentation.</p><p>This is a generalized engineering role with strong growth potential into specialized technical areas depending on business needs, technical aptitude, and individual interests.</p><p><strong>Essential functions</strong> (Reasonable accommodations may be made to enable individuals with disabilities to perform these essential functions.)</p><ul><li>Lead component-level mechanical design from requirements definition through detailed drawings, release, manufacturing, and testing.</li><li>Perform tolerance stack-up analysis and apply GD&amp;T principles to ensure fit, function, and manufacturability.</li><li>Support the design and development of testing and drilling systems for the Quaise mmW Drilling System.</li><li>Perform engineering analysis including structural analysis, thermal analysis, and fluid system evaluation to support design validation and optimization.</li><li>Utilize FEA tools to evaluate components and assemblies against expected operating conditions and loads.</li><li>Apply ASME standards and engineering best practices in component selection and mechanical system design.</li><li>Assist with CFD evaluations and flow analysis to support fluid and thermal system development.</li><li>Design, execute, and document experiments and testing activities, including Design of Experiments methodologies where appropriate.</li><li>Identify, specify, and integrate sensors, actuators, and instrumentation used in experimental and operational systems.</li><li>Develop and integrate hardware for laboratory experiments, test fixtures, and field-ready drilling systems.</li><li>Select materials and components based on thermal, structural, fatigue, and operational requirements.</li><li>Maintain organized engineering documentation including drawings, calculations, analyses, BOMs, and test records.</li><li>Collaborate with vendors and manufacturers to source custom and commercially available components.</li><li>Troubleshoot mechanical and experimental systems and support recovery efforts during testing and field operations.</li><li>Participate in technical reviews and cross-functional engineering discussions.</li><li>Perform other related duties as assigned.</li></ul><p><strong>Competencies</strong></p><ul><li>Proficiency with CAD software; Creo experience preferred.</li><li>Strong understanding of GD&amp;T, tolerance analysis, and mechanical design principles.</li><li>Experience with structural analysis tools such as ANSYS Mechanical or similar FEA platforms.</li><li>Working knowledge of fluid systems, thermal systems, and mechanical testing methodologies.</li><li>Familiarity with ASME standards related to tubing, fittings, flanges, and pressure-containing systems.</li><li>Ability to independently execute engineering tasks and manage multiple technical priorities simultaneously.</li><li>Strong analytical and problem-solving skills in experimental or fast-paced development environments.</li><li>Strong organizational skills and attention to detail, including maintaining review-ready engineering documentation.</li><li>Comfortable operating within a startup or high-growth environment with evolving priorities.</li><li>Excellent verbal and written communication skills.</li><li>Proficient with Microsoft Office Suite and familiarity with project planning tools.</li><li>Ability to interact effectively with coworkers, vendors, contractors, and cross-functional teams in both office and field environments.</li></ul><p><strong>Supervisory responsibilities</strong></p><ul><li>May supervise the work of contractors to ensure work is completed in accordance with project requirements.</li><li>This role does not include formal people-management responsibilities.</li></ul><p><strong>Education and Experience</strong></p><ul><li>Bachelor’s degree or higher in Mechanical Engineering or related engineering discipline required (Mechanical, Aerospace, Mechatronics, Robotics, or similar).</li><li>2–5 years of related engineering experience in a design-focused or product development environment.</li><li>Demonstrated ability to independently execute component-level design, analysis, testing, and troubleshooting activities.</li><li>Experience working in laboratory, R&amp;D, manufacturing, energy, aerospace, industrial, or other highly technical engineering environments preferred.</li></ul><p><strong>Physical requirements</strong></p><ul><li>This role requires prolonged periods sitting at a desk and working on a computer.</li><li>The employee is regularly required to stand, sit, walk, stoop, kneel, crouch, or crawl, as well as use hands to feel, reach, grasp, handle, or operate objects, tools, and/or controls.</li><li>The employee must be able to lift, push, pull, transfer, or move items up to 50 pounds at times for departmental needs.</li><li>Ability to move between worksites or travel to various job sites and locations to complete tasks.</li><li>The vision requirement includes reviewing written and electronic materials in digital and physical format.</li><li>Ability to work safely around high voltage and high-power systems while adhering to established safety protocols and procedures.</li><li>The employee must be able to adjust to changing work hours and locations as needed in support of operational and testing activities.</li></ul><p><strong>Other duties</strong></p><p>Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties or responsibilities required of the employee for this job. Management reserves the right to change, rescind, add, or delete the duties and responsibilities of positions within this job classification at any time.</p><p><strong>Affirmative Action/EEO statement</strong></p><p>Quaise Energy is an equal opportunity employer and does not discriminate against any employee or applicant on the basis of race, color, religion, sex, national origin, genetic information, disability, military status or age.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Mechanical Engineer II",
+      company: "Quaise Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

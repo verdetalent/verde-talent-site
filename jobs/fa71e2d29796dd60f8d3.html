@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">Excel</span><span class="tag">permitting</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Sr-Project-Manager--Thermal-Project-Management_R10668" target="_blank" rel="noopener">Apply on Invenergy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Sr-Project-Manager--Thermal-Project-Management_R10668">Apply on Invenergy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Invenergy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Invenergy is North America’s largest privately held developer, owner, and operator of power infrastructure. With 25 years of trusted execution, we deliver reliable, affordable energy through a diverse portfolio that includes natural gas, solar, land-based wind, energy storage, transmission, and domestic manufacturing. Headquartered in Chicago, we develop, own, and operate large scale projects that power communities and support the energy future.</p><p>This position will be open for application for at least 3 calendar days from the posting date. This position will remain open for application based on business need, which may be before or after the 3-day posting window.</p><p><strong>Job Description</strong></p><p><strong>Position Overview:</strong></p><p>As a Senior Project Manager, Thermal Project Management, you will be responsible for leading the efforts of a thermal power plant. You will manage and coordinate efforts across multiple teams inside the organization, from development to the commercial operation date (COD). In this position, you will lead and direct resources to support the project execution and construction efforts, while coordinating all other technical, economic, and commercial aspects of the project. Under your leadership, you will manage a team of specialists to develop, design, and build combustion projects utilizing gas turbines for simple cycles, combined cycles, and cogeneration facilities, as well as natural gas reciprocating engines. This role will encompass project development, including permitting, engineering, and construction, along with budget, risk, and schedule management to ensure the project is completed on time, within scope and budget. This position will be based in the Invenergy office in Chicago, IL. Technical supervision during project execution, specifically construction and commissioning phases, including travel to the project site, will also be required.</p><p><strong>General Responsibilities:</strong></p><ul><li>Lead all efforts in the project throughout its lifecycle, from development to COD, to deliver the project according to the required scope, meeting budget and schedule.</li><li>Manage workload and resources across multiple teams assigned to a specific project, promoting seamless coordination across different disciplines.</li><li>Represent the company in discussions with third parties, stakeholders, regulatory bodies, permitting agencies, and the project’s customer.</li><li>Manage project interfaces across multiple contractors and work packages to promote coordination through adequate cooperation, ensuring adherence to project budget and schedule.</li></ul><p><strong>Specific Responsibilities:</strong></p><p>Project management</p><ul><li>Coordinate project meetings and communications to ensure project goals.</li><li>Participate and coordinate the evaluation of proposals.</li><li>Collaborate with the commercial and finance teams to provide necessary cost modeling inputs for cost optimization.</li><li>Identify and evaluate risks and prevent flaws in the project.</li><li>Provide periodic reports for management and the client as needed.</li><li>Implement and keep a good track record of lessons learned.</li><li>Ensure record keeping for the entire project by adhering to company document management policies.</li></ul><p>Engineering</p><ul><li>Provide guidance to the engineering team during the design process to make sure the technical team meets project goals and client’s expectations.</li><li>Collaborate with the relevant engineering areas to optimize the design, layout, CAPEX, and OPEX of this infrastructure.</li><li>Supervise technical documentation for requisitions and solicitations to be used with contractors and other third parties.</li><li>Procurement</li><li>Liaise with the procurement team in the preparation of SOIs, RFIs, RFPs, RFQs, or any other documents.</li><li>Participate in the evaluation of suppliers’ technical and economic proposals.</li><li>Participate in discussions with manufacturers and vendors, as needed, in coordination with the procurement team.</li><li>Participate in the preparation of contracts with OEMs, suppliers, and contractors.</li></ul><p>Permitting, Interconnection &amp; Real Estate:</p><ul><li>Collaborate with the real estate team to coordinate efforts for rights-of-way and easements.</li><li>Collaborate with the development team to prepare the required documentation package to secure permits and electrical interconnection.</li><li>Oversee the permitting and approval process while working with the regulatory and engineering teams to ensure all required permits are secured in accordance with the project plan.</li><li>Coordinate with interconnecting utilities to align with project objectives during project execution.</li></ul><p>Construction and Commissioning:</p><ul><li>Lead negotiations with EPC contractors and prepare agreements, understanding concerns and constraints, providing solutions to those in collaboration with other groups of the organization (legal, risk, project controls, etc.).</li><li>Manage periodic calls and meetings with contractors to organize work in the most efficient way.</li><li>Analyze technical and construction risks proactively, providing solutions for those.</li><li>Monitor project activities and progress from the main office and at the project site, as needed.</li><li>Analyze progress reports to correct deviations and deficiencies.</li><li>Travel to the project site during construction to oversee progress and resolve technical issues and other concerns.</li><li>Assist and participate in the commissioning phase.</li><li>Manage multiple interfaces across packages and contractors, including external parties and stakeholders.</li><li>Ensure adherence to scope, quality, safety, and all environmental requirements and policies.</li></ul><p>Legal &amp; Contract Management:</p><ul><li>Experience negotiating construction agreements.</li><li>Manage internal interfaces with legal and contract management groups.</li><li>Manage variation of scope and change orders.</li><li>Identify and manage risks during contract negotiations and project execution.</li><li>Finance, insurance, legal and other corporate areas</li><li>Provide inputs to define CAPEX, OPEX and size project contingency.</li><li>Identify financial impacts of identified risks in the design and execution phases.</li><li>Liaise with other internal departments as required.</li><li>Interface with lenders and their independent engineers.</li></ul><p><strong>Minimum Qualifications:</strong></p><ul><li>Bachelor’s degree in mechanical, civil, electrical or structural engineering with relevant experience in the power generation industry.</li><li>7+ years of experience in combustion power plants, with relevant experience in gas turbines, steam turbines and reciprocating engines.</li><li>Proven track record of managing and delivering large-scale power plants, from development to commercial operation.</li><li>Site experience in projects under construction.</li><li>Experience managing interfaces between contractors and contract negotiation.</li><li>Proficient with Microsoft Office products, including Excel, Word, and PowerPoint.</li><li>Ability to travel up to 25% is required, and travel frequency must be adjusted during the project execution phase.</li></ul><p><strong>Preferred Qualifications:</strong></p><ul><li>Master’s degree in mechanical, civil, electrical or structural engineering with relevant experience in the power generation industry.</li><li>Ability to multi-task and manage deliverables for multiple packages of the same project at a time.</li><li>Desire to work in a dynamic environment alongside people with multiple interests and backgrounds.</li><li>Excellent organizational, writing, and interpersonal skills.</li><li>Strong verbal skills are required, including being an effective leader and communicator.</li><li>High degree of integrity and understanding of ethical industry standards.</li></ul><p><strong>Base Pay</strong></p><p>$155,000.00 - $185,000.00 USD Annual</p><p>Bonus: 25% - 40%</p><p>The base pay range reflects the minimum and maximum target salary for the position. Invenergy considers a number of factors when determining base pay offers such as the scope and responsibilities of the position and the candidate&#39;s experience, education and skills.</p><p>In addition to base pay, the total annual compensation package may also include eligibility to participate in our bonus program(s) which are designed to reward individual and company performance. Your recruiter can share more about bonus eligibility for this position during the hiring process.</p><p>Invenergy offers a variety of other benefits including medical, dental and vision insurance, 401k, paid time off, etc.</p><p>Invenergy LLC is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to, among other things, race, color, religion, sex, sexual orientation, gender identity, national origin, age, status as a protected veteran, or disability.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Sr. Project Manager, Thermal Project Management",
+      company: "Invenergy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">Python</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Berlin-CT/Lead-DevSecOps-Engineer--Cloud--Azure----Hybrid-Schedule_R-029827" target="_blank" rel="noopener">Apply on Eversource Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Berlin-CT/Lead-DevSecOps-Engineer--Cloud--Azure----Hybrid-Schedule_R-029827">Apply on Eversource Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Eversource Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p>Eversource supports work-life balance by offering hybrid schedules for certain roles. Eligibility is based on job responsibilities, operational needs, nature of work and team dynamics. Current guidelines require employees to work at least three days in the office, including Tuesdays and Wednesdays, with the third day set by the employee and supervisor based on department needs. These guidelines apply to roles approved for remote work and are subject to change,  based on managerial discretion and work performance. All applicants must be able to work up to five days in the office if needed (for example: emergencies, training, or other business needs) or should the policy change.</p><p><strong>Our Team:</strong></p><p>We have an amazing opportunity as the Lead Engineer, Development, Security and Operations (DevSecOps Engineer).   This critical role is responsible for managing Azure cloud infrastructure, leveraging foundational cloud concepts, networking, identity, security, storage, and computer services. The Lead Engineer will support the infrastructure build, manage Continuous Integration, Continuous Deployment (CI/CD) pipelines, utilize Infrastructure as Code using Harness and Terraform, apply DevSecOps principles while implementing security and compliance protocols.</p><p>The Lead DevSecOps Engineer will lead the technical execution of our application landing-zone and Internal Developer Platform (IDP) initiatives — enabling product teams through automation, governance, and reusable patterns. The ideal candidate combines deep Azure and DevOps expertise with a passion for building scalable, developer-focused platform solutions.</p><p><strong>Essential Functions:</strong></p><p><strong>Platform Architecture &amp; Automation</strong></p><ul><li>Design, implement, and maintain <strong>Azure application landing zones</strong> using Infrastructure as Code (Terraform).</li><li>Build and evolve the <strong>Internal Developer Platform (IDP)</strong> leveraging <strong>Harness</strong>, <strong>Backstage</strong>, and related frameworks to deliver developer self-service and standardized onboarding.</li><li>Engineer and optimize <strong>CI/CD pipelines</strong> using Harness, Jenkins, Azure DevOps, and GitHub Actions — delivering reliable, compliant, and automated application deployments.</li><li>Implement <strong>GitOps</strong> and advanced container orchestration techniques across <strong>Azure Kubernetes Serv</strong>ice (<strong>AKS)</strong>, <strong>OpenShift</strong>, and <strong>Docker</strong>.</li><li>Ensure end-to-end automation, observability, and security integration within deployment pipelines.</li></ul><p><strong>Engineering Enablement &amp; Leadership</strong></p><ul><li>Serve as a <strong>technical lead and mentor</strong>, guiding engineers and citizen developers in modern DevOps, IaC, and automation practices.</li><li>Partner with application teams to deliver reusable pipeline templates, landing-zone modules, and catalog items that accelerate time to value.</li><li>Lead <strong>cross-functional collaboration</strong> between development, operations, and security teams to embed DevSecOps, FinOps, and governance best practices.</li><li>Influence platform roadmap decisions and contribute to strategic initiatives within the <strong>Cloud Transformation Group (CTG)</strong>.</li></ul><p><strong>Operations &amp; Continuous Improvement</strong></p><ul><li>Lead efforts around <strong>monitoring, observability, and reliability engineering</strong> using Azure Monitor, ELK Stack, Prometheus, or Grafana.</li><li>Drive performance tuning, cost optimization, and operational hygiene across environments.</li><li>Participate in incident response, root-cause analysis, and proactive prevention strategies.</li><li>Support modernization and migration projects that improve cloud scalability, resilience, and compliance.</li></ul><p><strong>Technical Knowledge/Skill/Education/Licenses/Certifications:</strong></p><ul><li><strong>Cloud &amp; DevSecOps Expertise:</strong> Proficient in Microsoft Azure and hybrid cloud architecture with strong knowledge of DevSecOps principles, CI/CD pipelines using Harness, and version control using GitHub including branching strategies.</li><li><strong>Infrastructure Management:</strong> Experienced with Infrastructure as Code (IaC) using Terraform, configuration management with Ansible, and artifact management through JFrog Artifactory.</li><li><strong>Cost Management &amp; Optimization:</strong> Understanding of cloud cost models, billing structures, and usage analysis, with hands-on experience using Harness Cost Management and Turbonomics to recommend optimizations.</li><li><strong>Infrastructure &amp; Configuration Management:</strong> Experienced with Infrastructure as Code (IaC) using Terraform, configuration management with Ansible, and artifact management through JFrog Artifactory.</li><li><strong>Containerization &amp; Orchestration:</strong> Skilled in containerization with Docker and orchestration using containers for scalable application deployments.</li><li><strong>Monitoring &amp; Scripting:</strong> Proficient with monitoring and logging tools such as Splunk, AppDynamics, Prometheus, and Grafana, and scripting in Bash, PowerShell, and Python.</li><li>Strong knowledge of DevSecOps principles, compliance-as-code, and secure cloud architectures (NIST, CIS, SOX frameworks).</li><li>Demonstrated ability to mentor teams, influence technical direction, and drive platform-level improvements.</li><li>Experience designing and supporting Internal Developer Platforms (IDPs) or developer self-service portals (Harness IDP, Backstage, Port, etc.).</li><li>Familiarity with Microsoft .NET Core is a plus.</li></ul><p><strong>Education:</strong></p><ul><li>Bachelor’s degree in computer science, related technical discipline or related experience.</li><li>Advanced degree desirable.</li></ul><p><strong>Experience:</strong></p><ul><li>Minimum of eight (8) to ten (10) years in a technical engineering role or related experience working with technology or application solutions, including experience in architecture, design, implementation, support, and management of the technologies appropriate for the specific positions.</li></ul><p><strong>Working Conditions:</strong></p><ul><li>Must be available to work emergency restoration assignment as required.</li><li>Must be available to travel between MA/CT/NH as necessary.</li></ul><p>#corpajd</p><p>#LI-ES3</p><p>#LI-Hybrid</p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p><strong>Compensation and Benefits:</strong></p><p>Eversource offers a competitive total rewards program. Check out our careers site for an overview of our benefits programs. Salary is commensurate with your experience. This position is eligible for a potential incentive. The annual salary range for this position is:</p><p>$153,400.00-$170,440.00</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>1</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement</strong>:</p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Lead DevSecOps Engineer, Cloud (Azure),  Hybrid Schedule",
+      company: "Eversource Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

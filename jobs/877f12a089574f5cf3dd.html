@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Senior-Manager--Thermal-Contracts_R10947-2" target="_blank" rel="noopener">Apply on Invenergy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Senior-Manager--Thermal-Contracts_R10947-2">Apply on Invenergy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Invenergy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Invenergy is North America’s largest privately held developer, owner, and operator of power infrastructure. With 25 years of trusted execution, we deliver reliable, affordable energy through a diverse portfolio that includes natural gas, solar, land-based wind, energy storage, transmission, and domestic manufacturing. Headquartered in Chicago, we develop, own, and operate large scale projects that power communities and support the energy future.</p><p>This position will be open for application for at least 3 calendar days from the posting date. This position will remain open for application based on business need, which may be before or after the 3-day posting window.</p><p><strong>Job Description</strong></p><p><strong>Position Overview</strong></p><p>As the Senior Manager of Thermal Contracts, you will participate in the negotiation of agreements including Engineering, Procurement and Construction (EPC), Equipment Supply, and Build Transfer and Development Transfer agreements for thermal projects. The ideal candidate will possess the ability to comprehend, organize, and communicate the complex risks associated with these types of transactions. In addition, the candidate will have a strong understanding of project development and/or project management including development milestones, project schedule, and technical intricacies of a project. This is an ideal opportunity for a project developer or project manager looking to broaden their experience in commercial transactions.</p><p><strong>Responsibilities:</strong></p><ul><li>Support proposal evaluation by collaborating with procurement and technical teams to assess bids from a commercial perspective.</li><li>Support the drafting of agreements, including EPC, BT, and major equipment supply contracts (e.g., gas turbines, power transformers, HV switchgear), for inclusion in tender processes for vendor review and feedback, including contract exhibits.</li><li>Coordinate with bid/procurement teams to ensure project requirements and asset buyer requirements are accurately reflected in contract documents. Identify commercial risks in vendor proposals and develop mitigation strategies.</li><li>Support drafting and review of contracts during negotiations, incorporating feedback from internal and external stakeholders, with a focus on thermal industry standards and project-specific requirements, ensuring consistency across project contracts.</li><li>Lead contract negotiations to align terms with project objectives, build transfer agreements, budget, schedule, and risk profile.</li><li>Ensure all contract exhibits and appendices (e.g., performance guarantees, liquidated damages, outage requirements) are clear, comprehensive, and aligned with project and regulatory requirements.</li><li>Collaborate with controls and finance teams to monitor project budgets, cash flow, commodity exposure (e.g., fuel, steel), and forecast financial outcomes, ensuring alignment with contractual obligations.</li><li>Support preparation of materials for internal and external approvals required for contract execution.</li><li>Coordinate with project managers, engineers, and construction teams to ensure alignment between contract terms, project milestones, and technical specifications.</li><li>Prepare regular reports, status updates, and presentations for senior management on contract performance, project progress, and key risk areas.</li><li>Support claims management, dispute resolution, and other contractual matters arising during the project lifecycle, including issues related to delays, performance shortfalls, and change orders.</li></ul><p><strong>Minimum Qualifications:</strong></p><ul><li>7+ years of experience in project development, project management, power origination, or business development roles in the energy, infrastructure, or utilities sector.</li><li>Bachelor&#39;s and/or master&#39;s degree in business, finance, or engineering.</li><li>Experience with construction agreements, Build Transfer Agreements, Development Transfer Agreements, and/or EPC transactions across multiple power markets and technology.</li><li>Eligible to work in the United States without the need for employer visa sponsorship now or in the future.</li></ul><p><strong>Preferred Qualifications:</strong></p><ul><li>Over 10+ years of experience in project development, project management, power origination, or business development roles in the energy, infrastructure, or utilities sector.</li><li>5+ years of experience negotiating PPAs, BTs, or DTs.</li><li>Legal experience and/or experience negotiating other types of agreements.</li><li>Ability to comprehend complex documents and communicate transactional risks and project impact.</li><li>Excellent solution-seeking, teamwork, leadership and communication skills which extend across all organizational and management levels.</li><li>Excellent verbal and written communication skills.</li><li>Strong organizational skills and attention to detail</li><li>Critical thinking skills with the ability to identify and solve complex problems</li><li>Ability to manage priorities, meet deadlines and complete time-sensitive work.</li></ul><p><strong>Base Pay</strong></p><p>$155,000.00 - 190,000.00 USD Annual</p><p>Bonus: 25% - 40%</p><p>The base pay range reflects the minimum and maximum target salary for the position. Invenergy considers a number of factors when determining base pay offers such as the scope and responsibilities of the position and the candidate&#39;s experience, education and skills.</p><p>In addition to base pay, the total annual compensation package may also include eligibility to participate in our bonus program(s) which are designed to reward individual and company performance. Your recruiter can share more about bonus eligibility for this position during the hiring process.</p><p>Invenergy offers a variety of other benefits including medical, dental and vision insurance, 401k, paid time off, etc.</p><p>Invenergy LLC is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to, among other things, race, color, religion, sex, sexual orientation, gender identity, national origin, age, status as a protected veteran, or disability.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Senior Manager, Thermal Contracts",
+      company: "Invenergy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

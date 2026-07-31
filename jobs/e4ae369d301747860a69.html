@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span><span class="tag">NERC</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Massachusetts-Boston/Interconnection-Project-Manager_R-31059" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Massachusetts-Boston/Interconnection-Project-Manager_R-31059">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Interconnection Project Manager</strong></p><p>Reports to: Senior Director - Transmission</p><p>Location: <strong>Field</strong>, OR, MA</p><p>The base salary range for this position is dependent upon experience and location, ranging from:</p><ul><li>$128,320 - $160,400</li></ul><p><strong>What We Offer:</strong></p><ul><li><strong>Competitive benefits and growth opportunities</strong></li><li><strong>Generous performance‑based bonuses</strong></li><li><strong>12% 401(k) match</strong></li><li><strong>Comprehensive health, dental, and vision insurance</strong></li><li><strong>Tuition reimbursement</strong></li><li><strong>Professional development and clear career‑advancement pathways</strong></li></ul><p><strong>For more information, please visit:</strong><strong>Benefits - Avangrid</strong></p><p><strong>Job Summary:</strong></p><p>This is a senior-level position within the Transmission group reporting to the Senior Director, Transmission &amp; Interconnection, within the Vice President, Organic Growth, organization of Avangrid Renewables (AREN).</p><p>Primary responsibility will be for managing a specific region’s interconnection portfolio with limited supervision. This position requires identifying and securing interconnection positions, managing the requests through the queues, contributing to development strategies in a specific ISO or TO region by working with internal origination and development teams to create value at specific projects, negotiating the LGIAs, managing the project through construction and supporting the operations team during commissioning and operation.</p><p>In support of Avangrid’s renewable projects and development pipeline, managing a portfolio of interconnection queue requests and managing the interconnection process from submittal to operation. The ideal candidate will have 6+ years in the independent generation development or transmission utility business with good commercial experience but will also possess engineering, transmission and/or generation development expertise (ie not just a developer or project manager).</p><p>This position will serve as the primary contact with the transmission providers and will be primarily responsible for implementing the interconnection strategies for a region, filing interconnection requests, managing the requests through to an interconnection agreements and regional specific initiatives as directed by the Sr. Director, Transmission. The ideal candidate will have experience interfacing with Independent System Operators and Transmission Owners in a specific region on generation interconnections, responding to such requests from a transmission owner perspective, or having performed third-party analysis to assist in determining feasibility of interconnection scenarios. Specific responsibilities, among others, will include:</p><ul><li>Manage interconnection positions to support Avangrid’s Commercial, Organic Growth, Asset Management, and Policy groups to enhance the value of Avangrid projects by developing the most favorable interconnection and transmission strategies for development projects.</li><li>Manage, research and secure interconnection positions for greenfield wind, solar, and storage sites in a specific transmission region</li><li>Coordinating siting of interconnection and transmission facilities; collaborate with Avangrid Project Delivery, Development Engineering and Operations groups</li><li>Oversee/manage performance of technical screening studies to determine interconnection feasibility.</li><li>Review, negotiate, and coordinate execution of LGIP-related agreements</li><li>Identify and communicate risks associated with each interconnection queue and interconnection agreement.</li><li>Key participant in Avangrid’s relationships with TO &amp; ISO in a specific region.</li></ul><p><strong>Preferred Qualifications</strong></p><p>Bachelor&#39;s or advanced degree in engineering, business or related field. Minimum 6 years of industry experience in the following: generation development, interconnections, transmission planning or utility operations, and/or power marketing. Experience and transmission system knowledge of ISO but experience in the non-organized WECC, ERCOT, and SERC markets is also beneficial. Excellent communication skills, analytical skills. Ability to travel and support site prospecting and/or project development activities.</p><p>#LI-Field</p><p>#LI-VF1</p><p><strong>Company:</strong></p><p>AVANGRID POWER, LLC</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p><p>August-31-2026</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Interconnection Project Manager",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

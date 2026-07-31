@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#22E09A66;color:#22E09A;background:#22E09A1a;">Solar</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://sunrun.wd5.myworkdayjobs.com/Sunrun_Careers/job/CA-San-Diego/Certified-Electrician-3_R65288" target="_blank" rel="noopener">Apply on Sunrun's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://sunrun.wd5.myworkdayjobs.com/Sunrun_Careers/job/CA-San-Diego/Certified-Electrician-3_R65288">Apply on Sunrun's site &rarr;</button>
     <div class="apply-note">Applying takes you to Sunrun's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>At Sunrun, we’re on a mission to change the way the world interacts with energy, and we’re building a company and brand that puts power at the center of life. To do it, we’re designing a dynamic culture where employee development, well-being, and safety come first. It’s why we’ve become the #1 home solar and battery company in America. We’re unlike any other residential energy company. Our vertically integrated model gives us total control over every part of the energy lifecycle – from sale through installation and beyond – so you can find endless opportunities for growth. Come join a career you can grow in and a culture you can run with.</p><p>Who We Are</p><p>We’re on a mission to make energy more reliable and affordable for more people. We provide an opportunity with storage and solar to help people access greater energy independence without the big upfront costs. Sunrun is the largest dedicated residential solar and storage company in the country and has a mission to bring stably priced resilient power to the masses.</p><p><strong>Overview</strong></p><p>As a Certified Electrician 3 at Sunrun you will oversee the installation of solar batteries for residential solar projects. The Certified Electrician 3 has experience and interest in emerging solar technology and a passion for installing this new technology on our customers homes. This position will work with PV and battery installation crews to oversee the end-to-end installation of solar batteries.  The Certified Electrician 3 also performs and trains others on a variety of electrical work including main panel upgrades, electrical troubleshooting and service work.</p><p><strong>Responsibilities</strong></p><ul><li>Safely lead solar battery installations including design review, pre-installation planning and site walk evaluations, ensuring material is properly stocked and the appropriate electrical equipment is installed to local and NEC code</li><li>Responsible for the successful installation of residential solar projects including the installation of the electrical systems that interconnect the solar array to the grid power of customer’s residential property</li><li>Work with branch team and home owners to fulfill any necessary system repairs to support solar equipment installation</li><li>Mentor others to enhance their overall electrical skills</li><li>Train on Sunrun established best practices as well as prepare team members for future positions at Sunrun</li><li>Work cross-functionally with license holders, AHJ inspectors, and crew members to serve as a subject matter expert on electrical and battery work</li><li>Solve for recurring quality issues and failed inspections to increase the installation pass rate</li><li>When assigned, safely plan and complete main panel upgrades, electrical troubleshooting and service work</li><li>Other duties as assigned</li><li>10 - 30% travel as required</li></ul><p><strong>Qualifications</strong></p><ul><li>High school diploma or equivalent</li><li>Minimum 4 years of electrical installation and repair experience and at least 1 year of experience installing home backup products</li><li>Must have working knowledge and experience replacing residential electrical services and distribution panels</li><li>Must possess and maintain valid Journeyman License/Electrician Certification or equivalent per local and state requirements</li><li>Must maintain a clean driving record with the ability to pass a driving background check and drive company vehicles</li><li>Must be 21 years of age and possess a valid driver’s license</li><li>Demonstrated experience mentoring Electricians</li><li>Safety and customer focus</li></ul><p><strong>Physical Demands</strong></p><ul><li>Ability to transport materials and equipment to complete assigned job tasks (up to 50 pounds frequently and up to 100 pounds with assistance)</li><li>Ability to work on rooftops with various angles and surfaces which requires frequent bending, twisting, squatting, climbing, kneeling, crawling, turning, standing, and balance</li><li>Ability to work in confined spaces such as attics, basements, and crawl spaces which requires kneeling and crouching</li><li>Ability to work in outdoor weather conditions including but not limited to: excessive noise, extreme heat, extreme cold, wet environment, and humidity</li><li>Ability to frequently utilize hand functions requiring fine motor skills including but not limited to: fine manipulation, grasping, and pinching</li><li>Ability to work within the safe range of equipment such as ladders, fall protection harnesses and other personal protective equipment</li><li>Ability to work while wearing heavy protective equipment such as arc flash suits, gloves, and face shields</li><li>Ability to work and maintain balance on roofs and other areas of height</li><li>Ability to work in the sun and possibly low light conditions</li><li>Ability to walk on rafters, roof tiles, and roof shingles without damage</li><li>Ability to distinguish colors such as red, black, yellow, white, green</li><li>Ability to hear verbal commands and warnings</li><li>Ability to work with chemicals using appropriate protection</li></ul><p><strong>Recruiter:</strong></p><p>Kellie Wilkinson (kellie.wilkinson@sunrun.com)</p><p>Please note that the compensation information is made in good faith for this position only.  It assumes that the successful candidate will be located in markets within the United States that warrant the compensation.  Please speak with your recruiter to learn more.</p><p>Starting salary/wage for this opportunity:</p><p>$56.40 to $75.20</p><p>Compensation decisions will not be based on a candidate&#39;s salary history. You can learn more here.</p><p>This job description outlines the primary responsibilities, some essential job functions, and qualifications for the role. It may not include all essential functions, tasks, or requirements. If you are a qualified individual with a disability and you need reasonable accommodation during the hiring process or to perform this role, please contact us at candidateaccommodations@sunrun.com.</p><p>Sunrun is proud to be an equal opportunity employer that does not tolerate discrimination or harassment of any kind.  We believe that empowering people and valuing their differences are essential for our mission of connecting people to the cleanest energy on earth. Learn more here: EEO | Sunrun</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Certified Electrician 3",
+      company: "Sunrun",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

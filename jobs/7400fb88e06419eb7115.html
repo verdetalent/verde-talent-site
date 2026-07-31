@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://jobs.nexteraenergy.com/job/Houston-Principal-Endur-Business-Systems-Analyst-Back-Office-TX-77002/1396097100/" target="_blank" rel="noopener">Apply on NextEra Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://jobs.nexteraenergy.com/job/Houston-Principal-Endur-Business-Systems-Analyst-Back-Office-TX-77002/1396097100/">Apply on NextEra Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to NextEra Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Requisition ID:</strong>  95414</p><p>NextEra Energy Resources is one of America’s largest wholesale electricity generators, harnessing diverse energy sources to power progress. We deliver tailored energy solutions that fuel economic growth, strengthen communities, and help customers achieve their energy goals. Ready to make a lasting impact? Take the next step in your career with us!</p><p><strong>Position Specific Description</strong></p><p>We are seeking a highly skilled Back Office Principal Business Analyst with expertise in the Endur trading and risk management system. In this role, you will support post-trade processes by leveraging Endur to enhance operational efficiency and ensure accurate transaction settlements and month-end close. You will collaborate closely with Back Office stakeholders and IT partners to ensure Endur is used effectively in day-to-day operations. The ideal candidate brings strong Endur back-office experience, excellent analytical skills, and a solid understanding of commodity markets.</p><p><strong>Responsibilities:</strong></p><ul><li>Provide Endur specific insights and analysis to optimize back-office operational processes and transaction settlements.</li><li>Use Endur back-office modules (e.g., Accounting Desktop, DMS, Confirms and Settlement Desktop) to support settlements, accounting, and operational workflows.</li><li>Ensure back-office processes and system usage align with applicable regulatory and compliance requirements.</li><li>Gather and document business requirements from Back Office stakeholders, and translate them into Endur configurations and enhancements.</li><li>Configure and customize Endur to meet Back Office operational needs.</li><li>Monitor and analyze trading activity, positions, and market trends to provide actionable insights to the settlements team.</li><li>Develop and maintain Endur reports and dashboards to support operational monitoring and decision-making.</li><li>Train and support end users to ensure effective use of Endur in daily back-office operations.</li><li>Maintain awareness of industry trends and best practices in utilities trading, risk management, and post-trade operations.</li><li>Partner with IT and cross-functional teams to integrate Endur with upstream/downstream systems and to improve end-to-end back-office processes.</li></ul><p><strong>Preferred Requirements:</strong></p><ul><li>8+ years of experience in a back-office role within the utilities trading industry.</li><li>Strong knowledge of the commodities business and the Endur trading and risk management system.</li><li>Strong understanding of commodity and financial markets (e.g., power, gas, oil, environmental products, and interest rate swaps).</li><li>Experience using Endur functionality such as Trading Explorer, Credit/Risk Manager, Market Explorer, Accounting Manager, Settlements and Confirms desktop, and Report Builder.</li><li>Experience with eConfirms and Trade Vault reporting</li><li>Exposure to Endur v19 or higher (preferred).</li><li>Proficiency with data analysis and reporting tools.</li><li>Strong analytical and problem-solving skills, with the ability to troubleshoot complex issues.</li><li>Excellent communication and interpersonal skills, with the ability to collaborate effectively across Back Office and cross-functional teams.</li><li>Ability to thrive in a fast-paced, dynamic trading environment</li></ul><p><strong>Job Overview</strong></p><p>This position provides technical software project leadership including, but not limited to defining system architecture, guiding design of the system&#39;s software and writing code as part of the implementation team and mentors less experienced team members.  Employees in this role work with the product team to plan work and typically serve as Technical Lead of projects.  Individuals in this position provide technical advice to higher levels in the organization.</p><p><strong>Job Duties &amp; Responsibilities</strong></p><ul><li>Codes in multiple languages in support of software products and the development of software products</li><li>Leads software system architecture projects</li><li>Mentors others in efficient software design</li><li>Leads project-level sized teams including assigning work, answering technical project questions, helping other software engineers overcome challenges and mentoring less experienced software engineers</li><li>Communicates with varying levels within and outside the organization including clearly reporting status in meetings and in other forums, describing systems to audiences of all technical abilities, communicating task assignments to team members, refining requirements and helping to facilitate project planning with the product team, assisting with software project demos and reporting results</li><li>Provides input on software and technology decisions across an entire project and potentially participates in higher level meetings concerning software and IT architecture</li><li>Performs other job-related duties as assigned</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Bachelor’s Degree or equivalent work experience</li><li>Experience: 9+ years</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Bachelor’s - Engineering</li></ul><p>NextEra Energy offers a wide range of benefits to support our employees and their eligible family members. Click <strong>here</strong> to learn more.</p><p><strong>Employee Group:</strong>  Exempt</p><p><strong>Employee Type:</strong>  Full Time</p><p><strong>Job Category:</strong>  Science, Research, and Technology</p><p><strong>Organization:</strong>  NextEra Energy Project Management, LLC</p><p><strong>Relocation Provided:</strong>  Yes, if applicable</p><p>NextEra Energy is an Equal Opportunity Employer. Qualified applicants are considered for employment without regard to race, color, age, national origin, religion, marital status, sex, sexual orientation, gender identity, gender expression, genetics, disability, protected veteran status or any other basis prohibited by law.</p><p>NextEra Energy provides reasonable accommodation in its application and selection process for qualified individuals, including accommodations related to compliance with conditional job offer requirements, consistent with federal, state, and local laws. Supporting medical or religious documentation will be required where applicable and permitted by applicable law. To request a reasonable accommodation, please send an e-mail to recruiting-coordinator.sharedmailbox@nexteraenergy.com, providing your name, telephone number and the best time for us to reach you.</p><p>NextEra Energy will not discharge or in any other manner discriminate against employees or applicants because they have inquired about, discussed, or disclosed their own pay or the pay of another employee or applicant. However, employees who have access to the compensation information of other employees or applicants as a part of their essential job functions cannot disclose the pay of other employees or applicants to individuals who do not otherwise have access to compensation information, unless the disclosure is (a) in response to a formal complaint or charge, (b) in furtherance of an investigation, proceeding, hearing, or action, including an investigation conducted by the employer, or (c) consistent with the contractor’s legal duty to furnish information.</p><p>NextEra Energy <strong>does not</strong> accept any unsolicited resumes or referrals from <strong>any third-party recruiting firms or agencies</strong>. Please see our policy for more information.</p><p>#LI-JN2</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Principal Endur Business Systems Analyst - Back Office",
+      company: "NextEra Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

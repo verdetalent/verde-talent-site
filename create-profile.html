@@ -533,6 +533,32 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     btn.textContent = 'Submitted ✓';
     note.textContent = 'Account created and profile saved. You can sign in anytime to update it.';
     note.style.color = 'var(--grn)';
+
+    // If they arrived here mid-application (chose "Create free profile" on
+    // a job's Apply interstitial instead of skipping straight through),
+    // send them on to finish that application now that they have a
+    // profile - otherwise this would be a dead end that loses the
+    // applicant, which defeats the point of offering the choice at all.
+    const pendingRaw = sessionStorage.getItem('vt_pending_application');
+    if(pendingRaw){
+      try {
+        const pending = JSON.parse(pendingRaw);
+        sessionStorage.removeItem('vt_pending_application');
+        if(pending.job_url){
+          const continueBtn = document.createElement('button');
+          continueBtn.type = 'button';
+          continueBtn.className = 'btn-grn';
+          continueBtn.style.marginTop = '10px';
+          continueBtn.textContent = pending.company
+            ? `Continue to your application at ${pending.company} →`
+            : 'Continue to your application →';
+          continueBtn.addEventListener('click', function(){
+            window.open(pending.job_url, '_blank', 'noopener');
+          });
+          note.insertAdjacentElement('afterend', continueBtn);
+        }
+      } catch(e){ /* malformed stash - just skip it, profile was still saved */ }
+    }
   } catch(err){
     btn.disabled = false;
     btn.textContent = 'Submit profile →';

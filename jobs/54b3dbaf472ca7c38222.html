@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">NERC</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-New-York-Binghamton/Lead-Line-Engineer_R-31044" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-New-York-Binghamton/Lead-Line-Engineer_R-31044">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Job Title: Lead Line Engineer</strong></p><p><strong>Reports to Manager - Projects Unit</strong></p><p><strong>Work type: Office</strong></p><p><strong>Location: Binghamton, NY OR Rochester NY</strong></p><p><strong>The salary range for this position is based on experience level ranging from $120,000- 145,800</strong></p><p>**What We Offer:</p><p>Competitive benefits and growth opportunities</p><p>Generous performance‑based bonuses</p><p>12% 401(k) match</p><p>Comprehensive health, dental, and vision insurance**</p><p>**Tuition reimbursement</p><p>Professional development and clear career advancement pathways**</p><p>For more information please visit: Benefits - Avangrid</p><p><strong>Job Summary</strong></p><p>Responsible for high voltage, medium voltage, and low voltage transmission and distribution line designs for all operating companies in Avangrid Networks. Line designs include structural or electrical calculations, routing, and preparation of engineering drawings. The electric delivery system in Maine contains approximately 2,600 miles of transmission lines &amp; 317 substations. The electric delivery system in New York contains approximately 5,600 miles of transmission lines &amp; 621 substations. The electric delivery system in Connecticut contains approximately 130 miles of transmission lines and 28 bulk electric supply substations. Position reports to the Unit Manager Line Projects but will workday-today in a cross functional project team and support project needs as dictated by the NYSEG project manager(s).</p><p><strong>Key Responsibilities</strong></p><ul><li>Capital project engineering performance including all phases such as scoping and budgeting, conceptual engineering, contract management and design, engineering design, construction, and closeout.</li><li>Responsible for leading and creating new conceptual designs and overseeing the work of external detailed designers.</li><li>Proactively identify and perform special projects and studies that innovatively solve unique and complex problems with broad impact to the business.</li><li>Develop alternate methods or design concepts to resolve unique problems or to improve processes/services,</li><li>Solve unique and complex engineering problems. Identify innovative solutions,</li><li>Oversee engineering studies to evaluate equipment and system performance and effectiveness and analyze operational issues in support of system reliability and operational efficiency.</li><li>Develop and validate information needed for engineering analyses and applying engineering judgment to solve technical problems,</li><li>Ensure all engineering designs meet applicable company, local, state, and national codes, and standards,</li><li>Represent the company on regional and national committees when needed.</li><li>Utilize knowledge to influence and guide department engineers.</li><li>Provide technical leadership in complex projects that have a wide impact on the department.</li><li>Mentor, develop and support team in technical skills.</li><li>Ability to collaborate across departments</li><li>Liaison/ direct contractors on company policy, standards, and best practices</li><li>Work independently with little supervision For Lead Engineers:</li><li>Utilize knowledge to influence and guide department engineers.</li><li>Provide technical leadership in complex projects that have a wide impact on the department</li><li>Mentor, develop and support team in technical skills</li><li>Ability to collaborate across departments</li><li>Liaison/ direct contractors on company policy, standards, and best practices</li><li>Work independently with little supervision</li></ul><p><strong>Required Qualifications</strong></p><p>Technical Skills/Competencies</p><ul><li>Theoretical Engineering knowledge - Planning, Operations and Engineering Design, Analytic, modeling &amp; Calculation, understanding the business model; Global View of the Business (Values cross-functional collaboration, understands importance of growing knowledge and developing relationships and links across the organization)</li><li>Practical engineering experience/application - Planning, Operations and Engineering Design, Construction, (e.g., field experience, standardization &quot;Perform economic analyses of engineering alternatives, develop business cases and defend in front of stakeholders.&quot;)</li><li>Engineering documentation - Ability to adequately document and interpret engineering documentation</li><li>Ability to review and approve engineering work done by others - to ensure compliance with company standards, specifications, and contract requirements</li><li>Knowledge of Regulatory and Compliance Environment - Local, State and Federal Regulatory Standards and requirements</li><li>Experience/Training:</li><li>Engineering/Professional qualification or equivalent experience</li><li>Experience in the delivery of projects, as necessary</li><li>Relevant network construction and operational experience to include field inspections</li><li>Computer literacy</li><li>Required Education:</li><li>Bachelor’s degree in Engineering, Construction Management</li><li>Professional Engineering License Preferred</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>General Skills:</li><li>Excellent diagnostic and problem-solving skills to decipher unique technical and analytical problems,</li><li>Proven ability to lead and manage projects,</li><li>Strong communication and interpersonal skills to articulate highly technical concepts,</li><li>Strong management and leadership skills, ability to drive change and adoption of new technologies.</li><li>Knowledge of the regulatory environment including relevant output and incentive mechanisms.</li><li>General contract, commercial and regulatory awareness with the ability to balance effective and efficient customer service and project delivery, ensuring maximum return on investment.</li><li>Track record of effective stakeholder and customer service engagement and management.</li><li>Ability to communicate and present information effectively at all levels</li><li>Ability to manage competing priorities using sound engineering and financial judgment to determine optimal solutions</li><li>Awareness and understanding of key business drivers</li><li>Ability to devise solutions to both common and complex problems/challenges.</li><li>Where appropriate, technical, and operational experience in a relevant engineering role within a utility environment.</li><li>Where required, knowledge of:</li><li>Construction and maintenance standards in accordance with regulatory requirements</li><li>Engineering standards and specifications up to 345kV</li><li>Engineering standards and specifications up to 345kV</li><li>Routine Technical Skills:</li><li>CAD Drafting - Expert</li><li>Company Procedures, Processes and Standards - Expert</li><li>Construction and Outage Sequencing - Expert</li><li>Industry Codes, Standards, and Regulations- Expert</li><li>PLS-CADD Modeling - Expert</li><li>Project Scoping and Estimating - Expert</li><li>Technical Writing and Communication - Expert</li><li>Unique Technical Skills:</li><li>Foundation Design - Expert/Competent1</li><li>Overhead Transmission Line Layout - Expert/Competent1</li><li>Surveying - Expert/Competent1</li><li>Transmission Equipment Specifications - Expert/Competent1</li><li>Transmission Line Maintenance - Expert/Competent1</li><li>Transmission Material Selection - Expert/Competent1</li><li>Transmission Service Specifications - Expert/Competent1</li><li>Underground Transmission Line Design - Expert/Competent1</li><li>#LI-AM1</li><li>#LI-ONSITE</li></ul><p><strong>Company:</strong></p><p>NY STATE ELECTRIC &amp; GAS CORP</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p><p>September-25-2026</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Lead Line Engineer",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

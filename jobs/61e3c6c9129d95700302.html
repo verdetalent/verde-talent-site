@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#22E09A66;color:#22E09A;background:#22E09A1a;">Solar</span><span class="tag">Excel</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1024082" target="_blank" rel="noopener">Apply on First Solar's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1024082">Apply on First Solar's site &rarr;</button>
     <div class="apply-note">Applying takes you to First Solar's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p>Basic Job Functions:</p><p>This position is a cross-functional role that focuses on sales and integrates several independent teams and functions while seeking to recognize cross functional synergies between them.  The position requires a strategic development perspective, a markets origination focus to drive the organization’s performance across markets. This role is key to coordinating customer activity within and across those markets, while navigating strategic allocation to enable projects.</p><p>The Sr. Manager is responsible for driving the development of growth and customer relationships across First Solar’s markets. The Manager will drive implementation through preparation and opening of assigned new market segments, and evolving this network via new sales, account management and other business development activities as required. He/she will define go to market strategy, including identification of market entry points, key anchor customers/opportunities.  Candidate will be responsible for developing and sustaining market value proposition, pricing, balancing corporate and customer needs for success.  The Sr. Manager will also help drive strategic allocation for the team, including strategies to unlock value across customers.</p><p>This position requires analyzing challenging situations and driving clarity while maintaining complex alignment across the approval process. Key aspects of this role will center on sales, strategic allocation, customer development, account management, commercial contract execution, managing cross functional relationships and the ability to obtain executive management support and approvals.</p><p>Education/Experience:</p><ul><li>An undergraduate degree is required; MBA or Masters of Engineering (or equivalent) a plus.</li><li>10+ years of work experience in business development, sales, engineering, project management or other relevant business / technical experience</li><li>Minimum of 7+ years of experience in the energy, alternative energy and/or utility sectors.</li><li>Prior experience in utility-scale solar energy industry is required.</li><li>Ability to travel to multiple geographies is required</li></ul><p>Required Skills/Competencies:</p><p>Leadership Skills:</p><ul><li>Demonstrated experience navigating complex situations across C-suite audiences in a fast changing internal and external environment</li><li>Expertise in identifying, implementing, originating, negotiating and executing commercial contracts.</li><li>Proven ability to provide best in class account management to various key customer stake-holders</li><li>Proven experience leading cross-regional and/or cross-functional high performing teams, with demonstrated results</li><li>Demonstrated strengths in the core product management analytics:</li><li>Market/Customer Segment Analysis</li><li>Competitive Analysis</li><li>Positioning Analysis</li><li>Economic Value Analysis</li><li>Business Case Analysis</li><li>Understanding of global power and utility markets structures and decision making. Analytical skills to assess the impacts of regulatory changes.</li><li>Detail oriented and productive when leading cross functional project time-lines, including sales contracting, project delivery administration.</li><li>Demonstrated expertise in engaging targeted customers to:.</li><li>Acquire and validate key success factors and solution needs</li><li>Identify market hypothesis/gaps/opportunities for success</li><li>Establish long-term commercial partnerships</li><li>Negotiate and close commercial agreements</li><li>Navigate issues and their potential impacts to revenue, legal rep</li><li>Excellent written, oral, and executive level communication skills</li><li>Demonstrated excellence in defining/aligning organizational priorities with multiple internal stakeholders</li><li>Demonstrated excellence in communication of status to objectives; up, down, laterally and diagonally across the organization.</li></ul><p>Analytical Skills:</p><p>Customer/Market Engagement Skills</p><p>Communication Skills:</p><p>Essential Responsibilities:</p><ul><li>Act as a trusted advisor to the regional Sr. Director for the development, market segmentation, origination strategies and collaboration with executive leadership.</li><li>Functional responsibility to drive development and alignment of the global business plan and strategy for identified market segments or channels</li><li>Structure and implement a multi-year, multi-segment Market Strategy that includes an integrated segmentation strategy and product application/solution roadmap.</li><li>Quarterback the annual planning process, provide updates in regular review meetings, and document/manage approvals for the plan</li><li>Host recurring meetings with key stake holders to align strategies, identify constraints, and implement action plans</li><li>Drive customer intimacy grow deep relationships across multiple levels and customer accounts by ensuring:</li><li>Close collaboration between all sub-regional managers, key-account managers and subject matter experts engaging with the customer</li><li>Responsibility for Ecosystem enablement, supplier qualification and development/maintenance of overarching framework agreements</li><li>Provides cross-functional and executive reporting of key business metrics and corrective action plans to achieve key performance metrics</li><li>Other duties as assigned.</li><li>Job description subject to change at any time.</li></ul><p>Reporting Relationships:</p><ul><li>Reports to Head- IPPs and Strategic Accounts</li><li>May have direct reports</li></ul><p>Estimated Annual Salary Range:</p><ul><li>$140,000 - $200,000 Estimated Annual Salary</li></ul><p>US Physical Requirements:</p><p>All positions in our office require interaction with people and technology while either standing or sitting. To best service our customers, internal and external, all associates must be able to communicate face-to-face and on the phone with or without reasonable accommodation. First Solar is committed to compliance with its obligations under all applicable state and federal laws prohibiting employment discrimination. In keeping with this commitment, it attempts to reasonably accommodate applicants and employees in accordance with the requirements of the disability discrimination laws. It also invites individuals with disabilities to participate in a good faith, interactive process to identify reasonable accommodations that can be made without imposing an undue hardship.</p><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role. All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Sr Manager- Business Development USA",
+      company: "First Solar",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://job-boards.greenhouse.io/arcadiacareers/jobs/8620708002" target="_blank" rel="noopener">Apply on Arcadia's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://job-boards.greenhouse.io/arcadiacareers/jobs/8620708002">Apply on Arcadia's site &rarr;</button>
     <div class="apply-note">Applying takes you to Arcadia's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Senior Security Engineer (Security Operations)</p><p>Who we are</p><p>Arcadia is the AI-powered energy intelligence platform for businesses. We replace fragmented tools and manual workflows with one platform to pay utility bills, buy energy, and advance sustainability — across every location, at enterprise scale. Trusted by Fortune 2000 companies, Arcadia combines unified data, AI-powered analytics, and expert advisory to help enterprise teams save money, mitigate risk, and cut carbon.</p><p>We deliver this through three comprehensive solutions:</p><p>● Utility Bill Management: Automating the entire utility bill lifecycle — from data capture and validation to payment processing and auditing.</p><p>● Energy Procurement Advisory: Bringing together comprehensive data, AI-powered analytics, market expertise, and a strong partner network to make sophisticated procurement options accessible to all. .</p><p>● Sustainability Reporting — Verified emissions data with seamless integration into leading sustainability platforms.</p><p>Tackling the world&#39;s most complex energy challenges requires diverse thinking. We&#39;re building teams of people from different backgrounds, industries, and disciplines — united by a belief that energy management should be simple, intelligent, and a genuine driver of business value.</p><p>Job summary</p><p>As a Senior Security Engineer, you’ll be the technical anchor of Arcadia’s security operations function, leading the daily defense of our endpoints, cloud infrastructure, and identity systems. You’ll operate with significant autonomy and strong collaboration across our global team, drive initiatives end to end, and partner directly with security leadership in the U.S. to mature our detection, response, and vulnerability management programs. You’ll also support our SOC 2 Type II program by owning the technical controls within your scope.</p><p>This person will report to the Senior Manager of Security in the U.S., with strong local collaboration in Chennai, India. You’ll work as part of a single global security team operating with consistent expectations and shared standards across the globe.</p><p>What we’re looking for</p><p>We’re seeking a Senior Security Engineer based in Chennai, India with 5 to 8 years of experience in security operations, endpoint security, and cloud security. This is an Individual Contributor role at the Senior (L4) level, anchored in SecOps with expected contributions to security engineering work. The ideal candidate is technically deep, operationally disciplined, and comfortable driving programs end to end with light oversight. You should be equally at ease tuning an EDR detection, leading a vulnerability remediation effort with key stakeholders, and leading security incident response. You’ll bring strong judgment, clear written communication, and the ability to translate technical risk into business terms.</p><p>This role goes beyond reactive security analyst work and includes leadership of detection, response, and engineering initiatives. You’ll be expected to shape how Arcadia’s security operations function evolves, mentor teammates, and contribute to the broader security strategy.</p><p>At Arcadia, we value demonstrated experience over certifications. Whatever certifications you hold or don’t hold, what matters most is the depth of your hands-on security work and the impact you’ve had on the teams and programs you’ve supported.</p><p>What you’ll do</p><p>● Own and operate Arcadia’s endpoint security program on CrowdStrike, including detection tuning, response workflows, and policy management across Windows and macOS</p><p>● Lead vulnerability management end to end: scanning cadence, risk-based prioritization, and partnering with key stakeholders to drive remediation to closure</p><p>● Partner with engineering teams to strengthen cloud security in AWS over time, contributing to identity hygiene, configuration review, baseline assessments, and detection coverage as the program matures</p><p>● Serve as the response lead for security incidents: owning triage, investigation, containment, and post-incident review in coordination with senior security leadership</p><p>● Build and maintain detection content, response runbooks, and operational metrics that demonstrate program effectiveness</p><p>● Support Arcadia’s SOC 2 Type II program by owning the technical controls within your scope, producing audit evidence, and partnering with the GRC function on control design and testing</p><p>● Partner with the global IT team on identity, device management, and email security to ensure security best practices are operationalized</p><p>● Contribute to security engineering initiatives when the work calls for it: including tooling, automation, and infrastructure improvements that scale SecOps capabilities</p><p>● Mentor teammates and elevate the technical depth of the security team</p><p>● Contribute to security roadmap planning and represent security operations in cross-functional initiatives</p><p>What will help you succeed</p><p>● 5 to 8 years of experience in security operations, endpoint security, or cloud security roles</p><p>● Demonstrated ownership of EDR platforms, with CrowdStrike preferred (SentinelOne, Defender, or equivalent also acceptable), including detection tuning and response workflows</p><p>● Working knowledge of AWS security fundamentals, including IAM, logging and detection (CloudTrail, GuardDuty, or equivalent), and common misconfiguration patterns, with the ability to grow this practice in partnership with engineering</p><p>● Practical experience leading or significantly contributing to security incidents from detection through resolution</p><p>● Working knowledge of vulnerability management programs at scale, including prioritization frameworks and remediation partnership with cross-functional teams</p><p>● Familiarity with SOC 2 Type II or comparable control frameworks, with the ability to operate technical controls and produce audit evidence</p><p>● Ability to operate independently, drive projects to completion, and exercise sound judgment with light oversight</p><p>● Fluent written and spoken English. Daily collaboration across our global team is conducted in English, including incident response, technical documentation, code review, and meetings</p><p>● Availability to overlap with U.S. working hours for collaboration meetings, with overlap typically ending no later than 8:30 PM IST</p><p>Nice-to-have</p><p>● Proficiency in at least one scripting language for automation and tooling</p><p>● Experience with identity providers (Okta, Entra ID, or equivalent) and SSO/MFA hardening</p><p>● Exposure to detection-as-code workflows, SIEM tuning, or building security automations</p><p>● Experience working in a globally distributed security team</p><p>Benefits</p><p>● Competitive compensation based on market standards</p><p>● We are working on a hybrid model with remote first policy</p><p>● Apart from Fixed Base Salary potential candidates are eligible for following benefits</p><p>○ Flexible Leave Policy</p><p>○ Office located in the heart of the city in case you need to step in for any purpose</p><p>● We provide comprehensive coverage including accident policy and life insurance.</p><p>● Medical Insurance (1+5 Family Members)</p><p>● Flexible Benefit Plan</p><p>● Awards and Bonus</p><p>● Annual performance cycle</p><p>● Quarterly engagement activities</p><p>● A supportive workplace culture that values diversity, empathy, teamwork, trust, and efficiency</p><p>Eliminating carbon footprints, eliminating carbon copies.</p><p>Here at Arcadia, we cultivate diversity, celebrate individuality, and believe unique perspectives are key to our collective success in creating a clean energy future. Arcadia is committed to equal employment opportunities regardless of race, color, religion, gender, sexual orientation, gender identity or expression, national origin, age, disability, genetic information, protected veteran status, or any status protected by applicable federal, state, or local law.</p><p>Thank you</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Senior Security Engineer",
+      company: "Arcadia",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

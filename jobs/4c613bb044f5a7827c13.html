@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Mt-Holly-NC/Travel-I-E-Tech-I--II--III---Nuclear_R40587" target="_blank" rel="noopener">Apply on Duke Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Mt-Holly-NC/Travel-I-E-Tech-I--II--III---Nuclear_R40587">Apply on Duke Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Duke Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Sunday, August 2, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>Depending upon the qualifications of the successful candidate, the hiring manager may elect to fill this position at a higher level within the job hierarchy.</strong></p><ul><li>Positions will be based at the Lark Maintenance Center in Mount Holly, NC. Travel may be required up to 100% of the time.</li><li>Obtaining and Maintaining Nuclear access is required. Additionally, obtaining DOT medical card is required.</li><li>The Specialty Services I/C Group consist of Breaker/Switchgear Teams, Generator Breaker and Isolated Phase Bus Teams, Testing Teams and Instrumentation-Control-Electrical Teams based in the Carolinas.</li><li>This posting will place successful candidates on the Test Team within the Specialty Services Group.</li><li>The Nuclear Traveling Instrumentation &amp; Electrical Technician is skilled in the basic aspects of power plant electrical, electronic, pneumatic, and hydraulic instrumentation &amp; control systems.</li><li>As directed, duties performed may include but are not limited to:</li><li>Perform assigned calibration, maintenance and repair of electrical, electronic, pneumatic, and hydraulic instrumentation &amp; control systems in a safe, reliable, economical and environmentally sound manner.</li><li>Perform assigned maintenance activities independently or work within a team/group setting as needed.</li><li>Read and interpret basic I&amp;C and Electrical control drawings, work orders and/or plans.</li><li>Assist in the control of quality and productivity.</li><li>Communicate effectively with other maintenance personnel at all levels by keeping co-workers and leadership apprised of work progress and difficulties as they arise.</li><li>Understand and follow all applicable safety standards.</li><li>Use human performance tools and techniques.</li><li>Maintain good housekeeping standards on a continual basis and ensure no reportable incidents regarding housekeeping occur with the area of responsibility.</li><li>Develop proficiency in the use of calibration equipment &amp; specialty tooling.</li><li>Gain general knowledge of equipment maintenance procedures, instruction manuals, drawings, and codes.</li><li>Obtain and maintain unescorted nuclear access.</li><li>Develop proficiency in the use of company provided computers and associated software programs such as: Maximo, CAS, Tags Pro, eSOMs, Nantel, &amp; other associated software programs necessary to complete Nuclear &amp; Regulated &amp; Renewable Energy tasks</li></ul><p><strong>Basic Qualifications:</strong></p><ul><li>High School Diploma or GED</li></ul><p><strong>Desired Qualifications:</strong></p><ul><li>One year closely related experience with Tan Delta Cable Testing</li><li>One year closely related experience with Motor Testing</li><li>One year closely related experience with Automatic Voltage Regulator Maintenance</li><li>Experience with troubleshooting electrical/instrumentation equipment</li><li>Experience reading electrical diagrams, schematics, and one-line drawings</li><li>Experience utilizing electrical/instrumentation test equipment</li><li>Experience with lock out tag out of electrical equipment</li><li>Currently have Nuclear Access</li></ul><p><strong>Specific Requirements:</strong></p><ul><li>Must successfully complete EEI&#39;s Power Plant Maintenance Selection System (MASS)</li><li>This position contains a weight restriction of 275 pounds as an essential function of the job. The purpose of this restriction is to ensure that all weight rated equipment is used in an appropriate and safe manner within maximum allowed weight loading.</li></ul><p><strong>Physical Effort Required:</strong></p><ul><li>Physical exertion applicable to power plant maintenance such as standing; lifting, up to 50 lbs; walking; stooping; climbing ladders and stairs; working long hours.</li><li>With exposure to uneven and inclined walking/working surfaces; work at heights; work from scaffolds and platforms; work in confined spaces; work in tight areas.</li></ul><p><strong>Working Conditions</strong></p><ul><li>Typical conditions associated with an operating fossil or nuclear power station – extreme weather conditions, high temperatures, high pressures, high voltage electrical systems, and rotating machinery. Operation of vehicles and mobile equipment required.</li></ul><p><strong>Working Hours and Travel</strong></p><ul><li>Schedules may vary as project assignments and plant conditions dictate. Incumbent will be expected to work weekends, shift work and overtime. Travel away from home base can be up to 100% of the year. Expected to respond to unusual events and emergencies.</li></ul><p><strong>**Travel Requirements</strong>**</p><p>50+%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Travel I&E Tech I, II, III - Nuclear",
+      company: "Duke Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

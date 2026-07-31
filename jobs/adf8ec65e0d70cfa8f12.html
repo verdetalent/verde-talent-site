@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#FF705566;color:#FF7055;background:#FF70551a;">EV</span><span class="tag">Python</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://jobs.lever.co/terawattinfrastructure/d17b39f2-96a4-4838-aa2a-a35c30cca5e8" target="_blank" rel="noopener">Apply on Terawatt Infrastructure's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://jobs.lever.co/terawattinfrastructure/d17b39f2-96a4-4838-aa2a-a35c30cca5e8">Apply on Terawatt Infrastructure's site &rarr;</button>
     <div class="apply-note">Applying takes you to Terawatt Infrastructure's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>About Terawatt Infrastructure</p><p>The once-in-a-century transition to autonomous and electric vehicles is underway and will require a multi-trillion-dollar investment in energy and charging infrastructure, and the real estate to site it on. Terawatt is the leader in delivering large-scale, turnkey charging solutions for companies rapidly deploying AV and EV fleets. Whether it’s an urban mobility hub or a carefully located multi-fleet hub for semi-trucks, Terawatt brings the talent, capabilities, and capital to create reliable, cost-effective solutions for customers on the leading edge of the transition to the next generation of transport.</p><p>With a growing portfolio of sites across the US in urban hubs and along key logistics and transportation corridors and logistics hubs, Terawatt is building the permanent transportation and logistics infrastructure of tomorrow through a robust combination of capital, real estate, development, and site operations solutions. The company develops, finances, owns, and operates charging solutions that take the cost and complexity out of electrifying fleets.</p><p>At Terawatt, we execute humbly and with urgency to provide tailored solutions for fleets that delight our clients and support the transition of transportation.</p><p>Our Technology: Terawatt is not a traditional infrastructure operator. Our technology platform transforms a portfolio of sites into a reliable, intelligent network — through advanced power management, operational optimization, and data-driven systems that back our customers with hard performance guarantees. That&#39;s what makes us a de-risked operator and a category-defining company.</p><p>We sit at a rare intersection: software, hardware, real estate, energy systems, and live site operations. The work is concrete and the stakes are real. The code you write today runs physical infrastructure tomorrow. You&#39;ll build systems that orchestrate megawatts of power across hundreds of chargers, ingest millions of telemetry events per day, and keep autonomous fleets, rideshare vehicles, and heavy-duty trucks moving — in real time. Role Description: As a member of the Terawatt technology team in the role of Systems Quality Engineer you will own the processes and data that keep our charging systems performing to spec: defining what &quot;good&quot; looks like, measuring against it, and driving the engineering and operations teams to close the gap when it doesn&#39;t.  You will be responsible for validating the quality and performance of our full stack products, from End-to-End electrical hardware and software interactions, with a focus on high-power EV charging solutions and energy management systems. This role sits inside the technical organization with strong ties to field operations, software, and hardware procurement. Core Responsibilities: • Define and maintain quality standards for Terawatt&#39;s charging systems, uptime thresholds, fault rates, charge session success rates, hardware failure modes, and build the measurement infrastructure to track them</p><ul><li>Contribute to a product-driven engineering culture that champions diverse ideas and bottom-up innovation</li><li>Analyze field performance data to identify systemic failures, distinguish one-off events from recurring defect patterns, and prioritize engineering response accordingly</li><li>Develop and implement comprehensive QA testing standards, specifically focused on OCPP and ISO 15118 communication protocols and system logs</li><li>Triage and perform advanced root cause analysis on product or system issues, using network analysis tools like Wireshark and .pcap files to debug vehicle-to-charger communication and complex field failures</li><li>Collaborate closely with vendors to manage and support resolution of critical firmware, hardware, and integration defects, ensuring alignment with technical specifications and SLAs for timely delivery and reliable operation of new features</li><li>Ensure lab-to-site validation consistency by verifying that lab configurations and units exactly match field deployments to mitigate risks of unforeseen operational differences</li><li>Develop and maintain inspection protocols for new site commissioning; ensure sites are handed off to operations meeting defined quality gates</li><li>Collaborate with Operations to define and validate Standard Operating Procedures (SOPs) at the lab before deployment, and coordinate logistics for the delivery and return of large EVSE test units</li><li>Contribute to the quality and reliability planning for charging &amp; energy management systems, including local site energy management infrastructure (energy meters, local controllers, and DERs like BESS &amp; Solar)</li><li>Collaborate with Terawatt Operations and other stakeholders to ensure highly reliable operations and quality customer experiences at our charging facilities Minimum Qualifications: • 5+ years in a quality engineering, reliability engineering, or systems engineering role — ideally in power electronics, energy storage, EV charging, or industrial electrical equipment</li><li>Ability to read and interpret electrical schematics, system architecture diagrams, and hardware test reports</li><li>Expertise in high-voltage and low-power electrical systems, including deep, protocol-level debugging of complex in-field customer issues in the EV charging space.</li><li>Demonstrated hands-on debugging expertise of communication protocols between EV &amp; EVSE including ISO 15118-2 &amp; 20, DIN 70121, and OCPP protocols.</li><li>Experience in practical understanding of CCS, NACS, MCS standards</li><li>Hands-on experience validating local site energy management infrastructure including energy meters, local controllers, load limiting, and complex grid interactions with DERs (BESS &amp; Solar).</li><li>Strong communication skills to collaborate effectively in a dynamic, cross-functional remote work environment</li><li>Ability to work with ambiguity, manage multiple projects and independently collaborate with internal teams and external partners</li><li>Bachelor&#39;s degree in Electrical Engineering, Power Systems, or a related field</li><li>Willingness to work onsite at our lab in Baldwin Park, CA Preferred Qualifications : • Working knowledge of OCPI &amp; OCPP 2.* standards</li><li>Familiarity with charge management systems and fleet telematics data</li><li>Working experience with Hardware and IoT integrations into backend services</li><li>Hands-on experience with EV/EVSE Emulator systems for functional and integration testing</li><li>Hands-on experience with automation in Python and integrating with CI/CD pipelines</li></ul></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Senior System Quality Engineer",
+      company: "Terawatt Infrastructure",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

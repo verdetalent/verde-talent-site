@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">AutoCAD</span><span class="tag">PMP</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Charlotte-NC/Engineering-Technologist--Level-III-or-Senior----Asset-Design_R40712" target="_blank" rel="noopener">Apply on Duke Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Charlotte-NC/Engineering-Technologist--Level-III-or-Senior----Asset-Design_R40712">Apply on Duke Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Duke Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Tuesday, August 4, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>**Job Summary</strong>**</p><p><strong>“Depending upon the qualifications of the successful applicant, the hiring manager may elect to fill this position at a higher level within the job hierarchy.”</strong></p><p>The Engineering Technologist III is the third level of the non-Engineer degreed technical support role job classification.  Engineering Technologist III provide technical expertise to solve more complex problems and leadership skills to provide oversight and direction of work in a specific area of expertise, with some supervision.  Incumbents are expected to develop advanced skills and the ability to work with a high degree of independence.</p><p>The Senior Engineering Technologist is the fourth level of the non-Engineer degreed technical support role job classification and considered the Career level for the job hierarchy.  Senior Engineering Technologist provide technical expertise to solve more complex problems, and leadership skills to manage work in a specific area of expertise, with minimal supervision.  Incumbents are expected to develop advanced skills and to have the ability to work independently with increased latitude for unreviewed work.</p><p>The person in this position will be a part of the Asset Design Team for the Central Zone, responsible for managing vendor workload, reviewing and approving MYRP, customer and any other large Distribution designs, as well as providing SME support for the Zone. The design and review work in this group includes Distribution design support for underground and overhead designs with associated estimates, CAF review, and Distribution Standards support.</p><p>This position is expected to collaborate positively with Area Operations Support groups including Highway Relocation Team, DTUG Engineering, and Zone Engineering as well as other internal stakeholders including Project Management, Resource Planning and Scheduling, Construction Management, Government and Community Relations, Environmental Health and Safety, Land Services, and Legal as needed.</p><p><strong>**Responsibilities</strong>**</p><ul><li>Ensure a detailed design that meets the requirements prescribed by our various internal and external stakeholders (Distribution Standards, City/Municipalities/NCDOT etc.) is released to construction</li><li>Ensure the designs released are the most cost effective, safe, constructable, and reliable</li><li>Must be customer focused and responsive. Develops positive working relationships with internal and external customers to effectively coordinate work activities. Demonstrates effective oral and written communication skills.</li><li>Ability to adjust to changing priorities and make decisions that may affect the work of the team.</li><li>Facilitate communication with off-site vendors on how to negotiate effectively with customers and stakeholders for mutually positive outcomes.</li><li>Adapts quickly to changes in scope, schedule, or cost and provides updates to necessary stakeholders</li><li>Ensures accomplishment of business goals and objectives through effective planning, organizing, estimating, scheduling and monitoring of work activities</li><li>Perform job site coordination activities to facilitate needs of customers and construction crews as needed</li><li>Manage multiple projects and customers simultaneously to assure timely, successful completion of projects resulting in high levels of customer &amp; stakeholder satisfaction.</li><li>Provides engineering/technical expertise and guidance in the identification, analysis and resolution of routine problems in area of expertise.</li><li>Assists in the accomplishment of business goals and objectives through effective planning, organizing, estimating, scheduling and monitoring of work activities under the guidance of higher-level employees.</li><li>Possesses knowledge of fundamental concepts, practices and procedures.</li><li>Develops positive working relationships to effectively coordinate work activities.  Demonstrates effective oral and written communication skills.  Maintains accurate records and files.</li><li>Supports the company&#39;s goals and represents the company positively and professionally.</li><li>Oversee projects from conception to completion, including resolving both design and construction constraints and partnering with other organizations to ensure a successful outcome.</li><li>Prepares thorough and accurate technical reports, correspondence, documentation, calculations and sketches related to well-defined problems and analysis of moderate scope and complexity.</li><li>Practices a high level of both personal Safety and safe driving practices Design Safety</li></ul><p><strong>**Basic/Required Qualifications</strong>**</p><p>Note: This posting is for one open position. Dependent on relevant experience, the level to which a candidate is aligned is outlined below.</p><p>Engineering Technologist III</p><ul><li>Two+ years of relevant industry experience coupled with a Bachelor of Science in Engineering or Engineering Technology, OR</li><li>Four+ years of experience and Associate Degree in Engineering or Engineering Technology years of relevant industry experience coupled with a Bachelor of Science in Engineering or Engineering Technology, OR</li><li>HS/GED and 6+ years equivalent experience without a degree, AND</li><li>Valid Drivers&#39; License</li></ul><p>Senior Engineering Technologist</p><ul><li>Four+ years of relevant industry experience coupled with a Bachelor of Science in Engineering or Engineering Technology, OR</li><li>SIX+ years of experience and Associate Degree in Engineering or Engineering Technology, OR</li><li>HS/GED and 8+ years equivalent experience without a degree, AND</li></ul><p><strong>**Additional Preferred Qualifications</strong>**</p><ul><li>Strong interpersonal skills and the ability to build cooperative working relationships across multiple levels of the organization and across departmental boundaries</li><li>Broad knowledge of distribution systems, standards &amp; equipment, and associated safety policies, practices, and procedures</li><li>Demonstrates skills applying leadership in the areas of technical project management, program oversight and/or governance</li><li>Leverages past knowledge to document and improve processes for increased efficiency</li><li>Understanding of complex engineering theories and principles.</li><li>Understanding of nuanced practices of researching engineering and design issues, evaluating alternatives, making sound recommendations and preparing and presenting recommendations.</li><li>Ability to positively interact with a variety of individuals from various socio-economic, cultural and ethnic backgrounds.</li><li>Good written and oral communication skills.</li><li>Passing grade on the Engineering Fundamentals Exam.</li><li>Understanding of basic principles of project management.</li><li>Experience in the utility industry.</li><li>Experience with AutoCad</li><li>PMP Designation</li></ul><p><strong>**Working Conditions</strong>**</p><ul><li>Hybrid Mobility Classification – Work will be performed from both remote and onsite locations after the onboarding period. However, hybrid employees should live within a reasonable daily commute to a Duke Energy facility.</li></ul><p><strong>**Specific Qualifications</strong>**</p><ul><li>Valid driver&#39;s license</li></ul><p>#LI-PS1</p><p>#LI-Hybrid</p><p><strong>**Travel Requirements</strong>**</p><p>Not required</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Engineering Technologist (Level III or Senior) - Asset Design",
+      company: "Duke Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

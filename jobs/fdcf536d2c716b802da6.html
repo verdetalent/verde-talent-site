@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">Excel</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Energy-Efficiency-Consultant--Mid-Size-C-I--Hybrid-Schedule-_R-030638" target="_blank" rel="noopener">Apply on Eversource Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Energy-Efficiency-Consultant--Mid-Size-C-I--Hybrid-Schedule-_R-030638">Apply on Eversource Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Eversource Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p>Eversource supports work-life balance by offering hybrid schedules for certain roles. Eligibility is based on job responsibilities, operational needs, nature of work and team dynamics. Current guidelines require employees to work at least three days in the office, including Tuesdays and Wednesdays, with the third day set by the employee and supervisor based on department needs. These guidelines apply to roles approved for remote work and are subject to change, based on managerial discretion and work performance. All applicants must be able to work up to five days in the office if needed (for example: emergencies, training, or other business needs) or should the policy change.</p><p>If you’re passionate about sustainability, join a team of professionals connected and motivated by this common commitment to the environment and a clean energy future. In this role within the energy efficiency department, you will be working with customers to develop and execute retrofit energy efficiency projects. You will make a direct impact as you work to help customers and contractors provide energy efficiency improvements to Eversource’s Connecticut electric and natural gas customers.</p><p>As an Energy Efficiency Consultant, you will lead the development, promotion, and implementation of customer engagement in new and existing programs as well as identify existing and new technologies that support energy-saving solutions for customers. Through your regular interactions with external stakeholders, energy efficiency contractors, engineers, and internal teammates from marketing, regulatory compliance and sales, your focus will be on accomplishing energy saving goals which also help to lower the state’s carbon emissions.</p><p>This role is uniquely focused on developing and growing participation within an emerging and under-engaged customer segment of mid-size customers. Unlike traditional Energy Efficiency Consultant roles that primarily support established customer sectors, this position will require a proactive and strategic approach to identifying opportunities, understanding customer needs, developing engagement strategies, and creating scalable solutions that drive program participation and energy savings. The successful candidate will be comfortable navigating ambiguity, building new processes, and helping shape the future direction of the program.</p><p><strong>Essential Functions</strong></p><ul><li>Develop and implement strategies to increase participation among underserved and under-engaged customer segments.</li><li>Identify barriers to customer adoption of energy efficiency programs and recommend solutions to improve participation and customer experience.</li><li>Analyze participation trends, market data, and customer feedback to identify opportunities for program growth.</li><li>Establish and maintain relationships with key customers, trade allies, vendors, and internal stakeholders to advance energy efficiency objectives.</li><li>Pilot and evaluate new outreach, engagement, and implementation approaches to improve program performance for mid-sized customers.</li><li>Collaborate with internal teams to develop scalable processes and best practices for emerging customer segments.</li><li>Serve as a subject matter expert on assigned customer segments and provide recommendations regarding program design, customer engagement strategies, and market opportunities.</li><li>Provides direction to business partners, such as contracted vendors, and/or technical project expertise to customers and coordinates available resources specific to the procurement and installation of energy efficient measures, strategies, and systems.</li><li>Responsible for review and approval of moderately complex projects/programs, which require an understanding of engineering analysis/calculations, implementation strategy for new technologies, or energy simulation modeling.</li><li>Manages the integration of activities between the customer, program administrators, advisory consultants, and vendor/contractors.</li><li>Develops documents and plans necessary to meet compliance with regulatory filings and oversight of ratepayer funded Energy Efficiency programs.</li><li>Ensures that all projects and programs are accurate and in compliance with regulatory guidelines - reviews project documentation and program applications to confirm all required and supporting materials is provided to fulfill program participation parameters.</li><li>Participates in the budgeting, invoicing, evaluation, and tracking of expenses and energy savings; assists with the development of RFP&#39;s for contracted services.</li><li>Facilitates achievement of energy efficiency goals by promoting demand-reduction initiatives to assigned customers/customer segments and/or programs.</li><li>Partners with Energy Efficiency colleagues across sectors/channels, including Energy Efficiency Sales Account Executives, to set an energy efficiency implementation path and strategy for customer participation and energy efficiency program implementation.</li></ul><p><strong>Qualifications</strong></p><p>Technical Knowledge/Skill:</p><ul><li>Requires ability to interpret energy efficiency / renewable technologies and services and understand their application.</li><li>Requires solid understanding of financial principals.</li><li>The ability to use PC desktop applications (e.g., Microsoft Word and Excel).</li><li>Experience developing new programs, processes, or customer engagement strategies.</li><li>Experience managing projects in environments with evolving priorities and limited established procedures.</li><li>Demonstrated success identifying growth opportunities and driving measurable results.</li><li>Strong analytical and problem-solving skills with the ability to translate data into actionable recommendations.</li><li>Experience working across multiple stakeholder groups and influencing without direct authority.</li></ul><p>Education:</p><ul><li>Requires a bachelor’s degree in business, Marketing, Engineering or a related discipline, or equivalent relevant experience.</li></ul><p>Experience:</p><ul><li>Three (3) plus years of relevant experience in technical marketing, sales, project management, engineering, architectural, or energy efficiency.</li><li>Experience and/or aptitude in customer service also desired.</li></ul><p><strong>JOIN OUR TEAM!</strong></p><p>Eversource is recognized as one of the top utilities in the country specializing in energy efficiency solutions for our customers. Our team of energy experts work with residents, businesses, designers, and contractors across New England to advance clean energy solutions. We provide our customers with the expertise necessary to improve comfort, increase business performance, and lower energy costs. We are building the region’s premier energy efficiency team and are seeking candidates from diverse backgrounds.</p><p><strong>Why Eversource?</strong></p><p>Serving more than 3.6 million electric and natural gas customers in Connecticut, Massachusetts, and New Hampshire, and employing a workforce of more than 8,000 New Englanders, Eversource represents one unified company across three states.</p><p>The energy efficiency solutions provided by Eversource have received top honors from national organizations such as ENERGY STAR, American Council for an Energy Efficient Economy, and Northeast Energy Efficiency Partnerships. Come make a difference and work for an employer who is a leader in the industry.  We have a great working environment, excellent compensation and benefit programs, and opportunities for growth.</p><p>#LI-ES3</p><p>#cengajd</p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p><strong>Compensation and Benefits:</strong></p><p>Eversource offers a competitive total rewards program. Check out our careers site for an overview of our benefits programs. Salary is commensurate with your experience. This position is eligible for a potential incentive. The annual salary range for this position is:</p><p>$96,460.00-$107,180.00</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>1</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement</strong>:</p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Energy Efficiency Consultant, Mid-Size C&I (Hybrid Schedule)",
+      company: "Eversource Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

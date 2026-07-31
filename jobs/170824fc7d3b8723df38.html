@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://jobs.lever.co/cfsenergy/f1d5185d-c2ee-486b-93d8-bc6a40c7fa7e" target="_blank" rel="noopener">Apply on Commonwealth Fusion Systems's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://jobs.lever.co/cfsenergy/f1d5185d-c2ee-486b-93d8-bc6a40c7fa7e">Apply on Commonwealth Fusion Systems's site &rarr;</button>
     <div class="apply-note">Applying takes you to Commonwealth Fusion Systems's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>About Commonwealth Fusion Systems:</p><p>Commonwealth Fusion Systems is on a mission to deliver the urgent transition to fusion energy.</p><p>Combining decades of research, top talent, and new technologies, we’re designing and building commercially viable fusion power plants. And we&#39;re working with policymakers and suppliers to build the energy industry of the future.</p><p>We’re in the best position to make it happen. Since 2018, we’ve raised nearly $3 billion in capital, making us the largest and leading private fusion company in the world.</p><p>Now we’re looking for more thinkers, doers, builders, and makers to join us. People who’ll bring new perspectives, solve tough problems, and thrive as part of a team.</p><p>If that’s you and this role fits, we want to hear from you.</p><p>Join the power movement as Manager, Manufacturing Engineering</p><p>The Manager, Manufacturing Engineering for Weekend Operations provides technical and functional leadership for fourth and fifth shift manufacturing engineering activities. This role acts as the primary escalation point and communication pathway between weekend engineering and senior management, ensuring alignment with organizational priorities and production objectives. The lead combines hands-on engineering with cross-functional coordination across Design, Quality, and Planning to facilitate rapid issue resolution and operational discipline in a high-complexity environment.</p><p>The Schedule:</p><p>Shift: Friday through Sunday, 6:00 am - 6:00 pm</p><p>What you&#39;ll do:: • Lead and coordinate the weekend Manufacturing Engineering organization, establishing priorities and aligning resources to meet production goals</p><ul><li>Serve as the central technical escalation point for weekend operations, representing risks and requirements to senior leadership while cascading strategic direction to the team</li><li>Act as the primary engineering interface for cross-functional technical decision-making, facilitating troubleshooting and resolution of complex process issues</li><li>Drive manufacturing execution by partnering with Production and Quality to implement process standards, engineering changes, and continuous improvement initiatives</li><li>Promote a culture of safety, technical rigor, and operational excellence through Lean methodologies and data-driven problem solving What we&#39;re looking for:: • Bachelor’s degree in Engineering or related technical field</li><li>Significant experience in manufacturing engineering, advanced manufacturing, or production operations leadership</li><li>Experience leading cross-functional teams and coordinating engineering activities in a production environment</li><li>Strong troubleshooting, technical decision-making, and operational leadership skills</li><li>Demonstrated ability to operate effectively in high-complexity, fast-paced manufacturing environments with shifting priorities</li><li>Excellent communication, collaboration, and organizational leadership capabilities</li><li>Experience supporting off-shift or extended-hour manufacturing operations preferred</li><li>Lean Manufacturing, Continuous Improvement, or operational excellence experience preferred Bonus points for:: • Experience supporting off-shift or extended-hour manufacturing operations</li><li>Lean Manufacturing, Continuous Improvement, or operational excellence certification/experience</li><li>Strong technical judgment with the ability to make timely decisions under pressure and lead through influence Must-have requirements:: • Ability to lift up to 50 lbs occasionally</li><li>Perform activities such as typing, standing, stooping, and sitting, for extended periods of time</li><li>Dedication to safety to mitigate hazards that may include heat, cold, noise, fumes, strong magnets, lead, high voltage, and cryogenics</li><li>Willingness to occasionally travel or work required nights/weekends/on-call</li></ul></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Manager, Manufacturing Engineering - Third Shift",
+      company: "Commonwealth Fusion Systems",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

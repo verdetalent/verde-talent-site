@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">PMP</span><span class="tag">Professional Engineer</span><span class="tag">permitting</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Charlotte-NC/Project-Director---Project-Management-and-Construction--PMC-_R40645" target="_blank" rel="noopener">Apply on Duke Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Charlotte-NC/Project-Director---Project-Management-and-Construction--PMC-_R40645">Apply on Duke Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Duke Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Sunday, August 9, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p>Project Director (PD) position opened to support the expanding portfolio within PMC&#39;s Gas Development organization. Work is underway on development of various natural gas combined-cycle and simple-cycle facilities, an LNG storage evaluation and other existing facility modifications.  Duke’s Integrated Resource Planning team continues to identify the need for new generation in all jurisdictions and additional sites must be evaluated and prepared for development. Development process covers everything from permitting, regulatory approvals, scope and pricing development and approvals, stakeholder engagement/coordination, bidding and selecting major equipment and contractors, and preparing the project for success as it transitions into the commit phase for execution. Depending on various factors, the development project manager may continue with the development team working on future sites or transition with a project into execution.</p><p>This position has single point accountability, and/or is a position of leadership, direction senior management and oversight. The Project Director (PD) position is responsible for the management, or the oversight / direction of managing, all phases of project/program planning and execution to ensure all project success factors are met, including but not limited to scope, schedule, cost, quality, environmental, safety, communications, security, and integration.  In addition, this position is highly involved in the funding management and budgeting of the project / program responsible. This position may have direct reports consisting of Project Managers and Project Controls and/or other resources such as construction management, engineering, administrative support staff and contingent workers.</p><p>This position typically is assigned to projects classified as “Brown” per the Project Management Center of Excellence Project Profile Matrix which typically range from $100M to $500M with a high level of complexity.  These projects typically involve high scope complexity, team members who are sourced from multiple organizations, rely on multiple interdependent vendors, and stakeholders that include Senior Management, External Agencies, and likely the Board of Directors (among others).  The PD serves as the unifying agent providing leadership, management, direction, coordination, and control of the overall project in accordance with the established policies, procedures, systems, and requirements of The Company.</p><p>This position is considered a senior leadership / executive level position; minimum qualifications and proven behaviors must be met to be placed within this position.  Progression to this level is very restricted on the basis of business need.</p><p><strong>Responsibilities</strong></p><ul><li><strong>Create / Staff / Lead Project Organization.</strong> Provide leadership, oversight management, delegation, and coordination to the various internal and external organizations that are providing services to the project (development, engineering, project controls, estimating, construction management, supply chain, legal, risk, EHS, QA/QC, operations, communications, regulatory, security, fuels, transmission, etc.).  This position manages all matrixed members of the team on a daily basis and is responsible for staffing project teams appropriately, managing the performance of team members, and the redeployment of team members at project closure.</li><li><strong>Establish and maintain communications among all project/programs stakeholders</strong>. Structure, lead, and/or assist in leading all project related meetings and reports required to ensure open communication between all team members, key stakeholders, and management (monthly project reviews, kickoff meetings, weekly reports, monthly reports, etc.) and to properly report project status. Assure that Project Plan, all appropriate reports and reporting means are developed and managed according to PMCoE Standards. Present reports to appropriate management / governance team skillfully.</li><li><strong>Assure Excellence in Project Planning.</strong>Drive and oversee the process of project planning according to PMCoE Standards and Corporate Policies. This includes project / program planning activities like funding justification and authorization, program / project (s) scope definition, integrating team from functional roles, establishing appropriate team monitoring and controlling behaviors, etc.</li><li><strong>Assure Excellence in Project Execution.</strong>Includes objectives, stakeholders, scope, roles and responsibilities, assumptions and constraints, deliverables, WBS, schedule, external communication, regulatory strategy, procurement strategy, contractor and supplier strategy, resource plan, budget, lessons learned, risk plan, quality plan, safety plan, environmental plan, security plan, integration plan, data management plan, communications and reporting plan, change management, and project close out.</li><li><strong>Excellent Leadership, Development, Mentoring of PM’s and PC’s Roles.</strong>Provide coaching, direction, mentoring and leadership to career path staff / team members.  Share tools, learnings, expertise in manner consistent with corporate leadership and PMCoE.</li><li><strong>Expert Presentation / Interpersonal Skills.</strong>Ability to create, develop and deliver project / business case presentations to Senior Management / project sponsors. As well, this role must have excellent interpersonal skills in or to manage and direct teams and to be able to interface with other management, outside agencies and potentially, board of directors.</li></ul><p><strong>Required/Basic Qualifications</strong></p><ul><li>Bachelor&#39;s degree</li><li>9 plus years related work experience</li><li>In lieu of Bachelor&#39;s degree(s) and 9 plus year(s) related work experience listed above, High School/GED and 13 plus year(s) related work experience</li><li>Strong Expertise in Project Management, Decision Making, Critical Thinking and Problem Solving</li></ul><p><strong>Desired Qualifications</strong></p><ul><li>Master’s degree in project management or</li><li>Master&#39;s degree in Business Administration</li><li>Professional Engineer and/or Configuration Management II Professional (CM2-P) and/or Project Management Professional (PMP)</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Projects related work experience; Risk Management; Leadership; Employee Management/Development; Oversight</li><li>Expertise to Strong Expertise in project related Scheduling, Cost Controls, Quality, Risk</li><li>Utility Business Unit Experience and/or focus on new generation</li><li>Construction Management knowledge</li><li>Masters – business (MBA), project management, or equivalent</li><li>PMI (PMP) / CMII / AACE / Utility Technical Certifications</li><li>Contractors License</li><li>Professional Engineer License</li></ul><p>The Project Director may develop relationships with individuals in the following organizations ranging from individual contributors to Senior Department/Enterprise Leadership (i.e. Business Analyst through CFO):</p><ul><li>Community Relations</li><li>Finance</li><li>Engineering</li><li>Environmental, Health and Safety</li><li>Enterprise Security</li><li>Global Risk Management and Insurance</li><li>Human Resources</li><li>Quality</li><li>Development</li><li>Project Controls</li><li>Construction Management</li><li>Supply Chain</li><li>Legal Department</li><li>Project Management Center of Excellence (PMCoE)</li><li>Operations</li><li>Corporate Communications</li><li>Regulatory and Compliance</li><li>Stakeholder Engagement</li><li>Fuels</li><li>Others</li></ul><p>To perform this job, there is frequent interaction with others in the following positions at external companies, regulatory agencies or other organizations:</p><ul><li>Senior/Executive Leadership of external Suppliers/Vendors</li><li>Sales/Marketing Leadership of external Suppliers/Vendors</li><li>Project teams of external Suppliers/Vendors</li><li>Leaders of Regulatory Agencies</li><li>Public Staff</li></ul><p><strong>Mobility Classification - Hybrid</strong></p><p>#LI-PG1</p><p>#LI-Hybrid</p><p><strong>**Travel Requirements</strong>**</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Project Director - Project Management and Construction (PMC)",
+      company: "Duke Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#22E09A66;color:#22E09A;background:#22E09A1a;">Solar</span><span class="tag">Excel</span><span class="tag">OSHA</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1024421" target="_blank" rel="noopener">Apply on First Solar's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1024421">Apply on First Solar's site &rarr;</button>
     <div class="apply-note">Applying takes you to First Solar's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p><strong>Basic Job Functions:</strong></p><ul><li>Will act as a consultant for test execution in pilot line, often addressing and resolving material handling issues.</li><li>Identify and implement system improvements to achieve performance goals including people utilization, and proper personnel alignment with test complexity.</li><li>Support the production floor by creating and maintaining daily task schedules.</li><li>Assist with WIP and operational planning.</li><li>Monitors the daily production of Photovoltaic modules, coupons and/or E-plates in accordance with required quality standards and in a cost-efficient manner on the pilot line.</li><li>Drive tool level troubleshooting and standard process issues to conclusion and identify root cause.</li><li>Can identify and implement operation and tool system improvements to achieve performance goals.</li></ul><p><strong>Education/Experience:</strong></p><ul><li>High school diploma or GED plus 3 years of supervisory experience with 2 years technical work experience in manufacturing, maintenance, or engineering OR</li><li>High school diploma or GED plus 5 years of technical experience at First Solar OR</li><li>Associate or bachelor’s degree in engineering, mechanical or electrical field with no experience.</li><li>Experience in vacuum system, thermal, laser systems, electrical, mechanical, and chemical industrial applications is preferred.</li><li>Managed or participated in continuous improvement projects is preferred.</li><li>Past history of identifying and rectifying safety issues.</li><li>Past experience being the person of contact for a tool is preferred.</li><li>Past experience successfully troubleshooting issues with a piece of equipment.</li><li>Past experience leading a crew of 3-5 people.</li><li>Past experience following written procedures and instructions.</li><li>Past experience writing standard operating procedures.</li></ul><p><strong>Required Skills/Competencies:</strong></p><ul><li>Knowledge of Vacuum and Thermal systems, Laser operations, and Wet Chemistry operation are desired.</li><li>Knowledge of manufacturing processes, engineering controls, and equipment experience is preferred.</li><li>Excellent process and equipment troubleshooting and structural problem-solving skills.</li><li>Effective communication skills, both written and verbal.</li><li>Possess strong leadership, interpersonal skills, analytic skills, and ability to lead a flexible workforce.</li><li>Excellent organizational, supervisory, decision-making, and planning skills.</li><li>Proven ability to manage DE technicians effectively in terms of leading, supervising, coaching, training, and developing direct reports.</li><li>Knowledgeable in structural problem solving and analysis such as 5-Why Analysis, Fishbone diagram and 7-Steps.</li><li>Understands and can apply Statistical Data Analysis and Statistical Process Control (SPC), structural problem- solving tools (such as DMAIC).</li><li>Demonstrate ability to analyze engineering and statistical data, driven corrective/ improvement action accordingly. JMP experience a plus.</li><li>Good knowledge on EHS/Safety and Quality systems (ISO14001/ ISO9001/ ISO4500/ OSHA).</li><li>Familiarity with Asset Management and Maintenance applications required. Maximo/CMMS, SAP, or Oracle preferred.</li><li>Basic knowledge to work with different computer/ devices applications e.g., Mobile systems, Communication devices, Interface with Machine Control Panels and HMI interface.</li><li>Experience with LOTO procedures, Mechanical and Electrical and stored energy hazards with good awareness of Control of Hazardous Energies.</li><li>Proficient use of all Microsoft Office suite programs and analysis software.</li><li>Ability to work with minimal supervision.</li><li>Ability to drive a forklift.</li></ul><p><strong>Essential Responsibilities:</strong></p><ul><li>Adjust run plans as needed based on tool availability, staffing changes, or production priorities.</li><li>Assist with tracking and reporting key operational metrics and communicate issues impacting production goals.</li><li>Adheres to all safety procedures and good housekeeping standards, including our 5S system.</li><li>Responsible for the assigned shift uptime and process control within the HPVD /submodule area, following escalation procedures as needed for support.</li><li>Act a 1st level of escalation for submodule tools (process).</li><li>Plans and supervises the scheduling of daily work assignments for development engineering technicians assigned to the submodule areas.</li><li>Ensure all tests scheduled during shift are executed according to the plan designed by engineering.</li><li>Support operations, engineering, and integration teams in identifying, assigning cause and implementing improvement actions on yield excursions and performance issues.</li><li>Ensure team is responding to SPC alarms and bring processes back into control.</li><li>Provides direction to shift engineering, shift maintenance, onsite contractors, and vendors to ensure and enforce First Solar’s standards and policies. This includes ensuring Environmental Health and Safety requirements are met.</li><li>Responsible for communicating systems and policies to direct reports.</li><li>Responsible for working with the appropriate departments to handle employee relations issues.</li><li>Responsible for training and developing direct reports and setting objectives.</li><li>Serves as a liaison for the related functional department for continuous improvement.</li><li>Coordinate startups, shutdowns, and changeovers within submodule.</li><li>Effective use of internal application software for process and maintenance tracking.</li><li>Interfaces with other departments and manages timely completion of ETA/projects as required.</li><li>Utilizes structural problem-solving methodology to troubleshoot issues.</li><li>Manage time keeping of all assigned shift development engineering technicians, responsible for shift schedule and coordinate with Human Resources for appropriate staffing levels.</li><li>Responsible for handling disciplinary actions with the associate involved.</li><li>Responsible for effective communication levels and foster team building.</li><li>Oversee the responsibilities of development engineering technicians to manage and dispose properly the hazardous waste generated from routine, troubleshooting/ maintenance jobs performed in the either building.</li><li>Other duties as assigned.</li><li>Job description subject to change at any time.</li></ul><p><strong>Reporting Relationships:</strong></p><ul><li>This position will have direct reports.</li></ul><p><strong>Travel:</strong></p><ul><li>No travel is required.</li></ul><p><strong>Estimated Salary Range:</strong></p><ul><li>$68,800 - $90,000 Annually</li></ul><p><strong>US Physical Requirements:</strong></p><ul><li>Will sit, stand, or walk short distances for up to 12 hours per day.</li><li>Will climb stairs or steps on a frequent basis.</li><li>Will lift up to 58 pounds on an occasional basis, according to work instruction.</li><li>Will lift up to 37 pounds on a frequent basis.</li><li>Will push or pull up to 50 pounds of force on an occasional basis.</li><li>Will push or pull up to 37 pounds of force on a frequent basis.</li><li>Required to use hands to grasp, lift, handle, carry or feel objects on a frequent basis.</li><li>20/40 vision in each eye separately and both eyes (with or without correction), the ability to distinguish between red, yellow, and green and peripheral vision &gt;70 degrees is required.</li><li>May reach above shoulder heights and below the waist on a frequent basis.</li><li>May stoop, kneel, or bend, on an occasional basis.</li><li>Must comply with all safety standards and procedures.</li><li>Ability to wear personal protective equipment is required (including, but not limited to: steel-toed shoes, cut-resistant gloves, jackets, aprons &amp;/or arm guards, safety glasses or goggles, hearing protection &amp; respirators) as a condition of employment and continued employment (requires little or no facial hair).</li></ul><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role.   All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Technical Tool Lead USA",
+      company: "First Solar",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

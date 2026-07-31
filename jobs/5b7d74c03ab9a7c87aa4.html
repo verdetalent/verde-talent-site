@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#22E09A66;color:#22E09A;background:#22E09A1a;">Solar</span><span class="tag">Excel</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1025311" target="_blank" rel="noopener">Apply on First Solar's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1025311">Apply on First Solar's site &rarr;</button>
     <div class="apply-note">Applying takes you to First Solar's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>First Solar reserves the right to offer you a role most applicable to your experience and skillset.</p><p><strong>Basic Job Functions:</strong></p><p>This role will be responsible for day-to-day execution of end-to-end planning processes of assigned materials in conjunction with an aligned strategy. The candidate is tasked with managing incoming raw material stock levels in conjunction with the demand plan to support the Research and Development Center (RDC) manufacturing operations. This position is a key driver in ensuring that adequate inventory is available to ensure production uptime, while optimizing inventory levels.</p><p><strong>Education/Experience:</strong></p><ul><li>Associate’s degree in supply chain or business-related field and minimum of 2 years’ relevant work experience in a supply chain function.</li><li>Bachelor’s degree in supply chain or business-related field and minimum of 1-year relevant work experience in a supply chain function.</li><li>Experience in a manufacturing environment is preferred.</li><li>Experience with commonly used concepts, practices, and procedures within Supply Chain.</li><li>Experience with MRP concepts and one or more ERP systems (Oracle Cloud preferred).</li><li>APICS/ISM Certification preferred.</li></ul><p><strong>Required Skills/Competencies:</strong></p><ul><li>Works with guidance/supervision from Manager or more experienced peers.</li><li>Ability to analyze data, recognize critical issues and drive solutions to resolve.</li><li>Ability to seek/gather information from cross functional teams.</li><li>Demonstrate strong collaboration with peers.</li><li>Demonstrates ability to communicate cross functionally and globally.</li><li>Strong attention to detail.</li><li>Strong mathematical abilities.</li><li>Proficient use of all Microsoft Office suite programs.</li><li>Proficient Knowledge of Oracle Cloud and/or other ERP system functionality.</li></ul><p><strong>Essential Responsibilities:</strong></p><ul><li>Ensures there is a Plan for Every Part (PFEP) and Semi Finished Goods structures are in alignment with the overall planning strategy; Executes to plan.</li><li>Analyze/modifies planned orders as necessary based on inventory levels and system inputs and data from cross functional teams; Suggest modification to PO volumes based on inventory levels when necessary.</li><li>Analyzes Supply capacity vs RDC demand and communicates to cross-functional teams (CFT’s) when additional capacity is required to support First Solar growth.</li><li>Manages balancing of material across sites in supply constrained situations.</li><li>Ensures accurate supplier forecast data is available to cross-functional teams.</li><li>Manage transition roll outs/changes/phase outs to ramp new materials and minimize obsolescence.</li><li>Manage all system planning master data for assigned materials.</li><li>Monitor significant inventory changes and investigate root causes.</li><li>Reviews and make corrections as needed based on exception reports to ensure sufficient inventory.</li><li>Support requests and actions items from other departments as required.</li><li>Maintain effective communications and foster teamwork with peers.</li><li>Assure adherence to all First Solar processes and procedures, including ISO9000, ISO14000, safety, housekeeping, and audit.</li><li>May travel, including internationally, to support customers and operations.</li><li>Performs other duties as assigned.</li><li>Job description subject to change at any time.</li></ul><p><strong>Reporting Relationships:</strong></p><ul><li>This position will report to Lead – Planner RDC USA.</li><li>This position will not have direct reports.</li></ul><p><strong>Travel:</strong></p><ul><li>5% - 10%</li></ul><p><strong>Estimated Salary Range:</strong></p><ul><li>$48,400 - $69,000 Annually</li></ul><p><strong>US Physical Requirements:</strong></p><p>Office Physical Requirements:</p><p>All positions in our office require interaction with people and technology while either standing or sitting. To best service our customers, internal and external, all associates must be able to communicate face-to-face and on the phone with or without reasonable accommodation. First Solar is committed to compliance with its obligations under all applicable state and federal laws prohibiting employment discrimination. In keeping with this commitment, it attempts to reasonably accommodate applicants and employees in accordance with the requirements of the disability discrimination laws. It also invites individuals with disabilities to participate in a good faith, interactive process to identify reasonable accommodations that can be made without imposing an undue hardship.</p><p>Potential candidates will meet the education and experience requirements provided on the above job description and excel in completing the listed responsibilities for this role. All candidates receiving an offer of employment must successfully complete a background check and any other tests that may be required.</p><p>Equal Opportunity Employer Statement: First Solar is an Equal Opportunity Employer that values and respects the importance of a diverse and inclusive workforce. It is the policy of the company to recruit, hire, train and promote persons in all job titles without regard to race, color, religion, sex, age, national origin, veteran status, disability, sexual orientation, or gender identity. We recognize that diversity and inclusion is a driving force in the success of our company.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Global Planner I (RDC)",
+      company: "First Solar",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

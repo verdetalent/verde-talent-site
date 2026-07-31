@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#4FB3FF66;color:#4FB3FF;background:#4FB3FF1a;">Wind</span><span class="tag">Excel</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://careers.vestas.com/job/Houston-Transportation-Project-Manager-TX-77002/1406182433/" target="_blank" rel="noopener">Apply on Vestas's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://careers.vestas.com/job/Houston-Transportation-Project-Manager-TX-77002/1406182433/">Apply on Vestas's site &rarr;</button>
     <div class="apply-note">Applying takes you to Vestas's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Shape the Future of Renewable Energy at Vestas!</strong> Embark on a career with Vestas, the leader in wind energy, where you&#39;ll find an inviting atmosphere that supports professional growth, celebrates your contributions, and offers a comprehensive compensation and benefits package. Join our team as we expand the possibilities of renewable energy and create positive change around the world</p><p><strong>Job Overview</strong></p><p><strong>Responsibilities</strong></p><ul><li>Coordinate and monitor the timely delivery of main components and fixtures to/from Vestas sites. Communicates with customers and internal/external stakeholders regarding delivery changes pertinent to the shipping/receiving locations</li><li>Coordination of vessel port handling operations at origin and destination as needed</li><li>Coordination of railroad and railhead handling operations at destination as needed</li><li>Stay current with DOT regulations, international shipping requirements, and to act as a liaison with customs and trade team</li><li>Create necessary PR&#39;s in SAP and follow PO creation to ensure timely execution</li><li>Freight audit and payment of vendor/carrier invoices and monitor the timely payment of vendor/carrier</li><li>Ensure transport quality. Troubleshoot and support problem-solving of delivery and transport quality issues; File claims against carriers, when applicable, and support claim resolution</li><li>P&amp;L responsibility; manage 8 figure transportation budget</li><li>Follow and ensure following of Vestas transport processes and standards, including the correct usage of our Transport Management System (ITM)</li><li>Know and understand Vestas non-conforming (NCR) process; provide backup coverage for department NCR functions</li><li>Know and understand transportation SAP processes; provide backup coverage for SAP transportation functions</li></ul><p><strong>Competencies</strong></p><ul><li>Proficiency in Microsoft Office Suite computer skills (Windows, Word, Excel, Power Point, Outlook, Teams, SAP and additional software programs</li><li>Financial understanding</li><li>Ability to communicate orally and written in English</li><li>Ability to work flexible hours and with variety of cultures (coordinating with various time zones)</li><li>Problem solving skills</li><li>Regular and punctual attendance</li></ul><p><strong>Qualifications</strong></p><ul><li>Bachelor&#39;s degree in Business, Logistics, International Business, Supply Chain Management or equivalent experience</li><li>5 or more years of experience in transportation</li><li>Good computer skills including proficiency in MS Office Suite, SAP desired</li><li>Knowledge of TMS systems (ITM) desired</li><li>Transportation project management experience desired</li></ul><p>Well-developed oral and written skills.</p><ul><li>Attention to detail</li><li>Knowledge of truck and container movements required</li><li>Knowledge of international cargo moves, both intermodal, vessel, and trucking</li><li>Experience with loading and unloading activities at US ports.</li><li>Ability to self-manage as well as coordinate efforts of cross-functional teams</li></ul><p><strong>What we offer</strong></p><p>We offer an engaging position with great development opportunities in an inspiring environment at a renowned wind turbine producer. We value ownership, accountability, and accuracy. You will become part of an international environment committed to sustainability and safety, and you will work among colleagues who support each other</p><ul><li>Great benefits coverage that includes dental and vision</li><li>Generous Paid Time Off policies</li><li>401(k) plan</li><li>Tuition assistance</li><li>Global bonus program</li></ul><p>CCPA Notice for California Applicants</p><p><strong>Our commitment to a fair hiring</strong></p><p>At Vestas, we evaluate all candidates solely based on their professional experience, education, and relevant skills. To support a fair recruitment process, we kindly ask that you remove any photos, dates of birth or graduation, gender pronouns, marital status, or other personal information not relevant to the role before submitting your CV/resume. Your CV/resume should focus on your professional and educational background, along with the necessary contact details (email and phone number). We train our hiring teams in inclusive evaluation and regularly review process outcomes to ensure fairness.</p><p><strong>DEIB Statement</strong></p><p>At Vestas, we recognize the value of diversity, equity, and inclusion in driving innovation and success. We strongly encourage individuals from all backgrounds to apply, particularly those who may hesitate due to their identity or feel they do not meet every criterion. As our CEO states, &quot;Expertise and talent come in many forms, and a diverse workforce enhances our ability to think differently and solve the complex challenges of our industry&quot;. Your unique perspective is what will help us powering the solution for a sustainable, green energy future.</p><p><strong>BEWARE – RECRUITMENT FRAUD</strong></p><p>It has come to our attention that there are a number of fraudulent emails from people pretending to work for Vestas. Read more via this link, https://www.vestas.com/en/careers/our-recruitment-process</p><p><strong>About Vestas</strong></p><p>Vestas is the energy industry’s global partner on sustainable energy solutions. We are specialised in designing, manufacturing, installing, and servicing wind turbines, both onshore and offshore.</p><p>Across the globe, we have installed more wind power than anyone else. We consider ourselves pioneers within the industry, as we continuously aim to design new solutions and technologies to create a more sustainable future for all of us. With more than 185 GW of wind power installed worldwide and 40+ years of experience in wind energy, we have an unmatched track record demonstrating our expertise within the field.</p><p>With 30,000 employees globally, we are a diverse team united by a common goal: to power the solution – today, tomorrow, and far into the future.</p><p>Vestas promotes a diverse workforce which embraces all social identities and is free of any discrimination. We commit to create and sustain an environment that acknowledges and harvests different experiences, skills, and perspectives. We also aim to give everyone equal access to opportunity.</p><p>To learn more about our company and life at Vestas, we invite you to visit our website at www.vestas.com and follow us on our social media channels. We also encourage you to join our Talent Universe to receive notifications on new and relevant postings.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Transportation Project Manager",
+      company: "Vestas",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

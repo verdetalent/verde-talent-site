@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">NERC</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Charlotte-NC/Cybersec-Firewall-Analyst_R40647" target="_blank" rel="noopener">Apply on Duke Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Charlotte-NC/Cybersec-Firewall-Analyst_R40647">Apply on Duke Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Duke Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Saturday, August 1, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>**Position Summary</strong>**</p><p>The Cybersecurity Network Defense Analyst (CNDA) is responsible for protecting Operational Technology (OT) environments, including substation networks, against unauthorized cyber activity through the governance, validation, and continuous monitoring of network defense controls. This role ensures that security technologies, access controls, and network segmentation strategies are implemented and maintained in alignment with NERC CIP standards (e.g., CIP-005, CIP-007, CIP-010), TSA Security Directives, SOX controls, and PCI-DSS requirements.</p><p>The CNDA operates within a compliance-driven, risk-based framework, with primary accountability for independent validation and oversight of firewall configurations, rule changes, and network security controls. This includes reviewing and approving firewall rule sets, verifying adherence to least privilege and segmentation requirements, and ensuring all changes are properly authorized, documented, and auditable. The role emphasizes control effectiveness validation rather than direct implementation, ensuring separation of duties and alignment with audit expectations.</p><p>This position supports OT/substation defense operations by maintaining strong visibility into Electronic Security Perimeters (ESPs), External Routable Connectivity (ERC), and access pathways into critical infrastructure environments. Responsibilities include control testing, evidence generation, and audit support, as well as identifying and remediating compliance gaps through structured corrective actions. In addition, the CNDA contributes to incident response, event analysis, and service disruption investigations, performing root cause analysis with a focus on control effectiveness and preventive improvements. The role actively participates in CIP-010 baseline management and change validation processes, ensuring that all network security modifications are properly assessed, validated, and reflected in system baselines. The CNDA also supports project-based initiatives related to substation defense, firewall deployments, and network segmentation enhancements, providing oversight to ensure solutions are implemented in accordance with regulatory requirements and internal security standards. This includes maintaining accurate documentation and artifacts required to demonstrate compliance during internal and external audits. Candidates with a strong background in network engineering, OT networking, or infrastructure design who are transitioning into cybersecurity will be considered, particularly those with the ability to apply technical expertise within a highly regulated, audit-focused environment.</p><p><strong>**Responsibilities</strong>**</p><ul><li>Perform <strong>day-to-day oversight and validation of firewall policy administration</strong>, including review, approval, and lifecycle management of network access control rules on specialized cyber defense systems</li><li>Review, validate, and govern <strong>network access control lists (ACLs)</strong> to ensure alignment with least privilege, segmentation requirements, and regulatory expectations</li><li>Participate in <strong>security improvement and optimization initiatives</strong>, providing recommendations to enhance control effectiveness, resiliency, and compliance posture</li><li>Maintain <strong>accurate and up-to-date documentation</strong> of network security infrastructure, configuration changes, and security strategies to support audit readiness and operational transparency</li><li>Develop and support <strong>testing and validation procedures</strong> for network security controls, ensuring changes are properly assessed and meet compliance requirements prior to implementation</li><li>Collaborate with <strong>security architecture and engineering teams</strong> to interpret, apply, and enforce security requirements within OT and substation environments</li><li>Provide <strong>oversight of network defense system lifecycle activities</strong> (installation, configuration, testing, and maintenance), ensuring implementations meet regulatory and internal standards</li><li>Support and provide regulatory guidance for <strong>project-based firewall and network security deployments</strong></li><li>Proactively identify <strong>security risks, control gaps, and compliance issues</strong>, and recommend corrective actions aligned with NERC CIP, TSA, SOX, and PCI requirements</li><li>Participate in or lead MREE and TSA audit requests and interviews.</li></ul><p><strong>**Required/Basic Qualifications</strong>**</p><ul><li>Bachelors degree in Computer Science, Cybersecurity, Information Technology, or Other Related Degree</li><li>2 years related work experience</li><li>In lieu of Bachelors degree(s) AND 2 year(s) related work experience listed above, High School/GED AND 6 year(s) related work experience</li></ul><p><strong>**Desired Qualifications</strong>**</p><ul><li>CCNP and/or CISSP and/or GCIH and/or GIAC Information Security Professional and/or CompTIA Security+ and/or SANS</li></ul><p><strong>**Additional Preferred Qualifications</strong>**</p><ul><li>Experience in Cybersecurity preferably with firewall and proxy technology, event logging and detection mechanisms. Knowledge of foundational computer elements from the operating system, TCP/IP, routing and network topology.</li><li>Knowledge of cybersecurity and privacy principles.</li><li>Knowledge of the application firewall concepts and functions (e.g., Single point of authentication/audit/policy enforcement, message scanning for malicious content, data anonymization for PCI and PII compliance, data loss protection scanning, accelerated cryptographic operations, SSL security, REST/JSON processing).</li><li>Skill in determining how a security system should work (including its resilience and dependability capabilities) and how changes in conditions, operations, or the environment will affect these outcomes.</li><li>Skill in configuring and utilizing network protection components (e.g., Firewalls, VPNs, network intrusion detection systems).</li><li>Skill in performing packet-level analysis.</li><li>Ability to apply network security architecture concepts including topology, protocols, components, and principles (e.g., application of defense-in-depth).</li><li>Knowledge of web filtering technologies</li><li>Diagnose and resolve customer reported system incidents, problems, and events.</li><li>Direct background or exposure to cyber security operations</li><li>Experience with IDPS functionality.</li><li>Experience with Palo Alto Firewalls.</li><li>1-5 years of relevant work experience in Information Technology.</li><li>Compliance experience (PCI/SOX).</li><li>Experience with Syslog, TACACS, Radius, and SNMP.</li><li>Ability to perform self-directed work.</li><li>Experience in networking protocols: DNS, HTTP, SSL, SMTP, TCP</li><li>Experience working with Hardware Security Models</li><li>Experience in Web security and compliance experience (e.g., Firewalls, IDS/IPS systems, DDOS prevention and PCI, HIPAA, FIPS, etc.)</li><li>Strong Linux or Windows system administrator skills</li></ul><p><strong>**Working Conditions</strong>**</p><ul><li>Hybrid Mobility Classification – Work will be performed from both remote and onsite locations after the onboarding period. However, hybrid employees should live within a reasonable daily commute to a Duke Energy facility.</li><li>Office Environment</li><li>On Call Rotation</li><li>Event Response</li><li>Occasional Minor lifting at the waist of 25-50 pounds</li></ul><p><strong>**Travel Requirements</strong>**</p><p>5-15%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Cybersecurity Firewall Analyst",
+      company: "Duke Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

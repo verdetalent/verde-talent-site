@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#FFB54766;color:#FFB547;background:#FFB5471a;">Storage</span><span class="tag">AutoCAD</span><span class="tag">energy storage systems</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/India---Bangalore/Electrical-Engineer_JR101158" target="_blank" rel="noopener">Apply on Fluence Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/India---Bangalore/Electrical-Engineer_JR101158">Apply on Fluence Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Fluence Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Fluence (Nasdaq: FLNC) is a global market leader delivering intelligent energy storage and optimization software for renewables and storage. Our solutions and operational services are helping to create a more resilient grid and unlock the full potential of renewable portfolios. With gigawatts of successful implementations across nearly 50 markets, we are transforming the way we power our world for a more sustainable future. For more information, please visit fluenceenergy.com.</p><p><strong>Job Description:</strong></p><p><strong>Location:</strong> India – Bangalore</p><p><strong>Team:</strong> Electrical &amp; Controls Engineering</p><p><strong>Role Summary</strong></p><p>Fluence is seeking a highly capable <strong>Instrumentation &amp; Control Engineer</strong> to support the design and development of advanced <strong>Battery Energy Storage Systems (BESS)</strong>. This role requires strong experience in control systems design, instrumentation selection, industrial communication protocols, and safety‑related control architectures. The ideal candidate will have hands‑on experience with control hardware, networking fundamentals, and system‑level integration across power and communication interfaces.</p><p>You will collaborate closely with global engineering, product development, manufacturing, and field teams to deliver high‑quality, safe, and reliable energy storage solutions.</p><p><strong>Key Responsibilities</strong></p><p><strong>1. BESS Instrumentation &amp; Control Engineering</strong></p><ul><li>Support the development of control architecture and instrumentation strategy for utility‑scale and commercial BESS solutions.</li><li>Work with systems, electrical, and firmware teams to design reliable and scalable control solutions.</li></ul><p><strong>2. Control Schematic Design</strong></p><ul><li>Develop and review, Electrical control schematics, Wiring diagrams, I/O mapping documents, Control panel layouts and termination diagrams.</li><li>Ensure designs comply with internal standards, safety requirements, and industry best practices.</li></ul><p><strong>3. Component Selection &amp; Sizing</strong></p><ul><li>Select and size control and instrumentation components such as: Relays, safety relays, interlocks, I/O modules (AI/DI/AO/DO), Sensors (temperature, pressure, voltage/current transducers, etc.), Communication interface modules, Control power devices, power supplies, and terminal blocks</li><li>Evaluate supplier specifications and support procurement and qualification activities.</li></ul><p><strong>4. Cable Engineering</strong></p><ul><li>Perform cable sizing and selection for control, signal, communication, and power circuits.</li><li>Develop <strong>cable schedules</strong>, wiring plans, and <strong>cable harness layouts</strong> for enclosure‑level and system‑level assemblies.</li></ul><p><strong>5. Communication &amp; Networking</strong></p><ul><li>Design control networks with understanding</li><li>Ensure robust and noise‑immune communication strategies in industrial environments.</li></ul><p><strong>6. Industrial Protocols &amp; Interfaces</strong></p><ul><li>Integrate and troubleshoot communication protocols including: Modbus RTU / Modbus TCP,  RS232, RS485, Ethernet, CAN</li></ul><p><strong>7. Safety Systems</strong></p><ul><li>Design and validate safety‑related control architectures including, E‑Stop logic, Safety relays, Hardwired interlocks.</li><li>Ensure system safety compliance with international standards and Fluence safety processes.</li></ul><p><strong>8. BoM &amp; Documentation</strong></p><ul><li>Prepare accurate <strong>Instrumentation &amp; Control Bill of Materials (BoM)</strong>.</li><li>Maintain up‑to‑date engineering documentation across design cycles and revisions.</li></ul><p><strong>Required Qualifications</strong></p><ul><li>Bachelor’s or Master’s degree in Electrical, Instrumentation, Electronics, or related field.</li><li><strong>5+ years</strong> of experience in Instrumentation, Control Systems, or Electrical Engineering, preferably within <strong>BESS</strong>, renewable energy, or industrial automation.</li><li>Hands‑on experience in preparing electrical control schematics and wiring diagrams.</li><li>Strong understanding of control component sizing and selection.</li><li>Knowledge of Modbus RTU/TCP and industrial serial/ethernet communication standards.</li><li>Experience with safety relays, I/O modules, and E‑Stop logic.</li><li>Proficiency in AutoCAD Electrical or equivalent tools.</li><li>Familiarity with cable engineering (sizing, routing, harnessing).</li><li>Solid understanding of network fundamentals and communication hardware.</li><li>Strong documentation, problem‑solving, and cross‑functional collaboration skills.</li></ul><p><strong>Additional Qualifications</strong></p><ul><li>Prior experience in energy storage systems, PCS integration, or industrial automation.</li><li>Understanding of IEC/UL/NFPA control and safety standards.</li><li>Experience supporting commissioning or field troubleshooting activities.</li></ul><p><strong>Our Culture</strong></p><p>At Fluence, our culture is the foundation that drives our ambitious growth strategy and fuels our mission to transform the future of energy. Our core cultural pillars empower us to innovate, collaborate, and lead with purpose, ensuring we continue to deliver unparalleled value to our customers and the world.</p><p><strong>Unleash Voices</strong></p><p>We believe every voice matters. We encourage openness, active listening, and decisive action to create a culture where everyone has the opportunity to contribute to our success. We foster an environment where diverse perspectives are heard and valued, driving innovation and progress.</p><p><strong>Customer Fluent</strong></p><p>Our customers are at the heart of everything we do. We’re committed to delivering exceptional value that exceeds expectations by understanding our customers&#39; needs and adapting swiftly to meet them. Our deep focus on customer satisfaction drives us to continuously improve and innovate.</p><p><strong>Infinite Impact</strong></p><p>We are committed to creating the impossible. We push boundaries to deliver sustainable, game-changing solutions that shape a brighter, more energy-efficient future for all. Our team is passionate about making a lasting impact that will resonate for generations to come.</p><p><strong>All In</strong></p><p>We are all in for growth. Our teams are relentlessly focused on identifying and seizing opportunities that propel us forward. We embrace an ownership mindset, pushing ourselves and each other to accelerate progress and create lasting success.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Electrical Engineer",
+      company: "Fluence Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

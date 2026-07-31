@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">Aspen</span><span class="tag">NERC</span><span class="tag">PE License</span><span class="tag">PSS/E</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-New-York-Vestal/Principal-Engineer---Interconnections_R-21936" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-New-York-Vestal/Principal-Engineer---Interconnections_R-21936">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>TITLE: Principal Engineer - Interconnections</strong></p><p><strong>GREAT BENEFITS!</strong></p><p><strong>WORK TYPE: Office</strong></p><p><strong>SALARY RANGE</strong>: The base salary for this position is dependent upon experience and location ranging from <strong>$ 128,000 to $160,400</strong></p><p><strong>LOCATION</strong>: Binghamton, NY  / Rochester , NY</p><p><strong>Job Summary:</strong></p><p>The Principal Engineer is able to work independently. Participates and represents AVANGRID on Industry associations. Applies established distribution planning criteria and uses sound utility engineering</p><p>practices to identify deficiencies in the distribution system. Assists Distribution Engineers and Field Planners in evaluating system reliability and new service requirements. Acts as a technical leader in the</p><p>Interconnection group to direct, oversee and mentor other Interconnection Engineers in the Department. Proactively identify and perform special projects &amp; studies that innovatively solve unique &amp; complex</p><p>problems with a broad impact to the business.</p><p><strong>Key Responsibilities:</strong></p><ul><li>Solve complex and unique Distribution Planning and Reliability issues, studies to include large scale customer load additions and complex DER interconnections; develops scoping documents</li></ul><p>for complex distribution system improvement projects and proposes solutions for identified distribution issues falling outside of established distribution planning criteria, including</p><p>recommendations for new distribution substations and upgrade/replacement of existing distribution substation transformers and equipment.</p><ul><li>Develop alternative methods or design concepts to resolve unique problems or to improve processes/services including Non-Wires Alternatives (NWAs).</li><li>Anticipates internal/external business issues and/or threats and recommends process improvements.</li><li>Proactively studies and reports on the status of all distribution system facilities in assigned geographical area of responsibility on an established repeating cycle, assigned area may include multiple OPCOs.</li><li>Recognized expert for studies and projects of extreme importance to AVANGRID.</li><li>Manage divisional and company- wide projects/studies/initiatives, serve as SME on assigned demonstration projects, initiatives, and teams across AVANGRID.</li><li>Lead teams, acts as experienced mentor &amp; reviews engineering work of others in the department,</li></ul><p>manage and provide direction to resources outside the department.</p><ul><li>Makes presentations to regulatory/public entities. Explain difficult concepts &amp; influence others.</li><li>Proficient at utilizing computer aided analysis tools to identify system deficiencies and plan for system reinforcements and DER system impact studies.</li><li>Perform complex engineering analyses for locating and determining the settings for distribution automation equipment.</li><li>Can serve as Department leader in the absence of the Supervisor of Interconnections.</li><li>Assists during storm restoration.</li><li>Leads teams/projects or program initiatives across multiple OpCos that solve complex problems taking a broad perspective to identify innovative solutions.</li></ul><p><strong>Required Qualifications</strong></p><p><strong>Education &amp; Experience Required:</strong></p><ul><li>BS Degree in Electrical Engineering</li><li>10 years of relevant experience</li><li>Advanced Degree and/or PE License desired</li><li>Possess a depth and breadth of experience in Distribution Planning, Reliability Engineering and Distributed Energy Resources (DER)</li><li>Possesses broad knowledge of internal/external business and regulatory issues</li></ul><p><strong>Behavioral Competencies</strong></p><ul><li>Develop self &amp; others</li><li>Empower to grow</li><li>Collaborate and share</li><li>Be a role model</li><li>Focus to achieve results</li><li>Be agile</li></ul><p><strong>Technical Skills/Competencies</strong></p><ul><li>Theoretical Engineering knowledge: Planning, Operations and Engineering Design,</li></ul><p>Analytics, Modeling &amp; Calculation (e.g., sym. Components, per unit, etc.), Understanding</p><p>the Business Model</p><ul><li>Practical Engineering Experience/Application: Planning, Operations and Engineering</li></ul><p>Design, Construction, (e.g. field experience, standardization, develop business case and</p><p>defend in front of stakeholders)</p><ul><li>Engineering documentation: Ability to adequately document and interpret engineering</li></ul><p>documentation, review, and approve engineering work done by others</p><ul><li>Knowledge of Regulatory and Compliance Environment: Local, State and Federal</li></ul><p>Regulatory Standards and Requirements (NERC, NPCC, ISO, PUC, etc.)</p><p><strong>Functional Job Specific Competencies</strong></p><ul><li>Power System Studies - Knowledge &amp; Interpretation of Study Assumptions and Results:</li></ul><p>(e.g., Comprehensive Area Studies, Power Flow, DER, Voltage, Contingency, phase</p><p>imbalance, Power Factor correction, Short Circuit, reliability, resiliency, Capacity,</p><p>distribution automation, etc)</p><ul><li>Software Proficiency - Power System Analytics: (e.g. (e.g. CYME, PSS/E, SYNERGY, ASPEN, etc.)</li></ul><p><strong>Competencies</strong></p><ul><li>Growth &amp; Continuous Improvement</li><li>Initiative &amp; Change</li><li>Focused on Results</li><li>Customer Centric (internal and/or external)</li><li>Communication</li><li>Collaboration</li><li>Leadership (people managers/leaders)</li></ul><p>#LI-AV1</p><p><strong>Company:</strong></p><p>NY STATE ELECTRIC &amp; GAS CORP</p><p><strong>Mobility Information</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country.</p><p>At Avangrid we provide fair and equal employment and advancement opportunities for all employees and candidates regardless of race, color, religion, national origin, gender, sexual orientation, age, marital status, disability, protected veteran status or any other status protected by federal, state, or local law.</p><p>If you are an individual with a disability or a disabled veteran who is unable to use our online tool to search for or to apply for jobs, you may request a reasonable accommodation by contacting our People and Organization department at careers@avangrid.com.</p><p>Avangrid employees may be assigned a system emergency role and in the event of a system emergency, may be required to work outside of their regular schedule/job duties. This is applicable to employees that will work in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate functions.  This does not include those that will work for Avangrid Power.</p><p>Avangrid employees may also be assigned a NERC Reliability Standards compliance role supporting Critical Infrastructure Protection (CIP) and/or Operations and Planning (O&amp;P) responsibilities. This is applicable to employees that will work in electric transmission, operations, and cyber security business areas in Connecticut, Maine, Massachusetts, and New York within Avangrid Network and Corporate business areas. NERC Reliability Standards compliance roles and responsibilities may include additional access protections, training, audit engagement, and required evidence retention, and will be communicated by the employee’s management.</p><p><strong>Job Posting End Date:</strong></p><p>August-31-2026</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Principal Engineer - Interconnections",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

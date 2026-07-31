@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">Excel</span><span class="tag">P6</span><span class="tag">Power BI</span><span class="tag">Primavera</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Hooksett-NH/Analyst--Project-Controls--Risk-Management---EVM--Hybrid-Schedule-_R-030755" target="_blank" rel="noopener">Apply on Eversource Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Hooksett-NH/Analyst--Project-Controls--Risk-Management---EVM--Hybrid-Schedule-_R-030755">Apply on Eversource Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Eversource Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p><strong>Our Team:</strong></p><p>We have an exciting opportunity to join our amazing Transmission Project Controls, Risk Management &amp; EVM Team. This position will assist in the creation of project management reporting solutions and results analysis to support the respective business needs of our Risk Management &amp; EVM Group.</p><p>The selected individual will be responsible for meeting with internal customers to gain a better understanding of their business needs, define report requirements, design meaningful reports, and perform forensic deep dive analysis of performance changes associated with Risk and EVM to help drive actionable solutions.  In addition, the selected candidate will also provide user support by creating guides and performing end user training and reporting.</p><p><strong>The role is based in Hookset, NH</strong></p><p><strong>Essential Functions:</strong></p><ul><li>Meets with internal customers to gain a better understanding of their business needs and collaboratively identifies best practice solutions and defines report requirements.</li><li>Gains a clear understanding end user workflow and utilizes a variety of Risk, EVM and performance reports to:</li><li>Validate results</li><li>Reconcile discrepancies when necessary</li><li>Develop actionable solutions based on changes in project performance data</li><li>Gains a clear understanding of the data and end user workflow to validate results, reconcile discrepancies when necessary.</li><li>Utilizes a variety of tools and methodologies to create useful reports with actionable information.</li><li>Generates bi-monthly Project Controls Summary reports</li><li>Designs, implements and help maintain reports, dashboards, and other business intelligence tools.</li><li>Monitors performance reports, performs forensic deep dive analysis of performance changes and makes recommendations to optimize or improve project execution.</li><li>Monitors data integrity. Assists in resolving data discrepancies between Project Controls reports and other sources.</li><li>Creates and maintains documentation including requirements, design, and end user manuals</li></ul><p><strong>Technical Knowledge/Skill/Education/Licenses/Certifications:</strong></p><ul><li>Must have expertise in one or more of the following areas:</li><li>Microsoft Power Platform: Power BI, PowerApps, and Microsoft Flow.</li><li>Primavera P6 Professional, EPPM, or OPC</li><li>Experience in Microsoft Excel and Access development. Proficiency with Visual Basic for Applications (VBA) programming, including ability to analyze, debug, and/or enhance existing VBA applications.</li><li>Exposure to Gateway services and handling user and app security</li><li>Excellent listening, communication, interpersonal and presentation skills.</li><li>Adept at producing detailed and accurate written documentation.</li><li>Ability to contribute both independently and as part of a team.</li><li>Ability to gain high-level understanding of the organization’s business systems and processes.</li></ul><p><strong>Education:</strong></p><ul><li>Bachelor’s Degree in Business Administration, Computer Science, Information Technology, Engineering, related discipline or equivalent experience.</li></ul><p><strong>Experience:</strong></p><ul><li>Three (3) to Five (5) years business and technical experience</li></ul><p><strong>Working Conditions:</strong></p><ul><li>Must be available to work emergency restoration assignment as required.</li><li>Must be available to travel between MA/CT/NH as necessary.</li><li><strong>HYBRID SCHEDULE</strong>:  Eversource supports work-life balance by offering hybrid schedules for certain roles. Eligibility is based on job responsibilities, operational needs, nature of work and team dynamics. Current guidelines require employees to work at least three days in the office, including Tuesdays and Wednesdays, with the third day set by the employee and supervisor based on department needs. These guidelines apply to roles approved for remote work and are subject to change, based on managerial discretion and work performance. All applicants must be able to work up to five days in the office if needed (for example: emergencies, training, or other business needs) or should the policy change.</li></ul><p>#corpajd</p><p>#tranajd</p><p>#LI-BC1</p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p><strong>Compensation and Benefits:</strong></p><p>Eversource offers a competitive total rewards program. Check out our careers site for an overview of our benefits programs. Salary is commensurate with your experience. This position is eligible for a potential incentive. The annual salary range for this position is:</p><p>$92,700.00-$103,000.00</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>1</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement</strong>:</p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Analyst, Project Controls, Risk Management & EVM (Hybrid Schedule)",
+      company: "Eversource Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

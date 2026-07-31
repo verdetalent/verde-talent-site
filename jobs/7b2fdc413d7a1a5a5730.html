@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#FF705566;color:#FF7055;background:#FF70551a;">EV</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://www.chargepoint.com/about/opportunities/job/?gh_jid=8624521002" target="_blank" rel="noopener">Apply on ChargePoint's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://www.chargepoint.com/about/opportunities/job/?gh_jid=8624521002">Apply on ChargePoint's site &rarr;</button>
     <div class="apply-note">Applying takes you to ChargePoint's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>About Us</strong></p><p>With electric vehicles expected to be nearly 30% of new vehicle sales by 2025 and more than 50% by 2040, electric mobility is becoming a reality. ChargePoint (NYSE: CHPT) is at the center of this revolution, powering one of the world’s leading EV charging networks and a comprehensive set of hardware, software and mobile solutions for every charging need across North America and Europe. We bring together drivers, businesses, automakers, policymakers, utilities and other stakeholders to make e-mobility a global reality.</p><p>Since our founding in 2007, ChargePoint has focused solely on making the transition to electric easy for businesses, fleets and drivers. ChargePoint offers a once-in-a-lifetime opportunity to create an all-electric future and a trillion-dollar market.</p><p>At ChargePoint, we foster a positive and productive work environment by committing to live our values of Be Courageous, Charge Together, Love our Customers, Operate with Openness, and Relentlessly Pursue Awesome. These values guide how we show up every day, align, and work together to build a brighter future for all of us.</p><p>Join the team that is building the EV charging industry and make your mark on how people and goods will get everywhere they need to go, in any context, for generations to come.</p><p><strong>Reports To</strong></p><p>Interconnect Design Manager</p><p><strong>What You Will Be Doing</strong></p><p>The Mechanical Design group is seeking a Senior Mechanical Engineer – Interconnect Design to join our team. As a member of the MD team, you will be a driving force of innovation and helping build the future of electric vehicle charging.</p><p>The Interconnect Design Engineer will play a direct role in the design and execution of ChargePoint’s products. We are seeking a confident and personable engineer who has exceptional manufacturing experience, including design for manufacturing, design for cost and assembly, production tooling development, with a proven track record of delivering world-class products in cross-functional teams.</p><p><strong>What You Will Bring to ChargePoint</strong></p><p>As an Interconnect Design Engineer, your responsibilities will focus on the manufacturability, cost effectiveness, and design for quality of current production and new products:</p><ul><li>Execution from architecture to mass production</li><li>Design, prototype, and refine solutions to difficult engineering challenges</li><li>Interfacing directly with global suppliers to efficiently execute designs into mass production</li><li>Identifying design opportunities for quality, cost, assembly, and manufacturing</li><li>Production tooling development and monitoring for production</li><li>Root cause and failure analysis on parts and products</li></ul><p><strong>Requirements</strong></p><ul><li>Bachelor’s degree in Mechanical/Electrical Engineering or related field</li><li>Minimum 6 years of industry experience in an Engineering role with 3 years in the Cable Harness or Interconnect design field</li><li>Understanding of cable/connector tests (cross-section, pull-out, current cycling, electrical performance)</li><li>Working knowledge of basic metallurgy, solid mechanics, and material selection as it relates to electrical contacts, conductors and insulators</li><li>Connector selection (IP-rated, pin-outs, etc.); crimp &amp; crimp quality</li><li>Experience with standards &amp; regulations (USCAR, IEC, IPC)</li><li>Interference/shielding/grounding considerations (EMI, routing)</li><li>Thermal design of contacts &amp; ampacity</li><li>Wire gauge selection (twisted pair, micro-coax, AWG, etc.)</li><li>Ability to optimize complex electrical harness wire designs, drawings, and schematics</li><li>Experience working on regulated consumer or industrial products, including the design of components or systems submitted for regulatory compliance approval</li><li>Strong working knowledge of injection molding, CNC machining, and mass production processes</li><li>A self-starter who is comfortable driving multiple parts and aspects of the product design process simultaneously</li><li>Ability to learn quickly and operate outside of your comfort zone</li><li>Proficient in CAD (Zuken &amp; NX highly preferred, others accepted)</li><li>Ability to review and optimize 2D drawings, including understanding tolerances of various manufacturing methods and GD&amp;T</li></ul><p><strong>Desired Skills</strong></p><p>The ideal candidate would also have design experience in the following areas:</p><ul><li>High power system and interconnect design (up to 1kV &amp; up to 500A)</li><li>Ruggedized outdoor electromechanical products (IP protection)</li><li>Strong background in failure analysis and root cause investigations</li><li>Material selection for functional and regulatory requirements</li></ul><p><strong>**Location</strong>**</p><p>Campbell, CA</p><p>ChargePoint is committed to fair and equitable compensation practices. The targeted US salary range for roles at this operating level is $140,000 to $180,000. This range represents base salary and does not reflect equity, benefits or variable pay where applicable. Actual base salaries are based on several factors unique to each candidate, including but not limited to skill set, experience, certifications, and specific work location.</p><p>We are committed to an inclusive and diverse team. ChargePoint is an equal opportunity employer. We do not discriminate based on race, color, ethnicity, ancestry, national origin, religion, sex, gender, gender identity, gender expression, sexual orientation, age, disability, veteran status, genetic information, marital status or any legally protected status.</p><p>If there is a match between your experiences/skills and the Company needs, we will contact you directly.</p><p>ChargePoint is committed to fostering an inclusive workplace that welcomes and supports all qualified individuals. In alignment with this commitment, we ensure that persons with disabilities are provided with reasonable accommodations throughout the employment process.</p><p>If you need a reasonable accommodation to participate in the application or interview process, to perform essential job functions, or to access any other benefits and privileges of employment, please contact us at <strong>accommodations@chargepoint.com</strong>.</p><p>ChargePoint is an equal opportunity employer.</p><p>Applicants only - Recruiting agencies do not contact.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Senior Mechanical Engineer",
+      company: "ChargePoint",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

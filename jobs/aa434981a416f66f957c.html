@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">PLC</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Edwardsport-IN/Gasification-Production-Technician_R40585" target="_blank" rel="noopener">Apply on Duke Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Edwardsport-IN/Gasification-Production-Technician_R40585">Apply on Duke Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Duke Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Friday, July 31, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p>Duties</p><p>Work efficiently, effectively and safely in a multi-skilled team environment.  Under direct and indirect supervision, use knowledge acquired from training to monitor assigned coal gasification process equipment used to produce and prepare synthetic gas for combustion in gas turbines  Learn and apply correct operating procedures and the gasification process for startup, shutdown, normal and emergency operation of the gasification plant equipment.  Take appropriate action under normal operating and emergency conditions to ensure employee’s safety and to protect the process equipment from damage.  Learn and understand the process of the combined cycle operation of the combustion and steam turbine generators.  Be able to identify, evaluate and troubleshoot problems.</p><p>Perform the duties necessary to apply the approved clearance procedure to establish correct isolation of the facility’s gasification process equipment for maintenance activity.  Know and adhere to the site’s rules and regulations applicable to EHS (Environmental, Health and Safety) regarding smoking, the appropriate use of PPE (personal protective equipment) and PSM (process safety management).</p><p>Learn the operation of the site’s coal gasification systems, the operating parameters, the interlocks, safeguards, alarms and the combustion and steam turbine electric generating units, auxiliary power and all related station equipment and processes.  Train and instruct assigned employees and perform other work as assigned.</p><ul><li>Check with the Gasification Production Technician being relieved for special orders and station operating conditions, review log and make a thorough inspection of assigned equipment using the necessary sensory perceptions (see, hear, feel, smell, etc.) to ascertain it’s condition and report abnormal conditions and take appropriate corrective actions within control.  Check for proper operation, lubrication, cooling water flow and other conditions as required.</li><li>Operate gasification plant equipment, aux boilers, pumps, valves and other equipment.  Maintain all gas, liquid and steam flows, pressures, levels and temperatures within parameters and in a safe and efficient manner.  Engage in the necessary operations for placing heaters, coolers, boilers, turbines, water treatment and other equipment in service and removing them from service, maintaining proper sequence in so doing and checking and recording indicating instruments, gauges and meters and other such equipment and make necessary adjustments before it is placed in operation.</li><li>Check the equipment and perform Gasification Production Tech duties in the assigned areas such as ASU, Cooling Towers, Gas Turbines, Steam Turbine, HRSGs, Switchyard, Water Treat, Deep Wells and Collector Wells, AGR, SRU, TGU, Flare, Weigh Feeders, Rod Mills, Slurry forwarding, Grey and Black Water, LTGC, Gasifiers, RSC, Lockhoppers and the Slag/Drag Conveyors.  Handle normal and emergency operations of all equipment.</li><li>Perform the mechanical and electrical switching operations necessary to remove station or substation equipment from service or return it to service, including the operation of airbreaks, disconnecting switches, circuit breakers, valves, etc; prepare, place or remove hold tags in accordance with established procedures, taking proper precautions and using safety equipment to assure safety of self and equipment.</li><li>Perform operating maintenance when operating equipment, at other times perform maintenance work on station equipment as assigned.</li><li>Maintain work equipment and areas in a clean, orderly condition, continuously observe Company safety rules and practices, check condition of safety equipment, attend scheduled safety meetings, participate in scheduled training, safety and fire fighting procedures, artificial respiration practice as required and become familiar with safety manuals, rules and special procedures prescribed by the Company.</li><li>Acquire and use basic maintenance skills in the areas of Electrical, Mechanical and Instrument and Controls maintenance.</li><li>Company needs may require more highly skilled workers with extensive knowledge and experience in the maintenance fields described above.  In those cases, candidates with advanced skills may be sought to perform the following duties. Electrical Maintenance skills may include but not limited to electrical trouble shooting and repair or switches, breakers, starters, UPS, VFDs, PLC programs, diagnostic testing, motor maintenance, switchgear maintenance and other work as assigned, Mechanical Maintenance skills may include but not limited to the maintaining or rebuilding of pumps, valves, heat exchangers, bearings, compressors and other work as assigned, Instrument and Controls skills may include but not limited to instrument calibration and troubleshooting, I/Ps, Control Valves, DCS troubleshooting and programming, Profibus and Modbus communication, temperature elements, Continuous Emissions Monitoring and other work as assigned.</li></ul><p>Qualifications</p><p>Must meet the Company&#39;s requirements as to General Qualifications; and, in addition, must have the following specific qualifications</p><ul><li>Graduation from high school or applicable equivalent in either job training or study, and in addition, the completion of eighteen (18) months of technical education, or applicable equivalent, in steam-electric generation, gasification or combined cycle operation</li><li>Normally, three years or more of experience in station operation or industrial maintenance, or the equivalent in job training</li><li>Must have demonstrated knowledge of the station&#39;s gasification system, steam, mechanical and electrical apparatus and operation, and have clear understanding of the fundamental principles involved in coal gasification, combustion of fuel and generation of steam</li><li>Must maintain a valid drivers license to operate Company vehicles.</li><li>Demonstrated knowledge of the operation and functions of generators, exciters, voltage regulators, circuit breakers, storage batteries, relays and electrical meters, control valves, pumps and heat exchangers is desired.</li><li>Demonstrated knowledge of the operation and functions of all station controls, systems and instruments is desired.</li><li>Must be or become thoroughly familiar with the Company&#39;s safety rules and established Company safety policies and clearance rules, be alert and resourceful, capable of carrying the responsibilities involved in this work and be able to make quick and accurate decisions in emergencies.</li><li>Must possess and maintain a cooperative temperament and be able to receive and pass on orders and instructions in a manner that will obtain cooperation from the operating team working, the control room operator, management and others as necessary.</li><li>Must satisfactorily complete the Company&#39;s training course for the job of Gasification Production Technician or other qualification program as required by the company.</li></ul><p>Job Spec. No. 175</p><p>January 19, 2009</p><p>Gasification Production Technician</p><p>Year 1 – Grade 5</p><p>Year 2 – Grade 7</p><p>Year 2 – Grade 9</p><p>Year 4 – Grade 11</p><p>Year 5 – Grade 13</p><p><strong>**Travel Requirements</strong>**</p><p>5-15%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>IBEW Local 1393</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Gasification Production Technician",
+      company: "Duke Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

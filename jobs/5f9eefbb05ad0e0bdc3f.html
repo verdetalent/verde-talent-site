@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">Excel</span><span class="tag">P6</span><span class="tag">Primavera</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Associate-Planner---Scheduler-II--Project-Controls--Hybrid-Schedule-_R-030761" target="_blank" rel="noopener">Apply on Eversource Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Associate-Planner---Scheduler-II--Project-Controls--Hybrid-Schedule-_R-030761">Apply on Eversource Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Eversource Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p>Job Description Summary</p><p>Eversource supports work-life balance by offering hybrid schedules for certain roles. Eligibility is based on job responsibilities, operational needs, nature of work and team dynamics. Current guidelines require employees to work at least three days in the office, including Tuesdays and Wednesdays, with the third day set by the employee and supervisor based on department needs. These guidelines apply to roles approved for remote work and are subject to change, based on managerial discretion and work performance. All applicants must be able to work up to five days in the office if needed (for example: emergencies, training, or other business needs) or should the policy change.</p><p>Eversource is looking for an <strong>Associate Planner &amp; Scheduler II, Project Controls</strong>in <strong>Westwood, MA</strong>. As the Associate Planner &amp; Scheduler II, Project Controls, you will plan, schedule, manage and report on the Transmission Organization: Capital Projects, Maintenance Projects, and Distribution Projects managed by Transmission across the Eversource projects portfolio.  You will complete tasks associated with establishing, maintaining, analyzing, and reporting of costs and schedules associated to project activities contained in the overall project schedules.  Perform the following in coordination as needed with more senior team members, obtain, and provide information as well as implement recommendations to meet project goals and positively influence project direction as well as assist project managers, project team stakeholders and Transmission &amp; Engineering Controls &amp; Contracts in determining department resource solutions for meeting project cost and schedule objectives.  Develop an understanding and begin to apply project management theories and methodologies and project control tools.</p><p><strong>Essential Functions:</strong></p><p>Perform the following with assistance as needed from more senior team members for:</p><ul><li>Develop, maintain, analyze, and manage project activities and resources to the level necessary to support project and department requirements and needs.</li><li>Establish, monitor, and report on baselines for cost and schedule.</li><li>Assist in determining internal and external engineering and construction resource solutions for meeting project objectives.</li><li>Identify internal and external engineering and construction resources in the schedule and any constraints on current projects and future demands.</li><li>Communicate project status and resource loading with team members and management.</li><li>Identify and communicate project plan changes and advise team members and management of potential conflicts and solutions.</li><li>Expedite project plan changes and communicate internal and external reallocation of engineering and construction resources to accommodate changes and conflicts.</li><li>Evaluate project forecasts to assure desired results are achieved.</li><li>Develop alternative solutions for resolving potential project resource constraints, schedule conflicts and cost overruns.</li><li>Participate in intra and inter departmental activities to assure adherence to schedule and established guidelines.</li></ul><p><strong>Technical Knowledge/Skill/Education/Licenses/Certifications:</strong></p><p>Technical Knowledge/Skill:</p><ul><li>Incumbent to demonstrate the ability to multi-task, be detail oriented, meet expectations of department objectives, and possess the ability to understand goal-driven deliverables.</li><li>Incumbent to demonstrate the ability to coordinate and implement the necessary actions to ensure that goals and targets are achieved.</li><li>Use appropriate interpersonal styles to communicate and collaborate with peers and management toward goal achievement.</li><li>Project scheduling experience and knowledge of Primavera (5 or better) preferred.</li><li>Ability to use PC desktop applications (e.g. Microsoft Word and Excel).</li></ul><p>Education:</p><ul><li>Bachelor’s degree in construction management, engineering or equivalent is preferred.</li></ul><p>Experience:</p><ul><li>18 months - five (5) years of project controls, planning and scheduling work experience using Primavera P6 preferred.</li></ul><p>Licenses &amp; Certifications:</p><ul><li>None</li></ul><p><strong>Working Conditions:</strong></p><ul><li>Work is performed primarily in an office environment which requires sitting, standing, and general movement throughout the office area.</li><li>Repetitive movement of hands and fingers through typing and writing.  Reaching with hands and arms.  Occasional standing, walking, stooping, or bending</li><li>Travel will be required to Eversource office locations, project sites and contractor locations</li><li>Must be able to work emergency storm assignments as requires</li></ul><p><strong>Mental Aspects</strong>:</p><ul><li>Work includes analyzing implementing and coordinating. This role works in an environment that often requires the performance of multiple simultaneous activities, where deadlines need to be met and work is performed under pressure while involving significant business commitments and results.</li><li>The individual must possess good communication skills and demonstrate the ability to lead and direct activities of others</li></ul><p>#tranajd</p><p>#LI-ES1</p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p><strong>Compensation and Benefits:</strong></p><p>Eversource offers a competitive total rewards program. Check out our careers site for an overview of our benefits programs. Salary is commensurate with your experience. This position is eligible for a potential incentive. The annual salary range for this position is:</p><p>$82,870.00-$92,080.00</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>1</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement</strong>:</p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Associate Planner & Scheduler II, Project Controls (Hybrid Schedule)",
+      company: "Eversource Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

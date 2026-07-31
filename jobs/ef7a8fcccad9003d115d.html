@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">FERC</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://jobs.nexteraenergy.com/job/Juno-Beach-Principal-Financial-Analyst-FL-33408/1403271200/" target="_blank" rel="noopener">Apply on NextEra Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://jobs.nexteraenergy.com/job/Juno-Beach-Principal-Financial-Analyst-FL-33408/1403271200/">Apply on NextEra Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to NextEra Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Requisition ID:</strong>  95754</p><p>NextEra Energy Transmission, LLC (NEET) is the leading competitive transmission company in North America. We develop, finance, construct, operate and maintain transmission assets across the continent. We operate through our regional subsidiaries to integrate generation resources and enhance grid reliability. Do you want to be part of a team that is revolutionizing the transmission industry? Join our world-class team today.</p><p><strong>Position Specific Description</strong></p><p>The Principal Analyst supports NextEra Energy Transmission (NEET) operating companies by overseeing capital and operating expense accounting, forecasting, financial reporting, and regulatory activities. This role is responsible for executing day-to-day accounting operations, maintaining financial models, and supporting the month-end close for assigned OpCos.</p><p>The position collaborates closely with Accounting, Tax, Regulatory, Legal, and Operations to ensure timely and accurate financial results. It also requires the ability to operate with minimal direction—mentoring junior team members, driving process improvements, incorporating AI-driven initiatives, and representing Business Management/Business Services in cross-functional discussions.</p><p>The ideal candidate brings advanced accounting and finance expertise, strong familiarity with regulated utility environments, exceptional attention to detail, and the ability to manage multiple recurring deliverables across business units.</p><p><strong>Key Responsibilities</strong></p><ul><li>Review, edit, and submit Capital Authorization Requests (CARs); create and close master data (WBS codes) and support related project life-cycle activities</li><li>Prepare OpEx (O&amp;M, G&amp;A, property tax) and CapEx accruals, forecasts, and reporting, including OpCo-specific accruals</li><li>Perform timesheet review and process OpEx/CapEx spend reclass requests</li><li>Maintain financial models (Income Statement, Balance Sheet, Cash Flow) for variance analysis and management reporting; support over/under journal entries and month-end close deliverables</li><li>Lead support of regulatory filings, including projection filings, true-up filings, FERC Form 1 reviews, and depreciation studies in coordination with the Regulatory team; translate accounting positions into filing-ready exhibits</li><li>Build, maintain, and continuously improve financial models (Income Statement, Balance Sheet, Cash Flow) for variance analysis and management reporting; review over/under journal entries and month-end close deliverables, ensuring accuracy before submission to leadership</li><li>Communicate financial results to OpCo and senior management through monthly reviews and dashboards; deliver presentations to senior/executive management and external parties</li><li>Partner with Accounting, Tax, Regulatory, Legal, and Operations to ensure accurate and timely deliverables; draft process documentation, identify automation opportunities (Power Automate, Copilot), and support training of new team members</li><li>Lead and provide training to staff on a regular basis</li></ul><p><strong>Job Overview</strong></p><p>Employees in this role supports Senior Management decision making via financial modeling, including but not limited to, revenue requirement and customer bill impacts, discounted cash flow analysis and financial statement modeling.  This position identifies and conducts complex analyses of financial impacts of issues and/or decisions facing the company and proposes strategies to maximize financial performance of company.</p><p><strong>Job Duties &amp; Responsibilities</strong></p><p>•   Identifies, analyzes, and communicates to management the impact on the Company&#39;s financial structure, profitability, financial integrity, and competitive position utilizing relevant analytical methods and/or department’s forecasting models</p><p>•   Provides financial analysis support for various projects, calculating revenue requirements, net present value, customer bill impact, etc.</p><p>•   Provides expertise, support, and financial training for the company departments requiring these services</p><p>•   Performs financial analyses as required by management or regulatory bodies</p><p>•   Makes recommendations on financing decisions and executes long and/or short term financings</p><p>•   Prepares PowerPoint presentations to be provided to Senior and Executive Management</p><p>•   Acts as a mentor to lower level employees</p><p>•   Performs other job-related duties as assigned</p><p><strong>Required Qualifications</strong></p><p>•  High School Grad / GED</p><p>•  Bachelor&#39;s or Equivalent Experience</p><p>•  Experience: 6+ years</p><p><strong>Preferred Qualifications</strong></p><p>•  Bachelor&#39;s - Accounting / Finance</p><p>•  Master&#39;s - Accounting / Finance</p><p>NextEra Energy offers a wide range of benefits to support our employees and their eligible family members. Click <strong>here</strong> to learn more.</p><p><strong>Employee Group:</strong>  Exempt</p><p><strong>Employee Type:</strong>  Full Time</p><p><strong>Job Category:</strong>  Finance, Accounting &amp; Business Analytics</p><p><strong>Organization:</strong>  NextEra Energy Transmission, LLC</p><p><strong>Relocation Provided:</strong>  No</p><p>NextEra Energy is an Equal Opportunity Employer. Qualified applicants are considered for employment without regard to race, color, age, national origin, religion, marital status, sex, sexual orientation, gender identity, gender expression, genetics, disability, protected veteran status or any other basis prohibited by law.</p><p>NextEra Energy provides reasonable accommodation in its application and selection process for qualified individuals, including accommodations related to compliance with conditional job offer requirements, consistent with federal, state, and local laws. Supporting medical or religious documentation will be required where applicable and permitted by applicable law. To request a reasonable accommodation, please send an e-mail to recruiting-coordinator.sharedmailbox@nexteraenergy.com, providing your name, telephone number and the best time for us to reach you.</p><p>NextEra Energy will not discharge or in any other manner discriminate against employees or applicants because they have inquired about, discussed, or disclosed their own pay or the pay of another employee or applicant. However, employees who have access to the compensation information of other employees or applicants as a part of their essential job functions cannot disclose the pay of other employees or applicants to individuals who do not otherwise have access to compensation information, unless the disclosure is (a) in response to a formal complaint or charge, (b) in furtherance of an investigation, proceeding, hearing, or action, including an investigation conducted by the employer, or (c) consistent with the contractor’s legal duty to furnish information.</p><p>NextEra Energy <strong>does not</strong> accept any unsolicited resumes or referrals from <strong>any third-party recruiting firms or agencies</strong>. Please see our policy for more information.</p><p>#LI-SW1</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Principal Financial Analyst",
+      company: "NextEra Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

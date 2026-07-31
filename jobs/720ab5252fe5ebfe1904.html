@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Stamford-CT/Distribution-Design-Associate-Engineer_R-030925-1" target="_blank" rel="noopener">Apply on Eversource Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Stamford-CT/Distribution-Design-Associate-Engineer_R-030925-1">Apply on Eversource Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Eversource Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p>Eversource is looking for a <strong>Distribution Design Associate Engineer</strong> to be located in<strong>Stamford, CT.</strong> An entry-level position within the Distribution Design Engineer (DDE) progression reporting to an Engineering Lead. This position will provide the individual with experience and training necessary for advancement to the fully qualified level of Distribution Design Engineer. Duties will include assisting in identifying improvements and major repair needs on the distribution system, providing engineering support to Field Engineering Design for certain customer additions and assisting with system improvements for assigned circuits. Individual will review daily interruption reports and analyze projected circuit deficiencies (e.g. voltage, overloads, etc.) for assigned circuits. Individual will also assist the DDE/Lead with developing recommendations on equipment replacement vs repair to maximize Return on Asset (ROA). Individual will participate during major restoration efforts including Emergency Preparedness.</p><p><strong>Essential Functions:</strong></p><ul><li>Assist with the planning function and performance for all assigned circuits.</li><li>Assist in identifying benefits from individual projects and predicted desired outcomes.</li><li>Provide engineering support for specific projects.</li><li>Assist with engineering resolutions for multiple outages in the Distribution System</li><li>Create field work in current work management system.</li><li>Assist DDE/Lead until proficient in support of the following:</li><li>EMF communications and/or measurements for customers.</li><li>Real Estate Department and Customer to negotiate easements as required.</li><li>Account Executives with customer quality of service issues.</li><li>Operations with distribution issues. This includes review switching, develop contingency plans, prioritizing work, monitoring yellow tags, etc.</li><li>Engineering support to Field Engineering Design</li><li>P&amp;CE on developing Recloser and Breaker settings.</li><li>Considers safety in all circuit analysis.</li><li>Makes direct contact with customer and develop corrective actions.</li><li>Provide regulator and capacitor control settings for Electrical Maintenance.</li><li>Assist in outage, voltage, and power quality investigations and will engineer corrective action to prevent reoccurrence. Provide reports as required.</li><li>Works with DDE/Lead in the development of distribution projects and will be required to present to the Connecticut Project Authorization Committee CTPAC for approval.</li><li>Evaluate proposed DG interconnection applications.</li><li>Review and implement annual procedures, (e.g. TD941).</li><li>Utilize electronic software tools to model and analyze the distribution system (SynerGee, PTI, USAmp, PI, Visio, etc.)</li><li>Other related duties as assigned, including support to SOC</li><li>Will have nonexclusive, non-supervisory, storm restoration and emergency assignments.</li></ul><p><strong>Education, Experience and Skills:</strong></p><ul><li>Education: A Bachelor’s degree in Engineering is required, Electrical Engineering preferred</li><li>Experience: Zero (0) to Three (3) years of equivalent experience in Energy Delivery is preferred.</li><li>Technical Skills:</li><li>Knowledge of distribution systems is desired.</li><li>Must be able to work in a team environment.</li><li>Knowledgeable of various computer applications including Microsoft Office. Circuit analysis software skills preferred.</li><li>Strong written and verbal communication skills.</li><li>Must hold a valid motor vehicle operator’s license.</li></ul><p><strong>Compensation and Benefits:</strong></p><ul><li>The annual salary range for this position is $82,000-88,000, plus incentive. Salary progresses in accordance with the union contract. Check out the career site for an overview of our benefits.</li></ul><p>Bargaining unit employees under the TEAL contract will be given first consideration. In addition, this position is being posted internally and externally.</p><p>Please include a resume with your application.</p><p><strong>#engajd</strong></p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p>Build trusting relationships</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>1</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement:</strong></p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Distribution Design Associate Engineer - Stamford, CT",
+      company: "Eversource Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

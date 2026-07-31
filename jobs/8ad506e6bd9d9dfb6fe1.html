@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#FF705566;color:#FF7055;background:#FF70551a;">EV</span><span class="tag">Excel</span><span class="tag">MATLAB</span><span class="tag">Python</span><span class="tag">inverter</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://www.chargepoint.com/about/opportunities/job/?gh_jid=8624545002" target="_blank" rel="noopener">Apply on ChargePoint's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://www.chargepoint.com/about/opportunities/job/?gh_jid=8624545002">Apply on ChargePoint's site &rarr;</button>
     <div class="apply-note">Applying takes you to ChargePoint's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>About Us</strong></p><p>With electric vehicles expected to be nearly 30% of new vehicle sales by 2025 and more than 50% by 2040, electric mobility is becoming a reality. ChargePoint (NYSE: CHPT) is at the center of this revolution, powering one of the world’s leading EV charging networks and a comprehensive set of hardware, software and mobile solutions for every charging need across North America and Europe. We bring together drivers, businesses, automakers, policymakers, utilities and other stakeholders to make e-mobility a global reality.</p><p>Since our founding in 2007, ChargePoint has focused solely on making the transition to electric easy for businesses, fleets and drivers. ChargePoint offers a once-in-a-lifetime opportunity to create an all-electric future and a trillion-dollar market.</p><p>At ChargePoint, we foster a positive and productive work environment by committing to live our values of Be Courageous, Charge Together, Love our Customers, Operate with Openness, and Relentlessly Pursue Awesome. These values guide how we show up every day, align, and work together to build a brighter future for all of us.</p><p>Join the team that is building the EV charging industry and make your mark on how people and goods will get everywhere they need to go, in any context, for generations to come.</p><p><strong>Reports To</strong></p><p>Sr. Manager, Power Electronics Firmware</p><p><strong>What You Will Be Doing</strong></p><p>ChargePoint is looking for an experienced Power Electronics Controls and Firmware Engineer with more than seven years of hands-on expertise in developing embedded firmware for power control applications. The preferred candidate will excel as an individual contributor supporting our rapid growth. Advanced skills in writing C code for microcontrollers, DSPs, as well as FPGAs. Candidates with a background in power electronics systems and familiarity with renewable energy, electric vehicle charging, or energy storage technologies are highly valued. We are seeking someone with strong capabilities in Control Engineering and Power Electronics for next-generation fast-charging solutions.</p><p><strong>What You Will Bring to ChargePoint</strong></p><ul><li>Design and implement embedded control systems for power factor correction (PFC), grid-tie, grid-forming inverters, bidirectional chargers, DC/DC converters, and related power electronics.</li><li>Stay updated on advancements in digital control technologies and controllers.</li><li>Validate design concepts through both computer simulations and hands-on laboratory testing.</li><li>Create automated test cases for hardware-in-the-loop (HIL) modelling and testing, where applicable.</li><li>Perform board bring-up activities and develop device drivers for communication protocols such as CAN, I2C, and SPI.</li><li>Contribute to specification development, participate in design reviews, and carry out unit testing.</li><li>Ensure a thorough understanding of safety and regulatory requirements for power converters used in fast charging applications.</li><li>Guarantee compliance with relevant regulatory and safety standards, including UL, IEC, and SAE.</li></ul><p><strong>**Requirements</strong>**</p><ul><li>6+ years of proven experience developing Power Electronics products</li><li>6+ years of programming experience in C/C++, Assembly for 32-bit controllers, DSP, and Python for scripting and automation</li><li>Demonstrated experience implementing control code for power converters without relying on code generation tools.</li><li>Strong experience in designing controllers (such as PI, PR, droop, etc.), modelling, and simulation using tools such as PLECS, MATLAB, and Simulink, as well as lab tests.</li><li>Extensive background in designing FW that requires accurate timing within a real-time programming environment, including PLL, timers, PWMs, etc.</li><li>Strong experience in developing algorithms for harmonics cancellation using feedback approaches.</li><li>Solid background in developing embedded firmware for real-time systems using C/C++.</li><li>Strong grasp of power electronics principles, including control techniques for inverters, rectifiers, and DC-DC converters (LLC, CLLC, DAB, PFC chargers, DC/DC, inverters, etc.).</li><li><strong>Experience working with grid-tie inverter systems</strong> (solar, BESS, EVSE, etc.).</li><li>Solid hands-on experience in high-power labs, with the ability to debug hardware issues related to firmware functions in power converters.</li><li>Skilled in programming microcontrollers and using peripherals like timers, PWM, interrupts, GPIOs, ADC, UART, I2C, SPI, CAN, and Ethernet; experience with TI C2000 DSP family is a plus.</li><li>Familiar with version control systems such as Git and SVN.</li><li>Experience in hardware-in-the-loop (HIL) testing, including testbed setup, real-time simulation, plant modelling, hardware interfaces, test scripting, fault injection, and test result analysis.</li><li>Proven skills in debugging complex firmware issues using oscilloscopes, logic analysers, and debuggers.</li><li>Experience working with real-time operating systems (RTOS).</li><li>Proficient in FPGA programming and simulation techniques</li></ul><p><strong>**Location</strong>**</p><p>Campbell, CA</p><p>ChargePoint is committed to fair and equitable compensation practices. The targeted US salary range for roles at this operating level is $200,000 to $230,000. This range represents base salary and does not reflect equity, benefits or variable pay where applicable. Actual base salaries are based on several factors unique to each candidate, including but not limited to skill set, experience, certifications and specific work location.</p><p>We are committed to an inclusive and diverse team. ChargePoint is an equal opportunity employer. We do not discriminate based on race, color, ethnicity, ancestry, national origin, religion, sex, gender, gender identity, gender expression, sexual orientation, age, disability, veteran status, genetic information, marital status or any legally protected status.</p><p>If there is a match between your experiences/skills and the Company needs, we will contact you directly.</p><p>ChargePoint is committed to fostering an inclusive workplace that welcomes and supports all qualified individuals. In alignment with this commitment, we ensure that persons with disabilities are provided with reasonable accommodations throughout the employment process.</p><p>If you need a reasonable accommodation to participate in the application or interview process, to perform essential job functions, or to access any other benefits and privileges of employment, please contact us at <strong>accommodations@chargepoint.com</strong>.</p><p>ChargePoint is an equal opportunity employer.</p><p>Applicants only - Recruiting agencies do not contact.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Senior Staff Power Electronics Control Firmware Engineer",
+      company: "ChargePoint",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

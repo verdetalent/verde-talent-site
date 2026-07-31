@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span><span class="tag">substation design</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Lead-Engineer--Substation-Design--Hybrid-_R-029455-1" target="_blank" rel="noopener">Apply on Eversource Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Lead-Engineer--Substation-Design--Hybrid-_R-029455-1">Apply on Eversource Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Eversource Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Eversource will not offer immigration-related sponsorship for this position (e.g., H-1B, O-1, J-1, TN, E-3, etc.).  Applicants requiring visa sponsorship to start employment with Eversource will not be considered.</p><p>Role and Scope of Position:</p><p>Lead Engineer is responsible for the development, expansion, planning, design, maintenance and operation of the system and its equipment to meet the mission and objectives of the organization. In addition, this position coordinates the evaluation of system failures, and the appropriate resolutions, in order to provide support to operations on unplanned maintenance. Responsible for ensuring that the Eversource transmission and distribution systems are designed to high quality standards that provide customers with safe, reliable, competitively priced and environmentally sound electric service. This position shares accountability with peers in the strategy, development, and design of the organization’s Life Cycle Plan, a comprehensive long-term plan for the transmission/distribution system. Responsible for supervising, assigning, prioritizing and directing the work performed by other Engineers and staff.</p><p>Substation Engineering is responsible for working on substation design, maintenance, and support, optimizing the cost and performance of substation equipment on the transmission/distribution system. Substation Engineering also supports emergent and/or equipment failures, as necessary, to support operations.</p><p><strong>Essential Functions:</strong></p><ul><li>Supervises, coaches, and develops engineers; approves time and conducts performance reviews.  Assigns, prioritizes and directs work performed by at least 2 FTE Engineers.</li><li>Responsible for the cost and performance of certain assets on the system which may include reliability analysis and trending of system events and monitoring of equipment condition.</li><li>Responsible for the development, justification and approval of the Life Cycle Plan activities over a multi-year horizon and for ongoing projects</li><li>Ensures that the design and specification of additions, modifications and replacements to the transmission and distribution systems, and the preparation of system electrical permits and related customer notifications, are completed accurately and on time.</li><li>Responsible for the development of preliminary engineering designs and the details, as necessary.</li><li>Collaborates with other Engineers within Engineering to ensure consistency and teamwork.</li><li>Provides technical support and direction to operating areas relative to system priorities, engineering guidelines and operating decisions during normal and emergency situations.</li><li>Accountable for root-cause analysis, development and implementation of corrective actions.</li><li>Responsible for the evaluation and selection of technology and equipment for the system.</li><li>Responsible for the development of standards and procedures for design, operation and maintenance.</li><li>Assumes the role of the Manager as required.</li><li>Expected to assist with storm duty and any other major events.</li></ul><p><strong>Technical Knowledge/Skill/Education/Licenses/Certifications:</strong></p><p>Technical Knowledge/Skill:</p><ul><li>Knowledge of utility power systems is preferred.</li><li>Ability to independently develop, present and execute new projects through collaborations with other departments.</li><li>Familiarity with power related software is preferred.</li></ul><p>Education:</p><ul><li>Bachelor’s degree in Engineering is required.</li></ul><p>Experience:</p><ul><li>Minimum of eight (8) years in the technical, operational, or engineering aspects of the electrical utility industry.  Supervisory experience preferred.</li></ul><p>Licenses &amp; Certifications:</p><ul><li>None</li></ul><p><strong>Working Conditions:</strong></p><ul><li>Must be available to work emergency restoration assignment as required.</li><li>Must be available to travel between MA/CT/NH as necessary.</li><li>Work is performed primarily in an office environment which requires sitting, standing, walking and climbing stairs are involved.  Job can require traveling to operating districts and companies within and outside the state.</li><li>Depending on the specific nature of the engineering role, position may require occasional to significant travel by car. A valid driver’s license is required.</li></ul><p><strong>Problem Solving &amp; Complexity:</strong></p><ul><li>Work includes calculating, comparing, technical writing, editing, planning, evaluating, interpreting, organizing, consulting, analyzing, designing, documenting, specifying, coordinating, implementing and presenting.  This role works in an environment that often requires the performance of multiple simultaneous activities, where deadlines need to be met and work is performed under pressure while involving significant business commitments and results.</li></ul><p>#LI-ES3</p><p>#LI-Hybrid</p><p>#engajd</p><p><strong>Competencies:</strong></p><p>Build trusting relationships</p><p>Manage and develop people</p><p>Foster teamwork and cross-functional collaboration</p><p>Lead change</p><p>Communicate strategic vision</p><p>Create an engaged workforce</p><p>Focus on the customer</p><p>Take ownership &amp; accountability</p><p><strong>Compensation and Benefits:</strong></p><p>Eversource offers a competitive total rewards program. Check out our careers site for an overview of our benefits programs. Salary is commensurate with your experience. This position is eligible for a potential incentive. The annual salary range for this position is:</p><p>$145,670.00-$161,860.00</p><p><strong>Worker Type:</strong></p><p>Regular</p><p><strong>Number of Openings:</strong></p><p>1</p><p><strong>Emergency Response:</strong></p><p>Responding to emergency situations to meet customers’ needs is part of every employee’s role. If employed, you will be given an Emergency Restoration assignment.  This means you may be called to assist during an emergency outside of your normal responsibilities, work hours and location.</p><p><strong>EEO Statement</strong>:</p><p>Eversource Energy is an Equal Opportunity Employer.  All qualified applicants will receive consideration for employment without regard to age, race, color, sex, sexual orientation, gender identity, national origin, religion, disability status, or protected veteran status.</p><p>VEVRRA Federal Contractor</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Lead Engineer, Substation Design (Hybrid Schedule)",
+      company: "Eversource Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

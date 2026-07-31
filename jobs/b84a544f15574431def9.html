@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://blattner.wd5.myworkdayjobs.com/BlattnerCompany/job/RemoteTraveling-For-Corporate-Use-Only/Director-of-Estimating---Gas-Power-Generation_R7786" target="_blank" rel="noopener">Apply on Blattner Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://blattner.wd5.myworkdayjobs.com/BlattnerCompany/job/RemoteTraveling-For-Corporate-Use-Only/Director-of-Estimating---Gas-Power-Generation_R7786">Apply on Blattner Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Blattner Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>A DAY IN THE LIFE</strong></p><p>As the Director of Estimating – Gas Power Generation, you&#39;ll lead the preconstruction strategy for utility-scale gas power generation projects across North America. You&#39;ll oversee estimating, engineering coordination, procurement strategy, and commercial risk while helping shape some of the largest and most complex power generation opportunities.</p><p>Your day may involve collaborating with clients, engineering teams, equipment manufacturers, supply chain partners, and construction leaders to develop competitive project strategies, review engineering concepts, evaluate technical and commercial risk, and lead multidisciplinary teams through every phase of the proposal process. Projects may include gas turbine facilities, reciprocating engine power plants, single-cycle and combined-cycle generation facilities, balance of plant (BOP) systems, substations, transmission infrastructure, and integrated power solutions supporting data centers and other critical infrastructure.</p><p>You&#39;ll play a key role in developing estimating strategies, strengthening client relationships, mentoring estimating leaders, and ensuring projects are positioned for successful execution from concept through project award.</p><p><strong>STEP INTO THE ROLE</strong></p><ul><li>Lead all estimating and preconstruction activities for utility-scale gas power generation projects from opportunity identification through project award.</li><li>Develop estimating strategies that balance technical excellence, commercial competitiveness, schedule, constructability, and overall project risk.</li><li>Partner with Engineering, Integrated Supply Chain, Construction, Commercial Operations, and Project Management to deliver complete, high-quality proposals.</li><li>Review engineering concepts, preliminary designs, procurement strategies, schedules, and technical assumptions to ensure competitive and executable project solutions.</li><li>Lead multidisciplinary bid teams responsible for engineering coordination, estimating, procurement planning, subcontractor engagement, and commercial risk evaluation.</li><li>Build and maintain strategic relationships with Owners, equipment manufacturers, Engineers of Record (EOR), suppliers, subcontractors, and key industry partners.</li><li>Support proposal development for gas turbines, reciprocating engines, single-cycle and combined-cycle generation facilities while identifying opportunities for value engineering and innovation.</li><li>Guide estimating teams through scope development, quantity validation, pricing strategies, contingency planning, and proposal reviews.</li><li>Drive continuous improvement by implementing estimating best practices, lessons learned, process improvements, and innovative delivery strategies.</li><li>Mentor, coach, and develop estimating leaders while building a high-performing preconstruction organization.</li><li>Collaborate with executive leadership to support business development strategies and long-term growth within the gas power generation market.</li></ul><p><strong>WHAT YOU’LL NEED</strong></p><ul><li>Bachelor’s degree in construction management, Engineering, or a related field.</li><li>Five or more years of leadership experience in estimating, preconstruction, procurement, or project management within utility-scale power generation, industrial construction, EPC, or heavy infrastructure.</li><li>Demonstrated experience leading multidisciplinary estimating teams and developing complex EPC proposals.</li><li>Strong understanding of engineering, procurement, construction, commercial risk, and project delivery strategies.</li></ul><p><strong>WHAT SETS YOU APART</strong></p><ul><li>Experience supporting gas turbine facilities, reciprocating engine generation plants, single-cycle and combined-cycle power plants, or balance of plant (BOP) systems.</li><li>Experience estimating utility-scale gas power generation, industrial, or EPC projects.</li><li>Strong understanding of engineering, procurement, commercial contracting, construction execution, and project financing.</li><li>Experience collaborating with Owners, Engineers of Record (EOR), equipment manufacturers, EPC partners, utilities, and construction teams throughout the project lifecycle.</li><li>Demonstrated ability to build and lead high-performing estimating organizations while developing future leaders.</li><li>Passion for driving innovation, value engineering, continuous improvement, and strategic growth within the gas power generation market.</li></ul><p><strong>HOW WE INVEST IN YOU</strong></p><ul><li>Competitive pay</li><li>100% employer paid HDHP insurance premiums for employees</li><li>401(k) with company match</li><li>HSA and FSA options</li><li>Dental and Vision insurance</li><li>Education Assistance (Tuition Reimbursement)</li><li>Work/Life balance</li><li>Employee/Family focused culture</li><li>Gym on site</li><li>And more!</li></ul><p>#LI - Remote</p><p>$178,151.00 - $258,319.00 Individual Compensation to be determined based on the applicant&#39;s applicable experience and qualifications balanced against internal equity.</p><p><strong>WHO ARE WE?</strong></p><p>With more than 115 years of construction experience, Blattner has played a vital role in building America’s critical infrastructure, ranging from railroads and highways to dams and mines. Since 1997, the company has focused on renewable energy solutions and is responsible for some of the most significant solar, wind and storage projects in the U.S. Today, Blattner has installed over 20% of America’s utility-scale wind, solar and energy storage capacity. Blattner Company is the parent company of Blattner Energy and D.H. Blattner &amp; Sons, of which all are members of the Quanta Services family of companies. Company headquarters are in Avon, Minnesota.</p><p>Blattner is an Equal Employment Opportunity Employer committed to diversity and inclusion in the workplace. Blattner will not tolerate discrimination against any applicant for employment or employee on the basis of age (40 and over), ancestry, color, religious creed, gender, gender expression, gender identity, genetic information, marital status, medical condition, mental disability, military or veteran status, national origin, physical disability, race, receipt of public assistance, sex, sexual orientation, or any other status protected by federal, state, or local laws. This commitment governs all aspects of employment including, but not limited to: hiring, promotion, demotion, transfer, layoff, termination, compensation, discipline, and access to benefits and training. Additionally, Blattner is committed, in accordance with applicable law, to making reasonable accommodations for job applicants and employees based on a qualifying disability, a sincerely held religious belief or practice, and for pregnancy, childbirth or related health conditions. Applicants and employees who feel they have experienced or witnessed discrimination or who wishes to request a reasonable accommodation should contact the Human Resources Department. Blattner prohibits retaliation against any individual for making a complaint under this policy, for opposing discrimination, for participating in an investigation pursuant to this policy, or for requesting a reasonable accommodation.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Director of Estimating - Gas Power Generation",
+      company: "Blattner Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

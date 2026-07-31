@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">PPA</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-Kingdom-Glasgow/Commercial-Improvement-Manager_R-31873-1" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-Kingdom-Glasgow/Commercial-Improvement-Manager_R-31873-1">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Commercial Improvement Manager</strong></p><p><strong>ScottishPower HQ, Glasgow (hybrid)</strong></p><p><strong>Salary from £66,000 + car allowance, up to 20% bonus &amp; other excellent benefits</strong></p><p><strong>Closing date- 12th of August 2026</strong></p><p><strong>Help us create a better future, quicker!</strong></p><p>The Commercial Improvement Manager is responsible for driving end-to-end commercial improvement across the Business Energy portfolio, supporting SME and Industrial &amp; Commercial (I&amp;C) segments and optimisation of CPPA and sustainable energy solutions.</p><p>The role focuses on improving sales processes, customer journeys, systems and commercial frameworks to drive efficiency, scalability and performance.</p><p>Working cross-functionally across Sales, Pricing, Product, Operations, Digital and Wholesale, the role supports revenue growth, margin optimisation and improved customer outcomes.</p><p><strong>What you’ll be doing</strong></p><ul><li>Drive commercial improvement initiatives across SME, I&amp;C and PPA sales channels</li><li>Improve end-to-end customer lifecycle performance from lead through to billing</li><li>Support optimisation of CPPA end to end processes including contract negotiation, governance, onboarding and in contract lifecycle management.</li><li>Enhance sales effectiveness across direct and partner channels</li><li>Define and track commercial performance metrics</li><li>Support system and process improvements with Digital / IT</li><li>Ensure compliance with regulatory and governance frameworks</li><li>Deliver improvement roadmaps aligned to Business Energy strategy</li><li>Responsible for the collation of submission packs for responding to CPPA tenders/RfQs/RfPs, including pricing from each business to provide a full ScottishPower offering</li><li>Working with Compliance , Legal , Regulation and Cyber teams in assessing , designing, delivering or evolving necessary requirements across Business Energy Sales</li><li>Assist in the engagement of customers, both new and existing, to continue bi-lateral discussions on the pipeline of projects seeking a route to market through CPPAs</li><li>Supports SME and I&amp;C customer base and revenue performance</li><li>Contributes to CPPA portfolio development and optimisation</li><li>Operates across Sales, Product, Pricing, Operations and Digital</li><li>Influences customer acquisition, onboarding and retention performance</li></ul><p><strong>What you’ll bring</strong></p><ul><li>Proven experience leading business transformation, process improvement or commercial change programmes within the energy, utilities or B2B services sector.</li><li>Demonstrable success delivering measurable commercial outcomes, such as revenue growth, margin improvement, cost reduction, customer experience improvements or operational efficiency gains</li><li>Strong analytical and problem-solving skills</li><li>Senior Stakeholder management and cross-functional delivery experience</li><li>Proven experience managing multiple initiatives across different business areas</li><li>Structured approach to project delivery</li><li>Understanding of Business Energy markets (SME/I&amp;C) is highly desirable</li><li>PPA or renewable contract experience, alongside regulatory knowledge is desirable</li></ul><p><strong>Minimum Criteria</strong></p><ul><li>Demonstrated experience in commercial or operational improvement at a senior level</li><li>Strong stakeholder management skills</li><li>Ability to deliver measurable improvements</li><li>Ability to operate effectively in fast-changing environment</li></ul><p><strong>What’s in it for you</strong></p><p>As well as a competitive salary which is reviewed annually, you can also enjoy a number of other benefits. With our pension scheme, we’ll double match your contribution up to a company contribution of 10%.</p><p>At ScottishPower, we believe it’s the little things we do in life that make a big difference. From helping you look after your family’s wellbeing, save for your future and take personal steps for climate action – our benefits are designed to help you do just that - so that you have everything you need to take care of your world – today and tomorrow. That’s why our benefits include:</p><ul><li>36 days annual leave</li><li>Holiday purchase – perfect your work/life balance with extra annual leave</li><li>Share Incentive Plan and Sharesave Scheme</li><li>Payroll giving and charity matched funding</li><li>Technology Vouchers – save more and spread the cost of your technology purposes</li><li>Count us in – pledge to reduce carbon emissions and help fight climate change</li><li>Electric Vehicle Schemes – to help you transition to green/clean driving</li><li>Cycle to Work scheme and public transport season ticket loans</li><li>Options to purchase dental insurance, private medical insurance, health cash plan and annual health assessments</li><li>Life Assurance (4x salary)</li><li>Access to ‘nudge’ financial wellbeing support</li><li>Plus shopping, leisure, restaurant and gym discounts, and unique employee deals on travel insurance and more</li></ul><p><strong>Why ScottishPower</strong></p><p>ScottishPower is part of the Iberdrola Group, one of the world’s largest integrated utility companies and a world leader in wind energy. With a commitment to generate all of our energy from renewable resources and a drive to create the energy infrastructure of the future, we’re at the forefront of the journey to Net Zero and investing over £6m every working day to make this happen. With diverse opportunities across our businesses and a commitment to invest in our own internal talent, ScottishPower can offer people real career opportunities that meet personal and professional goals, in a global organisation.</p><p>Inclusion, diversity, and a social purpose are at the heart of everything we do. Together with our values, they bring us together into a stronger, more sustainable business with direct links to the communities we serve. It takes all kinds of people to build a large-scale business like ours, so whatever your background, you’ll fit right in.</p><p>ScottishPower is committed to providing reasonable support or adjustments in our recruiting processes for candidates with disabilities, long term conditions, mental health conditions, or who are neurodivergent or require pregnancy-related support. If you need support, please reach out to careers@scottishpower.com.</p><p><strong>Mobility</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country. If/when required, the Company will support the employee with the necessary Immigration requirements.</p><p><strong>IMPORTANT</strong></p><p>Advert will close at 23:59 GMT the day before <strong>Job Posting End Date</strong> below</p><p>August-12-2026</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Commercial Improvement Manager",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

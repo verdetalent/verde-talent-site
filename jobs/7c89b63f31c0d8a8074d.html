@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#4FB3FF66;color:#4FB3FF;background:#4FB3FF1a;">Wind</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://jobs.nexteraenergy.com/job/Austin-Leadership-Development-Program-Wind-Operations-TX-73301/1408238200/" target="_blank" rel="noopener">Apply on NextEra Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://jobs.nexteraenergy.com/job/Austin-Leadership-Development-Program-Wind-Operations-TX-73301/1408238200/">Apply on NextEra Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to NextEra Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Requisition ID:</strong>  96211</p><p>NextEra Energy Resources is one of America’s largest wholesale electricity generators, harnessing diverse energy sources to power progress. We deliver tailored energy solutions that fuel economic growth, strengthen communities, and help customers achieve their energy goals. Ready to make a lasting impact? Take the next step in your career with us!</p><p><strong>Position Specific Description</strong></p><p>In the role of the Associate Wind Site Manager, you will assume responsibility for all operational facets on the maintenance and repair of a wind power plant facility. Your chief priority will be ensuring the team&#39;s safety while concurrently focusing on maximizing performance and profitability per the operational framework. This will necessitate devising and executing strategies to elevate maintenance practices, diagnostic capabilities, and overall operational efficiency, resulting in heightened customer satisfaction and reduced service expenditures.</p><p>The next Leadership Development Program cohort will begin on November 3rd, 2026. The candidate selection process will take place throughout March and April. Onboarding will be held at our Renewable Training Center in Iowa for 3 weeks. Once complete, candidates will return home to begin the Leadership Development Program- Wind Operations. Please see below for more details.</p><p>Learn more about our Wind Operations and asset locations- NextEra Energy- Wind Operations PDF</p><p><strong>Additionally, your duties may encompass:</strong></p><ul><li>Initial 5 month rotational program includes training and rotational assignments between 2 of our current facilities to learn our core business. Travel may include 3 weeks away from home at a time.</li><li>Upon completion of leadership program, final site assignment may be <strong>anywhere in our US portfolio</strong></li><li>Enforcing the implementation of Operational Safety Policy Instructions, ensuring field work aligns with regulations, promoting sound employee safety practices, and fostering a culture of unparalleled employee safety.</li><li>Actively engaging in and leading Business Lean Six Sigma processes and projects.</li><li>Recruiting, nurturing, retaining, guiding, and advancing resources at sites to uphold professional standards and foster team development within a matrix environment.</li><li>Assuming accountability for all aspects of timely safety and environmental reporting, financial reporting, and turbine availability.</li><li>Collaborating closely with internal NextEra stakeholders to devise and execute operation-focused feedback and solutions for both planned and unplanned maintenance, improvement projects, development initiatives, and financial performance.</li><li>Serving as a positive and professional representative of NextEra Energy within the community and in interactions with customers.</li><li>Overseeing the performance of wind field operations within the designated contractual scope of responsibilities for external customers and stakeholders.</li><li>Climbing Wind Turbines (Candidate must have the ability to climb)</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Fluent in English.</li><li>Possesses either a Bachelor&#39;s Degree in business/engineering or has 5 years of equivalent experience in a leadership role.</li><li>Demonstrated adaptability to different geographic locations for potential future roles</li><li>At least five years of hands-on experience in leading field services operations, preferably within wind turbines or rotating equipment</li><li>Proficiency in collaborating effectively within a complex organizational structure and across all levels of the Company</li><li>Strong executive presentation skills</li><li>Quality Tools and Techniques, Six Sigma Green Belt preferred</li><li>Proficient in network infrastructure, communication protocols, and web technology</li><li>Established track record of managing profit and loss responsibilities</li><li>Exceptional analytical capabilities and a track record of thriving in cross-functional environments.</li></ul><p><strong>Job Overview</strong></p><p>Leaders in this job are responsible for the daily management and leadership of a wind power generation facility. Individuals are responsible for the overall safe and reliable operation of the wind site.</p><p><strong>Job Duties &amp; Responsibilities</strong></p><p>•   Monitors, controls, and forecasts plant budgets and ensures compliance with all contractual obligations</p><p>•   Interfaces with land owners, utilities, regulatory agencies, and local government and community representatives</p><p>•   Maintains all company supplied equipment, facilities, and tooling</p><p>•   Ensures compliance to all company safety and environmental policies</p><p>•   Performs other collateral duties in support of the Power Generation Division (PGD) portfolio</p><p>•   Uses computer based applications</p><p>•   Completes reports and paperwork</p><p>•   Performs other job-related duties as assigned</p><p><strong>Required Qualifications</strong></p><ul><li>High School Grad / GED</li><li>Bachelor&#39;s or Equivalent Experience</li><li>Experience:2+ years</li><li>Valid Driver&#39;s License (NON CDL)</li></ul><p><strong>Preferred Qualifications</strong></p><p>•  None</p><p>NextEra Energy offers a wide range of benefits to support our employees and their eligible family members. Click <strong>here</strong> to learn more.</p><p><strong>Employee Group:</strong>  Exempt</p><p><strong>Employee Type:</strong>  Full Time</p><p><strong>Job Category:</strong>  Operations</p><p><strong>Organization:</strong>  NextEra Energy Operating Services, LLC</p><p><strong>Relocation Provided:</strong>  Yes, if applicable</p><p>NextEra Energy is an Equal Opportunity Employer. Qualified applicants are considered for employment without regard to race, color, age, national origin, religion, marital status, sex, sexual orientation, gender identity, gender expression, genetics, disability, protected veteran status or any other basis prohibited by law.</p><p>NextEra Energy provides reasonable accommodation in its application and selection process for qualified individuals, including accommodations related to compliance with conditional job offer requirements, consistent with federal, state, and local laws. Supporting medical or religious documentation will be required where applicable and permitted by applicable law. To request a reasonable accommodation, please send an e-mail to recruiting-coordinator.sharedmailbox@nexteraenergy.com, providing your name, telephone number and the best time for us to reach you.</p><p>NextEra Energy will not discharge or in any other manner discriminate against employees or applicants because they have inquired about, discussed, or disclosed their own pay or the pay of another employee or applicant. However, employees who have access to the compensation information of other employees or applicants as a part of their essential job functions cannot disclose the pay of other employees or applicants to individuals who do not otherwise have access to compensation information, unless the disclosure is (a) in response to a formal complaint or charge, (b) in furtherance of an investigation, proceeding, hearing, or action, including an investigation conducted by the employer, or (c) consistent with the contractor’s legal duty to furnish information.</p><p>NextEra Energy <strong>does not</strong> accept any unsolicited resumes or referrals from <strong>any third-party recruiting firms or agencies</strong>. Please see our policy for more information.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Leadership Development Program- Wind Operations",
+      company: "NextEra Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

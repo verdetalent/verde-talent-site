@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Monticello-FL/Supervisor-Fleet-Services-Operations_R40520" target="_blank" rel="noopener">Apply on Duke Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Monticello-FL/Supervisor-Fleet-Services-Operations_R40520">Apply on Duke Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Duke Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Saturday, August 1, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>*</strong>*100% Onsite, this is not a remote or hybrid-based role<strong>*</strong>*</p><p><strong>*</strong>*Relocation assistance available!!<strong>*</strong>*</p><p><strong>Please note, to be qualified for this role you MUST HAVE</strong></p><ul><li>Demonstrated and applied Transportation Fleet <strong>Maintenance Leadership.</strong>The focus is on Managing Fleet &amp; Garage Maintenance; this role does not have a trucking or logistics focus.</li><li>Experience managing a remote team, which is spread across multiple regions.</li><li>Be able to leverage data to drive business decisions.</li></ul><p>Fleet Services provides strategic leadership, management, and governance for all transportation and mobile equipment in the Duke Energy fleet which consists of over 14 thousand vehicles/mobile equipment. The Supervisor of Vehicle Maintenance provides leadership and oversight to a diverse workforce for assigned maintenance locations (garages). Key accountabilities include: ensuring the execution of maintenance and repair work, providing strong leadership and oversight to employees, ensuring compliance with applicable, safety, environmental, ANSI, DOT and maintenance standards, managing work schedules, ensuring tasks are properly recorded in the work management system, coordinating with customer contacts to ensure their needs are being met and managing the business/financial aspects of assigned garages. Safety, environmental compliance, productivity and quality are all critical components of the successful execution of this work.</p><p>The Supervisor of Vehicle Maintenance is responsible for identifying and addressing barriers in the workplace and must also effectively communicate the plans and direction of the organization. Position is responsible for employee development and performance management of the assigned craft in the work group.</p><p><strong>Responsibilities &amp; Duties:</strong></p><p><strong>Manages the Fleet Services for assigned maintenance locations (garages) to deliver safe, reliable vehicles equipment, and services for multiple customer departments</strong></p><ul><li>Ensure timely completion of assigned work in compliance with safety, environmental, ANSI, DOT standards, manufacturers’ guidelines, and Fleet Services best practices.</li><li>Provide safe working conditions and practices by providing adequate safety training of work practices and procedures. Initiate action to promptly correct potential or actual safety problems.</li><li>Oversee assigned work and assuring quality of work being performed.</li><li>Complete field reviews, observations, and audits to ensure progress, performance, quality and results.</li><li>Foster a strong safety culture as it relates to both employee and operator safety.</li><li>Maintain a working knowledge of Duke Energy safety and environmental policies and procedures.</li><li>Monitor all aspects of team’s performance with a focus on continuous improvement.</li><li>Initiate actions to ensure objectives are achieved and improvement opportunities are addressed.</li><li>Monitor and manage garage expenditures to support overall budget and incentive goals.</li><li>Ensure geographic area is appropriately staffed and supported for 24/7 operations. This includes both individual availability and setting employee expectations.</li><li>Support storm restoration efforts including any off-system deployments</li><li>Local representative and point of contact for fleet, customer, equipment and facilities issues at assigned maintenance locations.</li></ul><p><strong>Lead a safe, productive and motivated work force</strong></p><ul><li>Maintain positive employee relations and culture based on trust, open communication, personal accountability, ownership, teamwork and collaboration.</li><li>Develop a culture of two-way communication, encouraging employee feedback.</li><li>Enable employees to make decisions within boundaries of processes and goals.</li><li>Actively communicate with employees on all relevant items related to the company, Fleet Services and the work group.</li><li>Recruit and develop technicians. Manage employee development including technical, compliance and on-the-job training</li><li>Maintain a working knowledge of bargaining unit contracts</li></ul><p><strong>Lead continuous improvement and change management efforts</strong></p><ul><li>Serve as a model of leadership for change.</li><li>Support human performance and corrective action programs by investigating, reviewing and communicating events, leading and participating in investigations and implementation of corrective actions.</li><li>Ensure successful implementation of organizational improvements and technology.</li><li>Analyze reports and take appropriate actions</li><li>Work effectively with Fleet GO staff identifying areas of improvement for maintenance practices and procedures.</li><li>Be a student of the Fleet Services business and the utility industry.</li><li>Analyze key performance reports and effectively monitor workgroups operational performance.</li></ul><p><strong>Deliver exceptional customer service</strong></p><ul><li>Engage with internal customers to ensure the organization meets their needs.</li><li>Work collaboratively with customers to perform required maintenance and repairs in a way the maximizes equipment availability.</li><li>Maintain positive customer relations by ensuring timely resolution of issues and concerns. Effectively elevates and communicates issues and concerns to appropriate Fleet GO staff teams.</li><li>Monitor work order accuracy to ensure customers are accurately charged for services.</li><li>Support transparency objectives by keeping customers informed about work impacting charges or equipment availability.</li><li>Directly collaborate with customers during storm restoration efforts and perform all duties and responsibilities outlined in the Fleet Storm Plan.</li></ul><p><strong>Required/Basic Qualifications</strong></p><ul><li>High school diploma/GED</li><li>Five (5) or more years of related work experience</li><li>Valid driver&#39;s license</li><li>Must live within one (1) hour from work location</li></ul><p><strong>Mobility Classification</strong></p><ul><li><strong>Onsite –</strong>Work will be performed at a company facility.</li></ul><p><strong>Desired Qualifications</strong></p><ul><li>Class A CDL license</li><li>Associate or bachelor&#39;s degree</li><li>Demonstrated working knowledge of fleet maintenance best practices as well as state and federal laws and regulations that pertain to vehicle/equipment operation and maintenance</li><li>Prior experience supervising in a tech/mechanical-type environment</li><li>Demonstrated effective leadership skills</li><li>Demonstrated effective written &amp; verbal communication skills</li><li>Demonstrated effective problem solving and analytical skills</li><li>Demonstrated effective conflict management and negotiating skills.</li><li>Demonstrated ability to work self-directed and be a team player</li><li>Demonstrated effective interpersonal skills</li><li>Demonstrated ability to implement and lead others through changes.</li><li>Possesses working knowledge of Fleet maintenance processes.</li><li>Prior supervisory experience working with craft employees.</li><li>Demonstrated ability to motivate and engage employees.</li><li>Experience working with customers. Demonstrates good customer service skills</li><li>Ability to effectively relate to craft, leadership, and external stakeholders</li><li>Demonstrated technical aptitude and ability to learn and communicate complex technical concepts to a diverse group of stakeholders.</li><li>Experience with process or continuous improvement efforts</li><li>Understanding of basic financial concepts including experience managing budgets.</li><li>Effective at managing multiple and at times conflicting priorities in a manner that keeps employees focused and fosters positive relations with customers and other stakeholders</li><li>Working knowledge of the equipment and associated regulations (DOT, ANSI, etc.)</li><li>Experience managing represented employees and working through labor agreements.</li></ul><p><strong>**Travel Requirements</strong>**</p><p>25-50%</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>Yes</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Supervisor Fleet Services Operations",
+      company: "Duke Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

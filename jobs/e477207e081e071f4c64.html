@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#FFB54766;color:#FFB547;background:#FFB5471a;">Storage</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://boards.greenhouse.io/redwoodmaterials/jobs/6017650004?gh_jid=6017650004" target="_blank" rel="noopener">Apply on Redwood Materials's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://boards.greenhouse.io/redwoodmaterials/jobs/6017650004?gh_jid=6017650004">Apply on Redwood Materials's site &rarr;</button>
     <div class="apply-note">Applying takes you to Redwood Materials's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>About Redwood Materials</strong></p><p><strong>Redwood is localizing a global battery supply chain that seamlessly integrates recovery, reuse, and recycling</strong><strong>—</strong><strong>keeping critical minerals in circulation and driving the energy transition. Founded in 2017,</strong><strong>we’re delivering low-cost and large-scale energy storage and producing battery materials in the U.S. for the first time, all from batteries we already have.</strong></p><p><strong>Senior Manager, Facilities</strong></p><p>Redwood Materials is seeking an experienced Senior Manager, Facilities to support the growth, reliability, and operational readiness of its facilities. This role will lead facilities operations while partnering closely with Design Engineering, Construction, Operations, and EHS to ensure new buildings, infrastructure, utilities, and systems are properly commissioned and successfully transitioned into ongoing operations.</p><p>The ideal candidate is a hands-on facilities leader with strong technical judgment, project execution experience, and a proven ability to guide systems from installation through startup, handover, and long-term operational support. This person will thrive in a fast-paced, highly collaborative environment and bring a practical, solutions-oriented approach to building and scaling world-class facilities.</p><p><strong>Responsibilities will include:</strong></p><ul><li>Lead the strategy, performance, and day-to-day operations of the Facilities function in support of safety, uptime, compliance, and site readiness.</li><li>Oversee maintenance and operation of building systems, utilities, and facility infrastructure, including HVAC, lighting, grounds, and related equipment.</li><li>Build, mentor, and lead a high-performing facilities team, while managing priorities, contractor performance, and escalated issues.</li><li>Drive continuous improvement initiatives that strengthen response time, asset reliability, service quality, and maintenance effectiveness.</li><li>Manage facility-related capital and expense projects, including scope, budget, schedule, contractor coordination, and quality oversight.</li><li>Partner with internal and external project teams to support new construction, tenant improvements, equipment installs, and infrastructure upgrades.</li><li>Lead commissioning and startup readiness activities for facility systems, utilities, and infrastructure supporting new and expanded operations.</li><li>Develop and manage turnover plans, acceptance criteria, and readiness checklists to support smooth transition from project completion to operational ownership.</li><li>Create and maintain handover package templates and document requirements for deliverables received from Construction and Design Engineering.</li><li>Review, receive, and accept turnover documentation, including as-built drawings, O&amp;M manuals, commissioning reports, training records, warranty documents, spare parts information, and asset data.</li><li>Ensure punch-list items, deficiencies, and open issues are tracked to closure or transitioned clearly with ownership and action plans.</li><li>Support CMMS readiness by ensuring asset information, preventive maintenance inputs, and equipment documentation are complete and usable.</li><li>Develop and track KPIs related to facilities performance, maintenance execution, and project turnover quality.</li><li>Maintain compliance with applicable environmental, health, safety, and regulatory requirements.</li><li>Travel: Expected 30% of travel to support multiple sites across the US.</li><li>Energy &amp; Sustainability: Own energy efficiency and sustainability initiatives across facilities operations.</li><li>Safety: Serve as site safety leader for facility operations, supporting EHS in developing robust incident response plans across sites.</li></ul><p><strong>Desired Qualifications:</strong></p><ul><li>Bachelor’s degree in engineering or a related technical discipline, or equivalent practical experience.</li><li>7+ years of experience in facilities, plant engineering, commissioning, maintenance, or related operations support within complex manufacturing, industrial, or production environments.</li><li>Experience leading facilities operations in a fast-paced environment with strong attention to safety, compliance, and reliability.</li><li>Experience supporting commissioning, startup, turnover, or operational readiness activities for building systems, utilities, or infrastructure projects.</li><li>Strong understanding of how to review and manage handover documentation from construction, design, OEMs, and contractors.</li><li>Experience with capital project execution, contractor management, and cross-functional coordination.</li><li>Familiarity with building management systems, facility controls, and maintenance planning processes.</li><li>Experience with CMMS asset setup, preventive maintenance development, or turnover data requirements is a plus.</li><li>Excellent communication, organization, and stakeholder management skills.</li><li>A proactive mindset, sound technical judgment, and a passion for building reliable, scalable infrastructure.</li></ul><p><strong>Preferred Qualification:</strong></p><ul><li>Experience in advanced manufacturing, battery, semiconductor, chemical processing, clean room, or other technically demanding industrial environments.</li><li>Experience supporting large-scale facility expansions, utility systems, or technically complex project handovers.</li><li>Experience working across facilities, construction, engineering, and operations teams in high-growth organizations.</li></ul><p><strong>Physical Requirements</strong></p><ul><li>Ability to safely perform the essential functions of the role consistent with applicable federal, state, and local requirements.</li><li>Ability to maintain regular attendance and support site needs, including occasional after-hours, weekend, or on-call support when required.</li><li>Must be able to lift and carry materials or equipment as needed for the role.</li><li>Must be able to walk job sites, climb stairs, and work in office, industrial, and outdoor environments.</li></ul><p><strong>Working Conditions</strong></p><ul><li>This role may be performed in office, industrial, construction, and outdoor settings, with exposure to noise, weather, hazardous materials, and active project environments.</li><li>The position may require support during shutdowns, startup activities, commissioning events, or other critical operational windows.</li></ul><p>The position is full-time. Compensation will be commensurate with experience.</p><p>We collect personal information (PI) from you in connection with your application for employment with Redwood Materials, including the following categories of PI: identifiers, personal records, professional or employment information, and inferences drawn from your PI. We collect your PI for our purposes, including performing services and operations related to your potential employment. If you have additional privacy-related questions, please contact us at privacy@redwoodmaterials.com.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Senior Manager, Facilities",
+      company: "Redwood Materials",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

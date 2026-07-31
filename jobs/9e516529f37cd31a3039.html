@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-Kingdom-Glasgow/Customer-Experience-and-Insight-Manager_R-28910" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-Kingdom-Glasgow/Customer-Experience-and-Insight-Manager_R-28910">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Customer Experience &amp; Insights Manager</strong></p><p><strong>Location:</strong> HQ Glasgow</p><p><strong>Salary + benefits:</strong>£55,200 - £69,000pa + annual bonus (up to 15%) + single cover healthcare with a strong benefits package, and our excellent pension scheme, where we’ll double match your contribution up to a company contribution of 10%.</p><p><strong>Clo</strong><strong>sing Date:</strong>10th August 2026</p><p><strong>Interviews will take place week commencing 24th of August 2026</strong></p><p><strong>Help us create a better future, quicker</strong></p><p>At SP Energy Networks, our customers are the spark that drive everything we do — their voices shape our decisions, their experiences guide our priorities, and their future inspires our ambition. We’re searching for a Customer Experience &amp; Insights Manager who can harness the power of customer insight and performance data to create meaningful, lasting change. In this role, you’ll champion the customer at every turn, turning real stories and real feedback into action that transforms how we deliver energy to millions — today, tomorrow and far into the future.</p><p><strong>What you’ll be doing</strong></p><p>The Customer Experience &amp; Performance Manager is a senior leadership role within the Customer Service Directorate, responsible for leading the Customer Experience and Reporting &amp; Insight functions to provide a trusted view of operational performance across SPEN.</p><p>Reporting directly to the Head of Reporting, Performance &amp; Insights, the postholder will ensure that customer feedback, operational performance and insight are translated into meaningful actions that improve customer outcomes, regulatory performance and operational excellence. They will champion the Voice of the Customer, embedding customer experience into decision-making and ensuring performance is understood through both data and operational reality.</p><p>Leading teams across Customer Experience and Reporting &amp; Insight, the postholder will work closely with operational teams across SPEN and contract partners to understand the true drivers of customer satisfaction and dissatisfaction. They will combine robust performance analysis with operational engagement to validate information, identify trends, challenge assumptions and uncover the root causes behind customer and business performance.</p><p><strong>What you’ll bring</strong></p><p>The successful candidate will be a hands-on operational problem solver who is comfortable engaging directly with frontline teams and leaders alike. They will have the ability to cut through noise and complexity, identify true root causes, and drive practical solutions that deliver tangible improvements in performance and customer satisfaction. They won&#39;t accept surface-level explanations; instead, they will challenge, investigate and influence across teams to remove barriers, resolve persistent issues, and ensure lasting outcomes are achieved.</p><p>This is a hands-on leadership role requiring strong operational awareness, exceptional attention to detail and the confidence to challenge constructively at all levels of the organisation. The postholder will influence across functions, hold teams accountable for improvement, remove barriers to delivery and ensure actions are driven through to completion, creating lasting improvements in both customer experience and operational performance.</p><p>Ultimately, the role exists to turn data into understanding, understanding into action and action into measurable improvements for customers, colleagues and the business.</p><p><strong>What’s in it for you</strong></p><p>As well as a competitive salary which is reviewed annually, you can also enjoy a number of other benefits. With our pension scheme, we’ll double match your contribution up to a company contribution of 10%.</p><p>At ScottishPower, we believe it’s the little things we do in life that make a big difference. From helping you look after your family’s wellbeing, save for your future and take personal steps for climate action – our benefits are designed to help you do just that - so that you have everything you need to take care of your world – today and tomorrow. That’s why our benefits include:</p><ul><li>36 days annual leave</li><li>Holiday Purchase – perfect your work/life balance with extra annual leave</li><li>Share Schemes</li><li>Payroll Giving and Charity Matched Funding</li><li>Technology Vouchers – save more and spread the cost of your technology purchases</li><li>Electric Vehicle Schemes – to help you transition to green/clean driving</li><li>Cycle to Work scheme and Public Transport Season Ticket Loans</li><li>Healthcare benefit options including: Dental Insurance, Private Medical Insurance, Health Cash Plan and annual Health Assessments</li><li>Life Assurance (4x salary)</li><li>Access to Savesmart financial wellbeing support</li><li>Plus shopping, leisure, restaurant and gym discounts, and unique employee deals on travel insurance and more</li></ul><p><strong>Why SP Energy Networks</strong></p><p>SP Energy Networks is part of the Iberdrola Group, one of the world’s largest integrated utility companies and a world leader in wind energy. We keep electricity flowing to homes and businesses through Central and Southern Scotland, North Wales and in the North West of England. We operate over 4000km of cables and lines that make-up the transmission network – connecting infrastructure like wind farms into the electricity system. It’s a role that puts us right at the heart of Scotland’s ambition to be Net Zero by 2045. And we’re taking it very seriously. We’re investing &gt;£10 billion into our transmission network, directly supporting the rapid growth needed in renewable energy. With diverse opportunities across our businesses and a commitment to invest in our own internal talent, ScottishPower can offer people real career opportunities that meet personal and professional goals, in a global organisation.</p><p>Inclusion, diversity, and a social purpose are at the heart of everything we do. Together with our values, they bring us together into a stronger, more sustainable business with direct links to the communities we serve. It takes all kinds of people to build a large-scale business like ours, so whatever your background, you’ll fit right in.</p><p>We are committed to providing reasonable support or adjustments in our recruiting processes for candidates with disabilities, long term conditions, mental health conditions, or who are neurodivergent or require pregnancy-related support. If you need support, please reach out to careers@scottishpower.com.</p><p><strong>Mobility</strong></p><p>Please note that any applicant who is not a citizen of the country of the vacancy will be subject to compliance with the applicable immigration requirements to legally work in that country. If/when required, the Company will support the employee with the necessary Immigration requirements.</p><p><strong>IMPORTANT</strong></p><p>Advert will close at 23:59 GMT the day before <strong>Job Posting End Date</strong> below</p><p>August-10-2026</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Customer Experience and Insight Manager",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

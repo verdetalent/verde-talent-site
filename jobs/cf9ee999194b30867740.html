@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#FFB54766;color:#FFB547;background:#FFB5471a;">Storage</span><span class="tag">Salesforce</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/Poland---Remote/Business-Development-manager---Poland_JR101076" target="_blank" rel="noopener">Apply on Fluence Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/Poland---Remote/Business-Development-manager---Poland_JR101076">Apply on Fluence Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Fluence Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Fluence (Nasdaq: FLNC) is a global market leader delivering intelligent energy storage and optimization software for renewables and storage. Our solutions and operational services are helping to create a more resilient grid and unlock the full potential of renewable portfolios. With gigawatts of successful implementations across nearly 50 markets, we are transforming the way we power our world for a more sustainable future. For more information, please visit fluenceenergy.com.</p><p><strong>Job Description:</strong></p><p><strong>Job Description:</strong></p><p>Fluence is seeking a Business Development Manager who will play a critical role in building and advancing early-stage customer relationships to drive qualified pipeline growth and shape how to win. This role is focused on originating and developing new commercial opportunities, positioning Fluence for success, and delivering indicative proposals that prepare the sales team to close.</p><p><strong>Key Responsibilities</strong></p><p><strong>Lead Generation</strong></p><ul><li>Collaborate with Sales Directors, Marketing, and Growth teams to define and execute the business development strategy</li><li>Contribute to market prioritization, customer segmentation, and marketing campaign design, specifically for Poland and Eastern EU</li><li>Lead outbound outreach and manage inbound lead conversion to generate high-quality sales leads and pipeline</li></ul><p><strong>Account Development</strong></p><ul><li>Independently build strong relationships with potential clients and their key stakeholders early in their decision-making journey, with minimal support from other customer-facing Fluence teams</li><li>Deliver tailored introductory and deep-dive presentations to position Fluence’s offerings effectively and strategically</li><li>Serve as a trusted first point of contact, shaping the customer’s understanding of Fluence’s capabilities and value proposition; position Fluence for success with tailored presentations.</li></ul><p><strong>Lead Qualification</strong></p><ul><li>Qualify prospects using predefined criteria such as customer profile, commercial readiness, project size, and technical fit</li><li>Conduct discovery calls to deeply understand customer needs, project timelines, budgets, and decision-making structures</li><li>Maintain accurate, up-to-date records of prospect interactions and progress in</li><li>Salesforce; track and manage pipeline in Salesforce</li><li>Collaborate closely with regional Account Managers to seamlessly transition qualified leads to the Account Manager, ensuring highest likelihood that customer opportunities will transact with Fluence in a timely manner.</li></ul><p><strong>Opportunity Development</strong></p><ul><li>Utilize Fluence’s differentiators to shape the opportunity and influence the project specifications to favor the company’s strengths</li><li>Deliver indicative pricing and proposals to begin opportunity development</li><li>In select cases, take qualified lead further into tangible opportunity development</li><li>Build internal opportunity overviews and lead initial deal strategy and win planning discussions</li></ul><p><strong>Market Intelligence</strong></p><ul><li>Gather and communicate insights from customer and stakeholder conversations back to Fluence’s Sales, Product, Marketing, and Strategy teams</li><li>Inform pricing strategies, product development, and go-to-market positioning</li><li>Monitor and analyze competitor activities and broader market dynamics to identify opportunities for differentiation and growth</li><li>Identify new revenue opportunities or segments that may be emerging in the market</li></ul><p><strong>Industry Engagement &amp; Representation</strong></p><ul><li>Represent Fluence at industry conferences, forums, and networking events to build brand visibility and thought leadership</li><li>Proactively identify and pursue opportunities to generate leads through events and community engagement</li><li>Build and maintain relationships with key industry partners, associations, and influencers across the clean energy and energy storage sectors</li></ul><p><strong>Required Qualifications and Experience</strong></p><ul><li>Bachelor’s degree in Business, Engineering, Energy, or related field (masters degree is a plus)</li><li>At least 5 years of experience in sales, business development, or account management, ideally within the clean energy, energy storage, or technology sectors</li><li>Strong understanding of the energy industry and competitive landscape, ideally with established industry relationships and strong technical understanding</li><li>Experience with Salesforce or similar CRM tools</li><li>Fluent in Polish and English is a must</li></ul><p><strong>Additional Skills</strong></p><ul><li>Possess an entrepreneurial drive for getting things done and a “whatever it takes” attitude. Exhibit a forward leaning posture, high ownership, and diligent pursuit of new opportunities</li><li>Strategic and proactive mindset</li><li>Highly organized, self-motivated, and proactive in generating and converting leads</li><li>Proven ability to build and maintain new customer relationships and to influence early sales stages</li><li>Strong communication, presentation, and interpersonal skills with the ability to engage with both technical and commercial stakeholders</li></ul><p><strong>Our Culture</strong></p><p>At Fluence, our culture is the foundation that drives our ambitious growth strategy and fuels our mission to transform the future of energy. Our core cultural pillars empower us to innovate, collaborate, and lead with purpose, ensuring we continue to deliver unparalleled value to our customers and the world.</p><p><strong>Unleash Voices</strong></p><p>We believe every voice matters. We encourage openness, active listening, and decisive action to create a culture where everyone has the opportunity to contribute to our success. We foster an environment where diverse perspectives are heard and valued, driving innovation and progress.</p><p><strong>Customer Fluent</strong></p><p>Our customers are at the heart of everything we do. We’re committed to delivering exceptional value that exceeds expectations by understanding our customers&#39; needs and adapting swiftly to meet them. Our deep focus on customer satisfaction drives us to continuously improve and innovate.</p><p><strong>Infinite Impact</strong></p><p>We are committed to creating the impossible. We push boundaries to deliver sustainable, game-changing solutions that shape a brighter, more energy-efficient future for all. Our team is passionate about making a lasting impact that will resonate for generations to come.</p><p><strong>All In</strong></p><p>We are all in for growth. Our teams are relentlessly focused on identifying and seizing opportunities that propel us forward. We embrace an ownership mindset, pushing ourselves and each other to accelerate progress and create lasting success.</p><p><strong>Our Culture</strong></p><p>At Fluence, our culture is the foundation that drives our ambitious growth strategy and fuels our mission to transform the future of energy. Our core cultural pillars empower us to innovate, collaborate, and lead with purpose, ensuring we continue to deliver unparalleled value to our customers and the world.</p><p><strong>Unleash Voices</strong></p><p>We believe every voice matters. We encourage openness, active listening, and decisive action to create a culture where everyone has the opportunity to contribute to our success. We foster an environment where diverse perspectives are heard and valued, driving innovation and progress.</p><p><strong>Customer Fluent</strong></p><p>Our customers are at the heart of everything we do. We’re committed to delivering exceptional value that exceeds expectations by understanding our customers&#39; needs and adapting swiftly to meet them. Our deep focus on customer satisfaction drives us to continuously improve and innovate.</p><p><strong>Infinite Impact</strong></p><p>We are committed to creating the impossible. We push boundaries to deliver sustainable, game-changing solutions that shape a brighter, more energy-efficient future for all. Our team is passionate about making a lasting impact that will resonate for generations to come.</p><p><strong>All In</strong></p><p>We are all in for growth. Our teams are relentlessly focused on identifying and seizing opportunities that propel us forward. We embrace an ownership mindset, pushing ourselves and each other to accelerate progress and create lasting success.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Business Development manager - Poland",
+      company: "Fluence Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

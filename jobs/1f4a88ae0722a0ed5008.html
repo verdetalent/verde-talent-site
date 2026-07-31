@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag">Python</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/Spain-Madrid/INGENIERO-A-IA_R-31247" target="_blank" rel="noopener">Apply on Avangrid Renewables's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/Spain-Madrid/INGENIERO-A-IA_R-31247">Apply on Avangrid Renewables's site &rarr;</button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Ingeniero/a IA</strong></p><p>¿Te apasiona el mundo de la <strong>Inteligencia Artificial</strong>, la <strong>analítica avanzada</strong> y el desarrollo de soluciones tecnológicas con impacto real en el negocio? ¿Te motiva participar en proyectos innovadores que impulsen la transformación digital de una compañía líder en el sector energético? ¿Quieres formar parte de un equipo que está construyendo el futuro de la Inteligencia Artificial aplicada al negocio?</p><p>En Iberdrola buscamos incorporar una persona para reforzar nuestro equipo especializado en el diseño, desarrollo e implantación de soluciones de Inteligencia Artificial, contribuyendo a acelerar la transformación digital de la compañía mediante tecnologías avanzadas basadas en datos e IA.</p><p><strong>¿Qué vas a hacer?</strong></p><p>Formarás parte del equipo responsable de diseñar, desarrollar e implantar soluciones de Inteligencia Artificial y analítica avanzada, participando en todo el ciclo de vida de las iniciativas, desde la identificación de oportunidades y definición técnica hasta su puesta en producción y evolución continua. Tu labor será clave para garantizar que las soluciones aportan valor al negocio, son escalables y cumplen con los estándares tecnológicos y de gobierno establecidos por la compañía.</p><p><strong>Funciones y responsabilidades</strong></p><p><strong>Desarrollo e implantación de soluciones de IA</strong></p><ul><li>Diseñar, desarrollar e implementar soluciones de Inteligencia Artificial y analítica avanzada, desde prototipos hasta entornos productivos.</li><li>Participar en el ciclo completo de vida de las soluciones de IA, incluyendo definición de casos de uso, diseño funcional y técnico, desarrollo, pruebas, despliegue, monitorización y evolución.</li><li>Desarrollar soluciones basadas en Machine Learning, Inteligencia Artificial Generativa, agentes inteligentes, arquitecturas RAG, OCR/IDP y automatización inteligente.</li></ul><p><strong>Arquitectura y plataformas tecnológicas</strong></p><ul><li>Colaborar en el diseño de arquitecturas técnicas que integren datos, modelos y aplicaciones, garantizando escalabilidad, rendimiento y mantenibilidad.</li><li>Colaborar con equipos de arquitectura y negocio en el diseño de soluciones AI-native alineadas con las necesidades corporativas.</li><li>Participar en la evaluación y selección de herramientas, tecnologías y plataformas de Inteligencia Artificial asegurando la integración con los sistemas corporativos.</li></ul><p><strong>Ingeniería de datos y operación de soluciones</strong></p><ul><li>Construir y mantener pipelines de datos fiables y eficientes garantizando la calidad, disponibilidad y trazabilidad de la información.</li><li>Implementar y mantener herramientas de monitorización y observabilidad para garantizar el rendimiento y disponibilidad de las soluciones desplegadas.</li><li>Aplicar buenas prácticas de ingeniería, automatización, versionado y operación de soluciones de datos e Inteligencia Artificial.</li></ul><p><strong>Gobierno, seguridad e innovación</strong></p><ul><li>Garantizar la seguridad, privacidad y correcto tratamiento de los datos utilizados y generados por las soluciones de IA.</li><li>Contribuir al cumplimiento de los principios de gobierno de Inteligencia Artificial establecidos por la compañía.</li><li>Investigar y evaluar nuevas tecnologías, metodologías y herramientas que permitan mejorar las capacidades y eficiencia de las plataformas de IA.</li></ul><p><strong>Relación con negocio y transformación</strong></p><ul><li>Traducir necesidades de negocio en soluciones técnicas viables y escalables.</li><li>Colaborar con equipos multidisciplinares para asegurar la correcta implantación y adopción de soluciones de Inteligencia Artificial.</li><li>Impulsar iniciativas de transformación digital mediante el uso de tecnologías avanzadas de datos e IA.</li></ul><p><strong>¿Qué estamos buscando?</strong></p><ul><li>Titulación universitaria en Ingeniería Informática, Telecomunicaciones, Industrial u otras titulaciones STEM equivalentes.</li><li>Se valorará formación de postgrado o especialización en Inteligencia Artificial, Ciencia de Datos, Analítica Avanzada o disciplinas afines.</li><li>Conocimiento y experiencia en el diseño, desarrollo e implantación de soluciones de Inteligencia Artificial y analítica avanzada.</li><li>Conocimiento del ciclo de vida completo de soluciones de IA: identificación de casos de uso, business case, diseño funcional y técnico, desarrollo, despliegue, monitorización y evolución.</li><li>Experiencia en tecnologías de Machine Learning, Inteligencia Artificial Generativa, agentes inteligentes, RAG, OCR/IDP, automatización inteligente y analítica avanzada.</li><li>Conocimiento de arquitecturas de datos, data platforms, data products, APIs e integración de sistemas.</li><li>Experiencia en desarrollo con Python y frameworks como FastAPI, Django o equivalentes.</li><li>Conocimiento de herramientas y entornos de despliegue como Kubernetes, SageMaker o tecnologías similares.</li><li>Experiencia en ingeniería de datos: ingesta, transformación, calidad y procesamiento de datos tanto batch como streaming.</li><li>Conocimiento de plataformas cloud, especialmente AWS y Azure.</li><li>Capacidad para traducir necesidades de negocio en soluciones tecnológicas viables, aportando visión técnica y orientación al valor.</li><li>Conocimiento de buenas prácticas de desarrollo, automatización, monitorización y operación de soluciones de IA.</li><li>Conocimiento en materia de gobierno de Inteligencia Artificial, protección de datos y seguridad de la información.</li><li>Inglés nivel avanzado (B2-C1).</li></ul><p><strong>Experiencia</strong></p><ul><li>Entre 2 y 5 años de experiencia en entornos tecnológicos dinámicos relacionados con Inteligencia Artificial, analítica avanzada, ingeniería de datos o desarrollo de software.</li><li>Experiencia demostrable en diseño, desarrollo y despliegue de soluciones de automatización de procesos, analítica avanzada o Inteligencia Artificial.</li><li>Se valorará experiencia en proyectos de transformación digital y despliegue de soluciones en entornos Cloud.</li></ul><p><strong>Lo que ofrecemos</strong></p><ul><li>Formar parte de una compañía global, diversa e innovadora.</li><li>Participar en proyectos estratégicos con impacto directo en las cuentas del Grupo.</li><li>Entorno colaborativo con equipos multidisciplinares en diferentes geografías.</li><li>Planes de desarrollo profesional y formación continua.</li></ul><p><strong>Nuestro proceso de selección</strong></p><p>En Iberdrola la diversidad, equidad e inclusión son puntos esenciales en nuestro día a día. Nos enorgullecemos de ser una compañía donde hay igualdad de oportunidades y donde todas las personas son bienvenidas, valoradas y respetadas independientemente de sexo, discapacidad, raza, religión, orientación sexual, edad, estado civil, nacionalidad o identidad de género.</p><p><strong>Fecha de finalización de la publicación:</strong></p><p>11-08-2026</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "INGENIERO/A IA",
+      company: "Avangrid Renewables",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span><span class="tag">Professional Engineer</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Plainfield-IN/Engineer-III-or-Senior-Engineer---Grid-Management_R40678" target="_blank" rel="noopener">Apply on Duke Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Plainfield-IN/Engineer-III-or-Senior-Engineer---Grid-Management_R40678">Apply on Duke Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Duke Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Important Application Submission Information</strong></p><p>In order to ensure your application is successfully received before the job posting expires, please submit your application by 11:59 PM on Sunday, August 9, 2026</p><p><strong>More than a career - a chance to make a difference in people&#39;s lives.</strong></p><p>Build an exciting, rewarding career with us – help us make a difference for millions of people every day. Consider joining the Duke Energy team, where you&#39;ll find a friendly work environment, opportunities for growth and development, recognition for your work, and competitive pay and benefits.</p><p><strong>**Position Summary:</strong>**</p><p>The Senior Engineer manages work in engineering areas of specialization, with minimal supervision. The Senior Engineer is expected to develop advanced skills and to have the ability to work independently, with guidance limited to unusual or complex projects or issues. Employees in the Senior Engineer position are fully competent in the use of concepts and procedures. The Senior Engineer identifies problems, develops solutions and takes action to resolve.</p><p>This position will assist in providing technical guidance to Grid Management in the DCC. The position supports communications across several internal departments in addition to external customers and is responsible for developing and implementing business plans, budgets, and training initiatives for the Company regarding DCC and ADMS initiatives. Areas of expertise in addition to Distribution engineering knowledge include ADMS and Switching and Tagging. Solves complex problems and demonstrates a broad perspective to identify innovative solutions. Plans and determines priorities for self and other team members and prescribes the processes needed to achieve the objectives within the framework of the organization’s operating policies. Responsible for analysis of complex plans, designs, construction and maintenance of structures, facilities, systems, components, and system operations with voltage levels typically 34.5KV and below. Assignments are broad in nature and require ability to identify trends and create system-level solutions that require extensive originality and ingenuity.</p><p><strong>**Responsibilities</strong>**</p><ul><li>Serve as technical resource in all aspects of the Company&#39;s distribution operations with a detailed focus on distribution engineering and system operations. Primary responsibilities in DCC include monitoring the operation of the ADMS to ensure effective, safe operation of ADMS and associated DA equipment, self-healing technology, and ensuring focus on volt/var management to meet requirements for service voltage levels and power factor goal.</li><li>Plans and determines priorities for self and other team members and prescribes the processes needed to achieve objectives within the framework of the organization’s operating policies.</li><li>Writes or oversees the development of switching plans, technical procedures, and guidelines used in the operation of the distribution system.</li><li>Demonstrate program and project management discipline through roles over various complex projects in the distribution organization. Primary projects include effective utilization of ADMS and associated DA equipment, timely seasonal load transfers, and continued focus on service restoration while adhering to Distribution engineering parameters.</li><li>Provide technical support to management, DCC operations personnel and internal and external customers within area of responsibility.</li><li>Provide peer leadership and direction for lower level engineers across the company. Serve on special projects and teams including IVVC, FISR, and Self-Healing.</li><li>Support deployment and operation of distribution automation devices including line regulators, capacitors, reclosers and power sensors.</li><li>Provide technical expertise and support for self healing devices and systems. Analyze feeder/sub data and monitor alarms provided by various technologies (e.g. ADMS, FAM, DSCADA, etc.) to identify trends, abnormal operating characteristics, and develop corrective actions. Support the work of the Grid Techs in the analysis of Volt-Var information and switching activities to ensure power factor targets are maintained and switching instructions are dispatched properly.</li><li>Establish and maintain procedures related to Switching &amp; Tagging (S&amp;T), including maintenance of the S&amp;T Manual.</li><li>Provide technical support for storm response and restoration</li></ul><p><strong>**Required/Basic Qualifications for Engineer III</strong>**</p><ul><li>Bachelor of Science in Engineering obtained from an ABET accredited program, OR a master’s degree in Engineering in lieu of a Bachelor of Science in Engineering</li><li>Minimum of four (4) years of engineering experience</li></ul><p><strong>**Required/Basic Qualifications for Senior Engineer</strong>**</p><ul><li>Bachelor of Science in Engineering obtained from an ABET accredited program, OR a master’s degree in Engineering in lieu of a Bachelor of Science in Engineering</li><li>Minimum of six (6) years of engineering experience or five (5) years of engineering experience with state registration as a Professional Engineer.</li></ul><p><strong>**Additional Preferred Qualifications</strong>**</p><ul><li>Electrical Engineering or Computer Engineering degree</li><li>Passing grade on the Engineering Fundamentals Exam.</li><li>Increasingly proficient in principles of project management.</li><li>Experience in the utility industry.</li><li>Department specific experience applicable to the hiring department.</li><li>Demonstrated advancing application of engineering theories and principles.</li><li>Increasingly proficient in practices of researching engineering and design issues, evaluating alternatives, preparing and presenting recommendations.</li><li>Good written and oral communication skills.</li></ul><p><strong>**Working Conditions</strong>**</p><ul><li>Hybrid – Work will be performed from both remote and onsite locations after the onboarding period. However, hybrid employees should live within a reasonable commute to the designated Duke Energy facility.</li><li>Some business units may require visits to field sites and/or plants</li></ul><p><strong>**Specific Requirements</strong>**</p><ul><li>Must have obtained Bachelor of Science in Engineering from an ABET accredited program</li><li>Minimum of 4 years of engineering experience</li><li>A Master&#39;s degree in Engineering will be considered in lieu of the B.S. Engineering degree.</li></ul><p><strong>**Travel Requirements</strong>**</p><p><strong>Relocation Assistance Provided (as applicable)</strong></p><p>No</p><p><strong>Represented/Union Position</strong></p><p>No</p><p><strong>Visa Sponsored Position</strong></p><p>No. This is not a Visa Sponsored Position. This role requires the ability to work lawfully in the U.S. without employment-based immigration sponsorship, now or in the future.</p><p><strong>Please note that in order to be considered for this position, you must possess all of the basic/required qualifications.</strong></p><p>Privacy</p><p>Do Not Sell My Personal Information (CA)</p><p>Terms of Use</p><p>Accessibility</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Engineer III or Senior Engineer - Grid Management",
+      company: "Duke Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>

@@ -74,8 +74,22 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
 .apply-row{margin:1.5rem 0 2rem;}
-.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+.scrim.open .apply-modal{transform:translateY(0) scale(1);}
+.am-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.am-close:hover{background:var(--card2, #1A1A1A);color:var(--t1);}
+.am-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,224,154,0.12);color:var(--grn);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1.1rem;}
+.apply-modal h2{font-size:19px;font-weight:700;margin:0 0 .5rem;letter-spacing:-0.01em;}
+.apply-modal p{font-size:14px;color:var(--t2);line-height:1.65;margin:0 0 1.4rem;}
+.am-btns{display:flex;flex-direction:column;gap:9px;}
+.am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-primary:hover{filter:brightness(1.05);}
+.am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
+.am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
 .desc-body{font-size:14px;line-height:1.75;color:var(--t2);border-top:0.5px solid var(--bdr);padding-top:1.5rem;}
 .desc-body p{margin:0 0 1rem;}
@@ -162,11 +176,23 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#FFB54766;color:#FFB547;background:#FFB5471a;">Storage</span><span class="tag">Excel</span><span class="tag">PMP</span><span class="tag">Power BI</span><span class="tag">energy storage systems</span></div>
   <div class="apply-row">
-    <a class="btn-apply" href="https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/USA-TX-Houston/Senior-Manager--Supply-Chain-Operations_JR101197" target="_blank" rel="noopener">Apply on Fluence Energy's site &rarr;</a>
+    <button type="button" class="btn-apply" id="applyBtn" data-url="https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/USA-TX-Houston/Senior-Manager--Supply-Chain-Operations_JR101197">Apply on Fluence Energy's site &rarr;</button>
     <div class="apply-note">Applying takes you to Fluence Energy's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p>Fluence (Nasdaq: FLNC) is a global market leader delivering intelligent energy storage and optimization software for renewables and storage. Our solutions and operational services are helping to create a more resilient grid and unlock the full potential of renewable portfolios. With gigawatts of successful implementations across nearly 50 markets, we are transforming the way we power our world for a more sustainable future. For more information, please visit fluenceenergy.com.</p><p><strong>Job Description:</strong></p><p><strong>Role Overview</strong></p><p>The Senior Manager, Supply Chain will lead key supply chain execution activities supporting Battery Energy Storage System operations, including supply planning, demand alignment, master scheduling, material readiness, and ERP-driven process discipline. This role is responsible for ensuring that customer demand, production requirements, supplier commitments, and inventory plans are aligned to support on-time delivery, operational efficiency, and scalable growth.</p><p>The ideal candidate will bring strong experience in supply chain planning within a manufacturing or industrial environment, preferably in BESS, energy storage, renewables, electronics, electrical systems, or complex engineered products. This leader must be comfortable operating in a fast-paced, global supply chain environment and driving best-in-class processes through SAP or similar ERP systems.</p><p><strong>Key Responsibilities</strong></p><p><strong>Supply Chain Planning &amp; Execution</strong></p><ul><li>Lead integrated supply chain planning activities across demand planning, supply planning, purchasing coordination, and production scheduling.</li><li>Translate customer demand, sales forecasts, and project requirements into executable supply and production plans.</li><li>Partner with Operations, Manufacturing, Engineering, Quality, Finance, Procurement, and Commercial teams to ensure alignment between demand, capacity, materials, and delivery commitments.</li><li>Support clear-to-build processes by ensuring material availability, supplier readiness, inventory accuracy, and production schedule alignment.</li><li>Identify risks related to material shortages, supplier constraints, capacity limitations, and schedule disruptions; drive mitigation plans with cross-functional stakeholders.</li></ul><p><strong>Supply &amp; Demand Planning</strong></p><ul><li>Support demand review processes by aligning forecast inputs, customer orders, project timing, and commercial priorities.</li><li>Develop and maintain supply plans that balance demand requirements, supplier capacity, inventory targets, and manufacturing constraints.</li><li>Monitor changes in demand and supply and drive timely communication of impacts to stakeholders.</li><li>Partner with demand planning and commercial teams to improve forecast accuracy, planning assumptions, and visibility to future requirements.</li></ul><p><strong>Master Scheduling</strong></p><ul><li>Own or support master scheduling activities for BESS production, integration, or fulfillment operations.</li><li>Convert demand and supply plans into executable master production schedules.</li><li>Coordinate with production, procurement, logistics, and quality teams to ensure schedule adherence.</li><li>Monitor schedule performance and escalate constraints impacting customer delivery or operational commitments.</li><li>Drive discipline in schedule changes, prioritization, and cross-functional communication.</li></ul><p><strong>ERP / SAP Process Excellence</strong></p><ul><li>Champion best-in-class supply chain processes using SAP or equivalent ERP systems.</li><li>Ensure transactional discipline across purchase orders, planned orders, production orders, inventory movements, delivery dates, master data, and planning parameters.</li><li>Drive improvements in ERP data accuracy, process compliance, and planning visibility.</li><li>Partner with business systems and process excellence teams to optimize planning tools, reporting, dashboards, and workflows.</li><li>Establish standard work, metrics, and governance for supply chain planning and execution processes.</li></ul><p><strong>BESS / Manufacturing Operations Support</strong></p><ul><li>Support supply chain execution for Battery Energy Storage System products, including enclosures, battery racks/modules, electrical components, thermal systems, power conversion equipment, and balance-of-system materials.</li><li>Coordinate with contract manufacturers, suppliers, and internal teams to ensure material readiness and production continuity.</li><li>Support new product introductions, ramp plans, supplier transitions, and capacity readiness activities.</li><li>Help drive scalable processes suitable for a global BESS manufacturing and supply chain environment.</li></ul><p><strong>Require Qualifications and Experience</strong></p><ul><li>Bachelor’s degree in Supply Chain Management, Operations, Engineering, Business, or related field.</li><li>Minimum 6 years of experience in supply chain, planning, manufacturing operations, procurement operations, or master scheduling.</li><li>Experience in supply planning, demand planning, production planning, master scheduling, or materials management.</li><li>Strong working knowledge of SAP, SAP S/4HANA, or similar ERP/MRP systems.</li><li>Experience supporting complex manufacturing, engineered products, electronics, energy storage, renewables, automotive, industrial equipment, or related industries.</li><li>Strong understanding of MRP, inventory planning, BOMs, routings, lead times, capacity planning, and production scheduling.</li><li>Demonstrated ability to work cross-functionally with manufacturing, procurement, engineering, quality, finance, and commercial teams.</li><li>Strong analytical, problem-solving, and communication skills.</li><li>Ability to operate in a fast-paced environment with competing priorities and tight delivery timelines.</li></ul><p><strong>Preferred Qualifications</strong></p><ul><li>Experience in Battery Energy Storage Systems, battery manufacturing, renewable energy, power electronics, or electrical equipment manufacturing.</li><li>Experience working with contract manufacturers, global suppliers, or outsourced manufacturing partners.</li><li>APICS / ASCM CPIM, CSCP, Lean Six Sigma, or PMP certification.</li><li>Experience implementing or improving S&amp;OP, S&amp;OE, master scheduling, clear-to-build, shortage management, or ERP governance processes.</li><li>Advanced Excel and Power BI experience.</li><li>Experience with global supply chains and multi-region planning processes.</li></ul><p><strong>Key Competencies</strong></p><ul><li>Supply and demand planning discipline</li><li>Master scheduling and production planning</li><li>ERP/SAP process ownership</li><li>Material shortage management</li><li>Clear-to-build execution</li><li>Cross-functional leadership</li><li>Data-driven decision-making</li><li>Supplier and manufacturing coordination</li><li>Process standardization and continuous improvement</li><li>Executive-level communication and escalation management</li></ul><p><strong>Key Performance Indicators</strong></p><p>This role will be measured against metrics such as:</p><ul><li>On-time delivery performance</li><li>Schedule adherence</li><li>Clear-to-build accuracy</li><li>Material shortage reduction</li><li>Forecast-to-supply alignment</li><li>ERP transaction accuracy</li><li>Inventory health and excess/obsolete reduction</li><li>Supplier commitment adherence</li><li>Production plan attainment</li><li>Planning data accuracy</li></ul><p><strong>Our Culture</strong></p><p>At Fluence, our culture is the foundation that drives our ambitious growth strategy and fuels our mission to transform the future of energy. Our core cultural pillars empower us to innovate, collaborate, and lead with purpose, ensuring we continue to deliver unparalleled value to our customers and the world.</p><p><strong>Unleash Voices</strong></p><p>We believe every voice matters. We encourage openness, active listening, and decisive action to create a culture where everyone has the opportunity to contribute to our success. We foster an environment where diverse perspectives are heard and valued, driving innovation and progress.</p><p><strong>Customer Fluent</strong></p><p>Our customers are at the heart of everything we do. We’re committed to delivering exceptional value that exceeds expectations by understanding our customers&#39; needs and adapting swiftly to meet them. Our deep focus on customer satisfaction drives us to continuously improve and innovate.</p><p><strong>Infinite Impact</strong></p><p>We are committed to creating the impossible. We push boundaries to deliver sustainable, game-changing solutions that shape a brighter, more energy-efficient future for all. Our team is passionate about making a lasting impact that will resonate for generations to come.</p><p><strong>All In</strong></p><p>We are all in for growth. Our teams are relentlessly focused on identifying and seizing opportunities that propel us forward. We embrace an ownership mindset, pushing ourselves and each other to accelerate progress and create lasting success.</p><p>Equal Opportunity Employer</p><p>At Fluence, we believe great teams are built on a collaborative and connected culture. We’re proud to be an Equal Opportunity Employer and welcome qualified applicants of all backgrounds. Employment decisions are made without regard to race, color, religion, sex, sexual orientation, national origin, age, disability, veteran status, gender identity or expression, genetic information, or any other status protected by law.</p><p>Work Authorization</p><p>To join our team, you’ll need to be legally authorized to work in the United States at the time of application and throughout your employment, without the need for employer sponsorship. Please note that Fluence does not sponsor work visas for this position.</p></div>
+</div>
+<div class="scrim" id="applyScrim">
+  <div class="apply-modal">
+    <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
+    <div class="am-icon"><i class="ti ti-user"></i></div>
+    <h2>Get matched to more roles like this</h2>
+    <p>Create a free Verde Talent profile and renewable energy employers can find and reach out to you directly &mdash; only takes 2 minutes.</p>
+    <div class="am-btns">
+      <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
+    </div>
+  </div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -180,6 +206,30 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+(function(){
+  const scrim = document.getElementById('applyScrim');
+  const applyBtn = document.getElementById('applyBtn');
+  const jobUrl = applyBtn.dataset.url;
+  function openModal(){ scrim.classList.add('open'); }
+  function closeModal(){ scrim.classList.remove('open'); }
+  function goToApplication(){
+    window.open(jobUrl, '_blank', 'noopener');
+    closeModal();
+  }
+  applyBtn.addEventListener('click', openModal);
+  document.getElementById('applyModalClose').addEventListener('click', closeModal);
+  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applyCreateProfile').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Senior Manager, Supply Chain Operations",
+      company: "Fluence Energy",
+    }));
+    window.location.href = '/create-profile.html';
+  });
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>
