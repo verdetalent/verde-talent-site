@@ -1,0 +1,76 @@
+/* Self-hosted subset of Tabler Icons (tabler.io) - only the icons this site
+   actually uses, generated from the same source as the CDN build. If you add
+   an <i class="ti ti-whatever"> using an icon not already in this file, it
+   will render as an invisible box until this subset is regenerated - see
+   verde_talent/README or ask to add it. */
+
+@font-face{font-family:"tabler-icons";font-style:normal;font-weight:400;src:url("./tabler-icons-subset.woff2") format("woff2")}
+.ti{font-family:"tabler-icons" !important;speak:none;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.ti-adjustments-horizontal:before{content:"\ec38"}
+.ti-alert-triangle:before{content:"\ea06"}
+.ti-arrow-left:before{content:"\ea19"}
+.ti-arrow-up:before{content:"\ea25"}
+.ti-atom:before{content:"\eb79"}
+.ti-battery-charging:before{content:"\ea33"}
+.ti-bell:before{content:"\ea35"}
+.ti-bolt:before{content:"\ea38"}
+.ti-brand-github:before{content:"\ec1c"}
+.ti-brand-linkedin:before{content:"\ec8c"}
+.ti-briefcase:before{content:"\ea46"}
+.ti-building:before{content:"\ea4f"}
+.ti-building-bank:before{content:"\ebe2"}
+.ti-calendar:before{content:"\ea53"}
+.ti-camera:before{content:"\ea54"}
+.ti-chart-bar:before{content:"\ea59"}
+.ti-check:before{content:"\ea5e"}
+.ti-chevron-down:before{content:"\ea5f"}
+.ti-chevron-left:before{content:"\ea60"}
+.ti-chevron-right:before{content:"\ea61"}
+.ti-circle-check:before{content:"\ea67"}
+.ti-clock:before{content:"\ea70"}
+.ti-cloud:before{content:"\ea76"}
+.ti-currency:before{content:"\efa6"}
+.ti-currency-dollar:before{content:"\eb84"}
+.ti-currency-euro:before{content:"\eb85"}
+.ti-currency-pound:before{content:"\ebac"}
+.ti-cut:before{content:"\ea86"}
+.ti-download:before{content:"\ea96"}
+.ti-eye:before{content:"\ea9a"}
+.ti-file-text:before{content:"\eaa2"}
+.ti-filter:before{content:"\eaa5"}
+.ti-function:before{content:"\f225"}
+.ti-grid-dots:before{content:"\eaba"}
+.ti-hourglass-off:before{content:"\f147"}
+.ti-info-circle:before{content:"\eac5"}
+.ti-leaf:before{content:"\ed4f"}
+.ti-link:before{content:"\eade"}
+.ti-list:before{content:"\eb6b"}
+.ti-loader-2:before{content:"\f226"}
+.ti-location:before{content:"\eae0"}
+.ti-lock:before{content:"\eae2"}
+.ti-mail:before{content:"\eae5"}
+.ti-map-pin:before{content:"\eae8"}
+.ti-menu-2:before{content:"\ec42"}
+.ti-news:before{content:"\eafd"}
+.ti-plant:before{content:"\ed50"}
+.ti-plug:before{content:"\ebd9"}
+.ti-plus:before{content:"\eb0b"}
+.ti-recycle:before{content:"\eb9b"}
+.ti-school:before{content:"\ecf7"}
+.ti-search:before{content:"\eb1c"}
+.ti-select:before{content:"\ec9e"}
+.ti-settings:before{content:"\eb20"}
+.ti-solar-panel:before{content:"\f7bf"}
+.ti-sort-descending:before{content:"\eb27"}
+.ti-stairs:before{content:"\eca6"}
+.ti-ticket:before{content:"\eb3d"}
+.ti-tools:before{content:"\ebca"}
+.ti-trash:before{content:"\eb41"}
+.ti-upload:before{content:"\eb47"}
+.ti-user:before{content:"\eb4d"}
+.ti-user-plus:before{content:"\eb4b"}
+.ti-users:before{content:"\ebf2"}
+.ti-virus:before{content:"\eb74"}
+.ti-wind:before{content:"\ec34"}
+.ti-world:before{content:"\eb54"}
+.ti-x:before{content:"\eb55"}
