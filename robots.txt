@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://verdetalent.com/sitemap.xml
+# deploy-trigger: 2026-08-06T18:06:40Z
