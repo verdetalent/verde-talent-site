@@ -1,0 +1,25 @@
+name: Supabase Keep-Alive
+
+# Supabase free-tier projects auto-pause after 7 days with no API activity.
+# This pings a lightweight read-only endpoint twice a week so the project
+# never goes idle long enough to trigger that.
+on:
+  schedule:
+    - cron: "0 12 * * 1,4" # Mondays and Thursdays, 12:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://iqcyofkosjopxsfdufvy.supabase.co/rest/v1/candidates?select=id&limit=1" \
+            -H "apikey: sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH" \
+            -H "Authorization: Bearer sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH")
+          echo "Supabase responded with HTTP $status"
+          if [ "$status" -ge 500 ]; then
+            echo "Server error from Supabase"
+            exit 1
+          fi
