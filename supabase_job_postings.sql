@@ -43,10 +43,15 @@ using (auth.jwt() ->> 'email' = 'contact@verdetalent.com');
 -- A safe, public-facing view: only paid + still-active postings, and only
 -- the columns a job listing actually needs - no email addresses, no
 -- Stripe identifiers, no pending/expired/removed rows.
-create view public_job_postings as
+-- security_invoker = true makes this view run with the querying user's
+-- own permissions/RLS instead of the view owner's, so it can never expose
+-- more than the anon role should see even if the view logic changes later.
+create view public_job_postings
+with (security_invoker = true)
+as
 select
   id, company_name, job_title, job_description, location, sector,
-  employment_type, apply_url, company_email, paid_at, expires_at
+  employment_type, apply_url, paid_at, expires_at
 from job_postings
 where status = 'paid' and expires_at > now();
 
