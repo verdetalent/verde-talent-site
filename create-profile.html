@@ -38,12 +38,56 @@
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);flex-shrink:0;max-width:1400px;margin:0 auto;width:100%;position:relative;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;}
 .logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
 .logo-img{height:104px;width:auto;display:block;}
-.nav-right{font-size:13px;color:var(--t3);}
-.nav-right a{color:var(--t2);text-decoration:none;}
-.nav-right a:hover{color:var(--grn);}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-links a.active{color:var(--t1);}
+.nav-group.grn .nav-links a.active{color:var(--grn);}
+.nav-group.amb .nav-links a.active{color:var(--amb);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
+.nav-btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.nav-btn-grn{background:var(--grn);color:#052e1e;font-weight:500;}
+.nav-btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+@media (max-width:1200px){
+  .nav{padding:1rem 1.25rem;}
+  .nav-groups{gap:0;}
+  .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
+  .nav-links{gap:.7rem;}
+  .nav-right{gap:6px;}
+  .nav-right .nav-btn{padding:7px 12px;}
+  #signinToggle{padding:7px 10px;}
+}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:64px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+  .nav{padding:1rem 1rem;}
+  .nav-right{gap:6px;}
+  .nav-right .nav-btn{padding:6px 9px;font-size:11px;}
+}
 .note-banner{background:rgba(79,179,255,0.08);border-bottom:0.5px solid rgba(79,179,255,0.25);padding:.7rem 1.5rem;font-size:12px;color:var(--blu);text-align:center;}
 .body{display:grid;grid-template-columns:1fr 265px;gap:1.5rem;padding:1.75rem 1.5rem;align-items:start;max-width:1180px;margin:0 auto;}
 .form-section{background:var(--card);border:0.5px solid var(--bdr);border-radius:16px;padding:1.5rem;margin-bottom:14px;}
@@ -149,9 +193,59 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 </head>
 <body>
 <nav class="nav">
-  <a class="logo" href="index.html"><img src="logo.webp" alt="Verde Talent" class="logo-img"></a>
-  <div class="nav-right">Already have an account? <a href="login.html">Sign in</a></div>
+  <div style="display:flex;align-items:center;gap:1.15rem;flex:1;">
+    <a class="logo" href="index.html"><img src="logo.webp" alt="Verde Talent" class="logo-img"></a>
+    <div class="nav-groups">
+      <div class="nav-group grn">
+        <div class="nav-group-label grn">Candidates</div>
+        <div class="nav-links">
+          <a href="jobs.html">Find jobs</a>
+          <a href="companies.html">Companies</a>
+          <a href="professional-development.html">Training</a>
+        </div>
+      </div>
+      <div class="nav-group amb">
+        <div class="nav-group-label amb">Employers</div>
+        <div class="nav-links">
+          <a href="resume-vault.html">Resume Vault</a>
+          <a href="intelligence.html">Intelligence</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label"></div>
+        <div class="nav-links">
+          <a href="news.html">News</a>
+          <a href="about.html">About</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="nav-btn nav-btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="post-job.html" style="text-decoration:none;"><button type="button" class="nav-btn nav-btn-grn">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
 </nav>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.querySelector('.nav-groups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
 <div class="body">
   <div>
     <div class="form-section">
