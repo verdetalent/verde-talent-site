@@ -26,6 +26,8 @@
 <meta name="twitter:description" content="Create a free candidate profile on Verde Talent to get discovered by clean energy employers hiring for solar, wind, storage, and grid roles."/>
 <meta name="twitter:image" content="https://verdetalent.com/og-image.png"/>
 <link rel="stylesheet" href="/tabler-icons.css"/>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
@@ -52,8 +54,12 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .upload-box{border:1.5px dashed var(--bdr2);border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;position:relative;transition:border-color .15s,background .15s;}
 .upload-box:hover{border-color:rgba(34,224,154,0.5);background:rgba(34,224,154,0.04);}
 .upload-box.has-file{border-color:rgba(34,224,154,0.4);background:rgba(34,224,154,0.05);}
+.upload-box.parsing{border-color:rgba(255,181,71,0.4);background:rgba(255,181,71,0.05);}
+.upload-box.error{border-color:rgba(255,112,85,0.4);background:rgba(255,112,85,0.05);}
 .upload-box i.upload-icon{font-size:24px;color:var(--t3);margin-bottom:6px;display:block;}
 .upload-box.has-file i.upload-icon{color:var(--grn);}
+.upload-box.parsing i.upload-icon{color:var(--amb);}
+.upload-box.error i.upload-icon{color:var(--cor);}
 .upload-box p{font-size:13px;color:var(--t2);}
 .upload-box small{font-size:11px;color:var(--t3);margin-top:4px;display:block;}
 .upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -158,6 +164,17 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div style="font-size:12px;color:var(--t3);">This becomes your login — use it to sign back in and update your profile later.</div>
     </div>
     <div class="form-section">
+      <div class="fs-title"><i class="ti ti-file-text"></i>Resume / CV</div>
+      <div class="upload-box" id="resumeBox">
+        <label for="inp-resume" class="sr-only">Resume file</label>
+        <input type="file" accept=".pdf,.doc,.docx" id="inp-resume"/>
+        <i class="ti ti-upload upload-icon" id="resumeIcon"></i>
+        <p id="resumeText">Drag and drop your resume, or <span style="color:var(--grn);">browse files</span></p>
+        <small id="resumeHint">PDF or DOCX · Max 10 MB · We'll try to fill in the fields below automatically</small>
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:var(--t3);display:flex;align-items:center;gap:5px;"><i class="ti ti-lock" style="font-size:13px;"></i>Your resume is only shared with companies you apply to.</div>
+    </div>
+    <div class="form-section">
       <div class="fs-title"><i class="ti ti-user"></i>Basic information</div>
       <div class="avatar-row">
         <div class="avatar-upload" id="avatarUpload">
@@ -186,17 +203,6 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
           <div class="char-count" id="bio-count">0 / 500</div>
         </div>
       </div>
-    </div>
-    <div class="form-section">
-      <div class="fs-title"><i class="ti ti-file-text"></i>Resume / CV</div>
-      <div class="upload-box" id="resumeBox">
-        <label for="inp-resume" class="sr-only">Resume file</label>
-        <input type="file" accept=".pdf,.doc,.docx" id="inp-resume"/>
-        <i class="ti ti-upload upload-icon" id="resumeIcon"></i>
-        <p id="resumeText">Drag and drop your resume, or <span style="color:var(--grn);">browse files</span></p>
-        <small>PDF or DOCX · Max 10 MB</small>
-      </div>
-      <div style="margin-top:10px;font-size:12px;color:var(--t3);display:flex;align-items:center;gap:5px;"><i class="ti ti-lock" style="font-size:13px;"></i>Your resume is only shared with companies you apply to.</div>
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-solar-panel"></i>Sectors you work in</div>
@@ -333,19 +339,322 @@ document.getElementById('inp-bio').addEventListener('input', function(){
   document.getElementById('bio-count').textContent = this.value.length + ' / 500';
 });
 
-// --- Avatar + resume file selection (real filename capture, no fake parsing) ---
+// --- Avatar file selection (real filename capture, no parsing) ---
 document.getElementById('inp-avatar').addEventListener('change', function(){
   const name = this.files[0]?.name;
   document.getElementById('avatarFilename').textContent = name || '';
   document.getElementById('avatarIcon').className = name ? 'ti ti-check' : 'ti ti-camera';
 });
-document.getElementById('inp-resume').addEventListener('change', function(){
-  const name = this.files[0]?.name;
+
+// --- Resume file selection + best-effort auto-fill of the fields below ---
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+}
+
+function withTimeout(promise, ms, message) {
+  const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms));
+  return Promise.race([promise, timeout]);
+}
+
+async function extractTextFromPdf(arrayBuffer) {
+  // Groups text items into lines by their Y position rather than joining
+  // everything into one run-on paragraph, so section headers and entries
+  // in the parsed resume still land on their own lines.
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const pageTexts = [];
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    const lines = [];
+    let currentLine = [];
+    let lastY = null;
+    for (const item of content.items) {
+      const y = item.transform[5];
+      if (lastY !== null && Math.abs(y - lastY) > 2) {
+        lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+        currentLine = [];
+      }
+      currentLine.push(item.str);
+      lastY = y;
+    }
+    if (currentLine.length) lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+    pageTexts.push(lines.filter(Boolean).join('\n'));
+  }
+  return pageTexts.join('\n\n');
+}
+
+function htmlToStructuredText(html) {
+  const container = document.createElement('div');
+  container.innerHTML = html;
+  const lines = [];
+  for (const node of container.children) {
+    const tag = node.tagName.toLowerCase();
+    if (tag === 'ul' || tag === 'ol') {
+      for (const li of node.querySelectorAll(':scope > li')) {
+        const text = li.textContent.replace(/\s+/g, ' ').trim();
+        if (text) lines.push('• ' + text);
+      }
+    } else {
+      const text = node.textContent.replace(/\s+/g, ' ').trim();
+      if (text) lines.push(text);
+    }
+  }
+  return lines.join('\n');
+}
+
+async function extractTextFromResumeFile(file) {
+  const ext = file.name.toLowerCase().split('.').pop();
+  if (ext === 'pdf') {
+    return await withTimeout(
+      extractTextFromPdf(await file.arrayBuffer()),
+      15000,
+      'Reading that PDF took too long.'
+    );
+  }
+  if (ext === 'docx') {
+    const result = await withTimeout(
+      mammoth.convertToHtml({ arrayBuffer: await file.arrayBuffer() }),
+      15000,
+      'Reading that .docx file took too long.'
+    );
+    return htmlToStructuredText(result.value);
+  }
+  throw new Error('Auto-fill only works with .pdf or .docx files — you can still fill in the fields below by hand.');
+}
+
+// Best-effort resume parser. Resume formats vary too much to parse
+// reliably, so this only fills fields it's reasonably confident about,
+// never overwrites anything the person already typed, and everything it
+// fills stays fully editable — the submit note below still tells people
+// to double-check before submitting.
+const RESUME_SECTION_HEADERS = {
+  summary: /^(professional\s+)?summary$|^objective$|^about(\s+me)?$/i,
+  skills: /^(technical\s+|core\s+)?skills?(\s*&\s*\w+)?$/i,
+  experience: /^(professional\s+|work\s+)?experience$|^employment(\s+history)?$/i,
+  education: /^education(\s+&\s+\w+)?$/i,
+};
+const DATE_RANGE_RE = /((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{4}|\d{4})\s*(?:-|–|—|to)\s*((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{4}|\d{4}|present|current)/i;
+
+function findResumeSections(lines) {
+  const hits = [];
+  lines.forEach((line, i) => {
+    const clean = line.replace(/:$/, '').trim();
+    if (!clean || clean.length > 40) return;
+    for (const [type, re] of Object.entries(RESUME_SECTION_HEADERS)) {
+      if (re.test(clean)) { hits.push({ type, start: i }); break; }
+    }
+  });
+  hits.sort((a, b) => a.start - b.start);
+  const sections = {};
+  hits.forEach((hit, i) => {
+    const end = i + 1 < hits.length ? hits[i + 1].start : lines.length;
+    sections[hit.type] = lines.slice(hit.start + 1, end);
+  });
+  return sections;
+}
+
+// Anchors each entry on a detected date range rather than blank lines -
+// mammoth's HTML->text conversion collapses empty paragraphs, so a
+// blank-line-based paragraph splitter would merge multiple resume entries
+// (e.g. two past jobs) into one and silently drop everything after the
+// first date range found.
+function parseEntriesFromLines(lines, kind) {
+  const trimmed = lines.map(l => l.trim());
+  const entries = [];
+  for (let i = 0; i < trimmed.length; i++) {
+    const line = trimmed[i];
+    if (!line) continue;
+    const dateMatch = line.match(DATE_RANGE_RE);
+    if (!dateMatch) continue;
+    const withoutDate = line.replace(DATE_RANGE_RE, '').replace(/[|,–—-]\s*$/, '').trim();
+    let headLine;
+    if (withoutDate.length > 3) {
+      headLine = withoutDate; // date shared the line with the title/company
+    } else {
+      let j = i - 1;
+      while (j >= 0 && !trimmed[j]) j--;
+      if (j < 0 || DATE_RANGE_RE.test(trimmed[j])) continue;
+      headLine = trimmed[j];
+    }
+    const parts = headLine.split(/\s+(?:at|@)\s+|\s*[|–—]\s*|,\s*/).filter(Boolean);
+    if (!parts.length) continue;
+    const dates = dateMatch[0].replace(/\s+/g, ' ');
+    entries.push(kind === 'experience'
+      ? { title: parts[0], co: parts[1] || '', dates }
+      : { degree: parts[0], school: parts[1] || '', dates });
+  }
+  return entries;
+}
+
+const SECTOR_KEYWORDS = {
+  Solar: /\bsolar\b|\bpv\b|photovoltaic/i,
+  Wind: /\bwind\b|turbine/i,
+  Storage: /battery|energy storage|\bbess\b/i,
+  Grid: /\bgrid\b|transmission|substation|interconnection/i,
+  EV: /\bev\b|electric vehicle|charging infrastructure/i,
+  Hydrogen: /hydrogen|\bfuel cell\b/i,
+  Policy: /policy|regulatory|legislat/i,
+  Sustainability: /sustainab|\besg\b/i,
+};
+
+function parseResumeText(text) {
+  const lines = text.split('\n').map(l => l.trim());
+  const nonEmpty = lines.filter(Boolean);
+  const parsed = {};
+
+  const emailMatch = text.match(/[\w.+-]+@[\w-]+\.[\w.-]+/);
+  if (emailMatch) parsed.email = emailMatch[0];
+
+  const linkedinMatch = text.match(/(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/[\w-]+/i);
+  if (linkedinMatch) parsed.linkedin = linkedinMatch[0].replace(/^https?:\/\//, '');
+
+  const githubMatch = text.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/[\w-]+/i);
+  if (githubMatch) parsed.github = githubMatch[0].replace(/^https?:\/\//, '');
+
+  // Name: first non-empty line, if it reads like "First Last" (2-4 words, letters only)
+  if (nonEmpty[0] && nonEmpty[0].length < 50 && /^[A-Za-z.'-]+(\s+[A-Za-z.'-]+){1,3}$/.test(nonEmpty[0])) {
+    const parts = nonEmpty[0].split(/\s+/);
+    parsed.firstName = parts[0];
+    parsed.lastName = parts.slice(1).join(' ');
+  }
+
+  // Headline: first short line after the name that isn't contact info
+  for (let i = 1; i < Math.min(nonEmpty.length, 5); i++) {
+    const l = nonEmpty[i];
+    if (l.length < 90 && l.length > 3 && !/@/.test(l) && !/\d{3}[\s.-]?\d{3}[\s.-]?\d{4}/.test(l) && !/linkedin\.com|github\.com/i.test(l)) {
+      parsed.headline = l;
+      break;
+    }
+  }
+
+  const locMatch = text.match(/\b([A-Z][a-zA-Z.]+(?:\s[A-Z][a-zA-Z.]+)?,\s*[A-Z]{2})\b/);
+  if (locMatch) parsed.location = locMatch[1];
+
+  const sections = findResumeSections(lines);
+
+  if (sections.skills) {
+    const skillsText = sections.skills.filter(Boolean).join(', ');
+    parsed.skills = skillsText.split(/[,•|;]/).map(s => s.trim()).filter(s => s && s.length < 40).slice(0, 25);
+  }
+
+  if (sections.summary) {
+    const summary = sections.summary.filter(Boolean).join(' ').trim();
+    if (summary) parsed.bio = summary.slice(0, 500);
+  }
+
+  if (sections.experience) {
+    parsed.experience = parseEntriesFromLines(sections.experience, 'experience').slice(0, 6);
+  }
+
+  if (sections.education) {
+    parsed.education = parseEntriesFromLines(sections.education, 'education').slice(0, 4);
+  }
+
+  const sectors = new Set();
+  for (const [sector, re] of Object.entries(SECTOR_KEYWORDS)) {
+    if (re.test(text)) sectors.add(sector);
+  }
+  if (sectors.size) parsed.sectors = sectors;
+
+  return parsed;
+}
+
+function fillIfEmpty(id, value) {
+  if (!value) return false;
+  const el = document.getElementById(id);
+  if (el && !el.value.trim()) { el.value = value; return true; }
+  return false;
+}
+
+function applyParsedResumeData(parsed) {
+  const filled = [];
+
+  if (fillIfEmpty('inp-first', parsed.firstName)) filled.push('name');
+  fillIfEmpty('inp-last', parsed.lastName);
+  if (fillIfEmpty('inp-headline', parsed.headline)) filled.push('headline');
+  if (fillIfEmpty('inp-loc', parsed.location)) filled.push('location');
+  if (fillIfEmpty('link-linkedin', parsed.linkedin)) filled.push('LinkedIn');
+  fillIfEmpty('link-github', parsed.github);
+  if (fillIfEmpty('acc-email', parsed.email)) filled.push('email');
+
+  if (parsed.bio) {
+    const bioEl = document.getElementById('inp-bio');
+    if (bioEl && !bioEl.value.trim()) {
+      bioEl.value = parsed.bio;
+      document.getElementById('bio-count').textContent = parsed.bio.length + ' / 500';
+      filled.push('bio');
+    }
+  }
+
+  if (parsed.skills && parsed.skills.length && skills.length === 0) {
+    parsed.skills.forEach(s => addSkill(s));
+    filled.push('skills');
+  }
+
+  if (parsed.sectors && parsed.sectors.size && sectors.size === 0) {
+    document.querySelectorAll('.sector-pill').forEach(btn => {
+      if (parsed.sectors.has(btn.dataset.sector)) {
+        btn.classList.add('on');
+        sectors.add(btn.dataset.sector);
+      }
+    });
+    filled.push('sectors');
+  }
+
+  if (parsed.experience && parsed.experience.length && experience.length === 0) {
+    experience.push(...parsed.experience);
+    renderExperience();
+    filled.push('work experience');
+  }
+
+  if (parsed.education && parsed.education.length && education.length === 0) {
+    education.push(...parsed.education);
+    renderEducation();
+    filled.push('education');
+  }
+
+  return filled;
+}
+
+document.getElementById('inp-resume').addEventListener('change', async function(){
+  const file = this.files[0];
+  if (!file) return;
   const box = document.getElementById('resumeBox');
-  if(name){
-    box.classList.add('has-file');
-    document.getElementById('resumeIcon').className = 'ti ti-check upload-icon';
-    document.getElementById('resumeText').innerHTML = `Selected: <span style="color:var(--grn);">${name}</span>`;
+  const icon = document.getElementById('resumeIcon');
+  const label = document.getElementById('resumeText');
+  const hint = document.getElementById('resumeHint');
+
+  box.classList.remove('error', 'parsing');
+  box.classList.add('has-file');
+  icon.className = 'ti ti-check upload-icon';
+  label.innerHTML = `Selected: <span style="color:var(--grn);">${file.name}</span>`;
+
+  const ext = file.name.toLowerCase().split('.').pop();
+  if (ext !== 'pdf' && ext !== 'docx') {
+    hint.textContent = "Auto-fill only works with .pdf or .docx — your file is still attached, just fill in the fields below manually.";
+    return;
+  }
+
+  box.classList.add('parsing');
+  icon.className = 'ti ti-loader-2 upload-icon';
+  hint.textContent = `Reading ${file.name} to auto-fill the fields below…`;
+
+  try {
+    const text = await extractTextFromResumeFile(file);
+    if (!text.trim()) throw new Error('Could not find any text in that file.');
+    const parsed = parseResumeText(text);
+    const filled = applyParsedResumeData(parsed);
+    box.classList.remove('parsing');
+    icon.className = 'ti ti-check upload-icon';
+    hint.textContent = filled.length
+      ? `Filled in ${filled.join(', ')} — review everything below before submitting.`
+      : "Couldn't confidently pull details from that file — fill in the fields below manually.";
+  } catch (err) {
+    console.error('Resume parsing failed:', err);
+    box.classList.remove('parsing');
+    box.classList.add('error');
+    icon.className = 'ti ti-alert-triangle upload-icon';
+    hint.textContent = (err.message || 'Could not read that file automatically.') + ' Your resume is still attached — just fill in the fields below by hand.';
   }
 });
 
