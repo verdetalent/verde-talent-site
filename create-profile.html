@@ -370,6 +370,7 @@ document.addEventListener('click', function(){
       <div class="vis-row"><span style="color:var(--t2);">Show salary range</span><button type="button" class="tog on" data-vis="salary"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Show current employer</span><button type="button" class="tog off" data-vis="employer"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Profile searchable</span><button type="button" class="tog on" data-vis="searchable"></button></div>
+      <div class="vis-row"><span style="color:var(--t2);">Email me weekly job matches</span><button type="button" class="tog on" data-vis="jobAlerts"></button></div>
     </div>
     <button type="button" class="btn-grn" id="submitBtn">Submit profile →</button>
     <div class="submit-note" id="submitNote">Saves everything above to our candidate database.</div>
@@ -891,6 +892,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     const salMax = document.getElementById('pf-sal-max').value;
     const payload = {
       user_id: userId,
+      email,
       first_name: first,
       last_name: last,
       headline: document.getElementById('inp-headline').value.trim() || null,
@@ -916,6 +918,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       visibility_salary: document.querySelector('[data-vis="salary"]').classList.contains('on'),
       visibility_employer: document.querySelector('[data-vis="employer"]').classList.contains('on'),
       visibility_searchable: document.querySelector('[data-vis="searchable"]').classList.contains('on'),
+      email_job_alerts: document.querySelector('[data-vis="jobAlerts"]').classList.contains('on'),
     };
 
     const res = await fetch(`${SUPABASE_URL}/rest/v1/candidates`, {
