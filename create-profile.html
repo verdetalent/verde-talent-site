@@ -95,6 +95,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .fs-title{font-size:15px;font-weight:500;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .fs-title i{font-size:18px;color:var(--grn);}
 .fs-hint{font-size:12px;font-weight:400;color:var(--t3);}
+.section-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(34,224,154,0.05);border:0.5px solid rgba(34,224,154,0.25);border-radius:10px;padding:.7rem .9rem;}
+.section-summary .ss-text{font-size:13px;color:var(--t1);line-height:1.5;}
+.section-summary .ss-edit{background:none;border:0.5px solid var(--bdr2);color:var(--t2);font-size:12px;padding:5px 11px;border-radius:7px;cursor:pointer;white-space:nowrap;font-family:var(--font-sans);flex-shrink:0;}
+.section-summary .ss-edit:hover{border-color:rgba(34,224,154,0.4);color:var(--grn);}
 .upload-box{border:1.5px dashed var(--bdr2);border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;position:relative;transition:border-color .15s,background .15s;}
 .upload-box:hover{border-color:rgba(34,224,154,0.5);background:rgba(34,224,154,0.04);}
 .upload-box.has-file{border-color:rgba(34,224,154,0.4);background:rgba(34,224,154,0.05);}
@@ -269,6 +273,8 @@ document.addEventListener('click', function(){
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-user"></i>Basic information</div>
+      <div class="section-summary" id="basicInfoSummary" style="display:none;"><div class="ss-text" id="basicInfoSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('basicInfoSummary','basicInfoDetail')">Edit</button></div>
+      <div id="basicInfoDetail">
       <div class="avatar-row">
         <div class="avatar-upload" id="avatarUpload">
           <label for="inp-avatar" class="sr-only">Profile photo</label>
@@ -296,10 +302,12 @@ document.addEventListener('click', function(){
           <div class="char-count" id="bio-count">0 / 500</div>
         </div>
       </div>
+      </div>
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-solar-panel"></i>Sectors you work in</div>
-      <div class="sector-grid" id="sectorGrid">
+      <div class="section-summary" id="sectorsSummary" style="display:none;"><div class="ss-text" id="sectorsSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('sectorsSummary','sectorsDetail')">Edit</button></div>
+      <div class="sector-grid" id="sectorsDetail">
         <button type="button" class="sector-pill" data-sector="Solar"><i class="ti ti-solar-panel"></i>Solar</button>
         <button type="button" class="sector-pill" data-sector="Wind"><i class="ti ti-wind"></i>Wind</button>
         <button type="button" class="sector-pill" data-sector="Storage"><i class="ti ti-battery-charging"></i>Storage</button>
@@ -312,6 +320,8 @@ document.addEventListener('click', function(){
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-tools"></i>Skills</div>
+      <div class="section-summary" id="skillsSummary" style="display:none;"><div class="ss-text" id="skillsSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('skillsSummary','skillsDetail')">Edit</button></div>
+      <div id="skillsDetail">
       <div class="field" style="margin-bottom:12px;"><label for="skillInput">Add a skill</label><input type="text" id="skillInput" placeholder="Type a skill and press Enter…"/></div>
       <div class="skill-tags" id="skillTags"></div>
       <div class="sugg-label">Suggested:</div>
@@ -321,9 +331,12 @@ document.addEventListener('click', function(){
         <button type="button" class="skill-sugg" data-skill="PVsyst">+ PVsyst</button>
         <button type="button" class="skill-sugg" data-skill="Grid interconnection">+ Grid interconnection</button>
       </div>
+      </div>
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-briefcase"></i>Work experience</div>
+      <div class="section-summary" id="expSummary" style="display:none;"><div class="ss-text" id="expSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('expSummary','expDetail')">Edit</button></div>
+      <div id="expDetail">
       <div id="expList"><div class="empty-note" id="expEmpty">No experience added yet.</div></div>
       <div class="add-form" id="expForm">
         <div class="form-row"><div class="field"><label for="exp-title">Job title</label><input type="text" id="exp-title" placeholder="Solar Design Engineer"/></div><div class="field"><label for="exp-co">Company</label><input type="text" id="exp-co" placeholder="Company · City, State"/></div></div>
@@ -331,9 +344,12 @@ document.addEventListener('click', function(){
         <div class="add-form-actions"><button type="button" class="af-cancel" onclick="toggleForm('expForm',false)">Cancel</button><button type="button" class="af-save" onclick="addExperience()">Add</button></div>
       </div>
       <button type="button" class="add-btn" onclick="toggleForm('expForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add experience</button>
+      </div>
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-school"></i>Education</div>
+      <div class="section-summary" id="eduSummary" style="display:none;"><div class="ss-text" id="eduSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('eduSummary','eduDetail')">Edit</button></div>
+      <div id="eduDetail">
       <div id="eduList"><div class="empty-note" id="eduEmpty">No education added yet.</div></div>
       <div class="add-form" id="eduForm">
         <div class="form-row"><div class="field"><label for="edu-degree">Degree</label><input type="text" id="edu-degree" placeholder="B.S. Electrical Engineering"/></div><div class="field"><label for="edu-school">School</label><input type="text" id="edu-school" placeholder="University name"/></div></div>
@@ -341,6 +357,7 @@ document.addEventListener('click', function(){
         <div class="add-form-actions"><button type="button" class="af-cancel" onclick="toggleForm('eduForm',false)">Cancel</button><button type="button" class="af-save" onclick="addEducation()">Add</button></div>
       </div>
       <button type="button" class="add-btn" onclick="toggleForm('eduForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add education</button>
+      </div>
     </div>
   </div>
   <div class="sidebar">
@@ -660,6 +677,25 @@ function fillIfEmpty(id, value) {
   return false;
 }
 
+// Collapses a section that the resume parser successfully filled into a
+// one-line summary + "Edit" button, so a page that auto-filled from a
+// resume reads as short even though every field is still there underneath.
+// Sections nothing was parsed into (Account password, preferences, links
+// if empty, visibility) stay expanded exactly as before - this only ever
+// collapses what real data was actually found for.
+function collapseSection(summaryId, detailId, text) {
+  const detail = document.getElementById(detailId);
+  const summary = document.getElementById(summaryId);
+  if (!detail || !summary) return;
+  detail.style.display = 'none';
+  document.getElementById(summaryId + 'Text').textContent = text;
+  summary.style.display = 'flex';
+}
+function expandSection(summaryId, detailId) {
+  document.getElementById(detailId).style.display = '';
+  document.getElementById(summaryId).style.display = 'none';
+}
+
 function applyParsedResumeData(parsed) {
   const filled = [];
 
@@ -705,6 +741,37 @@ function applyParsedResumeData(parsed) {
     education.push(...parsed.education);
     renderEducation();
     filled.push('education');
+  }
+
+  if (filled.includes('name') || filled.includes('headline') || filled.includes('location') || filled.includes('bio')) {
+    const first = document.getElementById('inp-first').value.trim();
+    const last = document.getElementById('inp-last').value.trim();
+    const headline = document.getElementById('inp-headline').value.trim();
+    const location = document.getElementById('inp-loc').value.trim();
+    const bits = [[first, last].filter(Boolean).join(' '), headline, location].filter(Boolean);
+    collapseSection('basicInfoSummary', 'basicInfoDetail', bits.join(' · ') || 'Filled in from your resume');
+  }
+
+  if (filled.includes('sectors')) {
+    collapseSection('sectorsSummary', 'sectorsDetail', [...sectors].join(', '));
+  }
+
+  if (filled.includes('skills')) {
+    const preview = skills.slice(0, 4).join(', ') + (skills.length > 4 ? ` +${skills.length - 4} more` : '');
+    collapseSection('skillsSummary', 'skillsDetail', `${skills.length} skill${skills.length === 1 ? '' : 's'} added: ${preview}`);
+  }
+
+  if (filled.includes('work experience')) {
+    const first = experience[0];
+    const preview = first ? `${first.title}${first.co ? ' at ' + first.co : ''}` : '';
+    const more = experience.length > 1 ? ` +${experience.length - 1} more` : '';
+    collapseSection('expSummary', 'expDetail', `${experience.length} role${experience.length === 1 ? '' : 's'} added${preview ? ': ' + preview + more : ''}`);
+  }
+
+  if (filled.includes('education')) {
+    const first = education[0];
+    const preview = first ? `${first.degree}${first.school ? ' — ' + first.school : ''}` : '';
+    collapseSection('eduSummary', 'eduDetail', `${education.length} school${education.length === 1 ? '' : 's'} added${preview ? ': ' + preview : ''}`);
   }
 
   return filled;
