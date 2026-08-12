@@ -33,6 +33,7 @@ const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 const SITE_ORIGIN = "https://verdetalent.com";
 const FEED_URL = `${SITE_ORIGIN}/feed.xml`;
 const INTELLIGENCE_URL = `${SITE_ORIGIN}/data/intelligence.json`;
+const MIN_ITEMS = 5;
 const MAX_ITEMS = 10;
 const MAX_FEATURED_JOBS = 5;
 
@@ -252,11 +253,15 @@ Deno.serve(async (_req) => {
     if (!feedRes.ok) throw new Error(`Could not fetch feed.xml: ${feedRes.status}`);
     const items = parseFeed(await feedRes.text());
 
-    if (items.length === 0) {
-      return new Response(JSON.stringify({ success: true, sent: 0, note: "No feed items this week - nothing sent." }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
+    // feed.xml isn't filtered to "this week only" - it's the most recent
+    // MAX_ITEMS Approved rows regardless of age, so this floor is really
+    // just a "is there even enough real content" guard rather than
+    // something expected to trigger often.
+    if (items.length < MIN_ITEMS) {
+      return new Response(
+        JSON.stringify({ success: true, sent: 0, note: `Only ${items.length} feed item(s) available (need at least ${MIN_ITEMS}) - nothing sent.` }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      );
     }
 
     const [featuredJobs, intelStat] = await Promise.all([fetchFeaturedJobs(), fetchIntelStat()]);
