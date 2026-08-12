@@ -139,9 +139,6 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .nl-input::placeholder{color:var(--t3);}
 .nl-input:focus{border-color:rgba(34,224,154,0.4);}
 .nl-btn{width:100%;padding:10px;border-radius:9px;background:var(--grn);color:#052e1e;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:var(--font-sans);}
-.nl-freq{display:flex;gap:6px;margin-bottom:.9rem;}
-.freq-opt{flex:1;padding:7px;border-radius:8px;border:0.5px solid var(--bdr2);font-size:12px;color:var(--t3);text-align:center;cursor:pointer;}
-.freq-opt.on{border-color:rgba(34,224,154,0.4);color:var(--grn);background:rgba(34,224,154,0.07);}
 .nl-fine{font-size:11px;color:var(--t3);margin-top:.5rem;text-align:center;}
 /* Jobs callout */
 .job-callout{display:flex;flex-direction:column;gap:8px;}
@@ -306,11 +303,7 @@ document.addEventListener('click', function(){
     <!-- Newsletter -->
     <div class="s-card">
       <div class="s-title"><i class="ti ti-mail"></i>Energy briefing</div>
-      <div class="nl-sub">The week's most important clean energy news, jobs, and market shifts — delivered to your inbox.</div>
-      <div class="nl-freq">
-        <div class="freq-opt on">Daily</div>
-        <div class="freq-opt">Weekly</div>
-      </div>
+      <div class="nl-sub">The week's most important clean energy news, jobs, and market shifts — delivered to your inbox once a week.</div>
       <input class="nl-input" type="email" id="nl-email" placeholder="your@email.com"/>
       <button class="nl-btn" id="nl-subscribe-btn">Subscribe — free</button>
       <div class="nl-fine" id="nl-fine">No spam. Unsubscribe anytime.</div>
@@ -534,27 +527,56 @@ document.querySelectorAll('#filter-bar .fcat').forEach(btn => {
     render();
   });
 });
-// Frequency toggle
-document.querySelectorAll('.freq-opt').forEach(opt => {
-  opt.addEventListener('click', function() {
-    document.querySelectorAll('.freq-opt').forEach(o => o.classList.remove('on'));
-    this.classList.add('on');
-  });
-});
-// Newsletter signup - no backend yet, so this opens a pre-filled email to us
-// instead of silently discarding the address.
-document.getElementById('nl-subscribe-btn').addEventListener('click', function() {
-  const email = document.getElementById('nl-email').value.trim();
+// Newsletter signup - inserts directly into newsletter_subscribers (RLS
+// allows anon insert-only, same pattern as job_postings submissions).
+const NL_SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const NL_SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+document.getElementById('nl-subscribe-btn').addEventListener('click', async function() {
+  const btn = this;
+  const emailInput = document.getElementById('nl-email');
+  const email = emailInput.value.trim();
   const fine = document.getElementById('nl-fine');
+
   if (!email || !email.includes('@')) {
     fine.textContent = 'Enter a valid email first.';
     fine.style.color = 'var(--cor)';
     return;
   }
-  const freq = document.querySelector('.freq-opt.on')?.textContent.trim() || 'Daily';
-  const subject = encodeURIComponent('Energy briefing signup');
-  const body = encodeURIComponent(`Please add ${email} to the ${freq} energy briefing list.`);
-  window.location.href = `mailto:contact@verdetalent.com?subject=${subject}&body=${body}`;
+
+  btn.disabled = true;
+  btn.textContent = 'Subscribing…';
+  fine.textContent = '';
+
+  try {
+    const res = await fetch(`${NL_SUPABASE_URL}/rest/v1/newsletter_subscribers`, {
+      method: 'POST',
+      headers: {
+        'apikey': NL_SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${NL_SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (res.ok) {
+      emailInput.value = '';
+      fine.textContent = "You're subscribed — look for our next weekly email.";
+      fine.style.color = 'var(--grn)';
+    } else if (res.status === 409) {
+      fine.textContent = "That email's already subscribed.";
+      fine.style.color = 'var(--t3)';
+    } else {
+      throw new Error(await res.text());
+    }
+  } catch (err) {
+    console.error('Newsletter signup failed:', err);
+    fine.textContent = 'Something went wrong — please try again.';
+    fine.style.color = 'var(--cor)';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Subscribe — free';
+  }
 });
 
 const newsData = JSON.parse(document.getElementById("news-data").textContent);
