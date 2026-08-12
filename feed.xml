@@ -5,13 +5,14 @@
   <link>https://verdetalent.com/news.html</link>
   <description>Renewable energy news and jobs, curated by Verde Talent.</description>
   <language>en-us</language>
-  <lastBuildDate>Tue, 11 Aug 2026 22:24:57 GMT</lastBuildDate>
+  <lastBuildDate>Wed, 12 Aug 2026 18:35:37 GMT</lastBuildDate>
   <item>
     <title>Brookfield&#39;s $600M India renewable platform</title>
     <link>https://www.esgtoday.com/brookfield-launches-600-million-india-focused-renewable-energy-platform/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
     <guid isPermaLink="false">https://www.esgtoday.com/brookfield-launches-600-million-india-focused-renewable-energy-platform/</guid>
     <pubDate>Fri, 14 Aug 2026 00:00:00 GMT</pubDate>
     <category>Sustainability</category>
+    <domestic>false</domestic>
     <description>ESG Today — Brookfield Asset Management launched Lumara Energy, a new $600 million India-focused renewable energy platform.</description>
   </item>
   <item>
@@ -20,6 +21,7 @@
     <guid isPermaLink="false">https://www.pv-magazine.com/2026/08/03/ulanqab-selects-developers-for-4-4-gwh-grid-forming-storage-buildout/</guid>
     <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
     <category>Storage</category>
+    <domestic>false</domestic>
     <description>PV Magazine — Ulanqab, Inner Mongolia, has assigned five grid-forming storage projects totaling 4.4 GWh to developers including Datang and China Resources New Energy.</description>
   </item>
   <item>
@@ -28,6 +30,7 @@
     <guid isPermaLink="false">https://www.energy-storage.news/samsung-sdi-on-track-with-us-lfp-cell-production-expects-demand-to-outstrip-production/</guid>
     <pubDate>Wed, 12 Aug 2026 00:00:00 GMT</pubDate>
     <category>Storage</category>
+    <domestic>true</domestic>
     <description>Energy Storage News — Samsung SDI is on track to begin US LFP battery cell production in Q3, and already expects demand to outstrip production.</description>
   </item>
   <item>
@@ -36,6 +39,7 @@
     <guid isPermaLink="false">https://www.pv-magazine.com/2026/08/03/kazakhstans-solar-capacity-surpasses-1-37-gw/</guid>
     <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
     <category>Solar</category>
+    <domestic>false</domestic>
     <description>PV Magazine — Kazakhstan&#39;s installed solar capacity has surpassed 1.37 GW, part of a broader renewables push across Central Asia.</description>
   </item>
   <item>
@@ -44,6 +48,7 @@
     <guid isPermaLink="false">https://www.pv-magazine.com/2026/08/03/morocco-hosts-africas-first-battery-manufacturing-plant/</guid>
     <pubDate>Mon, 10 Aug 2026 00:00:00 GMT</pubDate>
     <category>Storage</category>
+    <domestic>false</domestic>
     <description>PV Magazine — Morocco is now home to Africa&#39;s first battery manufacturing plant — a 10 GWh LFP cell factory from Gotion High-Tech.</description>
   </item>
   <item>
@@ -52,6 +57,7 @@
     <guid isPermaLink="false">https://www.pv-magazine.com/2026/08/03/engie-legrand-sign-frances-first-24-7-renewable-energy-supply-deal/</guid>
     <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     <category>Solar</category>
+    <domestic>false</domestic>
     <description>PV Magazine — Engie and Legrand signed France&#39;s first 24/7 renewable energy supply deal, matching production to hourly demand from 2029 to 2031.</description>
   </item>
   <item>
@@ -60,6 +66,7 @@
     <guid isPermaLink="false">https://www.esgtoday.com/totalenergies-acquires-shells-european-onshore-renewables-business/</guid>
     <pubDate>Sat, 08 Aug 2026 00:00:00 GMT</pubDate>
     <category>Sustainability</category>
+    <domestic>true</domestic>
     <description>ESG Today — TotalEnergies announced the acquisition of Shell&#39;s European onshore renewables business, one of two clean energy deals this week.</description>
   </item>
   <item>
@@ -68,6 +75,7 @@
     <guid isPermaLink="false">https://electrek.co/2026/07/24/a-1-2-gw-solar-farm-is-rising-at-a-texas-coal-site-but-coal-is-staying/</guid>
     <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     <category>Solar</category>
+    <domestic>true</domestic>
     <description>Electrek — One of North America&#39;s biggest coal-site solar projects is now under construction in Texas, even as the coal plant next door stays open.</description>
   </item>
   <item>
@@ -76,6 +84,7 @@
     <guid isPermaLink="false">https://www.energy-storage.news/energy-storage-generates-nearly-20-of-catls-revenues-in-first-half-of-2026/</guid>
     <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
     <category>Storage</category>
+    <domestic>true</domestic>
     <description>Energy Storage News — CATL&#39;s energy storage division made up 19.23% of the battery giant&#39;s total revenue in the first half of 2026.</description>
   </item>
   <item>
@@ -84,6 +93,7 @@
     <guid isPermaLink="false">https://www.energy-storage.news/ark-energy-locks-in-au1-3-billion-for-2-2gwh-solar-plus-storage-site-in-new-south-wales-australia/</guid>
     <pubDate>Thu, 30 Jul 2026 00:00:00 GMT</pubDate>
     <category>Storage</category>
+    <domestic>false</domestic>
     <description>Energy Storage News — Ark Energy locks in AU$1.3 billion to build a 2.2GWh solar-plus-storage site in New South Wales, Australia.</description>
   </item>
   <item>
@@ -92,6 +102,7 @@
     <guid isPermaLink="false">https://www.pv-magazine.com/</guid>
     <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
     <category>Storage</category>
+    <domestic>false</domestic>
     <description>PV Magazine — Spain funded 2 GW of pumped storage — more capacity means more construction and O&amp;M jobs.</description>
   </item>
   <item>
@@ -100,6 +111,7 @@
     <guid isPermaLink="false">https://www.rtoinsider.com/136932-19-states-seek-to-join-suit-against-federal-wind-power-freeze/</guid>
     <pubDate>Tue, 28 Jul 2026 00:00:00 GMT</pubDate>
     <category>Policy</category>
+    <domestic>true</domestic>
     <description>RTO Insider — States are suing over the federal wind power freeze, citing jobs, tax revenue, and public health.</description>
   </item>
   <item>
@@ -108,6 +120,7 @@
     <guid isPermaLink="false">https://www.canarymedia.com/articles/offshore-wind/offshore-wind-new-england-heat</guid>
     <pubDate>Mon, 27 Jul 2026 00:00:00 GMT</pubDate>
     <category>Wind</category>
+    <domestic>true</domestic>
     <description>Canary Media — Offshore wind helped New England&#39;s grid survive a record heat wave after proving itself in winter storms.</description>
   </item>
   <item>
@@ -116,6 +129,7 @@
     <guid isPermaLink="false">https://www.renewableenergyworld.com/energy-business/new-coalitions-building-regional-energy-workforce-pipelines/</guid>
     <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
     <category>Jobs &amp; Hiring</category>
+    <domestic>true</domestic>
     <description>Renewable Energy World — New workforce coalitions are building direct pipelines from training into hired energy careers.</description>
   </item>
   <item>
@@ -124,6 +138,7 @@
     <guid isPermaLink="false">https://www.solarpowerworldonline.com/2026/07/bridging-the-workforce-gap-in-commercial-solar-through-integrated-training-models/</guid>
     <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
     <category>Solar</category>
+    <domestic>true</domestic>
     <description>Solar Power World — U.S. solar employed 280,000+ workers in 2024 — 460,000+ once storage roles are included.</description>
   </item>
 </channel>
