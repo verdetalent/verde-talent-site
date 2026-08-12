@@ -42,6 +42,8 @@ interface JobListing {
   job_title: string | null;
   company: string | null;
   location: string | null;
+  region: string | null;
+  is_remote: boolean;
   sector_bucket: string | null;
   first_seen: string | null;
   posted_date: string | null;
@@ -52,7 +54,50 @@ interface Candidate {
   email: string;
   first_name: string | null;
   sectors: string[] | null;
+  location: string | null;
+  relocation: string | null;
   unsubscribe_token: string;
+}
+
+// Full name -> abbreviation, so a candidate typing "Austin, Texas" still
+// matches a job listing normalized to "Austin, TX" (see
+// taxonomy/location_display.py on the crawler side for the same idea).
+const US_STATE_ABBR: Record<string, string> = {
+  alabama: "AL", alaska: "AK", arizona: "AZ", arkansas: "AR", california: "CA",
+  colorado: "CO", connecticut: "CT", delaware: "DE", florida: "FL", georgia: "GA",
+  hawaii: "HI", idaho: "ID", illinois: "IL", indiana: "IN", iowa: "IA",
+  kansas: "KS", kentucky: "KY", louisiana: "LA", maine: "ME", maryland: "MD",
+  massachusetts: "MA", michigan: "MI", minnesota: "MN", mississippi: "MS", missouri: "MO",
+  montana: "MT", nebraska: "NE", nevada: "NV", "new hampshire": "NH", "new jersey": "NJ",
+  "new mexico": "NM", "new york": "NY", "north carolina": "NC", "north dakota": "ND", ohio: "OH",
+  oklahoma: "OK", oregon: "OR", pennsylvania: "PA", "rhode island": "RI", "south carolina": "SC",
+  "south dakota": "SD", tennessee: "TN", texas: "TX", utah: "UT", vermont: "VT",
+  virginia: "VA", washington: "WA", "west virginia": "WV", wisconsin: "WI", wyoming: "WY",
+  "district of columbia": "DC",
+};
+
+function extractStateAbbr(text: string | null): string | null {
+  if (!text) return null;
+  const abbrMatch = text.match(/\b([A-Z]{2})\b/);
+  if (abbrMatch && Object.values(US_STATE_ABBR).includes(abbrMatch[1])) return abbrMatch[1];
+  const lower = text.toLowerCase();
+  for (const [name, abbr] of Object.entries(US_STATE_ABBR)) {
+    if (lower.includes(name)) return abbr;
+  }
+  return null;
+}
+
+// A candidate should only see a job they could actually take without
+// relocating, unless they've said they're open to that. Remote jobs are
+// always fair game regardless of relocation preference - no move required.
+function jobMatchesLocation(job: JobListing, candidate: Candidate): boolean {
+  if (job.is_remote) return true;
+  if (candidate.relocation === "Yes — anywhere") return true;
+  if (candidate.relocation === "Yes — US only") return job.region === "US";
+  // "No" (or unset) - only jobs in the candidate's own state.
+  const candidateState = extractStateAbbr(candidate.location);
+  const jobState = extractStateAbbr(job.location);
+  return !!candidateState && candidateState === jobState;
 }
 
 function escapeHtml(s: string): string {
@@ -141,7 +186,7 @@ Deno.serve(async (_req) => {
     const cooldownCutoff = new Date(Date.now() - RESEND_COOLDOWN_DAYS * 24 * 60 * 60 * 1000).toISOString();
     const { data: candidates, error: candidatesError } = await supabaseAdmin
       .from("candidates")
-      .select("id, email, first_name, sectors, unsubscribe_token, last_job_alert_sent_at")
+      .select("id, email, first_name, sectors, location, relocation, unsubscribe_token, last_job_alert_sent_at")
       .eq("email_job_alerts", true)
       .neq("availability", "Not currently looking")
       .not("email", "is", null)
@@ -157,7 +202,7 @@ Deno.serve(async (_req) => {
       const matched = new Map<string, JobListing>();
       for (const sector of candidate.sectors || []) {
         for (const job of jobsBySector.get(sector) || []) {
-          matched.set(job.job_id, job);
+          if (jobMatchesLocation(job, candidate)) matched.set(job.job_id, job);
         }
       }
       const jobs = [...matched.values()].slice(0, MAX_JOBS_PER_EMAIL);
