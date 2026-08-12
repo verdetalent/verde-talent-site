@@ -42,12 +42,17 @@ interface FeedItem {
   link: string;
   description: string;
   category: string | null;
+  isDomestic: boolean;
 }
 
 // Small hand-rolled RSS parser rather than pulling in an XML/DOM library
 // for a Deno edge function - feed.xml's shape is fixed and simple (we
 // generate it ourselves), so a few regexes are enough and avoid a new
-// dependency for four fields.
+// dependency for five fields. Returns every item in the feed, unsliced -
+// the caller decides how many to use after reordering by isDomestic, since
+// slicing here first would mean only ever reordering within whatever
+// happened to be chronologically first, missing domestic stories sitting
+// just past that cutoff.
 function parseFeed(xml: string): FeedItem[] {
   const items: FeedItem[] = [];
   const itemBlocks = xml.match(/<item>[\s\S]*?<\/item>/g) || [];
@@ -56,9 +61,22 @@ function parseFeed(xml: string): FeedItem[] {
     const link = block.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim();
     const description = block.match(/<description>([\s\S]*?)<\/description>/)?.[1]?.trim() || "";
     const category = block.match(/<category>([\s\S]*?)<\/category>/)?.[1]?.trim() || null;
-    if (title && link) items.push({ title, link, description, category });
+    const isDomestic = block.match(/<domestic>([\s\S]*?)<\/domestic>/)?.[1]?.trim() !== "false";
+    if (title && link) items.push({ title, link, description, category, isDomestic });
   }
-  return items.slice(0, MAX_ITEMS);
+  return items;
+}
+
+// Stable partition: domestic stories first (in their original, most-recent-
+// first order), then international ones filling any remaining slots - so
+// the top of the newsletter isn't dominated by international news just
+// because a handful of international stories happened to be posted most
+// recently, while still surfacing international stories once domestic
+// supply runs out.
+function orderDomesticFirst(items: FeedItem[]): FeedItem[] {
+  const domestic = items.filter((i) => i.isDomestic);
+  const international = items.filter((i) => !i.isDomestic);
+  return [...domestic, ...international];
 }
 
 interface FeaturedJob {
@@ -251,19 +269,20 @@ Deno.serve(async (_req) => {
   try {
     const feedRes = await fetch(FEED_URL);
     if (!feedRes.ok) throw new Error(`Could not fetch feed.xml: ${feedRes.status}`);
-    const items = parseFeed(await feedRes.text());
+    const rawItems = parseFeed(await feedRes.text());
 
     // feed.xml isn't filtered to "this week only" - it's the most recent
-    // MAX_ITEMS Approved rows regardless of age, so this floor is really
-    // just a "is there even enough real content" guard rather than
-    // something expected to trigger often.
-    if (items.length < MIN_ITEMS) {
+    // Approved rows regardless of age, so this floor is really just a "is
+    // there even enough real content" guard rather than something
+    // expected to trigger often.
+    if (rawItems.length < MIN_ITEMS) {
       return new Response(
-        JSON.stringify({ success: true, sent: 0, note: `Only ${items.length} feed item(s) available (need at least ${MIN_ITEMS}) - nothing sent.` }),
+        JSON.stringify({ success: true, sent: 0, note: `Only ${rawItems.length} feed item(s) available (need at least ${MIN_ITEMS}) - nothing sent.` }),
         { status: 200, headers: { "Content-Type": "application/json" } },
       );
     }
 
+    const items = orderDomesticFirst(rawItems).slice(0, MAX_ITEMS);
     const [featuredJobs, intelStat] = await Promise.all([fetchFeaturedJobs(), fetchIntelStat()]);
 
     const { data: subscribers, error } = await supabaseAdmin
