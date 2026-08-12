@@ -32,7 +32,7 @@ const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 const SITE_ORIGIN = "https://verdetalent.com";
 const JOBS_FEED_URL = `${SITE_ORIGIN}/data/jobs_feed.json`;
 const NEWS_FEED_URL = `${SITE_ORIGIN}/feed.xml`;
-const MAX_JOBS_PER_EMAIL = 8;
+const MAX_JOBS_PER_EMAIL = 10;
 const MAX_NEWS_ITEMS = 3;
 const NEW_JOB_WINDOW_DAYS = 7;
 // Guard against double-sends if this ever gets triggered twice in the same
@@ -237,7 +237,7 @@ function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem
 
   const greeting = `
     <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:${INK};">Hi ${escapeHtml(firstName)},</p>
-    <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new role" : "are " + jobs.length + " new roles"} matching your sectors on Verde Talent this week.</p>`;
+    <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new role" : "are " + jobs.length + " new roles"} matching your experience on Verde Talent this week.</p>`;
 
   // No news sidebar at all (rather than an empty one) if the feed came back
   // empty - a missing section is less jarring than a header with nothing
