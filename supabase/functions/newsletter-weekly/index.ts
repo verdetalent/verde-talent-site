@@ -56,26 +56,60 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+// Table-based layout, inline styles only, light background - the safe
+// subset that renders consistently across Gmail/Outlook/Apple Mail rather
+// than trying to reuse the site's own dark theme (which most email clients
+// handle inconsistently, Outlook especially).
+const GRN = "#22E09A";
+const INK = "#0A0A0A";
+const MUTED = "#6B7280";
+const BORDER = "#E8E8E8";
+const FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+
+function emailShell(preheader: string, bodyHtml: string, unsubscribeUrl: string): string {
+  return `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="margin:0;padding:0;background:#F5F6F5;font-family:${FONT};">
+<div style="display:none;max-height:0;overflow:hidden;">${escapeHtml(preheader)}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F5F6F5;padding:32px 16px;">
+<tr><td align="center">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FFFFFF;border-radius:14px;overflow:hidden;border:1px solid ${BORDER};">
+<tr><td style="background:${INK};padding:20px 28px;">
+  <span style="font-size:18px;font-weight:700;color:#FFFFFF;font-family:${FONT};">Verde <span style="color:${GRN};">Talent</span></span>
+</td></tr>
+<tr><td style="padding:28px 28px 8px;">
+${bodyHtml}
+</td></tr>
+<tr><td style="padding:20px 28px 28px;border-top:1px solid ${BORDER};margin-top:12px;">
+  <p style="margin:16px 0 0;font-size:11px;color:#9CA3AF;line-height:1.6;">
+    Verde Talent · <a href="${SITE_ORIGIN}" style="color:#9CA3AF;">verdetalent.com</a><br/>
+    <a href="${unsubscribeUrl}" style="color:#9CA3AF;">Unsubscribe</a>
+  </p>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body></html>`;
+}
+
 function buildEmailHtml(items: FeedItem[], unsubscribeToken: string): string {
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-newsletter?token=${unsubscribeToken}`;
   const rows = items.map((item) => `
-    <tr>
-      <td style="padding:14px 0;border-bottom:1px solid #eee;">
-        <a href="${item.link}" style="font-size:15px;font-weight:600;color:#0A0A0A;text-decoration:none;">${escapeHtml(item.title)}</a>
-        <div style="font-size:13px;color:#666;margin-top:4px;line-height:1.5;">${item.description}</div>
-      </td>
-    </tr>`).join("");
+    <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
+      <a href="${item.link}" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(item.title)}</a>
+      <div style="font-size:13px;color:${MUTED};margin-top:4px;line-height:1.5;">${item.description}</div>
+    </td></tr>`).join("");
 
-  return `
-  <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:560px;margin:0 auto;color:#0A0A0A;">
-    <p style="font-size:15px;">This week's clean energy news from Verde Talent:</p>
-    <table style="width:100%;border-collapse:collapse;">${rows}</table>
-    <p style="margin-top:24px;"><a href="${SITE_ORIGIN}/news.html" style="font-size:13px;color:#22E09A;">Read more on Verde Talent →</a></p>
-    <p style="margin-top:32px;font-size:11px;color:#999;">
-      You're getting this because you subscribed to the Verde Talent newsletter.
-      <a href="${unsubscribeUrl}" style="color:#999;">Unsubscribe</a>
-    </p>
-  </div>`;
+  const body = `
+    <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">This week's clean energy news from Verde Talent:</p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows}</table>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:24px;">
+      <tr><td style="background:${GRN};border-radius:9px;">
+        <a href="${SITE_ORIGIN}/news.html" style="display:inline-block;padding:11px 20px;font-size:13px;font-weight:600;color:#052e1e;text-decoration:none;">Read more on Verde Talent →</a>
+      </td></tr>
+    </table>`;
+
+  return emailShell("This week's clean energy news from Verde Talent", body, unsubscribeUrl);
 }
 
 Deno.serve(async (_req) => {
