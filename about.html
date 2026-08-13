@@ -37,6 +37,7 @@
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
 .nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;}
+.nav-toggle i{transform:translateX(3px);}
 .logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
 .logo-img{height:104px;width:auto;display:block;}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--grn);}
@@ -253,17 +254,17 @@ document.addEventListener('click', function(){
   <div class="section-label">Our values</div>
   <div class="values-grid">
     <div class="val-card">
-      <div class="val-icon" style="background:rgba(34,224,154,0.1);"><i class="ti ti-leaf" style="color:var(--grn);"></i></div>
+      <div class="val-icon" style="background:rgba(34,224,154,0.1);"><i class="ti ti-leaf" style="color:var(--grn);transform:translateX(3px);"></i></div>
       <div class="val-title">Planet first</div>
       <div class="val-desc">Every decision we make runs through a simple filter: does this help more clean energy get built? We're not neutral on climate — we're explicitly on the side of the transition.</div>
     </div>
     <div class="val-card">
-      <div class="val-icon" style="background:rgba(79,179,255,0.1);"><i class="ti ti-eye" style="color:var(--blu);"></i></div>
+      <div class="val-icon" style="background:rgba(79,179,255,0.1);"><i class="ti ti-eye" style="color:var(--blu);transform:translateX(2px);"></i></div>
       <div class="val-title">Transparency</div>
       <div class="val-desc">We show salary ranges on every job and publish our own hiring and market data in the open, including in our Intelligence reports. No black boxes.</div>
     </div>
     <div class="val-card">
-      <div class="val-icon" style="background:rgba(255,181,71,0.1);"><i class="ti ti-world" style="color:var(--amb);"></i></div>
+      <div class="val-icon" style="background:rgba(255,181,71,0.1);"><i class="ti ti-world" style="color:var(--amb);transform:translateX(2px);"></i></div>
       <div class="val-title">Accessibility</div>
       <div class="val-desc">Clean energy jobs shouldn't only be findable by people with the right LinkedIn network. Verde Talent is free for job seekers, always, and designed to surface opportunities regardless of background.</div>
     </div>

@@ -37,6 +37,7 @@
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
 .nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;}
+.nav-toggle i{transform:translateX(3px);}
 .logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
 .logo-img{height:104px;width:auto;display:block;}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--grn);}
@@ -321,12 +322,12 @@ document.addEventListener('click', function(){
 <div class="features">
   <div class="features-title">What you'll get</div>
   <div class="feat-grid">
-    <div class="feat-card"><div class="feat-icon" style="background:rgba(34,224,154,0.1);"><i class="ti ti-search" style="color:var(--grn);"></i></div><div class="feat-title">Full-text search</div><div class="feat-desc">Search by skill, certification, sector, title, or company history</div></div>
-    <div class="feat-card"><div class="feat-icon" style="background:rgba(79,179,255,0.1);"><i class="ti ti-filter" style="color:var(--blu);"></i></div><div class="feat-title">Deep filters</div><div class="feat-desc">Filter by sector, experience, location, remote preference, and availability</div></div>
-    <div class="feat-card"><div class="feat-icon" style="background:rgba(181,136,255,0.1);"><i class="ti ti-mail" style="color:var(--pur);"></i></div><div class="feat-title">Direct outreach</div><div class="feat-desc">Contact candidates who've opted in to recruiter messages</div></div>
-    <div class="feat-card"><div class="feat-icon" style="background:rgba(255,181,71,0.1);"><i class="ti ti-download" style="color:var(--amb);"></i></div><div class="feat-title">Export lists</div><div class="feat-desc">Download filtered candidate lists as CSV for your ATS</div></div>
-    <div class="feat-card"><div class="feat-icon" style="background:rgba(255,112,85,0.1);"><i class="ti ti-bell" style="color:var(--cor);"></i></div><div class="feat-title">Saved searches</div><div class="feat-desc">Set up alerts when new candidates matching your criteria sign up</div></div>
-    <div class="feat-card"><div class="feat-icon" style="background:rgba(34,224,154,0.1);"><i class="ti ti-chart-bar" style="color:var(--grn);"></i></div><div class="feat-title">Market data</div><div class="feat-desc">See salary benchmarks and hiring trends alongside candidate search</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(34,224,154,0.1);"><i class="ti ti-search" style="color:var(--grn);transform:translateX(2px);"></i></div><div class="feat-title">Full-text search</div><div class="feat-desc">Search by skill, certification, sector, title, or company history</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(79,179,255,0.1);"><i class="ti ti-filter" style="color:var(--blu);transform:translateX(3px);"></i></div><div class="feat-title">Deep filters</div><div class="feat-desc">Filter by sector, experience, location, remote preference, and availability</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(181,136,255,0.1);"><i class="ti ti-mail" style="color:var(--pur);transform:translateX(2px);"></i></div><div class="feat-title">Direct outreach</div><div class="feat-desc">Contact candidates who've opted in to recruiter messages</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(255,181,71,0.1);"><i class="ti ti-download" style="color:var(--amb);transform:translateX(3px);"></i></div><div class="feat-title">Export lists</div><div class="feat-desc">Download filtered candidate lists as CSV for your ATS</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(255,112,85,0.1);"><i class="ti ti-bell" style="color:var(--cor);transform:translateX(3px);"></i></div><div class="feat-title">Saved searches</div><div class="feat-desc">Set up alerts when new candidates matching your criteria sign up</div></div>
+    <div class="feat-card"><div class="feat-icon" style="background:rgba(34,224,154,0.1);"><i class="ti ti-chart-bar" style="color:var(--grn);transform:translateX(2px);"></i></div><div class="feat-title">Market data</div><div class="feat-desc">See salary benchmarks and hiring trends alongside candidate search</div></div>
   </div>
 </div>
 <div class="cta-close-card">
