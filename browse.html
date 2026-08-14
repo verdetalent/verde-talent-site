@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CNGTGW71QP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CNGTGW71QP');
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<title>Browse Renewable Energy Jobs by Location | Verde Talent</title>
+<meta name="description" content="Browse open solar, wind, storage, and other clean energy jobs by state and role across the US."/>
+<link rel="canonical" href="https://verdetalent.com/browse.html"/>
+<link rel="stylesheet" href="/tabler-icons.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:#1A1A1A;color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
+.wrap{max-width:900px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+h1{font-size:26px;font-weight:700;margin-bottom:.5rem;}
+.hub-intro{font-size:14px;color:var(--t2);line-height:1.65;margin-bottom:2.5rem;}
+.browse-section{margin-bottom:2rem;}
+.browse-section h2{font-size:16px;font-weight:700;margin-bottom:.9rem;}
+.browse-links{display:flex;flex-wrap:wrap;gap:8px;}
+.browse-link{font-size:13px;color:var(--t2);text-decoration:none;border:0.5px solid var(--bdr2);border-radius:20px;padding:6px 14px;}
+.browse-link:hover{color:var(--t1);border-color:var(--t2);}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:64px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="/index.html"><img src="/logo.webp" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="/login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="/employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+<div class="wrap">
+  <h1>Browse Jobs by Location</h1>
+  <p class="hub-intro">Every sector and state combination below has real open roles right now - pick one to see them, or <a href="/jobs.html" style="color:var(--grn);">search all jobs</a> directly.</p>
+  
+  <div class="browse-section">
+    <h2 style="color:#FF7055;">EV</h2>
+    <div class="browse-links"><a class="browse-link" href="/browse/ev-jobs-in-california.html">California (12)</a><a class="browse-link" href="/browse/ev-engineering-jobs-in-california.html">Engineering in California (6)</a><a class="browse-link" href="/browse/ev-engineering-jobs-in-indiana.html">Engineering in Indiana (7)</a><a class="browse-link" href="/browse/ev-jobs-in-indiana.html">Indiana (7)</a></div>
+  </div>
+  <div class="browse-section">
+    <h2 style="color:#B588FF;">Grid</h2>
+    <div class="browse-links"><a class="browse-link" href="/browse/grid-jobs-in-california.html">California (9)</a><a class="browse-link" href="/browse/grid-jobs-in-colorado.html">Colorado (9)</a><a class="browse-link" href="/browse/grid-jobs-in-connecticut.html">Connecticut (30)</a><a class="browse-link" href="/browse/grid-construction-field-jobs-in-massachusetts.html">Construction &amp; Field in Massachusetts (7)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-california.html">Engineering in California (6)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-colorado.html">Engineering in Colorado (7)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-connecticut.html">Engineering in Connecticut (18)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-illinois.html">Engineering in Illinois (4)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-indiana.html">Engineering in Indiana (5)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-massachusetts.html">Engineering in Massachusetts (34)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-minnesota.html">Engineering in Minnesota (4)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-new-hampshire.html">Engineering in New Hampshire (6)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-new-york.html">Engineering in New York (7)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-north-carolina.html">Engineering in North Carolina (3)</a><a class="browse-link" href="/browse/grid-engineering-jobs-in-texas.html">Engineering in Texas (4)</a><a class="browse-link" href="/browse/grid-jobs-in-florida.html">Florida (3)</a><a class="browse-link" href="/browse/grid-jobs-in-illinois.html">Illinois (5)</a><a class="browse-link" href="/browse/grid-jobs-in-indiana.html">Indiana (15)</a><a class="browse-link" href="/browse/grid-legal-jobs-in-massachusetts.html">Legal in Massachusetts (4)</a><a class="browse-link" href="/browse/grid-jobs-in-maine.html">Maine (5)</a><a class="browse-link" href="/browse/grid-jobs-in-massachusetts.html">Massachusetts (81)</a><a class="browse-link" href="/browse/grid-jobs-in-minnesota.html">Minnesota (7)</a><a class="browse-link" href="/browse/grid-jobs-in-new-hampshire.html">New Hampshire (7)</a><a class="browse-link" href="/browse/grid-jobs-in-new-york.html">New York (12)</a><a class="browse-link" href="/browse/grid-jobs-in-north-carolina.html">North Carolina (7)</a><a class="browse-link" href="/browse/grid-jobs-in-ohio.html">Ohio (3)</a><a class="browse-link" href="/browse/grid-operations-jobs-in-connecticut.html">Operations in Connecticut (3)</a><a class="browse-link" href="/browse/grid-operations-jobs-in-indiana.html">Operations in Indiana (5)</a><a class="browse-link" href="/browse/grid-operations-jobs-in-massachusetts.html">Operations in Massachusetts (6)</a><a class="browse-link" href="/browse/grid-operations-jobs-in-new-york.html">Operations in New York (4)</a><a class="browse-link" href="/browse/grid-project-program-management-jobs-in-massachusetts.html">Project &amp; Program Management in Massachusetts (6)</a><a class="browse-link" href="/browse/grid-supply-chain-procurement-jobs-in-massachusetts.html">Supply Chain &amp; Procurement in Massachusetts (3)</a><a class="browse-link" href="/browse/grid-jobs-in-texas.html">Texas (5)</a></div>
+  </div>
+  <div class="browse-section">
+    <h2 style="color:#4FB3FF;">Hydrogen</h2>
+    <div class="browse-links"><a class="browse-link" href="/browse/hydrogen-jobs-in-california.html">California (121)</a><a class="browse-link" href="/browse/hydrogen-construction-field-jobs-in-california.html">Construction &amp; Field in California (14)</a><a class="browse-link" href="/browse/hydrogen-construction-field-jobs-in-delaware.html">Construction &amp; Field in Delaware (6)</a><a class="browse-link" href="/browse/hydrogen-jobs-in-delaware.html">Delaware (46)</a><a class="browse-link" href="/browse/hydrogen-engineering-jobs-in-california.html">Engineering in California (43)</a><a class="browse-link" href="/browse/hydrogen-engineering-jobs-in-delaware.html">Engineering in Delaware (5)</a><a class="browse-link" href="/browse/hydrogen-finance-accounting-jobs-in-california.html">Finance &amp; Accounting in California (3)</a><a class="browse-link" href="/browse/hydrogen-hr-talent-jobs-in-california.html">HR &amp; Talent in California (3)</a><a class="browse-link" href="/browse/hydrogen-legal-jobs-in-california.html">Legal in California (3)</a><a class="browse-link" href="/browse/hydrogen-operations-jobs-in-california.html">Operations in California (4)</a><a class="browse-link" href="/browse/hydrogen-project-program-management-jobs-in-california.html">Project &amp; Program Management in California (6)</a><a class="browse-link" href="/browse/hydrogen-sales-jobs-in-california.html">Sales in California (7)</a><a class="browse-link" href="/browse/hydrogen-supply-chain-procurement-jobs-in-delaware.html">Supply Chain &amp; Procurement in Delaware (4)</a></div>
+  </div>
+  <div class="browse-section">
+    <h2 style="color:#FF7055;">Policy</h2>
+    <div class="browse-links"><a class="browse-link" href="/browse/policy-jobs-in-minnesota.html">Minnesota (3)</a></div>
+  </div>
+  <div class="browse-section">
+    <h2 style="color:#22E09A;">Solar</h2>
+    <div class="browse-links"><a class="browse-link" href="/browse/solar-jobs-in-alabama.html">Alabama (53)</a><a class="browse-link" href="/browse/solar-jobs-in-arizona.html">Arizona (14)</a><a class="browse-link" href="/browse/solar-jobs-in-california.html">California (163)</a><a class="browse-link" href="/browse/solar-jobs-in-colorado.html">Colorado (4)</a><a class="browse-link" href="/browse/solar-jobs-in-connecticut.html">Connecticut (5)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-alabama.html">Construction &amp; Field in Alabama (25)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-arizona.html">Construction &amp; Field in Arizona (3)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-california.html">Construction &amp; Field in California (28)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-colorado.html">Construction &amp; Field in Colorado (3)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-hawaii.html">Construction &amp; Field in Hawaii (10)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-illinois.html">Construction &amp; Field in Illinois (6)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-louisiana.html">Construction &amp; Field in Louisiana (28)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-maryland.html">Construction &amp; Field in Maryland (4)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-massachusetts.html">Construction &amp; Field in Massachusetts (4)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-nevada.html">Construction &amp; Field in Nevada (6)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-new-jersey.html">Construction &amp; Field in New Jersey (5)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-ohio.html">Construction &amp; Field in Ohio (28)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-south-carolina.html">Construction &amp; Field in South Carolina (8)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-texas.html">Construction &amp; Field in Texas (17)</a><a class="browse-link" href="/browse/solar-construction-field-jobs-in-virginia.html">Construction &amp; Field in Virginia (3)</a><a class="browse-link" href="/browse/solar-engineering-jobs-in-alabama.html">Engineering in Alabama (14)</a><a class="browse-link" href="/browse/solar-engineering-jobs-in-california.html">Engineering in California (6)</a><a class="browse-link" href="/browse/solar-engineering-jobs-in-florida.html">Engineering in Florida (6)</a><a class="browse-link" href="/browse/solar-engineering-jobs-in-louisiana.html">Engineering in Louisiana (5)</a><a class="browse-link" href="/browse/solar-engineering-jobs-in-ohio.html">Engineering in Ohio (52)</a><a class="browse-link" href="/browse/solar-engineering-jobs-in-south-carolina.html">Engineering in South Carolina (11)</a><a class="browse-link" href="/browse/solar-finance-accounting-jobs-in-arizona.html">Finance &amp; Accounting in Arizona (4)</a><a class="browse-link" href="/browse/solar-jobs-in-florida.html">Florida (9)</a><a class="browse-link" href="/browse/solar-jobs-in-hawaii.html">Hawaii (19)</a><a class="browse-link" href="/browse/solar-jobs-in-illinois.html">Illinois (44)</a><a class="browse-link" href="/browse/solar-jobs-in-louisiana.html">Louisiana (48)</a><a class="browse-link" href="/browse/solar-jobs-in-maryland.html">Maryland (6)</a><a class="browse-link" href="/browse/solar-jobs-in-massachusetts.html">Massachusetts (20)</a><a class="browse-link" href="/browse/solar-jobs-in-nevada.html">Nevada (11)</a><a class="browse-link" href="/browse/solar-jobs-in-new-jersey.html">New Jersey (12)</a><a class="browse-link" href="/browse/solar-jobs-in-new-york.html">New York (11)</a><a class="browse-link" href="/browse/solar-jobs-in-ohio.html">Ohio (102)</a><a class="browse-link" href="/browse/solar-operations-jobs-in-louisiana.html">Operations in Louisiana (3)</a><a class="browse-link" href="/browse/solar-sales-jobs-in-california.html">Sales in California (49)</a><a class="browse-link" href="/browse/solar-sales-jobs-in-connecticut.html">Sales in Connecticut (3)</a><a class="browse-link" href="/browse/solar-sales-jobs-in-illinois.html">Sales in Illinois (13)</a><a class="browse-link" href="/browse/solar-sales-jobs-in-massachusetts.html">Sales in Massachusetts (9)</a><a class="browse-link" href="/browse/solar-sales-jobs-in-nevada.html">Sales in Nevada (4)</a><a class="browse-link" href="/browse/solar-sales-jobs-in-new-jersey.html">Sales in New Jersey (4)</a><a class="browse-link" href="/browse/solar-sales-jobs-in-new-york.html">Sales in New York (7)</a><a class="browse-link" href="/browse/solar-sales-jobs-in-texas.html">Sales in Texas (16)</a><a class="browse-link" href="/browse/solar-jobs-in-south-carolina.html">South Carolina (33)</a><a class="browse-link" href="/browse/solar-jobs-in-texas.html">Texas (46)</a><a class="browse-link" href="/browse/solar-jobs-in-utah.html">Utah (4)</a><a class="browse-link" href="/browse/solar-jobs-in-virginia.html">Virginia (3)</a></div>
+  </div>
+  <div class="browse-section">
+    <h2 style="color:#FFB547;">Storage</h2>
+    <div class="browse-links"><a class="browse-link" href="/browse/storage-construction-field-jobs-in-nevada.html">Construction &amp; Field in Nevada (20)</a><a class="browse-link" href="/browse/storage-engineering-jobs-in-florida.html">Engineering in Florida (3)</a><a class="browse-link" href="/browse/storage-engineering-jobs-in-illinois.html">Engineering in Illinois (3)</a><a class="browse-link" href="/browse/storage-engineering-jobs-in-nevada.html">Engineering in Nevada (28)</a><a class="browse-link" href="/browse/storage-engineering-jobs-in-texas.html">Engineering in Texas (8)</a><a class="browse-link" href="/browse/storage-jobs-in-florida.html">Florida (4)</a><a class="browse-link" href="/browse/storage-jobs-in-georgia.html">Georgia (6)</a><a class="browse-link" href="/browse/storage-hr-talent-jobs-in-nevada.html">HR &amp; Talent in Nevada (3)</a><a class="browse-link" href="/browse/storage-jobs-in-illinois.html">Illinois (3)</a><a class="browse-link" href="/browse/storage-jobs-in-nevada.html">Nevada (96)</a><a class="browse-link" href="/browse/storage-operations-jobs-in-nevada.html">Operations in Nevada (10)</a><a class="browse-link" href="/browse/storage-project-program-management-jobs-in-nevada.html">Project &amp; Program Management in Nevada (4)</a><a class="browse-link" href="/browse/storage-jobs-in-south-carolina.html">South Carolina (7)</a><a class="browse-link" href="/browse/storage-jobs-in-texas.html">Texas (23)</a><a class="browse-link" href="/browse/storage-jobs-in-virginia.html">Virginia (12)</a></div>
+  </div>
+  <div class="browse-section">
+    <h2 style="color:#22E09A;">Sustainability</h2>
+    <div class="browse-links"><a class="browse-link" href="/browse/sustainability-engineering-jobs-in-texas.html">Engineering in Texas (4)</a><a class="browse-link" href="/browse/sustainability-jobs-in-texas.html">Texas (10)</a><a class="browse-link" href="/browse/sustainability-jobs-in-utah.html">Utah (5)</a></div>
+  </div>
+  <div class="browse-section">
+    <h2 style="color:#4FB3FF;">Wind</h2>
+    <div class="browse-links"><a class="browse-link" href="/browse/wind-jobs-in-arizona.html">Arizona (4)</a><a class="browse-link" href="/browse/wind-jobs-in-california.html">California (5)</a><a class="browse-link" href="/browse/wind-jobs-in-colorado.html">Colorado (19)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-california.html">Construction &amp; Field in California (3)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-colorado.html">Construction &amp; Field in Colorado (7)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-delaware.html">Construction &amp; Field in Delaware (32)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-illinois.html">Construction &amp; Field in Illinois (8)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-iowa.html">Construction &amp; Field in Iowa (11)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-missouri.html">Construction &amp; Field in Missouri (4)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-new-mexico.html">Construction &amp; Field in New Mexico (4)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-north-dakota.html">Construction &amp; Field in North Dakota (4)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-oklahoma.html">Construction &amp; Field in Oklahoma (5)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-oregon.html">Construction &amp; Field in Oregon (3)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-texas.html">Construction &amp; Field in Texas (36)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-washington.html">Construction &amp; Field in Washington (3)</a><a class="browse-link" href="/browse/wind-construction-field-jobs-in-wyoming.html">Construction &amp; Field in Wyoming (9)</a><a class="browse-link" href="/browse/wind-jobs-in-delaware.html">Delaware (58)</a><a class="browse-link" href="/browse/wind-engineering-jobs-in-colorado.html">Engineering in Colorado (3)</a><a class="browse-link" href="/browse/wind-engineering-jobs-in-indiana.html">Engineering in Indiana (8)</a><a class="browse-link" href="/browse/wind-jobs-in-florida.html">Florida (3)</a><a class="browse-link" href="/browse/wind-jobs-in-illinois.html">Illinois (8)</a><a class="browse-link" href="/browse/wind-jobs-in-indiana.html">Indiana (19)</a><a class="browse-link" href="/browse/wind-jobs-in-iowa.html">Iowa (12)</a><a class="browse-link" href="/browse/wind-jobs-in-minnesota.html">Minnesota (3)</a><a class="browse-link" href="/browse/wind-jobs-in-missouri.html">Missouri (4)</a><a class="browse-link" href="/browse/wind-jobs-in-new-mexico.html">New Mexico (6)</a><a class="browse-link" href="/browse/wind-jobs-in-north-dakota.html">North Dakota (4)</a><a class="browse-link" href="/browse/wind-jobs-in-oklahoma.html">Oklahoma (7)</a><a class="browse-link" href="/browse/wind-jobs-in-oregon.html">Oregon (7)</a><a class="browse-link" href="/browse/wind-jobs-in-pennsylvania.html">Pennsylvania (3)</a><a class="browse-link" href="/browse/wind-sales-jobs-in-delaware.html">Sales in Delaware (6)</a><a class="browse-link" href="/browse/wind-jobs-in-texas.html">Texas (49)</a><a class="browse-link" href="/browse/wind-jobs-in-washington.html">Washington (3)</a><a class="browse-link" href="/browse/wind-jobs-in-wyoming.html">Wyoming (10)</a></div>
+  </div>
+</div>
+<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+</script>
+</body>
+</html>
