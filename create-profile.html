@@ -199,6 +199,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .lite-alert-form{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:620px;margin:0 auto;}
 .lite-alert-form input,.lite-alert-form select{background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 13px;font-size:13px;color:var(--t1);outline:none;font-family:var(--font-sans);flex:1;min-width:150px;}
 .lite-alert-form select option{background:#1A1A1A;}
+.lite-alert-sectors{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:620px;margin:10px auto 0;}
+.lite-sector-chip{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--t2);border:0.5px solid var(--bdr2);border-radius:20px;padding:6px 12px;cursor:pointer;user-select:none;}
+.lite-sector-chip input{margin:0;accent-color:var(--grn);cursor:pointer;}
+.lite-sector-chip.all{font-weight:600;color:var(--t1);}
 .lite-alert-note{font-size:12px;margin-top:10px;min-height:14px;}
 @media (max-width:600px){.lite-alert-form{flex-direction:column;}.lite-alert-form input,.lite-alert-form select,.lite-alert-form button{width:100%;}}
 .submit-note{font-size:11px;color:var(--t3);margin-top:8px;text-align:center;}
@@ -407,19 +411,26 @@ document.addEventListener('click', function(){
 <div class="lite-alert-section">
   <div class="lite-alert-card">
     <div class="lite-alert-title">Not ready for a full profile?</div>
-    <div class="lite-alert-sub">Get emailed when new jobs open in your sector near you — just your email, sector, and location. No account, no commitment.</div>
+    <div class="lite-alert-sub">Get emailed when new jobs open in your sector near you — just your email, title, and location. No account, no commitment.</div>
     <div class="lite-alert-form">
       <label for="lead-email" class="sr-only">Email</label>
       <input type="email" id="lead-email" placeholder="you@example.com" autocomplete="email"/>
-      <label for="lead-sector" class="sr-only">Sector</label>
-      <select id="lead-sector">
-        <option value="">Sector…</option>
-        <option>Solar</option><option>Wind</option><option>Storage</option><option>Grid</option>
-        <option>EV</option><option>Hydrogen</option><option>Policy</option><option>Sustainability</option>
-      </select>
+      <label for="lead-title" class="sr-only">Job title</label>
+      <input type="text" id="lead-title" placeholder="Job title (e.g. Solar Design Engineer)" autocomplete="organization-title"/>
       <label for="lead-location" class="sr-only">Location</label>
-      <input type="text" id="lead-location" placeholder="City, State" autocomplete="address-level2"/>
+      <input type="text" id="lead-location" placeholder="City, State or ZIP" autocomplete="postal-code"/>
       <button type="button" class="btn-grn" id="leadSubmitBtn" style="width:auto;padding:10px 20px;flex-shrink:0;">Get job alerts →</button>
+    </div>
+    <div class="lite-alert-sectors" id="leadSectors">
+      <label class="lite-sector-chip all"><input type="checkbox" id="lead-sector-all"/>All sectors</label>
+      <label class="lite-sector-chip"><input type="checkbox" value="Solar"/>Solar</label>
+      <label class="lite-sector-chip"><input type="checkbox" value="Wind"/>Wind</label>
+      <label class="lite-sector-chip"><input type="checkbox" value="Storage"/>Storage</label>
+      <label class="lite-sector-chip"><input type="checkbox" value="Grid"/>Grid</label>
+      <label class="lite-sector-chip"><input type="checkbox" value="EV"/>EV</label>
+      <label class="lite-sector-chip"><input type="checkbox" value="Hydrogen"/>Hydrogen</label>
+      <label class="lite-sector-chip"><input type="checkbox" value="Policy"/>Policy</label>
+      <label class="lite-sector-chip"><input type="checkbox" value="Sustainability"/>Sustainability</label>
     </div>
     <div class="lite-alert-note" id="leadNote"></div>
   </div>
@@ -908,25 +919,41 @@ const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
 
 // --- Zero-commitment job alert signup (no account) ---
+// "All sectors" is a convenience toggle, not its own value - checking it
+// checks every individual sector box, and one row per sector gets inserted
+// (job_alert_leads has a unique(email, sector) constraint, so a candidate
+// can be signed up for several sectors at once but not duplicated within
+// one). Unchecking any individual box un-checks "All" automatically.
+const leadSectorAllCb = document.getElementById('lead-sector-all');
+const leadSectorCbs = Array.from(document.querySelectorAll('#leadSectors input[type="checkbox"]:not(#lead-sector-all)'));
+leadSectorAllCb.addEventListener('change', function(){
+  leadSectorCbs.forEach((cb) => { cb.checked = leadSectorAllCb.checked; });
+});
+leadSectorCbs.forEach((cb) => cb.addEventListener('change', function(){
+  if (!cb.checked) leadSectorAllCb.checked = false;
+  else if (leadSectorCbs.every((c) => c.checked)) leadSectorAllCb.checked = true;
+}));
+
 document.getElementById('leadSubmitBtn').addEventListener('click', async function(){
   const btn = this;
   const note = document.getElementById('leadNote');
   const email = document.getElementById('lead-email').value.trim();
-  const sector = document.getElementById('lead-sector').value;
+  const jobTitle = document.getElementById('lead-title').value.trim();
   const location = document.getElementById('lead-location').value.trim();
+  const sectors = leadSectorCbs.filter((cb) => cb.checked).map((cb) => cb.value);
 
   if (!email || !email.includes('@')) {
     note.textContent = 'Enter a valid email first.';
     note.style.color = 'var(--cor)';
     return;
   }
-  if (!sector) {
-    note.textContent = 'Pick a sector.';
+  if (sectors.length === 0) {
+    note.textContent = 'Pick at least one sector.';
     note.style.color = 'var(--cor)';
     return;
   }
   if (!location) {
-    note.textContent = 'Enter a location.';
+    note.textContent = 'Enter a city, state, or ZIP.';
     note.style.color = 'var(--cor)';
     return;
   }
@@ -936,28 +963,40 @@ document.getElementById('leadSubmitBtn').addEventListener('click', async functio
   note.textContent = '';
 
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/job_alert_leads`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal',
-      },
-      body: JSON.stringify({ email, sector, location }),
-    });
+    const results = await Promise.all(sectors.map((sector) =>
+      fetch(`${SUPABASE_URL}/rest/v1/job_alert_leads`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify({ email, sector, location, job_title: jobTitle || null }),
+      }),
+    ));
 
-    if (res.ok) {
-      document.getElementById('lead-email').value = '';
-      document.getElementById('lead-sector').value = '';
-      document.getElementById('lead-location').value = '';
-      note.textContent = "You're set — we'll email you when new " + sector + " jobs open near " + location + ".";
+    const okCount = results.filter((r) => r.ok).length;
+    const dupCount = results.filter((r) => r.status === 409).length;
+    const failCount = results.length - okCount - dupCount;
+
+    if (okCount === 0 && dupCount === 0) throw new Error('All signups failed');
+
+    document.getElementById('lead-email').value = '';
+    document.getElementById('lead-title').value = '';
+    document.getElementById('lead-location').value = '';
+    leadSectorAllCb.checked = false;
+    leadSectorCbs.forEach((cb) => { cb.checked = false; });
+
+    if (okCount > 0 && failCount === 0) {
+      note.textContent = "You're set — we'll email you when new jobs open near " + location + ".";
       note.style.color = 'var(--grn)';
-    } else if (res.status === 409) {
-      note.textContent = "You're already signed up for " + sector + " alerts with that email.";
+    } else if (okCount > 0 && failCount > 0) {
+      note.textContent = "You're set for some sectors, but a couple didn't go through — try again for those.";
       note.style.color = 'var(--t3)';
     } else {
-      throw new Error(await res.text());
+      note.textContent = "You're already signed up for those sectors with that email.";
+      note.style.color = 'var(--t3)';
     }
   } catch (err) {
     console.error('Job alert signup failed:', err);

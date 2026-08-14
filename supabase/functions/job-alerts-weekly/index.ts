@@ -74,15 +74,18 @@ interface Candidate {
 }
 
 // Zero-commitment signup from create-profile.html's "get emailed when new
-// jobs open near me" box - just email + sector + location, no account. No
-// headline/experience to infer a job category from, so matching stays at
-// sector + location only; the email carries an upsell nudge toward a full
-// profile for tighter matching.
+// jobs open near me" box - email + sector(s) + location + optional job
+// title, no account. job_title runs through the same mapJobCategory() rules
+// as a candidate's headline, so a lead who typed "Solar Design Engineer"
+// still only sees engineering roles, not every Solar job in their state.
+// The email carries an upsell nudge toward a full profile for even tighter
+// matching (job-level detail a plain title can't capture).
 interface Lead {
   id: string;
   email: string;
   sector: string;
   location: string;
+  job_title: string | null;
   unsubscribe_token: string;
 }
 
@@ -171,12 +174,49 @@ function jobMatchesLocation(job: JobListing, candidate: Candidate): boolean {
   return !!candidateState && candidateState === jobState;
 }
 
+// Approximate USPS ZIP-prefix -> state blocks (first 3 digits of a 5-digit
+// ZIP), so a lead who types a bare ZIP still gets state-level matching like
+// everyone else. Boundaries are close but not exact at the edges - good
+// enough for "does this job's state match the lead's state", not meant as
+// an authoritative ZIP database.
+const ZIP3_STATE_RANGES: [number, number, string][] = [
+  [10, 27, "MA"], [28, 29, "RI"], [30, 38, "NH"], [39, 49, "ME"], [50, 59, "VT"],
+  [60, 69, "CT"], [70, 89, "NJ"], [100, 149, "NY"], [150, 196, "PA"], [197, 199, "DE"],
+  [200, 205, "DC"], [206, 219, "MD"], [220, 246, "VA"], [247, 268, "WV"], [270, 289, "NC"],
+  [290, 299, "SC"], [300, 319, "GA"], [320, 339, "FL"], [341, 342, "FL"], [344, 344, "FL"],
+  [346, 347, "FL"], [349, 349, "FL"], [350, 369, "AL"], [370, 385, "TN"], [386, 397, "MS"],
+  [398, 399, "GA"], [400, 427, "KY"], [430, 459, "OH"], [460, 479, "IN"], [480, 499, "MI"],
+  [500, 528, "IA"], [530, 549, "WI"], [550, 567, "MN"], [570, 577, "SD"], [580, 588, "ND"],
+  [590, 599, "MT"], [600, 629, "IL"], [630, 658, "MO"], [660, 679, "KS"], [680, 693, "NE"],
+  [700, 714, "LA"], [716, 729, "AR"], [730, 749, "OK"], [750, 799, "TX"], [800, 816, "CO"],
+  [820, 831, "WY"], [832, 839, "ID"], [840, 847, "UT"], [850, 865, "AZ"], [870, 884, "NM"],
+  [885, 885, "TX"], [889, 898, "NV"], [900, 961, "CA"], [967, 968, "HI"], [970, 979, "OR"],
+  [980, 994, "WA"], [995, 999, "AK"],
+];
+
+function zip3ToState(zip3: number): string | null {
+  for (const [lo, hi, state] of ZIP3_STATE_RANGES) {
+    if (zip3 >= lo && zip3 <= hi) return state;
+  }
+  return null;
+}
+
+// Leads can enter a bare ZIP instead of "City, State" - try that first,
+// fall back to the same name/abbreviation matching used everywhere else.
+function extractStateAbbrOrZip(text: string | null): string | null {
+  if (!text) return null;
+  const trimmed = text.trim();
+  const zipMatch = trimmed.match(/^(\d{5})(-\d{4})?$/);
+  if (zipMatch) return zip3ToState(parseInt(zipMatch[1].slice(0, 3), 10));
+  return extractStateAbbr(trimmed);
+}
+
 // Leads never state a relocation preference (it's a "near me" ask by
 // design), so this is the "No"-relocation branch of jobMatchesLocation
 // above: remote jobs always qualify, everything else has to be in-state.
 function jobMatchesLeadLocation(job: JobListing, lead: Lead): boolean {
   if (job.is_remote) return true;
-  const leadState = extractStateAbbr(lead.location);
+  const leadState = extractStateAbbrOrZip(lead.location);
   const jobState = extractStateAbbr(job.location);
   return !!leadState && leadState === jobState;
 }
@@ -426,7 +466,7 @@ Deno.serve(async (_req) => {
 
     const { data: leads, error: leadsError } = await supabaseAdmin
       .from("job_alert_leads")
-      .select("id, email, sector, location, unsubscribe_token, last_alert_sent_at")
+      .select("id, email, sector, location, job_title, unsubscribe_token, last_alert_sent_at")
       .eq("subscribed", true)
       .or(`last_alert_sent_at.is.null,last_alert_sent_at.lt.${cooldownCutoff}`);
 
@@ -437,8 +477,10 @@ Deno.serve(async (_req) => {
     let leadsFailed = 0;
 
     for (const lead of (leads || []) as Lead[]) {
+      const category = mapJobCategory(lead.job_title);
       const jobs = (jobsBySector.get(lead.sector) || [])
         .filter((job) => jobMatchesLeadLocation(job, lead))
+        .filter((job) => !category || !job.job_category || job.job_category === category)
         .slice(0, MAX_JOBS_PER_EMAIL);
 
       if (jobs.length === 0) {

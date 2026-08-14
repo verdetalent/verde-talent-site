@@ -12,6 +12,7 @@ create table job_alert_leads (
   email text not null,
   sector text not null,
   location text not null,
+  job_title text,
   subscribed boolean not null default true,
   unsubscribe_token uuid not null default gen_random_uuid(),
   last_alert_sent_at timestamptz,
