@@ -4,11 +4,15 @@
 // function in the dashboard, same as stripe-webhook already is for the
 // same reason (Stripe can't send a Supabase JWT either).
 //
-// token is a capability token (candidates.unsubscribe_token, a random
-// uuid), not tied to auth - anyone with the exact token from their own
-// email can turn off their own alerts, which is the intended behavior of
-// an unsubscribe link. It grants nothing else: this function only ever
-// writes email_job_alerts=false for the single matching row.
+// token is a capability token (candidates.unsubscribe_token or
+// job_alert_leads.unsubscribe_token, a random uuid), not tied to auth -
+// anyone with the exact token from their own email can turn off their own
+// alerts, which is the intended behavior of an unsubscribe link. It grants
+// nothing else: this function only ever writes to the single matching row.
+//
+// Tries candidates first, then job_alert_leads - tokens are independently
+// random uuids from two different tables, so a match in one means there's
+// nothing to look up in the other.
 //
 // Env vars required (set via `supabase secrets set`):
 //   SUPABASE_URL              - auto-provided by Supabase
@@ -47,9 +51,24 @@ Deno.serve(async (req) => {
     console.error(error);
     return htmlPage("Something went wrong — please try again, or email contact@verdetalent.com.");
   }
-  if (!data) {
+  if (data) {
+    return htmlPage("You're unsubscribed from weekly job-match emails. You can turn them back on anytime from your profile.");
+  }
+
+  const { data: leadData, error: leadError } = await supabaseAdmin
+    .from("job_alert_leads")
+    .update({ subscribed: false })
+    .eq("unsubscribe_token", token)
+    .select("id")
+    .maybeSingle();
+
+  if (leadError) {
+    console.error(leadError);
+    return htmlPage("Something went wrong — please try again, or email contact@verdetalent.com.");
+  }
+  if (!leadData) {
     return htmlPage("That unsubscribe link isn't valid — it may have already been used.");
   }
 
-  return htmlPage("You're unsubscribed from weekly job-match emails. You can turn them back on anytime from your profile.");
+  return htmlPage("You're unsubscribed from job alerts. Come back anytime at verdetalent.com.");
 });

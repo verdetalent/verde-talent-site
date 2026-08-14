@@ -10,6 +10,13 @@
 // location/relocation preference. A candidate with zero matching jobs this
 // week gets no email at all, rather than an empty one.
 //
+// Also sends a lighter-weight digest to job_alert_leads - zero-commitment
+// signups from create-profile.html's "get emailed when new jobs open near
+// me" box (email + sector + location only, no account). These match on
+// sector + location only (no job-title/category refinement, since there's
+// no headline/experience to infer one from), and every email carries an
+// upsell nudge toward creating a full profile.
+//
 // Job data comes from a plain fetch() of the same slim listings already
 // embedded into jobs.html (see export_jobs_to_verde_talent.py in the
 // renewable-energy-jobs repo, which now also writes this file) - this
@@ -63,6 +70,19 @@ interface Candidate {
   experience: { title?: string }[] | null;
   location: string | null;
   relocation: string | null;
+  unsubscribe_token: string;
+}
+
+// Zero-commitment signup from create-profile.html's "get emailed when new
+// jobs open near me" box - just email + sector + location, no account. No
+// headline/experience to infer a job category from, so matching stays at
+// sector + location only; the email carries an upsell nudge toward a full
+// profile for tighter matching.
+interface Lead {
+  id: string;
+  email: string;
+  sector: string;
+  location: string;
   unsubscribe_token: string;
 }
 
@@ -149,6 +169,16 @@ function jobMatchesLocation(job: JobListing, candidate: Candidate): boolean {
   const candidateState = extractStateAbbr(candidate.location);
   const jobState = extractStateAbbr(job.location);
   return !!candidateState && candidateState === jobState;
+}
+
+// Leads never state a relocation preference (it's a "near me" ask by
+// design), so this is the "No"-relocation branch of jobMatchesLocation
+// above: remote jobs always qualify, everything else has to be in-state.
+function jobMatchesLeadLocation(job: JobListing, lead: Lead): boolean {
+  if (job.is_remote) return true;
+  const leadState = extractStateAbbr(lead.location);
+  const jobState = extractStateAbbr(job.location);
+  return !!leadState && leadState === jobState;
 }
 
 interface NewsItem {
@@ -257,6 +287,53 @@ function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem
   return emailShell(`${jobs.length} new job${jobs.length === 1 ? "" : "s"} matching your profile`, greeting + mainContent, unsubscribeUrl);
 }
 
+function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[]): string {
+  const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${lead.unsubscribe_token}`;
+  const jobRows = jobs.map((job) => `
+    <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
+      <a href="${SITE_ORIGIN}/jobs/${job.page_slug}.html" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(job.job_title || "Open role")}</a>
+      <div style="font-size:13px;color:${MUTED};margin-top:3px;">${escapeHtml(job.company || "")}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
+    </td></tr>`).join("");
+
+  const jobsColumn = `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${jobRows}</table>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+      <tr><td style="background:${GRN};border-radius:9px;">
+        <a href="${SITE_ORIGIN}/jobs.html" style="display:inline-block;padding:11px 20px;font-size:13px;font-weight:600;color:#052e1e;text-decoration:none;">See all open roles →</a>
+      </td></tr>
+    </table>`;
+
+  const greeting = `
+    <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:${INK};">Hi there,</p>
+    <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new " + escapeHtml(lead.sector) + " role" : "are " + jobs.length + " new " + escapeHtml(lead.sector) + " roles"} open near ${escapeHtml(lead.location)} this week.</p>`;
+
+  // The upsell - these are zero-commitment leads, so every send is a chance
+  // to nudge them toward a full profile (better matching: job title, not
+  // just sector + state).
+  const upsell = `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:22px;">
+      <tr><td style="background:#F5F6F5;border-radius:10px;padding:16px 18px;">
+        <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:${INK};">Want more precise matches?</p>
+        <p style="margin:0 0 10px;font-size:12.5px;color:${MUTED};line-height:1.5;">Create a free profile and we'll match you by job title too, not just sector and location.</p>
+        <a href="${SITE_ORIGIN}/create-profile.html" style="font-size:12.5px;font-weight:600;color:${GRN};text-decoration:none;">Create your free profile →</a>
+      </td></tr>
+    </table>`;
+
+  const mainContent = news.length === 0 ? jobsColumn : `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="vt-main-col" valign="top" width="66%" style="padding-right:20px;">${jobsColumn}</td>
+        <td class="vt-side-col" valign="top" width="34%" style="border-left:1px solid ${BORDER};padding-left:20px;">
+          <div style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">In the news</div>
+          ${news.map((item) => `<div style="margin-bottom:14px;"><a href="${escapeHtml(item.link)}" style="font-size:12.5px;font-weight:600;color:${INK};text-decoration:none;line-height:1.4;display:block;">${escapeHtml(item.title)}</a></div>`).join("")}
+          <a href="${SITE_ORIGIN}/news.html" style="font-size:11.5px;color:${GRN};text-decoration:none;font-weight:600;">More news →</a>
+        </td>
+      </tr>
+    </table>`;
+
+  return emailShell(`${jobs.length} new ${lead.sector} job${jobs.length === 1 ? "" : "s"} near ${lead.location}`, greeting + mainContent + upsell, unsubscribeUrl);
+}
+
 Deno.serve(async (_req) => {
   try {
     const feedRes = await fetch(JOBS_FEED_URL);
@@ -347,8 +424,61 @@ Deno.serve(async (_req) => {
       sent++;
     }
 
+    const { data: leads, error: leadsError } = await supabaseAdmin
+      .from("job_alert_leads")
+      .select("id, email, sector, location, unsubscribe_token, last_alert_sent_at")
+      .eq("subscribed", true)
+      .or(`last_alert_sent_at.is.null,last_alert_sent_at.lt.${cooldownCutoff}`);
+
+    if (leadsError) throw leadsError;
+
+    let leadsSent = 0;
+    let leadsSkippedNoMatch = 0;
+    let leadsFailed = 0;
+
+    for (const lead of (leads || []) as Lead[]) {
+      const jobs = (jobsBySector.get(lead.sector) || [])
+        .filter((job) => jobMatchesLeadLocation(job, lead))
+        .slice(0, MAX_JOBS_PER_EMAIL);
+
+      if (jobs.length === 0) {
+        leadsSkippedNoMatch++;
+        continue;
+      }
+
+      const { error: sendError } = await resend.emails.send({
+        from: "Verde Talent Jobs <jobs@updates.verdetalent.com>",
+        to: lead.email,
+        subject: jobs.length === 1
+          ? `1 new ${lead.sector} job near ${lead.location}`
+          : `${jobs.length} new ${lead.sector} jobs near ${lead.location}`,
+        html: buildLeadEmailHtml(lead, jobs, newsItems),
+      });
+
+      if (sendError) {
+        console.error(`Send failed for lead ${lead.id}:`, sendError);
+        leadsFailed++;
+        continue;
+      }
+
+      await supabaseAdmin
+        .from("job_alert_leads")
+        .update({ last_alert_sent_at: new Date().toISOString() })
+        .eq("id", lead.id);
+      leadsSent++;
+    }
+
     return new Response(
-      JSON.stringify({ success: true, new_jobs_found: newJobs.length, sent, skipped_no_match: skippedNoMatch, failed }),
+      JSON.stringify({
+        success: true,
+        new_jobs_found: newJobs.length,
+        sent,
+        skipped_no_match: skippedNoMatch,
+        failed,
+        leads_sent: leadsSent,
+        leads_skipped_no_match: leadsSkippedNoMatch,
+        leads_failed: leadsFailed,
+      }),
       { status: 200, headers: { "Content-Type": "application/json" } },
     );
   } catch (err) {
