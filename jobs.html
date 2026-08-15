@@ -107,8 +107,14 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
 .rh-left{font-size:13px;color:var(--t2);}
 .sort-sel{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:8px;padding:7px 12px;font-size:13px;color:var(--t2);outline:none;font-family:var(--font-sans);}
-.job-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.1rem 1.25rem;margin-bottom:10px;cursor:pointer;transition:border-color .15s;display:block;text-decoration:none;color:inherit;}
+.job-card-wrap{position:relative;margin-bottom:10px;}
+.job-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.1rem 1.25rem;cursor:pointer;transition:border-color .15s;display:block;text-decoration:none;color:inherit;}
 .job-card:hover{border-color:var(--bdr2);}
+.jc-save-btn{position:absolute;top:10px;right:10px;width:30px;height:30px;background:rgba(10,10,10,0.55);border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--t2);cursor:pointer;transition:color .15s;}
+.jc-save-btn svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;}
+.jc-save-btn:hover{color:var(--t1);}
+.jc-save-btn.saved{color:var(--grn);}
+.jc-save-btn.saved svg{fill:currentColor;}
 .jc-row1{display:flex;align-items:flex-start;gap:12px;}
 .co-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;flex-shrink:0;}
 .jc-info{flex:1;min-width:0;}
@@ -192,6 +198,10 @@ footer a:hover{color:var(--grn);}
     </div>
   </div>
   <div class="nav-right" style="display:flex;gap:10px;flex-shrink:0;align-items:center;">
+    <a href="saved-jobs.html" class="btn btn-ghost" style="text-decoration:none;display:flex;align-items:center;gap:5px;">
+      <svg viewBox="0 0 24 24" width="14" height="14" style="fill:currentColor;flex-shrink:0;"><path d="M6 3.5a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 18 3.5V21l-6-4.2L6 21V3.5z"/></svg>
+      Saved<span id="savedJobsCount" style="color:var(--t3);"></span>
+    </a>
     <div class="signin-wrap">
       <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
       <div class="signin-menu" id="signinMenu">
@@ -380,6 +390,11 @@ function fmtRelativeDate(iso) {
 const MAX_SKILL_FILTERS_SHOWN = 15;
 
 let ALL_JOBS = [];
+// save_keys of every job the current visitor has bookmarked - loaded from
+// localStorage synchronously (so the very first render already shows the
+// right filled/outline state) and topped up from the account's saved_jobs
+// table if they're signed in (async, triggers one re-render when it lands).
+let SAVED_KEYS = new Set();
 let currentScope = "us_remote";
 let currentSectors = new Set();
 let currentJobCategories = new Set();
@@ -653,10 +668,27 @@ function jobCardHtml(job) {
     ? `employer-job.html?id=${job.job_posting_id}`
     : (job.page_slug ? `jobs/${job.page_slug}.html` : (job.job_url || 'javascript:void(0)'));
 
+  // The save key mirrors the same job_posting_id-vs-page_slug branch href
+  // already uses above - one stable identifier scheme, not a second one
+  // invented just for saving. A raw job_url with neither (shouldn't happen
+  // in practice - every crawled job gets a page_slug) gets no save button
+  // at all rather than a save key that can't be matched back to anything.
+  const saveKey = job.job_posting_id ? `employer:${job.job_posting_id}` : job.page_slug;
+  const isSaved = saveKey && SAVED_KEYS.has(saveKey);
+  const saveBtn = saveKey ? `
+    <button type="button" class="jc-save-btn${isSaved ? " saved" : ""}" data-save-key="${escapeHtml(saveKey)}"
+      data-title="${escapeHtml(job.job_title || '')}" data-company="${escapeHtml(job.company || '')}" data-location="${escapeHtml(job.location || '')}"
+      aria-label="${isSaved ? "Unsave job" : "Save job"}" onclick="toggleSaveJob(event, this)">
+      <svg viewBox="0 0 24 24" width="17" height="17"><path d="M6 3.5a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 18 3.5V21l-6-4.2L6 21V3.5z"/></svg>
+    </button>` : "";
+
   return `
-  <a class="job-card" style="border-left:3px solid ${colorVar(color)};" href="${href}">
-    ${inner}
-  </a>`;
+  <div class="job-card-wrap">
+    <a class="job-card" style="border-left:3px solid ${colorVar(color)};" href="${href}">
+      ${inner}
+    </a>
+    ${saveBtn}
+  </div>`;
 }
 
 function render() {
@@ -1026,6 +1058,144 @@ document.getElementById("sort-select").addEventListener("change", () => {
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
 
+// --- Save this job: localStorage always, Supabase too when signed in ---
+
+function loadLocalSavedJobs() {
+  try {
+    return JSON.parse(localStorage.getItem('vt_saved_jobs') || '[]');
+  } catch (err) {
+    return [];
+  }
+}
+
+function writeLocalSavedJobs(list) {
+  localStorage.setItem('vt_saved_jobs', JSON.stringify(list));
+}
+
+// Returns the signed-in session (refreshing an expired access_token via
+// its refresh_token first) or null if there isn't one / it couldn't be
+// renewed. This is the only place that talks to vt_session directly -
+// every other function just gets back a usable session or nothing.
+async function getValidSession() {
+  let session;
+  try {
+    session = JSON.parse(localStorage.getItem('vt_session') || 'null');
+  } catch (err) {
+    return null;
+  }
+  if (!session || !session.refresh_token) return null;
+  // 60s buffer so a request doesn't start against a token that expires
+  // mid-flight.
+  if (session.expires_at && session.expires_at > Date.now() + 60000) {
+    return session;
+  }
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: session.refresh_token }),
+    });
+    if (!res.ok) throw new Error('refresh failed');
+    const data = await res.json();
+    session = {
+      ...session,
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+      expires_at: Date.now() + (data.expires_in || 3600) * 1000,
+    };
+    localStorage.setItem('vt_session', JSON.stringify(session));
+    return session;
+  } catch (err) {
+    // Refresh token itself is dead (revoked, too old) - clear the stale
+    // session rather than retrying forever on every save click.
+    localStorage.removeItem('vt_session');
+    return null;
+  }
+}
+
+async function loadAccountSavedJobs() {
+  const session = await getValidSession();
+  if (!session || !session.candidate_id) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/saved_jobs?candidate_id=eq.${session.candidate_id}&select=save_key`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}` },
+    });
+    if (!res.ok) return;
+    const rows = await res.json();
+    let changed = false;
+    for (const row of rows) {
+      if (!SAVED_KEYS.has(row.save_key)) { SAVED_KEYS.add(row.save_key); changed = true; }
+    }
+    if (changed) { updateSavedJobsCount(); render(); }
+  } catch (err) {
+    console.error('Could not load account saved jobs:', err);
+  }
+}
+
+function updateSavedJobsCount() {
+  const el = document.getElementById('savedJobsCount');
+  if (el) el.textContent = SAVED_KEYS.size ? ` (${SAVED_KEYS.size})` : '';
+}
+
+async function toggleSaveJob(event, btn) {
+  event.preventDefault();
+  event.stopPropagation();
+  const key = btn.dataset.saveKey;
+  const nowSaved = !btn.classList.contains('saved');
+
+  btn.classList.toggle('saved', nowSaved);
+  btn.setAttribute('aria-label', nowSaved ? 'Unsave job' : 'Save job');
+  if (nowSaved) SAVED_KEYS.add(key); else SAVED_KEYS.delete(key);
+  updateSavedJobsCount();
+
+  const local = loadLocalSavedJobs();
+  if (nowSaved) {
+    if (!local.some(j => j.save_key === key)) {
+      local.push({
+        save_key: key,
+        job_title: btn.dataset.title,
+        company: btn.dataset.company,
+        location: btn.dataset.location,
+        saved_at: new Date().toISOString(),
+      });
+    }
+  } else {
+    const idx = local.findIndex(j => j.save_key === key);
+    if (idx !== -1) local.splice(idx, 1);
+  }
+  writeLocalSavedJobs(local);
+
+  const session = await getValidSession();
+  if (!session || !session.candidate_id) return;
+  try {
+    if (nowSaved) {
+      await fetch(`${SUPABASE_URL}/rest/v1/saved_jobs`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'resolution=merge-duplicates,return=minimal',
+        },
+        body: JSON.stringify([{
+          candidate_id: session.candidate_id,
+          save_key: key,
+          job_title: btn.dataset.title,
+          company: btn.dataset.company,
+          location: btn.dataset.location,
+        }]),
+      });
+    } else {
+      await fetch(`${SUPABASE_URL}/rest/v1/saved_jobs?candidate_id=eq.${session.candidate_id}&save_key=eq.${encodeURIComponent(key)}`, {
+        method: 'DELETE',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}` },
+      });
+    }
+  } catch (err) {
+    console.error('Could not sync saved job to account:', err);
+  }
+}
+
 // Paid employer postings live in Supabase, not the crawler's static data -
 // fetched fresh on every page load and merged in alongside it so a job
 // shows up the moment it's paid for, not just after the next scheduled
@@ -1085,6 +1255,12 @@ async function fetchEmployerPostings() {
   const crawledJobs = JSON.parse(dataEl.textContent);
   const employerJobs = await fetchEmployerPostings();
   ALL_JOBS = employerJobs.concat(crawledJobs);
+  SAVED_KEYS = new Set(loadLocalSavedJobs().map(j => j.save_key));
+  updateSavedJobsCount();
+  // Fire-and-forget: a signed-in candidate's account saves may include
+  // more than what's cached locally (e.g. saved from another device) -
+  // loadAccountSavedJobs() re-renders once if it finds any.
+  loadAccountSavedJobs();
   // Fire-and-forget: don't block the initial render on a ~1MB fetch. If a
   // radius is already selected by the time this resolves, re-render so the
   // distance-based filter actually takes effect instead of silently falling

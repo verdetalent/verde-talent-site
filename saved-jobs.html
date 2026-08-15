@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CNGTGW71QP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CNGTGW71QP');
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<meta name="robots" content="noindex"/>
+<title>Saved Jobs — Verde Talent</title>
+<meta name="description" content="Jobs you've bookmarked on Verde Talent."/>
+<link rel="stylesheet" href="/tabler-icons.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;}
+.nav-toggle i{transform:translateX(3px);}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
+.nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
+.nav-links a:hover{color:var(--grn);}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
+.nav-group{display:flex;flex-direction:column;gap:6px;}
+.nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
+.nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
+.nav-group-label.grn{color:var(--grn);}
+.nav-group-label.amb{color:var(--amb);}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn{background:var(--grn);color:#052e1e;font-weight:500;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.signin-wrap{position:relative;}
+.signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
+.signin-menu.open{display:block;}
+.signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
+.signin-menu a:hover{background:var(--card2);color:var(--t1);}
+.signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
+.signin-menu .si-label.grn{color:var(--grn);}
+.signin-menu .si-label.amb{color:var(--amb);}
+
+.wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
+.page-head h1{font-size:26px;font-weight:700;margin-bottom:.4rem;}
+.page-head .sub{font-size:14px;color:var(--t2);}
+
+.sync-note{display:none;background:rgba(34,224,154,0.06);border:0.5px solid rgba(34,224,154,0.25);border-radius:12px;padding:.9rem 1.1rem;margin-top:1.5rem;font-size:13px;color:var(--t2);}
+.sync-note a{color:var(--grn);text-decoration:none;font-weight:600;}
+.sync-note.show{display:block;}
+
+.job-list{display:flex;flex-direction:column;gap:10px;margin-top:1.75rem;}
+.saved-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.1rem 1.25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.sc-info{flex:1;min-width:0;}
+.sc-title{font-size:15px;font-weight:500;text-decoration:none;color:var(--t1);}
+.sc-title:hover{color:var(--grn);}
+.sc-co-loc{font-size:13px;color:var(--t2);margin-top:3px;}
+.sc-saved-at{font-size:11.5px;color:var(--t3);margin-top:6px;}
+.sc-remove{background:none;border:0.5px solid var(--bdr2);color:var(--t3);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.sc-remove:hover{color:var(--cor);border-color:rgba(255,112,85,0.4);}
+.sc-remove svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
+
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--t3);}
+.empty-state svg{width:36px;height:36px;fill:none;stroke:var(--t3);stroke-width:1.4;margin-bottom:1rem;}
+.empty-state p{font-size:14px;margin-bottom:1.25rem;}
+.empty-state a{color:var(--grn);text-decoration:none;font-weight:600;}
+
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+
+@media (max-width:940px){
+  .nav-toggle{display:flex;}
+  .logo-img{height:64px;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
+  .nav-groups.open{display:flex;}
+  .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
+  .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
+  .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
+  .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.webp" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="jobs.html">Find jobs</a>
+        <a href="companies.html">Companies</a>
+        <a href="professional-development.html">Training</a>
+      </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="resume-vault.html">Resume Vault</a>
+        <a href="intelligence.html">Intelligence</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="news.html">News</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right" style="display:flex;gap:10px;flex-shrink:0;align-items:center;">
+    <div class="signin-wrap">
+      <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
+      <div class="signin-menu" id="signinMenu">
+        <div class="si-label grn">Candidates</div>
+        <a href="login.html">Sign in</a>
+        <div class="si-label amb">Employers</div>
+        <a href="employer-login.html">Sign in</a>
+      </div>
+    </div>
+    <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-head">
+    <h1>Saved jobs</h1>
+    <div class="sub" id="savedSub">Jobs you've bookmarked, kept right here in your browser.</div>
+  </div>
+
+  <div class="sync-note" id="syncNote">
+    Signed in as <span id="syncEmail"></span> — your saves are synced across devices.
+  </div>
+  <div class="sync-note" id="anonNote">
+    <a href="login.html">Sign in</a> to keep these saved jobs synced across every device you use.
+  </div>
+
+  <div class="job-list" id="jobList"></div>
+
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <svg viewBox="0 0 24 24"><path d="M6 3.5a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 18 3.5V21l-6-4.2L6 21V3.5z"/></svg>
+    <p>Nothing saved yet — click the bookmark icon on any job to keep it here.</p>
+    <a href="jobs.html">Browse open roles →</a>
+  </div>
+</div>
+
+<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+
+<script>
+document.getElementById('navToggle').addEventListener('click', function(){
+  document.getElementById('navGroups').classList.toggle('open');
+});
+document.getElementById('signinToggle').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('signinMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('signinMenu').classList.remove('open');
+});
+
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+
+function loadLocalSavedJobs() {
+  try {
+    return JSON.parse(localStorage.getItem('vt_saved_jobs') || '[]');
+  } catch (err) {
+    return [];
+  }
+}
+
+function writeLocalSavedJobs(list) {
+  localStorage.setItem('vt_saved_jobs', JSON.stringify(list));
+}
+
+// Same refresh-aware session reader as jobs.html - kept in sync manually
+// since this site has no shared JS file, only shared copy-pasted patterns.
+async function getValidSession() {
+  let session;
+  try {
+    session = JSON.parse(localStorage.getItem('vt_session') || 'null');
+  } catch (err) {
+    return null;
+  }
+  if (!session || !session.refresh_token) return null;
+  if (session.expires_at && session.expires_at > Date.now() + 60000) {
+    return session;
+  }
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: session.refresh_token }),
+    });
+    if (!res.ok) throw new Error('refresh failed');
+    const data = await res.json();
+    session = {
+      ...session,
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+      expires_at: Date.now() + (data.expires_in || 3600) * 1000,
+    };
+    localStorage.setItem('vt_session', JSON.stringify(session));
+    return session;
+  } catch (err) {
+    localStorage.removeItem('vt_session');
+    return null;
+  }
+}
+
+function urlForSaveKey(key) {
+  if (key.startsWith('employer:')) {
+    return `employer-job.html?id=${encodeURIComponent(key.slice(9))}`;
+  }
+  return `jobs/${key}.html`;
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+function fmtSavedAt(iso) {
+  if (!iso) return '';
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+  if (days <= 0) return 'Saved today';
+  if (days === 1) return 'Saved 1 day ago';
+  return `Saved ${days} days ago`;
+}
+
+function renderList(jobs) {
+  const listEl = document.getElementById('jobList');
+  const emptyEl = document.getElementById('emptyState');
+  if (!jobs.length) {
+    listEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    return;
+  }
+  emptyEl.style.display = 'none';
+  listEl.innerHTML = jobs.map(j => `
+    <div class="saved-card" data-save-key="${escapeHtml(j.save_key)}">
+      <div class="sc-info">
+        <a class="sc-title" href="${escapeHtml(urlForSaveKey(j.save_key))}">${escapeHtml(j.job_title || 'Open role')}</a>
+        <div class="sc-co-loc">${escapeHtml(j.company || '')}${j.location ? ' · ' + escapeHtml(j.location) : ''}</div>
+        <div class="sc-saved-at">${fmtSavedAt(j.saved_at)}</div>
+      </div>
+      <button type="button" class="sc-remove" aria-label="Remove from saved" onclick="removeSavedJob('${j.save_key.replace(/'/g, "\\\\'")}')">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>`).join('');
+}
+
+async function removeSavedJob(key) {
+  const local = loadLocalSavedJobs().filter(j => j.save_key !== key);
+  writeLocalSavedJobs(local);
+  renderList(local);
+
+  const session = await getValidSession();
+  if (!session || !session.candidate_id) return;
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/saved_jobs?candidate_id=eq.${session.candidate_id}&save_key=eq.${encodeURIComponent(key)}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}` },
+    });
+  } catch (err) {
+    console.error('Could not remove saved job from account:', err);
+  }
+}
+
+(async function main() {
+  let jobs = loadLocalSavedJobs();
+  renderList(jobs);
+
+  const session = await getValidSession();
+  if (session && session.candidate_id) {
+    document.getElementById('syncNote').classList.add('show');
+    document.getElementById('syncEmail').textContent = session.email || '';
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/saved_jobs?candidate_id=eq.${session.candidate_id}&select=save_key,job_title,company,location,saved_at&order=saved_at.desc`, {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}` },
+      });
+      if (res.ok) {
+        const rows = await res.json();
+        const byKey = new Map(jobs.map(j => [j.save_key, j]));
+        for (const row of rows) byKey.set(row.save_key, row);
+        jobs = Array.from(byKey.values()).sort((a, b) => new Date(b.saved_at) - new Date(a.saved_at));
+        writeLocalSavedJobs(jobs);
+        renderList(jobs);
+      }
+    } catch (err) {
+      console.error('Could not load account saved jobs:', err);
+    }
+  } else {
+    document.getElementById('anonNote').classList.add('show');
+  }
+})();
+</script>
+</body>
+</html>

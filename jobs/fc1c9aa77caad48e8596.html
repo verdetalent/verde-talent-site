@@ -73,9 +73,14 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row{font-size:13px;color:var(--t3);display:flex;flex-wrap:wrap;gap:14px;margin-bottom:1.25rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
-.apply-row{margin:1.5rem 0 2rem;}
+.apply-row{margin:1.5rem 0 2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
-.apply-note{font-size:12px;color:var(--t3);margin-top:8px;}
+.btn-save{background:none;border:0.5px solid var(--bdr2);color:var(--t2);padding:11px 18px;border-radius:10px;font-size:14px;cursor:pointer;font-family:var(--font-sans);display:inline-flex;align-items:center;gap:7px;}
+.btn-save:hover{color:var(--t1);}
+.btn-save.saved{color:var(--grn);border-color:rgba(34,224,154,0.35);}
+.btn-save svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;}
+.btn-save.saved svg{fill:currentColor;}
+.apply-note{font-size:12px;color:var(--t3);margin-top:8px;flex-basis:100%;}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:100;opacity:0;pointer-events:none;transition:opacity .18s ease;}
 .scrim.open{opacity:1;pointer-events:auto;}
 .apply-modal{background:var(--card);border:0.5px solid var(--bdr2);border-radius:18px;max-width:420px;width:100%;padding:1.75rem;position:relative;transform:translateY(6px) scale(.98);transition:transform .18s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
@@ -178,6 +183,11 @@ footer a{color:var(--t3);text-decoration:none;}
   <div></div>
   <div class="apply-row">
     <button type="button" class="btn-apply" id="applyBtn" data-url="https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-Kingdom-Cambuslang/Senior-Programme-Analyst_R-32422">Apply on Avangrid Renewables's site &rarr;</button>
+    <button type="button" class="btn-save" id="saveBtn" data-save-key="fc1c9aa77caad48e8596"
+      data-title="Senior Programme Analyst" data-company="Avangrid Renewables" data-location="United Kingdom, Cambuslang">
+      <svg viewBox="0 0 24 24"><path d="M6 3.5a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 18 3.5V21l-6-4.2L6 21V3.5z"/></svg>
+      <span id="saveBtnText">Save</span>
+    </button>
     <div class="apply-note">Applying takes you to Avangrid Renewables's own careers site to complete your application.</div>
   </div>
   <div class="desc-title">Full description</div>
@@ -207,6 +217,84 @@ document.getElementById('signinToggle').addEventListener('click', function(e){
 document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
+// --- Save this job: localStorage always, Supabase too when signed in.
+// Same pattern as jobs.html's bookmark icon - kept in sync by hand since
+// this site has no shared JS file, only a shared copy-pasted pattern.
+(function(){
+  const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+  const saveBtn = document.getElementById('saveBtn');
+  const saveBtnText = document.getElementById('saveBtnText');
+  const key = saveBtn.dataset.saveKey;
+
+  function loadLocal(){ try { return JSON.parse(localStorage.getItem('vt_saved_jobs') || '[]'); } catch(e) { return []; } }
+  function writeLocal(list){ localStorage.setItem('vt_saved_jobs', JSON.stringify(list)); }
+
+  async function getValidSession(){
+    let session;
+    try { session = JSON.parse(localStorage.getItem('vt_session') || 'null'); } catch(e) { return null; }
+    if (!session || !session.refresh_token) return null;
+    if (session.expires_at && session.expires_at > Date.now() + 60000) return session;
+    try {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: session.refresh_token }),
+      });
+      if (!res.ok) throw new Error('refresh failed');
+      const data = await res.json();
+      session = { ...session, access_token: data.access_token, refresh_token: data.refresh_token, expires_at: Date.now() + (data.expires_in || 3600) * 1000 };
+      localStorage.setItem('vt_session', JSON.stringify(session));
+      return session;
+    } catch(e) {
+      localStorage.removeItem('vt_session');
+      return null;
+    }
+  }
+
+  function setSavedUi(saved){
+    saveBtn.classList.toggle('saved', saved);
+    saveBtnText.textContent = saved ? 'Saved' : 'Save';
+  }
+
+  setSavedUi(loadLocal().some((j) => j.save_key === key));
+
+  saveBtn.addEventListener('click', async function(){
+    const nowSaved = !saveBtn.classList.contains('saved');
+    setSavedUi(nowSaved);
+
+    const local = loadLocal();
+    if (nowSaved) {
+      if (!local.some((j) => j.save_key === key)) {
+        local.push({ save_key: key, job_title: saveBtn.dataset.title, company: saveBtn.dataset.company, location: saveBtn.dataset.location, saved_at: new Date().toISOString() });
+      }
+    } else {
+      const idx = local.findIndex((j) => j.save_key === key);
+      if (idx !== -1) local.splice(idx, 1);
+    }
+    writeLocal(local);
+
+    const session = await getValidSession();
+    if (!session || !session.candidate_id) return;
+    try {
+      if (nowSaved) {
+        await fetch(`${SUPABASE_URL}/rest/v1/saved_jobs`, {
+          method: 'POST',
+          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}`, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+          body: JSON.stringify([{ candidate_id: session.candidate_id, save_key: key, job_title: saveBtn.dataset.title, company: saveBtn.dataset.company, location: saveBtn.dataset.location }]),
+        });
+      } else {
+        await fetch(`${SUPABASE_URL}/rest/v1/saved_jobs?candidate_id=eq.${session.candidate_id}&save_key=eq.${encodeURIComponent(key)}`, {
+          method: 'DELETE',
+          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}` },
+        });
+      }
+    } catch(err) {
+      console.error('Could not sync saved job to account:', err);
+    }
+  });
+})();
+
 (function(){
   const scrim = document.getElementById('applyScrim');
   const applyBtn = document.getElementById('applyBtn');

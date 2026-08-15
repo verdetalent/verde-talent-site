@@ -99,6 +99,34 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
 
+// Anyone could have bookmarked jobs anonymously (localStorage only) before
+// ever signing in - the moment they do sign in, those saves get folded
+// into their account so they're not silently lost. Prefer:
+// resolution=merge-duplicates makes this a safe upsert against the
+// unique(candidate_id, save_key) constraint, so re-running this on every
+// login is harmless rather than erroring on already-synced rows.
+async function syncLocalSavedJobs(accessToken, candidateId){
+  const local = JSON.parse(localStorage.getItem('vt_saved_jobs') || '[]');
+  if(!local.length) return;
+  const rows = local.map((j) => ({
+    candidate_id: candidateId,
+    save_key: j.save_key,
+    job_title: j.job_title || null,
+    company: j.company || null,
+    location: j.location || null,
+  }));
+  await fetch(`${SUPABASE_URL}/rest/v1/saved_jobs`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal',
+    },
+    body: JSON.stringify(rows),
+  });
+}
+
 document.getElementById('loginBtn').addEventListener('click', async function(){
   const btn = this;
   const note = document.getElementById('loginNote');
@@ -147,6 +175,16 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
       throw new Error('Signed in, but no profile was found on this account.');
     }
     const p = profiles[0];
+
+    // candidate_id (not just the auth user_id) is what saved_jobs and any
+    // other candidate-owned table key off of - stashing it now saves every
+    // other page from having to re-fetch the candidates row just to learn
+    // its own id.
+    const session = JSON.parse(localStorage.getItem('vt_session') || '{}');
+    session.candidate_id = p.id;
+    localStorage.setItem('vt_session', JSON.stringify(session));
+
+    syncLocalSavedJobs(accessToken, p.id).catch((err) => console.error('Saved-jobs sync failed:', err));
 
     document.getElementById('pf-name').textContent = `${p.first_name} ${p.last_name}`;
     document.getElementById('pf-headline').textContent = p.headline || '';
