@@ -67,7 +67,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 /* Hero */
 .hero{position:relative;padding:5rem 2rem 3rem;text-align:center;overflow:hidden;border-bottom:0.5px solid var(--bdr);}
 .hero-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
-.hero h1{font-size:36px;font-weight:700;line-height:1.2;max-width:600px;margin:0 auto .9rem;letter-spacing:-0.02em;position:relative;}
+.hero h1{font-size:44px;font-weight:700;line-height:1.2;max-width:600px;margin:0 auto .9rem;letter-spacing:-0.02em;position:relative;}
 .hero h1 span{color:var(--grn);}
 .hero p{font-size:16px;color:var(--t2);max-width:480px;margin:0 auto;line-height:1.65;position:relative;}
 /* Mission */
@@ -119,6 +119,10 @@ footer a:hover{color:var(--grn);}
   .nav-right{gap:6px;}
   .nav-right .btn{padding:7px 12px;}
   #signinToggle{padding:7px 10px;}
+}
+
+@media (max-width:900px){
+  .hero h1{font-size:32px;}
 }
 
 @media (max-width:940px){
