@@ -92,6 +92,14 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="row"><span>Skills</span><span class="tag-list" id="pf-skills"></span></div>
     <div class="row"><span>Availability</span><span id="pf-avail">—</span></div>
     <a href="#" class="resume-link" id="pf-resume" style="display:none;"><i class="ti ti-file-text"></i>View my resume</a>
+    <div class="referral-card" id="referralCard" style="display:none;margin-top:1.25rem;background:rgba(34,224,154,0.06);border:0.5px solid rgba(34,224,154,0.25);border-radius:12px;padding:1.1rem 1.25rem;text-align:left;">
+      <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px;">Know other clean energy job seekers?</div>
+      <div style="font-size:12.5px;color:var(--t2);line-height:1.55;margin-bottom:10px;">Refer 10 candidates and unlock salary intelligence access (coming soon). <span id="referralCount">0</span> of 10 so far.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input type="text" id="referralLink" readonly style="flex:1;min-width:180px;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:9px 12px;font-size:12.5px;color:var(--t2);font-family:var(--font-sans);"/>
+        <button type="button" class="btn-grn" id="referralCopyBtn" style="width:auto;padding:9px 16px;font-size:12.5px;flex-shrink:0;">Copy link</button>
+      </div>
+    </div>
     <div class="note" style="text-align:left;margin-top:1.25rem;">Editing your profile from here is coming soon. For changes in the meantime, email <a href="mailto:contact@verdetalent.com" style="color:var(--grn);">contact@verdetalent.com</a>.</div>
   </div>
 </div>
@@ -207,6 +215,33 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
         link.target = '_blank';
         link.style.display = 'inline-flex';
       }
+    }
+
+    if (p.referral_code) {
+      const shareLink = `${window.location.origin}/create-profile.html?ref=${p.referral_code}`;
+      document.getElementById('referralLink').value = shareLink;
+      document.getElementById('referralCard').style.display = 'block';
+      document.getElementById('referralCopyBtn').addEventListener('click', function(){
+        const btn2 = this;
+        navigator.clipboard.writeText(shareLink).then(() => {
+          btn2.textContent = 'Copied ✓';
+          setTimeout(() => { btn2.textContent = 'Copy link'; }, 2000);
+        }).catch(() => {});
+      });
+      // Count, not the referral rows themselves - RLS already scopes this
+      // to referrals crediting this candidate's own code, so a plain count
+      // is enough and avoids fetching rows just to throw them away.
+      fetch(`${SUPABASE_URL}/rest/v1/referrals?select=id&referrer_code=eq.${p.referral_code}`, {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${accessToken}`,
+          'Prefer': 'count=exact',
+        },
+      }).then((r) => {
+        const range = r.headers.get('content-range'); // "0-4/5"
+        const count = range ? parseInt(range.split('/')[1], 10) || 0 : 0;
+        document.getElementById('referralCount').textContent = count;
+      }).catch((err) => console.error('Could not load referral count:', err));
     }
 
     document.getElementById('loginCard').style.display = 'none';

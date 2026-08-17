@@ -918,6 +918,11 @@ function renderEducation(){
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
 
+// Whoever's referral link got this visitor here, if any - read once at
+// load so it survives the visitor filling out the whole form before
+// submitting, rather than needing to be threaded through as a live param.
+const REFERRAL_CODE = new URLSearchParams(window.location.search).get('ref');
+
 // --- Zero-commitment job alert signup (no account) ---
 // "All sectors" is a convenience toggle, not its own value - checking it
 // checks every individual sector box, and one row per sector gets inserted
@@ -1126,7 +1131,11 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
         'apikey': SUPABASE_ANON_KEY,
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
-        'Prefer': 'return=minimal',
+        // return=representation (not minimal) so we get back this new
+        // candidate's id + auto-generated referral_code, needed for the
+        // referral row below and the "share your link" nudge - the id
+        // isn't knowable client-side beforehand since the DB assigns it.
+        'Prefer': 'return=representation',
       },
       body: JSON.stringify(payload),
     });
@@ -1134,9 +1143,49 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       const errText = await res.text();
       throw new Error(errText || res.statusText);
     }
+    const [newCandidate] = await res.json();
     btn.textContent = 'Submitted ✓';
     note.textContent = 'Account created and profile saved. You can sign in anytime to update it.';
     note.style.color = 'var(--grn)';
+
+    // Credit whoever referred this signup, if anyone - failure here
+    // shouldn't surface as an error to the new candidate, their profile is
+    // already saved either way.
+    if (REFERRAL_CODE && newCandidate?.id) {
+      fetch(`${SUPABASE_URL}/rest/v1/referrals`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify({ referrer_code: REFERRAL_CODE, referred_candidate_id: newCandidate.id }),
+      }).catch((err) => console.error('Could not record referral:', err));
+    }
+
+    if (newCandidate?.referral_code) {
+      const referralCard = document.createElement('div');
+      referralCard.style.cssText = 'margin-top:1.25rem;background:rgba(34,224,154,0.06);border:0.5px solid rgba(34,224,154,0.25);border-radius:12px;padding:1.1rem 1.25rem;text-align:left;';
+      const shareLink = `${window.location.origin}/create-profile.html?ref=${newCandidate.referral_code}`;
+      referralCard.innerHTML = `
+        <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px;">Know other clean energy job seekers?</div>
+        <div style="font-size:12.5px;color:var(--t2);line-height:1.55;margin-bottom:10px;">Refer 10 candidates and unlock salary intelligence access (coming soon). 0 of 10 so far.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="text" readonly value="${shareLink}" style="flex:1;min-width:180px;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:9px 12px;font-size:12.5px;color:var(--t2);font-family:var(--font-sans);"/>
+          <button type="button" class="btn-grn" style="width:auto;padding:9px 16px;font-size:12.5px;flex-shrink:0;">Copy link</button>
+        </div>`;
+      const copyBtn = referralCard.querySelector('button');
+      const linkInput = referralCard.querySelector('input');
+      copyBtn.addEventListener('click', function(){
+        linkInput.select();
+        navigator.clipboard.writeText(shareLink).then(() => {
+          copyBtn.textContent = 'Copied ✓';
+          setTimeout(() => { copyBtn.textContent = 'Copy link'; }, 2000);
+        }).catch(() => {});
+      });
+      note.insertAdjacentElement('afterend', referralCard);
+    }
 
     // If they arrived here mid-application (chose "Create free profile" on
     // a job's Apply interstitial instead of skipping straight through),
