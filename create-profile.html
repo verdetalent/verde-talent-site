@@ -513,57 +513,156 @@ async function extractTextFromPdf(arrayBuffer) {
   // Groups text items into lines by their Y position rather than joining
   // everything into one run-on paragraph, so section headers and entries
   // in the parsed resume still land on their own lines.
-  //
-  // Whether to insert a space between two consecutive items is decided by
-  // their actual horizontal gap, not "always join with a space" - some PDF
-  // generators (Chrome's Skia PDF export in particular, common when a
-  // resume is built as a webpage and printed to PDF) emit heavily
-  // letter-spaced/tracked text as many separate single-character items
-  // with near-zero gaps between them. Always inserting a space there turns
-  // "PROFILE" into "P R O F I L E" and "$100K" into "$ 100 K", which then
-  // fails every section-header and field regex downstream.
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-  const pageTexts = [];
+  const pagesColumns = [];
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
-    const lines = [];
-    let currentLine = '';
-    let lastY = null;
-    let lastEndX = null;
-    let lastHeight = null;
-    const pushLine = () => {
-      const cleaned = currentLine.replace(/\s+/g, ' ').trim();
-      if (cleaned) lines.push(collapseTrackedLine(cleaned));
-    };
-    for (const item of content.items) {
-      const y = item.transform[5];
-      const x = item.transform[4];
-      if (lastY !== null && Math.abs(y - lastY) > 2) {
-        pushLine();
-        currentLine = '';
-        lastEndX = null;
-      }
-      if (item.str && lastEndX !== null) {
-        // A real word/section gap is comparable to (or wider than) the
-        // text's own height; a gap near zero (or even slightly negative,
-        // which normal kerning produces) means these items are part of
-        // the same run of text and get concatenated with no space at all.
-        const gap = x - lastEndX;
-        const threshold = Math.max(lastHeight || 0, item.height || 0) * 0.3;
-        if (gap > threshold && !/^\s/.test(item.str) && !/\s$/.test(currentLine)) {
-          currentLine += ' ';
-        }
-      }
-      currentLine += item.str;
-      lastEndX = x + (item.width || 0);
-      lastHeight = item.height || lastHeight;
-      lastY = y;
-    }
-    pushLine();
-    pageTexts.push(lines.filter(Boolean).join('\n'));
+    const viewport = page.getViewport({ scale: 1 });
+    // Whitespace-only items are excluded, not just empty ones - pdf.js
+    // emits some of them with an enormous advance width representing a
+    // large skipped run (e.g. the wide gap in a "date ......... title"
+    // header line), and that bounding box can span clean across a real
+    // column gutter, masking it from detection below.
+    const items = content.items.filter((it) => it.str && it.str.trim());
+    pagesColumns.push(splitIntoColumns(items, viewport.width));
   }
-  return pageTexts.join('\n\n');
+
+  // A multi-page resume with a sidebar (contact info, skills, education)
+  // typically has that sidebar end partway through the document while the
+  // main job-history column keeps going onto later pages. Emitting page 1
+  // in full before page 2 would splice a finished sidebar in between two
+  // halves of the main column that are actually meant to read
+  // consecutively. Emitting every page's Nth column together, in page
+  // order, before moving to the (N+1)th column keeps that main thread
+  // intact across page breaks. Single-column resumes (the common case)
+  // only ever produce one column per page, so this reduces to the
+  // original page-by-page order for them.
+  const maxColumns = Math.max(0, ...pagesColumns.map((c) => c.length));
+  const sections = [];
+  for (let colIdx = 0; colIdx < maxColumns; colIdx++) {
+    const lines = [];
+    for (const columns of pagesColumns) {
+      if (columns[colIdx]) lines.push(...itemsToLines(columns[colIdx]));
+    }
+    if (lines.length) sections.push(lines.join('\n'));
+  }
+  return sections.join('\n\n');
+}
+
+// Many resume templates use a 2-column layout (a sidebar of contact info,
+// skills and education next to a main column of job history), and a PDF's
+// content stream commonly interleaves the two - it emits items in whatever
+// order the generator wrote them, not necessarily top-to-bottom-then-
+// left-to-right. Reading the raw item order for a page like that produces
+// text where a job history entry can end up sandwiched inside an unrelated
+// sidebar section. Detecting a real vertical gutter (a band down the page
+// no text ever crosses) and processing everything left of it, then
+// everything right of it, restores natural reading order without needing
+// to know anything about this specific template.
+function splitIntoColumns(items, pageWidth) {
+  if (items.length < 10 || !pageWidth) return [items];
+
+  const STEP = 2;
+  const searchStart = pageWidth * 0.25;
+  const searchEnd = pageWidth * 0.75;
+  const bins = [];
+  for (let x = searchStart; x <= searchEnd; x += STEP) bins.push({ x, occupied: false });
+  for (const item of items) {
+    const x0 = item.transform[4];
+    const x1 = x0 + (item.width || 0);
+    for (const bin of bins) {
+      if (bin.x >= x0 - STEP && bin.x <= x1 + STEP) bin.occupied = true;
+    }
+  }
+
+  let bestStart = -1;
+  let bestLen = 0;
+  let curStart = -1;
+  let curLen = 0;
+  for (let idx = 0; idx < bins.length; idx++) {
+    if (!bins[idx].occupied) {
+      if (curStart === -1) curStart = idx;
+      curLen++;
+      if (curLen > bestLen) {
+        bestLen = curLen;
+        bestStart = curStart;
+      }
+    } else {
+      curStart = -1;
+      curLen = 0;
+    }
+  }
+
+  const gutterWidthPx = bestLen * STEP;
+  if (bestStart === -1 || gutterWidthPx < pageWidth * 0.03) return [items];
+
+  const gutterX0 = bins[bestStart].x;
+  const gutterX1 = bins[bestStart + bestLen - 1].x;
+  const left = items.filter((it) => it.transform[4] < gutterX0);
+  const right = items.filter((it) => it.transform[4] >= gutterX1);
+  // A real column gutter has substantial content on both sides. A thin
+  // blank strip next to a headshot, or a gap under a single centered
+  // line, produces a lopsided split that isn't actually two columns -
+  // fall back to treating the page as one column rather than shredding it.
+  if (left.length < 5 || right.length < 5) return [items];
+
+  return [left, right];
+}
+
+// Converts one column's worth of text items into an array of lines. Items
+// are explicitly re-sorted top-to-bottom then left-to-right first, since
+// once a page has been split into columns, the items belonging to one
+// column are no longer guaranteed to already be in that order in the
+// original stream.
+function itemsToLines(items) {
+  const sorted = [...items].sort((a, b) => {
+    const dy = b.transform[5] - a.transform[5];
+    if (Math.abs(dy) > 2) return dy;
+    return a.transform[4] - b.transform[4];
+  });
+
+  const lines = [];
+  let currentLine = '';
+  let lastY = null;
+  let lastEndX = null;
+  let lastHeight = null;
+  const pushLine = () => {
+    const cleaned = currentLine.replace(/\s+/g, ' ').trim();
+    if (cleaned) lines.push(collapseTrackedLine(cleaned));
+  };
+  for (const item of sorted) {
+    const y = item.transform[5];
+    const x = item.transform[4];
+    if (lastY !== null && Math.abs(y - lastY) > 2) {
+      pushLine();
+      currentLine = '';
+      lastEndX = null;
+    }
+    if (item.str && lastEndX !== null) {
+      // A real word/section gap is comparable to (or wider than) the
+      // text's own height; a gap near zero (or even slightly negative,
+      // which normal kerning produces) means these items are part of
+      // the same run of text and get concatenated with no space at all.
+      // Some PDF generators (Chrome's Skia PDF export in particular,
+      // common when a resume is built as a webpage and printed to PDF)
+      // emit heavily letter-spaced/tracked text as many separate
+      // single-character items with near-zero gaps between them -
+      // always inserting a space there turns "PROFILE" into
+      // "P R O F I L E", which fails every downstream regex.
+      const gap = x - lastEndX;
+      const threshold = Math.max(lastHeight || 0, item.height || 0) * 0.3;
+      if (gap > threshold && !/^\s/.test(item.str) && !/\s$/.test(currentLine)) {
+        currentLine += ' ';
+      }
+    }
+    currentLine += item.str;
+    lastEndX = x + (item.width || 0);
+    lastHeight = item.height || lastHeight;
+    lastY = y;
+  }
+  pushLine();
+  return lines;
 }
 
 // Position-based spacing (above) still isn't enough for headers set in
@@ -667,6 +766,21 @@ function findResumeSections(lines) {
 // blank-line-based paragraph splitter would merge multiple resume entries
 // (e.g. two past jobs) into one and silently drop everything after the
 // first date range found.
+// A line that reads like a full sentence (several words, ends in
+// punctuation) is almost certainly a bullet point, not a title or company
+// name - used below to stop a title/company block before it swallows the
+// entry's actual bullets.
+function looksLikeBulletLine(line) {
+  if (!line) return true;
+  // A line starting with a lowercase letter is almost always the tail end
+  // of a sentence that wrapped across lines (e.g. a bullet's last line
+  // after "...customer\nmanagement."), never a real title or company name
+  // - those are proper nouns and always capitalized. This catches short
+  // wrapped fragments a word-count check alone would miss.
+  if (/^[a-z]/.test(line)) return true;
+  return /[.!?]$/.test(line) && line.split(/\s+/).filter(Boolean).length > 4;
+}
+
 function parseEntriesFromLines(lines, kind) {
   const trimmed = lines.map(l => l.trim());
   const entries = [];
@@ -680,10 +794,37 @@ function parseEntriesFromLines(lines, kind) {
     if (withoutDate.length > 3) {
       headLine = withoutDate; // date shared the line with the title/company
     } else {
-      let j = i - 1;
-      while (j >= 0 && !trimmed[j]) j--;
-      if (j < 0 || DATE_RANGE_RE.test(trimmed[j])) continue;
-      headLine = trimmed[j];
+      // The date can sit on its own line either just above the title/
+      // company (a "title | company \n date" layout) or just below it (a
+      // "date \n title \n company" layout, common when the date is a
+      // right-aligned badge next to a wrapped title). Try backward first
+      // - if that line is itself a bullet from the *previous* entry
+      // (which happens whenever this entry's own title/company turns out
+      // to live below the date instead), fall back to looking forward.
+      let back = i - 1;
+      while (back >= 0 && !trimmed[back]) back--;
+      const backLine = back >= 0 && !DATE_RANGE_RE.test(trimmed[back]) ? trimmed[back] : null;
+      let fwd = i + 1;
+      while (fwd < trimmed.length && !trimmed[fwd]) fwd++;
+      const fwdLine = fwd < trimmed.length && !DATE_RANGE_RE.test(trimmed[fwd]) ? trimmed[fwd] : null;
+
+      if (backLine && !looksLikeBulletLine(backLine)) {
+        headLine = backLine;
+      } else if (fwdLine && !looksLikeBulletLine(fwdLine)) {
+        // Forward layouts commonly split title and company across two
+        // lines rather than one ("Title \n Company"); grab the next line
+        // too, when it also isn't a bullet, and treat it as the company.
+        const secondLine = trimmed[fwd + 1] ? trimmed[fwd + 1].trim() : '';
+        headLine = secondLine && !looksLikeBulletLine(secondLine) && !DATE_RANGE_RE.test(secondLine)
+          ? `${fwdLine} | ${secondLine}`
+          : fwdLine;
+      } else if (backLine) {
+        headLine = backLine;
+      } else if (fwdLine) {
+        headLine = fwdLine;
+      } else {
+        continue;
+      }
     }
     const parts = headLine.split(/\s+(?:at|@)\s+|\s*[|–—]\s*|,\s*/).filter(Boolean);
     if (!parts.length) continue;
