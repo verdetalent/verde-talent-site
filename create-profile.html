@@ -12,7 +12,7 @@
 </script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
 <title>Create Profile — Verde Talent</title>
 <meta name="description" content="Create a free candidate profile on Verde Talent to get discovered by clean energy employers hiring for solar, wind, storage, and grid roles."/>
 <meta property="og:type" content="website"/>
@@ -513,27 +513,76 @@ async function extractTextFromPdf(arrayBuffer) {
   // Groups text items into lines by their Y position rather than joining
   // everything into one run-on paragraph, so section headers and entries
   // in the parsed resume still land on their own lines.
+  //
+  // Whether to insert a space between two consecutive items is decided by
+  // their actual horizontal gap, not "always join with a space" - some PDF
+  // generators (Chrome's Skia PDF export in particular, common when a
+  // resume is built as a webpage and printed to PDF) emit heavily
+  // letter-spaced/tracked text as many separate single-character items
+  // with near-zero gaps between them. Always inserting a space there turns
+  // "PROFILE" into "P R O F I L E" and "$100K" into "$ 100 K", which then
+  // fails every section-header and field regex downstream.
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
   const pageTexts = [];
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
     const lines = [];
-    let currentLine = [];
+    let currentLine = '';
     let lastY = null;
+    let lastEndX = null;
+    let lastHeight = null;
+    const pushLine = () => {
+      const cleaned = currentLine.replace(/\s+/g, ' ').trim();
+      if (cleaned) lines.push(collapseTrackedLine(cleaned));
+    };
     for (const item of content.items) {
       const y = item.transform[5];
+      const x = item.transform[4];
       if (lastY !== null && Math.abs(y - lastY) > 2) {
-        lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
-        currentLine = [];
+        pushLine();
+        currentLine = '';
+        lastEndX = null;
       }
-      currentLine.push(item.str);
+      if (item.str && lastEndX !== null) {
+        // A real word/section gap is comparable to (or wider than) the
+        // text's own height; a gap near zero (or even slightly negative,
+        // which normal kerning produces) means these items are part of
+        // the same run of text and get concatenated with no space at all.
+        const gap = x - lastEndX;
+        const threshold = Math.max(lastHeight || 0, item.height || 0) * 0.3;
+        if (gap > threshold && !/^\s/.test(item.str) && !/\s$/.test(currentLine)) {
+          currentLine += ' ';
+        }
+      }
+      currentLine += item.str;
+      lastEndX = x + (item.width || 0);
+      lastHeight = item.height || lastHeight;
       lastY = y;
     }
-    if (currentLine.length) lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+    pushLine();
     pageTexts.push(lines.filter(Boolean).join('\n'));
   }
   return pageTexts.join('\n\n');
+}
+
+// Position-based spacing (above) still isn't enough for headers set in
+// heavy letter-tracking (e.g. "E D U C A T I O N") - a designed template
+// often makes the gap *within* a tracked word about as wide as the gap
+// *between* words, so no gap threshold can tell them apart. Catches what
+// that missed: a short line where most "words" came out as a single
+// character is almost certainly one of these tracked labels, not a real
+// sentence (a genuine sentence's word-length distribution never looks
+// like this), so every space in it gets removed rather than just some.
+function collapseTrackedLine(line) {
+  if (line.length > 40) return line;
+  const tokens = line.split(' ');
+  if (tokens.length < 3) return line;
+  const singleCharCount = tokens.filter(t => t.length === 1).length;
+  if (singleCharCount / tokens.length >= 0.6) {
+    return line.replace(/\s+/g, '');
+  }
+  return line;
 }
 
 function htmlToStructuredText(html) {
@@ -581,17 +630,24 @@ async function extractTextFromResumeFile(file) {
 // fills stays fully editable — the submit note below still tells people
 // to double-check before submitting.
 const RESUME_SECTION_HEADERS = {
-  summary: /^(professional\s+)?summary$|^objective$|^about(\s+me)?$/i,
+  summary: /^(professional\s+)?summary$|^objective$|^about(\s+me)?$|^profile$/i,
   skills: /^(technical\s+|core\s+)?skills?(\s*&\s*\w+)?$/i,
   experience: /^(professional\s+|work\s+)?experience$|^employment(\s+history)?$/i,
   education: /^education(\s+&\s+\w+)?$/i,
 };
+// Designed resume templates often number or bullet their section headers
+// ("01 Profile", "✦ Education") - stripped before matching against
+// RESUME_SECTION_HEADERS above (which only recognizes the bare word) so
+// those still register as real headers. Plain, unprefixed headers like
+// "Education" are untouched since they have no leading \W/digit run to
+// strip in the first place.
+const SECTION_HEADER_PREFIX_RE = /^[\W\d]+\s*/u;
 const DATE_RANGE_RE = /((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{4}|\d{4})\s*(?:-|–|—|to)\s*((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{4}|\d{4}|present|current)/i;
 
 function findResumeSections(lines) {
   const hits = [];
   lines.forEach((line, i) => {
-    const clean = line.replace(/:$/, '').trim();
+    const clean = line.replace(/:$/, '').trim().replace(SECTION_HEADER_PREFIX_RE, '');
     if (!clean || clean.length > 40) return;
     for (const [type, re] of Object.entries(RESUME_SECTION_HEADERS)) {
       if (re.test(clean)) { hits.push({ type, start: i }); break; }
