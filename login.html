@@ -92,6 +92,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="row"><span>Skills</span><span class="tag-list" id="pf-skills"></span></div>
     <div class="row"><span>Availability</span><span id="pf-avail">—</span></div>
     <a href="#" class="resume-link" id="pf-resume" style="display:none;"><i class="ti ti-file-text"></i>View my resume</a>
+    <label for="pf-resume-upload" class="resume-link" id="pf-resume-upload-label" style="display:none;cursor:pointer;"><i class="ti ti-upload"></i>Upload resume</label>
+    <input type="file" id="pf-resume-upload" accept=".pdf,.doc,.docx" style="display:none;"/>
+    <div class="note" id="pf-resume-upload-note" style="text-align:left;"></div>
     <div class="referral-card" id="referralCard" style="display:none;margin-top:1.25rem;background:rgba(34,224,154,0.06);border:0.5px solid rgba(34,224,154,0.25);border-radius:12px;padding:1.1rem 1.25rem;text-align:left;">
       <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px;">Know other clean energy job seekers?</div>
       <div style="font-size:12.5px;color:var(--t2);line-height:1.55;margin-bottom:10px;">Successfully refer 10 candidates and unlock salary intelligence access (coming soon). <span id="referralCount">0</span> of 10 so far.</div>
@@ -106,6 +109,22 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 <script>
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+
+// Supabase Storage object keys reject accented/punctuation characters
+// outside a narrow ASCII set (e.g. the "·" many resume filenames use as a
+// separator, like "Name · Title - Year.pdf"), which fails the upload
+// outright rather than just displaying oddly - the filename itself is
+// never shown to the user, so it's safe to normalize away entirely.
+function sanitizeStorageFileName(name){
+  const dotIdx = name.lastIndexOf('.');
+  const ext = dotIdx > -1 ? name.slice(dotIdx + 1).toLowerCase().replace(/[^a-z0-9]/g, '') : '';
+  const base = (dotIdx > -1 ? name.slice(0, dotIdx) : name)
+    .normalize('NFKD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60) || 'resume';
+  return ext ? `${base}.${ext}` : base;
+}
 
 // Anyone could have bookmarked jobs anonymously (localStorage only) before
 // ever signing in - the moment they do sign in, those saves get folded
@@ -215,6 +234,51 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
         link.target = '_blank';
         link.style.display = 'inline-flex';
       }
+    } else {
+      // No resume on file yet - most commonly because an earlier upload
+      // attempt failed (bad filename, dropped connection) after the
+      // account and profile were already created. Let them add one here
+      // rather than the only recovery path being an email to support.
+      document.getElementById('pf-resume-upload-label').style.display = 'inline-flex';
+      document.getElementById('pf-resume-upload').addEventListener('change', async function(){
+        const file = this.files[0];
+        if(!file) return;
+        const uploadNote = document.getElementById('pf-resume-upload-note');
+        uploadNote.textContent = 'Uploading…';
+        uploadNote.style.color = 'var(--t3)';
+        try {
+          const resumePath = `${userId}/${sanitizeStorageFileName(file.name)}`;
+          const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/resumes/${resumePath}`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': file.type || 'application/octet-stream',
+              'x-upsert': 'true',
+            },
+            body: file,
+          });
+          if(!uploadRes.ok) throw new Error(await uploadRes.text());
+          const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?id=eq.${p.id}`, {
+            method: 'PATCH',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal',
+            },
+            body: JSON.stringify({ resume_path: resumePath, resume_filename: file.name }),
+          });
+          if(!patchRes.ok) throw new Error(await patchRes.text());
+          uploadNote.textContent = 'Resume uploaded ✓';
+          uploadNote.style.color = 'var(--grn)';
+          document.getElementById('pf-resume-upload-label').style.display = 'none';
+        } catch (err) {
+          console.error('Resume upload failed:', err);
+          uploadNote.textContent = 'Upload failed — try a different file, or email contact@verdetalent.com.';
+          uploadNote.style.color = 'var(--cor)';
+        }
+      });
     }
 
     if (p.referral_code) {
