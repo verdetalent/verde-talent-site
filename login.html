@@ -54,17 +54,6 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .note{font-size:12px;color:var(--t3);margin-top:12px;text-align:center;}
 .foot-link{font-size:13px;color:var(--t3);text-align:center;margin-top:1.25rem;}
 .foot-link a{color:var(--grn);text-decoration:none;}
-
-/* Profile view (shown after successful login) */
-.profile-card{display:none;}
-.profile-card .row{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:0.5px solid var(--bdr);}
-.profile-card .row:last-child{border-bottom:none;}
-.profile-card .row span:first-child{color:var(--t3);}
-.profile-card .row > span:last-child{text-align:right;max-width:60%;}
-.tag-list{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;}
-.tag{font-size:11px;padding:3px 9px;border-radius:20px;border:0.5px solid rgba(34,224,154,0.35);color:var(--grn);background:rgba(34,224,154,0.08);flex-shrink:0;white-space:nowrap;}
-.resume-link{display:inline-flex;align-items:center;gap:6px;color:var(--blu);text-decoration:none;font-size:13px;margin-top:14px;}
-.resume-link:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -84,48 +73,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="foot-link">Don't have a profile yet? <a href="create-profile.html">Create one</a></div>
   </div>
 
-  <div class="card profile-card" id="profileCard">
-    <h1 id="pf-name">—</h1>
-    <p class="sub" id="pf-headline"></p>
-    <div class="row"><span>Location</span><span id="pf-loc">—</span></div>
-    <div class="row"><span>Experience</span><span id="pf-exp">—</span></div>
-    <div class="row"><span>Sectors</span><span class="tag-list" id="pf-sectors"></span></div>
-    <div class="row"><span>Skills</span><span class="tag-list" id="pf-skills"></span></div>
-    <div class="row"><span>Availability</span><span id="pf-avail">—</span></div>
-    <a href="#" class="resume-link" id="pf-resume" style="display:none;"><i class="ti ti-file-text"></i>View my resume</a>
-    <label for="pf-resume-upload" class="resume-link" id="pf-resume-upload-label" style="display:none;cursor:pointer;"><i class="ti ti-upload"></i>Upload resume</label>
-    <input type="file" id="pf-resume-upload" accept=".pdf,.doc,.docx" style="display:none;"/>
-    <div class="note" id="pf-resume-upload-note" style="text-align:left;"></div>
-    <div class="referral-card" id="referralCard" style="display:none;margin-top:1.25rem;background:rgba(34,224,154,0.06);border:0.5px solid rgba(34,224,154,0.25);border-radius:12px;padding:1.1rem 1.25rem;text-align:left;">
-      <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px;">Know other clean energy job seekers?</div>
-      <div style="font-size:12.5px;color:var(--t2);line-height:1.55;margin-bottom:10px;">Successfully refer 10 candidates and unlock salary intelligence access (coming soon). <span id="referralCount">0</span> of 10 so far.</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <input type="text" id="referralLink" readonly style="flex:1;min-width:180px;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:9px 12px;font-size:12.5px;color:var(--t2);font-family:var(--font-sans);"/>
-        <button type="button" class="btn-grn" id="referralCopyBtn" style="width:auto;padding:9px 16px;font-size:12.5px;flex-shrink:0;">Copy link</button>
-      </div>
-    </div>
-    <div class="note" style="text-align:left;margin-top:1.25rem;">Editing your profile from here is coming soon. For changes in the meantime, email <a href="mailto:contact@verdetalent.com" style="color:var(--grn);">contact@verdetalent.com</a>.</div>
-  </div>
 </div>
 <script>
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
-
-// Supabase Storage object keys reject accented/punctuation characters
-// outside a narrow ASCII set (e.g. the "·" many resume filenames use as a
-// separator, like "Name · Title - Year.pdf"), which fails the upload
-// outright rather than just displaying oddly - the filename itself is
-// never shown to the user, so it's safe to normalize away entirely.
-function sanitizeStorageFileName(name){
-  const dotIdx = name.lastIndexOf('.');
-  const ext = dotIdx > -1 ? name.slice(dotIdx + 1).toLowerCase().replace(/[^a-z0-9]/g, '') : '';
-  const base = (dotIdx > -1 ? name.slice(0, dotIdx) : name)
-    .normalize('NFKD').replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-zA-Z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 60) || 'resume';
-  return ext ? `${base}.${ext}` : base;
-}
 
 if(new URLSearchParams(window.location.search).get('created') === '1'){
   document.getElementById('createdNote').style.display = 'block';
@@ -218,103 +169,7 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
 
     syncLocalSavedJobs(accessToken, p.id).catch((err) => console.error('Saved-jobs sync failed:', err));
 
-    document.getElementById('pf-name').textContent = `${p.first_name} ${p.last_name}`;
-    document.getElementById('pf-headline').textContent = p.headline || '';
-    document.getElementById('pf-loc').textContent = p.location || '—';
-    document.getElementById('pf-exp').textContent = p.years_experience || '—';
-    document.getElementById('pf-sectors').innerHTML = (p.sectors || []).map(s=>`<span class="tag">${s}</span>`).join('') || '—';
-    document.getElementById('pf-skills').innerHTML = (p.skills || []).map(s=>`<span class="tag">${s}</span>`).join('') || '—';
-    document.getElementById('pf-avail').textContent = p.availability || '—';
-
-    if(p.resume_path){
-      const signRes = await fetch(`${SUPABASE_URL}/storage/v1/object/sign/resumes/${p.resume_path}`, {
-        method: 'POST',
-        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ expiresIn: 3600 }),
-      });
-      const signData = await signRes.json();
-      if(signRes.ok && signData.signedURL){
-        const link = document.getElementById('pf-resume');
-        link.href = `${SUPABASE_URL}/storage/v1${signData.signedURL}`;
-        link.target = '_blank';
-        link.style.display = 'inline-flex';
-      }
-    } else {
-      // No resume on file yet - most commonly because an earlier upload
-      // attempt failed (bad filename, dropped connection) after the
-      // account and profile were already created. Let them add one here
-      // rather than the only recovery path being an email to support.
-      document.getElementById('pf-resume-upload-label').style.display = 'inline-flex';
-      document.getElementById('pf-resume-upload').addEventListener('change', async function(){
-        const file = this.files[0];
-        if(!file) return;
-        const uploadNote = document.getElementById('pf-resume-upload-note');
-        uploadNote.textContent = 'Uploading…';
-        uploadNote.style.color = 'var(--t3)';
-        try {
-          const resumePath = `${userId}/${sanitizeStorageFileName(file.name)}`;
-          const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/resumes/${resumePath}`, {
-            method: 'POST',
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': file.type || 'application/octet-stream',
-              'x-upsert': 'true',
-            },
-            body: file,
-          });
-          if(!uploadRes.ok) throw new Error(await uploadRes.text());
-          const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?id=eq.${p.id}`, {
-            method: 'PATCH',
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
-              'Prefer': 'return=minimal',
-            },
-            body: JSON.stringify({ resume_path: resumePath, resume_filename: file.name }),
-          });
-          if(!patchRes.ok) throw new Error(await patchRes.text());
-          uploadNote.textContent = 'Resume uploaded ✓';
-          uploadNote.style.color = 'var(--grn)';
-          document.getElementById('pf-resume-upload-label').style.display = 'none';
-        } catch (err) {
-          console.error('Resume upload failed:', err);
-          uploadNote.textContent = 'Upload failed — try a different file, or email contact@verdetalent.com.';
-          uploadNote.style.color = 'var(--cor)';
-        }
-      });
-    }
-
-    if (p.referral_code) {
-      const shareLink = `${window.location.origin}/create-profile.html?ref=${p.referral_code}`;
-      document.getElementById('referralLink').value = shareLink;
-      document.getElementById('referralCard').style.display = 'block';
-      document.getElementById('referralCopyBtn').addEventListener('click', function(){
-        const btn2 = this;
-        navigator.clipboard.writeText(shareLink).then(() => {
-          btn2.textContent = 'Copied ✓';
-          setTimeout(() => { btn2.textContent = 'Copy link'; }, 2000);
-        }).catch(() => {});
-      });
-      // Count, not the referral rows themselves - RLS already scopes this
-      // to referrals crediting this candidate's own code, so a plain count
-      // is enough and avoids fetching rows just to throw them away.
-      fetch(`${SUPABASE_URL}/rest/v1/referrals?select=id&referrer_code=eq.${p.referral_code}`, {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${accessToken}`,
-          'Prefer': 'count=exact',
-        },
-      }).then((r) => {
-        const range = r.headers.get('content-range'); // "0-4/5"
-        const count = range ? parseInt(range.split('/')[1], 10) || 0 : 0;
-        document.getElementById('referralCount').textContent = count;
-      }).catch((err) => console.error('Could not load referral count:', err));
-    }
-
-    document.getElementById('loginCard').style.display = 'none';
-    document.getElementById('profileCard').style.display = 'block';
+    window.location.href = 'dashboard.html';
   } catch(err){
     btn.disabled = false;
     btn.textContent = 'Sign in →';
