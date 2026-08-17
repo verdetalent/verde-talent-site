@@ -877,7 +877,12 @@ function parseResumeText(text) {
     }
   }
 
-  const locMatch = text.match(/\b([A-Z][a-zA-Z.]+(?:\s[A-Z][a-zA-Z.]+)?,\s*[A-Z]{2})\b/);
+  // [ \t] rather than \s for the internal gaps - \s also matches newlines,
+  // which let this match glue the last word of an unrelated previous line
+  // onto a real "City, ST" that starts the next line (e.g. a job title
+  // ending in "...Manager" immediately above a contact line beginning
+  // "Austin, TX" was matching as one location, "Manager\nAustin, TX").
+  const locMatch = text.match(/\b([A-Z][a-zA-Z.]+(?:[ \t][A-Z][a-zA-Z.]+)?,[ \t]*[A-Z]{2})\b/);
   if (locMatch) parsed.location = locMatch[1];
 
   const sections = findResumeSections(lines);
