@@ -60,9 +60,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .profile-card .row{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:0.5px solid var(--bdr);}
 .profile-card .row:last-child{border-bottom:none;}
 .profile-card .row span:first-child{color:var(--t3);}
-.profile-card .row span:last-child{text-align:right;max-width:60%;}
+.profile-card .row > span:last-child{text-align:right;max-width:60%;}
 .tag-list{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;}
-.tag{font-size:11px;padding:3px 9px;border-radius:20px;border:0.5px solid rgba(34,224,154,0.35);color:var(--grn);background:rgba(34,224,154,0.08);}
+.tag{font-size:11px;padding:3px 9px;border-radius:20px;border:0.5px solid rgba(34,224,154,0.35);color:var(--grn);background:rgba(34,224,154,0.08);flex-shrink:0;white-space:nowrap;}
 .resume-link{display:inline-flex;align-items:center;gap:6px;color:var(--blu);text-decoration:none;font-size:13px;margin-top:14px;}
 .resume-link:hover{text-decoration:underline;}
 </style>
