@@ -125,6 +125,15 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .field input,.field select,.field textarea{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 13px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);transition:border-color .15s;}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(34,224,154,0.5);}
 .field input::placeholder,.field textarea::placeholder{color:var(--t3);}
+/* Chrome forces a light background on autofilled inputs (e.g. a
+   remembered email) that no background-color rule above can override -
+   only this combination of an inset box-shadow and text-fill-color can. */
+.field input:-webkit-autofill,.field input:-webkit-autofill:hover,.field input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 1000px #1A1A1A inset;
+  -webkit-text-fill-color:var(--t1);
+  caret-color:var(--t1);
+  transition:background-color 9999s ease-in-out 0s;
+}
 .field select option{background:#1A1A1A;}
 .field textarea{resize:vertical;min-height:80px;line-height:1.6;}
 .char-count{font-size:11px;color:var(--t3);text-align:right;margin-top:4px;}

@@ -86,6 +86,16 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .field input,.field textarea,.field select{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 13px;font-size:14px;color:var(--t1);outline:none;font-family:var(--font-sans);}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(34,224,154,0.5);}
 .field input[readonly]{color:var(--t3);cursor:not-allowed;}
+/* Chrome forces a light background on autofilled inputs that no
+   background-color rule above can override - only this combination of an
+   inset box-shadow and text-fill-color can. */
+.field input:-webkit-autofill,.field input:-webkit-autofill:hover,.field input:-webkit-autofill:focus,
+.pw-row input:-webkit-autofill,.pw-row input:-webkit-autofill:hover,.pw-row input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 1000px #1A1A1A inset;
+  -webkit-text-fill-color:var(--t1);
+  caret-color:var(--t1);
+  transition:background-color 9999s ease-in-out 0s;
+}
 .field textarea{resize:vertical;min-height:80px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
 .form-row.full{grid-template-columns:1fr;}
