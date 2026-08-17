@@ -502,6 +502,11 @@ function openExpForm(){
   document.getElementById('exp-dates').value = '';
   document.getElementById('exp-desc').value = '';
   document.getElementById('expSaveBtn').textContent = 'Add';
+  // Always parked right after the list (its default spot, above the "Add
+  // experience" button) - undoes any repositioning a previous edit left it
+  // in, since editExperience below moves it next to whichever card was
+  // clicked.
+  document.getElementById('expList').insertAdjacentElement('afterend', document.getElementById('expForm'));
   toggleForm('expForm', true);
 }
 function closeExpForm(){ editingExpIndex = null; toggleForm('expForm', false); }
@@ -513,6 +518,10 @@ function editExperience(i){
   document.getElementById('exp-dates').value = e.dates || '';
   document.getElementById('exp-desc').value = (e.bullets || []).join('\n');
   document.getElementById('expSaveBtn').textContent = 'Save';
+  // Opens right under the specific card being edited rather than always
+  // at the bottom of the list, so it's clear which entry it applies to.
+  const card = document.querySelectorAll('#expList .exp-card')[i];
+  if(card) card.insertAdjacentElement('afterend', document.getElementById('expForm'));
   toggleForm('expForm', true);
 }
 function saveExperience(){
@@ -550,6 +559,7 @@ function openEduForm(){
   document.getElementById('edu-dates').value = '';
   document.getElementById('edu-desc').value = '';
   document.getElementById('eduSaveBtn').textContent = 'Add';
+  document.getElementById('eduList').insertAdjacentElement('afterend', document.getElementById('eduForm'));
   toggleForm('eduForm', true);
 }
 function closeEduForm(){ editingEduIndex = null; toggleForm('eduForm', false); }
@@ -561,6 +571,8 @@ function editEducation(i){
   document.getElementById('edu-dates').value = e.dates || '';
   document.getElementById('edu-desc').value = (e.bullets || []).join('\n');
   document.getElementById('eduSaveBtn').textContent = 'Save';
+  const card = document.querySelectorAll('#eduList .exp-card')[i];
+  if(card) card.insertAdjacentElement('afterend', document.getElementById('eduForm'));
   toggleForm('eduForm', true);
 }
 function saveEducation(){
