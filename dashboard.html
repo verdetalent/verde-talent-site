@@ -78,8 +78,12 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .exp-title-text{font-size:14px;font-weight:500;}
 .exp-co{font-size:13px;color:var(--t2);margin-top:2px;}
 .exp-dates{font-size:12px;color:var(--t3);margin-top:2px;}
+.exp-bullets{list-style:disc;margin:8px 0 0 18px;padding:0;display:flex;flex-direction:column;gap:3px;}
+.exp-bullets li{font-size:12.5px;color:var(--t2);line-height:1.45;}
+.exp-actions{display:flex;gap:2px;flex-shrink:0;}
 .icon-btn{background:none;border:none;cursor:pointer;color:var(--t3);font-size:16px;padding:2px;}
 .icon-btn:hover{color:var(--cor);}
+.exp-actions .icon-btn:first-child:hover{color:var(--grn);}
 .add-btn{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--t3);cursor:pointer;padding:8px 0;background:none;border:none;font-family:var(--font-sans);}
 .add-btn:hover{color:var(--grn);}
 .add-form{background:#1A1A1A;border:0.5px solid rgba(34,224,154,0.3);border-radius:12px;padding:1rem;margin-bottom:8px;display:none;}
@@ -212,9 +216,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="add-form" id="expForm">
         <div class="form-row"><div class="field"><label for="exp-title">Job title</label><input type="text" id="exp-title" placeholder="Solar Design Engineer"/></div><div class="field"><label for="exp-co">Company</label><input type="text" id="exp-co" placeholder="Company · City, State"/></div></div>
         <div class="field"><label for="exp-dates">Dates</label><input type="text" id="exp-dates" placeholder="e.g. Jan 2022 — Present"/></div>
-        <div class="add-form-actions"><button type="button" class="af-cancel" onclick="toggleForm('expForm',false)">Cancel</button><button type="button" class="af-save" onclick="addExperience()">Add</button></div>
+        <div class="field"><label for="exp-desc">Bullet points</label><textarea id="exp-desc" placeholder="One per line, e.g.&#10;Led a team of 5 engineers&#10;Closed $2M in new business" style="min-height:80px;"></textarea></div>
+        <div class="add-form-actions"><button type="button" class="af-cancel" onclick="closeExpForm()">Cancel</button><button type="button" class="af-save" id="expSaveBtn" onclick="saveExperience()">Add</button></div>
       </div>
-      <button type="button" class="add-btn" onclick="toggleForm('expForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add experience</button>
+      <button type="button" class="add-btn" onclick="openExpForm()"><i class="ti ti-plus" style="font-size:15px;"></i> Add experience</button>
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-school"></i>Education</div>
@@ -222,9 +227,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="add-form" id="eduForm">
         <div class="form-row"><div class="field"><label for="edu-degree">Degree</label><input type="text" id="edu-degree" placeholder="B.S. Electrical Engineering"/></div><div class="field"><label for="edu-school">School</label><input type="text" id="edu-school" placeholder="University name"/></div></div>
         <div class="field"><label for="edu-dates">Dates</label><input type="text" id="edu-dates" placeholder="e.g. 2018 — 2022"/></div>
-        <div class="add-form-actions"><button type="button" class="af-cancel" onclick="toggleForm('eduForm',false)">Cancel</button><button type="button" class="af-save" onclick="addEducation()">Add</button></div>
+        <div class="field"><label for="edu-desc">Bullet points (optional)</label><textarea id="edu-desc" placeholder="One per line, e.g.&#10;Full scholarship&#10;Dean's list all four years" style="min-height:60px;"></textarea></div>
+        <div class="add-form-actions"><button type="button" class="af-cancel" onclick="closeEduForm()">Cancel</button><button type="button" class="af-save" id="eduSaveBtn" onclick="saveEducation()">Add</button></div>
       </div>
-      <button type="button" class="add-btn" onclick="toggleForm('eduForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add education</button>
+      <button type="button" class="add-btn" onclick="openEduForm()"><i class="ti ti-plus" style="font-size:15px;"></i> Add education</button>
     </div>
   </div>
   <div class="sidebar">
@@ -385,19 +391,48 @@ document.getElementById('inp-bio').addEventListener('input', function(){
 
 // --- Experience / education add-forms ---
 function toggleForm(id, show){ document.getElementById(id).style.display = show ? 'block' : 'none'; }
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function bulletsToLines(text){
+  return String(text || '').split('\n').map(l => l.trim()).filter(Boolean);
+}
 const experience = [];
 const education = [];
-function addExperience(){
+let editingExpIndex = null;
+let editingEduIndex = null;
+
+function openExpForm(){
+  editingExpIndex = null;
+  document.getElementById('exp-title').value = '';
+  document.getElementById('exp-co').value = '';
+  document.getElementById('exp-dates').value = '';
+  document.getElementById('exp-desc').value = '';
+  document.getElementById('expSaveBtn').textContent = 'Add';
+  toggleForm('expForm', true);
+}
+function closeExpForm(){ editingExpIndex = null; toggleForm('expForm', false); }
+function editExperience(i){
+  const e = experience[i];
+  editingExpIndex = i;
+  document.getElementById('exp-title').value = e.title || '';
+  document.getElementById('exp-co').value = e.co || '';
+  document.getElementById('exp-dates').value = e.dates || '';
+  document.getElementById('exp-desc').value = (e.bullets || []).join('\n');
+  document.getElementById('expSaveBtn').textContent = 'Save';
+  toggleForm('expForm', true);
+}
+function saveExperience(){
   const title = document.getElementById('exp-title').value.trim();
   const co = document.getElementById('exp-co').value.trim();
   const dates = document.getElementById('exp-dates').value.trim();
+  const bullets = bulletsToLines(document.getElementById('exp-desc').value);
   if(!title || !co) return;
-  experience.push({title, co, dates});
+  const entry = {title, co, dates, bullets};
+  if(editingExpIndex !== null) experience[editingExpIndex] = entry;
+  else experience.push(entry);
   renderExperience();
-  document.getElementById('exp-title').value='';
-  document.getElementById('exp-co').value='';
-  document.getElementById('exp-dates').value='';
-  toggleForm('expForm', false);
+  closeExpForm();
 }
 function removeExperience(i){ experience.splice(i,1); renderExperience(); }
 function renderExperience(){
@@ -407,21 +442,45 @@ function renderExperience(){
   experience.forEach((e,i)=>{
     const card = document.createElement('div');
     card.className = 'exp-card';
-    card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${e.title}</div><div class="exp-co">${e.co}</div><div class="exp-dates">${e.dates}</div></div><button class="icon-btn" onclick="removeExperience(${i})"><i class="ti ti-trash"></i></button></div>`;
+    const bulletsHtml = (e.bullets && e.bullets.length)
+      ? `<ul class="exp-bullets">${e.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}</ul>`
+      : '';
+    card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${escapeHtml(e.title)}</div><div class="exp-co">${escapeHtml(e.co)}</div><div class="exp-dates">${escapeHtml(e.dates)}</div>${bulletsHtml}</div><div class="exp-actions"><button class="icon-btn" onclick="editExperience(${i})"><i class="ti ti-pencil"></i></button><button class="icon-btn" onclick="removeExperience(${i})"><i class="ti ti-trash"></i></button></div></div>`;
     list.appendChild(card);
   });
 }
-function addEducation(){
+
+function openEduForm(){
+  editingEduIndex = null;
+  document.getElementById('edu-degree').value = '';
+  document.getElementById('edu-school').value = '';
+  document.getElementById('edu-dates').value = '';
+  document.getElementById('edu-desc').value = '';
+  document.getElementById('eduSaveBtn').textContent = 'Add';
+  toggleForm('eduForm', true);
+}
+function closeEduForm(){ editingEduIndex = null; toggleForm('eduForm', false); }
+function editEducation(i){
+  const e = education[i];
+  editingEduIndex = i;
+  document.getElementById('edu-degree').value = e.degree || '';
+  document.getElementById('edu-school').value = e.school || '';
+  document.getElementById('edu-dates').value = e.dates || '';
+  document.getElementById('edu-desc').value = (e.bullets || []).join('\n');
+  document.getElementById('eduSaveBtn').textContent = 'Save';
+  toggleForm('eduForm', true);
+}
+function saveEducation(){
   const degree = document.getElementById('edu-degree').value.trim();
   const school = document.getElementById('edu-school').value.trim();
   const dates = document.getElementById('edu-dates').value.trim();
+  const bullets = bulletsToLines(document.getElementById('edu-desc').value);
   if(!degree || !school) return;
-  education.push({degree, school, dates});
+  const entry = {degree, school, dates, bullets};
+  if(editingEduIndex !== null) education[editingEduIndex] = entry;
+  else education.push(entry);
   renderEducation();
-  document.getElementById('edu-degree').value='';
-  document.getElementById('edu-school').value='';
-  document.getElementById('edu-dates').value='';
-  toggleForm('eduForm', false);
+  closeEduForm();
 }
 function removeEducation(i){ education.splice(i,1); renderEducation(); }
 function renderEducation(){
@@ -431,7 +490,10 @@ function renderEducation(){
   education.forEach((e,i)=>{
     const card = document.createElement('div');
     card.className = 'exp-card';
-    card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${e.degree}</div><div class="exp-co">${e.school}</div><div class="exp-dates">${e.dates}</div></div><button class="icon-btn" onclick="removeEducation(${i})"><i class="ti ti-trash"></i></button></div>`;
+    const bulletsHtml = (e.bullets && e.bullets.length)
+      ? `<ul class="exp-bullets">${e.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}</ul>`
+      : '';
+    card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${escapeHtml(e.degree)}</div><div class="exp-co">${escapeHtml(e.school)}</div><div class="exp-dates">${escapeHtml(e.dates)}</div>${bulletsHtml}</div><div class="exp-actions"><button class="icon-btn" onclick="editEducation(${i})"><i class="ti ti-pencil"></i></button><button class="icon-btn" onclick="removeEducation(${i})"><i class="ti ti-trash"></i></button></div></div>`;
     list.appendChild(card);
   });
 }
