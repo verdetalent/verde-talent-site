@@ -1214,6 +1214,22 @@ document.getElementById('leadSubmitBtn').addEventListener('click', async functio
   }
 });
 
+// Supabase Storage object keys reject accented/punctuation characters
+// outside a narrow ASCII set (e.g. the "·" many resume filenames use as a
+// separator, like "Name · Title - Year.pdf"), which fails the upload
+// outright rather than just displaying oddly - the filename itself is
+// never shown to the user, so it's safe to normalize away entirely.
+function sanitizeStorageFileName(name){
+  const dotIdx = name.lastIndexOf('.');
+  const ext = dotIdx > -1 ? name.slice(dotIdx + 1).toLowerCase().replace(/[^a-z0-9]/g, '') : '';
+  const base = (dotIdx > -1 ? name.slice(0, dotIdx) : name)
+    .normalize('NFKD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60) || 'resume';
+  return ext ? `${base}.${ext}` : base;
+}
+
 document.getElementById('submitBtn').addEventListener('click', async function(){
   const btn = this;
   const note = document.getElementById('submitNote');
@@ -1275,13 +1291,14 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     let resumePath = null;
     if(resumeFile){
       btn.textContent = 'Uploading resume…';
-      resumePath = `${userId}/${resumeFile.name}`;
+      resumePath = `${userId}/${sanitizeStorageFileName(resumeFile.name)}`;
       const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/resumes/${resumePath}`, {
         method: 'POST',
         headers: {
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': resumeFile.type || 'application/octet-stream',
+          'x-upsert': 'true',
         },
         body: resumeFile,
       });
