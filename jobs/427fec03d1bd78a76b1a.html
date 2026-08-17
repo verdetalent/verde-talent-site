@@ -305,7 +305,21 @@ document.addEventListener('click', function(){
     window.open(jobUrl, '_blank', 'noopener');
     closeModal();
   }
-  applyBtn.addEventListener('click', openModal);
+  // A candidate who already has a profile doesn't need the "create one"
+  // pitch every time they apply - skip straight through if they're
+  // signed in with an unexpired session. Checked synchronously (no
+  // Supabase token-refresh round trip) so the click stays a direct user
+  // gesture - an await here before window.open would risk the new tab
+  // getting popup-blocked in some browsers.
+  function hasSignedInProfile(){
+    let session;
+    try { session = JSON.parse(localStorage.getItem('vt_session') || 'null'); } catch(e) { return false; }
+    return !!(session && session.candidate_id && session.expires_at && session.expires_at > Date.now());
+  }
+  applyBtn.addEventListener('click', function(){
+    if (hasSignedInProfile()) goToApplication();
+    else openModal();
+  });
   document.getElementById('applyModalClose').addEventListener('click', closeModal);
   document.getElementById('applySkip').addEventListener('click', goToApplication);
   document.getElementById('applyCreateProfile').addEventListener('click', function(){
