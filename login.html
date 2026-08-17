@@ -76,6 +76,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
   <div class="card" id="loginCard">
     <h1><span style="color:var(--grn);">Candidate</span> sign in</h1>
     <p class="sub">View the profile you created with Verde Talent.</p>
+    <div class="note" id="createdNote" style="display:none;background:rgba(34,224,154,0.06);border:0.5px solid rgba(34,224,154,0.25);border-radius:10px;padding:10px 12px;margin-bottom:16px;color:var(--grn);text-align:left;">Account created — sign in below to view your profile.</div>
     <div class="field"><label>Email</label><input type="email" id="li-email" placeholder="you@example.com"/></div>
     <div class="field"><label>Password</label><input type="password" id="li-password" placeholder="Your password"/></div>
     <button type="button" class="btn-grn" id="loginBtn">Sign in →</button>
@@ -124,6 +125,10 @@ function sanitizeStorageFileName(name){
     .replace(/^-+|-+$/g, '')
     .slice(0, 60) || 'resume';
   return ext ? `${base}.${ext}` : base;
+}
+
+if(new URLSearchParams(window.location.search).get('created') === '1'){
+  document.getElementById('createdNote').style.display = 'block';
 }
 
 // Anyone could have bookmarked jobs anonymously (localStorage only) before

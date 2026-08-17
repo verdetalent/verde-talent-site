@@ -1482,6 +1482,15 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
         }
       } catch(e){ /* malformed stash - just skip it, profile was still saved */ }
     }
+
+    // Send them on to sign in rather than leaving them stranded on the
+    // form they just submitted - but only when there's nothing else on
+    // this page still asking for their attention (the referral card and,
+    // especially, the "continue to your application" button above need a
+    // click before it'd make sense to navigate away).
+    if(!pendingRaw){
+      setTimeout(() => { window.location.href = 'login.html?created=1'; }, 900);
+    }
   } catch(err){
     btn.disabled = false;
     btn.textContent = 'Submit profile →';
