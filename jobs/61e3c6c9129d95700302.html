@@ -94,6 +94,8 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .am-btns{display:flex;flex-direction:column;gap:9px;}
 .am-primary{background:var(--grn);color:#052e1e;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);width:100%;}
 .am-primary:hover{filter:brightness(1.05);}
+.am-login{background:none;border:0.5px solid var(--bdr2);color:var(--t2);padding:11px 20px;border-radius:10px;font-size:13px;cursor:pointer;font-family:var(--font-sans);width:100%;}
+.am-login:hover{color:var(--t1);border-color:rgba(255,255,255,0.24);}
 .am-secondary{background:none;border:none;color:var(--t3);font-size:12px;padding:8px;cursor:pointer;font-family:var(--font-sans);text-decoration:underline;text-underline-offset:2px;}
 .am-secondary:hover{color:var(--t2);}
 .desc-title{font-weight:600;margin-bottom:.75rem;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;font-size:11px;}
@@ -201,6 +203,7 @@ footer a{color:var(--t3);text-decoration:none;}
     <p>Create a free Verde Talent profile &mdash; get weekly email alerts for jobs like this, and let renewable energy employers find and reach out to you directly. Only takes 2 minutes.</p>
     <div class="am-btns">
       <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
+      <button type="button" class="am-login" id="applyLogin">Already have an account? Sign in</button>
       <button type="button" class="am-secondary" id="applySkip">Skip, continue to apply</button>
     </div>
   </div>
@@ -329,6 +332,14 @@ document.addEventListener('click', function(){
       company: "First Solar",
     }));
     window.location.href = '/create-profile.html';
+  });
+  document.getElementById('applyLogin').addEventListener('click', function(){
+    sessionStorage.setItem('vt_pending_application', JSON.stringify({
+      job_url: jobUrl,
+      job_title: "Sr Manager- Business Development USA",
+      company: "First Solar",
+    }));
+    window.location.href = '/login.html';
   });
   scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
