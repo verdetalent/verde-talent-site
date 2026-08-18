@@ -41,11 +41,15 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .dash-nav-item i{font-size:16px;width:17px;flex-shrink:0;}
 .dash-nav-item:hover{background:var(--card2);color:var(--t1);}
 .dash-nav-item.on{background:rgba(34,224,154,0.1);color:var(--grn);}
-.dash-rail-foot{display:flex;flex-direction:column;gap:2px;padding-top:.9rem;margin-top:.9rem;border-top:0.5px solid var(--bdr);}
-.dash-rail-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;color:var(--t3);font-size:12px;text-decoration:none;background:none;border:none;cursor:pointer;font-family:var(--font-sans);text-align:left;width:100%;}
-.dash-rail-link i{font-size:15px;width:17px;flex-shrink:0;}
-.dash-rail-link:hover{color:var(--t1);background:var(--card2);}
-.dash-rail-link.dash-signout:hover{color:var(--cor);}
+.dash-rail-foot{display:flex;flex-direction:column;gap:6px;padding-top:.9rem;margin-top:.9rem;border-top:0.5px solid var(--bdr);}
+.dash-rail-link{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9px;font-size:12px;text-decoration:none;font-family:var(--font-sans);text-align:left;width:100%;border:0.5px solid var(--bdr2);color:var(--t3);background:none;cursor:pointer;}
+.dash-rail-link i{font-size:14px;width:16px;flex-shrink:0;}
+.dash-rail-link.rl-grn{border-color:rgba(34,224,154,0.3);color:var(--grn);background:rgba(34,224,154,0.07);}
+.dash-rail-link.rl-grn:hover{background:rgba(34,224,154,0.14);}
+.dash-rail-link.rl-blu{border-color:rgba(79,179,255,0.3);color:var(--blu);background:rgba(79,179,255,0.07);}
+.dash-rail-link.rl-blu:hover{background:rgba(79,179,255,0.14);}
+.dash-rail-link.dash-signout{border-color:rgba(255,112,85,0.3);color:var(--cor);background:rgba(255,112,85,0.07);}
+.dash-rail-link.dash-signout:hover{background:rgba(255,112,85,0.14);}
 
 .dash-content{flex:1;min-width:0;padding-bottom:90px;}
 .dash-topbar{display:flex;align-items:center;gap:16px;padding:1.5rem 2rem;border-bottom:0.5px solid var(--bdr);}
@@ -212,8 +216,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <button type="button" class="dash-nav-item" data-tab="account"><i class="ti ti-lock"></i><span>Account</span></button>
     </nav>
     <div class="dash-rail-foot">
-      <a href="jobs.html" class="dash-rail-link"><i class="ti ti-search"></i><span>Find jobs</span></a>
-      <a href="index.html" class="dash-rail-link"><i class="ti ti-arrow-left"></i><span>Verde Talent</span></a>
+      <a href="jobs.html" class="dash-rail-link rl-grn"><i class="ti ti-search"></i><span>Find jobs</span></a>
+      <a href="index.html" class="dash-rail-link rl-blu"><i class="ti ti-arrow-left"></i><span>Verde Talent</span></a>
       <button type="button" class="dash-rail-link dash-signout sign-out-btn"><i class="ti ti-x"></i><span>Sign out</span></button>
     </div>
   </aside>
