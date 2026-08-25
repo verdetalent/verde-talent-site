@@ -1024,6 +1024,13 @@ document.getElementById("clear-seniority-btn").addEventListener("click", () => {
 document.getElementById("clear-workstyle-btn").addEventListener("click", () => { currentWorkStyles.clear(); syncKeywordFilterControls("workstyle-checklist", currentWorkStyles); render(); });
 document.getElementById("clear-employmenttype-btn").addEventListener("click", () => { currentEmploymentTypes.clear(); syncKeywordFilterControls("employmenttype-checklist", currentEmploymentTypes); render(); });
 document.getElementById("search-btn").addEventListener("click", render);
+// Same behavior as the homepage's hero search box: Enter in either text
+// field runs the same search the button does, not just a form submit/reload.
+["job-search", "location-search"].forEach(id => {
+  document.getElementById(id).addEventListener("keydown", e => {
+    if (e.key === "Enter") render();
+  });
+});
 
 function syncScopeSwitch() {
   document.querySelectorAll(".scope-btn").forEach(btn => {
