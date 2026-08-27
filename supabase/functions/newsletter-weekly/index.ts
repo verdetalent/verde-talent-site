@@ -4,9 +4,11 @@
 // Three content sources:
 //   - News: feed.xml (same feed built for the abandoned Beehiiv path -
 //     export_rss_feed_to_verde_talent.py in the renewable-energy-jobs repo)
-//   - Featured jobs: public_job_postings (paid employer listings) - queried
-//     directly since this function already has a service-role client, no
-//     extra fetch needed. Gives paying employers real newsletter exposure.
+//   - Featured jobs: public_job_postings (paid employer listings) always
+//     shown first, backfilled with data/jobs_feed.json (the general
+//     scraped/aggregated listings job-alerts-weekly also reads) preferring
+//     jobs in each subscriber's own state - inferred from IP at signup by
+//     subscribe-newsletter, stored on newsletter_subscribers.location.
 //   - One intel stat: data/intelligence.json, same file intelligence.html
 //     reads. Several candidate stat sentences are generated and one is
 //     picked by ISO week number, so it's a different (but stable for the
@@ -33,6 +35,7 @@ const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 const SITE_ORIGIN = "https://verdetalent.com";
 const FEED_URL = `${SITE_ORIGIN}/feed.xml`;
 const INTELLIGENCE_URL = `${SITE_ORIGIN}/data/intelligence.json`;
+const JOBS_FEED_URL = `${SITE_ORIGIN}/data/jobs_feed.json`;
 const MIN_ITEMS = 5;
 const MAX_ITEMS = 10;
 const MAX_FEATURED_JOBS = 5;
@@ -84,19 +87,94 @@ interface FeaturedJob {
   job_title: string;
   company_name: string;
   location: string | null;
+  link: string;
 }
 
-async function fetchFeaturedJobs(): Promise<FeaturedJob[]> {
+interface GeneralJobListing {
+  page_slug: string;
+  job_title: string | null;
+  company: string | null;
+  location: string | null;
+  is_remote: boolean;
+  first_seen: string | null;
+}
+
+// jobs_feed.json's location field is a free-text scrape result - usually
+// "City, ST" or a bare "ST", sometimes "Remote"/"Location not listed"/a
+// full international place name. Pulling out a trailing two-letter state
+// code is the only piece of it that's reliably comparable to a
+// subscriber's geolocated state.
+function extractStateCode(location: string | null): string | null {
+  if (!location) return null;
+  const match = location.match(/\b([A-Z]{2})$/);
+  return match ? match[1] : null;
+}
+
+// Paid employer postings always fill first (that's what employers are
+// paying for) - any remaining slots are backfilled from the same
+// aggregated listings feed job-alerts-weekly reads.
+async function fetchPaidFeaturedJobs(): Promise<FeaturedJob[]> {
   const { data, error } = await supabaseAdmin
     .from("public_job_postings")
     .select("id, job_title, company_name, location")
     .order("paid_at", { ascending: false })
     .limit(MAX_FEATURED_JOBS);
   if (error) {
-    console.error("Could not fetch featured jobs (non-fatal):", error);
+    console.error("Could not fetch paid job postings (non-fatal):", error);
     return [];
   }
-  return data || [];
+  return (data || []).map((job) => ({
+    id: job.id,
+    job_title: job.job_title,
+    company_name: job.company_name,
+    location: job.location,
+    link: `${SITE_ORIGIN}/employer-job.html?id=${job.id}`,
+  }));
+}
+
+async function fetchGeneralJobListings(): Promise<GeneralJobListing[]> {
+  try {
+    const res = await fetch(JOBS_FEED_URL);
+    if (!res.ok) return [];
+    const listings = (await res.json()) as GeneralJobListing[];
+    return listings
+      .filter((job) => job.job_title && job.company && job.page_slug)
+      .sort((a, b) => (b.first_seen || "").localeCompare(a.first_seen || ""));
+  } catch (err) {
+    console.error("Could not fetch general job listings (non-fatal):", err);
+    return [];
+  }
+}
+
+// Remaining slots (after paid postings) prefer listings in the
+// subscriber's own state, plus remote roles, which fit anyone - then
+// backfill with whatever's most recent overall. A subscriber with no
+// inferred location (geolocation failed at signup, or they're outside the
+// US) just gets the unfiltered most-recent list, same as before.
+function buildFeaturedJobsFor(
+  paid: FeaturedJob[],
+  general: GeneralJobListing[],
+  subscriberState: string | null,
+): FeaturedJob[] {
+  const remaining = MAX_FEATURED_JOBS - paid.length;
+  if (remaining <= 0) return paid;
+
+  const toFeaturedJob = (job: GeneralJobListing): FeaturedJob => ({
+    id: job.page_slug,
+    job_title: job.job_title!,
+    company_name: job.company!,
+    location: job.location,
+    link: `${SITE_ORIGIN}/jobs/${job.page_slug}.html`,
+  });
+
+  let pool = general;
+  if (subscriberState) {
+    const matchesSubscriber = (job: GeneralJobListing) =>
+      job.is_remote || extractStateCode(job.location) === subscriberState;
+    pool = [...general.filter(matchesSubscriber), ...general.filter((job) => !matchesSubscriber(job))];
+  }
+
+  return [...paid, ...pool.slice(0, remaining).map(toFeaturedJob)];
 }
 
 // Several candidate stat sentences from data/intelligence.json (the same
@@ -235,7 +313,7 @@ function buildEmailHtml(items: FeedItem[], featuredJobs: FeaturedJob[], intelSta
     <div style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Featured jobs</div>
     ${featuredJobs.map((job) => `
       <div style="margin-bottom:12px;">
-        <a href="${SITE_ORIGIN}/employer-job.html?id=${job.id}" style="font-size:12.5px;font-weight:600;color:${INK};text-decoration:none;line-height:1.4;display:block;">${escapeHtml(job.job_title)}</a>
+        <a href="${job.link}" style="font-size:12.5px;font-weight:600;color:${INK};text-decoration:none;line-height:1.4;display:block;">${escapeHtml(job.job_title)}</a>
         <div style="font-size:11.5px;color:${MUTED};margin-top:2px;">${escapeHtml(job.company_name)}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
       </div>`).join("")}
     <a href="${SITE_ORIGIN}/jobs.html" style="font-size:11.5px;color:${GRN};text-decoration:none;font-weight:600;">See all jobs →</a>`;
@@ -283,11 +361,15 @@ Deno.serve(async (_req) => {
     }
 
     const items = orderDomesticFirst(rawItems).slice(0, MAX_ITEMS);
-    const [featuredJobs, intelStat] = await Promise.all([fetchFeaturedJobs(), fetchIntelStat()]);
+    const [paidJobs, generalJobs, intelStat] = await Promise.all([
+      fetchPaidFeaturedJobs(),
+      fetchGeneralJobListings(),
+      fetchIntelStat(),
+    ]);
 
     const { data: subscribers, error } = await supabaseAdmin
       .from("newsletter_subscribers")
-      .select("id, email, unsubscribe_token")
+      .select("id, email, unsubscribe_token, location")
       .eq("subscribed", true);
     if (error) throw error;
 
@@ -295,11 +377,21 @@ Deno.serve(async (_req) => {
     let failed = 0;
 
     for (const sub of subscribers || []) {
+      const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-newsletter?token=${sub.unsubscribe_token}`;
+      const featuredJobs = buildFeaturedJobsFor(paidJobs, generalJobs, sub.location);
       const { error: sendError } = await resend.emails.send({
         from: "Verde Talent Newsletter <newsletter@updates.verdetalent.com>",
         to: sub.email,
         subject: "This week in clean energy — Verde Talent",
         html: buildEmailHtml(items, featuredJobs, intelStat, sub.unsubscribe_token),
+        headers: {
+          // RFC 8058 one-click unsubscribe - unsubscribe-newsletter already
+          // handles the request the same way regardless of method (GET from
+          // the body link, POST from mail clients honoring this header), so
+          // no change needed there.
+          "List-Unsubscribe": `<${unsubscribeUrl}>`,
+          "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+        },
       });
       if (sendError) {
         console.error(`Send failed for subscriber ${sub.id}:`, sendError);
@@ -310,7 +402,7 @@ Deno.serve(async (_req) => {
     }
 
     return new Response(
-      JSON.stringify({ success: true, items_included: items.length, featured_jobs: featuredJobs.length, has_intel_stat: !!intelStat, sent, failed }),
+      JSON.stringify({ success: true, items_included: items.length, paid_jobs: paidJobs.length, general_jobs_available: generalJobs.length, has_intel_stat: !!intelStat, sent, failed }),
       { status: 200, headers: { "Content-Type": "application/json" } },
     );
   } catch (err) {

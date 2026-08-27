@@ -528,8 +528,10 @@ document.querySelectorAll('#filter-bar .fcat').forEach(btn => {
     render();
   });
 });
-// Newsletter signup - inserts directly into newsletter_subscribers (RLS
-// allows anon insert-only, same pattern as job_postings submissions).
+// Newsletter signup - posts to the subscribe-newsletter Edge Function
+// rather than inserting directly into newsletter_subscribers, so the
+// subscriber's IP can be geolocated to a state server-side (used by
+// newsletter-weekly to localize the Featured jobs sidebar).
 const NL_SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const NL_SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
 document.getElementById('nl-subscribe-btn').addEventListener('click', async function() {
@@ -549,13 +551,12 @@ document.getElementById('nl-subscribe-btn').addEventListener('click', async func
   fine.textContent = '';
 
   try {
-    const res = await fetch(`${NL_SUPABASE_URL}/rest/v1/newsletter_subscribers`, {
+    const res = await fetch(`${NL_SUPABASE_URL}/functions/v1/subscribe-newsletter`, {
       method: 'POST',
       headers: {
         'apikey': NL_SUPABASE_ANON_KEY,
         'Authorization': `Bearer ${NL_SUPABASE_ANON_KEY}`,
         'Content-Type': 'application/json',
-        'Prefer': 'return=minimal',
       },
       body: JSON.stringify({ email }),
     });
