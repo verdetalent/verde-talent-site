@@ -1,16 +1,928 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://verdetalent.com/</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/companies.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/post-job.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/resume-vault.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/intelligence.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/news.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/about.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/professional-development.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/privacy.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/terms.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/companies.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/post-job.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/resume-vault.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/intelligence.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/news.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/about.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/professional-development.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/privacy.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/terms.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1c75a08b655b6f55dffc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e2dca71be68a0628155c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4fe41c9fb65f9933902c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/db7583cc56281ee69c7e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/305e16f0065c28c83c73.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6d8a49f69b47762b6234.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1f7956ac4488acac1248.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a4913fe31974fcbab856.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bf3757b800f4ee4ec5de.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/99e4da8eb1b9c8c6a846.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0445fba3c6bf4e1dd7f0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7bdb7ab2306611d6459b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/45036b8af90ba11e57d1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/75e6213e6e0ad886d050.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bce9c92c49bfbb942937.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8be595b77ade629696d5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/41ea513d84a50a22748f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b046676c1be70cf2c4e6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/842e2bde361954d08702.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1306cc23dacb81cde5ed.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5cdfa046726b97798841.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f2ecabd7c527764bf4c9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/84a4b8eb137098038627.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fc9920e735f06a48f42f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dfc26b786cc52f7e89cb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3bf7465c4e5483d50a81.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/273ac5dca0188bdc71ac.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d95c0b9040f3cb857d4e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/169d2f75adde0e7d036f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3ea22b2b9754fba0dee9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cec42c5477bd16b2af83.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3d7ab934bd3670c05614.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6c759891999c2af4a4e6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1248b3406ba356c15fea.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ce4d8ba620b101cdb5be.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/de7949f068186d451720.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/28bbce1e9b87f06f125a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f396af0429378755ce38.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/75a0d8eb3e5fec3392bc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6628df62da145bd9f474.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e7b2c19699aa5358e20c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/446bfd20088db5499ddf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/10199d2902e067316f02.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5052ce9cefb5c0ed658a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a6ed4d2dd95037f932e5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8c0957fe6b2765358535.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1b76415968c1a43ebb9a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ab59b063a0ab05cd9d9b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8dc80a516b6f832cd158.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b4270c57f5c330503ced.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/09e64d5209ab68aa0c47.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/48475d87f6d2a4df27dd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/190e7b109853fa182830.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4d2c1d057c2676998c34.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/02085a656f53375a91bd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/306864947a1768d1d908.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9ba1d3f8aeaea2411c7a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/69292fe204af431b2aa0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5c46235fa017656247ad.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f86c881a5907625b9064.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/57e68106756471ffb324.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b0c0ed17b3c73ea7278e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/067b5b8f0f7deabec563.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a4b58beefe5c2825ff4a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/52d5d9aabb1e735ca77b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a21639e2f96f25c9dfe8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f4d3365e2ccd59b25e9a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e3f0dd99daa94f13029f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f631b116b41b3181c691.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/39e97514848dc440408e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8bf8b6ac93b00325b738.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4a1e3fe79149c9f22b81.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e59980283046870ea8f1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/76a1f94d3a7c1b9c37e4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/aca0572a180f545055d6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cb9553c903f56a21a6bc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4c2bea949cdb60b3fea5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/608862b08a9186967ad3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1ae2868eee1f8ea11baf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9ae5b95afc46c3b34c85.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3b88dfa3676384b74256.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/eef669296a762c32ebe2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/da0ffebecbc30bb1a635.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3b1910768e39cb81631f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e21830d0aa0d1d3cd257.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3ed0c9ef41882d7c9955.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/841da799079a0b3c83e9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6684844bd8ac0d229723.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e09a0882cc6f66e67941.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e51f1754f97ee2a57664.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c9d26016c88c65738190.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5f230bb0a2cc18ddf0e0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f45f87940432d7a2054f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a69a4709ba517e2f75e3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/54a4d99cdb94bef371a7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5948f13bcba19368faaf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c5a67073e9d379be5df1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/95fce74b20cdd8797c73.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4fc7dfec24825478941d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/44784b17cc2e1a313470.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a64cdf7bbfa48c8ef7a4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/76bd4f2bd9c521f33270.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/140fd5593955b00436d2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/34bb6a728cec1eb32cb1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/854d802142d056130d16.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/98917f0963613d5d80b6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1c5449949cd0a4690f51.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ddbce1b58f105bc65e8e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/72a5511d34bd583f8dc0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ecd91288d3b7e68be136.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d8633f7b8d589c78d49a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2be67b3d9e37cfbd3484.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/19f30082413e8932318e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d2ccd0b34792d11f2b48.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/283d14f084179a34c887.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/44d5dad19529b6ec9593.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/658bc3753bd3574a5e58.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8e8b3e0b64c4e068ac84.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/81e77f2130540afd1017.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5cbf04ba0b2bdbf36384.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7908065ceaf5c29660d8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/37a9bff3a046b338cae2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9e2fdfc50010529be9f9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9d9c55dda772a4b4e271.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3b946603cdd0ceb365e8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ca2218642b1b276a6d95.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/05b4beaa13807dee74d7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fc3b7680138321a78b16.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8b36609e43ea2ab8a4e2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7b60c4e63c9ededbb979.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/761d0cdfdc59cadb3f29.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/602e68269457be693664.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9894d083caf2f78eb20c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/21d7039bb186bf4717ac.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d2145aea9a472464b8b0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5a97a9fb8dc299a3df3d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3ca0e091898400adc142.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/800228c070a141e94a7e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5a3e46afdbe3234af0d6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b5a6595fa21adbb37df4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0449d738bd457203e3c2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3661d77dd62f12c15edc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d1103d45ab1884c1f18e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e0353fbb2c7096c1b165.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e269df82857ec0becd1b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1a612a4e3389137e4e84.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0802ec499f1c6fe4ab6b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d844adca2c35b39b5f28.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/79f93d280e473aa0c8cc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/140a5ea8743be60b54eb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a0c5d5ba7671caebe9d4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/509cce069dba8ca6b3d0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6301c93931499dd0af5a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6aa1ab24bea0e3e295e3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/39ef00b22f3333f2761d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/47d7d33f5ce905e96bb4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/be8f3aa18aa18218bb61.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ff7bb4cb77df6698eef3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2126ab9db69e4d4b4f88.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2b17e1bbc457de4ee98c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/72a0b456490039de930c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/074abc1d98309a72ed36.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8552eac3b44c554136d2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3d09672ee7d98a938be8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3a089314e3b73ab5c914.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/29eb5a8ef610b7cffc58.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cf268d7aceb940bf31e4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7e8eb0dd91994eed57b2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/62325ddda10c62ba0947.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/43c0285c0e47dfe4c9a9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2fb116b018e820c63fdc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0dc67e8a705944003b84.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e4174bd87be91484febc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/76cc8211bfac5d307b12.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fa44ef903dccf5e90d72.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f258ba68dde6a4a3dcda.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/09d74d40a1c2e1e25a9d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4e1048e23f2d72b76221.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/015f7ececc59702306d5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8580f5d28f017e7b4ef7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/49c373ac2b8c22f7f251.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/28de37efb5a661064a82.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0ec9ea31786613fb79ce.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/501d80019f50704209c5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/50616b44d8e4c1683969.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3ccd88a0f83d2473653a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f59910dd48c85ad06de4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/360da1b6c5d6f9de8a8a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a11c975ba28e121ba1fa.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8ce635cf3da5bd79a066.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/29d33f1234020326d918.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ab615ec4f42946c823cc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9f0b4c386171d65baa78.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/51392e060f12b1c7c920.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7ac6770bdd971c17ea89.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/184e735448019eb97a07.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/83f595e594907f8fe50f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/693e2cbbe1a512d94ac8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1026eb31b6d953ae732b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bbaaaa99f185679ee3f4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e9738e5db7f33ee9f442.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c8e8206212fe4fae8142.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0458d8b023ebc038af91.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cec071e2a3c9453ace31.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/39b47d9750399eb76459.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e3ed52b7c34726742584.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/77a6f1b8fa5f50b1d6be.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/529678912b899c381d4a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d08820cf1fd92ff2da1e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/69b29667026a7a4321f0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e7e6be7926e5f2fb9a66.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/652c58869b3ed923d8c8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f79c4258db4363ad6822.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c8053e5fbb24bbe5ed31.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1f95a937be66fd380f90.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a705416c2589f7b4ddf4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6fbd87c547b977ff6b56.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a24106c064fa5ac481b4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a71758732397c9857c75.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/315772ba1acd00794830.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/377c5bc099a87a318343.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1dab8a4627cb78d6a60b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/871c5f067acd654d167d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4ab51585d19461b0a3df.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/78130d4530f1d7a564e8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c915533a19d268f2c7bd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/69a4fcab8c9dbed47726.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c3e4c006ef13faf8a51b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/59e8010947992775ce46.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2835d2de18493415effe.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/51bced72ae8ed96d54bb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8a9d07398d6d6f629d16.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/23cddcb7bf9781f584a2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e15e15b2dc6d85f848be.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c8f7efd67e1fa1763c33.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9164066e9e004749eac8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/602e2ff68ec7688fe4c7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4152c67cd6335480a779.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/13fbd33d2ba40ac0d08b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d38538c0fcb5f9c91a4d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/570f55240ebef5491494.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/26e5581a9dc48c33379b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cb142122895463ca353a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/897be5fcc52718fac72a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2dd4327e16848a951267.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/be6503a91df831595db1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/beb2940444b08e098e74.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/de1058a670267551bc15.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1e596a85ff62a86470ce.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2ebcac547cd7d87eb6a7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/21880bacf4be3a77546d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4c6f989634547a23f80a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4e01416252479452a6ef.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c48fba1eab2b02e94a96.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/416dc530079439530bcb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0294ddceee9e2b7bb989.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8d72048a7f8e7b5fb706.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/912f3fd437e443ad6a79.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e38cb6da6949074c0836.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a99f1fe48c1d0ed16944.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8ed6ac524073291d0a27.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0a1b012d42e5d3d661de.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5a103306bfb2dc5ece9a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f4c3b7a6697864c640bf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4ca8932d7b42d655d17c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9051cbab50964fc9ba6a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3d5336150a7d3d66b04b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/81cf72232f1773eac1a1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5ffd161804c6c254eef3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/68a155dc789438d62953.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a5407f56ce28009c0734.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/24997c7ce688f8f887dc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7d4c0f9de6a9338f3d6d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d9ed72f911b15f49e394.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2d8a6d0b3621db340167.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e83bfb40e57cc846dfd5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/233f054063535476264e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/40956e776659bcad439b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5ae8754328a8e0fb6730.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fe39e6f9ffa25a97c684.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/25abe01d0a6b52d0ce6a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fd2363732efd2e504182.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4c9706549b756d95582c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2e4f0dcfd6d6cb690962.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/08eaba043ec2d2e39bd6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/daaed7e9fe7750dbfffd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/909591d9e02e5573b755.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6e388e6b2372f98b31a2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/afbf1c244513e14151d6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fb22783420b609cdb507.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3ac4c28da7e1b6453ff8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a0ce26ee21b4533beaba.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f9652edce43714613dc5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0ea90b123d5a70def829.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/34d66080a406cf3f0b03.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9442cd15748e1523ac13.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e5e7641dc57a9193834b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9d149329ba9c7e0364b6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d9034ef56887e2df283c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/52d85b9d53cecfa34cf8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b9b2d2c0450c39be460f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/49d5acff5a015ebd757c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/af6406a3c491e53225b8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7f24b5089b3d28bd055e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3d7becfd604f284553cc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d25ca52a8ff325107d15.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/67dffc9895bab183f153.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c0a826605a17a6892070.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bae750bffc015de9b165.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bcf31da2972972d980da.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/23e05a8c3bb0682b40f9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/994f6de12feb690cebb6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cb5384a7fbaf4ad91a72.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c649f7a46c84337a8fb7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/55ab4b1d8c5896bcc480.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/be836bd3b1724198629e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6c4e47a36baa213569ac.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/aac47f00b59373566a7c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2ede6323358d29addee9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d7f671cd370172b27613.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bf8fafedae55e7bdeb1e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b639b2a1139582a4987d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/91e2131642e488089729.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9794bc8740e5f6c5305b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4cd083d3194466282b18.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/df70658fb23a5e65152d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/18b2620b0e3ed060bf37.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/88b0b733fb5562aaf05c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e6866987dc14ca08a89c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/017a1dbe69975d67f3ee.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b41ba43464edf1be8270.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cd9082a4888082b6be22.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/63244816a4cd57bce285.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/293c999b63ef4cc5ceb8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f711090321c88441c4fe.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2241e514fcb99e62d66b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7465eb3d52440c1fcfe4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bc45a97d487ca82091da.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dce33bce9ab50ed15a6b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/41beebf214ae56d80012.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/62593add4fa39e8fecb0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/85017ca0ea5405d66678.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3c0a2b119d6d4ab18bea.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8deec903cf53d8ec19cd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/926d24af97c19f57992d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8c089c847b9d2960ae35.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d58e183c684c6d1c20ce.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c3d2bf40beab464d22b3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a339330e32e4c7040523.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/da0568f88d0f60c420a1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f23ab8a22b7f7b277dd6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ac3ebaf1c5ae7d674e79.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5af99d4f054c0b5950c9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4d73a6ad226c4049ad2a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/04b3482ea37dd2efbdff.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bf70fe9b896d5b0e7d52.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5609e3ab5c87cd108cba.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e3570add79653da05495.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/daa9e5b38fb3790db6ff.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5ec8c0368ac2e214de2c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ffe04bd183a5b203928e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/93be3ab998a523e1c636.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ef5c7a7b3fc8aac78341.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/db14c23c9944200db1bc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/eaee8f3ba43a54dd5ea0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c86515c85ba6e618e2e6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b0e127e6057ee9b7c7a2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d40858a0db11a54bf5e9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/44f101b13e1c1dc37be9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/804760866c94c010ab2c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d457082e46e7744f38cf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3030bd24be6bc4bec66f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cacb70aeeac10002e4a9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4ab3fcd50318404a6c66.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee2767343d0542e9a7fa.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/68072dde89b7f7aa554f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/10d45200e7f38fc71ddc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/04e52358a0f40e03ed95.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dca549ceb6e70c85cd82.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6524ccb453325aa61186.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bb81b02a9164b1d3b913.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8483a0717b205f5a12b6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/27b1d3a1425758954856.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee77ea9b44becac46f4b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/02d6aab56daf37495627.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6d2263a38ccc2fe0e3fa.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d9364a952905a66d5223.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7363f16bd6c3b0770646.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/57f85d3379b7418ec64f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/59437a63c94e03efa680.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b5e6df817c58985c8f62.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a307dbee72eb2cf4604f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ae9de0b5e2db0035a2c3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee05043c4ac4bb7aa340.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3e8dd545e3a8fc2bf99e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7b3532f50869f7c3645a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ec3b1f6921aa09cdbeeb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f8ecde7d939023fae630.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/83d9f6bc6ee6180aad89.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4a6f38e2516b154eea04.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a17bd61b83b17c8df302.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c8452ab030c20b841a21.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b4c1c04a1f687c371ddf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f22cf7f0b1a67d887969.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/62be058869feac84b9e7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/da6162f7539412119d49.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/94786aa0a67dc25ed16f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/aa3aee98e8e7bb411e00.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6e6a58263f05f5ef1730.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/59b720092d824af2e1e7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9175818d67a1344e7410.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/58fd8631bef83cad1f4b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d58cc68cedd850bdd5f7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/72d5e4faa13d3734253a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c974d7b588dd1c894456.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/82072d9f3a46b90d6278.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c6cf2f7d1648b21778f5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0e67ed4bbeac58b452fb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a82fff4b1adebc9726ab.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4e3cfc1f28f741530e75.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d28eb844283c375e6963.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0ec546d2fbd378e23611.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1840ea4dae6b39c5d009.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2c7d0de3e54420fd351d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0b505ec9041924676133.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3b6a9e93e74468eb87f1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/00be80bffd831bc3d99d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1c70e9ac7379fec91e87.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/83d406bc456dc426be92.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e0ec93e9def022372cbf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0485b44a971f7169ed66.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8ef2ce071f38641c36db.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/598a7c7eda5dd2dbf700.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1b7caa908309003972bc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b810f06827ebbf5481ed.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fd9df00b962dd27b0f45.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0474119601680e481112.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/705d335f4ece3f12ed5c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/584b2a7384f56922adab.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9f065656b09314b2c386.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/041157109bd0523a68b7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a7c1ed373f9bcca986db.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/859ca380c654c4cd9347.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/45dc7b81d6910499d803.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cbbecdf9648d7d6b694a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/532aab3faa052c67f562.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee705945889df8a45b99.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/037d826a039e6f8cc66b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/686bd60f98e5f403ed52.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6d0afb1bbd6ef5092195.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f7cd6ec9fbe7f64a15fa.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d921e59c3ad8ae5daa4f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0f90fda722dd8df0fe9c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/de476babe6dbcff9d3c0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ff6a8bc5354b63562f7f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/07265b4cf8ca60ae8ace.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b90661cf332d97963420.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/391c0478f7eb8e13cda7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b83576670af82fbf348b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8db540c659e0b9349885.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b805618741917adda439.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f6d0f2ac65c99efb1272.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a0b82081c27aceb16d79.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4805943e3d63b735ec07.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/db651c3a320899e0729d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9c1eac3146c811982a1e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bf93abf6cd1cab93605d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f7edff15fed165d1b6b8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cfd2256158c35625e1a3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/08e826016f8025e007ac.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7a456e973ce6bba23238.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e9752b534f2f8004e76b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2545d2591879c64a9b5c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4a286351087ade312d79.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8137ab40d5b08536656b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4a47b6d6587d930478ab.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8839b27e5d94d5ec53fe.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1ba2d22efcf31db168dc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2e95ba0e7b04e83442ec.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fb9a74dfa79ad186bd73.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bdf2839ca9d2896bce17.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8b677650a856147fe71c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6e89caf5c61118a8e5f4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/620827da1db459e0ee96.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f4777c697664aa17c823.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f8e7a9b30a3b6a81f20e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c655a75fe39340d82018.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fee941820e07c5cb16a5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6ca1f56bc89ea6de1a69.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/902a4fc988d3d5c9153d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/69396d8829b3b25ebb0f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/531c907c473ecb416502.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3147512613f8f4be72cb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d7a2578e98dae38bd940.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8e7438a9eae0d4e368a8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/641d24ee71865ee98d0c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8a82e8efa961aa82a06e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1b3b989306d301731e53.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b5d19467e1ce52274f65.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0a9008e4bbb0e076f2a4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a11b3b0a55753c297347.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/07e0361da47691fd7843.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/07cd6c21677accd11e43.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4aebb9c43db4e7727110.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a334329a2f5c0909f6eb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2ed105cc464df8b35a81.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e0b608e80cf25b73c3e5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0ea3fe97c09c715e0e4f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/35b55a155b25b38d4174.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b7b1561ebb54b0f13b40.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e17afe23ec0f7381a04c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2e9e2114b965ca46c5c3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/45c475476ab4a4406074.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a9e260a789af1935bf28.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f7140befdcec2253c8b1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bd49432c43edd6d4e239.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fb82ceadb3be79c277a6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ba89f84358e9b9cc8af3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2bfae22101e9b55a5427.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e7d1824dc7c3e55ee71f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c0172f5b2144e2a04981.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/acf9f4475418696a9d6d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/54479b8f7f5d6b019b86.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4a09f080111bfbcf69fa.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3f9ee43eaea850aff345.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/42c015373f1c26019016.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/22ec83286bf532317051.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7dfb3791d6e393270c2a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c2c7ffd30c63b610e7b1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f9000f6413ad92defac0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2c7586609242595663fe.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/aea5d85d1d91cc03730c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/95d24df5c2e545bafd77.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f13f72218380920e3979.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7f788536f275ed83e15f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0f801e8991ec31c78425.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9115a06925711dc59301.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7645b4c2b2e427c13591.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ea99dc3a82d7ec4ddd37.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f6d7e85b80599a3859f3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4cc73827ed3b982663ea.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/145456556aa4eb91713e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/04c1f7ab1a0d67ab6860.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f4ab10a8a3c203a9cace.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5b1ede0ee4c7280aea5e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ca97f808c018dc4cac8e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c833f1870f0855ea37f0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bf3852852c316d7bf7e3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9ded362935f7703f4dc3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/448f48799879d4b8ee6a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bbf691bcb59412b436d2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5eabf681ef4596503310.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8ae677183fe3cb6008f2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5aa9a4dc183a429133a3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a158fa7f753d78c3dcfe.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/37d045ab2b1bf2a3fc56.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a7cc54c835310ab4acb8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/746a251f271ac73f859d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7c8a61bb6e3e3d862b39.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a9fb9be52739a278a76a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e18c31280027f4d596ed.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/81f598ac82f3c35c25da.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ecfd800e7d8a672b8421.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4cfc18d9edca805d5866.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/be53aaf584e607685ed6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3ab340b2cf58e03d53ab.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2cc69ecebafdd5d8b71a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/08974c8b9fe2b1f25103.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5d8cb6f5eaa4d9ac6d80.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/555d3335188b22172595.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/69f84d4a6801016ffb21.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/402380ed98a053da71b3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee1a24ac7b99868ef6d1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/83eb26603f5b4d7f252d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a33ae59fa76739c711dc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2f5999aadc60a1dde6d7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9bae39d3e136c79f5f1c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8558891e9deb6ac8459c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/32edf1dd48ce2ddf22f2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5388c12d49d5b7727743.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5e777b490e29069fef00.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c8ffab19df03455a4553.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6df6cc27546588b5bf45.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c3929cde7458fb83a08b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bae9b0d4340695bcab4e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ae6fb0cf5f440ef5045c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4e2d202eb5a2f870e99d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7b70e63095aa9e9cb85b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/814aa7af9e317701e384.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/972af36a0b34297872db.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b6b51487b1b01cc16a75.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a4b4c67294af27f95203.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/10ea6c539ccc29b21038.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4d179c31df9fb73b9db1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d02e156332403bdcef01.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a1993f1a5035ed66db8e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fc96e00b5313a125baf3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/473bc140af83eb995df5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/24e18266230e84c2e431.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/757470fbb9eac670aad3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/15a0e18684e7213d4a7f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bec9afe53ccb23130782.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fb34a2cd5c13defde9f8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8476ca4676afff7ace16.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fb5586309341e2ebb927.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/460fce6cdce99eb20a00.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ca90199da22bec0019e1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/51c280e2662044d5296a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5884019945f9dbb7979a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/632e78470d1b7e3ec5fd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/57626d9159fdd4361816.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9ff5999567493e0d2eec.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/986c931993074f01c4a4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b52bdbd910d314f7437c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4c0934f1668b8a55f6e9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8f33281f63ed9461367d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d802d3a2dd1f59be0ae3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/131a0ae20b88ebbc3ce9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0c0cf1e81b2ee4eddbbb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/22e72c9ce08e73cab192.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2e2bf74ac9489929447e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0fc9ffd4d1013a7fa9e6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c60a846bdfbc5200e1bb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2489657eb8c89651300e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/02f58035b7032b989d0e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/244bd6d030afe1c69908.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fb8f5585648b2edc30ae.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ea6dbd5678c85f94969b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9d1392c0bc71596f2e32.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/757be0cc5a37e54ca5f8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/091377b424d992bfcffe.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/096fa927e46d975c23a3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f261db10b0136d324ff4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/83a4257252ae12117796.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee1899ef23f7da2f7185.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b21528482cab91b936e7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/05127279ba05922b1e53.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9d37cf416268a84af9f5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d8aa26e3c3a213625fb8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9b314add7efb3e6cfa98.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/66bea315a732961e694b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/52ae6ee691a701886573.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7705e31a291f915c4f18.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2a14adeb5b8b1a5e1cd1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c1b4892b67cac41f9b20.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dcff7f4f57f314b531cf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b6cfd903f03748e60f36.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/eeb971b4226b6db5325b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cfca8bb07f5fb374848d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ff973b3bc48d8007af00.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/128fff6e38b767ef9291.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7967cd5526560d5f77fd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/607d10d9386fd0cc59e2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/26bbf79a3d90449eee3e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/765d523c71c7154e4366.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/74b2a03898040e9d0517.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fdfe1f0fd181c4e20607.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/effb31350f873ce3f8f9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/66344cda9209d40b5532.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f034c3e9731f72c8ceeb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4a94f13732ee47f7a2f5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/36b905d915ea7cd051c2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d4ca52ac54a7b8b7d8f3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ceb6ce654e7ed3682d52.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cdff98d16161897d041a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/19be839c8508df744945.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/74edc934a60ca4c4ff42.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3cf0f524ae23e4a41c9e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/32977b3ecb80d0b249e1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7eb18e94f3a576d40755.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e8368d3f12a5921a3870.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c3a14023ab35272a76be.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9e56ad91111290754565.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2f972d554d2eeec711dc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e12b40084534da40076b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/93acbb562bd01d122067.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ea310d18486cf8267b3f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bfc806a5736e1d3c02ea.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/02f83ff2c1234cef4ecf.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/57e394abedac3604f60c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/31761ae59d71da05fb87.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d2a51b331f2e29c26058.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b94768b7cb23adf07701.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/df4840c38c2e6ed2591c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5974b514ed4bfbf66875.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3a5552417499726ff4b7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4bff4d7859054878285e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/454633bfe7c8951abd27.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b299626130e5ea92cb01.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/12a9fadc0f530011514a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5f48090869ccfb499762.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6a991ab239ea2c75986a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/82a36b5b1e02d7234f03.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cadbf2922539845c30d4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8a3ff12a034e519789da.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/128787df458a0ff212e9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/91df75bbf0812d950dda.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/53557df5ac758e047e24.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d5febaeb8a02efe836f2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/684d23c1f3f15ef0ab42.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/25d99a71343ef9faa1df.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c8b3cad0ae235a9f81f1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c3d9a2aab408c650843d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/914c848b353f28fff859.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/77199f4638235b5dc570.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0777ab387f4d42e1d14b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/01e22078667ea5756f71.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4b6e4e672ac6ddfe517e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/40240d7a14353c9147ec.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee4c8b127b70bc76c9fc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4201da6bb3dd17e759e9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/029ea071974cd3368d1a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/18cf44afc5feb506e471.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6c185ec75244fa6c5246.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/52b0754489d00ad61276.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/336a60a3c4a7b73eff7a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b9e3a4322b4e4c07d428.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3f161144e6516c9755a2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dbfc7fda2baa5a72d685.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8197b4bf0435cc7a0317.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8b477b6b226ff8b63899.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e7c5a4e385a6de4aea2f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7a2d6c18822efc33274a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f1ef826b5881a8d22b09.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/31fb8dda90ea14a77640.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4218ca0aa17133b36c57.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/558ff409ca4538a2e5c3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5e070d07d386220b37fc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2cef0945b8c8e6d32223.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/531191de88553b8d1e6a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2db63bbedb7d712928ed.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1487855f1ae9f4ab6d5e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/df9eaa4c7f5ead67ae61.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/225fc1e1193dc4f4ec9b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c970f0029ea13ce76bdd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/806f2cffde36b9e3e42b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/55962829fe3e567a429c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/68ce646d3bbd69fba996.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/944fedc7f06c49bf30f3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/98a524de143200331a4b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bb1bfc6c56bc804f0ae3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a3f692d40ca79d2c3c37.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e9cc20a012736499cdec.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/37a6a4cb113ca97ba876.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6d433a3099189329c9cb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8aff33eea84c87c12f5e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/47a5ae2c3b3a1c989b12.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/970bd9af47d96ab0ea8d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/273ab1ac6b0aedc3906c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2a923dd98c46c1feb0f6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bea5758131695329a487.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4c966a7d7ba95d251094.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e6f7ec9b04cac37c1eef.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5878c5e4e66653609126.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a7f5390c83d5e2f7929e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b6bf74ccbffea8918769.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0eb2038c92da94835acb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d99ae5cbf8cbc154ecd2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/06c0af93d738a0a8d19c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4ff1c9636ff03c5e738d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c991e5b51b4d5192e570.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d2aaac01705be028d5c8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bf3fca09ef61333e417d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8b284a8be5f565dd2039.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ade2659f7f0750610ffa.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bd3d383d5811f3696117.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/83abed326acdfe1e41ba.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e205b717717000d43aa0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/32a1a8b21a6e9f24388f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/299ac06a00c966e1d537.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c5bd2d6aa0b6da26ee89.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/98eddbf97fdf4fb284c5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/12723be7e273c24be2d5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/31002ad6d22ee7399221.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/975b2a71637ea9188de6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/08dc19bf61c8ae837aa0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5fc6ea5184766bab42dc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3f0030eb66aab5906fec.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dcd1ee2ecbaf09f39d6e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1980cc2c29018d64378e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e894de803d9c909e81c5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4c9c31ddee12323ce186.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/299d06b482e530e1c0d7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/50b34b18889e1356af12.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/26de8f5a8704de860182.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/08fa10a37c7fc6f3e29a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/efc29ce970c46d2ee605.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9d9d37191d5f504c0587.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/87c928920287b7512510.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/be28c1f1e38a16317a08.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7c40b7566dac9c44b6df.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bfcec8018cbbf878e9a9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7224c0ee008425202aaa.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/43a86edfcf9c016f194b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9a8c3871f08674521e8c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d18608c655fc15ecfe93.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e87215683936c03766c4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/302b74c650686044cbda.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/76f732d175cded6ce0ec.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8c28bc4c91c9b9e683c7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9cc96810e1bd02f531dd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7a69eaefdbbb413162b1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8df8ede88fe9cfd61184.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dffbe0167631fd851a93.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2f19185b6f2df62a70b3.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b1b955db162fd27cc962.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/be5e852dd9eea6d3d740.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2cb0fd3d1337100c3f4a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c1bb9b323a80a1e7dfd7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4ac9a6814c362368282f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8d0a08b8b76c9016e26b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9cd310eae22d02602015.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/51e3e7901f9927d4ab67.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ef449c76e5d0a5058ed9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/730b2d3fc7c6edd0cc0d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/50e210407c0b5853eb47.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/371f616ab0506862fd85.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3b37d3d5292e84ac5306.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7d395a21baba5562774a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/924da96d789bafbca78e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fd5b640e73dd7f1b9edd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dde4c640b67c8646aee2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2e84eed8a2cdbc3e90b9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8fbe05ed4e5c2454f226.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/64d8eff107d503870b82.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/843fc98ac24e75708d62.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2b08c2ed578bc2cee368.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/82f3ebbc5286b4be64e5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/875e488c204cbfeccd93.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/84642e689a44f90553ac.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/95f8dcd83a690520ac18.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ce030ab9e4fc0c25e688.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8c2cb73ca95cfdfbd4bc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fbce6c818c57f594bdda.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b19b9074e25417c46790.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c42330e24b4398017ed9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/93f6a4a3acc2afb3ca91.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9b4f306e830d98dbec3e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bcdf75952f585eebc448.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e26433126dd7b53881d5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f0e5b1ffd20125b566d2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6b92444de89f9e9463bc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1717bf66748cd4e2ca3f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a342d5b2ec622fb9eada.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4718d0f4fb95210d1fa9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5904132644f66d92788a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/885b04b61296da752002.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dac0fe4b5026001bca9f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d89119333582259c1b64.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/727ba949ee169f1e697f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0cd1fd7816c9c558fd0f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/852f8deb7f6afb03639c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f1dcba758f54d93b84b6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/2d1e2cea6141471cd8f0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fbc9aa9ab10dcdd75f3e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d45a0a8c4ae90c4e7efa.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/faeeb51dadb37172013d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/80ee3801094d74c99517.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/062133e976677647eb81.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9a1299a2e1102485cc91.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a2289dde952923ea39b1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/384a1b8c1c65cd9b1bcc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/37ecd48580d9b346366e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b75ae7f8eaf3d14cc3b5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a49691f0e8dcf9aed9ba.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/65420d7686d014bbbf70.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/866d2e74b83d4fbff1ad.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/70d7fcc027d547e1b3c8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6535a2b649f8e3777e53.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/623c6498922321f45261.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/40332b02ed95f9a0befe.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3318692af315dcac1e67.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7e1e8a0e329afc4c8434.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b5746053204c8fd575ba.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ad69bb572b073ca60981.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e7498b0776716db7361f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c97b630182cdf73381b9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/105ec6bdca2f1b419d39.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cdce533c4519c4abf064.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/48781f8cdd30bf8fd82f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/990dee37bddad39676b5.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/975b89f2462dd1ff47a8.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a46d460e2660fe69310c.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fe6a992187547723864d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fec237d464df8cb76656.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6f778e3dd0608b1baf2b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3ecfffd343f70d35a875.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1e7267102e64b0d71ed4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/be63950ca9b4328ecea6.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ad918559cc677b1c4456.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/f360b9217962380379bc.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5ab956b5cbbc83f5e4ef.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9c30265d11f57f284449.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/02af2dd5c047a39fd37e.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/97d7804a225f7a52edb7.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8591605774699119904b.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1190867bacd62bbc6bf9.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/df5858a7745bd631a9b2.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c962d6e0011e6f0303dd.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/447be00805b97c7e28db.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a94869fb9a03d4de6c29.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9568d6ff673c1f6553cb.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/96ec3fb90ac78001937f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4e751d61cba3085f473f.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/16d50a2a1935ee15a2b1.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8ba25cdb7d4bcfb16996.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7d524a8cfe57c4cec4a0.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5a5a76430caa699cccd4.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/af2b90c830713af8ad19.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/79b63c1bbcf08474265d.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e8c1eb27b43e16aa939a.html</loc><lastmod>2026-08-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c5df6c9e6bc2170b9055.html</loc><lastmod>2026-08-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/988151747ffe9fbc4a4c.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0f5880645c661a93f5a3.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/cb05e5b6c1b8492a182d.html</loc><lastmod>2026-08-26</lastmod></url>
@@ -26,34 +938,54 @@
   <url><loc>https://verdetalent.com/jobs/d6fda19910f4df42810f.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/700cb4bf5eadd0476d08.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/837e0aad47fdf80e235f.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/3cff32133b687dce4deb.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c20d8656444361bf1432.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c6833ad77854f43ac15a.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fc136b5b3a1ef25c34d3.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/98c5ad8a5db5126192a7.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3d1fb8b1a8f1944f76c8.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0d2e310380deaeced996.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/81e7dc8c9dc8f2a4c334.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9b05c2beef3403b68eee.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/a81457b1849c2f9a157a.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dc8500d669c8433f0ebd.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/cb8f8070ae6aab003fca.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/db71177ad7a444c36638.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0ec53ea1de0d56bee05b.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/956b9bfcbf70b9468c12.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d54bf041bda07e96f1c1.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/316d6626f8174a24c64e.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/12f020556303b93c6319.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/07f7926a3d12f15e4064.html</loc><lastmod>2026-08-26</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/9789aafcac486fc8c008.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a055db164de1150f615a.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/aba391414b532095b0d0.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/236dffe67cb8e2d8ec34.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a148dfbf07aeb5351eeb.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/382b2d7feaaa41935322.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8ecbf3408af2d72454b0.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d62d1cdfe4d4c5581446.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/708993e94b3a0d8c6380.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/58ede06446b03c9a95d8.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d3e3bdcfd0b82d913fec.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8f58861e88ae2db5e6b8.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ebf99aea7e09c3c8c3a4.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/caa48c863dcfbbd9c724.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/cc924f55186534371d16.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/97f377bef8f7481d0b26.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/83bb764ba4cb2fd20a28.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/756704a77d7763fe7068.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/32f1f3a4fbc4a0a98a10.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5efb0e8615845e6c7dcd.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/9694a2f4f503f72e1b89.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/48bbb5924725be4b3ab4.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f03541066ba9da18fba2.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/028bb043917679f93f5c.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4287c6b4bf8ee8cc1056.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8f17dbbbae7b732f594f.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/46bbf6c720f843862f06.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/98978767c4e7bf4cca0b.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/47c559fbb00bfcd97fed.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e0124ebc4312cb65c20c.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/91b4dfa8f05c768d6598.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f279576eba6e246b0f75.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a8288c39e0cd157be6d5.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/dcfbe124b72487e1ac44.html</loc><lastmod>2026-08-26</lastmod></url>
@@ -74,7 +1006,9 @@
   <url><loc>https://verdetalent.com/jobs/496641b5eb32e20f3f90.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d0bb2ba140f77fda2f94.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d60b42a60139157d51df.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1783ad3ff06dfe2a9c91.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8e19de659f15785711d9.html</loc><lastmod>2026-08-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/08cb94465de031efc6c5.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/52dea72d93446f97977c.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8bce5dfe19941eb036ea.html</loc><lastmod>2026-08-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/96aeae67b8f94cbc322f.html</loc><lastmod>2026-08-26</lastmod></url>
@@ -194,7 +1128,6 @@
   <url><loc>https://verdetalent.com/jobs/98bbea2e7d939832b0a5.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f1aa38178a474aff2892.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/aeae83cf8a49e6d5ed80.html</loc><lastmod>2026-08-25</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/e7c578667de80df0f2d9.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/69c2371ead4d1bf88068.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/1fcad8311b231d9bcd74.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/cea72dc8edae5a6694c1.html</loc><lastmod>2026-08-25</lastmod></url>
@@ -245,7 +1178,6 @@
   <url><loc>https://verdetalent.com/jobs/786d75387dec8c02345d.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/525f78166b8e395af128.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/89e4b39fee621fce7fa4.html</loc><lastmod>2026-08-25</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/f0a19db12c5d41f241f8.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c461eda349eee8d79bc7.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a3c5f88c8841b5ca7184.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/23e93154b001650b9b37.html</loc><lastmod>2026-08-25</lastmod></url>
@@ -492,6 +1424,11 @@
   <url><loc>https://verdetalent.com/jobs/39820691b6f15a3a5d89.html</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2c8226ad4968ebbc8458.html</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c52b579e97f88981b5a8.html</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4534decd8a65aa5d77f4.html</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7c37f428897d82ddb29b.html</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ca5a85c72797593a150b.html</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fb215c7236d0cbedccae.html</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b8dc42e16747ec4380e5.html</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a46886df68011f65d71a.html</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/96c99a224874168f611a.html</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ab5dbb4972dac1948af6.html</loc><lastmod>2026-08-21</lastmod></url>
@@ -704,11 +1641,11 @@
   <url><loc>https://verdetalent.com/jobs/70aedd144ba66e8d0c9e.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/57d40e0c4f9145ef109a.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2a4e54bc3cde9654ea4e.html</loc><lastmod>2026-08-19</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee366d5455558c2d0587.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/499a9cb6fd6f9b10a4ff.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d11268c867f1262cca86.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/40b79fbd30020293cc52.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5cc8f264f2e2ab1e5cad.html</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/a95696b6d5dd5d80d22d.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2bcabdfd0c727b2729a6.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/32116b46bf81d6bcda61.html</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e7a2f9e7c4e590262115.html</loc><lastmod>2026-08-19</lastmod></url>
@@ -806,8 +1743,6 @@
   <url><loc>https://verdetalent.com/jobs/6bdb38dcccc3dd4c47d7.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8104b34996b4be106b77.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0b6156179c46303f9279.html</loc><lastmod>2026-08-18</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/35b00fd725d0f0fa11c7.html</loc><lastmod>2026-08-18</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/55a5406cf76092bfed71.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/20dd50fd42bb50e3d706.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/504fb06c38f01ccd1521.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/dbe12f60a3d2cf74f185.html</loc><lastmod>2026-08-18</lastmod></url>
@@ -822,6 +1757,8 @@
   <url><loc>https://verdetalent.com/jobs/96e1b2aee7ea419cfeec.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/aac55c21f7e92ba4f021.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/24174516c26626792a7c.html</loc><lastmod>2026-08-18</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/500ba823e8c9b0446e94.html</loc><lastmod>2026-08-18</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ee7a6d7699245a40ccb2.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a73d6af75b0f6234355a.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/663673f0276d6e057b02.html</loc><lastmod>2026-08-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ae309f2c8ebdf0a6b7e2.html</loc><lastmod>2026-08-18</lastmod></url>
@@ -988,6 +1925,15 @@
   <url><loc>https://verdetalent.com/jobs/15deb8c485f3683ef869.html</loc><lastmod>2026-08-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/068e2d3367faf237ddd0.html</loc><lastmod>2026-08-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c0aaec5e826bcde6b1a7.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/05fc595cd0aa1609d8e6.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5d3e49c74b966e856970.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d33bbd601316a9744bd4.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8183786a5e8e0d836bb9.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/39a6ae0578b07399a2ec.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/665932638630f8d0fe34.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1948d809667255b5cd7e.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/56747de64ad3dc6e808b.html</loc><lastmod>2026-08-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1c8f2ee2ae0d3a3f6ba9.html</loc><lastmod>2026-08-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f5c5ebf6e0061f2cc1ac.html</loc><lastmod>2026-08-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e6ee204496bb19e767eb.html</loc><lastmod>2026-08-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a558b1b5b93e2d7950a3.html</loc><lastmod>2026-08-14</lastmod></url>
@@ -1072,6 +2018,8 @@
   <url><loc>https://verdetalent.com/jobs/3e25a6807e845f4c4b62.html</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/fb7af2b6d333a86496fa.html</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/4fd7a258dc31bfe2e0b4.html</loc><lastmod>2026-08-13</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/578175420dcbaac85db9.html</loc><lastmod>2026-08-13</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b128ada92565a35424c6.html</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/46112c5445639b53086c.html</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/92b9e25181c9d46f1de2.html</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/972b9682c3c1a4bf3770.html</loc><lastmod>2026-08-13</lastmod></url>
@@ -1120,7 +2068,6 @@
   <url><loc>https://verdetalent.com/jobs/2d3221a7cf10af7a7a4d.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/073d195b2446f1ce7b61.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/226bd78cc7b533d9fe84.html</loc><lastmod>2026-08-12</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/33d507dca5b800f14f90.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d701567cac1cd0e300c2.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/eaaedb3e331fad7bb78a.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/703a66902d589d4c1e60.html</loc><lastmod>2026-08-12</lastmod></url>
@@ -1163,8 +2110,9 @@
   <url><loc>https://verdetalent.com/jobs/c3e486cb969fe79f591f.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e47eb7914b5a262f5b80.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/45829320bf3d13b69ecb.html</loc><lastmod>2026-08-12</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/87cb7fca564741a98533.html</loc><lastmod>2026-08-12</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/546dfbe22300ab5cb7be.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3a118bf9fd74b35f4530.html</loc><lastmod>2026-08-12</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/f2acc9c742dfce6fb3e9.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/de23280696cfb6ea1fe1.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3b546a456dea4664da6e.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/1629155f5db55144d451.html</loc><lastmod>2026-08-12</lastmod></url>
@@ -1174,6 +2122,7 @@
   <url><loc>https://verdetalent.com/jobs/fe17905349d9db4f1695.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8b343273d8f6b65cfd64.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d29529cb5cf3f32064a1.html</loc><lastmod>2026-08-12</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4b9e0221d0b6b531322c.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/fcdcb50e87e45ec3fd51.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/82ccf008b37a9cd07664.html</loc><lastmod>2026-08-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/61c76c9be61373136682.html</loc><lastmod>2026-08-12</lastmod></url>
@@ -1261,10 +2210,11 @@
   <url><loc>https://verdetalent.com/jobs/1fc0cb9a1709329125a5.html</loc><lastmod>2026-08-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8c6ef1def862b06740ad.html</loc><lastmod>2026-08-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5fb60cf35b3bad250cfa.html</loc><lastmod>2026-08-10</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/6612466d65e9bb48e96d.html</loc><lastmod>2026-08-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3e889e5cb723f5504a70.html</loc><lastmod>2026-08-10</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/cde1122171a868abb00f.html</loc><lastmod>2026-08-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e32fa9f480e376cb863d.html</loc><lastmod>2026-08-10</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fc7fb60a18b727690ec4.html</loc><lastmod>2026-08-10</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7941c6d5d290ff165a35.html</loc><lastmod>2026-08-10</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/dee6a428c8330b4b87ed.html</loc><lastmod>2026-08-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e01e7694a0665d231640.html</loc><lastmod>2026-08-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2631d1d486f73c7bdbba.html</loc><lastmod>2026-08-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b4bd18ee460505608207.html</loc><lastmod>2026-08-10</lastmod></url>
@@ -1310,7 +2260,6 @@
   <url><loc>https://verdetalent.com/jobs/5ff65a72742fdff4a86a.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6c828cfba48f30d5f3e1.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8aac695577be3f062b2f.html</loc><lastmod>2026-08-07</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/2415d0e72001111f72e1.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c1b5506b69766c127a6f.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6c12bf781c2dce54353b.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f62bded9e67556093983.html</loc><lastmod>2026-08-07</lastmod></url>
@@ -1323,6 +2272,9 @@
   <url><loc>https://verdetalent.com/jobs/6401bf007e0082ad39f6.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/9b3961241a59ae316a54.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/26a293401b2575fa2b63.html</loc><lastmod>2026-08-07</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/36f2894ea2ad2fd1e961.html</loc><lastmod>2026-08-07</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/68d652fc84546992323b.html</loc><lastmod>2026-08-07</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/61d122f88da9a3db36b4.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/551c9f24737bd27fe9f0.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/79338569f485ed20ab4a.html</loc><lastmod>2026-08-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/07f8c25118a2a2817f59.html</loc><lastmod>2026-08-07</lastmod></url>
@@ -1378,7 +2330,6 @@
   <url><loc>https://verdetalent.com/jobs/d36d1334fb0bf25452a6.html</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/df2fcfcb7db1bfb9739f.html</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b0cd4d37b957500c491c.html</loc><lastmod>2026-08-06</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/2261d2fa95dcc3e40ac6.html</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/15e8249e9de024266f24.html</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d3d1443345b20ee918ae.html</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/815c015b3fd534a347b5.html</loc><lastmod>2026-08-06</lastmod></url>
@@ -1387,6 +2338,7 @@
   <url><loc>https://verdetalent.com/jobs/edf9127821e3a9a1ca32.html</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f9298ff552fa98384757.html</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/50d0069fbe0f4e2e6419.html</loc><lastmod>2026-08-06</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b6d44c51673412cc7fc8.html</loc><lastmod>2026-08-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/79c9e38caadf7b88aa4f.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a9a3b04adc307a50081b.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c62ed985533cf87c1ba5.html</loc><lastmod>2026-08-05</lastmod></url>
@@ -1408,7 +2360,6 @@
   <url><loc>https://verdetalent.com/jobs/b4baa293f65455bde3c3.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/82b08667f8313f0568df.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5bc7e2f66988e81f2120.html</loc><lastmod>2026-08-05</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/91df8c895106aeb2a3bb.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3a03fee86c85c12409a5.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/530f6a661d91aa84b12e.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8135314c9dbe5149b9ad.html</loc><lastmod>2026-08-05</lastmod></url>
@@ -1421,6 +2372,7 @@
   <url><loc>https://verdetalent.com/jobs/ea606287962c6fc00ccd.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/eb63e4c1f027d65181ef.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/255ca0032e37bf821b6b.html</loc><lastmod>2026-08-05</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4f8dcf84e1c2959ee295.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b21c165b2c001eec0d85.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ab3343171a59e1d89dd9.html</loc><lastmod>2026-08-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2b0714bf8cfa6190f941.html</loc><lastmod>2026-08-05</lastmod></url>
@@ -1494,7 +2446,6 @@
   <url><loc>https://verdetalent.com/jobs/cc7125909b1d1d9d41c0.html</loc><lastmod>2026-08-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/47ec6b281c33b5b7595f.html</loc><lastmod>2026-08-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/87dc3ef305dda24890fa.html</loc><lastmod>2026-08-03</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/aad4580ba8819cc29172.html</loc><lastmod>2026-08-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/639e4f0634cdb2af6b8a.html</loc><lastmod>2026-08-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b79c056184647c15c543.html</loc><lastmod>2026-08-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/99149a09622278a58d21.html</loc><lastmod>2026-08-03</lastmod></url>
@@ -1550,12 +2501,12 @@
   <url><loc>https://verdetalent.com/jobs/844f7dc9c0e29a02235d.html</loc><lastmod>2026-07-31</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/63a181e5f1a7971b2e42.html</loc><lastmod>2026-07-31</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e655848c0d314da95a92.html</loc><lastmod>2026-07-31</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/839ac7a3ac2969fb879c.html</loc><lastmod>2026-07-31</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c822d825ff5d85102689.html</loc><lastmod>2026-07-31</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/33f6d7ae1980b0b6b07a.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/373365316ace2b3c22c5.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/87c7d53e724bed32c657.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/45db67f565905374730a.html</loc><lastmod>2026-07-30</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/7fb3f6883d284cc27982.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e9c381c57b87567d4004.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/aec1de4be900aee3f231.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f4126b6743d2616d7786.html</loc><lastmod>2026-07-30</lastmod></url>
@@ -1573,6 +2524,7 @@
   <url><loc>https://verdetalent.com/jobs/09974a4476bb37db1362.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/62cb746490cd77598315.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/85ae59ae2da3bf8fac57.html</loc><lastmod>2026-07-30</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/40ae8c3940e34e58b0cf.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5c8f6a04ae39a071ec3c.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0bbddfca34eb5bc70aae.html</loc><lastmod>2026-07-30</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6d590a96630837808636.html</loc><lastmod>2026-07-30</lastmod></url>
@@ -1596,7 +2548,6 @@
   <url><loc>https://verdetalent.com/jobs/9a04daaff3002b1d18e0.html</loc><lastmod>2026-07-29</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/33faf3ab27fe029dd62d.html</loc><lastmod>2026-07-29</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8112c06a8a1141b6614a.html</loc><lastmod>2026-07-29</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/abfa6c73fdd3fac9ed9e.html</loc><lastmod>2026-07-29</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d9e5b10b8fe13b7c9658.html</loc><lastmod>2026-07-29</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/092cd195dcca31bb7b4a.html</loc><lastmod>2026-07-29</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6dd2d26660b2dd3ab6ba.html</loc><lastmod>2026-07-29</lastmod></url>
@@ -1667,6 +2618,7 @@
   <url><loc>https://verdetalent.com/jobs/877f12a089574f5cf3dd.html</loc><lastmod>2026-07-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/eecafad24a47fe413729.html</loc><lastmod>2026-07-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e2d57e776a31cd0d8e6a.html</loc><lastmod>2026-07-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/05463bd657ec7eed2027.html</loc><lastmod>2026-07-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/55e2291b407e411bcc3d.html</loc><lastmod>2026-07-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/28ddd4d1be37ecfe294e.html</loc><lastmod>2026-07-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f50314e829f721239d7b.html</loc><lastmod>2026-07-27</lastmod></url>
@@ -1737,6 +2689,7 @@
   <url><loc>https://verdetalent.com/jobs/f5629b298b1b235d7bf9.html</loc><lastmod>2026-07-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/9078959ed7866534f489.html</loc><lastmod>2026-07-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/33269877a0443abe665a.html</loc><lastmod>2026-07-24</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/7d64b74fadc7a643f161.html</loc><lastmod>2026-07-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6ef13e13e000e9cac7a7.html</loc><lastmod>2026-07-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e46f5ee531a1d7ec4d60.html</loc><lastmod>2026-07-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/be723ab30d1a1d2544ac.html</loc><lastmod>2026-07-24</lastmod></url>
@@ -1861,12 +2814,12 @@
   <url><loc>https://verdetalent.com/jobs/194e04df4659317287b2.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/bd7872c35f5066e12163.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b22d92be47d8c7eae7cc.html</loc><lastmod>2026-07-22</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/ce9015f464c7e927cbd1.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/098373a2d29b8640c7c6.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0655e151967185428b31.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/fc2f4e5d6e73a6cdb853.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/85be981673d31d2cc89e.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/990a0d18ee5598f1a52f.html</loc><lastmod>2026-07-22</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/89069934b17f7449d6de.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f0e1903cdf43a64f90e4.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/99ac8637142edb7783ba.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d93d8ac4933f21a8c463.html</loc><lastmod>2026-07-22</lastmod></url>
@@ -1894,6 +2847,7 @@
   <url><loc>https://verdetalent.com/jobs/6ff21670fd94b58ff310.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/96aafd095e6a5f51a0a9.html</loc><lastmod>2026-07-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/20bf59650d49dfa46ff1.html</loc><lastmod>2026-07-22</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9bf53929e5290ca1b9c0.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5b51325b6ca678562d91.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a2eefd4e77ed146beb11.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ce3f2976519dabfbe331.html</loc><lastmod>2026-07-21</lastmod></url>
@@ -1915,9 +2869,10 @@
   <url><loc>https://verdetalent.com/jobs/99882885482a5f6b8a1a.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/aa212cc4d022cdac6bfd.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e9e38e4f808ca3b98a4d.html</loc><lastmod>2026-07-21</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ed7a60d5e55ae60c443c.html</loc><lastmod>2026-07-21</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/277cede9c88998084dc6.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/fc64bc76b70bccd2b16d.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3a5ba5f3f2c99f8f63c5.html</loc><lastmod>2026-07-21</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/0f48ae6929700c16fac1.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ed1d23216860902b6c1c.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c47b604ecdfcdb052236.html</loc><lastmod>2026-07-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/94c58fc9be7d0eb87caa.html</loc><lastmod>2026-07-21</lastmod></url>
@@ -1980,7 +2935,6 @@
   <url><loc>https://verdetalent.com/jobs/ea3595cc2f861eab0f09.html</loc><lastmod>2026-07-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ff89456c960996f4be92.html</loc><lastmod>2026-07-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8eadc56ffdd6bc45b5c4.html</loc><lastmod>2026-07-18</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/3fcae168d3babe367d00.html</loc><lastmod>2026-07-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/7b198bda9b94c1c8e314.html</loc><lastmod>2026-07-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/1fe4ca0e6d5d224fc8dc.html</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d109fcc761777647e4e2.html</loc><lastmod>2026-07-17</lastmod></url>
@@ -1999,6 +2953,7 @@
   <url><loc>https://verdetalent.com/jobs/f0ad6575ca5c4f361507.html</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0efd55b6bc5ac633b798.html</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e971950e856a3f960d0b.html</loc><lastmod>2026-07-17</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/5b7581443d3a7800b8fd.html</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2ebc5ebcc0d140c22350.html</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2306d0fc2cba2e2348dc.html</loc><lastmod>2026-07-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/47cebb74dbfab2c5d048.html</loc><lastmod>2026-07-17</lastmod></url>
@@ -2042,11 +2997,11 @@
   <url><loc>https://verdetalent.com/jobs/d542cdce5ecd2abc3d73.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d316ad5ee8ef088d33be.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/aac8c6d94d7b19a905d5.html</loc><lastmod>2026-07-16</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/ef03530c88fe59dc127a.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/9bdd82be20dceb69aeca.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/73984cbe8a76157a19d9.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e242614ae2970570dfd4.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/44daf7888320dc7a4e60.html</loc><lastmod>2026-07-16</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/405dba6fd08a9d2dcf86.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/52e81ee4999e99dcb93b.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8f8db4c1a25103d2c310.html</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0eb1fd046a5ed33613f1.html</loc><lastmod>2026-07-16</lastmod></url>
@@ -2078,7 +3033,6 @@
   <url><loc>https://verdetalent.com/jobs/30f51a9537bdb202ac17.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a22e70f2eacf6760dc28.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5c9193855d0467cf090b.html</loc><lastmod>2026-07-15</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/5461d6018b49a1595bb5.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0a440fef69756280f361.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/4a0963a45b4b5e6dcd83.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/226933be46b8c83c703c.html</loc><lastmod>2026-07-15</lastmod></url>
@@ -2098,6 +3052,7 @@
   <url><loc>https://verdetalent.com/jobs/f4d9c09a87c6b2880d2b.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/84ea5045aa2b04bfeca7.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6e1db6bc0be36564acef.html</loc><lastmod>2026-07-15</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0a2ceddd2e5447bc66c7.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/7785b30813e04f9de644.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b16631e4c9dc053e8f67.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/9096bbedd1e12a4751af.html</loc><lastmod>2026-07-15</lastmod></url>
@@ -2105,7 +3060,6 @@
   <url><loc>https://verdetalent.com/jobs/6ea7e34d3b25b1405de7.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/9445a38b6a70e56d8740.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/fe9b4a0cd0c6025682d5.html</loc><lastmod>2026-07-15</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/cd167d438bb9cd238733.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6ed3d886eb1fd03e8c0c.html</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/966561c9e816e953bd40.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e4613ad4165b1b5deeb6.html</loc><lastmod>2026-07-14</lastmod></url>
@@ -2116,6 +3070,7 @@
   <url><loc>https://verdetalent.com/jobs/8a25eee79cb47e194862.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/59915fe5feef742c95d2.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/cc71e26f5bd1db3c3639.html</loc><lastmod>2026-07-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9e5748d11aa103651374.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/41b2f832745e01a09eda.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a9b586f6abb448a02a8e.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ba3e3665adfd7098b005.html</loc><lastmod>2026-07-14</lastmod></url>
@@ -2132,19 +3087,17 @@
   <url><loc>https://verdetalent.com/jobs/c065b7b5f13d8c988271.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/492cdb9edfdfce90ae78.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/1a56d97c61bae0353efc.html</loc><lastmod>2026-07-14</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/289dfb0489f3a2d7d2d7.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/22171e100906b8c3bdf8.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/928d2ccdc58ba981fe67.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/9fbe5f6ec24be141b475.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8fe2db2f3588440ca1d4.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/4d8f23800ae4daa7a13a.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6e2af3d63aae491b5f10.html</loc><lastmod>2026-07-14</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/e3b0630650aedd10957e.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ca0fde4fdef886222d58.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b09ef793785d8675817f.html</loc><lastmod>2026-07-14</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/f7255e19da4784b77865.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a35d72add6966ba703fc.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/4fdc9cc15fdeac6d5f84.html</loc><lastmod>2026-07-14</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/ce8c93819273a099ec0d.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ae69a74b3ea98f77ec87.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8d1c452242f880b6223b.html</loc><lastmod>2026-07-14</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/535dd2760052e16f5bbf.html</loc><lastmod>2026-07-13</lastmod></url>
@@ -2167,17 +3120,19 @@
   <url><loc>https://verdetalent.com/jobs/543f4026ebea21ff6abb.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/dc47c0b724f6f36f9214.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/37d6112f4f409b18e4b2.html</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/a3e5239726d6b2873e17.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/03d2c2df46c4eaa9db2b.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/743724b4d4ed77e0a31f.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d2501894d0c98ddf0ac8.html</loc><lastmod>2026-07-13</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/d5f98d161d107e72bb61.html</loc><lastmod>2026-07-13</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/6481ab0988b355178207.html</loc><lastmod>2026-07-13</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/ddc856fed2d0da04441b.html</loc><lastmod>2026-07-13</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9ebff5517678ebf2822b.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ed97120089f5a07bb646.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e517b1d9c6777e9978a7.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/adf9b7ab95e4c19ece09.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b6c3164773dba1315567.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/375f4468cc464411956e.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d9b0e9c93dcca5b9a97a.html</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/29984d4a80269a26430f.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/762fb1237c8098bc9132.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6373f64388940cb47fd5.html</loc><lastmod>2026-07-12</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5f5c526e454af4d9a531.html</loc><lastmod>2026-07-12</lastmod></url>
@@ -2239,7 +3194,6 @@
   <url><loc>https://verdetalent.com/jobs/2d8e07db7c5f16513e09.html</loc><lastmod>2026-07-08</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6763ace5746d7dbd9c6f.html</loc><lastmod>2026-07-08</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a08f697f31f5d395abec.html</loc><lastmod>2026-07-08</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/3826412e90b076b4c473.html</loc><lastmod>2026-07-08</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/320d2ad7a3466291cf0e.html</loc><lastmod>2026-07-08</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/424089f05d9913b2eefd.html</loc><lastmod>2026-07-08</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6ae564d27ed8f619fdcc.html</loc><lastmod>2026-07-08</lastmod></url>
@@ -2278,6 +3232,7 @@
   <url><loc>https://verdetalent.com/jobs/de98f248636e36f0f4ca.html</loc><lastmod>2026-07-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ff2dbbd591831fcc8b96.html</loc><lastmod>2026-07-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/88eebf07ab97541c185c.html</loc><lastmod>2026-07-07</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/108b67281aae7d011efc.html</loc><lastmod>2026-07-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/392b11c544049f2f1061.html</loc><lastmod>2026-07-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6b3068c89e58a403a4df.html</loc><lastmod>2026-07-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/82769270e72ed65f86da.html</loc><lastmod>2026-07-07</lastmod></url>
@@ -2310,7 +3265,6 @@
   <url><loc>https://verdetalent.com/jobs/9e57d2e8692fe88d6dde.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8c5e069c809789df38d6.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c897757617dec1a85431.html</loc><lastmod>2026-07-06</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/966c6c0d52c1fecf29b9.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/18f662471494fbb34a09.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6becd503a6f65915143e.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/69e2602ba2df8c9bbdac.html</loc><lastmod>2026-07-06</lastmod></url>
@@ -2320,10 +3274,12 @@
   <url><loc>https://verdetalent.com/jobs/f7c2831d1ab66f8b9339.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d5379bee14a1158c5061.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e5a183a533a8bf2dda49.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/af1fe137bb3bf1b37283.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5e33eec7e191884fb6f4.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b5fc2c007b76eeae4236.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/9a10265bd4318fa805f0.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/83bf5fc76935c5aa2e5c.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/28efc899bc1a9c0a53cd.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d7dcabfe1f396b3db1d2.html</loc><lastmod>2026-07-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/88c5d1fa36010ceebe1e.html</loc><lastmod>2026-07-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/48d888d29f2873b908b5.html</loc><lastmod>2026-07-04</lastmod></url>
@@ -2333,10 +3289,8 @@
   <url><loc>https://verdetalent.com/jobs/9a78b4208b11c3d71a5b.html</loc><lastmod>2026-07-04</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a643ded1e5983a3ef187.html</loc><lastmod>2026-07-04</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c0f719aea4cf251cc9b8.html</loc><lastmod>2026-07-03</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/eff575455db1d70568e4.html</loc><lastmod>2026-07-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/047e60a34f087344cb8c.html</loc><lastmod>2026-07-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e153fd1225e54e13b318.html</loc><lastmod>2026-07-03</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/0ecb234859169d17e2da.html</loc><lastmod>2026-07-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e0c2e04ef7420b1a0eec.html</loc><lastmod>2026-07-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/09b651dba29007b23e3c.html</loc><lastmod>2026-07-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/63ebd699890d7ee3f162.html</loc><lastmod>2026-07-03</lastmod></url>
@@ -2428,7 +3382,6 @@
   <url><loc>https://verdetalent.com/jobs/6a67bfdfbca319046f73.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6ace3177b4ab4e22f0c2.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/74e5a5377f3dc4bedf60.html</loc><lastmod>2026-07-02</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/df58ded2425f9a02c265.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/fa0f8ab68376ba9a8ce5.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/43b4fb77942de19c5792.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d4c1b4532c55aeda5f3c.html</loc><lastmod>2026-07-02</lastmod></url>
@@ -2442,6 +3395,9 @@
   <url><loc>https://verdetalent.com/jobs/e41388c4687957575677.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6b55311faf1c00354f3e.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/319c85ccb42ab9352e0b.html</loc><lastmod>2026-07-02</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/58e4f61b64dba959b619.html</loc><lastmod>2026-07-02</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/e12001ac3de121f9071b.html</loc><lastmod>2026-07-02</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/0fe89eac3cb777baa169.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/491a43a5c2cc5b9fe839.html</loc><lastmod>2026-07-01</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/907506583b11a76fddcf.html</loc><lastmod>2026-07-01</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/7e4f25d597fcd3e5643c.html</loc><lastmod>2026-07-01</lastmod></url>
@@ -2474,7 +3430,6 @@
   <url><loc>https://verdetalent.com/jobs/f6e3eb19f55fabbc7176.html</loc><lastmod>2026-07-01</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d0d3062226f8c8174489.html</loc><lastmod>2026-07-01</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/7210bb8785dc395fda8c.html</loc><lastmod>2026-07-01</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/9878ce7d81602b1fc24f.html</loc><lastmod>2026-07-01</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/4c02d2444aa1eefc48cf.html</loc><lastmod>2026-07-01</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/54b3dbaf472ca7c38222.html</loc><lastmod>2026-07-01</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d39fa956cd6eae73eec7.html</loc><lastmod>2026-07-01</lastmod></url>
@@ -2610,12 +3565,12 @@
   <url><loc>https://verdetalent.com/jobs/9c54ed7c5da88824011d.html</loc><lastmod>2026-06-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a40ff019466cad838256.html</loc><lastmod>2026-06-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/467b6d52bf3a07768f7b.html</loc><lastmod>2026-06-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/69a21b601e486a7fa42e.html</loc><lastmod>2026-06-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ad358935c82124153e9f.html</loc><lastmod>2026-06-26</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/798c4b64295ef42f8297.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b3a3f02a70ed3fc67d81.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/922dec7438dce684610c.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5d3614d559c0cc928c1d.html</loc><lastmod>2026-06-25</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/30190886b87fb6f17052.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f04cae19dd1596a8a24c.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/714b8f86c27a44f5d82a.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3cccdfd4b1fa081d5974.html</loc><lastmod>2026-06-25</lastmod></url>
@@ -2627,10 +3582,13 @@
   <url><loc>https://verdetalent.com/jobs/ee4f8deb588a67b9f44e.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/dcdc0de22f77a36cc087.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/effdd0d6a1b424f3c7e0.html</loc><lastmod>2026-06-25</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/776dd001ecbeed415ec7.html</loc><lastmod>2026-06-25</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/876c0d00f5925577974a.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5a7eb6b103319179b6d9.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8c24ca8277b0f38db49f.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b7f8581d135a576fe57e.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/fae1a03472f7c975cc1a.html</loc><lastmod>2026-06-25</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/97a8aa84a014ec75f3d2.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2b84f19b7d14a9fea04f.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a818af9c1ddda8a1a511.html</loc><lastmod>2026-06-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/abb82cc506890a26ae45.html</loc><lastmod>2026-06-24</lastmod></url>
@@ -2646,7 +3604,6 @@
   <url><loc>https://verdetalent.com/jobs/24b47632159df4e94e6b.html</loc><lastmod>2026-06-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/45758e5f87ce6f729bc8.html</loc><lastmod>2026-06-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5133f4b03bfc9c6d6506.html</loc><lastmod>2026-06-24</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/527328d015e93e925685.html</loc><lastmod>2026-06-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/4d1fc6fe74c89a0fa8d2.html</loc><lastmod>2026-06-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f5c29dc51851da554f39.html</loc><lastmod>2026-06-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/1729ed422269edb3b92b.html</loc><lastmod>2026-06-23</lastmod></url>
@@ -2673,6 +3630,9 @@
   <url><loc>https://verdetalent.com/jobs/970b10ef44603dae39fc.html</loc><lastmod>2026-06-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/cbced3658d28c25f5f20.html</loc><lastmod>2026-06-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/385d4d8cd64dfc654d04.html</loc><lastmod>2026-06-22</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/b4690807a467aa4f1b48.html</loc><lastmod>2026-06-22</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/20aafe723d8bf836c75d.html</loc><lastmod>2026-06-22</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c96c15b9902b48496e77.html</loc><lastmod>2026-06-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/cc04ae804d1e109e0b2f.html</loc><lastmod>2026-06-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/06c2335621b7b9b8756d.html</loc><lastmod>2026-06-22</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/206fed2d3049c1e5a596.html</loc><lastmod>2026-06-22</lastmod></url>
@@ -2681,7 +3641,6 @@
   <url><loc>https://verdetalent.com/jobs/2aa8c14bccc411728502.html</loc><lastmod>2026-06-20</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8c03025bde3f819deb3f.html</loc><lastmod>2026-06-20</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ccdcfb226aca65f2adab.html</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/07423c293523a6c30f1a.html</loc><lastmod>2026-06-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/da6dd623df74ee5aae4c.html</loc><lastmod>2026-06-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c570f8e4e2d7e48cf483.html</loc><lastmod>2026-06-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/5113906d03a51c733ae7.html</loc><lastmod>2026-06-19</lastmod></url>
@@ -2694,7 +3653,6 @@
   <url><loc>https://verdetalent.com/jobs/e1a705d940c8aae45380.html</loc><lastmod>2026-06-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ad913a3697f516790608.html</loc><lastmod>2026-06-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/34f0a6e51f3e124ad24f.html</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/2fe4974ea784e30e07b1.html</loc><lastmod>2026-06-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/56d1c58bb6f2a2987616.html</loc><lastmod>2026-06-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6333c385af0ccf77bb6a.html</loc><lastmod>2026-06-19</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/7e1383253a9dde56c8a7.html</loc><lastmod>2026-06-19</lastmod></url>
@@ -2735,6 +3693,7 @@
   <url><loc>https://verdetalent.com/jobs/78b03fcba2ef71bb5290.html</loc><lastmod>2026-06-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c02e95d3562b7a59d0a9.html</loc><lastmod>2026-06-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/fd21e36e484dc761f6cd.html</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/4055a5c85a5977093e0b.html</loc><lastmod>2026-06-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/55172633b01e1f0bf6e7.html</loc><lastmod>2026-06-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/98c954823fb89c1de9be.html</loc><lastmod>2026-06-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3bdc77c07a1d8425ab3b.html</loc><lastmod>2026-06-16</lastmod></url>
@@ -2748,6 +3707,7 @@
   <url><loc>https://verdetalent.com/jobs/c80d3421e549c4558e4e.html</loc><lastmod>2026-06-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6c1ae8421e254c541a41.html</loc><lastmod>2026-06-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/8c381a417243f1bb0893.html</loc><lastmod>2026-06-16</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/524948923242bc97f078.html</loc><lastmod>2026-06-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/80816cbe5cde6837a0ec.html</loc><lastmod>2026-06-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/cb002edbb74cbe224b8d.html</loc><lastmod>2026-06-16</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/55ada7b9900a21b9c327.html</loc><lastmod>2026-06-16</lastmod></url>
@@ -2794,7 +3754,6 @@
   <url><loc>https://verdetalent.com/jobs/19c4bd7c19cccb37e9f0.html</loc><lastmod>2026-06-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/7d903f8f925b29a549dc.html</loc><lastmod>2026-06-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e3e834e06ae5d5113b9d.html</loc><lastmod>2026-06-10</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/7b933cbe9a8d00f67c90.html</loc><lastmod>2026-06-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/4d3274ca065426ae39ae.html</loc><lastmod>2026-06-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b06001f7fcf7db6ecb95.html</loc><lastmod>2026-06-10</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/22fe3c87bb7fce378b5b.html</loc><lastmod>2026-06-10</lastmod></url>
@@ -2910,7 +3869,6 @@
   <url><loc>https://verdetalent.com/jobs/15b9d31f8504cae503a9.html</loc><lastmod>2026-06-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6cd53969528e4faac9f9.html</loc><lastmod>2026-06-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6443846cf94a32d8c8fd.html</loc><lastmod>2026-06-02</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/01628fc1d4db74185eac.html</loc><lastmod>2026-06-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d3b3733992643675c909.html</loc><lastmod>2026-06-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2cc5c16e983d78c45f56.html</loc><lastmod>2026-06-02</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/91abf078b9d4d3e570d9.html</loc><lastmod>2026-06-02</lastmod></url>
@@ -3087,8 +4045,12 @@
   <url><loc>https://verdetalent.com/jobs/6a700e028321fd419754.html</loc><lastmod>2026-05-29</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/92bae59fd6395120fec6.html</loc><lastmod>2026-05-29</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ccd68941fff3f7675d74.html</loc><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/66ba7d1bc803d5bd67fc.html</loc><lastmod>2026-05-29</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/869b5239f7d84b5ed49c.html</loc><lastmod>2026-05-28</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/4a01a921c5a2cd450500.html</loc><lastmod>2026-05-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/9bc14cb096344b797472.html</loc><lastmod>2026-05-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/1a4fbe107cd193aeffc1.html</loc><lastmod>2026-05-27</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/40cdb4526de63d69cb9f.html</loc><lastmod>2026-05-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/1b64b369452b4e14c0a0.html</loc><lastmod>2026-05-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a0ae6e66f2ad023e6ffe.html</loc><lastmod>2026-05-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0a0fa5f253d0a6746984.html</loc><lastmod>2026-05-26</lastmod></url>
@@ -3134,12 +4096,14 @@
   <url><loc>https://verdetalent.com/jobs/ad7e5cbccb10fd8c8332.html</loc><lastmod>2026-05-08</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0b6d5dbcd901ba09b263.html</loc><lastmod>2026-05-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/addd3a3644761ab5d3cf.html</loc><lastmod>2026-05-07</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/bfe78903f890ff5bbba7.html</loc><lastmod>2026-05-07</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/2b70a7c4a724cf0f0b1d.html</loc><lastmod>2026-05-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/7964dbbed834aff71e8c.html</loc><lastmod>2026-05-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/84118f1b09df896904f2.html</loc><lastmod>2026-05-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/ce794141deb077832853.html</loc><lastmod>2026-05-06</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b89cc7df587171a6900f.html</loc><lastmod>2026-05-04</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/f1106bcc8855d91caa6c.html</loc><lastmod>2026-05-04</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/c3a9d76060d2a23a0097.html</loc><lastmod>2026-05-04</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a6070a2679d6b4ffd7d8.html</loc><lastmod>2026-05-04</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/b2c09a405bc3fd9a46ad.html</loc><lastmod>2026-05-04</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/1cb265cef801670be525.html</loc><lastmod>2026-05-01</lastmod></url>
@@ -3156,7 +4120,6 @@
   <url><loc>https://verdetalent.com/jobs/62d1408845e1b864c40b.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/767c937c8656d3480741.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/60bc0a84fda6915ac17d.html</loc><lastmod>2026-04-27</lastmod></url>
-  <url><loc>https://verdetalent.com/jobs/8d23f28428219bb69e59.html</loc><lastmod>2026-04-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/53adb5b98602fe8fb632.html</loc><lastmod>2026-04-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/56dc782c66416852d4e8.html</loc><lastmod>2026-04-24</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/aad05a28f845595c3cb1.html</loc><lastmod>2026-04-24</lastmod></url>
@@ -3179,6 +4142,8 @@
   <url><loc>https://verdetalent.com/jobs/89f37c047cf2eb19eb7e.html</loc><lastmod>2026-04-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a00f8295c1678aac45cf.html</loc><lastmod>2026-04-15</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/0d00fc50d012c2da0bd1.html</loc><lastmod>2026-04-13</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/354e5b4a1914a08b515b.html</loc><lastmod>2026-04-13</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/359b2115b23da57c50aa.html</loc><lastmod>2026-04-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/c23f29853381947c25f1.html</loc><lastmod>2026-04-09</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/792e12e4fcabf0df7d89.html</loc><lastmod>2026-04-09</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/559d47b862a89be1802f.html</loc><lastmod>2026-04-07</lastmod></url>
@@ -3207,12 +4172,15 @@
   <url><loc>https://verdetalent.com/jobs/35030c57d43162a3db75.html</loc><lastmod>2026-03-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/6fd7b4e12fd4a14ad83d.html</loc><lastmod>2026-03-03</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/d37695d4b6abcbabe9c8.html</loc><lastmod>2026-02-26</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/fc2af2819a0a42fbfd70.html</loc><lastmod>2026-02-25</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e262872d1a8f18f39c6c.html</loc><lastmod>2026-02-23</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/3ad40be03faf66d5218d.html</loc><lastmod>2026-02-18</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/e0c12cf6d59214a9dff0.html</loc><lastmod>2026-02-17</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/922ef2cecf819e33ebf3.html</loc><lastmod>2026-02-15</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/32c25d1c16aa82c33684.html</loc><lastmod>2026-02-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/a2feaf77ecf86a011583.html</loc><lastmod>2026-02-13</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/160d9ff8d12cc8eb9cb0.html</loc><lastmod>2026-02-11</lastmod></url>
+  <url><loc>https://verdetalent.com/jobs/8a9000311383efecd4b3.html</loc><lastmod>2026-02-05</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/23131c02c1d2b6283aae.html</loc><lastmod>2026-02-04</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/1cee14f13913698577c4.html</loc><lastmod>2026-01-21</lastmod></url>
   <url><loc>https://verdetalent.com/jobs/59faf40482df9762a7c5.html</loc><lastmod>2026-01-21</lastmod></url>
