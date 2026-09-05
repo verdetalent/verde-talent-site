@@ -153,10 +153,12 @@ footer a:hover{color:var(--grn);}
 <div class="gate" id="admin-gate">
   <div class="gate-card">
     <div class="gate-icon"><i class="ti ti-lock"></i></div>
-    <h1>Verde Talent Admin</h1>
-    <p>This candidate database is internal-only. Enter the admin password to continue.</p>
-    <input type="password" id="gate-password" placeholder="Password" onkeydown="if(event.key==='Enter')checkGatePassword()"/>
-    <button onclick="checkGatePassword()">Unlock</button>
+    <h1 id="gate-title">Verde Talent Admin</h1>
+    <p id="gate-sub">This candidate database is internal-only. Sign in with your admin account to continue.</p>
+    <input type="email" id="gate-email" placeholder="you@example.com" autocomplete="username" onkeydown="if(event.key==='Enter')checkGatePassword()"/>
+    <input type="password" id="gate-password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')checkGatePassword()"/>
+    <button id="gate-submit" onclick="checkGatePassword()">Sign in &rarr;</button>
+    <button type="button" class="btn-ghost" style="width:100%;margin-top:8px;background:none;border:none;color:var(--t3);font-size:12px;cursor:pointer;text-decoration:underline;" onclick="toggleGateMode()" id="gate-toggle">First time here? Create your admin account</button>
     <div class="gate-error" id="gate-error"></div>
   </div>
 </div>
@@ -203,155 +205,363 @@ document.getElementById('navToggle').addEventListener('click', function(){
 <div class="threshold-banner">
   <div class="tb-left">
     <div class="tb-icon"><i class="ti ti-users"></i></div>
-    <div><div class="tb-text">287 profiles collected</div><div class="tb-sub">Reach 500 to unlock client access to the Resume Vault</div></div>
+    <div><div class="tb-text" id="tbText">Loading profiles…</div><div class="tb-sub">Reach 500 to unlock client access to the Resume Vault</div></div>
     <div class="tb-bar-wrap">
-      <div class="tb-bar-track"><div class="tb-bar-fill"></div></div>
-      <div class="tb-pct">287 / 500 — 57% there</div>
+      <div class="tb-bar-track"><div class="tb-bar-fill" id="tbBarFill" style="width:0%;"></div></div>
+      <div class="tb-pct" id="tbPct"></div>
     </div>
   </div>
   <div class="tb-right">
-    <span style="font-size:12px;color:var(--t3);">213 more needed</span>
-    <button class="btn-sm btn-ghost" style="font-size:12px;">Edit threshold</button>
+    <span style="font-size:12px;color:var(--t3);" id="tbMoreNeeded"></span>
   </div>
 </div>
 <div class="layout">
   <div class="sidebar">
     <div class="sf-title">Availability</div>
-    <label class="sf-check"><input type="checkbox" checked/> Actively looking (91)</label>
-    <label class="sf-check"><input type="checkbox" checked/> Open to offers (142)</label>
-    <label class="sf-check"><input type="checkbox"/> Not looking (54)</label>
+    <div id="filtersAvailability"></div>
     <div class="sf-title">Sector</div>
-    <div><span class="sf-pill on">Solar (178)</span><span class="sf-pill blu">Wind (89)</span><span class="sf-pill amb">Storage (112)</span><span class="sf-pill">Grid (67)</span><span class="sf-pill pur">EV (55)</span><span class="sf-pill">Hydrogen (31)</span><span class="sf-pill cor">Policy (44)</span><span class="sf-pill">Sust. (76)</span></div>
+    <div id="filtersSector"></div>
     <div class="sf-title">Experience</div>
-    <label class="sf-check"><input type="checkbox"/> &lt; 2 years (38)</label>
-    <label class="sf-check"><input type="checkbox" checked/> 2–5 years (89)</label>
-    <label class="sf-check"><input type="checkbox" checked/> 5–10 years (112)</label>
-    <label class="sf-check"><input type="checkbox"/> 10+ years (48)</label>
+    <div id="filtersExperience"></div>
     <div class="sf-title">Work style</div>
-    <label class="sf-check"><input type="checkbox" checked/> Remote (189)</label>
-    <label class="sf-check"><input type="checkbox" checked/> Hybrid (134)</label>
-    <label class="sf-check"><input type="checkbox"/> On-site only (41)</label>
+    <div id="filtersWorkStyle"></div>
     <div class="sf-title">Submitted</div>
-    <label class="sf-check"><input type="checkbox" checked/> Last 30 days (67)</label>
-    <label class="sf-check"><input type="checkbox"/> Last 90 days (154)</label>
-    <label class="sf-check"><input type="checkbox"/> All time (287)</label>
+    <div id="filtersSubmitted"></div>
   </div>
   <div class="main">
     <div class="top-bar">
-      <div class="search-wrap"><i class="ti ti-search"></i><input type="text" placeholder="Search by name, skill, title, company…"/></div>
-      <select class="sort-sel"><option>Most recent</option><option>Most relevant</option><option>Years exp: high</option><option>Name A–Z</option></select>
+      <div class="search-wrap"><i class="ti ti-search"></i><input type="text" id="searchInput" placeholder="Search by name, skill, title, location…"/></div>
+      <select class="sort-sel" id="sortSelect"><option value="recent">Most recent</option><option value="exp-high">Years exp: high</option><option value="exp-low">Years exp: low</option><option value="name">Name A–Z</option></select>
     </div>
     <div class="stats-row">
-      <div class="stat-card"><div class="sc-num" style="color:var(--grn);">287</div><div class="sc-label">Total profiles</div><div class="sc-delta up"><i class="ti ti-arrow-up" style="font-size:10px;"></i> +24 this week</div></div>
-      <div class="stat-card"><div class="sc-num" style="color:var(--blu);">91</div><div class="sc-label">Actively looking</div><div class="sc-delta up"><i class="ti ti-arrow-up" style="font-size:10px;"></i> +8 this week</div></div>
-      <div class="stat-card"><div class="sc-num" style="color:var(--amb);">7.2 yrs</div><div class="sc-label">Avg. experience</div><div class="sc-delta up"><i class="ti ti-arrow-up" style="font-size:10px;"></i> +0.3 vs last mo.</div></div>
-      <div class="stat-card"><div class="sc-num" style="color:var(--pur);">Solar</div><div class="sc-label">Top sector</div><div class="sc-delta" style="color:var(--t3);">62% of profiles</div></div>
+      <div class="stat-card"><div class="sc-num" style="color:var(--grn);" id="statTotal">–</div><div class="sc-label">Total profiles</div><div class="sc-delta up" id="statTotalDelta"></div></div>
+      <div class="stat-card"><div class="sc-num" style="color:var(--blu);" id="statActive">–</div><div class="sc-label">Actively looking</div><div class="sc-delta up" id="statActiveDelta"></div></div>
+      <div class="stat-card"><div class="sc-num" style="color:var(--amb);" id="statAvgExp">–</div><div class="sc-label">Avg. experience</div></div>
+      <div class="stat-card"><div class="sc-num" style="color:var(--pur);" id="statTopSector">–</div><div class="sc-label">Top sector</div><div class="sc-delta" style="color:var(--t3);" id="statTopSectorPct"></div></div>
     </div>
     <div class="results-header">
-      <div class="rh-count">Showing 233 of 287 candidates</div>
-      <div class="rh-actions">
-        <button class="btn-sm btn-ghost" style="font-size:12px;"><i class="ti ti-grid-dots" style="font-size:13px;"></i></button>
-        <button class="btn-sm btn-ghost" style="font-size:12px;"><i class="ti ti-list" style="font-size:13px;"></i></button>
-      </div>
+      <div class="rh-count" id="resultsCount"></div>
     </div>
-    <!-- Candidate cards -->
-    <div class="candidate-card">
-      <div class="avatar" style="background:rgba(34,224,154,0.15);color:var(--grn);">JR</div>
-      <div class="cc-body">
-        <div class="cc-top">
-          <div><div class="cc-name">Jamie Reyes</div><div class="cc-title">Senior Solar Design Engineer</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Boston, MA · Remote preferred</div></div>
-          <div class="cc-meta"><div class="avail-dot open"></div><span style="color:var(--grn);">Actively looking</span></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag grn">Solar</span><span class="cc-tag">Grid</span><span class="cc-tag amb">Storage</span><span class="cc-tag">8 yrs exp</span><span class="cc-tag">PVsyst</span><span class="cc-tag">NABCEP</span><span class="cc-tag">Helioscope</span></div>
-      </div>
-    </div>
-    <div class="candidate-card">
-      <div class="avatar" style="background:rgba(79,179,255,0.15);color:var(--blu);">SK</div>
-      <div class="cc-body">
-        <div class="cc-top">
-          <div><div class="cc-name">Sofia Kim</div><div class="cc-title">Offshore Wind Project Manager</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Providence, RI · Open to hybrid</div></div>
-          <div class="cc-meta"><div class="avail-dot open"></div><span style="color:var(--grn);">Actively looking</span></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag blu">Wind</span><span class="cc-tag">12 yrs exp</span><span class="cc-tag">Permitting</span><span class="cc-tag">BOEM</span><span class="cc-tag cor">Policy</span></div>
-      </div>
-    </div>
-    <div class="candidate-card">
-      <div class="avatar" style="background:rgba(255,181,71,0.15);color:var(--amb);">ML</div>
-      <div class="cc-body">
-        <div class="cc-top">
-          <div><div class="cc-name">Marcus Lee</div><div class="cc-title">Battery Storage Systems Engineer</div><div class="cc-loc"><i class="ti ti-map-pin"></i>San Jose, CA · On-site</div></div>
-          <div class="cc-meta"><div class="avail-dot passive"></div><span style="color:var(--amb);">Open to offers</span></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag amb">Storage</span><span class="cc-tag grn">Solar</span><span class="cc-tag">5 yrs exp</span><span class="cc-tag">BESS</span><span class="cc-tag">BMS</span><span class="cc-tag">Python</span></div>
-      </div>
-    </div>
-    <div class="candidate-card">
-      <div class="avatar" style="background:rgba(181,136,255,0.15);color:var(--pur);">AP</div>
-      <div class="cc-body">
-        <div class="cc-top">
-          <div><div class="cc-name">Aisha Patel</div><div class="cc-title">EV Infrastructure Lead</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Detroit, MI · Hybrid</div></div>
-          <div class="cc-meta"><div class="avail-dot open"></div><span style="color:var(--grn);">Actively looking</span></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag pur">EV</span><span class="cc-tag">Grid</span><span class="cc-tag">6 yrs exp</span><span class="cc-tag">EVSE</span><span class="cc-tag">SAE J1772</span><span class="cc-tag">Fleet electrification</span></div>
-      </div>
-    </div>
-    <div class="candidate-card">
-      <div class="avatar" style="background:rgba(255,112,85,0.15);color:var(--cor);">TW</div>
-      <div class="cc-body">
-        <div class="cc-top">
-          <div><div class="cc-name">Tyler Webb</div><div class="cc-title">Energy Policy Analyst</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Washington, DC · Remote</div></div>
-          <div class="cc-meta"><div class="avail-dot passive"></div><span style="color:var(--amb);">Open to offers</span></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag cor">Policy</span><span class="cc-tag">Regulatory</span><span class="cc-tag">4 yrs exp</span><span class="cc-tag">FERC</span><span class="cc-tag">IRA tax credits</span></div>
-      </div>
-    </div>
-    <div class="candidate-card">
-      <div class="avatar" style="background:rgba(34,224,154,0.15);color:var(--grn);">LN</div>
-      <div class="cc-body">
-        <div class="cc-top">
-          <div><div class="cc-name">Lily Nguyen</div><div class="cc-title">Sustainability & ESG Manager</div><div class="cc-loc"><i class="ti ti-map-pin"></i>Seattle, WA · Remote preferred</div></div>
-          <div class="cc-meta"><div class="avail-dot passive"></div><span style="color:var(--amb);">Open to offers</span></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">Sustainability</span><span class="cc-tag grn">ESG</span><span class="cc-tag">9 yrs exp</span><span class="cc-tag">GRI</span><span class="cc-tag">CDP reporting</span><span class="cc-tag">Net zero strategy</span></div>
-      </div>
-    </div>
-    <div class="pagination">
-      <button class="page-btn"><i class="ti ti-chevron-left" style="font-size:14px;"></i></button>
-      <button class="page-btn active">1</button>
-      <button class="page-btn">2</button>
-      <button class="page-btn">3</button>
-      <span style="color:var(--t3);font-size:13px;padding:0 4px;">…</span>
-      <button class="page-btn">12</button>
-      <button class="page-btn"><i class="ti ti-chevron-right" style="font-size:14px;"></i></button>
-    </div>
+    <div id="candidateList"></div>
+    <div class="empty-state" id="emptyState" style="display:none;text-align:center;padding:3rem 1rem;color:var(--t3);font-size:13px;">No candidate profiles match these filters.</div>
+    <div class="pagination" id="pagination"></div>
   </div>
 </div>
 </div>
 <script>
-// Client-side-only gate - a convenience speed bump, not real access control.
-// The password and the page content are both still present in this file's
-// source, so anyone who views-source or reads the network response can get
-// past it. Fine for keeping this off casual visitors' radar for now; swap for
-// real authentication before this data or "paid member" access needs to be
-// actually secure.
-const ADMIN_GATE_PASSWORD = "Lsdwku145421!";
+// Real auth, not a speed bump: the "candidates" table is locked down by a
+// database policy that only lets the contact@verdetalent.com Supabase Auth
+// account read rows (see the "Admin can view all candidates" RLS policy).
+// Anon-key reads return zero rows, so this has to sign in for real.
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+const GOAL = 500;
+const PAGE_SIZE = 20;
+const SECTOR_COLORS = { Solar:'grn', Wind:'blu', Storage:'amb', Grid:'pur', EV:'cor', Hydrogen:'blu', Policy:'cor', Sustainability:'grn' };
+const EXP_BUCKETS = ['Less than 1 year','1–3 years','3–5 years','5–10 years','10+ years'];
+const EXP_MIDPOINT = { 'Less than 1 year':0.5, '1–3 years':2, '3–5 years':4, '5–10 years':7.5, '10+ years':12 };
 
-// Deliberately does not remember a previous unlock (no sessionStorage/localStorage) -
-// the password prompt should appear every time this page is opened, not just once
-// per browser session.
-function checkGatePassword() {
-  const input = document.getElementById("gate-password");
-  if (input.value === ADMIN_GATE_PASSWORD) {
-    unlockAdmin();
-  } else {
-    document.getElementById("gate-error").textContent = "Incorrect password.";
+let isSignupMode = false;
+let accessToken = null;
+let ALL_CANDIDATES = [];
+let currentPage = 1;
+const excluded = { availability: new Set(), sector: new Set(), experience: new Set(), workStyle: new Set() };
+let submittedFilter = 'all';
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function toggleGateMode() {
+  isSignupMode = !isSignupMode;
+  document.getElementById('gate-title').textContent = isSignupMode ? 'Create admin account' : 'Verde Talent Admin';
+  document.getElementById('gate-submit').textContent = isSignupMode ? 'Create account →' : 'Sign in →';
+  document.getElementById('gate-toggle').textContent = isSignupMode ? 'Already have an admin account? Sign in' : 'First time here? Create your admin account';
+  document.getElementById('gate-error').textContent = '';
+}
+
+async function checkGatePassword() {
+  const btn = document.getElementById('gate-submit');
+  const errEl = document.getElementById('gate-error');
+  const email = document.getElementById('gate-email').value.trim();
+  const password = document.getElementById('gate-password').value;
+  errEl.textContent = '';
+  if (!email || !password) {
+    errEl.textContent = 'Enter email and password.';
+    return;
+  }
+  const prevLabel = btn.textContent;
+  btn.disabled = true;
+  try {
+    if (isSignupMode) {
+      btn.textContent = 'Creating account…';
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+        method: 'POST',
+        headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.msg || data?.error_description || 'Could not create account.');
+      accessToken = data.access_token;
+      if (!accessToken) throw new Error('Account created. If email confirmation is required, confirm it, then sign in.');
+    } else {
+      btn.textContent = 'Signing in…';
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error_description || data?.msg || 'Incorrect email or password.');
+      accessToken = data.access_token;
+    }
+
+    const listRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?select=*&order=created_at.desc`, {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${accessToken}` },
+    });
+    const candidates = await listRes.json();
+    if (!listRes.ok) throw new Error('Signed in, but this account is not authorized to view candidates.');
+
+    ALL_CANDIDATES = Array.isArray(candidates) ? candidates : [];
+    document.getElementById('admin-gate').style.display = 'none';
+    document.getElementById('admin-content').style.display = '';
+    renderThreshold();
+    renderStats();
+    renderSidebar();
+    currentPage = 1;
+    renderResults();
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = prevLabel;
+    errEl.textContent = err.message || 'Something went wrong.';
   }
 }
 
-function unlockAdmin() {
-  document.getElementById("admin-gate").style.display = "none";
-  document.getElementById("admin-content").style.display = "";
+function daysAgo(iso) {
+  if (!iso) return Infinity;
+  return (Date.now() - new Date(iso).getTime()) / 86400000;
 }
+
+function renderThreshold() {
+  const total = ALL_CANDIDATES.length;
+  const pct = Math.min(100, (total / GOAL) * 100);
+  document.getElementById('tbText').textContent = `${total} profile${total === 1 ? '' : 's'} collected`;
+  document.getElementById('tbBarFill').style.width = `${pct}%`;
+  document.getElementById('tbPct').textContent = `${total} / ${GOAL} — ${pct.toFixed(1)}% there`;
+  const remaining = Math.max(0, GOAL - total);
+  document.getElementById('tbMoreNeeded').textContent = remaining ? `${remaining} more needed` : 'Goal reached!';
+}
+
+function renderStats() {
+  const total = ALL_CANDIDATES.length;
+  document.getElementById('statTotal').textContent = total;
+  const totalThisWeek = ALL_CANDIDATES.filter(c => daysAgo(c.created_at) <= 7).length;
+  document.getElementById('statTotalDelta').innerHTML = totalThisWeek ? `<i class="ti ti-arrow-up" style="font-size:10px;"></i> +${totalThisWeek} this week` : '';
+
+  const active = ALL_CANDIDATES.filter(c => c.availability === 'Actively looking');
+  document.getElementById('statActive').textContent = active.length;
+  const activeThisWeek = active.filter(c => daysAgo(c.created_at) <= 7).length;
+  document.getElementById('statActiveDelta').innerHTML = activeThisWeek ? `<i class="ti ti-arrow-up" style="font-size:10px;"></i> +${activeThisWeek} this week` : '';
+
+  const nums = ALL_CANDIDATES.map(c => EXP_MIDPOINT[c.years_experience]).filter(v => v != null);
+  const avg = nums.length ? nums.reduce((a, b) => a + b, 0) / nums.length : null;
+  document.getElementById('statAvgExp').textContent = avg != null ? `${avg.toFixed(1)} yrs` : '—';
+
+  const sectorCounts = {};
+  ALL_CANDIDATES.forEach(c => (c.sectors || []).forEach(s => sectorCounts[s] = (sectorCounts[s] || 0) + 1));
+  const topSector = Object.keys(sectorCounts).sort((a, b) => sectorCounts[b] - sectorCounts[a])[0];
+  document.getElementById('statTopSector').textContent = topSector || '—';
+  document.getElementById('statTopSectorPct').textContent = topSector && total ? `${Math.round((sectorCounts[topSector] / total) * 100)}% of profiles` : '';
+}
+
+function toggleFacet(facet, value, included) {
+  if (included) excluded[facet].delete(value); else excluded[facet].add(value);
+  currentPage = 1;
+  renderSidebar();
+  renderResults();
+}
+
+function setSubmittedFilter(v) {
+  submittedFilter = v;
+  currentPage = 1;
+  renderResults();
+}
+
+function renderSidebar() {
+  const counts = { availability: {}, sector: {}, experience: {}, workStyle: {} };
+  ALL_CANDIDATES.forEach(c => {
+    const av = c.availability || 'Unspecified';
+    counts.availability[av] = (counts.availability[av] || 0) + 1;
+    (c.sectors || []).forEach(s => counts.sector[s] = (counts.sector[s] || 0) + 1);
+    const exp = c.years_experience || 'Unspecified';
+    counts.experience[exp] = (counts.experience[exp] || 0) + 1;
+    (c.work_style || []).forEach(w => counts.workStyle[w] = (counts.workStyle[w] || 0) + 1);
+  });
+
+  document.getElementById('filtersAvailability').innerHTML = Object.keys(counts.availability)
+    .sort((a, b) => counts.availability[b] - counts.availability[a])
+    .map(av => `<label class="sf-check"><input type="checkbox" ${excluded.availability.has(av) ? '' : 'checked'} onchange="toggleFacet('availability', ${JSON.stringify(av)}, this.checked)"/> ${escapeHtml(av)} (${counts.availability[av]})</label>`)
+    .join('');
+
+  document.getElementById('filtersSector').innerHTML = Object.keys(counts.sector)
+    .sort((a, b) => counts.sector[b] - counts.sector[a])
+    .map(s => {
+      const on = !excluded.sector.has(s);
+      return `<span class="sf-pill ${on ? 'on ' + (SECTOR_COLORS[s] || '') : ''}" onclick="toggleFacet('sector', ${JSON.stringify(s)}, ${!on})">${escapeHtml(s)} (${counts.sector[s]})</span>`;
+    })
+    .join('');
+
+  const expKeys = Object.keys(counts.experience);
+  const orderedExp = EXP_BUCKETS.filter(b => expKeys.includes(b)).concat(expKeys.filter(k => !EXP_BUCKETS.includes(k)));
+  document.getElementById('filtersExperience').innerHTML = orderedExp
+    .map(exp => `<label class="sf-check"><input type="checkbox" ${excluded.experience.has(exp) ? '' : 'checked'} onchange="toggleFacet('experience', ${JSON.stringify(exp)}, this.checked)"/> ${escapeHtml(exp)} (${counts.experience[exp]})</label>`)
+    .join('');
+
+  document.getElementById('filtersWorkStyle').innerHTML = Object.keys(counts.workStyle)
+    .sort((a, b) => counts.workStyle[b] - counts.workStyle[a])
+    .map(w => `<label class="sf-check"><input type="checkbox" ${excluded.workStyle.has(w) ? '' : 'checked'} onchange="toggleFacet('workStyle', ${JSON.stringify(w)}, this.checked)"/> ${escapeHtml(w)} (${counts.workStyle[w]})</label>`)
+    .join('');
+
+  const last30 = ALL_CANDIDATES.filter(c => daysAgo(c.created_at) <= 30).length;
+  const last90 = ALL_CANDIDATES.filter(c => daysAgo(c.created_at) <= 90).length;
+  document.getElementById('filtersSubmitted').innerHTML = `
+    <label class="sf-check"><input type="radio" name="submittedFilter" ${submittedFilter === '30' ? 'checked' : ''} onchange="setSubmittedFilter('30')"/> Last 30 days (${last30})</label>
+    <label class="sf-check"><input type="radio" name="submittedFilter" ${submittedFilter === '90' ? 'checked' : ''} onchange="setSubmittedFilter('90')"/> Last 90 days (${last90})</label>
+    <label class="sf-check"><input type="radio" name="submittedFilter" ${submittedFilter === 'all' ? 'checked' : ''} onchange="setSubmittedFilter('all')"/> All time (${ALL_CANDIDATES.length})</label>
+  `;
+}
+
+function getFilteredList() {
+  let list = ALL_CANDIDATES.filter(c => {
+    if (excluded.availability.has(c.availability || 'Unspecified')) return false;
+    if (excluded.experience.has(c.years_experience || 'Unspecified')) return false;
+    const sectors = c.sectors || [];
+    if (sectors.length && sectors.every(s => excluded.sector.has(s))) return false;
+    const ws = c.work_style || [];
+    if (ws.length && ws.every(w => excluded.workStyle.has(w))) return false;
+    if (submittedFilter !== 'all') {
+      const limit = submittedFilter === '30' ? 30 : 90;
+      if (daysAgo(c.created_at) > limit) return false;
+    }
+    return true;
+  });
+
+  const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+  if (q) {
+    list = list.filter(c => {
+      const hay = [c.first_name, c.last_name, c.headline, c.location, ...(c.skills || []), ...(c.sectors || [])].filter(Boolean).join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }
+
+  const sortVal = document.getElementById('sortSelect').value;
+  const expRank = v => EXP_BUCKETS.indexOf(v);
+  if (sortVal === 'exp-high') list.sort((a, b) => expRank(b.years_experience) - expRank(a.years_experience));
+  else if (sortVal === 'exp-low') list.sort((a, b) => expRank(a.years_experience) - expRank(b.years_experience));
+  else if (sortVal === 'name') list.sort((a, b) => `${a.first_name} ${a.last_name}`.localeCompare(`${b.first_name} ${b.last_name}`));
+  else list.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+  return list;
+}
+
+function initials(c) {
+  return `${(c.first_name || '?')[0] || ''}${(c.last_name || '')[0] || ''}`.toUpperCase();
+}
+
+const AVATAR_BG = { grn: 'rgba(34,224,154,0.15)', blu: 'rgba(79,179,255,0.15)', amb: 'rgba(255,181,71,0.15)', pur: 'rgba(181,136,255,0.15)', cor: 'rgba(255,112,85,0.15)' };
+const AVATAR_FG = { grn: 'var(--grn)', blu: 'var(--blu)', amb: 'var(--amb)', pur: 'var(--pur)', cor: 'var(--cor)' };
+
+function availDotClass(av) {
+  if (av === 'Actively looking') return 'open';
+  if (av === 'Open to opportunities') return 'passive';
+  return 'closed';
+}
+function availColorVar(av) {
+  if (av === 'Actively looking') return 'var(--grn)';
+  if (av === 'Open to opportunities') return 'var(--amb)';
+  return 'var(--t3)';
+}
+
+function renderCandidateCard(c) {
+  const colorKey = SECTOR_COLORS[(c.sectors || [])[0]] || 'grn';
+  const tags = [];
+  (c.sectors || []).forEach(s => tags.push(`<span class="cc-tag ${SECTOR_COLORS[s] || ''}">${escapeHtml(s)}</span>`));
+  if (c.years_experience) tags.push(`<span class="cc-tag">${escapeHtml(c.years_experience)}</span>`);
+  (c.skills || []).slice(0, 4).forEach(s => tags.push(`<span class="cc-tag">${escapeHtml(s)}</span>`));
+  const loc = [c.location, (c.work_style || []).join('/')].filter(Boolean).join(' · ');
+  const resumeBtn = c.resume_path
+    ? `<button type="button" class="btn-sm btn-ghost" style="font-size:11px;" onclick="viewResume('${c.resume_path}')"><i class="ti ti-file-text" style="font-size:12px;margin-right:4px;"></i>View resume</button>`
+    : `<span style="font-size:11px;color:var(--t3);">No resume uploaded</span>`;
+  return `
+    <div class="candidate-card" style="cursor:default;">
+      <div class="avatar" style="background:${AVATAR_BG[colorKey]};color:${AVATAR_FG[colorKey]};">${initials(c)}</div>
+      <div class="cc-body">
+        <div class="cc-top">
+          <div>
+            <div class="cc-name">${escapeHtml(c.first_name)} ${escapeHtml(c.last_name)}</div>
+            <div class="cc-title">${escapeHtml(c.headline || '')}</div>
+            ${loc ? `<div class="cc-loc"><i class="ti ti-map-pin"></i>${escapeHtml(loc)}</div>` : ''}
+          </div>
+          <div class="cc-meta"><div class="avail-dot ${availDotClass(c.availability)}"></div><span style="color:${availColorVar(c.availability)};">${escapeHtml(c.availability || 'Unspecified')}</span></div>
+        </div>
+        <div class="cc-tags">${tags.join('')}</div>
+        <div style="margin-top:10px;">${resumeBtn}</div>
+      </div>
+    </div>
+  `;
+}
+
+async function viewResume(path) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/sign/resumes/${path}`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ expiresIn: 3600 }),
+    });
+    const data = await res.json();
+    if (res.ok && data.signedURL) window.open(`${SUPABASE_URL}/storage/v1${data.signedURL}`, '_blank');
+    else alert('Could not open this resume.');
+  } catch (e) {
+    alert('Could not open this resume.');
+  }
+}
+
+function gotoPage(p) {
+  currentPage = p;
+  renderResults();
+  document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderPagination(totalItems) {
+  const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const el = document.getElementById('pagination');
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+  let html = `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="gotoPage(${currentPage - 1})"><i class="ti ti-chevron-left" style="font-size:14px;"></i></button>`;
+  for (let p = 1; p <= totalPages; p++) {
+    if (p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1) {
+      html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="gotoPage(${p})">${p}</button>`;
+    } else if (Math.abs(p - currentPage) === 2) {
+      html += `<span style="color:var(--t3);font-size:13px;padding:0 4px;">…</span>`;
+    }
+  }
+  html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="gotoPage(${currentPage + 1})"><i class="ti ti-chevron-right" style="font-size:14px;"></i></button>`;
+  el.innerHTML = html;
+}
+
+function renderResults() {
+  const filtered = getFilteredList();
+  document.getElementById('emptyState').style.display = filtered.length ? 'none' : 'block';
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = filtered.slice(start, start + PAGE_SIZE);
+  document.getElementById('resultsCount').textContent = filtered.length
+    ? `Showing ${start + 1}-${Math.min(start + PAGE_SIZE, filtered.length)} of ${filtered.length} candidates`
+    : 'No candidates match these filters';
+  document.getElementById('candidateList').innerHTML = pageItems.map(renderCandidateCard).join('');
+  renderPagination(filtered.length);
+}
+
+document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; renderResults(); });
+document.getElementById('sortSelect').addEventListener('change', () => { currentPage = 1; renderResults(); });
 </script>
 <footer>
   <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
