@@ -158,7 +158,6 @@ footer a:hover{color:var(--grn);}
     <input type="email" id="gate-email" placeholder="you@example.com" autocomplete="username" onkeydown="if(event.key==='Enter')checkGatePassword()"/>
     <input type="password" id="gate-password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')checkGatePassword()"/>
     <button id="gate-submit" onclick="checkGatePassword()">Sign in &rarr;</button>
-    <button type="button" class="btn-ghost" style="width:100%;margin-top:8px;background:none;border:none;color:var(--t3);font-size:12px;cursor:pointer;text-decoration:underline;" onclick="toggleGateMode()" id="gate-toggle">First time here? Create your admin account</button>
     <div class="gate-error" id="gate-error"></div>
   </div>
 </div>
@@ -261,7 +260,6 @@ const SECTOR_COLORS = { Solar:'grn', Wind:'blu', Storage:'amb', Grid:'pur', EV:'
 const EXP_BUCKETS = ['Less than 1 year','1–3 years','3–5 years','5–10 years','10+ years'];
 const EXP_MIDPOINT = { 'Less than 1 year':0.5, '1–3 years':2, '3–5 years':4, '5–10 years':7.5, '10+ years':12 };
 
-let isSignupMode = false;
 let accessToken = null;
 let ALL_CANDIDATES = [];
 let currentPage = 1;
@@ -270,14 +268,6 @@ let submittedFilter = 'all';
 
 function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
-
-function toggleGateMode() {
-  isSignupMode = !isSignupMode;
-  document.getElementById('gate-title').textContent = isSignupMode ? 'Create admin account' : 'Verde Talent Admin';
-  document.getElementById('gate-submit').textContent = isSignupMode ? 'Create account →' : 'Sign in →';
-  document.getElementById('gate-toggle').textContent = isSignupMode ? 'Already have an admin account? Sign in' : 'First time here? Create your admin account';
-  document.getElementById('gate-error').textContent = '';
 }
 
 async function checkGatePassword() {
@@ -293,28 +283,15 @@ async function checkGatePassword() {
   const prevLabel = btn.textContent;
   btn.disabled = true;
   try {
-    if (isSignupMode) {
-      btn.textContent = 'Creating account…';
-      const res = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
-        method: 'POST',
-        headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.msg || data?.error_description || 'Could not create account.');
-      accessToken = data.access_token;
-      if (!accessToken) throw new Error('Account created. If email confirmation is required, confirm it, then sign in.');
-    } else {
-      btn.textContent = 'Signing in…';
-      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-        method: 'POST',
-        headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error_description || data?.msg || 'Incorrect email or password.');
-      accessToken = data.access_token;
-    }
+    btn.textContent = 'Signing in…';
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data?.error_description || data?.msg || 'Incorrect email or password.');
+    accessToken = data.access_token;
 
     const listRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?select=*&order=created_at.desc`, {
       headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${accessToken}` },
