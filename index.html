@@ -98,7 +98,6 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .signin-menu .si-label.amb{color:var(--amb);}
 /* Hero */
 .hero{padding:2.25rem 2rem 1.5rem;text-align:center;position:relative;overflow:hidden;max-width:1400px;margin:0 auto;}
-.hero-bg{position:absolute;inset:0;pointer-events:none;}
 .hero h1{font-size:56px;font-weight:700;line-height:1.15;max-width:920px;margin:0 auto .9rem;letter-spacing:-0.02em;}
 .hero h1 span{color:var(--grn);}
 .hero p{font-size:18px;color:var(--t2);max-width:680px;margin:0 auto 2rem;line-height:1.65;}
@@ -283,15 +282,6 @@ document.addEventListener('click', function(){
 });
 </script>
 <div class="hero">
-  <!-- SVG background glow -->
-  <svg class="hero-bg" viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <ellipse cx="600" cy="300" rx="500" ry="220" fill="none" stroke="rgba(34,224,154,0.04)" stroke-width="1"/>
-    <ellipse cx="600" cy="300" rx="350" ry="150" fill="rgba(34,224,154,0.025)" />
-    <circle cx="200" cy="120" r="2" fill="rgba(34,224,154,0.3)"/>
-    <circle cx="980" cy="180" r="2" fill="rgba(79,179,255,0.3)"/>
-    <circle cx="150" cy="350" r="1.5" fill="rgba(255,181,71,0.3)"/>
-    <circle cx="1050" cy="380" r="1.5" fill="rgba(181,136,255,0.3)"/>
-  </svg>
   <h1>The job board built for<br><span>clean energy</span> careers</h1>
   <p>No noise — just renewable energy. Solar, wind, storage, grid, EV, hydrogen — find your place in the transition.</p>
   <div class="search-box">
