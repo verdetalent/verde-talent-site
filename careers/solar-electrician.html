@@ -148,6 +148,13 @@ border-top:0.5px solid var(--bdr);padding-top:1rem;}
 .pill-n{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;}
 .pill-l{font-size:12.5px;color:var(--t2);}
 .note-inline{font-size:12.5px;color:var(--t3);margin-top:.7rem;line-height:1.6;}
+
+.site-footer{border-top:0.5px solid var(--bdr);padding:2rem 1.5rem;text-align:center;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.55rem 1.15rem;margin-bottom:1rem;}
+.footer-links a{font-size:12.5px;color:var(--t2);text-decoration:none;}
+.footer-links a:hover{color:var(--grn);}
+.footer-copy{font-size:12px;color:var(--t3);}
+.footer-copy a{color:var(--t2);}
 </style>
 </head>
 <body>
@@ -228,7 +235,24 @@ border-top:0.5px solid var(--bdr);padding-top:1rem;}
   <p class="method">Built from live postings on Verde Talent and updated daily. Counts reflect
   roles open right now, and pay figures are what employers advertise rather than offers made.</p>
 </div>
-<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="/jobs.html">Jobs</a>
+    <a href="/browse.html">Browse by Location</a>
+    <a href="/companies.html">Companies</a>
+    <a href="/intelligence.html">Intelligence</a>
+    <a href="/news.html">News</a>
+    <a href="/professional-development.html">Training</a>
+    <a href="/resume-vault.html">Resume Vault</a>
+    <a href="/about.html">About</a>
+    <a href="/salaries.html">Salaries</a>
+    <a href="/careers.html">Career Profiles</a>
+    <a href="/hire.html">Hire Talent</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
+</footer>
 <script>
 document.getElementById('navToggle').addEventListener('click', function(){
   document.getElementById('navGroups').classList.toggle('open');

@@ -114,6 +114,13 @@ footer a{color:var(--t3);text-decoration:none;}
   .nav-right{gap:6px;}
   .nav-right .btn{padding:6px 9px;font-size:11px;}
 }
+
+.site-footer{border-top:0.5px solid var(--bdr);padding:2rem 1.5rem;text-align:center;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.55rem 1.15rem;margin-bottom:1rem;}
+.footer-links a{font-size:12.5px;color:var(--t2);text-decoration:none;}
+.footer-links a:hover{color:var(--grn);}
+.footer-copy{font-size:12px;color:var(--t3);}
+.footer-copy a{color:var(--t2);}
 </style>
 </head>
 <body>
@@ -317,7 +324,24 @@ footer a{color:var(--t3);text-decoration:none;}
     <a class="btn-apply" href="/jobs.html">See all open roles &rarr;</a>
   </div>
 </div>
-<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="/jobs.html">Jobs</a>
+    <a href="/browse.html">Browse by Location</a>
+    <a href="/companies.html">Companies</a>
+    <a href="/intelligence.html">Intelligence</a>
+    <a href="/news.html">News</a>
+    <a href="/professional-development.html">Training</a>
+    <a href="/resume-vault.html">Resume Vault</a>
+    <a href="/about.html">About</a>
+    <a href="/salaries.html">Salaries</a>
+    <a href="/careers.html">Career Profiles</a>
+    <a href="/hire.html">Hire Talent</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
+</footer>
 <script>
 document.getElementById('navToggle').addEventListener('click', function(){
   document.getElementById('navGroups').classList.toggle('open');
