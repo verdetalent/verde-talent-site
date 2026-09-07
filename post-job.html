@@ -96,6 +96,12 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .btn-grn:disabled{opacity:.6;cursor:default;}
 .submit-note{font-size:12px;color:var(--t3);margin-top:10px;text-align:center;}
 .note-banner{background:rgba(79,179,255,0.08);border:0.5px solid rgba(79,179,255,0.25);border-radius:10px;padding:.8rem 1rem;font-size:12px;color:var(--blu);margin-bottom:1.5rem;line-height:1.6;}
+.site-footer{border-top:0.5px solid var(--bdr,rgba(255,255,255,0.08));padding:2rem 1.5rem;text-align:center;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.55rem 1.15rem;margin-bottom:1rem;}
+.footer-links a{font-size:12.5px;color:var(--t2,rgba(255,255,255,0.6));text-decoration:none;}
+.footer-links a:hover{color:var(--grn,#22E09A);}
+.footer-copy{font-size:12px;color:var(--t3,rgba(255,255,255,0.35));}
+.footer-copy a{color:var(--t2,rgba(255,255,255,0.6));}
 </style>
 </head>
 <body>
@@ -591,5 +597,23 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
   }
 });
 </script>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="jobs.html">Jobs</a>
+    <a href="browse.html">Browse by Location</a>
+    <a href="companies.html">Companies</a>
+    <a href="intelligence.html">Intelligence</a>
+    <a href="news.html">News</a>
+    <a href="professional-development.html">Training</a>
+    <a href="resume-vault.html">Resume Vault</a>
+    <a href="about.html">About</a>
+    <a href="salaries.html">Salaries</a>
+    <a href="careers.html">Career Profiles</a>
+    <a href="hire.html">Hire Talent</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
+</footer>
 </body>
 </html>
