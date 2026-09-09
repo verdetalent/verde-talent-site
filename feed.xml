@@ -5,24 +5,222 @@
   <link>https://verdetalent.com/news.html</link>
   <description>Renewable energy news and jobs, curated by Verde Talent.</description>
   <language>en-us</language>
-  <lastBuildDate>Wed, 12 Aug 2026 18:35:37 GMT</lastBuildDate>
+  <lastBuildDate>Wed, 09 Sep 2026 11:15:16 GMT</lastBuildDate>
   <item>
-    <title>Brookfield&#39;s $600M India renewable platform</title>
-    <link>https://www.esgtoday.com/brookfield-launches-600-million-india-focused-renewable-energy-platform/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.esgtoday.com/brookfield-launches-600-million-india-focused-renewable-energy-platform/</guid>
-    <pubDate>Fri, 14 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Sustainability</category>
-    <domestic>false</domestic>
-    <description>ESG Today — Brookfield Asset Management launched Lumara Energy, a new $600 million India-focused renewable energy platform.</description>
+    <title>ISO-NE offshore wind sets new production record</title>
+    <link>https://www.rtoinsider.com/142325-iso-ne-offshore-wind-breaks-production-record-in-late-august/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/142325-iso-ne-offshore-wind-breaks-production-record-in-late-august/</guid>
+    <pubDate>Sun, 13 Sep 2026 00:00:00 GMT</pubDate>
+    <category>Wind</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — New England&#39;s offshore wind fleet sent a record 930MW to the grid in late August.</description>
   </item>
   <item>
-    <title>Ulanqab assigns 4.4 GWh storage buildout</title>
-    <link>https://www.pv-magazine.com/2026/08/03/ulanqab-selects-developers-for-4-4-gwh-grid-forming-storage-buildout/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.pv-magazine.com/2026/08/03/ulanqab-selects-developers-for-4-4-gwh-grid-forming-storage-buildout/</guid>
-    <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
+    <title>Microsoft backs $180M Washington solar project</title>
+    <link>https://www.esgtoday.com/cypress-creek-reveals-microsoft-as-long-term-offtaker-for-new-180-million-washington-solar-project/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/cypress-creek-reveals-microsoft-as-long-term-offtaker-for-new-180-million-washington-solar-project/</guid>
+    <pubDate>Sat, 12 Sep 2026 00:00:00 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>ESG Today — Cypress Creek&#39;s new solar project secures Microsoft as long-term power buyer.</description>
+  </item>
+  <item>
+    <title>Utilities eye small modular reactors for data center demand</title>
+    <link>https://www.utilitydive.com/news/utilities-eye-small-modular-nuclear-reactors-for-reliability-as-hyperscaler/829681/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.utilitydive.com/news/utilities-eye-small-modular-nuclear-reactors-for-reliability-as-hyperscaler/829681/</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>Utility Dive — Hyperscalers are driving early interest in SMRs as a reliable power source.</description>
+  </item>
+  <item>
+    <title>Google, Tesla, Sunrun, PG&amp;E launch CA virtual power plant</title>
+    <link>https://www.energy-storage.news/google-tesla-sunrun-and-pge-partner-on-new-california-virtual-power-plant-programme/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.energy-storage.news/google-tesla-sunrun-and-pge-partner-on-new-california-virtual-power-plant-programme/</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>Energy Storage News — A new VPP program turns home batteries into a coordinated grid resource in California.</description>
+  </item>
+  <item>
+    <title>Energy jobs report finds high wages, labor shortage</title>
+    <link>https://www.rtoinsider.com/142486-strong-growth-prospects-wages-seen-us-energy-economy/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/142486-strong-growth-prospects-wages-seen-us-energy-economy/</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
+    <category>Jobs &amp; Hiring</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — 2026 report finds the clean energy workforce well-paid but facing acute labor shortages.</description>
+  </item>
+  <item>
+    <title>NJ BPU Storage Proposal</title>
+    <link>https://www.energy-storage.news/new-jersey-board-of-public-utilities-releases-150mw-btm-energy-storage-proposal/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.energy-storage.news/new-jersey-board-of-public-utilities-releases-150mw-btm-energy-storage-proposal/</guid>
+    <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>Energy-Storage.News — New Jersey&#39;s BPU proposed 150MW of behind-the-meter battery incentives, part of a push toward 2,000MW of storage by 2030.</description>
+  </item>
+  <item>
+    <title>Virginia Agrivoltaics Law</title>
+    <link>https://www.canarymedia.com/articles/food-and-farms/virginia-solar-with-farming?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/food-and-farms/virginia-solar-with-farming</guid>
+    <pubDate>Mon, 31 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>Canary Media — Virginia became the fourth state to legally define agrivoltaics, opening the door for solar and farming to share the same land.</description>
+  </item>
+  <item>
+    <title>FERC VPP Ruling in PJM</title>
+    <link>https://www.canarymedia.com/articles/virtual-power-plants/federal-ruling-virtual-power-plants-pjm?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/virtual-power-plants/federal-ruling-virtual-power-plants-pjm</guid>
+    <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>Canary Media — FERC ordered PJM to accept statistical sampling for virtual power plants, unlocking up to 4.9 GW of demand-response capacity across 13 states.</description>
+  </item>
+  <item>
+    <title>Swift Current + Avantus Financing</title>
+    <link>https://www.energy-storage.news/us-ipps-swift-current-avantus-raise-us1-billion-for-clean-energy-projects/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.energy-storage.news/us-ipps-swift-current-avantus-raise-us1-billion-for-clean-energy-projects/</guid>
+    <pubDate>Sat, 29 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>Energy-Storage.News — Swift Current Energy and Avantus raised more than $1 billion combined to build out solar and storage projects across the US.</description>
+  </item>
+  <item>
+    <title>Base Power $1B Raise</title>
+    <link>https://www.canarymedia.com/articles/batteries/base-power-raises-1b-to-get-big-batteries-into-more-homes?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/batteries/base-power-raises-1b-to-get-big-batteries-into-more-homes</guid>
+    <pubDate>Fri, 28 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>Canary Media — Base Power raised $1 billion, valuing the home-battery startup at $13 billion as it scales past 17,000 installations.</description>
+  </item>
+  <item>
+    <title>CIP $3B Growth Markets Fund</title>
+    <link>https://www.esgtoday.com/cip-raises-3-billion-for-growth-markets-focused-clean-energy-infrastructure-fund/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/cip-raises-3-billion-for-growth-markets-focused-clean-energy-infrastructure-fund/</guid>
+    <pubDate>Thu, 27 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Sustainability</category>
+    <domestic>true</domestic>
+    <description>ESG Today — Copenhagen Infrastructure Partners closed its Growth Markets Fund II at $3 billion, triple its predecessor, to fund clean energy across 15 emerging markets.</description>
+  </item>
+  <item>
+    <title>Form Energy $750M Storage Raise</title>
+    <link>https://www.esgtoday.com/form-energy-raises-750-million-for-multi-day-energy-storage-solution/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/form-energy-raises-750-million-for-multi-day-energy-storage-solution/</guid>
+    <pubDate>Wed, 26 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>ESG Today — Form Energy closed a $750M Series G to scale its 100-hour iron-air battery technology for multi-day grid storage.</description>
+  </item>
+  <item>
+    <title>Every 2027 GM EV gets Tesla Supercharger access</title>
+    <link>https://electrek.co/2026/08/14/every-2027-gm-ev-will-plug-directly-into-tesla-superchargers/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/08/14/every-2027-gm-ev-will-plug-directly-into-tesla-superchargers/</guid>
+    <pubDate>Tue, 25 Aug 2026 00:00:00 GMT</pubDate>
+    <category>EV</category>
+    <domestic>true</domestic>
+    <description>Electrek — GM says every 2027 model-year EV will have NACS DC fast-charging ports built in, giving access to Tesla Superchargers.</description>
+  </item>
+  <item>
+    <title>Power now up to 40% of WSP&#39;s revenue</title>
+    <link>https://www.utilitydive.com/news/wsp-power-generation-nuclear-data-centers-construction-us/827577/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.utilitydive.com/news/wsp-power-generation-nuclear-data-centers-construction-us/827577/</guid>
+    <pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>Utility Dive — Engineering firm WSP says power now accounts for up to 40% of its revenue amid surging US power infrastructure construction.</description>
+  </item>
+  <item>
+    <title>NJ approves first batch of dual-use solar projects</title>
+    <link>https://www.rtoinsider.com/139292-nj-approves-first-batch-dual-solar-projects/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/139292-nj-approves-first-batch-dual-solar-projects/</guid>
+    <pubDate>Sun, 23 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — New Jersey approved its first batch of dual-use solar projects, 16 projects totaling 52 MW.</description>
+  </item>
+  <item>
+    <title>Ohio&#39;s largest solar project nears final decision</title>
+    <link>https://www.canarymedia.com/articles/solar/after-a-2-year-wait-will-ohios-largest-solar-project-get-the-ok?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/solar/after-a-2-year-wait-will-ohios-largest-solar-project-get-the-ok</guid>
+    <pubDate>Sat, 22 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>Canary Media — The Ohio Power Siting Board is nearing a final decision on the Oak Run Solar Project, the state&#39;s largest solar and storage project.</description>
+  </item>
+  <item>
+    <title>Samsung takes full ownership of $3.5B Indiana battery plant</title>
+    <link>https://www.esgtoday.com/samsung-acquires-gms-stake-in-3-5-billion-battery-joint-venture/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/samsung-acquires-gms-stake-in-3-5-billion-battery-joint-venture/</guid>
+    <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
     <category>Storage</category>
     <domestic>false</domestic>
-    <description>PV Magazine — Ulanqab, Inner Mongolia, has assigned five grid-forming storage projects totaling 4.4 GWh to developers including Datang and China Resources New Energy.</description>
+    <description>ESG Today — Samsung SDI is acquiring GM&#39;s stake in their $3.5B Indiana battery joint venture, pivoting the plant to energy storage systems.</description>
+  </item>
+  <item>
+    <title>UNIGRID + Syntropic US sodium-ion manufacturing</title>
+    <link>https://www.solarpowerworldonline.com/2026/08/unigrid-syntropic-power-are-planning-us-sodium-ion-battery-manufacturing/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.solarpowerworldonline.com/2026/08/unigrid-syntropic-power-are-planning-us-sodium-ion-battery-manufacturing/</guid>
+    <pubDate>Thu, 20 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>Solar Power World — UNIGRID and Syntropic Power are partnering to bring sodium-ion battery manufacturing to the U.S., targeting 1 GWh deployed by 2027.</description>
+  </item>
+  <item>
+    <title>Oncor weighs Texas data center freeze impact</title>
+    <link>https://www.utilitydive.com/news/fate-of-oncors-nearly-300-gw-load-pipeline-unclear-following-texas-data-ce/827303/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.utilitydive.com/news/fate-of-oncors-nearly-300-gw-load-pipeline-unclear-following-texas-data-ce/827303/</guid>
+    <pubDate>Wed, 19 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>Utility Dive — Oncor is weighing the impact of Texas&#39;s data center interconnection freeze on its nearly 300-GW load pipeline.</description>
+  </item>
+  <item>
+    <title>DOE closes $489M grid loan for Puerto Rico</title>
+    <link>https://www.energy-storage.news/us-doe-closes-us489-million-loan-with-pattern-energy-to-support-bess-natural-gas-in-puerto-rico/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.energy-storage.news/us-doe-closes-us489-million-loan-with-pattern-energy-to-support-bess-natural-gas-in-puerto-rico/</guid>
+    <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>false</domestic>
+    <description>Energy Storage News — The U.S. DOE closed a $489.4 million loan to Pattern Energy&#39;s Amanecer Puerto Rico to support battery storage and grid strength.</description>
+  </item>
+  <item>
+    <title>NC rooftop solar holds steady post-tax-credit</title>
+    <link>https://www.canarymedia.com/articles/solar/north-carolina-rooftop-solar?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/solar/north-carolina-rooftop-solar</guid>
+    <pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>Canary Media — Rooftop solar in North Carolina is holding up despite the loss of the 30% federal tax credit.</description>
+  </item>
+  <item>
+    <title>Google&#39;s 15-year U.S. solar PPA with RWE</title>
+    <link>https://www.esgtoday.com/google-purchases-entire-output-from-rwe-u-s-solar-project/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/google-purchases-entire-output-from-rwe-u-s-solar-project/</guid>
+    <pubDate>Sun, 16 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>ESG Today — Google signed a 15-year power purchase agreement for the entire output of a new RWE-operated U.S. solar project.</description>
+  </item>
+  <item>
+    <title>Constellation locks in new nuclear power buyers</title>
+    <link>https://www.rtoinsider.com/138524-constellation-secures-more-buyers-nuclear-power/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/138524-constellation-secures-more-buyers-nuclear-power/</guid>
+    <pubDate>Fri, 14 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — Constellation Energy reported strong Q2 financials, including nearly a gigawatt of new long-term purchase agreements for power from its nuclear reactors.</description>
+  </item>
+  <item>
+    <title>California tops 21 GW of energy storage</title>
+    <link>https://www.solarpowerworldonline.com/2026/08/california-surpasses-21-gw-of-energy-storage-connected-to-grid/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.solarpowerworldonline.com/2026/08/california-surpasses-21-gw-of-energy-storage-connected-to-grid/</guid>
+    <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>Solar Power World — California has installed more than 21 GW of energy storage across the state, one of the largest battery fleets in the world.</description>
   </item>
   <item>
     <title>Samsung SDI&#39;s US battery production ramp</title>
