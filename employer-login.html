@@ -177,6 +177,15 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
       expires_at: Date.now() + (authData.expires_in || 3600) * 1000,
     }));
 
+    if (mode === 'signup') {
+      // GA4 key event. The redirect is immediate, so wait for GA to confirm
+      // the hit (capped at 1s, in case gtag.js is ad-blocked) before leaving.
+      let left = false;
+      const go = () => { if (!left) { left = true; window.location.href = 'employer-dashboard.html'; } };
+      gtag('event', 'sign_up', { method: 'email', account_type: 'employer', event_callback: go, event_timeout: 1000 });
+      setTimeout(go, 1000);
+      return;
+    }
     window.location.href = 'employer-dashboard.html';
   } catch(err){
     btn.disabled = false;

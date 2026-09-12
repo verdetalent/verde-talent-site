@@ -245,6 +245,7 @@ document.addEventListener('click', function(){
 });
 
 let pendingApplyUrl = null, pendingApplyTitle = null, pendingApplyCompany = null;
+let currentJob = null;  // set once the posting loads - labels the apply_click event
 function openApplyModal(url, title, company){
   pendingApplyUrl = url; pendingApplyTitle = title; pendingApplyCompany = company;
   document.getElementById('applyScrim').classList.add('open');
@@ -253,6 +254,13 @@ function closeApplyModal(){
   document.getElementById('applyScrim').classList.remove('open');
 }
 function skipApplyModal(){
+  gtag('event', 'apply_click', {
+    job_title: pendingApplyTitle || '',
+    company: pendingApplyCompany || '',
+    apply_method: 'external',
+    apply_path: 'skipped_profile',
+    paid_posting: true,
+  });
   window.open(pendingApplyUrl, '_blank', 'noopener');
   closeApplyModal();
 }
@@ -349,6 +357,13 @@ async function handleApplyClick(btn, jobPostingId) {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Could not send your application.');
 
+    gtag('event', 'apply_click', {
+      job_title: currentJob ? currentJob.job_title : '',
+      company: currentJob ? currentJob.company_name : '',
+      apply_method: 'verde_profile',
+      apply_path: 'signed_in',
+      paid_posting: true,
+    });
     btn.textContent = 'Application sent ✓';
     note.className = 'apply-note success';
     note.textContent = 'Your resume was sent to the employer.';
@@ -378,6 +393,7 @@ async function handleApplyClick(btn, jobPostingId) {
       return;
     }
     const job = rows[0];
+    currentJob = job;
     document.title = `${job.job_title} at ${job.company_name} — Verde Talent`;
 
     const metaParts = [];

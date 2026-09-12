@@ -297,6 +297,12 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
             ? `Continue to your application at ${pending.company} →`
             : 'Continue to your application →';
           continueBtn.addEventListener('click', function(){
+            gtag('event', 'apply_click', {
+              job_title: pending.job_title || '',
+              company: pending.company || '',
+              apply_method: 'external',
+              apply_path: 'after_login',
+            });
             window.open(pending.job_url, '_blank', 'noopener');
           });
           note.insertAdjacentElement('afterend', continueBtn);

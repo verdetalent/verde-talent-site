@@ -250,9 +250,22 @@ function postingRowHtml(p) {
         <div class="posting-title">${escapeHtml(p.job_title || "Untitled role")}${p.is_remote ? '<span class="remote-badge">REMOTE</span>' : ""}</div>
         <div class="posting-meta">${escapeHtml(p.location || "Location not listed")} · Posted ${fmtDate(p.date_posted)}</div>
       </div>
-      ${p.job_url ? `<a class="posting-link" href="${p.job_url}" target="_blank" rel="noopener">View &amp; apply →</a>` : ""}
+      ${p.job_url ? `<a class="posting-link" href="${p.job_url}" target="_blank" rel="noopener" data-title="${escapeHtml(p.job_title || "")}">View &amp; apply →</a>` : ""}
     </div>`;
 }
+
+// GA4 key event for the outbound "View & apply" links - delegated, since
+// the posting rows are rendered after load.
+document.addEventListener("click", e => {
+  const link = e.target.closest(".posting-link");
+  if (!link) return;
+  gtag("event", "apply_click", {
+    job_title: link.dataset.title || "",
+    company: (document.querySelector("h1") || {}).textContent || "",
+    apply_method: "external",
+    apply_path: "company_page",
+  });
+});
 
 function renderCompany(c) {
   const color = SECTOR_COLORS[c.sector_bucket] || NEUTRAL_COLOR;

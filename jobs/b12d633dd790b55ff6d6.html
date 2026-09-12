@@ -345,7 +345,19 @@ document.addEventListener('click', function(){
   const jobUrl = applyBtn.dataset.url;
   function openModal(){ scrim.classList.add('open'); }
   function closeModal(){ scrim.classList.remove('open'); }
-  function goToApplication(){
+  // GA4 key event - the outbound click is the whole point of a job page,
+  // and without it a quick "land, click Apply, leave" visit reads as a
+  // bounce. `path` records how they got here: already signed in, or
+  // skipping the create-a-profile pitch.
+  function goToApplication(path){
+    gtag('event', 'apply_click', {
+      job_title: "Special Itinerant -  Instrumentation & Controls",
+      company: "NextEra Energy",
+      job_location: "Parrish, FL",
+      sector: "",
+      apply_method: 'external',
+      apply_path: path,
+    });
     window.open(jobUrl, '_blank', 'noopener');
     closeModal();
   }
@@ -361,11 +373,11 @@ document.addEventListener('click', function(){
     return !!(session && session.candidate_id && session.expires_at && session.expires_at > Date.now());
   }
   applyBtn.addEventListener('click', function(){
-    if (hasSignedInProfile()) goToApplication();
+    if (hasSignedInProfile()) goToApplication('signed_in');
     else openModal();
   });
   document.getElementById('applyModalClose').addEventListener('click', closeModal);
-  document.getElementById('applySkip').addEventListener('click', goToApplication);
+  document.getElementById('applySkip').addEventListener('click', function(){ goToApplication('skipped_profile'); });
   document.getElementById('applyCreateProfile').addEventListener('click', function(){
     sessionStorage.setItem('vt_pending_application', JSON.stringify({
       job_url: jobUrl,

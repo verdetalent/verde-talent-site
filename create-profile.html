@@ -1415,6 +1415,13 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       throw new Error(errText || res.statusText);
     }
     const [newCandidate] = await res.json();
+    // GA4 key event - fired once the profile row actually exists, not on
+    // the auth signup alone (that can succeed and still leave no profile).
+    gtag('event', 'sign_up', {
+      method: 'email',
+      account_type: 'candidate',
+      from_apply: !!sessionStorage.getItem('vt_pending_application'),
+    });
     btn.textContent = 'Submitted ✓';
     note.textContent = 'Account created and profile saved. You can sign in anytime to update it.';
     note.style.color = 'var(--grn)';
@@ -1511,6 +1518,12 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
             ? `Continue to your application at ${pending.company} →`
             : 'Continue to your application →';
           continueBtn.addEventListener('click', function(){
+            gtag('event', 'apply_click', {
+              job_title: pending.job_title || '',
+              company: pending.company || '',
+              apply_method: 'external',
+              apply_path: 'after_signup',
+            });
             window.open(pending.job_url, '_blank', 'noopener');
           });
           note.insertAdjacentElement('afterend', continueBtn);

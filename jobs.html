@@ -1331,6 +1331,36 @@ async function fetchEmployerPostings() {
 
   render();
 })();
+
+// GA4 "search" event. The boxes filter live as you type, so log a search
+// once the typing pauses rather than per keystroke, and skip repeats.
+// `results` makes zero-result searches easy to find - demand we don't cover.
+(function trackSearches() {
+  const qEl = document.getElementById("job-search");
+  const locEl = document.getElementById("location-search");
+  let timer = null, lastKey = "";
+  function send(source) {
+    const term = qEl.value.trim();
+    const loc = locEl.value.trim();
+    const key = `${term.toLowerCase()}|${loc.toLowerCase()}`;
+    if ((!term && !loc) || key === lastKey) return;
+    lastKey = key;
+    gtag("event", "search", {
+      search_term: term,
+      search_location: loc,
+      search_source: source,
+      results: currentFiltered.length,
+    });
+  }
+  [qEl, locEl].forEach(el => el.addEventListener("input", () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => send("typed"), 1500);
+  }));
+  // Arrived with ?q= / ?location= - the homepage hero box or Google's
+  // sitelinks search box. (?company= is a company-page link, not a search.)
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("q") || params.get("location")) send("home_or_link");
+})();
 </script>
 <footer>
   <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
