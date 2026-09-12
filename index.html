@@ -114,7 +114,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .sb-divider{width:0.5px;height:28px;background:var(--bdr2);}
 .btn-search{background:var(--grn);color:#052e1e;border:none;padding:11px 22px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;}
 .sector-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:1.25rem;}
-.s-chip{display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;font-size:12px;border:0.5px solid var(--bdr2);color:var(--t2);cursor:pointer;transition:all .15s;}
+.s-chip{display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;font-size:12px;border:0.5px solid var(--bdr2);color:var(--t2);cursor:pointer;transition:all .15s;background:transparent;font-family:inherit;}
 .s-chip:hover,.s-chip.on{border-color:rgba(34,224,154,0.4);color:var(--grn);background:rgba(34,224,154,0.07);}
 .s-chip.blu:hover,.s-chip.blu.on{border-color:rgba(79,179,255,0.4);color:var(--blu);background:rgba(79,179,255,0.07);}
 .s-chip.amb:hover,.s-chip.amb.on{border-color:rgba(255,181,71,0.4);color:var(--amb);background:rgba(255,181,71,0.07);}
@@ -308,15 +308,15 @@ document.addEventListener('click', function(){
     <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input type="text" id="home-search-location" placeholder="Location" autocomplete="off"/></div>
     <button class="btn-search" id="home-search-btn">Search jobs</button>
   </div>
-  <div class="sector-chips">
-    <div class="s-chip"><i class="ti ti-solar-panel" style="font-size:13px;"></i>Solar</div>
-    <div class="s-chip blu"><i class="ti ti-wind" style="font-size:13px;"></i>Wind</div>
-    <div class="s-chip amb"><i class="ti ti-battery-charging" style="font-size:13px;"></i>Storage</div>
-    <div class="s-chip"><i class="ti ti-bolt" style="font-size:13px;"></i>Grid</div>
-    <div class="s-chip pur"><i class="ti ti-plug" style="font-size:13px;"></i>EV</div>
-    <div class="s-chip"><i class="ti ti-atom" style="font-size:13px;"></i>Hydrogen</div>
-    <div class="s-chip cor"><i class="ti ti-building-bank" style="font-size:13px;"></i>Policy</div>
-    <div class="s-chip"><i class="ti ti-leaf" style="font-size:13px;"></i>Sustainability</div>
+  <div class="sector-chips" role="group" aria-label="Filter by sector">
+    <button type="button" class="s-chip" data-sector="Solar" aria-pressed="false"><i class="ti ti-solar-panel" style="font-size:13px;"></i>Solar</button>
+    <button type="button" class="s-chip blu" data-sector="Wind" aria-pressed="false"><i class="ti ti-wind" style="font-size:13px;"></i>Wind</button>
+    <button type="button" class="s-chip amb" data-sector="Storage" aria-pressed="false"><i class="ti ti-battery-charging" style="font-size:13px;"></i>Storage</button>
+    <button type="button" class="s-chip" data-sector="Grid" aria-pressed="false"><i class="ti ti-bolt" style="font-size:13px;"></i>Grid</button>
+    <button type="button" class="s-chip pur" data-sector="EV" aria-pressed="false"><i class="ti ti-plug" style="font-size:13px;"></i>EV</button>
+    <button type="button" class="s-chip" data-sector="Hydrogen" aria-pressed="false"><i class="ti ti-atom" style="font-size:13px;"></i>Hydrogen</button>
+    <button type="button" class="s-chip cor" data-sector="Policy" aria-pressed="false"><i class="ti ti-building-bank" style="font-size:13px;"></i>Policy</button>
+    <button type="button" class="s-chip" data-sector="Sustainability" aria-pressed="false"><i class="ti ti-leaf" style="font-size:13px;"></i>Sustainability</button>
   </div>
 </div>
 <div class="profile-banner-slim">
@@ -452,13 +452,23 @@ function companyCardHtml(c) {
 // search/filter experience on jobs.html, passing along whatever was typed.
 // Location accepts a city+state, a state alone, a ZIP code, or "remote";
 // jobs.html's own location-search box does the actual parsing/matching.
+// The sector chips under it toggle on/off (several can be on at once) and
+// ride along as ?sector=Solar,Wind - jobs.html pre-selects its own sector
+// filter from that.
 (function wireHomeSearch() {
+  const chips = document.querySelectorAll(".sector-chips .s-chip");
+  chips.forEach(chip => chip.addEventListener("click", () => {
+    const on = chip.classList.toggle("on");
+    chip.setAttribute("aria-pressed", on ? "true" : "false");
+  }));
   function goToJobsSearch() {
     const q = document.getElementById("home-search-q").value.trim();
     const location = document.getElementById("home-search-location").value.trim();
+    const sectors = [...chips].filter(c => c.classList.contains("on")).map(c => c.dataset.sector);
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (location) params.set("location", location);
+    if (sectors.length) params.set("sector", sectors.join(","));
     window.location.href = "jobs.html" + (params.toString() ? "?" + params.toString() : "");
   }
   document.getElementById("home-search-btn").addEventListener("click", goToJobsSearch);

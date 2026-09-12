@@ -1288,6 +1288,29 @@ async function fetchEmployerPostings() {
   }
 }
 
+// GA4 "search" event. The boxes filter live as you type, so log a search
+// once the typing pauses rather than per keystroke, and skip repeats.
+// `results` makes zero-result searches easy to find - demand we don't cover.
+let lastSearchKey = "", searchLogTimer = null;
+function logSearch(source) {
+  const term = document.getElementById("job-search").value.trim();
+  const loc = document.getElementById("location-search").value.trim();
+  const key = `${term.toLowerCase()}|${loc.toLowerCase()}`;
+  if ((!term && !loc && !currentSectors.size) || key === lastSearchKey) return;
+  lastSearchKey = key;
+  gtag("event", "search", {
+    search_term: term,
+    search_location: loc,
+    search_sectors: [...currentSectors].join(","),
+    search_source: source,
+    results: currentFiltered.length,
+  });
+}
+["job-search", "location-search"].forEach(id => document.getElementById(id).addEventListener("input", () => {
+  clearTimeout(searchLogTimer);
+  searchLogTimer = setTimeout(() => logSearch("typed"), 1500);
+}));
+
 (async function main() {
   const dataEl = document.getElementById("job-listings-data");
   const crawledJobs = JSON.parse(dataEl.textContent);
@@ -1328,38 +1351,20 @@ async function fetchEmployerPostings() {
   if (locationParam) {
     document.getElementById("location-search").value = locationParam;
   }
+  // ?sector=Solar,Wind from the homepage sector chips - pre-select those in
+  // the Sector filter, ignoring any name that isn't a real sector here.
+  const sectorParam = params.get("sector");
+  if (sectorParam) {
+    const known = new Set([...document.querySelectorAll("#sector-checklist .sf-pill")].map(p => p.dataset.sector));
+    currentSectors = new Set(sectorParam.split(",").map(s => s.trim()).filter(s => known.has(s)));
+    syncSectorControls();
+  }
 
   render();
-})();
-
-// GA4 "search" event. The boxes filter live as you type, so log a search
-// once the typing pauses rather than per keystroke, and skip repeats.
-// `results` makes zero-result searches easy to find - demand we don't cover.
-(function trackSearches() {
-  const qEl = document.getElementById("job-search");
-  const locEl = document.getElementById("location-search");
-  let timer = null, lastKey = "";
-  function send(source) {
-    const term = qEl.value.trim();
-    const loc = locEl.value.trim();
-    const key = `${term.toLowerCase()}|${loc.toLowerCase()}`;
-    if ((!term && !loc) || key === lastKey) return;
-    lastKey = key;
-    gtag("event", "search", {
-      search_term: term,
-      search_location: loc,
-      search_source: source,
-      results: currentFiltered.length,
-    });
-  }
-  [qEl, locEl].forEach(el => el.addEventListener("input", () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => send("typed"), 1500);
-  }));
-  // Arrived with ?q= / ?location= - the homepage hero box or Google's
-  // sitelinks search box. (?company= is a company-page link, not a search.)
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("q") || params.get("location")) send("home_or_link");
+  // A search handed over in the URL (the homepage hero box and its sector
+  // chips, or Google's sitelinks box) - logged only now, once the boxes and
+  // result count are filled in. ?company= is a company-page link, not a search.
+  if (queryParam || locationParam || sectorParam) logSearch("home_or_link");
 })();
 </script>
 <footer>
