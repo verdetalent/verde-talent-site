@@ -442,7 +442,7 @@ document.addEventListener('click', function(){
     <div class="submit-note" id="submitNote">Saves everything above to our candidate database.</div>
   </div>
 </div>
-<div class="lite-alert-section">
+<div class="lite-alert-section" id="job-alerts" style="scroll-margin-top:90px;">
   <div class="lite-alert-card">
     <div class="lite-alert-title">Not ready for a full profile?</div>
     <div class="lite-alert-sub">Get emailed when new jobs open in your sector near you — just your email, title, and location. No account, no commitment.</div>
@@ -1228,6 +1228,12 @@ document.getElementById('leadSubmitBtn').addEventListener('click', async functio
     document.getElementById('lead-location').value = '';
     leadSectorAllCb.checked = false;
     leadSectorCbs.forEach((cb) => { cb.checked = false; });
+
+    // GA4 key event - same sign_up as a full profile, told apart by
+    // account_type, so every email we capture counts toward one number.
+    if (okCount > 0) {
+      gtag('event', 'sign_up', { method: 'email', account_type: 'job_alert', sectors: sectors.join(',') });
+    }
 
     if (okCount > 0 && failCount === 0) {
       note.textContent = "You're set — we'll email you when new jobs open near " + location + ".";
