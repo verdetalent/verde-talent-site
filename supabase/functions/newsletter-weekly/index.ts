@@ -4,10 +4,11 @@
 // Three content sources:
 //   - News: feed.xml (same feed built for the abandoned Beehiiv path -
 //     export_rss_feed_to_verde_talent.py in the renewable-energy-jobs repo)
-//   - Featured jobs: public_job_postings (paid employer listings) always
-//     shown first, backfilled with data/jobs_feed.json (the general
-//     scraped/aggregated listings job-alerts-weekly also reads) preferring
-//     jobs in each subscriber's own state - typed at signup into an
+//   - Featured jobs: live paid employer postings (job_postings) and
+//     data/jobs_feed.json (the general scraped/aggregated listings
+//     job-alerts-weekly also reads) in one pool, preferring jobs in each
+//     subscriber's own area - paid postings lead only where their location
+//     fits, and are marked "Promoted". Area is typed at signup into an
 //     optional "City, State, or ZIP" box and resolved to a state by
 //     subscribe-newsletter, stored on newsletter_subscribers.location.
 //     Same location rule as job-alerts-weekly: US subscribers never get
@@ -107,6 +108,7 @@ interface FeaturedJob {
   company_name: string;
   location: string | null;
   link: string;
+  paid: boolean;
 }
 
 interface GeneralJobListing {
@@ -117,6 +119,9 @@ interface GeneralJobListing {
   region: string | null;
   is_remote: boolean;
   first_seen: string | null;
+  // Set only on paid employer postings (fetchPaidListings).
+  link?: string;
+  paid?: boolean;
 }
 
 // jobs_feed.json's location field is a free-text scrape result - usually
@@ -247,25 +252,31 @@ function personCountry(t: string): { country: string; city: string | null } | nu
   return null;
 }
 
-// Paid employer postings always fill first (that's what employers are
-// paying for) - any remaining slots are backfilled from the same
-// aggregated listings feed job-alerts-weekly reads.
-async function fetchPaidFeaturedJobs(): Promise<FeaturedJob[]> {
+// Live paid employer postings, shaped like feed listings so they compete in
+// the same pool (buildFeaturedJobsFor) instead of always filling the top
+// slots - a paid posting only leads when its location fits the
+// subscriber. Read from job_postings rather than the public view, which
+// doesn't carry is_international.
+async function fetchPaidListings(): Promise<GeneralJobListing[]> {
   const { data, error } = await supabaseAdmin
-    .from("public_job_postings")
-    .select("id, job_title, company_name, location")
-    .order("paid_at", { ascending: false })
-    .limit(MAX_FEATURED_JOBS);
+    .from("job_postings")
+    .select("id, job_title, company_name, location, is_international, paid_at")
+    .eq("status", "paid")
+    .gt("expires_at", new Date().toISOString());
   if (error) {
     console.error("Could not fetch paid job postings (non-fatal):", error);
     return [];
   }
-  return (data || []).map((job) => ({
-    id: job.id,
-    job_title: job.job_title,
-    company_name: job.company_name,
-    location: job.location,
-    link: `${SITE_ORIGIN}/employer-job.html?id=${job.id}`,
+  return (data || []).map((p) => ({
+    page_slug: `paid-${p.id}`,
+    link: `${SITE_ORIGIN}/employer-job.html?id=${p.id}`,
+    job_title: p.job_title,
+    company: p.company_name,
+    location: p.location,
+    region: p.is_international ? "International" : "US",
+    is_remote: /\bremote\b/i.test(p.location || ""),
+    first_seen: p.paid_at,
+    paid: true,
   }));
 }
 
@@ -285,7 +296,8 @@ async function fetchGeneralJobListings(): Promise<GeneralJobListing[]> {
   }
 }
 
-// Remaining slots (after paid postings) depend on where the subscriber is:
+// The subscriber's MAX_FEATURED_JOBS, from free and paid listings alike,
+// depending on where they are:
 //   - In the US: listings in their own state plus US remote roles first,
 //     then whatever's most recent in the US. Never foreign roles - a German
 //     posting listed as "SH, DE" would otherwise pass as Delaware.
@@ -293,39 +305,43 @@ async function fetchGeneralJobListings(): Promise<GeneralJobListing[]> {
 //     their own city first, then most recent - no US backfill.
 //   - No location on file (box left blank, or not a place we recognize):
 //     the US most-recent list.
+// Paid postings go first only within a group that matches the subscriber's
+// location (their state + remote, or their city / country). In the
+// backfill, or for a subscriber with no location, they're ordered like any
+// other listing - newest first. Newsletter subscribers give no job title,
+// so title can't be weighed here (job-alerts-weekly does).
 // The feed can carry the same posting twice under different ids (a company
 // re-listing it) - each shows once.
 function buildFeaturedJobsFor(
-  paid: FeaturedJob[],
-  general: GeneralJobListing[],
+  listings: GeneralJobListing[],
   subscriberState: string | null,
   subscriberCountry: string | null,
   subscriberCity: string | null,
 ): FeaturedJob[] {
-  const remaining = MAX_FEATURED_JOBS - paid.length;
-  if (remaining <= 0) return paid;
-
   const toFeaturedJob = (job: GeneralJobListing): FeaturedJob => ({
     id: job.page_slug,
     job_title: job.job_title!,
     company_name: job.company!,
     location: job.location,
-    link: `${SITE_ORIGIN}/jobs/${job.page_slug}.html`,
+    link: job.link || `${SITE_ORIGIN}/jobs/${job.page_slug}.html`,
+    paid: !!job.paid,
   });
+  const newestFirst = (a: GeneralJobListing, b: GeneralJobListing) => (b.first_seen || "").localeCompare(a.first_seen || "");
+  const paidFirst = (group: GeneralJobListing[]) => [...group.filter((j) => j.paid), ...group.filter((j) => !j.paid)];
 
   let pool: GeneralJobListing[];
   if (subscriberCountry && subscriberCountry !== "US") {
-    const inCountry = general.filter((job) => jobCountry(job) === subscriberCountry);
+    const inCountry = listings.filter((job) => jobCountry(job) === subscriberCountry).sort(newestFirst);
     const city = (subscriberCity || "").toLowerCase();
     const inCity = (job: GeneralJobListing) => !!city && (job.location || "").toLowerCase().includes(city);
-    pool = [...inCountry.filter(inCity), ...inCountry.filter((job) => !inCity(job))];
+    pool = [...paidFirst(inCountry.filter(inCity)), ...paidFirst(inCountry.filter((job) => !inCity(job)))];
   } else {
-    const us = general.filter((job) => job.region !== "International");
+    const us = listings.filter((job) => job.region !== "International").sort(newestFirst);
     pool = us;
     if (subscriberState) {
       const matchesSubscriber = (job: GeneralJobListing) =>
         job.is_remote || extractStateCode(job.location) === subscriberState;
-      pool = [...us.filter(matchesSubscriber), ...us.filter((job) => !matchesSubscriber(job))];
+      pool = [...paidFirst(us.filter(matchesSubscriber)), ...us.filter((job) => !matchesSubscriber(job))];
     }
   }
 
@@ -337,7 +353,7 @@ function buildFeaturedJobsFor(
     return true;
   });
 
-  return [...paid, ...pool.slice(0, remaining).map(toFeaturedJob)];
+  return pool.slice(0, MAX_FEATURED_JOBS).map(toFeaturedJob);
 }
 
 // Several candidate stat sentences from data/intelligence.json (the same
@@ -476,8 +492,8 @@ function buildEmailHtml(items: FeedItem[], featuredJobs: FeaturedJob[], intelSta
     <div style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Featured jobs</div>
     ${featuredJobs.map((job) => `
       <div style="margin-bottom:12px;">
-        <a href="${job.link}" style="font-size:12.5px;font-weight:600;color:${INK};text-decoration:none;line-height:1.4;display:block;">${escapeHtml(job.job_title)}</a>
-        <div style="font-size:11.5px;color:${MUTED};margin-top:2px;">${escapeHtml(job.company_name)}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
+        <a href="${escapeHtml(job.link)}" style="font-size:12.5px;font-weight:600;color:${INK};text-decoration:none;line-height:1.4;display:block;">${escapeHtml(job.job_title)}</a>
+        <div style="font-size:11.5px;color:${MUTED};margin-top:2px;">${job.paid ? `<span style="font-size:10px;font-weight:700;color:#0B7A55;">Promoted</span> · ` : ""}${escapeHtml(job.company_name)}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
       </div>`).join("")}
     <a href="${SITE_ORIGIN}/jobs.html" style="font-size:11.5px;color:${GRN};text-decoration:none;font-weight:600;">See all jobs →</a>`;
 
@@ -525,7 +541,7 @@ Deno.serve(async (_req) => {
 
     const items = orderDomesticFirst(rawItems).slice(0, MAX_ITEMS);
     const [paidJobs, generalJobs, intelStat] = await Promise.all([
-      fetchPaidFeaturedJobs(),
+      fetchPaidListings(),
       fetchGeneralJobListings(),
       fetchIntelStat(),
     ]);
@@ -544,7 +560,7 @@ Deno.serve(async (_req) => {
       // A US state on file wins; only without one is the typed text checked
       // for a foreign country ("Berlin, Germany").
       const abroad = !sub.location && sub.location_input ? personCountry(sub.location_input) : null;
-      const featuredJobs = buildFeaturedJobsFor(paidJobs, generalJobs, sub.location, abroad ? abroad.country : null, abroad ? abroad.city : null);
+      const featuredJobs = buildFeaturedJobsFor([...paidJobs, ...generalJobs], sub.location, abroad ? abroad.country : null, abroad ? abroad.city : null);
       const { error: sendError } = await resend.emails.send({
         from: "Verde Talent Newsletter <newsletter@updates.verdetalent.com>",
         to: sub.email,

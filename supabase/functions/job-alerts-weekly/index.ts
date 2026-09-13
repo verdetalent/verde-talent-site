@@ -60,6 +60,10 @@ interface JobListing {
   job_category: string | null;
   first_seen: string | null;
   posted_date: string | null;
+  // Set only on paid employer postings (see fetchPaidJobs) - they link to
+  // their own page rather than jobs/<slug>.html.
+  link?: string;
+  paid?: boolean;
 }
 
 interface Candidate {
@@ -108,7 +112,8 @@ interface Lead {
 // jobs (see locationTier).
 // Within a tier, jobs whose titles share more words with theirs come first
 // ("Solar Design Engineer" -> "PV Design Engineer" before "Civil Engineer"),
-// then the newest.
+// then the nearest and newest. Paid employer postings go through the same
+// matching; when one matches, it leads its tier (never a closer one).
 // ---------------------------------------------------------------------------
 
 const CITY_GEO_URL = `${SITE_ORIGIN}/data/us_cities_geo.json`;
@@ -580,11 +585,14 @@ function jobMiles(job: JobListing, place: Place): number | null {
   return min;
 }
 
-// Up to MAX_JOBS_PER_EMAIL jobs, best first: location tier, then how
-// closely the title matches, then nearest, then newest. A job several
-// requests match keeps its best tier/score. Within a tier, sectors take
-// turns so one busy sector can't fill every slot for someone following
-// several.
+// Up to MAX_JOBS_PER_EMAIL jobs, best first: location tier, then paid
+// postings, then how closely the title matches, then nearest, then newest.
+// A paid posting only gets here by matching sector, role type and location
+// like any other job; its edge is going first *within its own tier* - it
+// never jumps ahead of a closer free listing. A job several requests match
+// keeps its best tier/score. Within a tier, sectors take turns (after any
+// paid postings) so one busy sector can't fill every slot for someone
+// following several.
 function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing[]>): JobListing[] {
   const best = new Map<string, { job: JobListing; tier: number; score: number; miles: number | null }>();
   for (const req of requests) {
@@ -604,6 +612,7 @@ function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing
 
   const sorted = [...best.values()].sort((a, b) =>
     a.tier - b.tier ||
+    Number(!!b.job.paid) - Number(!!a.job.paid) ||
     b.score - a.score ||
     (a.miles ?? Infinity) - (b.miles ?? Infinity) ||
     (b.job.first_seen || "").localeCompare(a.job.first_seen || ""));
@@ -620,9 +629,12 @@ function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing
 
   const picked: JobListing[] = [];
   for (let tier = TIER_NEARBY; tier <= TIER_RELOCATE && picked.length < MAX_JOBS_PER_EMAIL; tier++) {
+    for (const r of ranked) {
+      if (r.tier === tier && r.job.paid && picked.length < MAX_JOBS_PER_EMAIL) picked.push(r.job);
+    }
     const bySector = new Map<string, JobListing[]>();
     for (const r of ranked) {
-      if (r.tier !== tier) continue;
+      if (r.tier !== tier || r.job.paid) continue;
       const s = r.job.sector_bucket || "";
       if (!bySector.has(s)) bySector.set(s, []);
       bySector.get(s)!.push(r.job);
@@ -811,14 +823,26 @@ function withSidebar(mainHtml: string, news: NewsItem[], intelStat: string | nul
     </table>`;
 }
 
+// One job in either digest's list. Paid employer postings link to their own
+// page and carry a small "Promoted" label - they're only in the list because
+// they matched like any other job, but readers should still be able to tell
+// what's sponsored.
+function jobRowHtml(job: JobListing): string {
+  const href = job.link || `${SITE_ORIGIN}/jobs/${job.page_slug}.html`;
+  const badge = job.paid
+    ? ` <span style="display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:#F0FBF6;border:1px solid #BFEFD9;font-size:10.5px;font-weight:700;color:#0B7A55;vertical-align:2px;">Promoted</span>`
+    : "";
+  return `
+    <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
+      <a href="${escapeHtml(href)}" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(job.job_title || "Open role")}</a>${badge}
+      <div style="font-size:13px;color:${MUTED};margin-top:3px;">${escapeHtml(job.company || "")}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
+    </td></tr>`;
+}
+
 function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
   const firstName = candidate.first_name || "there";
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${candidate.unsubscribe_token}`;
-  const jobRows = jobs.map((job) => `
-    <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
-      <a href="${SITE_ORIGIN}/jobs/${job.page_slug}.html" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(job.job_title || "Open role")}</a>
-      <div style="font-size:13px;color:${MUTED};margin-top:3px;">${escapeHtml(job.company || "")}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
-    </td></tr>`).join("");
+  const jobRows = jobs.map(jobRowHtml).join("");
 
   const jobsColumn = `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${jobRows}</table>
@@ -848,11 +872,7 @@ function sectorLabel(sectors: string[]): string {
 // any one of its rows - they share the email, and location is taken from it.
 function buildLeadEmailHtml(lead: Lead, label: string, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${lead.unsubscribe_token}`;
-  const jobRows = jobs.map((job) => `
-    <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
-      <a href="${SITE_ORIGIN}/jobs/${job.page_slug}.html" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(job.job_title || "Open role")}</a>
-      <div style="font-size:13px;color:${MUTED};margin-top:3px;">${escapeHtml(job.company || "")}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
-    </td></tr>`).join("");
+  const jobRows = jobs.map(jobRowHtml).join("");
 
   // The upsell - these are zero-commitment leads, and full profiles are what
   // employers search in the talent database, so every send pushes toward one.
@@ -891,6 +911,41 @@ function buildLeadEmailHtml(lead: Lead, label: string, jobs: JobListing[], news:
 // Gmail/Apple Mail their native "Unsubscribe" button, and Gmail/Yahoo
 // expect it from bulk senders. unsubscribe-job-alerts reads the token off
 // the URL whatever the method, so the mail client's POST works unchanged.
+// Live paid employer postings (job_postings, status 'paid', not expired),
+// shaped like feed listings so they go through exactly the same matching:
+// sector, role type (from their title) and location. Read from the table
+// rather than the public view, which doesn't carry is_international. They
+// stay eligible for as long as they're live, not just their first week -
+// that's what the employer paid for - but they only appear to people they
+// match, and only rank ahead of free listings within the same location
+// tier (see pickJobs). A failed fetch just means no paid postings this run.
+async function fetchPaidJobs(): Promise<JobListing[]> {
+  const { data, error } = await supabaseAdmin
+    .from("job_postings")
+    .select("id, company_name, job_title, location, sector, is_international, paid_at")
+    .eq("status", "paid")
+    .gt("expires_at", new Date().toISOString());
+  if (error) {
+    console.error("Could not fetch paid job postings (non-fatal):", error);
+    return [];
+  }
+  return (data || []).map((p) => ({
+    job_id: `paid:${p.id}`,
+    page_slug: "",
+    link: `${SITE_ORIGIN}/employer-job.html?id=${p.id}`,
+    job_title: p.job_title,
+    company: p.company_name,
+    location: p.location,
+    region: p.is_international ? "International" : "US",
+    is_remote: /\bremote\b/i.test(p.location || ""),
+    sector_bucket: p.sector,
+    job_category: mapJobCategory(p.job_title),
+    first_seen: p.paid_at,
+    posted_date: p.paid_at,
+    paid: true,
+  }));
+}
+
 function unsubscribeHeaders(token: string): Record<string, string> {
   return {
     "List-Unsubscribe": `<${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${token}>`,
@@ -918,7 +973,7 @@ Deno.serve(async (_req) => {
     }
     // Same deal for the intel stat - null just drops that sidebar section.
     // Geo data likewise: without it, matching runs at state level only.
-    const [intelStat] = await Promise.all([fetchIntelStat(), loadGeoData()]);
+    const [intelStat, paidJobs] = await Promise.all([fetchIntelStat(), fetchPaidJobs(), loadGeoData()]);
 
     const cutoff = new Date(Date.now() - NEW_JOB_WINDOW_DAYS * 24 * 60 * 60 * 1000);
     const newJobs = allJobs.filter((job) => {
@@ -926,8 +981,9 @@ Deno.serve(async (_req) => {
       return seen && seen >= cutoff;
     });
 
+    // Paid postings join whatever's new this week (see fetchPaidJobs).
     const jobsBySector = new Map<string, JobListing[]>();
-    for (const job of newJobs) {
+    for (const job of [...newJobs, ...paidJobs]) {
       if (!job.sector_bucket) continue;
       if (!jobsBySector.has(job.sector_bucket)) jobsBySector.set(job.sector_bucket, []);
       jobsBySector.get(job.sector_bucket)!.push(job);
