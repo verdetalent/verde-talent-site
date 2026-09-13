@@ -1,3 +1,8 @@
+-- ALREADY APPLIED - DO NOT RE-RUN. The view definition below is stale: it
+-- drops security_invoker and exposes company_email to anonymous visitors.
+-- The current public_job_postings is in
+-- supabase_public_postings_visibility.sql (2026-09-13).
+--
 -- Lets an employer flag a posting as based outside the U.S., so it can be
 -- correctly categorized under the site's "International" search scope
 -- (which otherwise has no way to know, since employer postings don't go

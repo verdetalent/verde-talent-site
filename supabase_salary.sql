@@ -1,3 +1,8 @@
+-- ALREADY APPLIED - DO NOT RE-RUN. The view definition below is stale: it
+-- drops security_invoker and exposes company_email to anonymous visitors.
+-- The current public_job_postings is in
+-- supabase_public_postings_visibility.sql (2026-09-13).
+--
 -- Optional employer-entered salary range, either hourly or annual.
 alter table job_postings
   add column salary_min integer,
