@@ -39,6 +39,7 @@ const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 const SITE_ORIGIN = "https://verdetalent.com";
 const JOBS_FEED_URL = `${SITE_ORIGIN}/data/jobs_feed.json`;
 const NEWS_FEED_URL = `${SITE_ORIGIN}/feed.xml`;
+const INTELLIGENCE_URL = `${SITE_ORIGIN}/data/intelligence.json`;
 const MAX_JOBS_PER_EMAIL = 10;
 const MAX_NEWS_ITEMS = 3;
 const NEW_JOB_WINDOW_DAYS = 7;
@@ -226,6 +227,18 @@ interface NewsItem {
   link: string;
 }
 
+// feed.xml is XML, so "PG&E" arrives as "PG&amp;E" and apostrophes as
+// "&#39;". Decode before escapeHtml() re-escapes for the email, or the
+// reader sees the entity itself ("PG&amp;E") and link query strings break.
+function decodeXml(s: string): string {
+  return s
+    .replace(/&#(\d+);/g, (_m, n) => String.fromCharCode(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_m, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 // Same small hand-rolled RSS parser as newsletter-weekly - feed.xml's shape
 // is fixed and simple (we generate it ourselves), so a couple of regexes
 // beat pulling in an XML/DOM library for two fields.
@@ -235,9 +248,77 @@ function parseFeed(xml: string): NewsItem[] {
   for (const block of itemBlocks) {
     const title = block.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim();
     const link = block.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim();
-    if (title && link) items.push({ title, link });
+    if (title && link) items.push({ title: decodeXml(title), link: decodeXml(link) });
   }
   return items.slice(0, MAX_NEWS_ITEMS);
+}
+
+// The "Industry intel" sidebar stat - copied from newsletter-weekly (edge
+// functions don't share code here, same as parseFeed above). Several
+// candidate sentences from data/intelligence.json, one picked per send,
+// rotated by ISO week so it's stable for the week and changes next week.
+function isoWeekNumber(date: Date): number {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+}
+
+function buildIntelStat(intel: Record<string, unknown>): string | null {
+  const candidates: string[] = [];
+
+  const topSkill = (intel.top_skills as { top_skills?: { skill: string; pct_of_described_postings: number }[] })
+    ?.top_skills?.[0];
+  if (topSkill) {
+    candidates.push(`"${topSkill.skill}" is the most in-demand skill this month, appearing in ${topSkill.pct_of_described_postings}% of job descriptions we've tracked.`);
+  }
+
+  const demandBySector = intel.demand_trend_by_sector as Record<string, Record<string, number>> | undefined;
+  if (demandBySector) {
+    let topSector: string | null = null;
+    let topCount = 0;
+    for (const [sector, months] of Object.entries(demandBySector)) {
+      const total = Object.values(months).reduce((a, b) => a + b, 0);
+      if (total > topCount) {
+        topCount = total;
+        topSector = sector;
+      }
+    }
+    if (topSector) candidates.push(`${topSector} is leading hiring this month with ${topCount} open roles tracked.`);
+  }
+
+  const regions = intel.region_breakdown as Record<string, number> | undefined;
+  if (regions) {
+    const [topRegion, topRegionCount] = Object.entries(regions)
+      .filter(([name]) => name !== "Unknown")
+      .sort((a, b) => b[1] - a[1])[0] || [];
+    if (topRegion) candidates.push(`${topRegion} has the most open renewable energy roles right now, with ${topRegionCount} tracked.`);
+  }
+
+  const salaryRole = (intel.salary_benchmarks as { roles?: { role: string; national_median_wage: number }[] })
+    ?.roles?.[0];
+  if (salaryRole) {
+    candidates.push(`${salaryRole.role}s earn a national median of $${salaryRole.national_median_wage.toLocaleString()}/year, per BLS data.`);
+  }
+
+  const totalTracked = (intel.totals as { open_postings?: number })?.open_postings;
+  if (totalTracked) {
+    candidates.push(`We're tracking ${totalTracked.toLocaleString()} open renewable energy roles right now.`);
+  }
+
+  if (candidates.length === 0) return null;
+  return candidates[isoWeekNumber(new Date()) % candidates.length];
+}
+
+async function fetchIntelStat(): Promise<string | null> {
+  try {
+    const res = await fetch(INTELLIGENCE_URL);
+    if (!res.ok) return null;
+    return buildIntelStat(await res.json());
+  } catch (err) {
+    console.error("Could not fetch intelligence data (non-fatal):", err);
+    return null;
+  }
 }
 
 function escapeHtml(s: string): string {
@@ -288,7 +369,34 @@ ${bodyHtml}
 </body></html>`;
 }
 
-function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem[]): string {
+// Right-hand column shared by both digests, same look as newsletter-weekly's
+// Featured jobs / Industry intel column: "In the news", then "Industry
+// intel". Each section drops out on its own when its fetch came back empty,
+// and with neither there's no column at all - a missing section is less
+// jarring than a header with nothing under it.
+const SIDE_LABEL = "font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;";
+
+function withSidebar(mainHtml: string, news: NewsItem[], intelStat: string | null): string {
+  const newsHtml = news.length === 0 ? "" : `
+          <div style="${SIDE_LABEL}">In the news</div>
+          ${news.map((item) => `<div style="margin-bottom:14px;"><a href="${escapeHtml(item.link)}" style="font-size:12.5px;font-weight:600;color:${INK};text-decoration:none;line-height:1.4;display:block;">${escapeHtml(item.title)}</a></div>`).join("")}
+          <a href="${SITE_ORIGIN}/news.html" style="font-size:11.5px;color:${GRN};text-decoration:none;font-weight:600;">More news →</a>`;
+  const intelHtml = !intelStat ? "" : `
+          <div style="${SIDE_LABEL}${newsHtml ? "margin-top:24px;" : ""}">Industry intel</div>
+          <div style="font-size:12.5px;color:${INK};line-height:1.5;margin-bottom:8px;">${escapeHtml(intelStat)}</div>
+          <a href="${SITE_ORIGIN}/intelligence.html" style="font-size:11.5px;color:${GRN};text-decoration:none;font-weight:600;">See full dashboard →</a>`;
+  if (!newsHtml && !intelHtml) return mainHtml;
+  return `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="vt-main-col" valign="top" width="66%" style="padding-right:20px;">${mainHtml}</td>
+        <td class="vt-side-col" valign="top" width="34%" style="border-left:1px solid ${BORDER};padding-left:20px;">${newsHtml}${intelHtml}
+        </td>
+      </tr>
+    </table>`;
+}
+
+function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
   const firstName = candidate.first_name || "there";
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${candidate.unsubscribe_token}`;
   const jobRows = jobs.map((job) => `
@@ -309,25 +417,12 @@ function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem
     <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:${INK};">Hi ${escapeHtml(firstName)},</p>
     <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new role" : "are " + jobs.length + " new roles"} matching your experience on Verde Talent this week.</p>`;
 
-  // No news sidebar at all (rather than an empty one) if the feed came back
-  // empty - a missing section is less jarring than a header with nothing
-  // under it.
-  const mainContent = news.length === 0 ? jobsColumn : `
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-      <tr>
-        <td class="vt-main-col" valign="top" width="66%" style="padding-right:20px;">${jobsColumn}</td>
-        <td class="vt-side-col" valign="top" width="34%" style="border-left:1px solid ${BORDER};padding-left:20px;">
-          <div style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">In the news</div>
-          ${news.map((item) => `<div style="margin-bottom:14px;"><a href="${escapeHtml(item.link)}" style="font-size:12.5px;font-weight:600;color:${INK};text-decoration:none;line-height:1.4;display:block;">${escapeHtml(item.title)}</a></div>`).join("")}
-          <a href="${SITE_ORIGIN}/news.html" style="font-size:11.5px;color:${GRN};text-decoration:none;font-weight:600;">More news →</a>
-        </td>
-      </tr>
-    </table>`;
+  const mainContent = withSidebar(jobsColumn, news, intelStat);
 
   return emailShell(`${jobs.length} new job${jobs.length === 1 ? "" : "s"} matching your profile`, greeting + mainContent, unsubscribeUrl);
 }
 
-function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[]): string {
+function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${lead.unsubscribe_token}`;
   const jobRows = jobs.map((job) => `
     <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
@@ -363,17 +458,7 @@ function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[]): s
     <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:${INK};">Hi there,</p>
     <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new " + escapeHtml(lead.sector) + " role" : "are " + jobs.length + " new " + escapeHtml(lead.sector) + " roles"} open near ${escapeHtml(lead.location)} this week.</p>`;
 
-  const mainContent = news.length === 0 ? jobsColumn : `
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-      <tr>
-        <td class="vt-main-col" valign="top" width="66%" style="padding-right:20px;">${jobsColumn}</td>
-        <td class="vt-side-col" valign="top" width="34%" style="border-left:1px solid ${BORDER};padding-left:20px;">
-          <div style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">In the news</div>
-          ${news.map((item) => `<div style="margin-bottom:14px;"><a href="${escapeHtml(item.link)}" style="font-size:12.5px;font-weight:600;color:${INK};text-decoration:none;line-height:1.4;display:block;">${escapeHtml(item.title)}</a></div>`).join("")}
-          <a href="${SITE_ORIGIN}/news.html" style="font-size:11.5px;color:${GRN};text-decoration:none;font-weight:600;">More news →</a>
-        </td>
-      </tr>
-    </table>`;
+  const mainContent = withSidebar(jobsColumn, news, intelStat);
 
   return emailShell(`${jobs.length} new ${lead.sector} job${jobs.length === 1 ? "" : "s"} near ${lead.location}`, greeting + mainContent, unsubscribeUrl);
 }
@@ -396,6 +481,8 @@ Deno.serve(async (_req) => {
     } catch (err) {
       console.error("Could not fetch news feed (non-fatal):", err);
     }
+    // Same deal for the intel stat - null just drops that sidebar section.
+    const intelStat = await fetchIntelStat();
 
     const cutoff = new Date(Date.now() - NEW_JOB_WINDOW_DAYS * 24 * 60 * 60 * 1000);
     const newJobs = allJobs.filter((job) => {
@@ -452,7 +539,7 @@ Deno.serve(async (_req) => {
         subject: jobs.length === 1
           ? `1 new job matching your profile on Verde Talent`
           : `${jobs.length} new jobs matching your profile on Verde Talent`,
-        html: buildEmailHtml(candidate, jobs, newsItems),
+        html: buildEmailHtml(candidate, jobs, newsItems, intelStat),
       });
 
       if (sendError) {
@@ -498,7 +585,7 @@ Deno.serve(async (_req) => {
         subject: jobs.length === 1
           ? `1 new ${lead.sector} job near ${lead.location}`
           : `${jobs.length} new ${lead.sector} jobs near ${lead.location}`,
-        html: buildLeadEmailHtml(lead, jobs, newsItems),
+        html: buildLeadEmailHtml(lead, jobs, newsItems, intelStat),
       });
 
       if (sendError) {
