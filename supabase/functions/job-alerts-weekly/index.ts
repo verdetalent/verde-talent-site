@@ -335,29 +335,33 @@ function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[]): s
       <div style="font-size:13px;color:${MUTED};margin-top:3px;">${escapeHtml(job.company || "")}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
     </td></tr>`).join("");
 
-  const jobsColumn = `
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${jobRows}</table>
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:20px;">
-      <tr><td style="background:${GRN};border-radius:9px;">
-        <a href="${SITE_ORIGIN}/jobs.html" style="display:inline-block;padding:11px 20px;font-size:13px;font-weight:600;color:#052e1e;text-decoration:none;">See all open roles →</a>
+  // The upsell - these are zero-commitment leads, and full profiles are what
+  // employers search in the talent database, so every send pushes toward one.
+  // It sits straight under the job list (the filled button in this email),
+  // with "see all roles" demoted to a text link so the two don't compete.
+  // UTM tags let GA credit the profiles this email produces.
+  const profileUrl = `${SITE_ORIGIN}/create-profile.html?utm_source=job_alert_email&utm_medium=email&utm_campaign=complete_profile`;
+  const upsell = `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:22px;">
+      <tr><td style="background:#F0FBF6;border:1px solid #BFEFD9;border-radius:10px;padding:18px 20px;">
+        <p style="margin:0 0 4px;font-size:14px;font-weight:700;color:${INK};">Let ${escapeHtml(lead.sector)} employers find you</p>
+        <p style="margin:0 0 14px;font-size:13px;color:${MUTED};line-height:1.55;">Complete your free profile and hiring teams can reach out to you directly. Your alerts get sharper too, matched by your experience and not just sector and location. Takes about 2 minutes.</p>
+        <table role="presentation" cellpadding="0" cellspacing="0">
+          <tr><td style="background:${GRN};border-radius:9px;">
+            <a href="${profileUrl}" style="display:inline-block;padding:11px 20px;font-size:13px;font-weight:600;color:#052e1e;text-decoration:none;">Complete your profile →</a>
+          </td></tr>
+        </table>
       </td></tr>
     </table>`;
+
+  const jobsColumn = `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${jobRows}</table>
+    ${upsell}
+    <p style="margin:16px 0 0;font-size:13px;"><a href="${SITE_ORIGIN}/jobs.html" style="color:${INK};font-weight:600;text-decoration:underline;">See all open roles →</a></p>`;
 
   const greeting = `
     <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:${INK};">Hi there,</p>
     <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new " + escapeHtml(lead.sector) + " role" : "are " + jobs.length + " new " + escapeHtml(lead.sector) + " roles"} open near ${escapeHtml(lead.location)} this week.</p>`;
-
-  // The upsell - these are zero-commitment leads, so every send is a chance
-  // to nudge them toward a full profile (better matching: job title, not
-  // just sector + state).
-  const upsell = `
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:22px;">
-      <tr><td style="background:#F5F6F5;border-radius:10px;padding:16px 18px;">
-        <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:${INK};">Want more precise matches?</p>
-        <p style="margin:0 0 10px;font-size:12.5px;color:${MUTED};line-height:1.5;">Create a free profile and we'll match you by job title too, not just sector and location.</p>
-        <a href="${SITE_ORIGIN}/create-profile.html" style="font-size:12.5px;font-weight:600;color:${GRN};text-decoration:none;">Create your free profile →</a>
-      </td></tr>
-    </table>`;
 
   const mainContent = news.length === 0 ? jobsColumn : `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
@@ -371,7 +375,7 @@ function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[]): s
       </tr>
     </table>`;
 
-  return emailShell(`${jobs.length} new ${lead.sector} job${jobs.length === 1 ? "" : "s"} near ${lead.location}`, greeting + mainContent + upsell, unsubscribeUrl);
+  return emailShell(`${jobs.length} new ${lead.sector} job${jobs.length === 1 ? "" : "s"} near ${lead.location}`, greeting + mainContent, unsubscribeUrl);
 }
 
 Deno.serve(async (_req) => {
