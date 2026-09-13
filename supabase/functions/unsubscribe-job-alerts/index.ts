@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
     .from("job_alert_leads")
     .update({ subscribed: false })
     .eq("unsubscribe_token", token)
-    .select("id")
+    .select("id, email")
     .maybeSingle();
 
   if (leadError) {
@@ -68,6 +68,18 @@ Deno.serve(async (req) => {
   }
   if (!leadData) {
     return htmlPage("That unsubscribe link isn't valid — it may have already been used.");
+  }
+
+  // A lead has one row per sector but gets one combined email (see
+  // job-alerts-weekly), so its unsubscribe has to switch off every sector
+  // for that address, not just the row this token belongs to.
+  const { error: siblingsError } = await supabaseAdmin
+    .from("job_alert_leads")
+    .update({ subscribed: false })
+    .eq("email", leadData.email);
+  if (siblingsError) {
+    console.error(siblingsError);
+    return htmlPage("Something went wrong — please try again, or email contact@verdetalent.com.");
   }
 
   return htmlPage("You're unsubscribed from job alerts. Come back anytime at verdetalent.com.");

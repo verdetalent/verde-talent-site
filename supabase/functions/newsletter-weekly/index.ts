@@ -65,9 +65,24 @@ function parseFeed(xml: string): FeedItem[] {
     const description = block.match(/<description>([\s\S]*?)<\/description>/)?.[1]?.trim() || "";
     const category = block.match(/<category>([\s\S]*?)<\/category>/)?.[1]?.trim() || null;
     const isDomestic = block.match(/<domestic>([\s\S]*?)<\/domestic>/)?.[1]?.trim() !== "false";
-    if (title && link) items.push({ title, link, description, category, isDomestic });
+    if (title && link) {
+      items.push({ title: decodeXml(title), link: decodeXml(link), description: decodeXml(description), category, isDomestic });
+    }
   }
   return items;
+}
+
+// feed.xml is XML, so "PG&E" arrives as "PG&amp;E" and apostrophes as
+// "&#39;". Decoded here to plain text, then escapeHtml()'d once on the way
+// into the email - escaping the still-encoded text is what printed
+// "PG&amp;E" in subscribers' inboxes. Same fix as job-alerts-weekly.
+function decodeXml(s: string): string {
+  return s
+    .replace(/&#(\d+);/g, (_m, n) => String.fromCharCode(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_m, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 }
 
 // Stable partition: domestic stories first (in their original, most-recent-
@@ -297,8 +312,8 @@ function buildEmailHtml(items: FeedItem[], featuredJobs: FeaturedJob[], intelSta
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-newsletter?token=${unsubscribeToken}`;
   const newsRows = items.map((item) => `
     <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
-      <a href="${item.link}" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(item.title)}</a>
-      <div style="font-size:13px;color:${MUTED};margin-top:4px;line-height:1.5;">${item.description}</div>
+      <a href="${escapeHtml(item.link)}" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(item.title)}</a>
+      <div style="font-size:13px;color:${MUTED};margin-top:4px;line-height:1.5;">${escapeHtml(item.description)}</div>
     </td></tr>`).join("");
 
   const newsColumn = `

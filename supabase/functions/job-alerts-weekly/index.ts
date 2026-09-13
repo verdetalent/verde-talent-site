@@ -422,7 +422,16 @@ function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem
   return emailShell(`${jobs.length} new job${jobs.length === 1 ? "" : "s"} matching your profile`, greeting + mainContent, unsubscribeUrl);
 }
 
-function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
+// "Solar", "Solar & Storage", "Solar, Storage & Grid" - for a lead's
+// combined email across every sector they signed up for.
+function sectorLabel(sectors: string[]): string {
+  if (sectors.length <= 1) return sectors[0] || "clean energy";
+  return `${sectors.slice(0, -1).join(", ")} & ${sectors[sectors.length - 1]}`;
+}
+
+// `label` covers every sector on this address (see sectorLabel); `lead` is
+// any one of its rows - they share the email, and location is taken from it.
+function buildLeadEmailHtml(lead: Lead, label: string, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${lead.unsubscribe_token}`;
   const jobRows = jobs.map((job) => `
     <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
@@ -439,7 +448,7 @@ function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[], in
   const upsell = `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:22px;">
       <tr><td style="background:#F0FBF6;border:1px solid #BFEFD9;border-radius:10px;padding:18px 20px;">
-        <p style="margin:0 0 4px;font-size:14px;font-weight:700;color:${INK};">Let ${escapeHtml(lead.sector)} employers find you</p>
+        <p style="margin:0 0 4px;font-size:14px;font-weight:700;color:${INK};">Let ${escapeHtml(label)} employers find you</p>
         <p style="margin:0 0 14px;font-size:13px;color:${MUTED};line-height:1.55;">Complete your free profile and hiring teams can reach out to you directly. Your alerts get sharper too, matched by your experience and not just sector and location. Takes about 2 minutes.</p>
         <table role="presentation" cellpadding="0" cellspacing="0">
           <tr><td style="background:${GRN};border-radius:9px;">
@@ -456,11 +465,22 @@ function buildLeadEmailHtml(lead: Lead, jobs: JobListing[], news: NewsItem[], in
 
   const greeting = `
     <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:${INK};">Hi there,</p>
-    <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new " + escapeHtml(lead.sector) + " role" : "are " + jobs.length + " new " + escapeHtml(lead.sector) + " roles"} open near ${escapeHtml(lead.location)} this week.</p>`;
+    <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new " + escapeHtml(label) + " role" : "are " + jobs.length + " new " + escapeHtml(label) + " roles"} open near ${escapeHtml(lead.location)} this week.</p>`;
 
   const mainContent = withSidebar(jobsColumn, news, intelStat);
 
-  return emailShell(`${jobs.length} new ${lead.sector} job${jobs.length === 1 ? "" : "s"} near ${lead.location}`, greeting + mainContent, unsubscribeUrl);
+  return emailShell(`${jobs.length} new ${label} job${jobs.length === 1 ? "" : "s"} near ${lead.location}`, greeting + mainContent, unsubscribeUrl);
+}
+
+// RFC 8058 one-click unsubscribe, same as newsletter-weekly sends - gives
+// Gmail/Apple Mail their native "Unsubscribe" button, and Gmail/Yahoo
+// expect it from bulk senders. unsubscribe-job-alerts reads the token off
+// the URL whatever the method, so the mail client's POST works unchanged.
+function unsubscribeHeaders(token: string): Record<string, string> {
+  return {
+    "List-Unsubscribe": `<${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${token}>`,
+    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+  };
 }
 
 Deno.serve(async (_req) => {
@@ -540,6 +560,7 @@ Deno.serve(async (_req) => {
           ? `1 new job matching your profile on Verde Talent`
           : `${jobs.length} new jobs matching your profile on Verde Talent`,
         html: buildEmailHtml(candidate, jobs, newsItems, intelStat),
+        headers: unsubscribeHeaders(candidate.unsubscribe_token),
       });
 
       if (sendError) {
@@ -567,29 +588,54 @@ Deno.serve(async (_req) => {
     let leadsSkippedNoMatch = 0;
     let leadsFailed = 0;
 
+    // One email per address, not per row. job_alert_leads holds one row per
+    // (email, sector), so someone who ticked Solar + Storage + Grid used to
+    // get three separate digests every week. Each row still matches on its
+    // own sector/location/title; the results are merged, taking jobs from
+    // each sector in turn so one busy sector can't fill all the slots.
+    const leadsByEmail = new Map<string, Lead[]>();
     for (const lead of (leads || []) as Lead[]) {
-      const category = mapJobCategory(lead.job_title);
-      const jobs = (jobsBySector.get(lead.sector) || [])
-        .filter((job) => jobMatchesLeadLocation(job, lead))
-        .filter((job) => !category || !job.job_category || job.job_category === category)
-        .slice(0, MAX_JOBS_PER_EMAIL);
+      if (!leadsByEmail.has(lead.email)) leadsByEmail.set(lead.email, []);
+      leadsByEmail.get(lead.email)!.push(lead);
+    }
+
+    for (const [email, rows] of leadsByEmail) {
+      const perSector = rows.map((lead) => {
+        const category = mapJobCategory(lead.job_title);
+        return (jobsBySector.get(lead.sector) || [])
+          .filter((job) => jobMatchesLeadLocation(job, lead))
+          .filter((job) => !category || !job.job_category || job.job_category === category);
+      });
+      const picked = new Map<string, JobListing>();
+      for (let i = 0; picked.size < MAX_JOBS_PER_EMAIL && perSector.some((list) => i < list.length); i++) {
+        for (const list of perSector) {
+          if (i < list.length && picked.size < MAX_JOBS_PER_EMAIL) picked.set(list[i].job_id, list[i]);
+        }
+      }
+      const jobs = [...picked.values()];
 
       if (jobs.length === 0) {
         leadsSkippedNoMatch++;
         continue;
       }
 
+      const sectors = [...new Set(rows.map((r) => r.sector))];
+      const label = sectorLabel(sectors);
+      const location = rows[0].location;
       const { error: sendError } = await resend.emails.send({
         from: "Verde Talent Jobs <jobs@updates.verdetalent.com>",
-        to: lead.email,
+        to: email,
         subject: jobs.length === 1
-          ? `1 new ${lead.sector} job near ${lead.location}`
-          : `${jobs.length} new ${lead.sector} jobs near ${lead.location}`,
-        html: buildLeadEmailHtml(lead, jobs, newsItems, intelStat),
+          ? `1 new ${label} job near ${location}`
+          : `${jobs.length} new ${label} jobs near ${location}`,
+        html: buildLeadEmailHtml(rows[0], label, jobs, newsItems, intelStat),
+        // Any one row's token works - unsubscribe-job-alerts turns off every
+        // row for that address, matching the one combined email.
+        headers: unsubscribeHeaders(rows[0].unsubscribe_token),
       });
 
       if (sendError) {
-        console.error(`Send failed for lead ${lead.id}:`, sendError);
+        console.error(`Send failed for lead ${rows[0].id}:`, sendError);
         leadsFailed++;
         continue;
       }
@@ -597,7 +643,7 @@ Deno.serve(async (_req) => {
       await supabaseAdmin
         .from("job_alert_leads")
         .update({ last_alert_sent_at: new Date().toISOString() })
-        .eq("id", lead.id);
+        .in("id", rows.map((r) => r.id));
       leadsSent++;
     }
 
