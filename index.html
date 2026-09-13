@@ -239,6 +239,53 @@ footer a:hover{color:var(--grn);}
 .follow-links a:hover,.follow-links a:focus-visible{border-color:var(--grn,#22E09A);color:var(--grn,#22E09A);}
 .follow-links svg{width:16px;height:16px;display:block;}
 /*/social-css*/
+
+/*emp-css*/ /* Employer banner + "For employers" section */
+.emp-banner-ctas{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-ghost-blu{background:transparent;border:0.5px solid rgba(79,179,255,0.45);color:var(--blu);font-weight:500;}
+.btn-ghost-blu:hover{background:rgba(79,179,255,0.08);}
+.emp-section{width:calc(100% - 4rem);max-width:1400px;margin:0 auto 2rem;padding:2.25rem 0 .5rem;border-top:0.5px solid var(--bdr);box-sizing:border-box;}
+.emp-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--amb);margin-bottom:.6rem;}
+.emp-section h2{font-size:26px;font-weight:700;letter-spacing:-0.01em;margin-bottom:.4rem;}
+.emp-sub{font-size:14px;color:var(--t2);margin-bottom:1.4rem;}
+.emp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.emp-card{border-radius:16px;padding:1.6rem 1.6rem 1.4rem;display:flex;flex-direction:column;}
+.emp-card.data{background:linear-gradient(145deg,rgba(79,179,255,0.10) 0%,rgba(79,179,255,0.02) 70%);border:0.5px solid rgba(79,179,255,0.28);}
+.emp-card.post{background:linear-gradient(145deg,rgba(34,224,154,0.10) 0%,rgba(34,224,154,0.02) 70%);border:0.5px solid rgba(34,224,154,0.28);}
+.emp-card-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;font-size:19px;}
+.emp-card.data .emp-card-icon{background:rgba(79,179,255,0.16);color:var(--blu);}
+.emp-card.post .emp-card-icon{background:rgba(34,224,154,0.16);color:var(--grn);}
+.emp-card-kicker{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:.35rem;}
+.emp-card.data .emp-card-kicker{color:var(--blu);}
+.emp-card.post .emp-card-kicker{color:var(--grn);}
+.emp-card h3{font-size:19px;font-weight:650;margin-bottom:.35rem;}
+.emp-card > p{font-size:13.5px;color:var(--t2);margin-bottom:1rem;line-height:1.55;}
+.emp-card ul{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.2rem;}
+.emp-card li{display:flex;gap:8px;font-size:13.5px;color:var(--t1);line-height:1.45;}
+.emp-card li i{font-size:16px;flex-shrink:0;margin-top:1px;}
+.emp-card.data li i{color:var(--blu);}
+.emp-card.post li i{color:var(--grn);}
+.emp-prices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:.55rem;}
+.emp-price-note{font-size:11.5px !important;color:var(--t3) !important;margin-bottom:1.2rem !important;}
+.emp-prices div{background:rgba(0,0,0,0.25);border:0.5px solid var(--bdr);border-radius:10px;padding:.6rem .5rem;text-align:center;}
+.emp-prices strong{display:block;font-size:17px;}
+.emp-prices span{font-size:11px;color:var(--t3);}
+.emp-prices em{font-style:normal;}
+.emp-prices .sep{font-weight:400;}
+.emp-ctas{margin-top:auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.emp-cta{display:inline-block;padding:11px 20px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;}
+.emp-cta.blu{background:var(--blu);color:#052846;}
+.emp-cta.grn{background:var(--grn);color:#052e1e;}
+.emp-cta-sub{font-size:13px;color:var(--t2);text-decoration:underline;text-underline-offset:3px;}
+.emp-cta-sub:hover{color:var(--grn);}
+@media (max-width:940px){
+  .emp-grid{grid-template-columns:1fr;}
+  .emp-prices .sep{display:none;}
+  .emp-prices em{display:block;}
+  .emp-section{width:calc(100% - 2rem);}
+  .emp-section h2{font-size:22px;}
+}
+/*/emp-css*/
 </style>
 </head>
 <body>
@@ -338,16 +385,19 @@ document.addEventListener('click', function(){
   <div class="stat"><div class="stat-num" style="color:var(--pur);">8</div><div class="stat-label">Sectors</div></div>
 </div>
 </div>
-<div class="intel-banner-slim">
+<!--emp-banner--><div class="intel-banner-slim">
   <div class="ibs-left">
-    <div class="ibs-icon"><i class="ti ti-chart-bar"></i></div>
+    <div class="ibs-icon"><i class="ti ti-building"></i></div>
     <div>
-      <div class="ibs-text-title">Hiring? See the market data first</div>
-      <div class="ibs-text-sub">Real compensation benchmarks, hiring trends, and fill-difficulty data across clean energy roles</div>
+      <div class="ibs-text-title">Hiring in clean energy?</div>
+      <div class="ibs-text-sub">See what the market pays for your roles, or put a job in front of candidates who fit it</div>
     </div>
   </div>
-  <a href="intelligence.html" style="text-decoration:none;"><button class="btn btn-blu" style="padding:9px 18px;font-size:13px;">Explore Intelligence →</button></a>
-</div>
+  <div class="emp-banner-ctas">
+    <a href="hire.html" style="text-decoration:none;" data-emp-cta="hiring_data" data-emp-place="banner"><button class="btn btn-ghost-blu" style="padding:9px 16px;font-size:13px;">See hiring data</button></a>
+    <a href="post-job.html" style="text-decoration:none;" data-emp-cta="post_job" data-emp-place="banner"><button class="btn btn-grn" style="padding:9px 16px;font-size:13px;">Post a job →</button></a>
+  </div>
+</div><!--/emp-banner-->
 <div class="section">
   <div class="section-header">
     <h2 class="section-title">Featured jobs</h2>
@@ -478,6 +528,59 @@ function companyCardHtml(c) {
   });
 })();
 </script>
+<!--emp-section-->
+<section class="emp-section" aria-labelledby="emp-heading">
+  <div class="emp-eyebrow"><i class="ti ti-building"></i>For employers</div>
+  <h2 id="emp-heading">Hiring clean energy talent?</h2>
+  <p class="emp-sub">Reach the people your role fits, and see what the market pays.</p>
+  <div class="emp-grid">
+    <div class="emp-card post">
+      <div class="emp-card-icon"><i class="ti ti-briefcase"></i></div>
+      <div class="emp-card-kicker">Job postings · From $100</div>
+      <h3>Put your role in front of the right candidates</h3>
+      <p>Your job goes on the board and out to the people it fits.</p>
+      <ul>
+        <li><i class="ti ti-circle-check"></i>Listed in job search, with its own page and Apply button</li>
+        <li><i class="ti ti-circle-check"></i>Sent in weekly job-match emails to candidates with a matching role and location</li>
+        <li><i class="ti ti-circle-check"></i>Salary range shown on your posting when you add one</li>
+      </ul>
+      <div class="emp-prices">
+        <div><strong>$100</strong><span>1 post<b class="sep"> · </b><em>30 days</em></span></div>
+        <div><strong>$450</strong><span>5 posts<b class="sep"> · </b><em>$90 each</em></span></div>
+        <div><strong>$850</strong><span>10 posts<b class="sep"> · </b><em>$85 each</em></span></div>
+      </div>
+      <p class="emp-price-note">Pack posts run 30 days each and can be used any time within 12 months.</p>
+      <div class="emp-ctas">
+        <a href="post-job.html" class="emp-cta grn" data-emp-cta="post_job" data-emp-place="section">Post a job →</a>
+        <a href="employer-account.html" class="emp-cta-sub" data-emp-cta="buy_pack" data-emp-place="section">Buy a posting pack</a>
+      </div>
+    </div>
+    <div class="emp-card data">
+      <div class="emp-card-icon"><i class="ti ti-chart-bar"></i></div>
+      <div class="emp-card-kicker">Hiring data · Free</div>
+      <h3>Know the market before you hire</h3>
+      <p>Benchmarks built from the thousands of live clean energy postings we track.</p>
+      <ul>
+        <li><i class="ti ti-circle-check"></i>Posted salary ranges for solar, wind, storage and grid roles</li>
+        <li><i class="ti ti-circle-check"></i>Hiring volume: how many roles like yours are open right now</li>
+        <li><i class="ti ti-circle-check"></i>Which employers you're competing with for the same people</li>
+      </ul>
+      <div class="emp-ctas"><a href="hire.html" class="emp-cta blu" data-emp-cta="hiring_data" data-emp-place="section">See hiring &amp; salary data →</a></div>
+    </div>
+  </div>
+</section>
+<script>
+// GA4 + Fullstory: employer calls-to-action (banner and "For employers"
+// section) - how many employers head for a paid post vs. the hiring data.
+document.addEventListener("click", function (e) {
+  var a = e.target.closest("[data-emp-cta]");
+  if (!a) return;
+  var params = { cta: a.dataset.empCta, placement: a.dataset.empPlace };
+  gtag("event", "employer_cta_click", params);
+  if (window.FS) FS("trackEvent", { name: "employer_cta_click", properties: params });
+});
+</script>
+<!--/emp-section-->
 <div class="seeker-cta">
   <div class="sc-left">
     <h2>Get found by top energy employers</h2>

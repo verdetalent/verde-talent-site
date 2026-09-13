@@ -143,7 +143,9 @@ function getEmployerSession() {
 
 const session = getEmployerSession();
 if (!session) {
-  window.location.href = 'employer-login.html';
+  // Come back here after signing in (e.g. from the homepage's "Buy a
+  // posting pack") instead of landing on the dashboard.
+  window.location.href = 'employer-login.html?next=employer-account.html';
 } else {
   document.getElementById('accountEmail').textContent = session.email;
 }

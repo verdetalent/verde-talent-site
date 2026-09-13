@@ -177,16 +177,23 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
       expires_at: Date.now() + (authData.expires_in || 3600) * 1000,
     }));
 
+    // Back to the page that sent them here (?next=, e.g. the credits page
+    // from the homepage's "Buy a posting pack"). Only these employer pages
+    // are accepted, so the parameter can't bounce anyone to another site.
+    const NEXT_ALLOWED = ['employer-account.html', 'employer-dashboard.html', 'post-job.html'];
+    const nextParam = new URLSearchParams(window.location.search).get('next');
+    const afterLogin = NEXT_ALLOWED.includes(nextParam) ? nextParam : 'employer-dashboard.html';
+
     if (mode === 'signup') {
       // GA4 key event. The redirect is immediate, so wait for GA to confirm
       // the hit (capped at 1s, in case gtag.js is ad-blocked) before leaving.
       let left = false;
-      const go = () => { if (!left) { left = true; window.location.href = 'employer-dashboard.html'; } };
+      const go = () => { if (!left) { left = true; window.location.href = afterLogin; } };
       gtag('event', 'sign_up', { method: 'email', account_type: 'employer', event_callback: go, event_timeout: 1000 });
       setTimeout(go, 1000);
       return;
     }
-    window.location.href = 'employer-dashboard.html';
+    window.location.href = afterLogin;
   } catch(err){
     btn.disabled = false;
     btn.textContent = mode === 'signup' ? 'Create account →' : 'Sign in →';
