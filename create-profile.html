@@ -1070,6 +1070,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
 
   const ext = file.name.toLowerCase().split('.').pop();
   if (ext !== 'pdf' && ext !== 'docx') {
+    trackProfile('profile_resume_upload', { file_type: ext, autofill: 'unsupported', fields_filled: 0 });
     hint.textContent = "Auto-fill only works with .pdf or .docx — your file is still attached, just fill in the fields below manually.";
     return;
   }
@@ -1083,6 +1084,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     if (!text.trim()) throw new Error('Could not find any text in that file.');
     const parsed = parseResumeText(text);
     const filled = applyParsedResumeData(parsed);
+    trackProfile('profile_resume_upload', { file_type: ext, autofill: filled.length ? 'filled' : 'nothing_found', fields_filled: filled.length });
     box.classList.remove('parsing');
     icon.className = 'ti ti-check upload-icon';
     hint.textContent = filled.length
@@ -1090,6 +1092,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
       : "Couldn't confidently pull details from that file — fill in the fields below manually.";
   } catch (err) {
     console.error('Resume parsing failed:', err);
+    trackProfile('profile_resume_upload', { file_type: ext, autofill: 'failed', fields_filled: 0 });
     box.classList.remove('parsing');
     box.classList.add('error');
     icon.className = 'ti ti-alert-triangle upload-icon';
@@ -1278,6 +1281,68 @@ function sanitizeStorageFileName(name){
   return ext ? `${base}.${ext}` : base;
 }
 
+// --- Funnel tracking (GA4 + Fullstory) ---
+// How far people get through this form before leaving. Each step is a GA4
+// event (for a funnel exploration) mirrored to Fullstory (for its funnels
+// and session search). Only field ids, section names, counts and reason
+// codes are ever sent - never anything a person typed.
+function trackProfile(name, params) {
+  params = params || {};
+  gtag('event', name, params);
+  if (window.FS) FS('trackEvent', { name: name, properties: params });
+}
+
+// Checked after each interaction; each section reports once, the first
+// time it's filled in. Order here is the form's own top-to-bottom order.
+const PROFILE_SECTIONS = [
+  ['account', () => document.getElementById('acc-email').value.includes('@') && document.getElementById('acc-password').value.length >= 6],
+  ['resume', () => !!document.getElementById('inp-resume').files[0]],
+  ['name', () => !!(document.getElementById('inp-first').value.trim() && document.getElementById('inp-last').value.trim())],
+  ['headline', () => !!document.getElementById('inp-headline').value.trim()],
+  ['location', () => !!document.getElementById('inp-loc').value.trim()],
+  ['sectors', () => sectors.size > 0],
+  ['skills', () => skills.length > 0],
+  ['experience', () => experience.length > 0],
+  ['education', () => education.length > 0],
+];
+const profileFunnel = { started: false, done: [], submitted: false };
+
+function checkProfileSections() {
+  for (const [section, isDone] of PROFILE_SECTIONS) {
+    if (!profileFunnel.done.includes(section) && isDone()) {
+      profileFunnel.done.push(section);
+      trackProfile('profile_section_complete', { section: section, sections_done: profileFunnel.done.length });
+    }
+  }
+}
+
+// .body is the profile form itself - the no-account alerts box below it
+// isn't part of this funnel.
+let profileCheckTimer = null;
+['input', 'change', 'click'].forEach((type) => document.querySelector('.body').addEventListener(type, (e) => {
+  const control = e.target.closest('input, textarea, select, button, .upload-box');
+  if (!control) return;
+  if (!profileFunnel.started) {
+    profileFunnel.started = true;
+    trackProfile('profile_form_start', {
+      first_field: control.id || control.dataset.sector || control.className.split(' ')[0] || 'unknown',
+      from_apply: !!sessionStorage.getItem('vt_pending_application'),
+    });
+  }
+  clearTimeout(profileCheckTimer);
+  profileCheckTimer = setTimeout(checkProfileSections, 600);
+}, true));
+
+// Left after starting but before a successful submit: where they got to.
+window.addEventListener('pagehide', () => {
+  if (!profileFunnel.started || profileFunnel.submitted) return;
+  checkProfileSections();
+  trackProfile('profile_form_abandon', {
+    sections_done: profileFunnel.done.length,
+    last_section: profileFunnel.done[profileFunnel.done.length - 1] || 'none',
+  });
+});
+
 document.getElementById('submitBtn').addEventListener('click', async function(){
   const btn = this;
   const note = document.getElementById('submitNote');
@@ -1286,17 +1351,23 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
   const email = document.getElementById('acc-email').value.trim();
   const password = document.getElementById('acc-password').value;
 
+  checkProfileSections();
+  trackProfile('profile_submit_click', { sections_done: profileFunnel.done.length });
+
   if(!first || !last){
+    trackProfile('profile_submit_blocked', { reason: 'missing_name' });
     note.textContent = 'Add your first and last name first.';
     note.style.color = 'var(--cor)';
     return;
   }
   if(!email || !email.includes('@')){
+    trackProfile('profile_submit_blocked', { reason: 'invalid_email' });
     note.textContent = 'Enter a valid email to create your account.';
     note.style.color = 'var(--cor)';
     return;
   }
   if(!password || password.length < 6){
+    trackProfile('profile_submit_blocked', { reason: 'short_password' });
     note.textContent = 'Choose a password with at least 6 characters.';
     note.style.color = 'var(--cor)';
     return;
@@ -1430,7 +1501,8 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     const [newCandidate] = await res.json();
     // GA4 key event - fired once the profile row actually exists, not on
     // the auth signup alone (that can succeed and still leave no profile).
-    gtag('event', 'sign_up', {
+    profileFunnel.submitted = true;
+    trackProfile('sign_up', {
       method: 'email',
       account_type: 'candidate',
       from_apply: !!sessionStorage.getItem('vt_pending_application'),
@@ -1558,6 +1630,15 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     note.textContent = err.message || 'Something went wrong — please try again.';
     note.style.color = 'var(--cor)';
     console.error('Candidate submit failed:', err);
+    // A reason code, not the message itself - server messages can echo
+    // back what was typed.
+    const msg = String(err.message || '');
+    trackProfile('profile_submit_error', {
+      reason: /already (exist|registered)/i.test(msg) ? 'account_exists'
+        : /confirm/i.test(msg) ? 'email_confirmation_required'
+        : /password/i.test(msg) ? 'password_rejected'
+        : 'other',
+    });
   }
 });
 </script>
