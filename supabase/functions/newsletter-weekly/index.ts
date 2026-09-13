@@ -14,6 +14,8 @@
 //     Same location rule as job-alerts-weekly: US subscribers never get
 //     foreign roles; subscribers who typed a foreign place ("Berlin,
 //     Germany", kept in location_input) get only their country's roles.
+//     An optional job title (job_title) puts matching roles first, and a
+//     paid posting only leads if it fits both area and role.
 //   - One intel stat: data/intelligence.json, same file intelligence.html
 //     reads. Several candidate stat sentences are generated and one is
 //     picked by ISO week number, so it's a different (but stable for the
@@ -119,6 +121,7 @@ interface GeneralJobListing {
   region: string | null;
   is_remote: boolean;
   first_seen: string | null;
+  job_category: string | null;
   // Set only on paid employer postings (fetchPaidListings).
   link?: string;
   paid?: boolean;
@@ -133,6 +136,58 @@ function extractStateCode(location: string | null): string | null {
   if (!location) return null;
   const match = location.match(/\b([A-Z]{2})$/);
   return match ? match[1] : null;
+}
+
+// Copied from job-alerts-weekly (originally ported from
+// taxonomy/job_category.py on the crawler side) - same rules,
+// same order (first match wins, most specific categories listed first), so
+// a person's inferred role type lines up with what each job was actually
+// tagged with. Kept in sync by hand; not imported directly since this Edge
+// Function has no access to that repo. Last synced 2026-09-13.
+const JOB_CATEGORY_RULES: [string, RegExp[]][] = [
+  ["Project/Program Management", [/\bproject manage/, /\bprogram manage/, /\bschedul(er|ing)\b/]],
+  ["Engineering", [/\bengineer(ing)?\b/]],
+  ["Construction/Field", [
+    /\bconstruction\b/, /\bfield (service|technician)\b/, /\blineman\b/,
+    /\btechnician\b/, /\binstall(er|ation)\b/, /\bsuperintendent\b/,
+    /\bforeperson\b/, /\bforeman\b/,
+    /\bwelder\b/, /\belectrician\b/, /\blaborer\b/, /\bmechanic\b/,
+    /\bcarpenter\b/, /\bmillwright\b/, /\bcement mason\b/,
+    /\bitinerant\b/, /\bmachinist\b/, /\brepair(er)?\b/,
+    /\bestimat(or|ing)\b/, /\bdesign phase\b/, /\bpreconstruction\b/,
+    /\bepc\b/,
+  ]],
+  ["Sales", [/\bsales\b/, /\baccount executive\b/, /\bbusiness development\b/, /\bappointment setter\b/]],
+  ["Finance/Accounting", [
+    /\bfinanc(e|ial)\b/, /\baccount(ant|ing)\b/, /\bfp&a\b/, /\btax\b/,
+    /\baudit\b/, /\btreasury\b/, /\bcost control\b/,
+  ]],
+  ["Legal", [/\blegal\b/, /\bcounsel\b/, /\bcompliance\b/, /\bcontracts?\b/, /\bimmigration\b/]],
+  ["Supply Chain/Procurement", [
+    /\bsupply chain\b/, /\bprocurement\b/, /\bsourcing\b/, /\blogistics\b/,
+    /\bwarehouse\b/, /\bmaterials?\b/, /\bbuyer\b/, /\bsupply planner\b/,
+  ]],
+  ["HR/Talent", [/\bhuman resources\b/, /\bhr\b/, /\btalent\b/, /\brecruit(er|ing|ment)\b/, /\bpeople\b/]],
+  ["IT/Technology", [
+    /\binformation technology\b/, /\bit support\b/, /\bsoftware\b/,
+    /\bcyber\b/, /\bdata\b/, /\bnetwork\b/, /\bapplication(s)? develop/,
+  ]],
+  ["Marketing/Communications", [/\bmarketing\b/, /\bcommunications\b/, /\bbrand\b/, /\bpublic relations\b/]],
+  ["Safety/EHS", [/\bsafety\b/, /\behs\b/, /\benvironmental\b/, /\bquality\b/]],
+  ["Customer Service", [/\bcustomer (service|experience|success)\b/, /\bcall center\b/]],
+  ["Real Estate/Land", [/\breal estate\b/, /\bland (manager|agent)\b/]],
+  ["Manufacturing/Production", [/\bmanufactur/, /\bproduction\b/, /\bstock keeper\b/]],
+  ["Operations", [/\boperations?\b/, /\boperator\b/, /\bo&m\b/, /\bplant manager\b/, /\bcommissioning\b/]],
+  ["Development", [/\bdevelopment\b/]],
+];
+
+function mapJobCategory(title: string | null | undefined): string | null {
+  const text = (title || "").toLowerCase();
+  if (!text) return null;
+  for (const [category, patterns] of JOB_CATEGORY_RULES) {
+    if (patterns.some((p) => p.test(text))) return category;
+  }
+  return null;
 }
 
 // ---- Countries ------------------------------------------------------------
@@ -276,6 +331,7 @@ async function fetchPaidListings(): Promise<GeneralJobListing[]> {
     region: p.is_international ? "International" : "US",
     is_remote: /\bremote\b/i.test(p.location || ""),
     first_seen: p.paid_at,
+    job_category: mapJobCategory(p.job_title),
     paid: true,
   }));
 }
@@ -305,11 +361,13 @@ async function fetchGeneralJobListings(): Promise<GeneralJobListing[]> {
 //     their own city first, then most recent - no US backfill.
 //   - No location on file (box left blank, or not a place we recognize):
 //     the US most-recent list.
-// Paid postings go first only within a group that matches the subscriber's
-// location (their state + remote, or their city / country). In the
-// backfill, or for a subscriber with no location, they're ordered like any
-// other listing - newest first. Newsletter subscribers give no job title,
-// so title can't be weighed here (job-alerts-weekly does).
+// Job title (optional at signup, mapped to a role type): within each
+// location group, roles matching it come first. Paid postings go first
+// only where they fit the subscriber: inside a group that matches their
+// location (their state + remote, or their city / country) and - when they
+// gave a title - of the same role type. Everywhere else (the backfill, a
+// subscriber with no location, a paid role of a different type) they're
+// ordered like any other listing, newest first.
 // The feed can carry the same posting twice under different ids (a company
 // re-listing it) - each shows once.
 function buildFeaturedJobsFor(
@@ -317,6 +375,7 @@ function buildFeaturedJobsFor(
   subscriberState: string | null,
   subscriberCountry: string | null,
   subscriberCity: string | null,
+  subscriberRole: string | null,
 ): FeaturedJob[] {
   const toFeaturedJob = (job: GeneralJobListing): FeaturedJob => ({
     id: job.page_slug,
@@ -327,21 +386,32 @@ function buildFeaturedJobsFor(
     paid: !!job.paid,
   });
   const newestFirst = (a: GeneralJobListing, b: GeneralJobListing) => (b.first_seen || "").localeCompare(a.first_seen || "");
-  const paidFirst = (group: GeneralJobListing[]) => [...group.filter((j) => j.paid), ...group.filter((j) => !j.paid)];
+  const fitsRole = (j: GeneralJobListing) => !subscriberRole || j.job_category === subscriberRole;
+  // A group that matches the subscriber's location: role fits first (paid
+  // ones leading), then the rest - a paid role of another type gets no lift.
+  const rankMatched = (group: GeneralJobListing[]) => [
+    ...group.filter((j) => fitsRole(j) && j.paid),
+    ...group.filter((j) => fitsRole(j) && !j.paid),
+    ...group.filter((j) => !fitsRole(j)),
+  ];
+  // Backfill / unknown location: role fits first, but paid gets no lift.
+  const rankUnmatched = (group: GeneralJobListing[]) => subscriberRole
+    ? [...group.filter(fitsRole), ...group.filter((j) => !fitsRole(j))]
+    : group;
 
   let pool: GeneralJobListing[];
   if (subscriberCountry && subscriberCountry !== "US") {
     const inCountry = listings.filter((job) => jobCountry(job) === subscriberCountry).sort(newestFirst);
     const city = (subscriberCity || "").toLowerCase();
     const inCity = (job: GeneralJobListing) => !!city && (job.location || "").toLowerCase().includes(city);
-    pool = [...paidFirst(inCountry.filter(inCity)), ...paidFirst(inCountry.filter((job) => !inCity(job)))];
+    pool = [...rankMatched(inCountry.filter(inCity)), ...rankMatched(inCountry.filter((job) => !inCity(job)))];
   } else {
     const us = listings.filter((job) => job.region !== "International").sort(newestFirst);
-    pool = us;
+    pool = rankUnmatched(us);
     if (subscriberState) {
       const matchesSubscriber = (job: GeneralJobListing) =>
         job.is_remote || extractStateCode(job.location) === subscriberState;
-      pool = [...paidFirst(us.filter(matchesSubscriber)), ...us.filter((job) => !matchesSubscriber(job))];
+      pool = [...rankMatched(us.filter(matchesSubscriber)), ...rankUnmatched(us.filter((job) => !matchesSubscriber(job)))];
     }
   }
 
@@ -548,7 +618,7 @@ Deno.serve(async (_req) => {
 
     const { data: subscribers, error } = await supabaseAdmin
       .from("newsletter_subscribers")
-      .select("id, email, unsubscribe_token, location, location_input")
+      .select("id, email, unsubscribe_token, location, location_input, job_title")
       .eq("subscribed", true);
     if (error) throw error;
 
@@ -560,7 +630,11 @@ Deno.serve(async (_req) => {
       // A US state on file wins; only without one is the typed text checked
       // for a foreign country ("Berlin, Germany").
       const abroad = !sub.location && sub.location_input ? personCountry(sub.location_input) : null;
-      const featuredJobs = buildFeaturedJobsFor([...paidJobs, ...generalJobs], sub.location, abroad ? abroad.country : null, abroad ? abroad.city : null);
+      const featuredJobs = buildFeaturedJobsFor(
+        [...paidJobs, ...generalJobs], sub.location,
+        abroad ? abroad.country : null, abroad ? abroad.city : null,
+        mapJobCategory(sub.job_title),
+      );
       const { error: sendError } = await resend.emails.send({
         from: "Verde Talent Newsletter <newsletter@updates.verdetalent.com>",
         to: sub.email,

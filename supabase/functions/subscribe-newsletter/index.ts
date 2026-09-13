@@ -1,5 +1,6 @@
-// Newsletter signup endpoint. news.html posts { email, location } here
-// rather than inserting straight into newsletter_subscribers.
+// Newsletter signup endpoint. news.html posts { email, location, job_title }
+// here rather than inserting straight into newsletter_subscribers. job_title
+// is optional and stored as typed (newsletter-weekly maps it to a role type).
 //
 // `location` is what the subscriber typed into the optional "City, State,
 // or ZIP" box. It's resolved here to a two-letter US state, stored in
@@ -116,12 +117,14 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS_HEADERS });
 
   try {
-    const { email, location } = await req.json();
+    const { email, location, job_title } = await req.json();
     if (!email || typeof email !== "string" || !email.includes("@")) {
       return jsonResponse({ error: "Valid email required." }, 400);
     }
 
     const locationInput = typeof location === "string" ? location.trim().slice(0, 100) : "";
+    // Optional too - newsletter-weekly uses it to match Featured jobs by role.
+    const jobTitle = typeof job_title === "string" ? job_title.trim().slice(0, 100) : "";
 
     const { error } = await supabaseAdmin
       .from("newsletter_subscribers")
@@ -129,6 +132,7 @@ Deno.serve(async (req) => {
         email,
         location: locationInput ? stateFromLocation(locationInput) : null,
         location_input: locationInput || null,
+        job_title: jobTitle || null,
       });
 
     if (error) {
