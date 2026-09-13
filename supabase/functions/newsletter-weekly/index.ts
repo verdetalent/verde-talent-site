@@ -10,7 +10,9 @@
 //     jobs in each subscriber's own state - typed at signup into an
 //     optional "City, State, or ZIP" box and resolved to a state by
 //     subscribe-newsletter, stored on newsletter_subscribers.location.
-//     Foreign roles are never featured, same rule as job-alerts-weekly.
+//     Same location rule as job-alerts-weekly: US subscribers never get
+//     foreign roles; subscribers who typed a foreign place ("Berlin,
+//     Germany", kept in location_input) get only their country's roles.
 //   - One intel stat: data/intelligence.json, same file intelligence.html
 //     reads. Several candidate stat sentences are generated and one is
 //     picked by ISO week number, so it's a different (but stable for the
@@ -128,6 +130,123 @@ function extractStateCode(location: string | null): string | null {
   return match ? match[1] : null;
 }
 
+// ---- Countries ------------------------------------------------------------
+// Copied from job-alerts-weekly (same rules there): subscribers who typed
+// a foreign location ("Berlin, Germany") get Featured jobs from their own
+// country; everyone else never sees foreign roles. Originally ported from
+// taxonomy/countries.py on the crawler side (last synced 2026-09-13).
+const COUNTRY_NAME_BY_ISO2: Record<string, string> = {
+  AF: "Afghanistan", AL: "Albania", DZ: "Algeria", AD: "Andorra", AO: "Angola", AR: "Argentina",
+  AM: "Armenia", AU: "Australia", AT: "Austria", AZ: "Azerbaijan", BS: "Bahamas", BH: "Bahrain",
+  BD: "Bangladesh", BY: "Belarus", BE: "Belgium", BZ: "Belize", BJ: "Benin", BT: "Bhutan",
+  BO: "Bolivia", BA: "Bosnia and Herzegovina", BW: "Botswana", BR: "Brazil", BN: "Brunei",
+  BG: "Bulgaria", BF: "Burkina Faso", BI: "Burundi", KH: "Cambodia", CM: "Cameroon", CA: "Canada",
+  CV: "Cabo Verde", CF: "Central African Republic", TD: "Chad", CL: "Chile", CN: "China",
+  CO: "Colombia", KM: "Comoros", CG: "Congo", CD: "DR Congo", CR: "Costa Rica", HR: "Croatia",
+  CU: "Cuba", CY: "Cyprus", CZ: "Czechia", DK: "Denmark", DJ: "Djibouti", DM: "Dominica",
+  DO: "Dominican Republic", EC: "Ecuador", EG: "Egypt", SV: "El Salvador", GQ: "Equatorial Guinea",
+  ER: "Eritrea", EE: "Estonia", SZ: "Eswatini", ET: "Ethiopia", FJ: "Fiji", FI: "Finland",
+  FR: "France", GA: "Gabon", GM: "Gambia", GE: "Georgia", DE: "Germany", GH: "Ghana", GR: "Greece",
+  GD: "Grenada", GT: "Guatemala", GN: "Guinea", GW: "Guinea-Bissau", GY: "Guyana", HT: "Haiti",
+  HN: "Honduras", HK: "Hong Kong", HU: "Hungary", IS: "Iceland", IN: "India", ID: "Indonesia",
+  IR: "Iran", IQ: "Iraq", IE: "Ireland", IL: "Israel", IT: "Italy", CI: "Ivory Coast", JM: "Jamaica",
+  JP: "Japan", JO: "Jordan", KZ: "Kazakhstan", KE: "Kenya", KI: "Kiribati", KW: "Kuwait",
+  KG: "Kyrgyzstan", LA: "Laos", LV: "Latvia", LB: "Lebanon", LS: "Lesotho", LR: "Liberia",
+  LY: "Libya", LI: "Liechtenstein", LT: "Lithuania", LU: "Luxembourg", MO: "Macao",
+  MG: "Madagascar", MW: "Malawi", MY: "Malaysia", MV: "Maldives", ML: "Mali", MT: "Malta",
+  MH: "Marshall Islands", MR: "Mauritania", MU: "Mauritius", MX: "Mexico", FM: "Micronesia",
+  MD: "Moldova", MC: "Monaco", MN: "Mongolia", ME: "Montenegro", MA: "Morocco", MZ: "Mozambique",
+  MM: "Myanmar", NA: "Namibia", NR: "Nauru", NP: "Nepal", NL: "Netherlands", NZ: "New Zealand",
+  NI: "Nicaragua", NE: "Niger", NG: "Nigeria", MK: "North Macedonia", NO: "Norway", OM: "Oman",
+  PK: "Pakistan", PW: "Palau", PA: "Panama", PG: "Papua New Guinea", PY: "Paraguay", PE: "Peru",
+  PH: "Philippines", PL: "Poland", PT: "Portugal", PR: "Puerto Rico", QA: "Qatar", RO: "Romania",
+  RU: "Russia", RW: "Rwanda", KN: "Saint Kitts and Nevis", LC: "Saint Lucia", WS: "Samoa",
+  SM: "San Marino", SA: "Saudi Arabia", SN: "Senegal", RS: "Serbia", SC: "Seychelles",
+  SL: "Sierra Leone", SG: "Singapore", SK: "Slovakia", SI: "Slovenia", SB: "Solomon Islands",
+  SO: "Somalia", ZA: "South Africa", KR: "South Korea", SS: "South Sudan", ES: "Spain",
+  LK: "Sri Lanka", SD: "Sudan", SR: "Suriname", SE: "Sweden", CH: "Switzerland", SY: "Syria",
+  TW: "Taiwan", TJ: "Tajikistan", TZ: "Tanzania", TH: "Thailand", TL: "Timor-Leste", TG: "Togo",
+  TO: "Tonga", TT: "Trinidad and Tobago", TN: "Tunisia", TR: "Turkey", TM: "Turkmenistan",
+  TV: "Tuvalu", UG: "Uganda", UA: "Ukraine", AE: "United Arab Emirates", GB: "United Kingdom",
+  UY: "Uruguay", UZ: "Uzbekistan", VU: "Vanuatu", VA: "Vatican City", VE: "Venezuela",
+  VN: "Vietnam", YE: "Yemen", ZM: "Zambia", ZW: "Zimbabwe",
+};
+const COUNTRY_BY_NAME: Record<string, string> = {
+  ...Object.fromEntries(Object.entries(COUNTRY_NAME_BY_ISO2).map(([code, name]) => [name.toLowerCase(), code])),
+  "united kingdom": "GB", uk: "GB", "great britain": "GB", england: "GB", scotland: "GB", wales: "GB",
+  "northern ireland": "GB", "czech republic": "CZ", korea: "KR", "south korea": "KR",
+  "russian federation": "RU", "viet nam": "VN", uae: "AE", holland: "NL", deutschland: "DE",
+  "türkiye": "TR", turkiye: "TR",
+  usa: "US", "u.s.": "US", "u.s.a.": "US", "united states": "US", "united states of america": "US", america: "US",
+};
+const ISO2_CODES = new Set(Object.keys(COUNTRY_NAME_BY_ISO2));
+// Vestas lists Indian roles as "IN, TN" (India, Tamil Nadu) - scanned from
+// the end like everything else, "TN" would read as Tunisia.
+const INDIA_SUBDIVISION_CODES = new Set(["TN", "KA", "MH", "TG", "TS", "AP", "GJ", "DL", "HR", "UP", "RJ", "WB", "KL", "MP", "OR", "OD", "PB"]);
+const INDIA_STATE_NAMES = new Set([
+  "tamil nadu", "karnataka", "maharashtra", "telangana", "andhra pradesh", "gujarat", "delhi",
+  "haryana", "uttar pradesh", "rajasthan", "west bengal", "kerala", "madhya pradesh", "odisha", "punjab",
+]);
+// A person typing "Toronto, ON" means Canada, not an unknown US place.
+const CANADA_PROVINCE_CODES = new Set(["ON", "QC", "BC", "AB", "MB", "SK", "NS", "NB", "NL", "PE", "YT", "NT", "NU"]);
+// Places listed without any country ("Sydney, NSW", "Jung-gu, Seoul") that
+// still name one unambiguously. Three-letter codes and full names only.
+const PLACE_TO_COUNTRY: Record<string, string> = {
+  nsw: "AU", vic: "AU", qld: "AU", tas: "AU", "new south wales": "AU", queensland: "AU",
+  tasmania: "AU", "western australia": "AU", "south australia": "AU", seoul: "KR",
+};
+
+// One comma/dash-split piece of a location, as a country - a name, or (only
+// when allowCodes) an upper-case ISO2 code. Whole-piece matches only, so a
+// city with a country-like word in it never false-positives.
+function countryOfSegment(segment: string, allowCodes: boolean): string | null {
+  const s = segment.replace(/\s*\+\s*\d+\s*more.*$/i, "").replace(/^careers:\s*/i, "").trim();
+  if (!s) return null;
+  if (allowCodes && s.length === 2 && s === s.toUpperCase() && ISO2_CODES.has(s)) return s;
+  const lower = s.toLowerCase();
+  return COUNTRY_BY_NAME[lower] || PLACE_TO_COUNTRY[lower] || (INDIA_STATE_NAMES.has(lower) ? "IN" : null);
+}
+
+// Country of an international job ("Aarhus N, Region Central Jutland, DK,
+// 8200", "Germany - Erlangen", "Taipei, Taiwan, TW, 110"), scanned from the
+// end the way the crawler does. null for US jobs and for international ones
+// with no identifiable country ("Remote", "Location not listed").
+const JOB_COUNTRY_CACHE = new Map<string, string | null>();
+
+function jobCountry(job: GeneralJobListing): string | null {
+  if (job.region !== "International") return null;
+  const key = job.location || "";
+  if (JOB_COUNTRY_CACHE.has(key)) return JOB_COUNTRY_CACHE.get(key) ?? null;
+  const segs = key.split(";")[0].split(/,| - /).map((s) => s.trim()).filter(Boolean);
+  let found: string | null = null;
+  if (segs.includes("IN") && segs.some((s) => INDIA_SUBDIVISION_CODES.has(s))) found = "IN";
+  for (let i = segs.length - 1; i >= 0 && !found; i--) found = countryOfSegment(segs[i], true);
+  JOB_COUNTRY_CACHE.set(key, found);
+  return found;
+}
+
+// A person outside the US names their country in words - "Berlin,
+// Germany", "Germany", "London, UK", "Berlin Germany". Never by 2-letter
+// code: CA, DE, IN, GA... are US states first. Returns the country and the
+// city they gave, if any.
+function personCountry(t: string): { country: string; city: string | null } | null {
+  const segs = t.split(/,| - /).map((s) => s.trim()).filter(Boolean);
+  for (let i = segs.length - 1; i >= 0; i--) {
+    const country = countryOfSegment(segs[i], false);
+    if (country) return { country, city: i > 0 ? segs[0] : null };
+  }
+  if (segs.length >= 2 && CANADA_PROVINCE_CODES.has(segs[segs.length - 1].toUpperCase())) {
+    return { country: "CA", city: segs[0] };
+  }
+  const words = t.split(/\s+/);
+  for (const n of [3, 2, 1]) {
+    if (words.length <= n) continue;
+    const country = countryOfSegment(words.slice(-n).join(" "), false);
+    if (country) return { country, city: words.slice(0, -n).join(" ") };
+  }
+  return null;
+}
+
 // Paid employer postings always fill first (that's what employers are
 // paying for) - any remaining slots are backfilled from the same
 // aggregated listings feed job-alerts-weekly reads.
@@ -155,10 +274,10 @@ async function fetchGeneralJobListings(): Promise<GeneralJobListing[]> {
     const res = await fetch(JOBS_FEED_URL);
     if (!res.ok) return [];
     const listings = (await res.json()) as GeneralJobListing[];
-    // No foreign roles (including remote ones based abroad) - and without
-    // this a German posting listed as "SH, DE" would pass as Delaware.
+    // International roles stay in the list - buildFeaturedJobsFor keeps
+    // them away from US subscribers and gives them to subscribers abroad.
     return listings
-      .filter((job) => job.job_title && job.company && job.page_slug && job.region !== "International")
+      .filter((job) => job.job_title && job.company && job.page_slug)
       .sort((a, b) => (b.first_seen || "").localeCompare(a.first_seen || ""));
   } catch (err) {
     console.error("Could not fetch general job listings (non-fatal):", err);
@@ -166,15 +285,22 @@ async function fetchGeneralJobListings(): Promise<GeneralJobListing[]> {
   }
 }
 
-// Remaining slots (after paid postings) prefer listings in the
-// subscriber's own state, plus remote roles, which fit anyone - then
-// backfill with whatever's most recent overall. A subscriber with no
-// state on file (left the optional box blank, or typed something that
-// isn't a US place) just gets the unfiltered most-recent list.
+// Remaining slots (after paid postings) depend on where the subscriber is:
+//   - In the US: listings in their own state plus US remote roles first,
+//     then whatever's most recent in the US. Never foreign roles - a German
+//     posting listed as "SH, DE" would otherwise pass as Delaware.
+//   - Abroad (typed e.g. "Berlin, Germany"): only roles in that country,
+//     their own city first, then most recent - no US backfill.
+//   - No location on file (box left blank, or not a place we recognize):
+//     the US most-recent list.
+// The feed can carry the same posting twice under different ids (a company
+// re-listing it) - each shows once.
 function buildFeaturedJobsFor(
   paid: FeaturedJob[],
   general: GeneralJobListing[],
   subscriberState: string | null,
+  subscriberCountry: string | null,
+  subscriberCity: string | null,
 ): FeaturedJob[] {
   const remaining = MAX_FEATURED_JOBS - paid.length;
   if (remaining <= 0) return paid;
@@ -187,12 +313,29 @@ function buildFeaturedJobsFor(
     link: `${SITE_ORIGIN}/jobs/${job.page_slug}.html`,
   });
 
-  let pool = general;
-  if (subscriberState) {
-    const matchesSubscriber = (job: GeneralJobListing) =>
-      job.is_remote || extractStateCode(job.location) === subscriberState;
-    pool = [...general.filter(matchesSubscriber), ...general.filter((job) => !matchesSubscriber(job))];
+  let pool: GeneralJobListing[];
+  if (subscriberCountry && subscriberCountry !== "US") {
+    const inCountry = general.filter((job) => jobCountry(job) === subscriberCountry);
+    const city = (subscriberCity || "").toLowerCase();
+    const inCity = (job: GeneralJobListing) => !!city && (job.location || "").toLowerCase().includes(city);
+    pool = [...inCountry.filter(inCity), ...inCountry.filter((job) => !inCity(job))];
+  } else {
+    const us = general.filter((job) => job.region !== "International");
+    pool = us;
+    if (subscriberState) {
+      const matchesSubscriber = (job: GeneralJobListing) =>
+        job.is_remote || extractStateCode(job.location) === subscriberState;
+      pool = [...us.filter(matchesSubscriber), ...us.filter((job) => !matchesSubscriber(job))];
+    }
   }
+
+  const seen = new Set<string>();
+  pool = pool.filter((job) => {
+    const key = `${job.job_title}|${job.company}|${job.location}`.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 
   return [...paid, ...pool.slice(0, remaining).map(toFeaturedJob)];
 }
@@ -389,7 +532,7 @@ Deno.serve(async (_req) => {
 
     const { data: subscribers, error } = await supabaseAdmin
       .from("newsletter_subscribers")
-      .select("id, email, unsubscribe_token, location")
+      .select("id, email, unsubscribe_token, location, location_input")
       .eq("subscribed", true);
     if (error) throw error;
 
@@ -398,7 +541,10 @@ Deno.serve(async (_req) => {
 
     for (const sub of subscribers || []) {
       const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-newsletter?token=${sub.unsubscribe_token}`;
-      const featuredJobs = buildFeaturedJobsFor(paidJobs, generalJobs, sub.location);
+      // A US state on file wins; only without one is the typed text checked
+      // for a foreign country ("Berlin, Germany").
+      const abroad = !sub.location && sub.location_input ? personCountry(sub.location_input) : null;
+      const featuredJobs = buildFeaturedJobsFor(paidJobs, generalJobs, sub.location, abroad ? abroad.country : null, abroad ? abroad.city : null);
       const { error: sendError } = await resend.emails.send({
         from: "Verde Talent Newsletter <newsletter@updates.verdetalent.com>",
         to: sub.email,

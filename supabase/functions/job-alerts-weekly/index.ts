@@ -103,7 +103,9 @@ interface Lead {
 //        REMOTE    remote roles
 //        RELOCATE  anywhere else in the US - only for candidates who said
 //                  they'd relocate, and always last
-// Foreign roles are never sent (see locationTier).
+// Foreign roles only go to people who told us they're in that country
+// ("Berlin, Germany") - and those people get only their own country's
+// jobs (see locationTier).
 // Within a tier, jobs whose titles share more words with theirs come first
 // ("Solar Design Engineer" -> "PV Design Engineer" before "Civil Engineer"),
 // then the newest.
@@ -332,9 +334,131 @@ function haversineMiles(a: LatLon, b: LatLon): number {
   return 3958.8 * 2 * Math.asin(Math.sqrt(h));
 }
 
+// ---- Countries ------------------------------------------------------------
+// People who say they're outside the US ("Berlin, Germany") get jobs in
+// their own country instead of US ones; everyone else never sees foreign
+// roles. ISO2 list and the backward scan are ported from
+// taxonomy/countries.py on the crawler side (last synced 2026-09-13).
+const COUNTRY_NAME_BY_ISO2: Record<string, string> = {
+  AF: "Afghanistan", AL: "Albania", DZ: "Algeria", AD: "Andorra", AO: "Angola", AR: "Argentina",
+  AM: "Armenia", AU: "Australia", AT: "Austria", AZ: "Azerbaijan", BS: "Bahamas", BH: "Bahrain",
+  BD: "Bangladesh", BY: "Belarus", BE: "Belgium", BZ: "Belize", BJ: "Benin", BT: "Bhutan",
+  BO: "Bolivia", BA: "Bosnia and Herzegovina", BW: "Botswana", BR: "Brazil", BN: "Brunei",
+  BG: "Bulgaria", BF: "Burkina Faso", BI: "Burundi", KH: "Cambodia", CM: "Cameroon", CA: "Canada",
+  CV: "Cabo Verde", CF: "Central African Republic", TD: "Chad", CL: "Chile", CN: "China",
+  CO: "Colombia", KM: "Comoros", CG: "Congo", CD: "DR Congo", CR: "Costa Rica", HR: "Croatia",
+  CU: "Cuba", CY: "Cyprus", CZ: "Czechia", DK: "Denmark", DJ: "Djibouti", DM: "Dominica",
+  DO: "Dominican Republic", EC: "Ecuador", EG: "Egypt", SV: "El Salvador", GQ: "Equatorial Guinea",
+  ER: "Eritrea", EE: "Estonia", SZ: "Eswatini", ET: "Ethiopia", FJ: "Fiji", FI: "Finland",
+  FR: "France", GA: "Gabon", GM: "Gambia", GE: "Georgia", DE: "Germany", GH: "Ghana", GR: "Greece",
+  GD: "Grenada", GT: "Guatemala", GN: "Guinea", GW: "Guinea-Bissau", GY: "Guyana", HT: "Haiti",
+  HN: "Honduras", HK: "Hong Kong", HU: "Hungary", IS: "Iceland", IN: "India", ID: "Indonesia",
+  IR: "Iran", IQ: "Iraq", IE: "Ireland", IL: "Israel", IT: "Italy", CI: "Ivory Coast", JM: "Jamaica",
+  JP: "Japan", JO: "Jordan", KZ: "Kazakhstan", KE: "Kenya", KI: "Kiribati", KW: "Kuwait",
+  KG: "Kyrgyzstan", LA: "Laos", LV: "Latvia", LB: "Lebanon", LS: "Lesotho", LR: "Liberia",
+  LY: "Libya", LI: "Liechtenstein", LT: "Lithuania", LU: "Luxembourg", MO: "Macao",
+  MG: "Madagascar", MW: "Malawi", MY: "Malaysia", MV: "Maldives", ML: "Mali", MT: "Malta",
+  MH: "Marshall Islands", MR: "Mauritania", MU: "Mauritius", MX: "Mexico", FM: "Micronesia",
+  MD: "Moldova", MC: "Monaco", MN: "Mongolia", ME: "Montenegro", MA: "Morocco", MZ: "Mozambique",
+  MM: "Myanmar", NA: "Namibia", NR: "Nauru", NP: "Nepal", NL: "Netherlands", NZ: "New Zealand",
+  NI: "Nicaragua", NE: "Niger", NG: "Nigeria", MK: "North Macedonia", NO: "Norway", OM: "Oman",
+  PK: "Pakistan", PW: "Palau", PA: "Panama", PG: "Papua New Guinea", PY: "Paraguay", PE: "Peru",
+  PH: "Philippines", PL: "Poland", PT: "Portugal", PR: "Puerto Rico", QA: "Qatar", RO: "Romania",
+  RU: "Russia", RW: "Rwanda", KN: "Saint Kitts and Nevis", LC: "Saint Lucia", WS: "Samoa",
+  SM: "San Marino", SA: "Saudi Arabia", SN: "Senegal", RS: "Serbia", SC: "Seychelles",
+  SL: "Sierra Leone", SG: "Singapore", SK: "Slovakia", SI: "Slovenia", SB: "Solomon Islands",
+  SO: "Somalia", ZA: "South Africa", KR: "South Korea", SS: "South Sudan", ES: "Spain",
+  LK: "Sri Lanka", SD: "Sudan", SR: "Suriname", SE: "Sweden", CH: "Switzerland", SY: "Syria",
+  TW: "Taiwan", TJ: "Tajikistan", TZ: "Tanzania", TH: "Thailand", TL: "Timor-Leste", TG: "Togo",
+  TO: "Tonga", TT: "Trinidad and Tobago", TN: "Tunisia", TR: "Turkey", TM: "Turkmenistan",
+  TV: "Tuvalu", UG: "Uganda", UA: "Ukraine", AE: "United Arab Emirates", GB: "United Kingdom",
+  UY: "Uruguay", UZ: "Uzbekistan", VU: "Vanuatu", VA: "Vatican City", VE: "Venezuela",
+  VN: "Vietnam", YE: "Yemen", ZM: "Zambia", ZW: "Zimbabwe",
+};
+const COUNTRY_BY_NAME: Record<string, string> = {
+  ...Object.fromEntries(Object.entries(COUNTRY_NAME_BY_ISO2).map(([code, name]) => [name.toLowerCase(), code])),
+  "united kingdom": "GB", uk: "GB", "great britain": "GB", england: "GB", scotland: "GB", wales: "GB",
+  "northern ireland": "GB", "czech republic": "CZ", korea: "KR", "south korea": "KR",
+  "russian federation": "RU", "viet nam": "VN", uae: "AE", holland: "NL", deutschland: "DE",
+  "türkiye": "TR", turkiye: "TR",
+  usa: "US", "u.s.": "US", "u.s.a.": "US", "united states": "US", "united states of america": "US", america: "US",
+};
+const ISO2_CODES = new Set(Object.keys(COUNTRY_NAME_BY_ISO2));
+// Vestas lists Indian roles as "IN, TN" (India, Tamil Nadu) - scanned from
+// the end like everything else, "TN" would read as Tunisia.
+const INDIA_SUBDIVISION_CODES = new Set(["TN", "KA", "MH", "TG", "TS", "AP", "GJ", "DL", "HR", "UP", "RJ", "WB", "KL", "MP", "OR", "OD", "PB"]);
+const INDIA_STATE_NAMES = new Set([
+  "tamil nadu", "karnataka", "maharashtra", "telangana", "andhra pradesh", "gujarat", "delhi",
+  "haryana", "uttar pradesh", "rajasthan", "west bengal", "kerala", "madhya pradesh", "odisha", "punjab",
+]);
+// A person typing "Toronto, ON" means Canada, not an unknown US place.
+const CANADA_PROVINCE_CODES = new Set(["ON", "QC", "BC", "AB", "MB", "SK", "NS", "NB", "NL", "PE", "YT", "NT", "NU"]);
+// Places listed without any country ("Sydney, NSW", "Jung-gu, Seoul") that
+// still name one unambiguously. Three-letter codes and full names only.
+const PLACE_TO_COUNTRY: Record<string, string> = {
+  nsw: "AU", vic: "AU", qld: "AU", tas: "AU", "new south wales": "AU", queensland: "AU",
+  tasmania: "AU", "western australia": "AU", "south australia": "AU", seoul: "KR",
+};
+
+// One comma/dash-split piece of a location, as a country - a name, or (only
+// when allowCodes) an upper-case ISO2 code. Whole-piece matches only, so a
+// city with a country-like word in it never false-positives.
+function countryOfSegment(segment: string, allowCodes: boolean): string | null {
+  const s = segment.replace(/\s*\+\s*\d+\s*more.*$/i, "").replace(/^careers:\s*/i, "").trim();
+  if (!s) return null;
+  if (allowCodes && s.length === 2 && s === s.toUpperCase() && ISO2_CODES.has(s)) return s;
+  const lower = s.toLowerCase();
+  return COUNTRY_BY_NAME[lower] || PLACE_TO_COUNTRY[lower] || (INDIA_STATE_NAMES.has(lower) ? "IN" : null);
+}
+
+// Country of an international job ("Aarhus N, Region Central Jutland, DK,
+// 8200", "Germany - Erlangen", "Taipei, Taiwan, TW, 110"), scanned from the
+// end the way the crawler does. null for US jobs and for international ones
+// with no identifiable country ("Remote", "Location not listed").
+const JOB_COUNTRY_CACHE = new Map<string, string | null>();
+
+function jobCountry(job: JobListing): string | null {
+  if (job.region !== "International") return null;
+  const key = job.location || "";
+  if (JOB_COUNTRY_CACHE.has(key)) return JOB_COUNTRY_CACHE.get(key) ?? null;
+  const segs = key.split(";")[0].split(/,| - /).map((s) => s.trim()).filter(Boolean);
+  let found: string | null = null;
+  if (segs.includes("IN") && segs.some((s) => INDIA_SUBDIVISION_CODES.has(s))) found = "IN";
+  for (let i = segs.length - 1; i >= 0 && !found; i--) found = countryOfSegment(segs[i], true);
+  JOB_COUNTRY_CACHE.set(key, found);
+  return found;
+}
+
+// A person outside the US names their country in words - "Berlin,
+// Germany", "Germany", "London, UK", "Berlin Germany". Never by 2-letter
+// code: CA, DE, IN, GA... are US states first. Returns the country and the
+// city they gave, if any.
+function personCountry(t: string): { country: string; city: string | null } | null {
+  const segs = t.split(/,| - /).map((s) => s.trim()).filter(Boolean);
+  for (let i = segs.length - 1; i >= 0; i--) {
+    const country = countryOfSegment(segs[i], false);
+    if (country) return { country, city: i > 0 ? segs[0] : null };
+  }
+  if (segs.length >= 2 && CANADA_PROVINCE_CODES.has(segs[segs.length - 1].toUpperCase())) {
+    return { country: "CA", city: segs[0] };
+  }
+  const words = t.split(/\s+/);
+  for (const n of [3, 2, 1]) {
+    if (words.length <= n) continue;
+    const country = countryOfSegment(words.slice(-n).join(" "), false);
+    if (country) return { country, city: words.slice(0, -n).join(" ") };
+  }
+  return null;
+}
+
+// Where a person is. US people have a state (and a map point when they gave
+// a city or ZIP); people abroad have a country other than "US", and a city
+// if they gave one. Neither = location unknown, treated as US.
 interface Place {
   state: string | null;
   point: LatLon | null;
+  country?: string | null;
+  city?: string | null;
 }
 
 function cityPoint(city: string, state: string): LatLon | null {
@@ -370,6 +494,8 @@ function parsePersonLocation(text: string | null | undefined): Place {
       if (state) return { state, point: cityPoint(words.slice(0, -n).join(" "), state) };
     }
   }
+  const abroad = personCountry(t);
+  if (abroad) return { state: null, point: null, country: abroad.country, city: abroad.city };
   return { state: findStateAnywhere(t), point: null };
 }
 
@@ -408,11 +534,20 @@ const TIER_RELOCATE = 3;
 // answer; leads never give one (their signup is a "near me" ask), so they
 // never reach the RELOCATE tier.
 //
-// Foreign roles are never sent, whatever the relocation answer - "Yes —
-// anywhere" is treated the same as "Yes — US only". That includes remote
-// roles based abroad ("Remote - Amsterdam"), which usually need you to live
-// in that country.
+// People in the US (or with no location) never get foreign roles, whatever
+// their relocation answer - "Yes — anywhere" is treated the same as "Yes —
+// US only". That includes remote roles based abroad ("Remote - Amsterdam"),
+// which usually need you to live in that country.
+//
+// People who said they're abroad get the mirror image: only jobs in their
+// own country - their city first, then elsewhere in the country, then
+// remote roles based there. No US roles, no relocation tier.
 function locationTier(job: JobListing, place: Place, relocation: string | null): number | null {
+  if (place.country && place.country !== "US") {
+    if (jobCountry(job) !== place.country) return null;
+    if (place.city && (job.location || "").toLowerCase().includes(place.city.toLowerCase())) return TIER_NEARBY;
+    return job.is_remote ? TIER_REMOTE : TIER_STATE;
+  }
   if (job.region === "International") return null;
   const places = jobPlaces(job);
   if (place.point && places.some((p) => p.point && haversineMiles(place.point!, p.point) <= NEARBY_MILES)) return TIER_NEARBY;
