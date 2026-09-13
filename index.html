@@ -407,6 +407,59 @@ document.addEventListener('click', function(){
   </div>
   <div class="jobs-grid" id="home-jobs-grid"></div>
 </div>
+<!--emp-section-->
+<section class="emp-section" aria-labelledby="emp-heading">
+  <div class="emp-eyebrow"><i class="ti ti-building"></i>For employers</div>
+  <h2 id="emp-heading">Hiring clean energy talent?</h2>
+  <p class="emp-sub">Reach the people your role fits, and see what the market pays.</p>
+  <div class="emp-grid">
+    <div class="emp-card post">
+      <div class="emp-card-icon"><i class="ti ti-briefcase"></i></div>
+      <div class="emp-card-kicker">Job postings · From $100</div>
+      <h3>Put your role in front of the right candidates</h3>
+      <p>Your job goes on the board and out to the people it fits.</p>
+      <ul>
+        <li><i class="ti ti-circle-check"></i>Listed in job search, with its own page and Apply button</li>
+        <li><i class="ti ti-circle-check"></i>Sent in weekly job-match emails to candidates with a matching role and location</li>
+        <li><i class="ti ti-circle-check"></i>Salary range shown on your posting when you add one</li>
+      </ul>
+      <div class="emp-prices">
+        <div><strong>$100</strong><span>1 post<b class="sep"> · </b><em>30 days</em></span></div>
+        <div><strong>$450</strong><span>5 posts<b class="sep"> · </b><em>$90 each</em></span></div>
+        <div><strong>$850</strong><span>10 posts<b class="sep"> · </b><em>$85 each</em></span></div>
+      </div>
+      <p class="emp-price-note">Pack posts run 30 days each and can be used any time within 12 months.</p>
+      <div class="emp-ctas">
+        <a href="post-job.html" class="emp-cta grn" data-emp-cta="post_job" data-emp-place="section">Post a job →</a>
+        <a href="employer-account.html" class="emp-cta-sub" data-emp-cta="buy_pack" data-emp-place="section">Buy a posting pack</a>
+      </div>
+    </div>
+    <div class="emp-card data">
+      <div class="emp-card-icon"><i class="ti ti-chart-bar"></i></div>
+      <div class="emp-card-kicker">Market intelligence · Free report</div>
+      <h3>Know the market before you hire</h3>
+      <p>The clean energy hiring report: where the demand is and what roles pay.</p>
+      <ul>
+        <li><i class="ti ti-circle-check"></i>Which sectors and roles are hiring the most</li>
+        <li><i class="ti ti-circle-check"></i>Supply and demand for each role</li>
+        <li><i class="ti ti-circle-check"></i>Salary benchmarks by role</li>
+      </ul>
+      <div class="emp-ctas"><a href="intelligence.html" class="emp-cta blu" data-emp-cta="hiring_data" data-emp-place="section">See hiring &amp; salary data →</a></div>
+    </div>
+  </div>
+</section>
+<script>
+// GA4 + Fullstory: employer calls-to-action (banner and "For employers"
+// section) - how many employers head for a paid post vs. the hiring data.
+document.addEventListener("click", function (e) {
+  var a = e.target.closest("[data-emp-cta]");
+  if (!a) return;
+  var params = { cta: a.dataset.empCta, placement: a.dataset.empPlace };
+  gtag("event", "employer_cta_click", params);
+  if (window.FS) FS("trackEvent", { name: "employer_cta_click", properties: params });
+});
+</script>
+<!--/emp-section-->
 <div class="section" style="padding-top:0;">
   <div class="section-header">
     <h2 class="section-title">Top companies hiring</h2>
@@ -530,59 +583,6 @@ function companyCardHtml(c) {
   });
 })();
 </script>
-<!--emp-section-->
-<section class="emp-section" aria-labelledby="emp-heading">
-  <div class="emp-eyebrow"><i class="ti ti-building"></i>For employers</div>
-  <h2 id="emp-heading">Hiring clean energy talent?</h2>
-  <p class="emp-sub">Reach the people your role fits, and see what the market pays.</p>
-  <div class="emp-grid">
-    <div class="emp-card post">
-      <div class="emp-card-icon"><i class="ti ti-briefcase"></i></div>
-      <div class="emp-card-kicker">Job postings · From $100</div>
-      <h3>Put your role in front of the right candidates</h3>
-      <p>Your job goes on the board and out to the people it fits.</p>
-      <ul>
-        <li><i class="ti ti-circle-check"></i>Listed in job search, with its own page and Apply button</li>
-        <li><i class="ti ti-circle-check"></i>Sent in weekly job-match emails to candidates with a matching role and location</li>
-        <li><i class="ti ti-circle-check"></i>Salary range shown on your posting when you add one</li>
-      </ul>
-      <div class="emp-prices">
-        <div><strong>$100</strong><span>1 post<b class="sep"> · </b><em>30 days</em></span></div>
-        <div><strong>$450</strong><span>5 posts<b class="sep"> · </b><em>$90 each</em></span></div>
-        <div><strong>$850</strong><span>10 posts<b class="sep"> · </b><em>$85 each</em></span></div>
-      </div>
-      <p class="emp-price-note">Pack posts run 30 days each and can be used any time within 12 months.</p>
-      <div class="emp-ctas">
-        <a href="post-job.html" class="emp-cta grn" data-emp-cta="post_job" data-emp-place="section">Post a job →</a>
-        <a href="employer-account.html" class="emp-cta-sub" data-emp-cta="buy_pack" data-emp-place="section">Buy a posting pack</a>
-      </div>
-    </div>
-    <div class="emp-card data">
-      <div class="emp-card-icon"><i class="ti ti-chart-bar"></i></div>
-      <div class="emp-card-kicker">Market intelligence · Free report</div>
-      <h3>Know the market before you hire</h3>
-      <p>The clean energy hiring report: where the demand is and what roles pay.</p>
-      <ul>
-        <li><i class="ti ti-circle-check"></i>Which sectors and roles are hiring the most</li>
-        <li><i class="ti ti-circle-check"></i>Supply and demand for each role</li>
-        <li><i class="ti ti-circle-check"></i>Salary benchmarks by role</li>
-      </ul>
-      <div class="emp-ctas"><a href="intelligence.html" class="emp-cta blu" data-emp-cta="hiring_data" data-emp-place="section">See hiring &amp; salary data →</a></div>
-    </div>
-  </div>
-</section>
-<script>
-// GA4 + Fullstory: employer calls-to-action (banner and "For employers"
-// section) - how many employers head for a paid post vs. the hiring data.
-document.addEventListener("click", function (e) {
-  var a = e.target.closest("[data-emp-cta]");
-  if (!a) return;
-  var params = { cta: a.dataset.empCta, placement: a.dataset.empPlace };
-  gtag("event", "employer_cta_click", params);
-  if (window.FS) FS("trackEvent", { name: "employer_cta_click", properties: params });
-});
-</script>
-<!--/emp-section-->
 <div class="seeker-cta">
   <div class="sc-left">
     <h2>Get found by top energy employers</h2>
