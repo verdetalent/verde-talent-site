@@ -3,19 +3,19 @@
 // in the dashboard, and the cron job's own service-role key satisfies that,
 // so no extra secret-header check is needed on top of it.
 //
-// Matches on three things: sector (candidates.sectors[] vs each job's
-// sector_bucket), job function/category inferred from the candidate's
-// headline (so a Solar Design Engineer doesn't get sent Wind Technician or
-// Battery Storage PM roles just because they're all in-sector), and
-// location/relocation preference. A candidate with zero matching jobs this
+// Every job sent must match on sector, role type AND location - see the
+// "Matching" section below (pickJobs) for the tiers: within 100 miles, then
+// elsewhere in their state, then remote, then - only for candidates open to
+// relocating - further afield, last. A person with zero matching jobs this
 // week gets no email at all, rather than an empty one.
 //
-// Also sends a lighter-weight digest to job_alert_leads - zero-commitment
-// signups from create-profile.html's "get emailed when new jobs open near
-// me" box (email + sector + location only, no account). These match on
-// sector + location only (no job-title/category refinement, since there's
-// no headline/experience to infer one from), and every email carries an
-// upsell nudge toward creating a full profile.
+// Two audiences, same matching:
+//   - candidates: full profiles. Role from headline (or latest experience
+//     title), location from the profile, plus their relocation answer.
+//   - job_alert_leads: zero-commitment signups from create-profile.html's
+//     alerts box (email + job title + location + sector(s), no account).
+//     One combined email per address, and every one carries a "Complete
+//     your profile" nudge - profiles are what employers search.
 //
 // Job data comes from a plain fetch() of the same slim listings already
 // embedded into jobs.html (see export_jobs_to_verde_talent.py in the
@@ -75,12 +75,12 @@ interface Candidate {
 }
 
 // Zero-commitment signup from create-profile.html's "get emailed when new
-// jobs open near me" box - email + sector(s) + location + optional job
-// title, no account. job_title runs through the same mapJobCategory() rules
-// as a candidate's headline, so a lead who typed "Solar Design Engineer"
-// still only sees engineering roles, not every Solar job in their state.
-// The email carries an upsell nudge toward a full profile for even tighter
-// matching (job-level detail a plain title can't capture).
+// jobs open near me" box - email + sector(s) + location + job title, no
+// account. job_title runs through the same role rules as a candidate's
+// headline, so a lead who typed "Solar Design Engineer" only sees
+// engineering roles, not every Solar job in their state. job_title is
+// required on the form since 2026-09-13; older rows can still be null, and
+// those match on sector + location alone.
 interface Lead {
   id: string;
   email: string;
@@ -90,26 +90,69 @@ interface Lead {
   unsubscribe_token: string;
 }
 
+// ---------------------------------------------------------------------------
+// Matching. Every job sent has to fit on all three:
+//   1. Sector   - one of the person's sectors (candidates.sectors[], or the
+//                 lead row's sector).
+//   2. Role     - the same job function (role type) as the title they gave
+//                 us: a lead's job_title, or a candidate's headline (falling
+//                 back to their latest experience title).
+//   3. Location - in one of these tiers, which is also the send order:
+//        NEARBY    within NEARBY_MILES of their city or ZIP
+//        STATE     elsewhere in their state
+//        REMOTE    remote roles
+//        RELOCATE  anywhere else in the US - only for candidates who said
+//                  they'd relocate, and always last
+// Foreign roles are never sent (see locationTier).
+// Within a tier, jobs whose titles share more words with theirs come first
+// ("Solar Design Engineer" -> "PV Design Engineer" before "Civil Engineer"),
+// then the newest.
+// ---------------------------------------------------------------------------
+
+const CITY_GEO_URL = `${SITE_ORIGIN}/data/us_cities_geo.json`;
+const ZIP3_GEO_URL = `${SITE_ORIGIN}/data/zip3_centroids.json`;
+const NEARBY_MILES = 100;
+
 // Ported from taxonomy/job_category.py on the crawler side - same rules,
-// same order (first match wins, most specific categories listed first),
-// so a candidate's inferred category lines up with what a job listing was
-// actually tagged with. Kept in sync by hand; not imported directly since
-// this Edge Function has no access to that repo.
+// same order (first match wins, most specific categories listed first), so
+// a person's inferred role type lines up with what each job was actually
+// tagged with. Kept in sync by hand; not imported directly since this Edge
+// Function has no access to that repo. Last synced 2026-09-13.
 const JOB_CATEGORY_RULES: [string, RegExp[]][] = [
-  ["Project/Program Management", [/\bproject manage/, /\bprogram manage/]],
+  ["Project/Program Management", [/\bproject manage/, /\bprogram manage/, /\bschedul(er|ing)\b/]],
   ["Engineering", [/\bengineer(ing)?\b/]],
-  ["Construction/Field", [/\bconstruction\b/, /\bfield (service|technician)\b/, /\blineman\b/, /\btechnician\b/, /\binstaller\b/]],
-  ["Sales", [/\bsales\b/, /\baccount executive\b/, /\bbusiness development\b/]],
-  ["Finance/Accounting", [/\bfinance\b/, /\baccount(ant|ing)\b/, /\bfp&a\b/, /\btax\b/, /\baudit\b/, /\btreasury\b/]],
+  ["Construction/Field", [
+    /\bconstruction\b/, /\bfield (service|technician)\b/, /\blineman\b/,
+    /\btechnician\b/, /\binstall(er|ation)\b/, /\bsuperintendent\b/,
+    /\bforeperson\b/, /\bforeman\b/,
+    /\bwelder\b/, /\belectrician\b/, /\blaborer\b/, /\bmechanic\b/,
+    /\bcarpenter\b/, /\bmillwright\b/, /\bcement mason\b/,
+    /\bitinerant\b/, /\bmachinist\b/, /\brepair(er)?\b/,
+    /\bestimat(or|ing)\b/, /\bdesign phase\b/, /\bpreconstruction\b/,
+    /\bepc\b/,
+  ]],
+  ["Sales", [/\bsales\b/, /\baccount executive\b/, /\bbusiness development\b/, /\bappointment setter\b/]],
+  ["Finance/Accounting", [
+    /\bfinanc(e|ial)\b/, /\baccount(ant|ing)\b/, /\bfp&a\b/, /\btax\b/,
+    /\baudit\b/, /\btreasury\b/, /\bcost control\b/,
+  ]],
   ["Legal", [/\blegal\b/, /\bcounsel\b/, /\bcompliance\b/, /\bcontracts?\b/, /\bimmigration\b/]],
-  ["Supply Chain/Procurement", [/\bsupply chain\b/, /\bprocurement\b/, /\bsourcing\b/, /\blogistics\b/, /\bwarehouse\b/, /\bmaterials\b/]],
+  ["Supply Chain/Procurement", [
+    /\bsupply chain\b/, /\bprocurement\b/, /\bsourcing\b/, /\blogistics\b/,
+    /\bwarehouse\b/, /\bmaterials?\b/, /\bbuyer\b/, /\bsupply planner\b/,
+  ]],
   ["HR/Talent", [/\bhuman resources\b/, /\bhr\b/, /\btalent\b/, /\brecruit(er|ing|ment)\b/, /\bpeople\b/]],
-  ["IT/Technology", [/\binformation technology\b/, /\bit support\b/, /\bsoftware\b/, /\bcyber\b/, /\bdata\b/, /\bnetwork\b/, /\bapplication(s)? develop/]],
+  ["IT/Technology", [
+    /\binformation technology\b/, /\bit support\b/, /\bsoftware\b/,
+    /\bcyber\b/, /\bdata\b/, /\bnetwork\b/, /\bapplication(s)? develop/,
+  ]],
   ["Marketing/Communications", [/\bmarketing\b/, /\bcommunications\b/, /\bbrand\b/, /\bpublic relations\b/]],
-  ["Safety/EHS", [/\bsafety\b/, /\behs\b/, /\benvironmental health\b/]],
+  ["Safety/EHS", [/\bsafety\b/, /\behs\b/, /\benvironmental\b/, /\bquality\b/]],
   ["Customer Service", [/\bcustomer (service|experience|success)\b/, /\bcall center\b/]],
   ["Real Estate/Land", [/\breal estate\b/, /\bland (manager|agent)\b/]],
-  ["Operations", [/\boperations?\b/, /\boperator\b/, /\bo&m\b/]],
+  ["Manufacturing/Production", [/\bmanufactur/, /\bproduction\b/, /\bstock keeper\b/]],
+  ["Operations", [/\boperations?\b/, /\boperator\b/, /\bo&m\b/, /\bplant manager\b/, /\bcommissioning\b/]],
+  ["Development", [/\bdevelopment\b/]],
 ];
 
 function mapJobCategory(title: string | null | undefined): string | null {
@@ -121,22 +164,84 @@ function mapJobCategory(title: string | null | undefined): string | null {
   return null;
 }
 
-// Prefers the headline (what the candidate explicitly said they are) over
-// past experience titles, falling back to the most recent listed job only
-// if the headline itself doesn't resolve to a category.
-function candidateJobCategory(candidate: Candidate): string | null {
-  const fromHeadline = mapJobCategory(candidate.headline);
-  if (fromHeadline) return fromHeadline;
-  for (const exp of candidate.experience || []) {
-    const fromExp = mapJobCategory(exp.title);
-    if (fromExp) return fromExp;
+// Words that say nothing about the job itself - seniority, sector, work
+// arrangement, filler. Stripped from both sides before comparing titles, so
+// "Senior Solar Design Engineer" and "PV Design Engineer II" share
+// {design, engineer} rather than looking unrelated.
+const GENERIC_TITLE_WORDS = new Set([
+  "senior", "sr", "junior", "jr", "lead", "principal", "staff", "associate", "assistant",
+  "chief", "head", "entry", "level", "i", "ii", "iii", "iv", "v",
+  "and", "of", "the", "a", "an", "to", "for", "in", "at", "with", "or", "open",
+  "solar", "wind", "energy", "renewable", "renewables", "storage", "battery", "bess",
+  "grid", "power", "clean", "ev", "hydrogen", "offshore", "onshore", "utility", "utilities", "pv",
+  "remote", "hybrid", "onsite", "site", "based", "full", "part", "time", "contract", "temporary",
+  "us", "usa", "north", "america", "new",
+]);
+const TITLE_WORD_ALIASES: Record<string, string> = {
+  tech: "technician", techs: "technician", mgr: "manager", engr: "engineer", eng: "engineer",
+  admin: "administrator", coord: "coordinator",
+};
+
+function titleWords(title: string | null | undefined): Set<string> {
+  const words = new Set<string>();
+  for (let w of (title || "").toLowerCase().split(/[^a-z&]+/)) {
+    if (!w) continue;
+    w = TITLE_WORD_ALIASES[w] || w;
+    if (w.length > 3 && w.endsWith("s") && !w.endsWith("ss")) w = w.slice(0, -1); // engineers -> engineer
+    if (!GENERIC_TITLE_WORDS.has(w)) words.add(w);
   }
-  return null;
+  return words;
 }
 
-// Full name -> abbreviation, so a candidate typing "Austin, Texas" still
-// matches a job listing normalized to "Austin, TX" (see
-// taxonomy/location_display.py on the crawler side for the same idea).
+interface Role {
+  category: string | null;
+  words: Set<string>;
+}
+
+function roleFromTitle(title: string | null | undefined): Role {
+  return { category: mapJobCategory(title), words: titleWords(title) };
+}
+
+// Prefers the headline (what the candidate explicitly said they are) over
+// past experience titles, falling back to the most recent listed job only
+// if the headline itself doesn't resolve to a role type.
+function candidateRole(candidate: Candidate): Role {
+  const headlineRole = roleFromTitle(candidate.headline);
+  if (headlineRole.category) return headlineRole;
+  for (const exp of candidate.experience || []) {
+    const expRole = roleFromTitle(exp.title);
+    if (expRole.category) return expRole;
+  }
+  if (headlineRole.words.size) return headlineRole;
+  return roleFromTitle(candidate.experience?.[0]?.title);
+}
+
+// null = not the same kind of job, drop it. Otherwise the number of title
+// words shared, used to rank within a location tier.
+//   - Known role type: the job must carry the same one. A job the crawler
+//     couldn't tag at all only gets in if its title plainly matches theirs
+//     (shares at least two of their words, or their only word).
+//   - Title didn't map to a role type (e.g. "Analyst"): shared title words
+//     are the only signal, same threshold.
+//   - No title information at all (profiles with no headline/experience,
+//     leads from before job title was required): nothing to filter on, so
+//     location + sector only.
+function roleScore(job: JobListing, role: Role): number | null {
+  if (!role.category && role.words.size === 0) return 0;
+  const jobWords = titleWords(job.job_title);
+  let shared = 0;
+  for (const w of role.words) if (jobWords.has(w)) shared++;
+  const plainMatch = shared >= Math.min(2, role.words.size);
+  if (role.category) {
+    if (job.job_category === role.category) return shared;
+    if (!job.job_category && plainMatch) return shared;
+    return null;
+  }
+  return plainMatch ? shared : null;
+}
+
+// Full name -> abbreviation, so "Austin, Texas" matches a listing normalized
+// to "Austin, TX" (see taxonomy/location_display.py on the crawler side).
 const US_STATE_ABBR: Record<string, string> = {
   alabama: "AL", alaska: "AK", arizona: "AZ", arkansas: "AR", california: "CA",
   colorado: "CO", connecticut: "CT", delaware: "DE", florida: "FL", georgia: "GA",
@@ -150,36 +255,32 @@ const US_STATE_ABBR: Record<string, string> = {
   virginia: "VA", washington: "WA", "west virginia": "WV", wisconsin: "WI", wyoming: "WY",
   "district of columbia": "DC",
 };
+const US_STATE_CODES = new Set(Object.values(US_STATE_ABBR));
 
-function extractStateAbbr(text: string | null): string | null {
-  if (!text) return null;
-  const abbrMatch = text.match(/\b([A-Z]{2})\b/);
-  if (abbrMatch && Object.values(US_STATE_ABBR).includes(abbrMatch[1])) return abbrMatch[1];
+// "TX" / "tx" / "Texas" -> "TX"; anything else -> null.
+function stateCode(token: string | null | undefined): string | null {
+  const t = (token || "").trim();
+  if (!t) return null;
+  if (US_STATE_CODES.has(t.toUpperCase()) && t.length === 2) return t.toUpperCase();
+  return US_STATE_ABBR[t.toLowerCase()] || null;
+}
+
+// Last resort for free-text locations that don't parse cleanly ("Greater
+// Austin area, TX metro") - any state code or name found anywhere in it.
+function findStateAnywhere(text: string): string | null {
+  const abbr = text.match(/\b([A-Z]{2})\b/g)?.find((m) => US_STATE_CODES.has(m));
+  if (abbr) return abbr;
   const lower = text.toLowerCase();
-  for (const [name, abbr] of Object.entries(US_STATE_ABBR)) {
-    if (lower.includes(name)) return abbr;
+  for (const [name, code] of Object.entries(US_STATE_ABBR)) {
+    if (lower.includes(name)) return code;
   }
   return null;
 }
 
-// A candidate should only see a job they could actually take without
-// relocating, unless they've said they're open to that. Remote jobs are
-// always fair game regardless of relocation preference - no move required.
-function jobMatchesLocation(job: JobListing, candidate: Candidate): boolean {
-  if (job.is_remote) return true;
-  if (candidate.relocation === "Yes — anywhere") return true;
-  if (candidate.relocation === "Yes — US only") return job.region === "US";
-  // "No" (or unset) - only jobs in the candidate's own state.
-  const candidateState = extractStateAbbr(candidate.location);
-  const jobState = extractStateAbbr(job.location);
-  return !!candidateState && candidateState === jobState;
-}
-
 // Approximate USPS ZIP-prefix -> state blocks (first 3 digits of a 5-digit
-// ZIP), so a lead who types a bare ZIP still gets state-level matching like
-// everyone else. Boundaries are close but not exact at the edges - good
-// enough for "does this job's state match the lead's state", not meant as
-// an authoritative ZIP database.
+// ZIP), so a bare ZIP still yields a state even when its prefix has no
+// centroid. Boundaries are close but not exact at the edges - good enough
+// for "is this job in their state", not an authoritative ZIP database.
 const ZIP3_STATE_RANGES: [number, number, string][] = [
   [10, 27, "MA"], [28, 29, "RI"], [30, 38, "NH"], [39, 49, "ME"], [50, 59, "VT"],
   [60, 69, "CT"], [70, 89, "NJ"], [100, 149, "NY"], [150, 196, "PA"], [197, 199, "DE"],
@@ -202,24 +303,203 @@ function zip3ToState(zip3: number): string | null {
   return null;
 }
 
-// Leads can enter a bare ZIP instead of "City, State" - try that first,
-// fall back to the same name/abbreviation matching used everywhere else.
-function extractStateAbbrOrZip(text: string | null): string | null {
-  if (!text) return null;
-  const trimmed = text.trim();
-  const zipMatch = trimmed.match(/^(\d{5})(-\d{4})?$/);
-  if (zipMatch) return zip3ToState(parseInt(zipMatch[1].slice(0, 3), 10));
-  return extractStateAbbr(trimmed);
+// Same public-domain GeoNames-derived reference files jobs.html's radius
+// search uses: "city|ST" -> [lat, lon] (~29.5k cities) and ZIP3 prefix ->
+// [lat, lon]. Loaded once per run; if either fails, matching quietly drops
+// to state level (no NEARBY tier) rather than failing the send.
+type LatLon = [number, number];
+let CITY_GEO: Record<string, LatLon> = {};
+let ZIP3_GEO: Record<string, LatLon> = {};
+
+async function loadGeoData(): Promise<void> {
+  try {
+    const [cities, zip3] = await Promise.all([
+      fetch(CITY_GEO_URL).then((r) => (r.ok ? r.json() : {})),
+      fetch(ZIP3_GEO_URL).then((r) => (r.ok ? r.json() : {})),
+    ]);
+    CITY_GEO = cities;
+    ZIP3_GEO = zip3;
+  } catch (err) {
+    console.error("Could not load geo data - matching falls back to state level (non-fatal):", err);
+  }
 }
 
-// Leads never state a relocation preference (it's a "near me" ask by
-// design), so this is the "No"-relocation branch of jobMatchesLocation
-// above: remote jobs always qualify, everything else has to be in-state.
-function jobMatchesLeadLocation(job: JobListing, lead: Lead): boolean {
-  if (job.is_remote) return true;
-  const leadState = extractStateAbbrOrZip(lead.location);
-  const jobState = extractStateAbbr(job.location);
-  return !!leadState && leadState === jobState;
+function haversineMiles(a: LatLon, b: LatLon): number {
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const dLat = toRad(b[0] - a[0]);
+  const dLon = toRad(b[1] - a[1]);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * Math.sin(dLon / 2) ** 2;
+  return 3958.8 * 2 * Math.asin(Math.sqrt(h));
+}
+
+interface Place {
+  state: string | null;
+  point: LatLon | null;
+}
+
+function cityPoint(city: string, state: string): LatLon | null {
+  return CITY_GEO[`${city.trim().toLowerCase()}|${state}`] || null;
+}
+
+// What a person typed as their location - a ZIP, "City, ST", "City, State",
+// "City State", or just a state - resolved to a state and, where possible,
+// a map point for the 100-mile radius. A state alone has no point, so it
+// matches on the state tier and remote only.
+function parsePersonLocation(text: string | null | undefined): Place {
+  const t = (text || "").trim();
+  if (!t) return { state: null, point: null };
+
+  const zip = t.match(/^(\d{5})(-\d{4})?$/);
+  if (zip) {
+    const prefix = zip[1].slice(0, 3);
+    return { state: zip3ToState(parseInt(prefix, 10)), point: ZIP3_GEO[prefix] || null };
+  }
+
+  const parts = t.split(",").map((s) => s.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    const state = stateCode(parts[1]);
+    if (state) return { state, point: cityPoint(parts[0], state) };
+  } else {
+    const whole = stateCode(t);
+    if (whole) return { state: whole, point: null };
+    // "Austin TX", "Raleigh North Carolina" - try a 2-word then 1-word state at the end.
+    const words = t.split(/\s+/);
+    for (const n of [2, 1]) {
+      if (words.length <= n) continue;
+      const state = stateCode(words.slice(-n).join(" "));
+      if (state) return { state, point: cityPoint(words.slice(0, -n).join(" "), state) };
+    }
+  }
+  return { state: findStateAnywhere(t), point: null };
+}
+
+// A job's listed location(s) - "City, ST", a bare "ST", or several joined
+// with ";" for multi-site postings - as places. Cached per distinct string
+// since the same locations repeat across thousands of jobs and people.
+const JOB_PLACES_CACHE = new Map<string, Place[]>();
+
+function jobPlaces(job: JobListing): Place[] {
+  // Foreign roles never place in a US state - without this a German posting
+  // listed as "SH, DE" would read as Delaware.
+  if (job.region === "International") return [];
+  const key = job.location || "";
+  const cached = JOB_PLACES_CACHE.get(key);
+  if (cached) return cached;
+  const places: Place[] = [];
+  for (const seg of key.split(";")) {
+    const parts = seg.split(",").map((s) => s.trim()).filter(Boolean);
+    if (!parts.length) continue;
+    const state = stateCode(parts[parts.length - 1]);
+    if (!state) continue;
+    const point = parts.length >= 2 ? cityPoint(parts[parts.length - 2], state) : null;
+    places.push({ state, point });
+  }
+  JOB_PLACES_CACHE.set(key, places);
+  return places;
+}
+
+const TIER_NEARBY = 0;
+const TIER_STATE = 1;
+const TIER_REMOTE = 2;
+const TIER_RELOCATE = 3;
+
+// Which location tier a job falls in for this person, or null if it's out
+// of range entirely. `relocation` is a candidate's "Open to relocation?"
+// answer; leads never give one (their signup is a "near me" ask), so they
+// never reach the RELOCATE tier.
+//
+// Foreign roles are never sent, whatever the relocation answer - "Yes —
+// anywhere" is treated the same as "Yes — US only". That includes remote
+// roles based abroad ("Remote - Amsterdam"), which usually need you to live
+// in that country.
+function locationTier(job: JobListing, place: Place, relocation: string | null): number | null {
+  if (job.region === "International") return null;
+  const places = jobPlaces(job);
+  if (place.point && places.some((p) => p.point && haversineMiles(place.point!, p.point) <= NEARBY_MILES)) return TIER_NEARBY;
+  if (place.state && places.some((p) => p.state === place.state)) return TIER_STATE;
+  if (job.is_remote) return TIER_REMOTE;
+  if ((relocation === "Yes — anywhere" || relocation === "Yes — US only") && job.region === "US") return TIER_RELOCATE;
+  return null;
+}
+
+// One set of preferences to match against: a candidate is one of these; a
+// lead is one per job_alert_leads row (each row its own sector, and possibly
+// its own title/location if they signed up more than once).
+interface MatchRequest {
+  sectors: string[];
+  place: Place;
+  relocation: string | null;
+  role: Role;
+}
+
+// Miles from the person to the nearest of the job's placeable locations,
+// or null when either side has no map point.
+function jobMiles(job: JobListing, place: Place): number | null {
+  if (!place.point) return null;
+  let min: number | null = null;
+  for (const p of jobPlaces(job)) {
+    if (!p.point) continue;
+    const d = haversineMiles(place.point, p.point);
+    if (min === null || d < min) min = d;
+  }
+  return min;
+}
+
+// Up to MAX_JOBS_PER_EMAIL jobs, best first: location tier, then how
+// closely the title matches, then nearest, then newest. A job several
+// requests match keeps its best tier/score. Within a tier, sectors take
+// turns so one busy sector can't fill every slot for someone following
+// several.
+function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing[]>): JobListing[] {
+  const best = new Map<string, { job: JobListing; tier: number; score: number; miles: number | null }>();
+  for (const req of requests) {
+    for (const sector of req.sectors) {
+      for (const job of jobsBySector.get(sector) || []) {
+        const score = roleScore(job, req.role);
+        if (score === null) continue;
+        const tier = locationTier(job, req.place, req.relocation);
+        if (tier === null) continue;
+        const prev = best.get(job.job_id);
+        if (!prev || tier < prev.tier || (tier === prev.tier && score > prev.score)) {
+          best.set(job.job_id, { job, tier, score, miles: jobMiles(job, req.place) });
+        }
+      }
+    }
+  }
+
+  const sorted = [...best.values()].sort((a, b) =>
+    a.tier - b.tier ||
+    b.score - a.score ||
+    (a.miles ?? Infinity) - (b.miles ?? Infinity) ||
+    (b.job.first_seen || "").localeCompare(a.job.first_seen || ""));
+
+  // The feed can carry the same posting twice under different ids (a
+  // company re-listing it) - show it once.
+  const seen = new Set<string>();
+  const ranked = sorted.filter((r) => {
+    const key = `${r.job.job_title}|${r.job.company}|${r.job.location}`.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  const picked: JobListing[] = [];
+  for (let tier = TIER_NEARBY; tier <= TIER_RELOCATE && picked.length < MAX_JOBS_PER_EMAIL; tier++) {
+    const bySector = new Map<string, JobListing[]>();
+    for (const r of ranked) {
+      if (r.tier !== tier) continue;
+      const s = r.job.sector_bucket || "";
+      if (!bySector.has(s)) bySector.set(s, []);
+      bySector.get(s)!.push(r.job);
+    }
+    const queues = [...bySector.values()];
+    for (let i = 0; picked.length < MAX_JOBS_PER_EMAIL && queues.some((q) => i < q.length); i++) {
+      for (const q of queues) {
+        if (i < q.length && picked.length < MAX_JOBS_PER_EMAIL) picked.push(q[i]);
+      }
+    }
+  }
+  return picked;
 }
 
 interface NewsItem {
@@ -502,7 +782,8 @@ Deno.serve(async (_req) => {
       console.error("Could not fetch news feed (non-fatal):", err);
     }
     // Same deal for the intel stat - null just drops that sidebar section.
-    const intelStat = await fetchIntelStat();
+    // Geo data likewise: without it, matching runs at state level only.
+    const [intelStat] = await Promise.all([fetchIntelStat(), loadGeoData()]);
 
     const cutoff = new Date(Date.now() - NEW_JOB_WINDOW_DAYS * 24 * 60 * 60 * 1000);
     const newJobs = allJobs.filter((job) => {
@@ -533,21 +814,12 @@ Deno.serve(async (_req) => {
     let failed = 0;
 
     for (const candidate of (candidates || []) as Candidate[]) {
-      // If we can't tell what role the candidate is after (no headline or
-      // experience title that maps to a category), fall back to
-      // sector+location only rather than sending nothing - being unable to
-      // narrow further is a smaller problem than an inference gap silently
-      // zeroing out their email.
-      const category = candidateJobCategory(candidate);
-      const matched = new Map<string, JobListing>();
-      for (const sector of candidate.sectors || []) {
-        for (const job of jobsBySector.get(sector) || []) {
-          if (!jobMatchesLocation(job, candidate)) continue;
-          if (category && job.job_category && job.job_category !== category) continue;
-          matched.set(job.job_id, job);
-        }
-      }
-      const jobs = [...matched.values()].slice(0, MAX_JOBS_PER_EMAIL);
+      const jobs = pickJobs([{
+        sectors: candidate.sectors || [],
+        place: parsePersonLocation(candidate.location),
+        relocation: candidate.relocation,
+        role: candidateRole(candidate),
+      }], jobsBySector);
       if (jobs.length === 0) {
         skippedNoMatch++;
         continue;
@@ -590,9 +862,8 @@ Deno.serve(async (_req) => {
 
     // One email per address, not per row. job_alert_leads holds one row per
     // (email, sector), so someone who ticked Solar + Storage + Grid used to
-    // get three separate digests every week. Each row still matches on its
-    // own sector/location/title; the results are merged, taking jobs from
-    // each sector in turn so one busy sector can't fill all the slots.
+    // get three separate digests every week. Each row is its own match
+    // request (its sector, location and title); pickJobs merges them.
     const leadsByEmail = new Map<string, Lead[]>();
     for (const lead of (leads || []) as Lead[]) {
       if (!leadsByEmail.has(lead.email)) leadsByEmail.set(lead.email, []);
@@ -600,19 +871,12 @@ Deno.serve(async (_req) => {
     }
 
     for (const [email, rows] of leadsByEmail) {
-      const perSector = rows.map((lead) => {
-        const category = mapJobCategory(lead.job_title);
-        return (jobsBySector.get(lead.sector) || [])
-          .filter((job) => jobMatchesLeadLocation(job, lead))
-          .filter((job) => !category || !job.job_category || job.job_category === category);
-      });
-      const picked = new Map<string, JobListing>();
-      for (let i = 0; picked.size < MAX_JOBS_PER_EMAIL && perSector.some((list) => i < list.length); i++) {
-        for (const list of perSector) {
-          if (i < list.length && picked.size < MAX_JOBS_PER_EMAIL) picked.set(list[i].job_id, list[i]);
-        }
-      }
-      const jobs = [...picked.values()];
+      const jobs = pickJobs(rows.map((lead) => ({
+        sectors: [lead.sector],
+        place: parsePersonLocation(lead.location),
+        relocation: null,
+        role: roleFromTitle(lead.job_title),
+      })), jobsBySector);
 
       if (jobs.length === 0) {
         leadsSkippedNoMatch++;
