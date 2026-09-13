@@ -328,7 +328,8 @@ document.addEventListener('click', function(){
     <div class="s-card">
       <div class="s-title"><i class="ti ti-mail"></i>Energy briefing</div>
       <div class="nl-sub">The week's most important clean energy news, jobs, and market shifts — delivered to your inbox once a week.</div>
-      <input class="nl-input" type="email" id="nl-email" placeholder="your@email.com"/>
+      <input class="nl-input" type="email" id="nl-email" placeholder="your@email.com" aria-label="Email"/>
+      <input class="nl-input" type="text" id="nl-location" placeholder="City, State, or ZIP (optional)" aria-label="Location, for jobs near you (optional)" autocomplete="postal-code"/>
       <button class="nl-btn" id="nl-subscribe-btn">Subscribe — free</button>
       <div class="nl-fine" id="nl-fine">No spam. Unsubscribe anytime.</div>
     </div>
@@ -580,9 +581,9 @@ document.querySelectorAll('#filter-bar .fcat').forEach(btn => {
   });
 });
 // Newsletter signup - posts to the subscribe-newsletter Edge Function
-// rather than inserting directly into newsletter_subscribers, so the
-// subscriber's IP can be geolocated to a state server-side (used by
-// newsletter-weekly to localize the Featured jobs sidebar).
+// rather than inserting directly into newsletter_subscribers. The optional
+// location box (city+state, state, or ZIP) is resolved to a state there and
+// used by newsletter-weekly to localize the Featured jobs sidebar.
 const NL_SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const NL_SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
 document.getElementById('nl-subscribe-btn').addEventListener('click', async function() {
@@ -609,11 +610,12 @@ document.getElementById('nl-subscribe-btn').addEventListener('click', async func
         'Authorization': `Bearer ${NL_SUPABASE_ANON_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email, location: document.getElementById('nl-location').value.trim() }),
     });
 
     if (res.ok) {
       emailInput.value = '';
+      document.getElementById('nl-location').value = '';
       fine.textContent = "You're subscribed — look for our next weekly email.";
       fine.style.color = 'var(--grn)';
     } else if (res.status === 409) {

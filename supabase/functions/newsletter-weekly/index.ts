@@ -7,8 +7,10 @@
 //   - Featured jobs: public_job_postings (paid employer listings) always
 //     shown first, backfilled with data/jobs_feed.json (the general
 //     scraped/aggregated listings job-alerts-weekly also reads) preferring
-//     jobs in each subscriber's own state - inferred from IP at signup by
+//     jobs in each subscriber's own state - typed at signup into an
+//     optional "City, State, or ZIP" box and resolved to a state by
 //     subscribe-newsletter, stored on newsletter_subscribers.location.
+//     Foreign roles are never featured, same rule as job-alerts-weekly.
 //   - One intel stat: data/intelligence.json, same file intelligence.html
 //     reads. Several candidate stat sentences are generated and one is
 //     picked by ISO week number, so it's a different (but stable for the
@@ -110,6 +112,7 @@ interface GeneralJobListing {
   job_title: string | null;
   company: string | null;
   location: string | null;
+  region: string | null;
   is_remote: boolean;
   first_seen: string | null;
 }
@@ -118,7 +121,7 @@ interface GeneralJobListing {
 // "City, ST" or a bare "ST", sometimes "Remote"/"Location not listed"/a
 // full international place name. Pulling out a trailing two-letter state
 // code is the only piece of it that's reliably comparable to a
-// subscriber's geolocated state.
+// subscriber's state.
 function extractStateCode(location: string | null): string | null {
   if (!location) return null;
   const match = location.match(/\b([A-Z]{2})$/);
@@ -152,8 +155,10 @@ async function fetchGeneralJobListings(): Promise<GeneralJobListing[]> {
     const res = await fetch(JOBS_FEED_URL);
     if (!res.ok) return [];
     const listings = (await res.json()) as GeneralJobListing[];
+    // No foreign roles (including remote ones based abroad) - and without
+    // this a German posting listed as "SH, DE" would pass as Delaware.
     return listings
-      .filter((job) => job.job_title && job.company && job.page_slug)
+      .filter((job) => job.job_title && job.company && job.page_slug && job.region !== "International")
       .sort((a, b) => (b.first_seen || "").localeCompare(a.first_seen || ""));
   } catch (err) {
     console.error("Could not fetch general job listings (non-fatal):", err);
@@ -164,8 +169,8 @@ async function fetchGeneralJobListings(): Promise<GeneralJobListing[]> {
 // Remaining slots (after paid postings) prefer listings in the
 // subscriber's own state, plus remote roles, which fit anyone - then
 // backfill with whatever's most recent overall. A subscriber with no
-// inferred location (geolocation failed at signup, or they're outside the
-// US) just gets the unfiltered most-recent list, same as before.
+// state on file (left the optional box blank, or typed something that
+// isn't a US place) just gets the unfiltered most-recent list.
 function buildFeaturedJobsFor(
   paid: FeaturedJob[],
   general: GeneralJobListing[],
