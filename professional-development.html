@@ -202,10 +202,12 @@ a.path-chip.jobs{background:rgba(34,224,154,0.1);border-color:rgba(34,224,154,0.
 .pb-start:hover .pb-cta{background:#5cebb8;}
 .pb-anchor{font-size:12px;text-decoration:none;}
 .disclosure-line{font-size:11.5px;color:var(--t3);margin-top:1.1rem;line-height:1.5;}
-.course{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:11px;padding:.9rem 1rem;margin-top:8px;max-width:680px;}
-.course-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px;flex-wrap:wrap;}
-.course-meta{font-size:11px;color:var(--t3);margin-left:auto;}
-.course-name{font-size:14px;font-weight:600;color:var(--t1);text-decoration:none;display:inline-block;margin-bottom:7px;line-height:1.35;}
+.course{background:var(--card2);border:0.5px solid rgba(34,224,154,0.5);border-radius:11px;padding:.9rem 1rem;margin-top:8px;max-width:680px;}
+.course-head{display:flex;justify-content:flex-start;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap;}
+.course-meta{font-size:11px;color:var(--t3);}
+.course-name{font-size:14px;font-weight:700;color:var(--t1);text-decoration:none;display:flex;gap:9px;align-items:flex-start;margin-bottom:8px;line-height:1.35;}
+.course-name i{font-size:19px;color:var(--grn);line-height:1;}
+.compact .course-name i{color:var(--cor);}
 .course-name:hover{color:var(--grn);}
 .course-dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:var(--t2);line-height:1.45;margin-bottom:11px;}
 .course-dl dt{color:var(--t3);font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px;white-space:nowrap;}
@@ -220,14 +222,15 @@ a.path-chip.jobs{background:rgba(34,224,154,0.1);border-color:rgba(34,224,154,0.
 .tracks.two{grid-template-columns:repeat(2,minmax(0,1fr));}
 .tracks .course{margin-top:0;max-width:none;display:flex;flex-direction:column;}
 .tracks .course-dl{flex:1;}
-.track-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.track-label{font-size:11px;font-weight:500;border-radius:6px;padding:1px 7px;border:0.5px solid currentColor;background:color-mix(in srgb,currentColor 12%,transparent);}
 .cross-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;}
 .cross-chip{display:inline-block;font-size:12px;padding:6px 11px;border-radius:8px;text-decoration:none;border:0.5px solid var(--bdr2);color:var(--t2);background:rgba(255,255,255,0.03);}
 .cross-chip.amb{border-color:rgba(255,181,71,0.4);color:var(--amb);}
 .cross-chip.grn{border-color:rgba(34,224,154,0.4);color:var(--grn);}
+.course-head .prog-tag,.course-head .pb-badge{font-size:11px;font-weight:500;padding:1px 7px;}
 .prog-tag.safety{color:var(--cor);background:rgba(255,112,85,0.12);border:0.5px solid rgba(255,112,85,0.3);}
 .pair-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cor);margin:14px 0 0;}
-.course.compact{border-color:rgba(255,112,85,0.28);}
+.course.compact{border-color:rgba(255,112,85,0.45);}
 .cc-line{font-size:12px;color:var(--t2);line-height:1.5;}
 .compact .course-foot{margin-top:12px;}
 .tracks .compact .course-foot{margin-top:auto;padding-top:12px;}
@@ -374,9 +377,9 @@ document.addEventListener('click', function(){
       <div class="path-title">Get the entry credential — NABCEP Associate</div>
       <div class="path-sub">4–6 weeks · no prior experience required</div>
       <div class="course">
-        <div class="course-head"><span class="course-meta"><span class="course-rating">★ 4.7</span> · 18–24 hours · NABCEP CEUs</span></div>
-        <a class="course-name" href="https://www.heatspring.com/courses/solar-pv-boot-camp-nabcep-pv-associate-exam-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Solar PV Boot Camp + NABCEP PV Associate Exam Prep</a>
-        <dl class="course-dl"><dt>You'll learn</dt><dd>Solar PV fundamentals, plus prep for the NABCEP PV Associate exam (HeatSpring offers a pass guarantee)</dd><dt>Best for</dt><dd>Newcomers, electricians, contractors</dd><dt>Leads to</dt><dd>Solar PV Installer roles</dd></dl>
+        <div class="course-head"><span class="pb-badge">Most popular</span><span class="course-meta"><span class="course-rating">★ 4.7</span> · 18–24 hours · NABCEP CEUs · Pass guarantee</span></div>
+        <a class="course-name" href="https://www.heatspring.com/courses/solar-pv-boot-camp-nabcep-pv-associate-exam-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>Solar PV Boot Camp + NABCEP PV Associate Exam Prep</a>
+        <dl class="course-dl"><dt>You'll learn</dt><dd>Solar PV fundamentals, plus prep for the NABCEP PV Associate exam</dd><dt>Best for</dt><dd>Newcomers, electricians, contractors</dd><dt>Leads to</dt><dd>Solar PV Installer roles</dd></dl>
         <div class="course-foot"><span class="course-price">$895</span><a class="course-btn" href="https://www.heatspring.com/courses/solar-pv-boot-camp-nabcep-pv-associate-exam-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
       </div>
     </div></div>
@@ -387,7 +390,7 @@ document.addEventListener('click', function(){
       <div class="pair-label">Show up site-ready</div>
       <div class="course compact">
           <div class="course-head"><span class="prog-tag safety">Safety</span><span class="course-meta"><span class="course-rating">★ 4.6</span> · 8 hours · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/solar-construction-safety?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Solar Construction Safety</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/solar-construction-safety?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-alert-triangle" aria-hidden="true"></i>Solar Construction Safety</a>
           <div class="cc-line">Solar jobsite safety: fall protection, rooftop and site hazards. Best for installers and field crews.</div>
           <div class="course-alt">También en español: <a class="" href="https://www.heatspring.com/courses/solar-construction-safety-en-espanol-spanish?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Solar Construction Safety — en Español</a></div>
         
@@ -400,25 +403,25 @@ document.addEventListener('click', function(){
       <div class="tracks two">
         <div class="course">
           <div class="course-head"><span class="track-label" style="color:var(--grn);">Installer</span><span class="course-meta"><span class="course-rating">★ 4.7</span> · 3-course bundle · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/nabcep-pv-installation-professional-pvip-certification-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">NABCEP PV Installation Professional (PVIP) Certification Prep</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/nabcep-pv-installation-professional-pvip-certification-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>NABCEP PV Installation Professional (PVIP) Certification Prep</a>
           <dl class="course-dl"><dt>You'll learn</dt><dd>All the training required to sit for the NABCEP PVIP exam</dd><dt>Best for</dt><dd>Installers with field experience</dd></dl>
           <div class="course-foot"><span class="course-price">$1,795</span><a class="course-btn" href="https://www.heatspring.com/courses/nabcep-pv-installation-professional-pvip-certification-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
         </div>
         <div class="course">
           <div class="course-head"><span class="track-label" style="color:var(--grn);">Sales</span><span class="course-meta"><span class="course-rating">★ 4.7</span> · 5-course bundle · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/nabcep-pv-technical-sales-pvts-certification-prep-c-i-energy-storage-focus?aff_id=-dmbra" target="_blank" rel="sponsored noopener">NABCEP PV Technical Sales (PVTS) Certification Prep: C&amp;I + Energy Storage Focus</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/nabcep-pv-technical-sales-pvts-certification-prep-c-i-energy-storage-focus?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>NABCEP PV Technical Sales (PVTS) Certification Prep: C&amp;I + Energy Storage Focus</a>
           <dl class="course-dl"><dt>You'll learn</dt><dd>All 58 hours required for the PVTS exam, with commercial and battery storage focus</dd><dt>Best for</dt><dd>Solar sales consultants</dd></dl>
           <div class="course-foot"><span class="course-price">$1,795</span><a class="course-btn" href="https://www.heatspring.com/courses/nabcep-pv-technical-sales-pvts-certification-prep-c-i-energy-storage-focus?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
         </div>
         <div class="course">
           <div class="course-head"><span class="track-label" style="color:var(--grn);">Design</span><span class="course-meta"><span class="course-rating">★ 4.4</span> · 30–35 hours · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/megawatt-design?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Megawatt Design</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/megawatt-design?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>Megawatt Design</a>
           <dl class="course-dl"><dt>You'll learn</dt><dd>How to design large-scale PV systems; includes a year of HelioScope</dd><dt>Best for</dt><dd>Designers and engineers</dd></dl>
           <div class="course-foot"><span class="course-price">$1,395</span><a class="course-btn" href="https://www.heatspring.com/courses/megawatt-design?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
         </div>
         <div class="course">
           <div class="course-head"><span class="track-label" style="color:var(--grn);">Project management</span><span class="course-meta"><span class="course-rating">★ 4.7</span> · 5–7 hours · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/utility-scale-solar-construction-project-management?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Utility-Scale Solar Construction &amp; Project Management</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/utility-scale-solar-construction-project-management?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>Utility-Scale Solar Construction &amp; Project Management</a>
           <dl class="course-dl"><dt>You'll learn</dt><dd>Development, permitting, construction and commissioning of utility-scale plants</dd><dt>Best for</dt><dd>PMs and site supervisors</dd></dl>
           <div class="course-foot"><span class="course-price">$545</span><a class="course-btn" href="https://www.heatspring.com/courses/utility-scale-solar-construction-project-management?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
         </div>
@@ -451,7 +454,7 @@ document.addEventListener('click', function(){
       <div class="path-sub">Electricians and newcomers welcome · no solar background needed</div>
       <div class="course">
         <div class="course-head"><span class="course-meta"><span class="course-rating">★ 4.7</span> · 18–22 hours · NABCEP CEUs</span></div>
-        <a class="course-name" href="https://www.heatspring.com/courses/energy-storage-associate-boot-camp?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Energy Storage Associate Boot Camp</a>
+        <a class="course-name" href="https://www.heatspring.com/courses/energy-storage-associate-boot-camp?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>Energy Storage Associate Boot Camp</a>
         <dl class="course-dl"><dt>You'll learn</dt><dd>Technical best practices for energy storage systems</dd><dt>Best for</dt><dd>Electricians and newcomers</dd><dt>Leads to</dt><dd>Battery storage installer roles and the ESIP credential</dd></dl>
         <div class="course-foot"><span class="course-price">$895</span><a class="course-btn" href="https://www.heatspring.com/courses/energy-storage-associate-boot-camp?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
       </div>
@@ -459,14 +462,14 @@ document.addEventListener('click', function(){
       <div class="tracks two">
       <div class="course compact">
           <div class="course-head"><span class="prog-tag safety">Safety</span><span class="course-meta"><span class="course-rating">★ 4.6</span> · 3 hours · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/2023-nfpa-855-and-fire-codes-for-energy-storage-systems?aff_id=-dmbra" target="_blank" rel="sponsored noopener">2023 NFPA 855 and Fire Codes for Energy Storage Systems</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/2023-nfpa-855-and-fire-codes-for-energy-storage-systems?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-alert-triangle" aria-hidden="true"></i>2023 NFPA 855 and Fire Codes for Energy Storage Systems</a>
           <div class="cc-line">Codes, standards and fire protection for energy storage systems. Best for battery storage installers, techs and designers.</div>
         
         <div class="course-foot"><span class="course-price">$250</span><a class="course-btn" href="https://www.heatspring.com/courses/2023-nfpa-855-and-fire-codes-for-energy-storage-systems?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
       </div>
       <div class="course compact">
           <div class="course-head"><span class="prog-tag safety">Safety</span><span class="course-meta"><span class="course-rating">★ 4.9</span> · 6 hours · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/6-hour-nfpa-70e-electrical-safety-training?aff_id=-dmbra" target="_blank" rel="sponsored noopener">6-Hour NFPA 70E Electrical Safety Training</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/6-hour-nfpa-70e-electrical-safety-training?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-alert-triangle" aria-hidden="true"></i>6-Hour NFPA 70E Electrical Safety Training</a>
           <div class="cc-line">Arc-flash and shock safety for live equipment, including battery systems (NFPA 70E Article 320). Best for battery storage installers and techs.</div>
           <div class="course-alt">También en español: <a class="" href="https://www.heatspring.com/courses/6-hour-nfpa-70e-electrical-safety-training-en-espanol-spanish?aff_id=-dmbra" target="_blank" rel="sponsored noopener">6-Hour NFPA 70E Electrical Safety Training — en Español</a></div>
         
@@ -479,7 +482,7 @@ document.addEventListener('click', function(){
       <div class="path-sub">58 hours approved toward the ESIP exam</div>
       <div class="course">
         <div class="course-head"><span class="course-meta"><span class="course-rating">★ 4.7</span> · 3-course bundle · 58 hours · CEUs</span></div>
-        <a class="course-name" href="https://www.heatspring.com/courses/nabcep-energy-storage-installation-professional-esip-certification-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">NABCEP Energy Storage Installation Professional (ESIP) Certification Prep</a>
+        <a class="course-name" href="https://www.heatspring.com/courses/nabcep-energy-storage-installation-professional-esip-certification-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>NABCEP Energy Storage Installation Professional (ESIP) Certification Prep</a>
         <dl class="course-dl"><dt>You'll learn</dt><dd>The training approved for the NABCEP ESIP certification exam</dd><dt>Best for</dt><dd>Battery storage installers ready to certify</dd><dt>Leads to</dt><dd>Certified battery storage installer roles</dd></dl>
         <div class="course-foot"><span class="course-price">$1,795</span><a class="course-btn" href="https://www.heatspring.com/courses/nabcep-energy-storage-installation-professional-esip-certification-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
       </div>
@@ -491,19 +494,19 @@ document.addEventListener('click', function(){
       <div class="tracks">
         <div class="course">
           <div class="course-head"><span class="track-label" style="color:var(--amb);">Technician</span><span class="course-meta">18–24 hours</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/solar-pv-and-bess-operations-maintenance-tech-1-training-nabcep-omat-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Solar PV and BESS O&amp;M Tech 1 Training + NABCEP OMAT Prep</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/solar-pv-and-bess-operations-maintenance-tech-1-training-nabcep-omat-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>Solar PV and BESS O&amp;M Tech 1 Training + NABCEP OMAT Prep</a>
           <dl class="course-dl"><dt>You'll learn</dt><dd>Entry-level PV and battery maintenance aligned with SEIA Standard 301; official NABCEP OMAT exam prep</dd><dt>Best for</dt><dd>O&amp;M and field technicians</dd></dl>
           <div class="course-foot"><span class="course-price">$795</span><a class="course-btn" href="https://www.heatspring.com/courses/solar-pv-and-bess-operations-maintenance-tech-1-training-nabcep-omat-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
         </div>
         <div class="course">
           <div class="course-head"><span class="track-label" style="color:var(--amb);">Engineer</span><span class="course-meta"><span class="course-rating">★ 4.4</span> · 2-course bundle · 71 hours</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/utility-scale-commercial-industrial-solar-and-storage-series?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Utility-Scale Commercial &amp; Industrial Solar and Storage Series</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/utility-scale-commercial-industrial-solar-and-storage-series?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>Utility-Scale Commercial &amp; Industrial Solar and Storage Series</a>
           <dl class="course-dl"><dt>You'll learn</dt><dd>Planning and designing C&amp;I and utility-grade battery storage; 71 hours of NABCEP advanced training</dd><dt>Best for</dt><dd>Battery storage and electrical engineers</dd></dl>
           <div class="course-foot"><span class="course-price">$1,490 <span class="save">Save $300</span></span><a class="course-btn" href="https://www.heatspring.com/courses/utility-scale-commercial-industrial-solar-and-storage-series?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
         </div>
         <div class="course">
           <div class="course-head"><span class="track-label" style="color:var(--amb);">Developer / finance</span><span class="course-meta"><span class="course-rating">★ 4.6</span> · 3–6 hours · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/foundations-of-battery-energy-storage-systems?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Foundations of Battery Energy Storage Systems</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/foundations-of-battery-energy-storage-systems?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>Foundations of Battery Energy Storage Systems</a>
           <dl class="course-dl"><dt>You'll learn</dt><dd>A crash course on battery energy storage from a project developer</dd><dt>Best for</dt><dd>Developers, finance, engineers new to batteries</dd></dl>
           <div class="course-foot"><span class="course-price">$395</span><a class="course-btn" href="https://www.heatspring.com/courses/foundations-of-battery-energy-storage-systems?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
         </div>
@@ -552,7 +555,7 @@ document.addEventListener('click', function(){
   <div class="tstat-strip"><div class="tstat"><div class="tstat-num" id="pd-ev-jobs" style="color:var(--cor);">31</div><div class="tstat-label">open roles right now</div></div><div class="tstat"><div class="tstat-num" id="pd-ev-companies" style="color:var(--t1);">3</div><div class="tstat-label">companies hiring</div></div></div><a href="jobs.html" style="font-size:12px;color:var(--grn);text-decoration:none;display:inline-block;margin-bottom:1.4rem;">See all EV jobs →</a>
   <div class="path-steps"><div class="path-step"><div class="path-rail"><div class="path-dot">1</div><div class="path-line"></div></div><div class="path-body"><div class="path-title">Start from an electrical base</div><div class="path-sub">EVITP requires a licensed electrician background — IBEW-NECA apprenticeships are the classic route</div><div class="pair-label">Work safely on live equipment</div><div class="course compact">
           <div class="course-head"><span class="prog-tag safety">Safety</span><span class="course-meta"><span class="course-rating">★ 4.9</span> · 6 hours · CEUs</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/6-hour-nfpa-70e-electrical-safety-training?aff_id=-dmbra" target="_blank" rel="sponsored noopener">6-Hour NFPA 70E Electrical Safety Training</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/6-hour-nfpa-70e-electrical-safety-training?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-alert-triangle" aria-hidden="true"></i>6-Hour NFPA 70E Electrical Safety Training</a>
           <div class="cc-line">Arc-flash and electrical safety under NFPA 70E; accepted as prep for the NFPA CEST exam. Best for electricians and EV installers.</div>
           <div class="course-alt">También en español: <a class="" href="https://www.heatspring.com/courses/6-hour-nfpa-70e-electrical-safety-training-en-espanol-spanish?aff_id=-dmbra" target="_blank" rel="sponsored noopener">6-Hour NFPA 70E Electrical Safety Training — en Español</a></div>
         
@@ -595,8 +598,8 @@ document.addEventListener('click', function(){
   <div class="pd-section-sub"><span data-stat="osha-mentions">305</span> open roles we track name OSHA. These apply whether you're headed for solar, battery storage, wind or grid work.</div>
   <div class="tracks two">
       <div class="course compact">
-          <div class="course-head"><span class="prog-tag safety">Safety</span><span class="course-meta"><span class="course-rating">★ 4.8</span> · 10 hours · DOL card</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/osha-10-hour-construction?aff_id=-dmbra" target="_blank" rel="sponsored noopener">OSHA 10-Hour Construction</a>
+          <div class="course-head"><span class="prog-tag safety">Safety</span><span class="pb-badge">Most popular</span><span class="course-meta"><span class="course-rating">★ 4.8</span> · 10 hours · DOL card</span></div>
+          <a class="course-name" href="https://www.heatspring.com/courses/osha-10-hour-construction?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-alert-triangle" aria-hidden="true"></i>OSHA 10-Hour Construction</a>
           <div class="cc-line">OSHA-authorized training on critical jobsite hazards. Best for anyone starting field work.</div>
           <div class="course-alt">También en español: <a class="" href="https://www.heatspring.com/courses/osha-10-para-la-construccion-en-espanol?aff_id=-dmbra" target="_blank" rel="sponsored noopener">OSHA 10 para la Construcción en Español</a></div>
         
@@ -604,7 +607,7 @@ document.addEventListener('click', function(){
       </div>
       <div class="course compact">
           <div class="course-head"><span class="prog-tag safety">Safety</span><span class="course-meta"><span class="course-rating">★ 4.9</span> · 30 hours · DOL card</span></div>
-          <a class="course-name" href="https://www.heatspring.com/courses/osha-30-hour-construction?aff_id=-dmbra" target="_blank" rel="sponsored noopener">OSHA 30-Hour Construction</a>
+          <a class="course-name" href="https://www.heatspring.com/courses/osha-30-hour-construction?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-alert-triangle" aria-hidden="true"></i>OSHA 30-Hour Construction</a>
           <div class="cc-line">30 hours of OSHA-authorized training. Best for crew leads, foremen and site supervisors.</div>
           <div class="course-alt">También en español: <a class="" href="https://www.heatspring.com/courses/osha-30-para-la-construccion-en-espanol?aff_id=-dmbra" target="_blank" rel="sponsored noopener">OSHA 30 para la Construcción en Español</a></div>
         
