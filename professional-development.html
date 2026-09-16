@@ -231,6 +231,14 @@ a.path-chip.jobs{background:rgba(34,224,154,0.1);border-color:rgba(34,224,154,0.
 .cross-chip.grn{border-color:rgba(34,224,154,0.4);color:var(--grn);}
 .course-head .prog-tag,.course-head .pb-badge{font-size:11px;font-weight:500;padding:1px 7px;}
 .prog-tag.safety{color:var(--cor);background:rgba(255,112,85,0.12);border:0.5px solid rgba(255,112,85,0.3);}
+.pair-label.entry{color:var(--blu);}
+.entry-opt summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;}
+.entry-opt summary::-webkit-details-marker{display:none;}
+.entry-opt summary:hover{text-decoration:underline;}
+.entry-opt summary:focus-visible{outline:2px solid var(--blu);outline-offset:2px;border-radius:4px;}
+.entry-opt summary i{display:inline-block;font-size:13px;transition:transform .15s;}
+.entry-opt[open] summary i{transform:rotate(180deg);}
+@media (prefers-reduced-motion: reduce){.entry-opt summary i{transition:none;}}
 .pair-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cor);margin:14px 0 0;}
 .course.compact{border-color:rgba(255,112,85,0.45);}
 .cc-line{font-size:12px;color:var(--t2);line-height:1.5;}
@@ -367,6 +375,7 @@ document.addEventListener('click', function(){
   <a href="#sector-grid" class="pur">Grid</a>
   <a href="#sector-ev" class="cor">EV</a>
   <a href="#sector-sustainability">Sustainability</a>
+  <a href="#sector-buildings" class="blu">Building Performance</a>
   <a href="#sector-policy" class="cor">Policy</a>
   <a href="#jobsite-safety" class="cor">Jobsite safety</a>
 </div>
@@ -568,6 +577,76 @@ document.addEventListener('click', function(){
     <div class="train-list-label">Where to train</div>
     <a class="train-item" href="https://www.globalreporting.org/academy/certification/" target="_blank" rel="noopener"><span>GRI Academy — Certified Sustainability Professional</span><span class="prog-tag featured">Featured</span></a>
     <a class="train-item" href="https://www.usgbc.org/credentials/exam-preparation" target="_blank" rel="noopener"><span>USGBC — LEED Green Associate exam prep</span><span class="prog-tag featured">Featured</span></a>
+  </div>
+</div>
+
+<div class="pd-section" id="sector-buildings">
+  <div class="sector-header"><i class="ti ti-building" style="font-size:18px;color:var(--blu);"></i>Building Performance</div>
+  <div class="pd-section-sub">Energy audits, weatherization and home performance.</div>
+  <div class="path-steps">
+    <div class="path-step"><div class="path-rail"><div class="path-dot">1</div><div class="path-line"></div></div><div class="path-body">
+      <div class="path-title">Get certified — BPI Building Analyst</div>
+      <div class="path-sub">No experience required · both options include BSP, BA-T and BA-P</div>
+      <div class="tracks two">
+        <div class="course">
+          <div class="course-head"><span class="track-label" style="color:var(--blu);">Live, one week</span><span class="course-meta"><span class="course-rating">★ 4.7</span> (46 reviews) · 40 hours · exams included</span></div>
+          <a class="course-name" href="https://www.heatspring.com/courses/bpi-building-analyst-certification-one-week-intensive-live?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>BPI Building Analyst Certification — One-Week Intensive</a>
+          <dl class="course-dl"><dt>You'll learn</dt><dd>BSP, BA-T and BA-P in one live online week, with tutoring, books, exams and proctoring included</dd><dt>Best for</dt><dd>The fastest route to the credential</dd></dl>
+          <div class="course-foot"><span class="course-price">$3,500</span><a class="course-btn" href="https://www.heatspring.com/courses/bpi-building-analyst-certification-one-week-intensive-live?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
+        </div>
+        <div class="course">
+          <div class="course-head"><span class="track-label" style="color:var(--blu);">Self-paced</span><span class="course-meta"><span class="course-rating">★ 4.7</span> (46 reviews) · 3 courses · CEUs</span></div>
+          <a class="course-name" href="https://www.heatspring.com/courses/bpi-building-analyst-certification-package?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>BPI Building Analyst Certification Package</a>
+          <dl class="course-dl"><dt>You'll learn</dt><dd>BSP, Building Analyst Technician (BA-T) and Building Analyst Professional (BA-P) in one package</dd><dt>Best for</dt><dd>Learning at your own pace</dd></dl>
+          <div class="course-foot"><span class="course-price">$2,116</span><a class="course-btn" href="https://www.heatspring.com/courses/bpi-building-analyst-certification-package?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
+        </div>
+      </div>
+      <details class="entry-opt">
+        <summary class="pair-label entry">Not ready to commit? Start with BSP only <i class="ti ti-chevron-down" aria-hidden="true"></i></summary>
+      <div class="course">
+        <div class="course-head"><span class="course-meta"><span class="course-rating">★ 4.6</span> (28 reviews) · 8 hours · CEUs</span></div>
+        <a class="course-name" href="https://www.heatspring.com/courses/bpi-building-science-principles-bsp-certificate-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>BPI Building Science Principles (BSP) Certificate Prep</a>
+        <dl class="course-dl"><dt>You'll learn</dt><dd>How heat, air and moisture move through a house, and prep for the BPI BSP certificate</dd><dt>Best for</dt><dd>Newcomers to home energy work</dd><dt>Leads to</dt><dd>BA-T and BA-P, the rest of the Building Analyst credential</dd></dl>
+        <div class="course-alt">También en español: <a href="https://www.heatspring.com/courses/bpi-building-science-principles-bsp-certificate-prep-en-espanol-spanish?aff_id=-dmbra" target="_blank" rel="sponsored noopener">BPI Building Science Principles — en Español</a></div>
+        <div class="course-alt">Already have BSP? Continue with <a href="https://www.heatspring.com/courses/bpi-building-analyst-technician-ba-t-certification-training?aff_id=-dmbra" target="_blank" rel="sponsored noopener">BA-T ($1,075)</a> and <a href="https://www.heatspring.com/courses/bpi-building-analyst-professional-ba-p-certification-training?aff_id=-dmbra" target="_blank" rel="sponsored noopener">BA-P ($1,150)</a>.</div>
+        <div class="course-foot"><span class="course-price">$600</span><a class="course-btn" href="https://www.heatspring.com/courses/bpi-building-science-principles-bsp-certificate-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
+      </div>
+      </details>
+    </div></div>
+    <div class="path-step"><div class="path-rail"><div class="path-dot">2</div><div class="path-line"></div></div><div class="path-body">
+      <div class="path-title">Specialize — pick your track</div>
+      <div class="path-sub">Add-on credentials for inspectors, testers and heat pump retrofits</div>
+      <div class="tracks two">
+        <div class="course">
+          <div class="course-head"><span class="track-label" style="color:var(--blu);">Weatherization QC</span><span class="course-meta">6 hours</span></div>
+          <a class="course-name" href="https://www.heatspring.com/courses/bpi-home-energy-professional-hep-quality-control-inspector-qci-certification?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>BPI Home Energy Professional Quality Control Inspector (QCI)</a>
+          <dl class="course-dl"><dt>You'll learn</dt><dd>In-process and final quality inspections of home energy upgrades</dd><dt>Best for</dt><dd>Inspectors on weatherization and retrofit programs</dd></dl>
+          <div class="course-foot"><span class="course-price">$1,150</span><a class="course-btn" href="https://www.heatspring.com/courses/bpi-home-energy-professional-hep-quality-control-inspector-qci-certification?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
+        </div>
+        <div class="course">
+          <div class="course-head"><span class="track-label" style="color:var(--blu);">Healthy homes</span><span class="course-meta"><span class="course-rating">★ 4.6</span> (13 reviews) · 6–8 hours · CEUs</span></div>
+          <a class="course-name" href="https://www.heatspring.com/courses/bpi-healthy-home-evaluator-hhe-certification-exam-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>BPI Healthy Home Evaluator (HHE) Exam Prep</a>
+          <dl class="course-dl"><dt>You'll learn</dt><dd>Assessing homes for health and safety hazards, building on your Building Analyst training</dd><dt>Best for</dt><dd>Auditors adding health assessments</dd></dl>
+          <div class="course-foot"><span class="course-price">$795</span><a class="course-btn" href="https://www.heatspring.com/courses/bpi-healthy-home-evaluator-hhe-certification-exam-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
+        </div>
+        <div class="course">
+          <div class="course-head"><span class="track-label" style="color:var(--blu);">Code testing</span><span class="course-meta"><span class="course-rating">★ 4.5</span> · 4 hours · CEUs</span></div>
+          <a class="course-name" href="https://www.heatspring.com/courses/bpi-infiltration-and-duct-leakage-idl-certification-training?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>BPI Infiltration and Duct Leakage (IDL) Certification</a>
+          <dl class="course-dl"><dt>You'll learn</dt><dd>Blower door and duct leakage testing that many state building codes require from a certified third party</dd><dt>Best for</dt><dd>Third-party testers</dd></dl>
+          <div class="course-foot"><span class="course-price">$850</span><a class="course-btn" href="https://www.heatspring.com/courses/bpi-infiltration-and-duct-leakage-idl-certification-training?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
+        </div>
+        <div class="course">
+          <div class="course-head"><span class="track-label" style="color:var(--blu);">Heat pumps</span><span class="course-meta"><span class="course-rating">★ 4.5</span> · 4–6 hours</span></div>
+          <a class="course-name" href="https://www.heatspring.com/courses/bpi-cold-climate-heat-pump-ccashp-assessor-certificate-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>BPI Cold Climate Heat Pump (ccASHP) Assessor Certificate Prep</a>
+          <dl class="course-dl"><dt>You'll learn</dt><dd>Judging whether a home suits a cold-climate air-source heat pump retrofit</dd><dt>Best for</dt><dd>Auditors and HVAC pros in cold climates</dd></dl>
+          <div class="course-foot"><span class="course-price">$395</span><a class="course-btn" href="https://www.heatspring.com/courses/bpi-cold-climate-heat-pump-ccashp-assessor-certificate-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener">Enroll on HeatSpring →</a></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="path-step"><div class="path-rail"><div class="path-dot done"><i class="ti ti-check"></i></div></div><div class="path-body">
+      <div class="path-title">Building performance roles — energy auditor, weatherization crew lead, QC inspector</div>
+      <div class="path-sub">Weatherization and utility efficiency programs look for these credentials</div>
+    </div></div>
   </div>
 </div>
 
