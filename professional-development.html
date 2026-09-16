@@ -72,7 +72,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .signin-menu .si-label.grn{color:var(--grn);}
 .signin-menu .si-label.amb{color:var(--amb);}
 /* Hero */
-.hero{padding:4rem 2rem 2.5rem;text-align:center;border-bottom:0.5px solid var(--bdr);}
+.hero{padding:2.25rem 2rem 1.75rem;text-align:center;border-bottom:0.5px solid var(--bdr);}
 .hero h1{font-size:44px;font-weight:700;line-height:1.2;max-width:620px;margin:0 auto .9rem;letter-spacing:-0.02em;}
 .hero h1 span{color:var(--grn);}
 .hero p{font-size:15px;color:var(--t2);max-width:520px;margin:0 auto;line-height:1.65;}
@@ -173,7 +173,8 @@ footer a:hover{color:var(--grn);}
 a.path-chip.jobs{background:rgba(34,224,154,0.1);border-color:rgba(34,224,154,0.3);color:var(--grn);text-decoration:none;}
 /*heatspring-css*/
 .path-body{flex:1;min-width:0;}
-.path-band{max-width:1040px;margin:0 auto;padding:2.25rem 2rem 1.75rem;border-bottom:0.5px solid var(--bdr);}
+.path-band{max-width:1040px;margin:0 auto;padding:1.5rem 2rem 1.75rem;border-bottom:0.5px solid var(--bdr);}
+.path-band .jump-nav{padding:0;margin:14px 0 0;border-bottom:none;max-width:none;}
 .pb-grid{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);grid-template-rows:auto auto auto;margin-top:1.25rem;}
 .pb-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.1rem 1.25rem;}
 .pb-card.saf{grid-column:1;grid-row:1 / 4;align-self:center;border-color:rgba(255,112,85,0.35);}
@@ -336,6 +337,17 @@ document.addEventListener('click', function(){
 <div class="path-band">
   <div class="pd-section-title">Your path into clean energy</div>
   <div class="pd-section-sub" style="margin-bottom:0;">Every path starts on a safe jobsite. From there, choose solar, battery storage, or both.</div>
+  <div class="jump-nav">
+    <a href="#sector-solar">Solar</a>
+    <a href="#sector-storage" class="amb">Battery Storage</a>
+    <a href="#sector-wind" class="blu">Wind</a>
+    <a href="#sector-grid" class="pur">Grid</a>
+    <a href="#sector-ev" class="cor">EV</a>
+    <a href="#sector-sustainability">Sustainability</a>
+    <a href="#sector-buildings" class="blu">Building Performance</a>
+    <a href="#sector-policy" class="cor">Policy</a>
+    <a href="#jobsite-safety">Jobsite Safety</a>
+  </div>
   <div class="pb-grid">
     <div class="pb-card saf">
       <div class="pb-eyebrow" style="color:var(--cor);"><i class="ti ti-alert-triangle"></i>Start here</div>
@@ -365,18 +377,6 @@ document.addEventListener('click', function(){
     </div>
   </div>
   <div class="disclosure-line">Verde Talent is a HeatSpring partner. We may earn a commission when you enroll through links on this page. It's how we keep Verde Talent free for job seekers, and your price is the same. Prices as of September 2026.</div>
-</div>
-
-<div class="jump-nav">
-  <a href="#sector-solar">Solar</a>
-  <a href="#sector-storage" class="amb">Battery Storage</a>
-  <a href="#sector-wind" class="blu">Wind</a>
-  <a href="#sector-grid" class="pur">Grid</a>
-  <a href="#sector-ev" class="cor">EV</a>
-  <a href="#sector-sustainability">Sustainability</a>
-  <a href="#sector-buildings" class="blu">Building Performance</a>
-  <a href="#sector-policy" class="cor">Policy</a>
-  <a href="#jobsite-safety">Jobsite Safety</a>
 </div>
 
 <div class="pd-section" id="sector-solar">
