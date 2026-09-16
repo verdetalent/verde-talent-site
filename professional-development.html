@@ -231,14 +231,13 @@ a.path-chip.jobs{background:rgba(34,224,154,0.1);border-color:rgba(34,224,154,0.
 .cross-chip.grn{border-color:rgba(34,224,154,0.4);color:var(--grn);}
 .course-head .prog-tag,.course-head .pb-badge{font-size:11px;font-weight:500;padding:1px 7px;}
 .prog-tag.safety{color:var(--cor);background:rgba(255,112,85,0.12);border:0.5px solid rgba(255,112,85,0.3);}
-.pair-label.entry{color:var(--blu);}
-.entry-opt summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;}
+.entry-opt{margin-top:14px;}
+.entry-opt summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:10px;font-size:12.5px;font-weight:500;color:var(--blu);background:rgba(79,179,255,0.08);border:0.5px solid rgba(79,179,255,0.35);border-radius:999px;padding:5px 6px 5px 14px;}
 .entry-opt summary::-webkit-details-marker{display:none;}
-.entry-opt summary:hover{text-decoration:underline;}
-.entry-opt summary:focus-visible{outline:2px solid var(--blu);outline-offset:2px;border-radius:4px;}
-.entry-opt summary i{display:inline-block;font-size:13px;transition:transform .15s;}
-.entry-opt[open] summary i{transform:rotate(180deg);}
-@media (prefers-reduced-motion: reduce){.entry-opt summary i{transition:none;}}
+.entry-opt summary::after{content:"+";display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(79,179,255,0.18);font-size:15px;font-weight:600;line-height:1;}
+.entry-opt[open] summary::after{content:"−";}
+.entry-opt summary:hover{background:rgba(79,179,255,0.15);border-color:rgba(79,179,255,0.6);}
+.entry-opt summary:focus-visible{outline:2px solid var(--blu);outline-offset:2px;}
 .pair-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cor);margin:14px 0 0;}
 .course.compact{border-color:rgba(255,112,85,0.45);}
 .cc-line{font-size:12px;color:var(--t2);line-height:1.5;}
@@ -602,7 +601,7 @@ document.addEventListener('click', function(){
         </div>
       </div>
       <details class="entry-opt">
-        <summary class="pair-label entry">Not ready to commit? Start with BSP only <i class="ti ti-chevron-down" aria-hidden="true"></i></summary>
+        <summary>Not ready to commit? Start with BSP only</summary>
       <div class="course">
         <div class="course-head"><span class="course-meta"><span class="course-rating">★ 4.6</span> (28 reviews) · 8 hours · CEUs</span></div>
         <a class="course-name" href="https://www.heatspring.com/courses/bpi-building-science-principles-bsp-certificate-prep?aff_id=-dmbra" target="_blank" rel="sponsored noopener"><i class="ti ti-school" aria-hidden="true"></i>BPI Building Science Principles (BSP) Certificate Prep</a>
