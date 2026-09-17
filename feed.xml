@@ -5,339 +5,366 @@
   <link>https://verdetalent.com/news.html</link>
   <description>Renewable energy news and jobs, curated by Verde Talent.</description>
   <language>en-us</language>
-  <lastBuildDate>Wed, 16 Sep 2026 21:05:35 GMT</lastBuildDate>
+  <lastBuildDate>Thu, 17 Sep 2026 14:07:21 GMT</lastBuildDate>
   <item>
-    <title>ISO-NE offshore wind sets new production record</title>
-    <link>https://www.rtoinsider.com/142325-iso-ne-offshore-wind-breaks-production-record-in-late-august/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.rtoinsider.com/142325-iso-ne-offshore-wind-breaks-production-record-in-late-august/</guid>
-    <pubDate>Sun, 13 Sep 2026 00:00:00 GMT</pubDate>
-    <category>Wind</category>
-    <domestic>true</domestic>
-    <description>RTO Insider — New England&#39;s offshore wind fleet sent a record 930MW to the grid in late August.</description>
-  </item>
-  <item>
-    <title>Microsoft backs $180M Washington solar project</title>
-    <link>https://www.esgtoday.com/cypress-creek-reveals-microsoft-as-long-term-offtaker-for-new-180-million-washington-solar-project/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.esgtoday.com/cypress-creek-reveals-microsoft-as-long-term-offtaker-for-new-180-million-washington-solar-project/</guid>
-    <pubDate>Sat, 12 Sep 2026 00:00:00 GMT</pubDate>
-    <category>Solar</category>
-    <domestic>true</domestic>
-    <description>ESG Today — Cypress Creek&#39;s new solar project secures Microsoft as long-term power buyer.</description>
-  </item>
-  <item>
-    <title>Utilities eye small modular reactors for data center demand</title>
-    <link>https://www.utilitydive.com/news/utilities-eye-small-modular-nuclear-reactors-for-reliability-as-hyperscaler/829681/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.utilitydive.com/news/utilities-eye-small-modular-nuclear-reactors-for-reliability-as-hyperscaler/829681/</guid>
-    <pubDate>Fri, 11 Sep 2026 00:00:00 GMT</pubDate>
-    <category>Grid</category>
-    <domestic>true</domestic>
-    <description>Utility Dive — Hyperscalers are driving early interest in SMRs as a reliable power source.</description>
-  </item>
-  <item>
-    <title>Google, Tesla, Sunrun, PG&amp;E launch CA virtual power plant</title>
-    <link>https://www.energy-storage.news/google-tesla-sunrun-and-pge-partner-on-new-california-virtual-power-plant-programme/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.energy-storage.news/google-tesla-sunrun-and-pge-partner-on-new-california-virtual-power-plant-programme/</guid>
-    <pubDate>Thu, 10 Sep 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>true</domestic>
-    <description>Energy Storage News — A new VPP program turns home batteries into a coordinated grid resource in California.</description>
-  </item>
-  <item>
-    <title>Energy jobs report finds high wages, labor shortage</title>
-    <link>https://www.rtoinsider.com/142486-strong-growth-prospects-wages-seen-us-energy-economy/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.rtoinsider.com/142486-strong-growth-prospects-wages-seen-us-energy-economy/</guid>
-    <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
-    <category>Jobs &amp; Hiring</category>
-    <domestic>true</domestic>
-    <description>RTO Insider — 2026 report finds the clean energy workforce well-paid but facing acute labor shortages.</description>
-  </item>
-  <item>
-    <title>NJ BPU Storage Proposal</title>
-    <link>https://www.energy-storage.news/new-jersey-board-of-public-utilities-releases-150mw-btm-energy-storage-proposal/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.energy-storage.news/new-jersey-board-of-public-utilities-releases-150mw-btm-energy-storage-proposal/</guid>
-    <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>true</domestic>
-    <description>Energy-Storage.News — New Jersey&#39;s BPU proposed 150MW of behind-the-meter battery incentives, part of a push toward 2,000MW of storage by 2030.</description>
-  </item>
-  <item>
-    <title>Virginia Agrivoltaics Law</title>
-    <link>https://www.canarymedia.com/articles/food-and-farms/virginia-solar-with-farming?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.canarymedia.com/articles/food-and-farms/virginia-solar-with-farming</guid>
-    <pubDate>Mon, 31 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Solar</category>
-    <domestic>true</domestic>
-    <description>Canary Media — Virginia became the fourth state to legally define agrivoltaics, opening the door for solar and farming to share the same land.</description>
-  </item>
-  <item>
-    <title>FERC VPP Ruling in PJM</title>
-    <link>https://www.canarymedia.com/articles/virtual-power-plants/federal-ruling-virtual-power-plants-pjm?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.canarymedia.com/articles/virtual-power-plants/federal-ruling-virtual-power-plants-pjm</guid>
-    <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Grid</category>
-    <domestic>true</domestic>
-    <description>Canary Media — FERC ordered PJM to accept statistical sampling for virtual power plants, unlocking up to 4.9 GW of demand-response capacity across 13 states.</description>
-  </item>
-  <item>
-    <title>Swift Current + Avantus Financing</title>
-    <link>https://www.energy-storage.news/us-ipps-swift-current-avantus-raise-us1-billion-for-clean-energy-projects/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.energy-storage.news/us-ipps-swift-current-avantus-raise-us1-billion-for-clean-energy-projects/</guid>
-    <pubDate>Sat, 29 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>true</domestic>
-    <description>Energy-Storage.News — Swift Current Energy and Avantus raised more than $1 billion combined to build out solar and storage projects across the US.</description>
-  </item>
-  <item>
-    <title>Base Power $1B Raise</title>
-    <link>https://www.canarymedia.com/articles/batteries/base-power-raises-1b-to-get-big-batteries-into-more-homes?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.canarymedia.com/articles/batteries/base-power-raises-1b-to-get-big-batteries-into-more-homes</guid>
-    <pubDate>Fri, 28 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>true</domestic>
-    <description>Canary Media — Base Power raised $1 billion, valuing the home-battery startup at $13 billion as it scales past 17,000 installations.</description>
-  </item>
-  <item>
-    <title>CIP $3B Growth Markets Fund</title>
-    <link>https://www.esgtoday.com/cip-raises-3-billion-for-growth-markets-focused-clean-energy-infrastructure-fund/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.esgtoday.com/cip-raises-3-billion-for-growth-markets-focused-clean-energy-infrastructure-fund/</guid>
-    <pubDate>Thu, 27 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Sustainability</category>
-    <domestic>true</domestic>
-    <description>ESG Today — Copenhagen Infrastructure Partners closed its Growth Markets Fund II at $3 billion, triple its predecessor, to fund clean energy across 15 emerging markets.</description>
-  </item>
-  <item>
-    <title>Form Energy $750M Storage Raise</title>
-    <link>https://www.esgtoday.com/form-energy-raises-750-million-for-multi-day-energy-storage-solution/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.esgtoday.com/form-energy-raises-750-million-for-multi-day-energy-storage-solution/</guid>
-    <pubDate>Wed, 26 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>true</domestic>
-    <description>ESG Today — Form Energy closed a $750M Series G to scale its 100-hour iron-air battery technology for multi-day grid storage.</description>
-  </item>
-  <item>
-    <title>Every 2027 GM EV gets Tesla Supercharger access</title>
-    <link>https://electrek.co/2026/08/14/every-2027-gm-ev-will-plug-directly-into-tesla-superchargers/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://electrek.co/2026/08/14/every-2027-gm-ev-will-plug-directly-into-tesla-superchargers/</guid>
-    <pubDate>Tue, 25 Aug 2026 00:00:00 GMT</pubDate>
+    <title>BYD is ‘leading’ the solid-state battery race, and its first EV with the new tech is almost here</title>
+    <link>https://electrek.co/2026/09/14/byd-leading-solid-state-battery-race-first-ev-2027/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/09/14/byd-leading-solid-state-battery-race-first-ev-2027/</guid>
+    <pubDate>Mon, 14 Sep 2026 16:27:55 GMT</pubDate>
     <category>EV</category>
     <domestic>true</domestic>
-    <description>Electrek — GM says every 2027 model-year EV will have NACS DC fast-charging ports built in, giving access to Tesla Superchargers.</description>
+    <description>Electrek — BYD is in “the leading position,” according to executive vice president Stella Li, with plans to introduce its first EV equipped with solid-state batteries in 2027. more…</description>
   </item>
   <item>
-    <title>Power now up to 40% of WSP&#39;s revenue</title>
-    <link>https://www.utilitydive.com/news/wsp-power-generation-nuclear-data-centers-construction-us/827577/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.utilitydive.com/news/wsp-power-generation-nuclear-data-centers-construction-us/827577/</guid>
-    <pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Grid</category>
-    <domestic>true</domestic>
-    <description>Utility Dive — Engineering firm WSP says power now accounts for up to 40% of its revenue amid surging US power infrastructure construction.</description>
-  </item>
-  <item>
-    <title>NJ approves first batch of dual-use solar projects</title>
-    <link>https://www.rtoinsider.com/139292-nj-approves-first-batch-dual-solar-projects/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.rtoinsider.com/139292-nj-approves-first-batch-dual-solar-projects/</guid>
-    <pubDate>Sun, 23 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Solar</category>
-    <domestic>true</domestic>
-    <description>RTO Insider — New Jersey approved its first batch of dual-use solar projects, 16 projects totaling 52 MW.</description>
-  </item>
-  <item>
-    <title>Ohio&#39;s largest solar project nears final decision</title>
-    <link>https://www.canarymedia.com/articles/solar/after-a-2-year-wait-will-ohios-largest-solar-project-get-the-ok?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.canarymedia.com/articles/solar/after-a-2-year-wait-will-ohios-largest-solar-project-get-the-ok</guid>
-    <pubDate>Sat, 22 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Solar</category>
-    <domestic>true</domestic>
-    <description>Canary Media — The Ohio Power Siting Board is nearing a final decision on the Oak Run Solar Project, the state&#39;s largest solar and storage project.</description>
-  </item>
-  <item>
-    <title>Samsung takes full ownership of $3.5B Indiana battery plant</title>
-    <link>https://www.esgtoday.com/samsung-acquires-gms-stake-in-3-5-billion-battery-joint-venture/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.esgtoday.com/samsung-acquires-gms-stake-in-3-5-billion-battery-joint-venture/</guid>
-    <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>false</domestic>
-    <description>ESG Today — Samsung SDI is acquiring GM&#39;s stake in their $3.5B Indiana battery joint venture, pivoting the plant to energy storage systems.</description>
-  </item>
-  <item>
-    <title>UNIGRID + Syntropic US sodium-ion manufacturing</title>
-    <link>https://www.solarpowerworldonline.com/2026/08/unigrid-syntropic-power-are-planning-us-sodium-ion-battery-manufacturing/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.solarpowerworldonline.com/2026/08/unigrid-syntropic-power-are-planning-us-sodium-ion-battery-manufacturing/</guid>
-    <pubDate>Thu, 20 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>true</domestic>
-    <description>Solar Power World — UNIGRID and Syntropic Power are partnering to bring sodium-ion battery manufacturing to the U.S., targeting 1 GWh deployed by 2027.</description>
-  </item>
-  <item>
-    <title>Oncor weighs Texas data center freeze impact</title>
-    <link>https://www.utilitydive.com/news/fate-of-oncors-nearly-300-gw-load-pipeline-unclear-following-texas-data-ce/827303/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.utilitydive.com/news/fate-of-oncors-nearly-300-gw-load-pipeline-unclear-following-texas-data-ce/827303/</guid>
-    <pubDate>Wed, 19 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Grid</category>
-    <domestic>true</domestic>
-    <description>Utility Dive — Oncor is weighing the impact of Texas&#39;s data center interconnection freeze on its nearly 300-GW load pipeline.</description>
-  </item>
-  <item>
-    <title>DOE closes $489M grid loan for Puerto Rico</title>
-    <link>https://www.energy-storage.news/us-doe-closes-us489-million-loan-with-pattern-energy-to-support-bess-natural-gas-in-puerto-rico/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.energy-storage.news/us-doe-closes-us489-million-loan-with-pattern-energy-to-support-bess-natural-gas-in-puerto-rico/</guid>
-    <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>false</domestic>
-    <description>Energy Storage News — The U.S. DOE closed a $489.4 million loan to Pattern Energy&#39;s Amanecer Puerto Rico to support battery storage and grid strength.</description>
-  </item>
-  <item>
-    <title>NC rooftop solar holds steady post-tax-credit</title>
-    <link>https://www.canarymedia.com/articles/solar/north-carolina-rooftop-solar?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.canarymedia.com/articles/solar/north-carolina-rooftop-solar</guid>
-    <pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Solar</category>
-    <domestic>true</domestic>
-    <description>Canary Media — Rooftop solar in North Carolina is holding up despite the loss of the 30% federal tax credit.</description>
-  </item>
-  <item>
-    <title>Google&#39;s 15-year U.S. solar PPA with RWE</title>
-    <link>https://www.esgtoday.com/google-purchases-entire-output-from-rwe-u-s-solar-project/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.esgtoday.com/google-purchases-entire-output-from-rwe-u-s-solar-project/</guid>
-    <pubDate>Sun, 16 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Solar</category>
-    <domestic>true</domestic>
-    <description>ESG Today — Google signed a 15-year power purchase agreement for the entire output of a new RWE-operated U.S. solar project.</description>
-  </item>
-  <item>
-    <title>Constellation locks in new nuclear power buyers</title>
-    <link>https://www.rtoinsider.com/138524-constellation-secures-more-buyers-nuclear-power/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.rtoinsider.com/138524-constellation-secures-more-buyers-nuclear-power/</guid>
-    <pubDate>Fri, 14 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Grid</category>
-    <domestic>true</domestic>
-    <description>RTO Insider — Constellation Energy reported strong Q2 financials, including nearly a gigawatt of new long-term purchase agreements for power from its nuclear reactors.</description>
-  </item>
-  <item>
-    <title>California tops 21 GW of energy storage</title>
-    <link>https://www.solarpowerworldonline.com/2026/08/california-surpasses-21-gw-of-energy-storage-connected-to-grid/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.solarpowerworldonline.com/2026/08/california-surpasses-21-gw-of-energy-storage-connected-to-grid/</guid>
-    <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>true</domestic>
-    <description>Solar Power World — California has installed more than 21 GW of energy storage across the state, one of the largest battery fleets in the world.</description>
-  </item>
-  <item>
-    <title>Samsung SDI&#39;s US battery production ramp</title>
-    <link>https://www.energy-storage.news/samsung-sdi-on-track-with-us-lfp-cell-production-expects-demand-to-outstrip-production/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.energy-storage.news/samsung-sdi-on-track-with-us-lfp-cell-production-expects-demand-to-outstrip-production/</guid>
-    <pubDate>Wed, 12 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>true</domestic>
-    <description>Energy Storage News — Samsung SDI is on track to begin US LFP battery cell production in Q3, and already expects demand to outstrip production.</description>
-  </item>
-  <item>
-    <title>Kazakhstan solar capacity tops 1.37 GW</title>
-    <link>https://www.pv-magazine.com/2026/08/03/kazakhstans-solar-capacity-surpasses-1-37-gw/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.pv-magazine.com/2026/08/03/kazakhstans-solar-capacity-surpasses-1-37-gw/</guid>
-    <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Solar</category>
-    <domestic>false</domestic>
-    <description>PV Magazine — Kazakhstan&#39;s installed solar capacity has surpassed 1.37 GW, part of a broader renewables push across Central Asia.</description>
-  </item>
-  <item>
-    <title>Africa&#39;s first battery plant opens in Morocco</title>
-    <link>https://www.pv-magazine.com/2026/08/03/morocco-hosts-africas-first-battery-manufacturing-plant/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.pv-magazine.com/2026/08/03/morocco-hosts-africas-first-battery-manufacturing-plant/</guid>
-    <pubDate>Mon, 10 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>false</domestic>
-    <description>PV Magazine — Morocco is now home to Africa&#39;s first battery manufacturing plant — a 10 GWh LFP cell factory from Gotion High-Tech.</description>
-  </item>
-  <item>
-    <title>France&#39;s first 24/7 renewable supply deal</title>
-    <link>https://www.pv-magazine.com/2026/08/03/engie-legrand-sign-frances-first-24-7-renewable-energy-supply-deal/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.pv-magazine.com/2026/08/03/engie-legrand-sign-frances-first-24-7-renewable-energy-supply-deal/</guid>
-    <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
-    <category>Solar</category>
-    <domestic>false</domestic>
-    <description>PV Magazine — Engie and Legrand signed France&#39;s first 24/7 renewable energy supply deal, matching production to hourly demand from 2029 to 2031.</description>
-  </item>
-  <item>
-    <title>TotalEnergies acquires Shell&#39;s onshore renewables business</title>
-    <link>https://www.esgtoday.com/totalenergies-acquires-shells-european-onshore-renewables-business/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.esgtoday.com/totalenergies-acquires-shells-european-onshore-renewables-business/</guid>
-    <pubDate>Sat, 08 Aug 2026 00:00:00 GMT</pubDate>
+    <title>Oracle to Launch Public Dashboard with Emissions, Water Use Data for New Hyperscale Data Center</title>
+    <link>https://www.esgtoday.com/oracle-to-launch-public-dashboard-with-emissions-water-use-data-for-new-hyperscale-data-center/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=oracle-to-launch-public-dashboard-with-emissions-water-use-data-for-new-hyperscale-data-center&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/oracle-to-launch-public-dashboard-with-emissions-water-use-data-for-new-hyperscale-data-center/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=oracle-to-launch-public-dashboard-with-emissions-water-use-data-for-new-hyperscale-data-center</guid>
+    <pubDate>Mon, 14 Sep 2026 16:07:45 GMT</pubDate>
     <category>Sustainability</category>
     <domestic>true</domestic>
-    <description>ESG Today — TotalEnergies announced the acquisition of Shell&#39;s European onshore renewables business, one of two clean energy deals this week.</description>
+    <description>ESG Today — Cloud-focused infrastructure and software provider Oracle announced plans to launch a public dashboard for Project […]</description>
   </item>
   <item>
-    <title>Solar rising at a Texas coal site</title>
-    <link>https://electrek.co/2026/07/24/a-1-2-gw-solar-farm-is-rising-at-a-texas-coal-site-but-coal-is-staying/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://electrek.co/2026/07/24/a-1-2-gw-solar-farm-is-rising-at-a-texas-coal-site-but-coal-is-staying/</guid>
-    <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
+    <title>Gavin Newsom’s complicated legacy on climate and clean energy</title>
+    <link>https://www.canarymedia.com/articles/clean-energy/gavin-newsom-complicated-clean-energy-legacy?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/clean-energy/gavin-newsom-complicated-clean-energy-legacy</guid>
+    <pubDate>Mon, 14 Sep 2026 16:00:00 GMT</pubDate>
+    <category>Sustainability</category>
+    <domestic>true</domestic>
+    <description>Canary Media — Gavin Newsom’s eight-year run as California’s Democratic governor — and as self-styled U.S. climate change warrior — comes to an end in January. At this pivotal moment for the state’s clean energy transition, it’s worth reflecting on how he’s lived up to his clean energy commitments and what kind of climate legacy he…</description>
+  </item>
+  <item>
+    <title>Blackstone-TXNM deal faces fresh questions from New Mexico DOJ</title>
+    <link>https://www.utilitydive.com/news/blackstone-txnm-deal-faces-fresh-questions-from-new-mexico-doj/830292/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.utilitydive.com/news/blackstone-txnm-deal-faces-fresh-questions-from-new-mexico-doj/830292/</guid>
+    <pubDate>Mon, 14 Sep 2026 15:28:42 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>false</domestic>
+    <description>Utility Dive — TXNM unwound a Blackstone stock sale ruled illegal, but the state Department of Justice is seeking more information related to potential indirect costs to PNM ratepayers.</description>
+  </item>
+  <item>
+    <title>EPA poised to scrap power plant carbon standards</title>
+    <link>https://www.utilitydive.com/news/epa-poised-to-scrap-power-plant-carbon-standards/830301/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.utilitydive.com/news/epa-poised-to-scrap-power-plant-carbon-standards/830301/</guid>
+    <pubDate>Mon, 14 Sep 2026 15:26:12 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>Utility Dive — Eliminating federal limits on power-sector emissions could undermine local climate goals and increase risks to infrastructure and public health, city and environmental leaders warn.</description>
+  </item>
+  <item>
+    <title>Anker SOLIX XE: Energy freedom made simple</title>
+    <link>https://www.energy-storage.news/anker-solix-xe-energy-freedom-made-simple/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.energy-storage.news/anker-solix-xe-energy-freedom-made-simple/</guid>
+    <pubDate>Mon, 14 Sep 2026 15:18:50 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>Energy Storage News — Anker SOLIX, a global leader in smart energy, introduces the XE system, the next-generation true all-in-one home energy storage system.</description>
+  </item>
+  <item>
+    <title>Canadian province launches second renewable procurement round</title>
+    <link>https://www.pv-magazine.com/2026/09/14/canadian-province-launches-second-green-choice-renewable-procurement-round/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.pv-magazine.com/2026/09/14/canadian-province-launches-second-green-choice-renewable-procurement-round/</guid>
+    <pubDate>Mon, 14 Sep 2026 14:30:00 GMT</pubDate>
     <category>Solar</category>
     <domestic>true</domestic>
-    <description>Electrek — One of North America&#39;s biggest coal-site solar projects is now under construction in Texas, even as the coal plant next door stays open.</description>
+    <description>PV Magazine — Nova Scotia is seeking 350 MW of new renewable capacity, in a program that has so far been dominated by wind, to expand a scheme that lets large industrial and institutional customers buy clean power directly from the provincial grid.</description>
   </item>
   <item>
-    <title>CATL&#39;s storage revenue milestone</title>
-    <link>https://www.energy-storage.news/energy-storage-generates-nearly-20-of-catls-revenues-in-first-half-of-2026/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.energy-storage.news/energy-storage-generates-nearly-20-of-catls-revenues-in-first-half-of-2026/</guid>
-    <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+    <title>Sungrow raises inverter, storage prices by up to 15%</title>
+    <link>https://www.pv-magazine.com/2026/09/14/sungrow-raises-inverter-storage-prices-by-up-to-15/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.pv-magazine.com/2026/09/14/sungrow-raises-inverter-storage-prices-by-up-to-15/</guid>
+    <pubDate>Mon, 14 Sep 2026 14:26:53 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>false</domestic>
+    <description>PV Magazine — Sungrow will raise prices for solar inverters and energy storage products by 5% to 15% from Sept. 20, citing rising raw material and component costs. The move, its second price increase this year, reflects broader cost pressures across China’s inverter and storage supply chains.</description>
+  </item>
+  <item>
+    <title>Constellation Energy in deal to buy 609-MW Rhode Island gas plant from Shell</title>
+    <link>https://www.utilitydive.com/news/constellation-energy-purchase-609-mw-rhode-island-gas-plant-shell/830270/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.utilitydive.com/news/constellation-energy-purchase-609-mw-rhode-island-gas-plant-shell/830270/</guid>
+    <pubDate>Mon, 14 Sep 2026 14:16:37 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>Utility Dive — The deal expands Constellation’s ISO New England portfolio. In a separate transaction, Shell acquired a 169-MW Pennsylvania gas portfolio to grow its PJM Interconnection position.</description>
+  </item>
+  <item>
+    <title>Santander Surpasses 85% of 2030 Green Finance Goal</title>
+    <link>https://www.esgtoday.com/santander-passes-85-towards-2030-green-finance-goal/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=santander-passes-85-towards-2030-green-finance-goal&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/santander-passes-85-towards-2030-green-finance-goal/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=santander-passes-85-towards-2030-green-finance-goal</guid>
+    <pubDate>Mon, 14 Sep 2026 14:15:37 GMT</pubDate>
+    <category>Sustainability</category>
+    <domestic>true</domestic>
+    <description>ESG Today — Spanish multinational financial services company Santander Group revealed that it mobilized €14 billion in green […]</description>
+  </item>
+  <item>
+    <title>US energy storage companies secure financing and launch compliance services amid regulatory shifts</title>
+    <link>https://www.energy-storage.news/us-energy-storage-companies-secure-financing-and-launch-compliance-services-amid-regulatory-shifts/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.energy-storage.news/us-energy-storage-companies-secure-financing-and-launch-compliance-services-amid-regulatory-shifts/</guid>
+    <pubDate>Mon, 14 Sep 2026 13:34:20 GMT</pubDate>
     <category>Storage</category>
     <domestic>true</domestic>
-    <description>Energy Storage News — CATL&#39;s energy storage division made up 19.23% of the battery giant&#39;s total revenue in the first half of 2026.</description>
+    <description>Energy Storage News — Heron Power and NeoVolta have secured significant credit facilities, while Carina Energy has launched a FEOC compliance support practice to help developers navigate increasingly complex regulatory requirements.</description>
   </item>
   <item>
-    <title>Ark Energy&#39;s AU$1.3B storage buildout</title>
-    <link>https://www.energy-storage.news/ark-energy-locks-in-au1-3-billion-for-2-2gwh-solar-plus-storage-site-in-new-south-wales-australia/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.energy-storage.news/ark-energy-locks-in-au1-3-billion-for-2-2gwh-solar-plus-storage-site-in-new-south-wales-australia/</guid>
-    <pubDate>Thu, 30 Jul 2026 00:00:00 GMT</pubDate>
+    <title>Competitive TCO, detailed specs and strong local presence key for BESS supplier success in Germany, RWE says</title>
+    <link>https://www.energy-storage.news/germany-capacity-market-contracts-bankable-base-layer-alongside-merchant-revenues-rwe/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.energy-storage.news/germany-capacity-market-contracts-bankable-base-layer-alongside-merchant-revenues-rwe/</guid>
+    <pubDate>Mon, 14 Sep 2026 13:26:21 GMT</pubDate>
     <category>Storage</category>
     <domestic>false</domestic>
-    <description>Energy Storage News — Ark Energy locks in AU$1.3 billion to build a 2.2GWh solar-plus-storage site in New South Wales, Australia.</description>
+    <description>Energy Storage News — We hear from the BESS lead at RWE Renewables Europe &amp; Australia ahead of the Energy Storage Summit Germany 2026, discussing the major trends, challenges and opportunities in the country’s grid-scale storage market.</description>
   </item>
   <item>
-    <title>📰 Spain Funds €165M Pumped Storage</title>
-    <link>https://www.pv-magazine.com/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.pv-magazine.com/</guid>
-    <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
-    <category>Storage</category>
-    <domestic>false</domestic>
-    <description>PV Magazine — Spain funded 2 GW of pumped storage — more capacity means more construction and O&amp;M jobs.</description>
+    <title>Kanadevia Inova Acquires Dutch Clean Fuels Platform BioValue</title>
+    <link>https://www.esgtoday.com/kanadevia-inova-acquires-dutch-clean-fuels-platform-biovalue/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=kanadevia-inova-acquires-dutch-clean-fuels-platform-biovalue&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/kanadevia-inova-acquires-dutch-clean-fuels-platform-biovalue/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=kanadevia-inova-acquires-dutch-clean-fuels-platform-biovalue</guid>
+    <pubDate>Mon, 14 Sep 2026 12:47:52 GMT</pubDate>
+    <category>Sustainability</category>
+    <domestic>true</domestic>
+    <description>ESG Today — Swiss energy transition and circular economy solutions provider Kanadevia Inova announced today that it has […]</description>
   </item>
   <item>
-    <title>📰 States Sue Over Wind Power Freeze</title>
-    <link>https://www.rtoinsider.com/136932-19-states-seek-to-join-suit-against-federal-wind-power-freeze/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.rtoinsider.com/136932-19-states-seek-to-join-suit-against-federal-wind-power-freeze/</guid>
-    <pubDate>Tue, 28 Jul 2026 00:00:00 GMT</pubDate>
+    <title>EU to Enable Integration of Sustainability Criteria in €2.5 Trillion Public Procurement Market</title>
+    <link>https://www.esgtoday.com/eu-to-enable-integration-of-sustainability-criteria-in-e2-5-trillion-public-procurement-contracts/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=eu-to-enable-integration-of-sustainability-criteria-in-e2-5-trillion-public-procurement-contracts&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/eu-to-enable-integration-of-sustainability-criteria-in-e2-5-trillion-public-procurement-contracts/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=eu-to-enable-integration-of-sustainability-criteria-in-e2-5-trillion-public-procurement-contracts</guid>
+    <pubDate>Mon, 14 Sep 2026 11:44:42 GMT</pubDate>
     <category>Policy</category>
     <domestic>true</domestic>
-    <description>RTO Insider — States are suing over the federal wind power freeze, citing jobs, tax revenue, and public health.</description>
+    <description>ESG Today — The European Commission announced the release of a new proposed regulation aimed at creating simpler […]</description>
   </item>
   <item>
-    <title>📰 Offshore Wind Powers Through Heat Wave</title>
-    <link>https://www.canarymedia.com/articles/offshore-wind/offshore-wind-new-england-heat?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.canarymedia.com/articles/offshore-wind/offshore-wind-new-england-heat</guid>
-    <pubDate>Mon, 27 Jul 2026 00:00:00 GMT</pubDate>
+    <title>BlackRock’s Skyborn Renewables Secures Over $2.4 Billion for Major German Offshore Windfarm</title>
+    <link>https://www.esgtoday.com/blackrocks-skyborn-renewables-secures-over-2-4-billion-for-major-german-offshore-windfarm/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=blackrocks-skyborn-renewables-secures-over-2-4-billion-for-major-german-offshore-windfarm&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/blackrocks-skyborn-renewables-secures-over-2-4-billion-for-major-german-offshore-windfarm/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=blackrocks-skyborn-renewables-secures-over-2-4-billion-for-major-german-offshore-windfarm</guid>
+    <pubDate>Mon, 14 Sep 2026 10:07:27 GMT</pubDate>
     <category>Wind</category>
     <domestic>true</domestic>
-    <description>Canary Media — Offshore wind helped New England&#39;s grid survive a record heat wave after proving itself in winter storms.</description>
+    <description>ESG Today — BlackRock-backed Skyborn Renewables announced that it has reached financial close on the Gennaker offshore wind […]</description>
   </item>
   <item>
-    <title>📰 New Energy Career Pipelines Launch</title>
-    <link>https://www.renewableenergyworld.com/energy-business/new-coalitions-building-regional-energy-workforce-pipelines/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.renewableenergyworld.com/energy-business/new-coalitions-building-regional-energy-workforce-pipelines/</guid>
-    <pubDate>Fri, 24 Jul 2026 00:00:00 GMT</pubDate>
-    <category>Jobs &amp; Hiring</category>
+    <title>An Idaho county banned renewables. It’s having second thoughts.</title>
+    <link>https://www.canarymedia.com/articles/clean-energy/idaho-county-may-reverse-renewables-solar-ban?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/clean-energy/idaho-county-may-reverse-renewables-solar-ban</guid>
+    <pubDate>Mon, 14 Sep 2026 10:00:00 GMT</pubDate>
+    <category>Sustainability</category>
     <domestic>true</domestic>
-    <description>Renewable Energy World — New workforce coalitions are building direct pipelines from training into hired energy careers.</description>
+    <description>Canary Media — This article was copublished with The Daily Yonder , a newsroom covering rural America. POCATELLO, Idaho — Jeff Hough did not pull any punches. What his fellow Republican county commissioners were about to do, he said to the packed courthouse, would violate America’s founding ideals. He quoted the Declaration of…</description>
   </item>
   <item>
-    <title>📰 Solar Jobs Surpass 280,000</title>
-    <link>https://www.solarpowerworldonline.com/2026/07/bridging-the-workforce-gap-in-commercial-solar-through-integrated-training-models/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
-    <guid isPermaLink="false">https://www.solarpowerworldonline.com/2026/07/bridging-the-workforce-gap-in-commercial-solar-through-integrated-training-models/</guid>
-    <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
+    <title>Masdar, clean energy investor Luxcara form €5 billion partnership for Germany BESS and wind projects</title>
+    <link>https://www.energy-storage.news/masdar-luxcara-eur5-billion-partnership-germany-bess-wind-projects/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.energy-storage.news/masdar-luxcara-eur5-billion-partnership-germany-bess-wind-projects/</guid>
+    <pubDate>Mon, 14 Sep 2026 09:58:25 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>false</domestic>
+    <description>Energy Storage News — UAE state-owned renewables company Masdar has partnered with Germany’s Luxcara for battery storage and wind energy projects.</description>
+  </item>
+  <item>
+    <title>Turning utility customer affordability into action</title>
+    <link>https://www.utilitydive.com/spons/turning-utility-customer-affordability-into-action/829519/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.utilitydive.com/spons/turning-utility-customer-affordability-into-action/829519/</guid>
+    <pubDate>Mon, 14 Sep 2026 09:00:00 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>Utility Dive — The growing role of customer affordability in utility strategy, investment and long-term planning.</description>
+  </item>
+  <item>
+    <title>The hidden cost of utility customer vulnerability</title>
+    <link>https://www.utilitydive.com/spons/the-hidden-cost-of-utility-customer-vulnerability/829737/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.utilitydive.com/spons/the-hidden-cost-of-utility-customer-vulnerability/829737/</guid>
+    <pubDate>Mon, 14 Sep 2026 09:00:00 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>Utility Dive — Affordability struggles are spreading. Is your utility built to catch them in time?</description>
+  </item>
+  <item>
+    <title>Anker SOLIX launches XE, the next-generation all-in-one home energy storage</title>
+    <link>https://www.pv-magazine.com/2026/09/14/anker-solix-launches-xe-the-next-generation-all-in-one-home-energy-storage/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.pv-magazine.com/2026/09/14/anker-solix-launches-xe-the-next-generation-all-in-one-home-energy-storage/</guid>
+    <pubDate>Mon, 14 Sep 2026 09:00:00 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>false</domestic>
+    <description>PV Magazine — The system, launched in the UK and Ireland, removes the barriers that have kept home energy storage from the mainstream.</description>
+  </item>
+  <item>
+    <title>HSBC Appoints Mik Breiterman-Loader as Head of US Sustainable Finance and Transition</title>
+    <link>https://www.esgtoday.com/hsbc-appoints-mik-breiterman-loader-as-head-of-us-sustainable-finance-and-transition/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=hsbc-appoints-mik-breiterman-loader-as-head-of-us-sustainable-finance-and-transition&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.esgtoday.com/hsbc-appoints-mik-breiterman-loader-as-head-of-us-sustainable-finance-and-transition/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=hsbc-appoints-mik-breiterman-loader-as-head-of-us-sustainable-finance-and-transition</guid>
+    <pubDate>Mon, 14 Sep 2026 08:43:06 GMT</pubDate>
+    <category>Sustainability</category>
+    <domestic>true</domestic>
+    <description>ESG Today — HSBC has appointed Mik Breiterman-Loader as its new Head of US Sustainable Finance and Transition. […]</description>
+  </item>
+  <item>
+    <title>Noria Energy launches single-axis tracker for floating solar applications</title>
+    <link>https://www.pv-magazine.com/2026/09/14/noria-energy-launches-single-axis-tracker-for-floating-solar-applications/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.pv-magazine.com/2026/09/14/noria-energy-launches-single-axis-tracker-for-floating-solar-applications/</guid>
+    <pubDate>Mon, 14 Sep 2026 07:33:18 GMT</pubDate>
     <category>Solar</category>
     <domestic>true</domestic>
-    <description>Solar Power World — U.S. solar employed 280,000+ workers in 2024 — 460,000+ once storage roles are included.</description>
+    <description>PV Magazine — The U.S.-made Airon tracker delivers up to 20% more generation than fixed-tilt floating photovoltaics at a parity installed cost, with commercial deliveries scheduled to begin in mid-2027.</description>
+  </item>
+  <item>
+    <title>California ‘Affordability Crisis’ Needs Attention, Report Says</title>
+    <link>https://www.rtoinsider.com/142857-california-affordability-crisis-needs-attention-report-says/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/142857-california-affordability-crisis-needs-attention-report-says/</guid>
+    <pubDate>Sun, 13 Sep 2026 22:50:21 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — While California electricity rates are about twice those in much of the rest of the U.S., many solutions are available to address the state’s growing energy affordability problem — and some within months, according to a new report.</description>
+  </item>
+  <item>
+    <title>MISO South States Want Removal of Majority/Minority Labels in OMS Docs</title>
+    <link>https://www.rtoinsider.com/143128-miso-south-states-want-removal-of-majority-minority-labels-in-oms-docs/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/143128-miso-south-states-want-removal-of-majority-minority-labels-in-oms-docs/</guid>
+    <pubDate>Sun, 13 Sep 2026 22:49:12 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — MISO South states are pushing for a change in the Organization of MISO States bylaws that would eradicate the organization’s longstanding practice of recognizing majority and minority opinions among state regulators.</description>
+  </item>
+  <item>
+    <title>MISO Stakeholders Demand Better Cost Allocation for Transmission Spurred by Large Loads</title>
+    <link>https://www.rtoinsider.com/143136-stakeholders-demand-better-miso-allocation-plan-for-large-loads-spawning-costly-reliability-tx-projects/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/143136-stakeholders-demand-better-miso-allocation-plan-for-large-loads-spawning-costly-reliability-tx-projects/</guid>
+    <pubDate>Sun, 13 Sep 2026 22:48:13 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — Stakeholders told MISO that cost-shifting among transmission customers to bring large loads online seems to already be taking place in the form of expensive reliability-based transmission projects that wouldn’t be necessary but for data centers and their ilk.</description>
+  </item>
+  <item>
+    <title>Longer-duration Energy Storage Faces Obstacles Entering Ripe Market</title>
+    <link>https://www.rtoinsider.com/143159-longer-duration-energy-storage-faces-obstacles-entering-ripe-market/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/143159-longer-duration-energy-storage-faces-obstacles-entering-ripe-market/</guid>
+    <pubDate>Sun, 13 Sep 2026 22:45:40 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — Longer-duration energy storage technologies are advancing faster than market designs that can support its use, analysts say.</description>
+  </item>
+  <item>
+    <title>Constellation Buying Shell Plant to Boost ISO-NE Position</title>
+    <link>https://www.rtoinsider.com/143197-constellation-buying-shell-plant-to-boost-iso-ne-position/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/143197-constellation-buying-shell-plant-to-boost-iso-ne-position/</guid>
+    <pubDate>Sun, 13 Sep 2026 22:44:56 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — Shell Energy North America is selling natural gas-fired generation in Rhode Island and buying it in Pennsylvania.</description>
+  </item>
+  <item>
+    <title>NEPOOL Debates Changes to ISO-NE Accreditation Proposal</title>
+    <link>https://www.rtoinsider.com/143203-nepool-debates-changes-to-iso-ne-accreditation-proposal/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.rtoinsider.com/143203-nepool-debates-changes-to-iso-ne-accreditation-proposal/</guid>
+    <pubDate>Sun, 13 Sep 2026 22:43:54 GMT</pubDate>
+    <category>Storage</category>
+    <domestic>true</domestic>
+    <description>RTO Insider — The NEPOOL Markets Committee debated CAR-SA amendments that would affect energy storage capacity accreditation, gas contracting requirements and other auction parameters.</description>
+  </item>
+  <item>
+    <title>Commerce confirms dumping of solar cells from India, Indonesia and Laos into US market</title>
+    <link>https://www.solarpowerworldonline.com/2026/09/commerce-confirms-dumping-of-solar-cells-from-india-indonesia-and-laos-into-us-market/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.solarpowerworldonline.com/2026/09/commerce-confirms-dumping-of-solar-cells-from-india-indonesia-and-laos-into-us-market/</guid>
+    <pubDate>Sun, 13 Sep 2026 20:19:16 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>false</domestic>
+    <description>Solar Power World — The Dept. of Commerce has released its final determinations in an antidumping/countervailing duty (AD/CVD) investigation on solar cell imports from India, Indonesia and Laos. The DOC determined that solar cell and panel producers and exporters from these countries have been dumping solar products into the U.S. market at unfairly low prices and have benefited from…</description>
+  </item>
+  <item>
+    <title>GoSun built a practical electric tractor that charges itself with solar panels [video]</title>
+    <link>https://electrek.co/2026/09/13/gosun-built-a-practical-electric-tractor-that-charges-itself-with-solar-panels-video/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/09/13/gosun-built-a-practical-electric-tractor-that-charges-itself-with-solar-panels-video/</guid>
+    <pubDate>Sun, 13 Sep 2026 17:06:42 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>Electrek — Electric farm tractors are a great idea that hasn’t quite found a way to succeed in the market, but Ohio-based GoSun thinks the time is right to try again – this time with integrated solar charging technology that could give its all-electric tractor a serious advantage over the diesel-powered competition. more…</description>
+  </item>
+  <item>
+    <title>New fleet of battery electric trains promises faster, more reliable UK travel</title>
+    <link>https://electrek.co/2026/09/12/new-fleet-of-battery-electric-trains-promises-faster-more-reliable-uk-travel/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/09/12/new-fleet-of-battery-electric-trains-promises-faster-more-reliable-uk-travel/</guid>
+    <pubDate>Sat, 12 Sep 2026 14:50:51 GMT</pubDate>
+    <category>Jobs &amp; Hiring</category>
+    <domestic>true</domestic>
+    <description>Electrek — A new fleet of British-designed and built battery electric trains has been announced, promising thousands of new jobs, faster and more reliable rail service, and significant reductions in carbon emissions across northern England. more…</description>
+  </item>
+  <item>
+    <title>xAI has quietly built a massive battery at its Memphis data center hub</title>
+    <link>https://www.canarymedia.com/articles/batteries/xai-massive-battery-memphis-data-center?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/batteries/xai-massive-battery-memphis-data-center</guid>
+    <pubDate>Fri, 11 Sep 2026 22:00:00 GMT</pubDate>
+    <category>Sustainability</category>
+    <domestic>true</domestic>
+    <description>Canary Media — Elon Musk’s SpaceXAI has built what may be the biggest battery in the U.S. at its controversial Memphis AI computing hub. The exact size of the battery is unclear. Canary Media counted 720 Tesla Megapack battery containers visible on the grounds of the Colossus 2 data center in satellite imagery dated July 11. That…</description>
+  </item>
+  <item>
+    <title>One panel per minute: Solar recycling is going big in Texas</title>
+    <link>https://electrek.co/2026/09/11/one-panel-per-minute-solar-recycling-is-going-big-in-texas/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/09/11/one-panel-per-minute-solar-recycling-is-going-big-in-texas/</guid>
+    <pubDate>Fri, 11 Sep 2026 19:43:52 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>Electrek — Old solar panels contain valuable silver, copper, silicon, aluminum, and glass. A new Texas solar recycling plant aims to recover nearly all of it without sending partially processed materials overseas. more…</description>
+  </item>
+  <item>
+    <title>Podcast: Tesla Semi, mixed bag of EV sales, Chinese EVs in the US, and more</title>
+    <link>https://electrek.co/2026/09/11/podcast-tesla-semi-mixed-bag-of-ev-sales-chinese-evs-in-the-us-and-more/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/09/11/podcast-tesla-semi-mixed-bag-of-ev-sales-chinese-evs-in-the-us-and-more/</guid>
+    <pubDate>Fri, 11 Sep 2026 19:40:59 GMT</pubDate>
+    <category>EV</category>
+    <domestic>true</domestic>
+    <description>Electrek — In the Electrek Podcast , we discuss the most popular news in the world of sustainable transport and energy. In this week’s episode, we discuss the Tesla Semi launch in Europe, mixed bag of EV sales, Chinese EVs in the US, and more. more…</description>
+  </item>
+  <item>
+    <title>EV prices are falling while the average new car tops $50K</title>
+    <link>https://electrek.co/2026/09/11/ev-prices-are-falling-while-the-average-new-car-tops-50k/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/09/11/ev-prices-are-falling-while-the-average-new-car-tops-50k/</guid>
+    <pubDate>Fri, 11 Sep 2026 19:07:23 GMT</pubDate>
+    <category>EV</category>
+    <domestic>true</domestic>
+    <description>Electrek — The average new EV got cheaper in August, even as the average transaction price (ATP) paid for a new vehicle in the US climbed back above $50,000. more…</description>
+  </item>
+  <item>
+    <title>Want to get off gas? Learn how at Drive Electric Month events across the US</title>
+    <link>https://electrek.co/2026/09/11/learn-how-to-save-money-on-gas-at-us-drive-electric-month-events-all-month/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/09/11/learn-how-to-save-money-on-gas-at-us-drive-electric-month-events-all-month/</guid>
+    <pubDate>Fri, 11 Sep 2026 19:00:00 GMT</pubDate>
+    <category>EV</category>
+    <domestic>false</domestic>
+    <description>Electrek — Drive Electric Month kicks off this week with over 150 online and in-person events celebrating electric vehicles over the course of the next month. Events will be held for the next several weekends, with events in most US states, and one in Canada. And in the midst of a global oil price spike, there couldn’t be a better time to learn how to become energy independent. more…</description>
+  </item>
+  <item>
+    <title>Noria Energy debuts single-axis floating solar tracker</title>
+    <link>https://www.solarpowerworldonline.com/2026/09/noria-energy-debuts-single-axis-floating-solar-tracker/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.solarpowerworldonline.com/2026/09/noria-energy-debuts-single-axis-floating-solar-tracker/</guid>
+    <pubDate>Fri, 11 Sep 2026 18:46:20 GMT</pubDate>
+    <category>Solar</category>
+    <domestic>true</domestic>
+    <description>Solar Power World — Noria Energy has brought Airon, a U.S.-made floating solar tracker system, to market. Airon is designed to generate more electricity within a similar project footprint and nameplate energy as a fixed-tilt floating system. Noria plans to install its first commercial pilot Airon project in late 2026, in addition to its existing demonstration project, with shipments…</description>
+  </item>
+  <item>
+    <title>Oracle and OpenAI bet that more solar could combat data center pushback</title>
+    <link>https://www.latitudemedia.com/news/oracle-and-openai-bet-that-more-solar-could-combat-data-center-pushback/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.latitudemedia.com/news/oracle-and-openai-bet-that-more-solar-could-combat-data-center-pushback/</guid>
+    <pubDate>Fri, 11 Sep 2026 18:11:10 GMT</pubDate>
+    <category>Grid</category>
+    <domestic>false</domestic>
+    <description>Latitude Media — The Stargate project is balancing federal support and local opposition in New Mexico.</description>
+  </item>
+  <item>
+    <title>Court blocks Trump from forcing open a dead coal plant that no one wants open</title>
+    <link>https://electrek.co/2026/09/11/court-blocks-trump-from-reopening-broken-coal-plant-that-no-one-wants-open/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://electrek.co/2026/09/11/court-blocks-trump-from-reopening-broken-coal-plant-that-no-one-wants-open/</guid>
+    <pubDate>Fri, 11 Sep 2026 17:48:45 GMT</pubDate>
+    <category>Policy</category>
+    <domestic>true</domestic>
+    <description>Electrek — A court has blocked the Department of Energy’s attempts to force a broken coal plant open in Michigan, stating that there is no “emergency” that should force the plant to stay open and wasting millions of ratepayer dollars for 468 days after its planned retirement. more…</description>
+  </item>
+  <item>
+    <title>Court rules that Trump can’t force a Michigan coal plant to keep running</title>
+    <link>https://www.canarymedia.com/articles/fossil-fuels/court-rules-against-trump-michigan-coal-plant?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=weekly_digest</link>
+    <guid isPermaLink="false">https://www.canarymedia.com/articles/fossil-fuels/court-rules-against-trump-michigan-coal-plant</guid>
+    <pubDate>Fri, 11 Sep 2026 17:19:00 GMT</pubDate>
+    <category>Policy</category>
+    <domestic>true</domestic>
+    <description>Canary Media — A federal court has ruled that the Department of Energy acted outside the bounds of its legal authority when it forced a coal plant in Michigan to keep running last year — a decision that could undermine the Trump administration’s push to prevent aging and costly fossil-fueled power plants from closing down. Under…</description>
   </item>
 </channel>
 </rss>
