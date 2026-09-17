@@ -2,9 +2,9 @@
 
 > Verde Talent is a US job board dedicated to the clean energy industry: solar,
 > wind, battery storage, grid and utilities, EV infrastructure, hydrogen, energy
-> policy and sustainability. Open roles are collected daily from employers'
-> own career sites, so listings are current and link straight to the employer's
-> application. Searching and applying are free and need no account; a free
+> policy and sustainability. Open roles are updated daily, so listings are
+> current and link straight to the employer's application. Searching and
+> applying are free and need no account; a free
 > candidate profile is optional and adds weekly job-match emails. Employers can
 > post a role from $100. Salary ranges are shown wherever an employer discloses
 > them, and the site publishes its own salary benchmarks and hiring data.
