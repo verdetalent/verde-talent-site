@@ -1,5 +1,65 @@
+# Everything here is open to every crawler, search engines and AI assistants
+# alike. The named blocks below are deliberate: Verde Talent wants to be
+# readable by - and citable in - ChatGPT, Claude, Perplexity, Gemini and
+# Copilot answers, so a future Disallow can never catch them by accident.
+
 User-agent: *
 Allow: /
 
+# OpenAI: training, ChatGPT search, and user-initiated fetches
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google Gemini (separate from Googlebot's own search crawl)
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence / Siri
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Copilot rides Bing's index
+User-agent: bingbot
+Allow: /
+
+# Common Crawl - a common source of model training data
+User-agent: CCBot
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+# Amazon (Alexa / Rufus)
+User-agent: Amazonbot
+Allow: /
+
 Sitemap: https://verdetalent.com/sitemap.xml
+# Page guide for AI assistants: https://verdetalent.com/llms.txt
 # deploy-trigger: 2026-08-06T18:06:40Z
