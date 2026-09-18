@@ -533,7 +533,7 @@ function companyCardHtml(c) {
   const initial = (c.name || "?").charAt(0).toUpperCase();
   const rolesLabel = c.open_postings_count === 1 ? "1 open role" : `${c.open_postings_count} open roles`;
   return `
-  <a class="co-card" href="company.html?name=${encodeURIComponent(c.name)}" style="text-decoration:none;color:inherit;">
+  <a class="co-card" href="companies/${encodeURIComponent(c.slug)}.html" style="text-decoration:none;color:inherit;">
     <div class="co-avatar" style="background:${colorVar(color)}22;color:${colorVar(color)};">${initial}</div>
     <div class="co-name">${escapeHtml(c.name)}</div>
     <div class="co-sector">${escapeHtml(c.sector || "Uncategorized")}</div>
