@@ -22,6 +22,9 @@
 - [Training and certifications](https://verdetalent.com/professional-development.html): certification paths and training providers by sector (NABCEP, NERC, EVITP, LEED and others).
 - [Hiring data and market intelligence](https://verdetalent.com/intelligence.html): which sectors and roles are hiring, supply and demand by role, and salary benchmarks.
 
+## Definitions
+- [Clean energy jobs glossary](https://verdetalent.com/glossary.html): 47 industry terms - NABCEP, GWO, BESS, interconnection, PPA, O&M, prevailing wage and others - defined plainly, each with the number of open postings using it today.
+
 ## News
 - [Clean energy news](https://verdetalent.com/news.html): weekly industry and hiring news, with a free email briefing.
 - [News feed (RSS)](https://verdetalent.com/feed.xml)
