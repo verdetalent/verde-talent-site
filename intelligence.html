@@ -7,7 +7,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-CNGTGW71QP');
 </script>
 <meta charset="UTF-8"/>
@@ -15,252 +14,352 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
 <script src="/fullstory.js"></script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-<link rel="canonical" href="https://verdetalent.com/intelligence.html"/>
-<title>2026 Clean Energy Hiring Report — Verde Talent Intelligence</title>
-<meta name="description" content="Clean energy hiring data and salary benchmarks by role — compensation, demand, and hiring trends across solar, wind, storage, and grid roles."/>
+<title>Clean Energy Hiring Data &amp; Salary Benchmarks | Verde Talent</title>
+<meta name="description" content="Live clean energy hiring data: 3,433 open US roles tracked daily, advertised pay by role, the tightest hiring markets in the country, and the 215 GW of capacity due to be built next."/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Verde Talent"/>
 <meta property="og:url" content="https://verdetalent.com/intelligence.html"/>
-<meta property="og:title" content="2026 Clean Energy Hiring Report — Verde Talent Intelligence"/>
-<meta property="og:description" content="Clean energy hiring data and salary benchmarks by role — compensation, demand, and hiring trends across solar, wind, storage, and grid roles."/>
+<meta property="og:title" content="Clean Energy Hiring Data &amp; Salary Benchmarks | Verde Talent"/>
+<meta property="og:description" content="Live clean energy hiring data: 3,433 open US roles tracked daily, advertised pay by role, the tightest hiring markets in the country, and the 215 GW of capacity due to be built next."/>
 <meta property="og:image" content="https://verdetalent.com/og-image.png"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="2026 Clean Energy Hiring Report — Verde Talent Intelligence"/>
-<meta name="twitter:description" content="Clean energy hiring data and salary benchmarks by role — compensation, demand, and hiring trends across solar, wind, storage, and grid roles."/>
-<meta name="twitter:image" content="https://verdetalent.com/og-image.png"/>
-<link rel="stylesheet" href="/tabler-icons.css"/>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<link rel="canonical" href="https://verdetalent.com/intelligence.html"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --blk:#0A0A0A;--card:#131313;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
   --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--pur:#B588FF;--cor:#FF7055;
   --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
+a{color:inherit;}
+.wrap{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+.back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
+.back-link:hover{color:var(--grn);}
+h1{font-size:clamp(1.6rem,4vw,2.3rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;}
+.lede{font-size:14.5px;color:var(--t2);line-height:1.7;margin:1rem 0 2rem;max-width:62ch;}
+h2{font-size:15px;font-weight:700;margin:2.4rem 0 1rem;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+.stat{background:var(--card);border:0.5px solid var(--bdr);border-radius:10px;padding:1rem 1.1rem;}
+.stat-n{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.stat-k{font-size:11.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-top:.35rem;}
+.stat-sub{font-size:12px;color:var(--t2);margin-top:.4rem;line-height:1.5;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{font-size:13px;color:var(--t2);text-decoration:none;border:0.5px solid var(--bdr2);border-radius:20px;padding:6px 14px;}
+.chip:hover{color:var(--t1);border-color:var(--t2);}
+.rows{display:flex;flex-direction:column;gap:8px;}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--card);border:0.5px solid var(--bdr);border-radius:8px;padding:11px 14px;}
+.row-name{font-size:13.5px;}
+.row-n{font-size:12.5px;color:var(--t3);font-variant-numeric:tabular-nums;}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:2.4rem;}
+.btn{display:inline-block;font-size:13.5px;font-weight:600;text-decoration:none;border-radius:8px;padding:11px 18px;}
+.btn-primary{background:var(--grn);color:#00140C;}
+.btn-ghost{border:0.5px solid var(--bdr2);color:var(--t1);}
+.note{font-size:12px;color:var(--t3);margin-top:1rem;line-height:1.6;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem;text-align:center;font-size:12px;color:var(--t3);}
+footer a{color:var(--t2);}
+
+/* Nav styling lifted from the hub-page template so the shared NAV_HTML
+   renders identically here - without these the nav degrades to a stack of
+   unstyled links. */
 .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;position:relative;}
-.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;}
-.nav-toggle i{transform:translateX(3px);}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;flex-shrink:0;}
 .logo-img{height:104px;width:auto;display:block;}
-.dot{width:10px;height:10px;border-radius:50%;background:var(--grn);}
+.nav-toggle{display:none;background:none;border:0.5px solid var(--bdr2);color:var(--t2);width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;}
 .nav-links{display:flex;align-items:center;gap:1.1rem;font-size:13px;}
 .nav-links a{color:var(--t2);text-decoration:none;white-space:nowrap;}
 .nav-links a:hover{color:var(--grn);}
-.nav-links a.active{color:var(--t1);}
-.nav-group.grn .nav-links a.active{color:var(--grn);}
-.nav-group.amb .nav-links a.active{color:var(--amb);}
-.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;}
+.nav-groups{display:flex;align-items:flex-end;flex:1;justify-content:space-evenly;margin:0 1.15rem;}
 .nav-group{display:flex;flex-direction:column;gap:6px;}
 .nav-group + .nav-group{margin-left:14px;padding-left:14px;border-left:0.5px solid var(--bdr2);}
 .nav-group-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;height:12px;line-height:12px;}
 .nav-group-label.grn{color:var(--grn);}
 .nav-group-label.amb{color:var(--amb);}
-.btn{padding:10px 18px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);font-weight:500;white-space:nowrap;}
-.btn-grn{background:var(--grn);color:#052e1e;}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:none;font-family:var(--font-sans);white-space:nowrap;}
+.btn-grn2{background:var(--grn);color:#052e1e;font-weight:500;}
 .btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
 .signin-wrap{position:relative;}
 .signin-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:60;}
 .signin-menu.open{display:block;}
 .signin-menu a{display:block;padding:8px 12px;border-radius:7px;font-size:13px;color:var(--t2);text-decoration:none;}
-.signin-menu a:hover{background:var(--card2);color:var(--t1);}
+.signin-menu a:hover{background:#1A1A1A;color:var(--t1);}
 .signin-menu .si-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 2px;}
 .signin-menu .si-label.grn{color:var(--grn);}
 .signin-menu .si-label.amb{color:var(--amb);}
-.btn-lg{padding:14px 26px;font-size:15px;border-radius:11px;}
-
-/* Masthead */
-.masthead{padding:4.5rem 2rem 3.5rem;border-bottom:0.5px solid var(--bdr);text-align:center;background:radial-gradient(ellipse at top,rgba(34,224,154,0.06),transparent 60%);}
-.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grn);font-weight:600;margin-bottom:1.1rem;}
-.masthead h1{font-size:44px;line-height:1.15;font-weight:700;max-width:820px;margin:0 auto .9rem;letter-spacing:-.01em;}
-.masthead h1 .accent{color:var(--grn);}
-.masthead p{font-size:16px;color:var(--t2);max-width:620px;margin:0 auto 1.75rem;line-height:1.6;}
-.masthead-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-
-/* Stat callouts */
-.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bdr);border:0.5px solid var(--bdr);border-radius:14px;overflow:hidden;margin:-1px 2rem 0;}
-.stat-tile{background:var(--blk);padding:1.75rem 1.25rem;text-align:center;}
-.stat-num{font-size:32px;font-weight:700;line-height:1;margin-bottom:.5rem;}
-.stat-label{font-size:12px;color:var(--t3);}
-
-.content{padding:0 2rem;max-width:1180px;margin:0 auto;}
-.report-section{padding:3.5rem 0;border-bottom:0.5px solid var(--bdr);}
-.report-section:last-of-type{border-bottom:none;}
-.section-kicker{display:flex;align-items:baseline;gap:.6rem;margin-bottom:.6rem;}
-.section-num{font-size:12px;color:var(--grn);font-weight:700;letter-spacing:.05em;}
-.section-title{font-size:24px;font-weight:700;letter-spacing:-.01em;}
-.section-lead{font-size:15px;color:var(--t2);max-width:680px;line-height:1.65;margin-bottom:1.75rem;}
-.section-note{font-size:12px;color:var(--t3);margin-top:.9rem;line-height:1.5;}
-
-/* Chart cards */
-.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.chart-row.wide-left{grid-template-columns:1.4fr 1fr;}
-.chart-row.three-col{grid-template-columns:1fr 1fr 0.9fr;}
-.chart-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.4rem;}
-.chart-card h4{font-size:13px;font-weight:600;margin-bottom:1rem;color:var(--t1);}
-.chart-canvas-wrap{position:relative;height:260px;}
-.chart-canvas-wrap.tall{height:320px;}
-.chart-canvas-wrap.short{height:180px;}
-
-/* Salary benchmarks */
-.salary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.sal-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.1rem 1.2rem;}
-.sal-role{font-size:13px;font-weight:500;margin-bottom:.5rem;display:flex;align-items:center;gap:6px;}
-.sal-median{font-size:22px;font-weight:700;color:var(--grn);}
-.sal-range{font-size:12px;color:var(--t3);margin-top:2px;}
-.sal-regions{margin-top:.75rem;display:flex;flex-direction:column;gap:5px;}
-.sal-region-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;}
-.sal-region-label{color:var(--t3);}
-.sal-region-val{color:var(--t2);}
-.sal-bar{height:3px;border-radius:2px;margin-top:2px;background:rgba(34,224,154,0.3);}
-.sal-locked{display:flex;align-items:center;gap:7px;margin-top:1rem;padding:.7rem .8rem;background:var(--card2);border-radius:9px;font-size:12px;color:var(--t3);}
-
-/* Role explorer */
-.explorer-row{display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;}
-.explorer-list-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:.9rem;}
-.role-search-input{width:100%;padding:9px 12px;border-radius:9px;border:0.5px solid var(--bdr2);background:var(--card2);color:var(--t1);font-size:13px;font-family:var(--font-sans);margin-bottom:.75rem;}
-.role-search-input::placeholder{color:var(--t3);}
-.role-search-input:focus{outline:none;border-color:var(--grn);}
-.role-list{max-height:560px;overflow-y:auto;}
-.role-list-item{padding:.65rem .6rem;border-radius:9px;cursor:pointer;margin-bottom:3px;}
-.role-list-item:hover{background:var(--card2);}
-.role-list-item.active{background:rgba(34,224,154,0.08);border:0.5px solid rgba(34,224,154,0.25);}
-.role-list-name{font-size:13px;font-weight:500;margin-bottom:.3rem;}
-.role-list-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--t3);margin-bottom:.25rem;}
-.role-list-salary{font-size:12px;color:var(--grn);font-weight:500;}
-.diff-badge{font-size:10px;padding:2px 7px;border-radius:20px;border:0.5px solid;font-weight:500;}
-.diff-badge.large{font-size:12px;padding:4px 11px;}
-.pro-tag{font-size:9px;font-weight:700;letter-spacing:.04em;color:var(--pur);background:rgba(181,136,255,0.12);border:0.5px solid rgba(181,136,255,0.3);padding:1px 6px;border-radius:5px;}
-.explorer-detail-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.5rem;min-height:300px;position:relative;overflow:hidden;}
-.explorer-detail-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(19,19,19,0.98) 92%);pointer-events:none;z-index:2;}
-.role-detail-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px;}
-.role-detail-header h3{font-size:19px;font-weight:600;}
-/* Redacted preview - same pattern as resume-vault.html: real headline info,
-   the rest represented as gray bars instead of the actual numbers/content. */
-.redact{height:11px;border-radius:3px;background:rgba(255,255,255,0.09);margin-bottom:7px;}
-.redact-lg{height:26px;width:140px;border-radius:5px;background:rgba(255,255,255,0.09);margin:.3rem 0 .8rem;}
-.redact-chart{height:150px;border-radius:9px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;}
-.unlock-footer{position:relative;z-index:3;text-align:center;margin-top:-2.5rem;padding-top:2.5rem;}
-.unlock-footer h4{font-size:15px;font-weight:600;margin-bottom:.4rem;}
-.unlock-footer p{font-size:12px;color:var(--t3);margin-bottom:1rem;}
-.role-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
-.detail-subhead{font-size:11px;color:var(--t3);font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:.6rem;}
-.strategy-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.strategy-list li{font-size:13px;color:var(--t2);line-height:1.55;padding:.6rem .8rem;background:var(--card2);border-radius:9px;border-left:2px solid var(--grn);}
-.postings-table{width:100%;border-collapse:collapse;font-size:12px;}
-.postings-table th{text-align:left;color:var(--t3);font-weight:500;padding:.4rem .5rem;border-bottom:0.5px solid var(--bdr);}
-.postings-table td{padding:.5rem;border-bottom:0.5px solid var(--bdr);color:var(--t2);}
-.postings-table tr:last-child td{border-bottom:none;}
-.stat-row{display:flex;justify-content:space-between;font-size:12px;padding:.3rem 0;color:var(--t2);}
-.stat-row b{color:var(--t1);font-weight:600;}
-
-/* Closing CTA band */
-.cta-band{background:linear-gradient(135deg,rgba(34,224,154,0.10),rgba(79,179,255,0.05));border:0.5px solid rgba(34,224,154,0.22);border-radius:18px;padding:3rem 2rem;text-align:center;margin:1rem 0 2.5rem;}
-.cta-band h2{font-size:28px;font-weight:700;margin-bottom:.6rem;letter-spacing:-.01em;}
-.cta-band p{font-size:15px;color:var(--t2);max-width:520px;margin:0 auto 1.5rem;line-height:1.6;}
-.cta-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-
-.footer-note{padding:1.75rem 2rem 2.5rem;text-align:center;font-size:12px;color:var(--t3);line-height:1.7;max-width:1180px;margin:0 auto;}
-.empty-note{font-size:12px;color:var(--t3);padding:.5rem 0;line-height:1.6;}
-.loading{padding:5rem 2rem;text-align:center;color:var(--t3);font-size:13px;}
-@media (max-width:1160px){
+.btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
+@media (max-width:1200px){
   .nav{padding:1rem 1.25rem;}
-  .nav-groups{gap:0;}
+  .nav-groups{gap:0;margin:0 .5rem;}
   .nav-group + .nav-group{margin-left:10px;padding-left:10px;}
   .nav-links{gap:.7rem;}
   .nav-right{gap:6px;}
   .nav-right .btn{padding:7px 12px;}
   #signinToggle{padding:7px 10px;}
 }
-
-@media (max-width:900px){
-  .stat-strip{grid-template-columns:repeat(2,1fr);}
-  .chart-row,.chart-row.wide-left,.chart-row.three-col,.explorer-row,.role-detail-grid{grid-template-columns:1fr;}
-  .masthead h1{font-size:32px;}
+@media (max-width:940px){
   .nav-toggle{display:flex;}
   .logo-img{height:64px;}
-  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;}
+  .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}
   .nav-groups.open{display:flex;}
   .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}
   .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}
   .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}
   .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}
-  .nav{padding:1rem 1rem;}
   .nav-right{gap:6px;}
   .nav-right .btn{padding:6px 9px;font-size:11px;}
-  .salary-grid{grid-template-columns:1fr;}
 }
-footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;font-size:12px;color:var(--t3);}
-footer a{color:var(--t3);text-decoration:none;}
-footer a:hover{color:var(--grn);}
-.footer-links{display:flex;gap:1.25rem;flex-wrap:wrap;}
+
+.hero{padding:2.5rem 0 1.5rem;}
+.hero h1{font-size:clamp(1.9rem,4.6vw,3rem);font-weight:750;letter-spacing:-.03em;line-height:1.08;max-width:19ch;}
+.hero h1 em{font-style:normal;color:var(--grn);}
+.kicker{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--grn);margin-bottom:.7rem;}
+.hero .lede{font-size:15.5px;max-width:62ch;margin:1rem 0 1.4rem;}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border:0.5px solid var(--bdr);border-radius:14px;overflow:hidden;margin-bottom:3rem;}
+.strip .cell{background:var(--card);padding:1.15rem 1.2rem;display:flex;flex-direction:column;gap:.35rem;}
+.strip .cell + .cell{border-left:0.5px solid var(--bdr);}
+.strip .n{font-size:1.7rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.strip .k{font-size:12.5px;color:var(--t2);line-height:1.45;}
+.strip .src{font-size:11px;color:var(--t3);margin-top:auto;padding-top:.4rem;}
+.mod{margin-bottom:3.4rem;}
+.mod-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:1.1rem;}
+.mod h2{font-size:clamp(1.25rem,2.4vw,1.6rem);font-weight:700;letter-spacing:-.015em;}
+.mod .sub{font-size:13.5px;color:var(--t2);max-width:64ch;margin-top:.35rem;}
+.toggle{display:inline-flex;border:0.5px solid var(--bdr2);border-radius:999px;padding:3px;gap:2px;}
+.toggle button{background:none;border:0;color:var(--t2);font:inherit;font-size:12.5px;padding:6px 13px;border-radius:999px;cursor:pointer;}
+.toggle button[aria-pressed="true"]{background:var(--t1);color:#0A0A0A;font-weight:600;}
+.map{display:grid;grid-template-columns:repeat(11,1fr);gap:5px;max-width:720px;}
+.tile{aspect-ratio:1;border-radius:7px;background:rgba(255,255,255,0.04);display:flex;flex-direction:column;
+align-items:center;justify-content:center;gap:1px;text-decoration:none;color:var(--t1);min-width:0;}
+.tile.empty{background:none;}
+.tile .ab{font-size:11px;font-weight:600;letter-spacing:.02em;}
+.tile .v{font-size:9.5px;color:rgba(255,255,255,0.75);font-variant-numeric:tabular-nums;}
+a.tile:hover{outline:1.5px solid var(--grn);}
+.map[data-view="jobs"] .tile[data-j="1"]{background:rgba(34,224,154,0.14);}
+.map[data-view="jobs"] .tile[data-j="2"]{background:rgba(34,224,154,0.28);}
+.map[data-view="jobs"] .tile[data-j="3"]{background:rgba(34,224,154,0.46);}
+.map[data-view="jobs"] .tile[data-j="4"]{background:rgba(34,224,154,0.68);color:#062b1e;}
+.map[data-view="jobs"] .tile[data-j="4"] .v{color:rgba(6,43,30,0.8);}
+.map[data-view="mw"] .tile[data-m="1"]{background:rgba(79,179,255,0.14);}
+.map[data-view="mw"] .tile[data-m="2"]{background:rgba(79,179,255,0.3);}
+.map[data-view="mw"] .tile[data-m="3"]{background:rgba(79,179,255,0.5);}
+.map[data-view="mw"] .tile[data-m="4"]{background:rgba(79,179,255,0.72);color:#04233c;}
+.map[data-view="mw"] .tile[data-m="4"] .v{color:rgba(4,35,60,0.8);}
+.map[data-view="jobs"] .v.mw,.map[data-view="mw"] .v.jobs{display:none;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--t3);margin-top:.9rem;}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px;}
+.tbl-wrap{overflow-x:auto;border:0.5px solid var(--bdr);border-radius:12px;}
+table.data{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px;}
+table.data th,table.data td{padding:10px 13px;text-align:left;border-bottom:0.5px solid var(--bdr);}
+table.data thead th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);background:var(--card);font-weight:600;}
+table.data tbody tr:last-child td{border-bottom:0;}
+table.data td.n{text-align:right;font-variant-numeric:tabular-nums;}
+table.data a{color:var(--grn);text-decoration:none;}
+table.data a:hover{text-decoration:underline;}
+.ladder{display:grid;gap:9px;}
+.lrow{display:grid;grid-template-columns:190px 1fr 74px;align-items:center;gap:12px;text-decoration:none;color:inherit;}
+.lrow .nm{font-size:13px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+a.lrow:hover .nm{color:var(--t1);}
+/* Both must be block: a percentage width on an inline span is ignored, which silently
+   rendered every pay bar as an empty track. */
+.ltrack{display:block;height:20px;background:rgba(255,255,255,0.05);border-radius:5px;}
+.lfill{display:block;height:100%;border-radius:5px;background:var(--grn);opacity:.55;}
+.lval{font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums;color:var(--t2);}
+.qbars{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end;min-height:190px;}
+.qcol{display:flex;flex-direction:column;justify-content:flex-end;gap:3px;text-align:center;}
+.qstack{display:flex;flex-direction:column;justify-content:flex-end;gap:2px;}
+.qseg{border-radius:3px;min-height:2px;}
+.qlab{font-size:11px;color:var(--t3);margin-top:.45rem;}
+.qtot{font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;}
+.pro{border:0.5px solid rgba(79,179,255,.3);border-radius:16px;padding:1.8rem;background:
+radial-gradient(120% 140% at 100% 0%,rgba(79,179,255,.1),transparent 55%),var(--card);}
+.pro h2{margin-bottom:.4rem;}
+.pro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.3rem 0 1.4rem;}
+.pro-card{background:rgba(0,0,0,.25);border:0.5px solid var(--bdr);border-radius:12px;padding:1.1rem 1.2rem;}
+.pro-card h3{font-size:14.5px;font-weight:650;margin-bottom:.35rem;}
+.pro-card p{font-size:12.5px;color:var(--t2);line-height:1.55;}
+.method{font-size:12px;color:var(--t3);line-height:1.75;border-top:0.5px solid var(--bdr);padding-top:1rem;margin-top:2rem;}
+.method b{color:var(--t2);font-weight:600;}
+@media (max-width:820px){
+  .strip{grid-template-columns:1fr 1fr;}
+  .strip .cell:nth-child(3){border-left:0;}
+  .strip .cell:nth-child(n+3){border-top:0.5px solid var(--bdr);}
+  .pro-grid{grid-template-columns:1fr;}
+  .qbars{grid-template-columns:repeat(3,1fr);}
+}
+@media (max-width:560px){
+  .map{gap:3px;}
+  .tile .v{display:none;}
+  .lrow{grid-template-columns:120px 1fr 68px;}
+}
+
+.site-footer{border-top:0.5px solid var(--bdr);padding:2rem 1.5rem;text-align:center;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.55rem 1.15rem;margin-bottom:1rem;}
+.footer-links a{font-size:12.5px;color:var(--t2);text-decoration:none;}
+.footer-links a:hover{color:var(--grn);}
+.footer-copy{font-size:12px;color:var(--t3);}
+.footer-copy a{color:var(--t2);}
 /*social-css*/
-.footer-social{display:flex;align-items:center;gap:14px;}
-.footer-social a{display:inline-flex;color:var(--t3,rgba(255,255,255,0.35));text-decoration:none;}
-.footer-social a:hover,.footer-social a:focus-visible{color:var(--grn,#22E09A);}
+.footer-social{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:1rem;}
+.footer-social a{display:inline-flex;color:var(--t3);text-decoration:none;}
+.footer-social a:hover,.footer-social a:focus-visible{color:var(--grn);}
 .footer-social svg{width:17px;height:17px;display:block;}
-.follow-block{max-width:720px;margin:3rem auto 3.5rem;padding:1.6rem 1.75rem;background:var(--card,#131313);border:0.5px solid var(--bdr,rgba(255,255,255,0.08));border-radius:14px;text-align:center;}
-.follow-block h2{font-size:17px;font-weight:700;margin:0 0 .4rem;color:var(--t1,#fff);}
-.follow-block p{font-size:13.5px;color:var(--t2,rgba(255,255,255,0.6));line-height:1.6;margin:0 0 1.1rem;}
-.follow-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
-.follow-links a{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:0.5px solid var(--bdr2,rgba(255,255,255,0.14));border-radius:999px;font-size:13px;color:var(--t1,#fff);text-decoration:none;}
-.follow-links a:hover,.follow-links a:focus-visible{border-color:var(--grn,#22E09A);color:var(--grn,#22E09A);}
-.follow-links svg{width:16px;height:16px;display:block;}
 /*/social-css*/
 </style>
 </head>
 <body>
 <nav class="nav">
-  <div style="display:flex;align-items:center;gap:1.15rem;flex:1;">
-    <a class="logo" href="index.html"><img src="logo.webp" alt="Verde Talent" class="logo-img"></a>
-    <div class="nav-groups">
-      <div class="nav-group grn">
-        <div class="nav-group-label grn">Candidates</div>
-        <div class="nav-links">
-          <a href="jobs.html">Find jobs</a>
-          <a href="companies.html">Companies</a>
-          <a href="professional-development.html">Training</a>
-        </div>
+  <a class="logo" href="/index.html"><img src="/logo.webp" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-groups" id="navGroups">
+    <div class="nav-group grn">
+      <div class="nav-group-label grn">Candidates</div>
+      <div class="nav-links">
+        <a href="/jobs.html">Find jobs</a>
+        <a href="/companies.html">Companies</a>
+        <a href="/professional-development.html">Training</a>
       </div>
-      <div class="nav-group amb">
-        <div class="nav-group-label amb">Employers</div>
-        <div class="nav-links">
-          <a href="resume-vault.html">Resume Vault</a>
-          <a href="intelligence.html" class="active">Intelligence</a>
-        </div>
+    </div>
+    <div class="nav-group amb">
+      <div class="nav-group-label amb">Employers</div>
+      <div class="nav-links">
+        <a href="/resume-vault.html">Resume Vault</a>
+        <a href="/intelligence.html">Intelligence</a>
       </div>
-      <div class="nav-group">
-        <div class="nav-group-label"></div>
-        <div class="nav-links">
-          <a href="news.html">News</a>
-          <a href="about.html">About</a>
-        </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label"></div>
+      <div class="nav-links">
+        <a href="/news.html">News</a>
+        <a href="/about.html">About</a>
       </div>
     </div>
   </div>
-  <div class="nav-right" style="display:flex;gap:10px;flex-shrink:0;align-items:center;">
+  <div class="nav-right">
     <div class="signin-wrap">
       <button type="button" class="btn btn-ghost" id="signinToggle">Sign in <i class="ti ti-chevron-down" style="font-size:11px;vertical-align:1px;"></i></button>
       <div class="signin-menu" id="signinMenu">
         <div class="si-label grn">Candidates</div>
-        <a href="login.html">Sign in</a>
+        <a href="/login.html">Sign in</a>
         <div class="si-label amb">Employers</div>
-        <a href="employer-login.html">Sign in</a>
+        <a href="/employer-login.html">Sign in</a>
       </div>
     </div>
-    <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
-    <a href="post-job.html" style="text-decoration:none;"><button class="btn btn-grn">Post a job</button></a>
+    <a href="/create-profile.html" style="text-decoration:none;"><button class="btn btn-ghost">Create profile</button></a>
+    <a href="/post-job.html" style="text-decoration:none;"><button class="btn btn-grn2">Post a job</button></a>
     <button type="button" class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
   </div>
 </nav>
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">Verde Talent Intelligence &middot; updated daily</div>
+    <h1>The clean energy hiring market, <em>as it is today</em></h1>
+    <p class="lede">We track every role these employers post, every day, and read it against
+    federal wage, workforce and construction data. This page is free and rebuilt each morning.</p>
+  </header>
+  <div class="strip"><div class="cell"><span class="n" style="color:var(--grn);">3,433</span><span class="k">Open US roles tracked right now</span><span class="src">Verde Talent, updated daily</span></div><div class="cell"><span class="n" style="color:var(--t1);">44</span><span class="k">Employers whose career sites we read every day</span><span class="src">Verde Talent</span></div><div class="cell"><span class="n" style="color:var(--blu);">215 GW</span><span class="k">Capacity with a planned build date</span><span class="src">EIA generator inventory, july 2026</span></div><div class="cell"><span class="n" style="color:var(--amb);">2.1</span><span class="k">Openings per 100 wind turbine technicians in Kansas - the tightest market we measure</span><span class="src">Verde Talent + BLS OEWS</span></div></div>
+  
+<section class="mod">
+  <div class="mod-head">
+    <div>
+      <h2>Where the work is</h2>
+      <p class="sub">Open roles we are tracking right now, and the generating capacity
+      developers plan to build. The two rarely sit in the same places - which is the whole
+      problem employers are hiring against.</p>
+    </div>
+    <div class="toggle" role="group" aria-label="Map view">
+      <button type="button" id="view-jobs" aria-pressed="true">Open roles</button>
+      <button type="button" id="view-mw" aria-pressed="false">Planned capacity</button>
+    </div>
+  </div>
+  <div class="map" id="us-map" data-view="jobs"><div class="tile" data-j="2" data-m="1" title="Alaska: 6 open roles, 29 MW planned"><span class="ab">AK</span><span class="v jobs">6</span><span class="v mw">29</span></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile" data-j="2" data-m="2" title="Maine: 19 open roles, 591 MW planned"><span class="ab">ME</span><span class="v jobs">19</span><span class="v mw">591</span></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile" data-j="1" data-m="1" title="Vermont: 4 open roles, 108 MW planned"><span class="ab">VT</span><span class="v jobs">4</span><span class="v mw">108</span></div><div class="tile" data-j="3" data-m="1" title="New Hampshire: 55 open roles, 24 MW planned"><span class="ab">NH</span><span class="v jobs">55</span><span class="v mw">24</span></div><div class="tile empty"></div><div class="tile" data-j="2" data-m="3" title="Washington: 6 open roles, 3,551 MW planned"><span class="ab">WA</span><span class="v jobs">6</span><span class="v mw">3.6K</span></div><div class="tile" data-j="2" data-m="2" title="Idaho: 6 open roles, 959 MW planned"><span class="ab">ID</span><span class="v jobs">6</span><span class="v mw">959</span></div><div class="tile" data-j="1" data-m="2" title="Montana: 3 open roles, 1,167 MW planned"><span class="ab">MT</span><span class="v jobs">3</span><span class="v mw">1.2K</span></div><div class="tile" data-j="2" data-m="2" title="North Dakota: 10 open roles, 1,163 MW planned"><span class="ab">ND</span><span class="v jobs">10</span><span class="v mw">1.2K</span></div><div class="tile" data-j="4" data-m="2" title="Minnesota: 189 open roles, 1,332 MW planned"><span class="ab">MN</span><span class="v jobs">189</span><span class="v mw">1.3K</span></div><div class="tile" data-j="4" data-m="4" title="Illinois: 175 open roles, 6,514 MW planned"><span class="ab">IL</span><span class="v jobs">175</span><span class="v mw">6.5K</span></div><div class="tile" data-j="2" data-m="3" title="Wisconsin: 16 open roles, 3,423 MW planned"><span class="ab">WI</span><span class="v jobs">16</span><span class="v mw">3.4K</span></div><div class="tile" data-j="1" data-m="3" title="Michigan: 4 open roles, 4,328 MW planned"><span class="ab">MI</span><span class="v jobs">4</span><span class="v mw">4.3K</span></div><div class="tile" data-j="4" data-m="4" title="New York: 111 open roles, 7,112 MW planned"><span class="ab">NY</span><span class="v jobs">111</span><span class="v mw">7.1K</span></div><div class="tile" data-j="2" data-m="2" title="Rhode Island: 11 open roles, 718 MW planned"><span class="ab">RI</span><span class="v jobs">11</span><span class="v mw">718</span></div><div class="tile" data-j="4" data-m="2" title="Massachusetts: 252 open roles, 727 MW planned"><span class="ab">MA</span><span class="v jobs">252</span><span class="v mw">726</span></div><div class="tile" data-j="2" data-m="4" title="Oregon: 15 open roles, 7,407 MW planned"><span class="ab">OR</span><span class="v jobs">15</span><span class="v mw">7.4K</span></div><div class="tile" data-j="4" data-m="4" title="Nevada: 121 open roles, 7,072 MW planned"><span class="ab">NV</span><span class="v jobs">121</span><span class="v mw">7.1K</span></div><div class="tile" data-j="2" data-m="4" title="Wyoming: 6 open roles, 6,587 MW planned"><span class="ab">WY</span><span class="v jobs">6</span><span class="v mw">6.6K</span></div><div class="tile" data-j="1" data-m="1" title="South Dakota: 4 open roles, 104 MW planned"><span class="ab">SD</span><span class="v jobs">4</span><span class="v mw">103</span></div><div class="tile" data-j="2" data-m="2" title="Iowa: 25 open roles, 1,028 MW planned"><span class="ab">IA</span><span class="v jobs">25</span><span class="v mw">1K</span></div><div class="tile" data-j="3" data-m="3" title="Indiana: 74 open roles, 3,973 MW planned"><span class="ab">IN</span><span class="v jobs">74</span><span class="v mw">4K</span></div><div class="tile" data-j="4" data-m="3" title="Ohio: 189 open roles, 3,532 MW planned"><span class="ab">OH</span><span class="v jobs">189</span><span class="v mw">3.5K</span></div><div class="tile" data-j="4" data-m="3" title="Pennsylvania: 98 open roles, 2,132 MW planned"><span class="ab">PA</span><span class="v jobs">98</span><span class="v mw">2.1K</span></div><div class="tile" data-j="4" data-m="1" title="New Jersey: 92 open roles, 42 MW planned"><span class="ab">NJ</span><span class="v jobs">92</span><span class="v mw">42</span></div><div class="tile" data-j="4" data-m="2" title="Connecticut: 163 open roles, 620 MW planned"><span class="ab">CT</span><span class="v jobs">163</span><span class="v mw">619</span></div><div class="tile empty"></div><div class="tile" data-j="4" data-m="4" title="California: 495 open roles, 20,018 MW planned"><span class="ab">CA</span><span class="v jobs">495</span><span class="v mw">20K</span></div><div class="tile" data-j="3" data-m="3" title="Utah: 32 open roles, 3,773 MW planned"><span class="ab">UT</span><span class="v jobs">32</span><span class="v mw">3.8K</span></div><div class="tile" data-j="4" data-m="3" title="Colorado: 174 open roles, 5,400 MW planned"><span class="ab">CO</span><span class="v jobs">174</span><span class="v mw">5.4K</span></div><div class="tile" data-j="1" data-m="1" title="Nebraska: 5 open roles, 225 MW planned"><span class="ab">NE</span><span class="v jobs">5</span><span class="v mw">225</span></div><div class="tile" data-j="1" data-m="3" title="Missouri: 5 open roles, 1,901 MW planned"><span class="ab">MO</span><span class="v jobs">5</span><span class="v mw">1.9K</span></div><div class="tile" data-j="1" data-m="3" title="Kentucky: 2 open roles, 2,219 MW planned"><span class="ab">KY</span><span class="v jobs">2</span><span class="v mw">2.2K</span></div><div class="tile" data-j="0" data-m="2" title="West Virginia: 0 open roles, 360 MW planned"><span class="ab">WV</span><span class="v jobs">&mdash;</span><span class="v mw">359</span></div><div class="tile" data-j="3" data-m="4" title="Virginia: 33 open roles, 6,348 MW planned"><span class="ab">VA</span><span class="v jobs">33</span><span class="v mw">6.3K</span></div><div class="tile" data-j="3" data-m="1" title="Maryland: 32 open roles, 71 MW planned"><span class="ab">MD</span><span class="v jobs">32</span><span class="v mw">71</span></div><div class="tile" data-j="1" data-m="0" title="District of Columbia: 1 open roles, 0 MW planned"><span class="ab">DC</span><span class="v jobs">1</span><span class="v mw">&mdash;</span></div><div class="tile empty"></div><div class="tile" data-j="3" data-m="4" title="Arizona: 55 open roles, 12,881 MW planned"><span class="ab">AZ</span><span class="v jobs">55</span><span class="v mw">12.9K</span></div><div class="tile" data-j="3" data-m="3" title="New Mexico: 29 open roles, 2,966 MW planned"><span class="ab">NM</span><span class="v jobs">29</span><span class="v mw">3K</span></div><div class="tile" data-j="3" data-m="2" title="Kansas: 33 open roles, 795 MW planned"><span class="ab">KS</span><span class="v jobs">33</span><span class="v mw">795</span></div><div class="tile" data-j="1" data-m="3" title="Arkansas: 5 open roles, 4,818 MW planned"><span class="ab">AR</span><span class="v jobs">5</span><span class="v mw">4.8K</span></div><div class="tile" data-j="1" data-m="2" title="Tennessee: 3 open roles, 612 MW planned"><span class="ab">TN</span><span class="v jobs">3</span><span class="v mw">611</span></div><div class="tile" data-j="3" data-m="3" title="North Carolina: 72 open roles, 2,125 MW planned"><span class="ab">NC</span><span class="v jobs">72</span><span class="v mw">2.1K</span></div><div class="tile" data-j="3" data-m="3" title="South Carolina: 42 open roles, 2,093 MW planned"><span class="ab">SC</span><span class="v jobs">42</span><span class="v mw">2.1K</span></div><div class="tile" data-j="3" data-m="1" title="Delaware: 27 open roles, 200 MW planned"><span class="ab">DE</span><span class="v jobs">27</span><span class="v mw">200</span></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile" data-j="2" data-m="3" title="Oklahoma: 16 open roles, 2,114 MW planned"><span class="ab">OK</span><span class="v jobs">16</span><span class="v mw">2.1K</span></div><div class="tile" data-j="3" data-m="3" title="Louisiana: 40 open roles, 1,867 MW planned"><span class="ab">LA</span><span class="v jobs">40</span><span class="v mw">1.9K</span></div><div class="tile" data-j="1" data-m="3" title="Mississippi: 1 open roles, 1,586 MW planned"><span class="ab">MS</span><span class="v jobs">1</span><span class="v mw">1.6K</span></div><div class="tile" data-j="3" data-m="3" title="Alabama: 56 open roles, 1,551 MW planned"><span class="ab">AL</span><span class="v jobs">56</span><span class="v mw">1.6K</span></div><div class="tile" data-j="2" data-m="3" title="Georgia: 17 open roles, 4,882 MW planned"><span class="ab">GA</span><span class="v jobs">17</span><span class="v mw">4.9K</span></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile" data-j="2" data-m="2" title="Hawaii: 23 open roles, 332 MW planned"><span class="ab">HI</span><span class="v jobs">23</span><span class="v mw">331</span></div><div class="tile empty"></div><div class="tile" data-j="4" data-m="4" title="Texas: 266 open roles, 70,693 MW planned"><span class="ab">TX</span><span class="v jobs">266</span><span class="v mw">70.7K</span></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile" data-j="4" data-m="3" title="Florida: 269 open roles, 1,882 MW planned"><span class="ab">FL</span><span class="v jobs">269</span><span class="v mw">1.9K</span></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div></div>
+  <div class="legend">
+    <span><i style="background:rgba(34,224,154,0.68);"></i>Most open roles</span>
+    <span><i style="background:rgba(34,224,154,0.14);"></i>Fewest</span>
+    <span>Most roles: California (495), Florida (269), Texas (266), Massachusetts (252), Minnesota (189)</span>
+    <span>Most capacity planned: Texas (70.7K MW), California (20K MW), Arizona (12.9K MW), Oregon (7.4K MW), New York (7.1K MW)</span>
+  </div>
+</section>
+<section class="mod">
+  <div class="mod-head"><div>
+    <h2>The hardest markets to hire in</h2>
+    <p class="sub">Open roles for every 100 people who already do that job in the state.
+    A wind technician opening in Kansas competes for a workforce of a few hundred people,
+    not a few thousand - so the same job advert performs very differently state to state.</p>
+  </div></div>
+  <div class="tbl-wrap"><table class="data">
+    <thead><tr><th>Role</th><th>State</th><th class="n">Openings per 100 workers</th>
+    <th class="n">People in the job</th><th class="n">BLS median pay</th><th class="n">Typical time posted</th></tr></thead>
+    <tbody><tr><td>Wind Turbine Technician</td><td>Kansas</td><td class="n">2.12</td><td class="n">330</td><td class="n">$78,240</td><td class="n">7 days</td></tr><tr><td>Wind Turbine Technician</td><td>California</td><td class="n">1.75</td><td class="n">400</td><td class="n">$77,910</td><td class="n">19 days</td></tr><tr><td>Wind Turbine Technician</td><td>Oklahoma</td><td class="n">1.47</td><td class="n">340</td><td class="n">$59,290</td><td class="n">12 days</td></tr><tr><td>Solar Installer</td><td>Pennsylvania</td><td class="n">1.32</td><td class="n">1,210</td><td class="n">$47,760</td><td class="n">&mdash;</td></tr><tr><td>Wind Turbine Technician</td><td>North Dakota</td><td class="n">1.29</td><td class="n">310</td><td class="n">$66,700</td><td class="n">15 days</td></tr><tr><td>Wind Turbine Technician</td><td>Colorado</td><td class="n">1.22</td><td class="n">410</td><td class="n">$74,740</td><td class="n">15 days</td></tr><tr><td>Substation, Relay &amp; Controls Technician</td><td>Florida</td><td class="n">1.21</td><td class="n">910</td><td class="n">$101,780</td><td class="n">44 days</td></tr><tr><td>Wind Turbine Technician</td><td>New Mexico</td><td class="n">1.21</td><td class="n">330</td><td class="n">$57,230</td><td class="n">20 days</td></tr></tbody>
+  </table></div>
+</section>
+<section class="mod">
+  <div class="mod-head"><div>
+    <h2>What these jobs pay</h2>
+    <p class="sub">Median advertised pay by role, from live US postings. Each row opens its
+    full benchmark: the percentile range, how it moves by state, and how it compares to
+    neighbouring roles.</p>
+  </div></div>
+  <div class="ladder"><a class="lrow" href="/salaries/software-data-engineer-salary.html"><span class="nm">Software &amp; Data Engineer</span><span class="ltrack"><span class="lfill" style="width:100%"></span></span><span class="lval">$140,000</span></a><a class="lrow" href="/salaries/energy-storage-engineer-salary.html"><span class="nm">Energy Storage Engineer</span><span class="ltrack"><span class="lfill" style="width:100%"></span></span><span class="lval">$140,000</span></a><a class="lrow" href="/salaries/lineworker-salary.html"><span class="nm">Lineworker</span><span class="ltrack"><span class="lfill" style="width:84%"></span></span><span class="lval">$117,146</span></a><a class="lrow" href="/salaries/construction-site-manager-salary.html"><span class="nm">Construction / Site Manager</span><span class="ltrack"><span class="lfill" style="width:83%"></span></span><span class="lval">$115,764</span></a><a class="lrow" href="/salaries/controls-automation-engineer-salary.html"><span class="nm">Controls &amp; Automation Engineer</span><span class="ltrack"><span class="lfill" style="width:81%"></span></span><span class="lval">$113,000</span></a><a class="lrow" href="/salaries/finance-accounting-salary.html"><span class="nm">Finance &amp; Accounting</span><span class="ltrack"><span class="lfill" style="width:81%"></span></span><span class="lval">$112,888</span></a><a class="lrow" href="/salaries/legal-compliance-salary.html"><span class="nm">Legal &amp; Compliance</span><span class="ltrack"><span class="lfill" style="width:80%"></span></span><span class="lval">$112,300</span></a><a class="lrow" href="/salaries/electrical-power-systems-engineer-salary.html"><span class="nm">Electrical &amp; Power Systems Engineer</span><span class="ltrack"><span class="lfill" style="width:80%"></span></span><span class="lval">$112,166</span></a><a class="lrow" href="/salaries/project-manager-salary.html"><span class="nm">Project Manager</span><span class="ltrack"><span class="lfill" style="width:80%"></span></span><span class="lval">$111,974</span></a><a class="lrow" href="/salaries/mechanical-engineer-salary.html"><span class="nm">Mechanical Engineer</span><span class="ltrack"><span class="lfill" style="width:79%"></span></span><span class="lval">$110,000</span></a><a class="lrow" href="/salaries/superintendent-salary.html"><span class="nm">Superintendent</span><span class="ltrack"><span class="lfill" style="width:77%"></span></span><span class="lval">$107,757</span></a><a class="lrow" href="/salaries/estimating-project-controls-salary.html"><span class="nm">Estimating &amp; Project Controls</span><span class="ltrack"><span class="lfill" style="width:72%"></span></span><span class="lval">$100,561</span></a><a class="lrow" href="/salaries/project-developer-salary.html"><span class="nm">Project Developer</span><span class="ltrack"><span class="lfill" style="width:68%"></span></span><span class="lval">$94,600</span></a><a class="lrow" href="/salaries/procurement-supply-chain-salary.html"><span class="nm">Procurement &amp; Supply Chain</span><span class="ltrack"><span class="lfill" style="width:66%"></span></span><span class="lval">$93,000</span></a><a class="lrow" href="/salaries/ehs-quality-specialist-salary.html"><span class="nm">EHS &amp; Quality Specialist</span><span class="ltrack"><span class="lfill" style="width:65%"></span></span><span class="lval">$91,000</span></a><a class="lrow" href="/salaries/manufacturing-quality-engineer-salary.html"><span class="nm">Manufacturing &amp; Quality Engineer</span><span class="ltrack"><span class="lfill" style="width:63%"></span></span><span class="lval">$88,050</span></a><a class="lrow" href="/salaries/project-field-engineer-salary.html"><span class="nm">Project &amp; Field Engineer</span><span class="ltrack"><span class="lfill" style="width:60%"></span></span><span class="lval">$84,100</span></a><a class="lrow" href="/salaries/foreman-supervisor-salary.html"><span class="nm">Foreman / Supervisor</span><span class="ltrack"><span class="lfill" style="width:50%"></span></span><span class="lval">$70,508</span></a><a class="lrow" href="/salaries/solar-sales-representative-salary.html"><span class="nm">Solar Sales Representative</span><span class="ltrack"><span class="lfill" style="width:49%"></span></span><span class="lval">$68,000</span></a><a class="lrow" href="/salaries/electrician-salary.html"><span class="nm">Electrician</span><span class="ltrack"><span class="lfill" style="width:48%"></span></span><span class="lval">$67,621</span></a><a class="lrow" href="/salaries/battery-storage-technician-salary.html"><span class="nm">Battery Storage Technician</span><span class="ltrack"><span class="lfill" style="width:48%"></span></span><span class="lval">$66,560</span></a><a class="lrow" href="/salaries/wind-turbine-technician-salary.html"><span class="nm">Wind Turbine Technician</span><span class="ltrack"><span class="lfill" style="width:42%"></span></span><span class="lval">$58,760</span></a><a class="lrow" href="/salaries/solar-o-m-technician-salary.html"><span class="nm">Solar O&amp;M Technician</span><span class="ltrack"><span class="lfill" style="width:41%"></span></span><span class="lval">$57,598</span></a><a class="lrow" href="/salaries/administrative-salary.html"><span class="nm">Administrative</span><span class="ltrack"><span class="lfill" style="width:36%"></span></span><span class="lval">$51,002</span></a><a class="lrow" href="/salaries/solar-installer-salary.html"><span class="nm">Solar Installer</span><span class="ltrack"><span class="lfill" style="width:36%"></span></span><span class="lval">$49,920</span></a><a class="lrow" href="/salaries/warehouse-logistics-salary.html"><span class="nm">Warehouse &amp; Logistics</span><span class="ltrack"><span class="lfill" style="width:35%"></span></span><span class="lval">$48,880</span></a><a class="lrow" href="/salaries/engineering-lab-technician-salary.html"><span class="nm">Engineering / Lab Technician</span><span class="ltrack"><span class="lfill" style="width:35%"></span></span><span class="lval">$48,610</span></a><a class="lrow" href="/salaries/manufacturing-technician-salary.html"><span class="nm">Manufacturing Technician</span><span class="ltrack"><span class="lfill" style="width:30%"></span></span><span class="lval">$42,640</span></a><a class="lrow" href="/salaries/production-worker-salary.html"><span class="nm">Production Worker</span><span class="ltrack"><span class="lfill" style="width:27%"></span></span><span class="lval">$37,440</span></a></div>
+</section>
+<section class="mod">
+  <div class="mod-head"><div>
+    <h2>What gets built next</h2>
+    <p class="sub">Solar, storage and wind capacity with a planned operation date, from the
+    federal generator inventory. Construction hiring runs ahead of these dates, so this is
+    the demand curve before it reaches the job boards.</p>
+  </div></div>
+  <div class="qbars"><div class="qcol"><div class="qstack"><span class="qseg" style="height:53px;background:#FFB547;opacity:.75;" title="Solar: 13,169 MW"></span><span class="qseg" style="height:26px;background:#4FB3FF;opacity:.75;" title="Storage: 6,475 MW"></span><span class="qseg" style="height:9px;background:#22E09A;opacity:.75;" title="Wind: 2,269 MW"></span></div><span class="qtot">21.9K</span><span class="qlab">2026 Q3</span></div><div class="qcol"><div class="qstack"><span class="qseg" style="height:58px;background:#FFB547;opacity:.75;" title="Solar: 14,614 MW"></span><span class="qseg" style="height:28px;background:#4FB3FF;opacity:.75;" title="Storage: 6,936 MW"></span><span class="qseg" style="height:11px;background:#22E09A;opacity:.75;" title="Wind: 2,746 MW"></span></div><span class="qtot">24.3K</span><span class="qlab">2026 Q4</span></div><div class="qcol"><div class="qstack"><span class="qseg" style="height:17px;background:#FFB547;opacity:.75;" title="Solar: 4,173 MW"></span><span class="qseg" style="height:14px;background:#4FB3FF;opacity:.75;" title="Storage: 3,610 MW"></span><span class="qseg" style="height:13px;background:#22E09A;opacity:.75;" title="Wind: 3,332 MW"></span></div><span class="qtot">11.1K</span><span class="qlab">2027 Q1</span></div><div class="qcol"><div class="qstack"><span class="qseg" style="height:34px;background:#FFB547;opacity:.75;" title="Solar: 8,570 MW"></span><span class="qseg" style="height:23px;background:#4FB3FF;opacity:.75;" title="Storage: 5,649 MW"></span><span class="qseg" style="height:4px;background:#22E09A;opacity:.75;" title="Wind: 1,063 MW"></span></div><span class="qtot">15.3K</span><span class="qlab">2027 Q2</span></div><div class="qcol"><div class="qstack"><span class="qseg" style="height:33px;background:#FFB547;opacity:.75;" title="Solar: 8,201 MW"></span><span class="qseg" style="height:19px;background:#4FB3FF;opacity:.75;" title="Storage: 4,860 MW"></span><span class="qseg" style="height:4px;background:#22E09A;opacity:.75;" title="Wind: 885 MW"></span></div><span class="qtot">13.9K</span><span class="qlab">2027 Q3</span></div><div class="qcol"><div class="qstack"><span class="qseg" style="height:90px;background:#FFB547;opacity:.75;" title="Solar: 22,407 MW"></span><span class="qseg" style="height:46px;background:#4FB3FF;opacity:.75;" title="Storage: 11,418 MW"></span><span class="qseg" style="height:15px;background:#22E09A;opacity:.75;" title="Wind: 3,653 MW"></span></div><span class="qtot">37.5K</span><span class="qlab">2027 Q4</span></div></div>
+  <div class="legend"><span><i style="background:#FFB547;opacity:.75;"></i>Solar</span><span><i style="background:#4FB3FF;opacity:.75;"></i>Storage</span><span><i style="background:#22E09A;opacity:.75;"></i>Wind</span><span>Megawatts due online, by quarter</span></div>
+</section>
+<section class="mod pro">
+  <h2>Go deeper with Intelligence Pro</h2>
+  <p class="sub">Everything above is free and rebuilt daily. Pro answers the questions a
+  hiring plan actually turns on.</p>
+  <div class="pro-grid">
+    <div class="pro-card"><h3>Metro-level detail</h3><p>The same picture for
+    185 metro areas: who is hiring there, what they post, and how long roles stay
+    open.</p></div>
+    <div class="pro-card"><h3>Where to put the next site</h3><p>Rank markets by talent pool,
+    pay, competing employers, industry concentration and what is being built nearby.</p></div>
+    <div class="pro-card"><h3>Competitor tracking</h3><p>Follow named employers: what they
+    are hiring, where they are expanding, and the pay they advertise against yours.</p></div>
+  </div>
+  <div class="cta">
+    <a class="btn btn-primary" href="mailto:contact@verdetalent.com?subject=Verde%20Talent%20Intelligence%20Pro">Talk to our team</a>
+    <a class="btn btn-ghost" href="/post-job.html">Post a role</a>
+  </div>
+</section>
+  <p class="method"><b>How this is built.</b> Job figures come from the career sites of the employers we track, read daily; pay is what those postings advertise, not offers made or salaries paid. Workforce size and government pay figures are BLS Occupational Employment &amp; Wage Statistics (2025); industry concentration is BLS QCEW (2026Q1); planned capacity is the EIA generator inventory (july 2026). Tightness is only shown where BLS publishes that exact occupation and at least 200 people hold it in the state - BLS suppresses small cells, so some states show no figure rather than a misleading one. Last rebuilt September 20, 2026.</p>
+</div>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="/jobs.html">Jobs</a>
+    <a href="/browse.html">Browse by Location</a>
+    <a href="/companies.html">Companies</a>
+    <a href="/intelligence.html">Intelligence</a>
+    <a href="/news.html">News</a>
+    <a href="/professional-development.html">Training</a>
+    <a href="/resume-vault.html">Resume Vault</a>
+    <a href="/about.html">About</a>
+    <a href="/salaries.html">Salaries</a>
+    <a href="/careers.html">Career Profiles</a>
+    <a href="/glossary.html">Glossary</a>
+    <a href="/hire.html">Hire Talent</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+  <!--social--><div class="footer-social">
+    <a href="https://www.linkedin.com/company/verde-talent/" rel="me noopener" target="_blank" aria-label="Verde Talent on LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8h4.56v14H.22V8zm7.44 0h4.37v1.92h.06c.61-1.15 2.1-2.37 4.32-2.37 4.62 0 5.47 3.04 5.47 7v7.45h-4.56v-6.6c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.53 1.72-2.53 3.49v6.71H7.66V8z"/></svg></a>
+    <a href="https://www.instagram.com/verde_talent/" rel="me noopener" target="_blank" aria-label="Verde Talent on Instagram" title="Instagram"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg></a>
+    <a href="https://www.facebook.com/verdetalent" rel="me noopener" target="_blank" aria-label="Verde Talent on Facebook" title="Facebook"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false"><path fill="currentColor" d="M14 8h3V4h-3c-2.76 0-5 2.24-5 5v2H7v4h2v9h4v-9h3l1-4h-4V9c0-.55.45-1 1-1z"/></svg></a>
+  </div><!--/social-->
+  <div class="footer-copy">&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
+</footer>
 <script>
 document.getElementById('navToggle').addEventListener('click', function(){
-  document.querySelector('.nav-groups').classList.toggle('open');
+  document.getElementById('navGroups').classList.toggle('open');
 });
 document.getElementById('signinToggle').addEventListener('click', function(e){
   e.stopPropagation();
@@ -270,491 +369,20 @@ document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
 </script>
-
-<div class="masthead">
-  <div class="eyebrow" id="masthead-eyebrow">Verde Talent Intelligence · 2026 Report</div>
-  <h1 id="masthead-headline">The State of Clean Energy Hiring</h1>
-  <p id="masthead-sub">Supply, demand, compensation, and hiring-difficulty benchmarks across solar, wind, storage, grid, EV, hydrogen, policy, and sustainability roles — built from live job postings and public labor-market data.</p>
-  <div class="masthead-cta">
-    <button class="btn btn-grn btn-lg" onclick="document.getElementById('cta-band').scrollIntoView({behavior:'smooth'})">Talk to our team</button>
-    <button class="btn btn-ghost btn-lg" onclick="document.getElementById('explore').scrollIntoView({behavior:'smooth'})">Explore the data ↓</button>
-  </div>
-  <p style="font-size:12px;color:var(--t3);margin-top:1.1rem;">Market-wide trends below are free to everyone. Metro-area compensation and full per-role profiles are part of <span style="color:var(--pur);font-weight:600;">Pro</span>.</p>
-</div>
-
-<div id="stat-strip"></div>
-
-<div class="content" id="content">
-  <div class="loading" id="loading">Loading report...</div>
-</div>
-
-<footer>
-  <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
-  <div class="footer-links">
-    <a href="jobs.html">Jobs</a>
-    <a href="resume-vault.html">Resume Vault</a>
-    <a href="companies.html">Companies</a>
-    <a href="intelligence.html">Intelligence</a>
-    <a href="news.html">News</a>
-    <a href="professional-development.html">Training</a>
-    <a href="about.html">About</a>
-    <a href="browse.html">Browse by Location</a>
-    <a href="salaries.html">Salaries</a>
-    <a href="careers.html">Career Profiles</a>
-    <a href="glossary.html">Glossary</a>
-    <a href="hire.html">Hire Talent</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
-    <a href="talent-database.html" rel="nofollow" style="opacity:.5;">Admin</a>
-  </div>
-  <!--social--><div class="footer-social">
-    <a href="https://www.linkedin.com/company/verde-talent/" rel="me noopener" target="_blank" aria-label="Verde Talent on LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8h4.56v14H.22V8zm7.44 0h4.37v1.92h.06c.61-1.15 2.1-2.37 4.32-2.37 4.62 0 5.47 3.04 5.47 7v7.45h-4.56v-6.6c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.53 1.72-2.53 3.49v6.71H7.66V8z"/></svg></a>
-    <a href="https://www.instagram.com/verde_talent/" rel="me noopener" target="_blank" aria-label="Verde Talent on Instagram" title="Instagram"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg></a>
-    <a href="https://www.facebook.com/verdetalent" rel="me noopener" target="_blank" aria-label="Verde Talent on Facebook" title="Facebook"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false"><path fill="currentColor" d="M14 8h3V4h-3c-2.76 0-5 2.24-5 5v2H7v4h2v9h4v-9h3l1-4h-4V9c0-.55.45-1 1-1z"/></svg></a>
-  </div><!--/social-->
-  <div>© 2026 Verde Talent · <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
-</footer>
-
-<!-- Replaced by export_to_verde_talent.py with the real contents of data/intelligence.json -->
-<script id="intelligence-data" type="application/json">{"generated_at": "2026-09-19T21:00:08.278049+00:00", "totals": {"total_postings_tracked": 11123, "open_postings": 4097, "closed_postings": 7026, "tracking_since": "2026-07-01T16:52:50.568698+00:00"}, "taxonomy_coverage": {"sector_unmapped_count": 4062, "sector_unmapped_pct": 36.5, "occupation_unmapped_count": 10453, "occupation_unmapped_pct": 94.0}, "demand_trend_by_sector": {"Grid": {"2026-07": 418, "2026-08": 284, "2026-09": 194}, "Wind": {"2026-07": 1146, "2026-08": 724, "2026-09": 370}, "Storage": {"2026-07": 634, "2026-08": 558, "2026-09": 209}, "Solar": {"2026-07": 1216, "2026-08": 1168, "2026-09": 427}, "Policy": {"2026-07": 15, "2026-08": 16, "2026-09": 14}, "Sustainability": {"2026-07": 42, "2026-08": 8, "2026-09": 9}, "Hydrogen": {"2026-07": 312, "2026-08": 44, "2026-09": 36}, "EV": {"2026-07": 43, "2026-08": 28, "2026-09": 23}}, "competitor_heatmap": {"AES Corporation": {"Grid": 76, "Wind": 12, "Storage": 3, "Solar": 32, "Policy": 2}, "Arcadia": {"Grid": 21}, "Arevon Energy": {"Solar": 2}, "Avangrid Renewables": {"Grid": 84, "Wind": 32, "Policy": 1, "Solar": 1, "Sustainability": 2}, "Baker Electric Solar": {"Solar": 2}, "Blattner Energy": {"Solar": 6, "Wind": 3, "Grid": 3, "Storage": 1}, "Bloom Energy": {"Hydrogen": 392}, "Brooklyn SolarWorks": {"Solar": 6}, "ChargePoint": {"EV": 72}, "Charm Industrial": {"Sustainability": 18}, "Clearway Energy": {"Wind": 66, "Solar": 68, "Storage": 63, "Grid": 1}, "Commonwealth Fusion Systems": {"Grid": 162}, "Duke Energy": {"Grid": 105, "Wind": 4, "Policy": 4, "Storage": 1, "Solar": 3}, "EDF Renewables North America": {"Wind": 73}, "Energy Project Solutions": {"Wind": 20, "Storage": 20, "Grid": 2}, "Energy Vault": {"Storage": 11}, "Enphase Energy": {"Solar": 97, "Storage": 115, "Grid": 1}, "Eversource Energy": {"Grid": 163, "Policy": 5}, "First Solar": {"Solar": 524}, "Fluence Energy": {"Storage": 313}, "GE Vernova": {"Wind": 8, "Grid": 2}, "Green Mountain Solar": {"Solar": 2}, "Green Power Energy": {"Solar": 5}, "Green Solar Systems": {"Solar": 3}, "GreenSpark Solar": {"Solar": 9}, "Invenergy": {"Wind": 294, "Solar": 289, "Storage": 252, "Grid": 23, "Policy": 3, "Sustainability": 2}, "Lithion Battery": {"Storage": 24}, "Mortenson": {"Solar": 162, "Grid": 71, "Wind": 42, "Storage": 76, "Sustainability": 1}, "NextEra Energy": {"Solar": 108, "Grid": 32, "Storage": 6, "Wind": 144, "Policy": 6}, "Northland Power": {"Wind": 26, "Solar": 26, "Storage": 27}, "NovaSource Power": {"Storage": 78}, "Palmetto": {"Solar": 2}, "Paradise Energy Solutions": {"Solar": 33}, "Pearce Services": {"Storage": 31, "Solar": 30, "Wind": 4, "EV": 9}, "Persefoni": {"Sustainability": 6}, "Public Service Solar": {"Solar": 4}, "Quaise Energy": {"Sustainability": 17}, "ReNu Solar & Roofing": {"Solar": 19}, "Recurrent Energy / CSI Energy Storage": {"Storage": 17}, "Redwood Materials": {"Storage": 205}, "Renewance": {"Storage": 8}, "Renovus Solar": {"Solar": 1}, "SOLV Energy": {"Storage": 137, "Solar": 167, "Grid": 14}, "Semper Solaris": {"Solar": 1}, "Siemens Gamesa / Siemens Energy": {"Grid": 5, "Policy": 2, "Wind": 9}, "Sky Climber Renewables": {"Wind": 3}, "Solar Landscape": {"Solar": 46}, "Solar States": {"Solar": 7}, "Stem Inc": {"Storage": 12}, "SunCommon": {"Solar": 4}, "Sunrun": {"Solar": 921}, "Terawatt Infrastructure": {"EV": 13}, "Terra-Gen": {"Wind": 17}, "Trinity Solar": {"Solar": 218}, "Vanguard Energy Partners": {"Solar": 10}, "Vestas": {"Wind": 1478}, "Wartsila Energy Storage & Optimization": {"Storage": 1}, "Xcel Energy": {"Grid": 131, "Policy": 22, "Solar": 3, "Wind": 5}, "Zanskar": {"Sustainability": 13}}, "fastest_growing_roles": {"roles": [{"role": "Solar O&M Technician", "prior_period_count": 40, "current_period_count": 21, "pct_change": -47.5}, {"role": "Solar Photovoltaic Installer", "prior_period_count": 27, "current_period_count": 9, "pct_change": -66.7}, {"role": "Wind Turbine Service Technician", "prior_period_count": 7, "current_period_count": 2, "pct_change": -71.4}, {"role": "Electrical Engineer", "prior_period_count": 26, "current_period_count": 7, "pct_change": -73.1}, {"role": "Project Manager", "prior_period_count": 180, "current_period_count": 46, "pct_change": -74.4}, {"role": "Software Engineer", "prior_period_count": 14, "current_period_count": 3, "pct_change": -78.6}, {"role": "Battery / Storage Engineer", "prior_period_count": 16, "current_period_count": 1, "pct_change": -93.8}], "note": "Comparing 2026-08 -> 2026-09."}, "posting_duration": {"sample_size_closed": 7026, "avg_days_listed": 20.4, "note": "This measures days the posting stayed listed, a proxy for time-to-fill - a posting can disappear because it was filled, cancelled, or budget-pulled, and this data can't tell those apart."}, "region_breakdown": {"Midwest": 1970, "West": 2248, "South": 2414, "Northeast": 1620, "Unknown": 605, "International": 2108, "Remote": 158}, "salary_benchmarks": {"source": "BLS OEWS, fetched 2026-07-07T12:53:33.715166+00:00", "roles": [{"role": "Solar Photovoltaic Installer", "soc_code": "47-2231", "precision": "exact", "national_median_wage": 53140.0, "national_mean_wage": 57900.0, "national_employment": 31350.0, "state_median_wage": {"TX": 48240.0, "IL": 59630.0}, "city_median_wage": {"Providence-Warwick, RI-MA": 53700.0, "Austin-Round Rock-Georgetown, TX": 50580.0, "Dallas-Fort Worth-Arlington, TX": 48350.0}, "scraped_salary_observations": 36, "scraped_salary_median": 52946}, {"role": "Wind Turbine Service Technician", "soc_code": "49-9081", "precision": "exact", "national_median_wage": 64120.0, "national_mean_wage": 68980.0, "national_employment": 9980.0, "state_median_wage": {"OR": 61820.0, "NY": 81330.0, "IA": 74880.0, "CA": 77910.0, "PA": 60830.0, "TX": 61950.0}, "city_median_wage": {}, "scraped_salary_observations": 30, "scraped_salary_median": 68770}, {"role": "Electrical Engineer", "soc_code": "17-2071", "precision": "exact", "national_median_wage": 120630.0, "national_mean_wage": 125100.0, "national_employment": 198750.0, "state_median_wage": {"IL": 107860.0, "OH": 100620.0, "MN": 109510.0, "CT": 104160.0, "NY": 119010.0, "NV": 107400.0, "CA": 144040.0, "SC": 98440.0, "CO": 120760.0, "TX": 129450.0}, "city_median_wage": {"Dayton-Kettering, OH": 103720.0, "New Haven-Milford, CT": 105250.0, "Binghamton, NY": 126010.0, "San Francisco-Oakland-Berkeley, CA": 166030.0, "San Jose-Sunnyvale-Santa Clara, CA": 187060.0, "Chicago-Naperville-Elgin, IL-IN-WI": 113520.0, "Amarillo, TX": 106130.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 117230.0, "Denver-Aurora-Lakewood, CO": 119020.0, "Pueblo, CO": 118520.0}, "scraped_salary_observations": 33, "scraped_salary_median": 123188}, {"role": "Software Engineer", "soc_code": "15-1252", "precision": "exact", "national_median_wage": 135980.0, "national_mean_wage": 148100.0, "national_employment": 1687890.0, "state_median_wage": {"NV": 128810.0, "CA": 174410.0, "MA": 165210.0, "CT": 134120.0}, "city_median_wage": {"San Jose-Sunnyvale-Santa Clara, CA": 213110.0, "Hartford-East Hartford-Middletown, CT": 132520.0, "San Francisco-Oakland-Berkeley, CA": 186640.0}, "scraped_salary_observations": 22, "scraped_salary_median": 159750}, {"role": "Project Manager", "soc_code": "13-1082", "precision": "exact", "national_median_wage": 102320.0, "national_mean_wage": 110740.0, "national_employment": 1066670.0, "state_median_wage": {"CA": 120910.0, "PA": 100150.0, "WA": 124160.0, "CO": 110050.0, "TX": 98440.0, "MA": 114190.0, "IL": 103470.0, "DE": 122190.0, "MN": 97860.0, "NC": 100820.0, "ME": 101830.0, "NY": 121040.0}, "city_median_wage": {"Houston-The Woodlands-Sugar Land, TX": 99510.0, "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD": 104160.0, "Boulder, CO": 122040.0, "Rochester, NY": 103520.0, "Portland-Vancouver-Hillsboro, OR-WA": 108340.0, "San Jose-Sunnyvale-Santa Clara, CA": 135120.0, "Raleigh-Cary, NC": 102280.0, "Boston-Cambridge-Newton, MA-NH": 114990.0, "Denver-Aurora-Lakewood, CO": 116740.0, "Chicago-Naperville-Elgin, IL-IN-WI": 105320.0, "Amarillo, TX": 83210.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 97860.0}, "scraped_salary_observations": 225, "scraped_salary_median": 129515}, {"role": "Solar Design Engineer", "soc_code": "17-2071", "precision": "broad", "national_median_wage": 120630.0, "national_mean_wage": 125100.0, "national_employment": 198750.0, "state_median_wage": {"IL": 107860.0, "OH": 100620.0, "MN": 109510.0, "CT": 104160.0, "NY": 119010.0, "NV": 107400.0, "CA": 144040.0, "SC": 98440.0, "CO": 120760.0, "TX": 129450.0}, "city_median_wage": {"Dayton-Kettering, OH": 103720.0, "New Haven-Milford, CT": 105250.0, "Binghamton, NY": 126010.0, "San Francisco-Oakland-Berkeley, CA": 166030.0, "San Jose-Sunnyvale-Santa Clara, CA": 187060.0, "Chicago-Naperville-Elgin, IL-IN-WI": 113520.0, "Amarillo, TX": 106130.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 117230.0, "Denver-Aurora-Lakewood, CO": 119020.0, "Pueblo, CO": 118520.0}, "scraped_salary_observations": 1, "scraped_salary_median": 142900}, {"role": "Wind Turbine Engineer", "soc_code": "17-2071", "precision": "broad", "national_median_wage": 120630.0, "national_mean_wage": 125100.0, "national_employment": 198750.0, "state_median_wage": {"IL": 107860.0, "OH": 100620.0, "MN": 109510.0, "CT": 104160.0, "NY": 119010.0, "NV": 107400.0, "CA": 144040.0, "SC": 98440.0, "CO": 120760.0, "TX": 129450.0}, "city_median_wage": {"Dayton-Kettering, OH": 103720.0, "New Haven-Milford, CT": 105250.0, "Binghamton, NY": 126010.0, "San Francisco-Oakland-Berkeley, CA": 166030.0, "San Jose-Sunnyvale-Santa Clara, CA": 187060.0, "Chicago-Naperville-Elgin, IL-IN-WI": 113520.0, "Amarillo, TX": 106130.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 117230.0, "Denver-Aurora-Lakewood, CO": 119020.0, "Pueblo, CO": 118520.0}, "scraped_salary_observations": 1, "scraped_salary_median": 98500}, {"role": "Battery / Storage Engineer", "soc_code": "17-2199", "precision": "broad", "national_median_wage": 122930.0, "national_mean_wage": 125330.0, "national_employment": 154070.0, "state_median_wage": {"NV": 103780.0, "CA": 130850.0, "CO": 132590.0}, "city_median_wage": {"Boulder, CO": 137530.0, "San Francisco-Oakland-Berkeley, CA": 159800.0}, "scraped_salary_observations": 10, "scraped_salary_median": 133631}, {"role": "Grid / Interconnection Analyst", "soc_code": "17-2071", "precision": "broad", "national_median_wage": 120630.0, "national_mean_wage": 125100.0, "national_employment": 198750.0, "state_median_wage": {"IL": 107860.0, "OH": 100620.0, "MN": 109510.0, "CT": 104160.0, "NY": 119010.0, "NV": 107400.0, "CA": 144040.0, "SC": 98440.0, "CO": 120760.0, "TX": 129450.0}, "city_median_wage": {"Dayton-Kettering, OH": 103720.0, "New Haven-Milford, CT": 105250.0, "Binghamton, NY": 126010.0, "San Francisco-Oakland-Berkeley, CA": 166030.0, "San Jose-Sunnyvale-Santa Clara, CA": 187060.0, "Chicago-Naperville-Elgin, IL-IN-WI": 113520.0, "Amarillo, TX": 106130.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 117230.0, "Denver-Aurora-Lakewood, CO": 119020.0, "Pueblo, CO": 118520.0}, "scraped_salary_observations": 3, "scraped_salary_median": 78334}, {"role": "EV Infrastructure PM", "soc_code": "11-9199", "precision": "broad", "national_median_wage": 141900.0, "national_mean_wage": 153890.0, "national_employment": 622190.0, "state_median_wage": {}, "city_median_wage": {}, "scraped_salary_observations": 0, "scraped_salary_median": null}, {"role": "Energy Policy Analyst", "soc_code": "19-3099", "precision": "broad", "national_median_wage": 101110.0, "national_mean_wage": 107690.0, "national_employment": 37100.0, "state_median_wage": {}, "city_median_wage": {}, "scraped_salary_observations": 2, "scraped_salary_median": 88833}, {"role": "Sustainability / ESG Analyst", "soc_code": "13-1199", "precision": "broad", "national_median_wage": 83050.0, "national_mean_wage": 93970.0, "national_employment": 1087090.0, "state_median_wage": {}, "city_median_wage": {}, "scraped_salary_observations": 2, "scraped_salary_median": 61875}, {"role": "Solar O&M Technician", "soc_code": "49-9071", "precision": "broad", "national_median_wage": 49590.0, "national_mean_wage": 53780.0, "national_employment": 1529700.0, "state_median_wage": {}, "city_median_wage": {}, "scraped_salary_observations": 57, "scraped_salary_median": 63596}], "note": "National/state/city figures are BLS OEWS wage data joined by SOC code. City-level figures are only available for the subset of cities in our postings that resolve through the curated city-to-metro-area lookup (taxonomy/cbsa.py) - small towns not in that lookup fall back to state or national figures instead of being guessed. 'broad' precision roles (see taxonomy/occupations.py) share a wage number with other occupations in that catch-all SOC category, not this role specifically. scraped_salary_median is our own live postings' salary text, parsed and annualized (see taxonomy/salary.py), median-ed per role - a same-day market read to complement OEWS, which is real government data but typically a year or more old by publication. Only present once at least one live posting for that role discloses a real figure; scraped_salary_observations is that same set's sample size."}, "fill_difficulty": {"source": "BLS JOLTS, fetched 2026-07-07T12:53:34.623732+00:00", "by_industry": {"national": {"latest_openings_rate": 4.5, "latest_hires_rate": 3.7, "as_of": "2026-05", "openings_to_hires_ratio": 1.22}, "construction": {"latest_openings_rate": 3.8, "latest_hires_rate": 4.3, "as_of": "2026-05", "openings_to_hires_ratio": 0.88}}, "note": "Macro, industry-wide context only - 'national' is total nonfarm, 'construction' is the Construction supersector (relevant to solar/wind installation labor). Not role- or company-specific. A higher openings-to-hires ratio suggests jobs are opening faster than they're being filled - a directional signal, not a precise difficulty score."}, "top_skills": {"top_skills": [{"skill": "Excel", "count": 2109, "pct_of_described_postings": 20.6}, {"skill": "OSHA", "count": 756, "pct_of_described_postings": 7.4}, {"skill": "SCADA", "count": 689, "pct_of_described_postings": 6.7}, {"skill": "NERC", "count": 639, "pct_of_described_postings": 6.2}, {"skill": "energy storage systems", "count": 538, "pct_of_described_postings": 5.3}, {"skill": "Python", "count": 422, "pct_of_described_postings": 4.1}, {"skill": "permitting", "count": 386, "pct_of_described_postings": 3.8}, {"skill": "SQL", "count": 352, "pct_of_described_postings": 3.4}, {"skill": "Power BI", "count": 311, "pct_of_described_postings": 3.0}, {"skill": "Professional Engineer", "count": 264, "pct_of_described_postings": 2.6}], "described_postings": 10241, "total_postings": 11123, "note": "Counts mentions from a fixed keyword list (taxonomy/skills.py) in posting descriptions, not NLP - misses synonyms/phrasing it doesn't know about. Only postings with a non-null description are counted, and description coverage varies a lot by crawler source, so this skews toward employers whose career sites happen to expose full posting text."}, "macro_context": {"report": "2025 U.S. Energy & Employment Report (USEER)", "publisher": "U.S. Department of Energy", "data_year": 2024, "published": "2025-08", "source_url": "https://www.energy.gov/policy/2025-us-energy-employment-report-useer", "figures": {"clean_energy_total_jobs": 3400000, "renewable_energy_generation_jobs": 560000, "solar_jobs": 370556, "solar_yoy_growth_pct": 2.0, "solar_wind_combined_jobs": 380000, "clean_energy_yoy_growth_pct": 3.0, "overall_us_workforce_yoy_growth_pct": 1.0, "clean_energy_5yr_jobs_added": 520000, "clean_energy_5yr_growth_pct": 17.0}, "note": "Manually entered from DOE's published USEER summary figures - this report is published roughly annually as a PDF, not available via API, so it isn't refreshed automatically like the BLS caches. Use as macro, national sanity-check context only; it is not derived from this project's own scraped postings and isn't broken out by our sector taxonomy."}, "role_profiles": [{"role": "Project Manager", "soc_code": "13-1082", "precision": "exact", "demand": {"open_postings": 103, "postings_by_month": {"2026-07": 17, "2026-08": 59, "2026-09": 27}, "growth_pct_change": -74.4, "top_locations": [{"state": "CA", "count": 18}, {"state": "FL", "count": 8}, {"state": "MA", "count": 7}, {"state": "IL", "count": 7}, {"state": "MN", "count": 5}], "sample_postings": [{"job_title": "Commissioning Project Manager, HV", "company": "SOLV Energy", "location": "Remote - CA; Remote - KY; Remote - LA; Remote - ME; Remote - MD; Remote - MA; Remote - MI; Remote - MN; Remote - MS; Remote - MO; Remote - MT; Remote - NE; Remote - NV; Remote - NH; Remote - NJ; Remote - NM; Remote - NY; Remote - NC; Remote - ND; Remote - OH; Remote - OK; Remote - OR; Remote - PA; Remote - RI; Remote - SC; Remote - SD; Remote - TN; Remote - UT; Remote - VT; Remote - VA; Remote - WA; Remote - WV; Remote - WI; Remote - WY; Remote - TX; Remote - AL; Remote - AZ; Remote - AR; Remote - CO; Remote - CT; Remote - DE; Remote - FL; Remote - GA; Remote - ID; Remote - IL; Remote - IN; Remote - IA; Remote - KS", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Remote---CA/Commissioning-Project-Manager--HV_J13971", "first_seen": "2026-09-19T12:05:59.836530+00:00"}, {"job_title": "Project Manager II, Transmission (hybrid schedule)", "company": "Eversource Energy", "location": "Westwood, MA; Hartford, CT", "job_url": "https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Project-Manager-II--Transmission--hybrid-schedule-_R-029937-1", "first_seen": "2026-09-19T11:56:19.393302+00:00"}, {"job_title": "Project Manager I", "company": "NextEra Energy", "location": "Palm Beach Gardens, FL, US, 33410", "job_url": "https://jobs.nexteraenergy.com/job/Palm-Beach-Gardens-Project-Manager-I-FL-33410/1431609700/", "first_seen": "2026-09-19T11:46:45.964968+00:00"}, {"job_title": "Sr Project Manager, CPX Bidding", "company": "Vestas", "location": "Québec City, Quebec, CA, G1A 1A3", "job_url": "https://careers.vestas.com/job/Qu%C3%A9bec-City-Sr-Project-Manager%2C-CPX-Bidding-Queb-G1A-1A3/1438120533/", "first_seen": "2026-09-18T12:03:59.864193+00:00"}, {"job_title": "Roof Field Project Manager", "company": "Trinity Solar", "location": "Worcester, MA", "job_url": "https://recruiting.adp.com/srccar/public/RTI.home?r=5001225686000&c=2211221&d=ExternalCareerSite&rb=VCCareerSite", "first_seen": "2026-09-17T12:41:54.487255+00:00"}, {"job_title": "Environmental Services Project Manager - Central Region", "company": "NextEra Energy", "location": "Denver, CO, US, 80201", "job_url": "https://jobs.nexteraenergy.com/job/Denver-Environmental-Services-Project-Manager-Central-Region-CO-80201/1430848600/", "first_seen": "2026-09-17T12:22:32.432911+00:00"}, {"job_title": "Senior EPC Project Manager [Hybrid]", "company": "EDF Renewables North America", "location": "San Diego, CA", "job_url": "https://careers-edf-re.icims.com/jobs/5131/senior-epc-project-manager-%5bhybrid%5d/job", "first_seen": "2026-09-16T12:47:09.972725+00:00"}, {"job_title": "Sr. Project Manager - Gas Power Generation", "company": "Blattner Energy", "location": "Remote/Traveling (For Corporate Use Only)", "job_url": "https://blattner.wd5.myworkdayjobs.com/BlattnerCompany/job/RemoteTraveling-For-Corporate-Use-Only/Sr-Project-Manager---Gas-Power-Generation_R8761", "first_seen": "2026-09-16T12:45:40.390289+00:00"}, {"job_title": "HV Assistant Project Manager", "company": "SOLV Energy", "location": "Electra, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Electra-TX/HV-Assistant-Project-Manager_J13037", "first_seen": "2026-09-15T12:56:19.493078+00:00"}, {"job_title": "Project Manager", "company": "Fluence Energy", "location": "USA-GA-Alpharetta", "job_url": "https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/USA-GA-Alpharetta/Project-Manager_JR101656-1", "first_seen": "2026-09-15T12:50:25.650326+00:00"}, {"job_title": "Senior Project Manager (m/w/d)", "company": "Fluence Energy", "location": "Germany - Erlangen; Germany - Berlin", "job_url": "https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/Germany---Erlangen/Senior-Project-Manager--m-w-d-_JR101630", "first_seen": "2026-09-15T12:50:25.650326+00:00"}, {"job_title": "Project Manager I, II or III", "company": "Xcel Energy", "location": "Minneapolis, MN, 55401; Denver, CO, 80205; Amarillo, TX, 79101", "job_url": "https://xcelenergy.wd1.myworkdayjobs.com/External/job/Minneapolis-MN-55401/Project-Manager-I_JR116475-1", "first_seen": "2026-09-15T12:41:07.636422+00:00"}, {"job_title": "Project Manager III", "company": "Xcel Energy", "location": "Minneapolis, MN, 55418; Denver City Service Center; Denver HQ T3; St Paul Service Center; Fort Collins Operations Center", "job_url": "https://xcelenergy.wd1.myworkdayjobs.com/External/job/Minneapolis-MN-55418/Project-Manager-III_JR116142-1", "first_seen": "2026-09-15T12:41:07.636422+00:00"}, {"job_title": "Project Manager - Development Services", "company": "Energy Project Solutions", "location": "Phoenix, AZ", "job_url": "https://job-boards.greenhouse.io/energyprojectsolutionsllc/jobs/4401326009", "first_seen": "2026-09-12T11:44:41.200855+00:00"}, {"job_title": "Project Manager I / Project Manager II – Industrial / Commercial Electrical Systems Engineer", "company": "Duke Energy", "location": "Raleigh, NC; Concord, NC", "job_url": "https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Raleigh-NC/Project-Manager-I---Project-Manager-II---Industrial---Commercial-Electrical-Systems-Engineer_R41491", "first_seen": "2026-09-12T11:33:45.662589+00:00"}, {"job_title": "Technical Project Manager", "company": "Vestas", "location": "Aarhus N, Region Central Jutland, DK, 8200", "job_url": "https://careers.vestas.com/job/Aarhus-N-Technical-Project-Manager-Regi-8200/1436249233/", "first_seen": "2026-09-12T11:27:30.813484+00:00"}, {"job_title": "Senior Technical Project Manager", "company": "Commonwealth Fusion Systems", "location": "Devens, MA", "job_url": "https://jobs.lever.co/cfsenergy/478ef710-43d8-45a4-8b1a-cdd89e16e20c", "first_seen": "2026-09-12T11:22:47.135840+00:00"}, {"job_title": "Commissioning Project Manager, BESS", "company": "SOLV Energy", "location": "Remote - CA; Remote - KY; Remote - LA; Remote - ME; Remote - MD; Remote - MA; Remote - MI; Remote - MN; Remote - MS; Remote - MO; Remote - MT; Remote - NE; Remote - NV; Remote - NH; Remote - NJ; Remote - NM; Remote - NY; Remote - NC; Remote - ND; Remote - OH; Remote - OK; Remote - OR; Remote - PA; Remote - RI; Remote - SC; Remote - SD; Remote - TN; Remote - UT; Remote - VT; Remote - VA; Remote - WA; Remote - WV; Remote - WI; Remote - WY; Remote - TX; Remote - AL; Remote - AZ; Remote - AR; Remote - CO; Remote - CT; Remote - DE; Remote - FL; Remote - GA; Remote - ID; Remote - IL; Remote - IN; Remote - IA; Remote - KS", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Remote---CA/Commissioning-Project-Manager--BESS_J13912", "first_seen": "2026-09-10T12:26:50.391319+00:00"}, {"job_title": "Utility Scale Solar & BESS Project Manager [Hybrid or Remote]", "company": "EDF Renewables North America", "location": "West Lebanon, NH; Columbia, MD", "job_url": "https://careers-edf-re.icims.com/jobs/4995/utility-scale-solar-%26-bess-project-manager-%5bhybrid-or-remote%5d/job", "first_seen": "2026-09-10T12:25:02.170712+00:00"}, {"job_title": "Commercial Project Manager", "company": "Brooklyn SolarWorks", "location": "Brooklyn, NY", "job_url": "https://brooklynsolarworks.applytojob.com/apply/bxORHJ1Tah/Commercial-Project-Manager", "first_seen": "2026-09-10T12:24:32.598603+00:00"}, {"job_title": "Project Manager - Transmission & Substation", "company": "NextEra Energy", "location": "Juno Beach, FL, US, 33408", "job_url": "https://jobs.nexteraenergy.com/job/Juno-Beach-Project-Manager-Transmission-&-Substation-FL-33408/1427524000/", "first_seen": "2026-09-09T12:08:18.507943+00:00"}, {"job_title": "Project Manager, Interconnections (hybrid schedule)", "company": "Eversource Energy", "location": "Westwood, MA; East Springfield, MA; Berlin, CT", "job_url": "https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Project-Manager--Interconnections--hybrid-schedule-_R-031752", "first_seen": "2026-09-08T14:05:31.419036+00:00"}, {"job_title": "Senior Project Manager BESS", "company": "Fluence Energy", "location": "United Kingdom - Remote", "job_url": "https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/United-Kingdom---Remote/Senior-Project-Manager-BESS_JR101623", "first_seen": "2026-09-07T13:35:23.378973+00:00"}, {"job_title": "Assistant Commissioning Project Manager, PV - West Region", "company": "SOLV Energy", "location": "Lost Hills, CA; Los Banos, CA", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Lost-Hills-CA/Assistant-Commissioning-Project-Manager--PV---West-Region_J13902", "first_seen": "2026-09-05T11:41:45.203694+00:00"}, {"job_title": "EPC Project Manager, Utility Scale Solar (Fabens, TX)", "company": "SOLV Energy", "location": "Fabens, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Fabens-TX/EPC-Project-Manager--Utility-Scale-Solar--Fabens--TX-_J13882", "first_seen": "2026-09-05T11:41:45.203694+00:00"}, {"job_title": "Preconstruction Project Manager (Remote)", "company": "SOLV Energy", "location": "Remote - CA; Remote - KY; Remote - LA; Remote - ME; Remote - MD; Remote - MA; Remote - MI; Remote - MN; Remote - MS; Remote - MO; Remote - MT; Remote - NE; Remote - NV; Remote - NH; Remote - NJ; Remote - NM; Remote - NY; Remote - NC; Remote - ND; Remote - OH; Remote - OK; Remote - OR; Remote - PA; Remote - RI; Remote - SC; Remote - SD; Remote - TN; Remote - UT; Remote - VT; Remote - VA; Remote - WA; Remote - WV; Remote - WI; Remote - WY; Remote - TX; Remote - AL; Remote - AZ; Remote - AR; Remote - CO; Remote - CT; Remote - DE; Remote - FL; Remote - GA; Remote - ID; Remote - IL; Remote - IN; Remote - IA; Remote - KS", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Remote---CA/Preconstruction-Project-Manager--Remote-_J13881-1", "first_seen": "2026-09-04T12:32:32.755386+00:00"}, {"job_title": "Assistant Project Manager - PreConstruction", "company": "Energy Project Solutions", "location": "United States ", "job_url": "https://job-boards.greenhouse.io/energyprojectsolutionsllc/jobs/4340222009", "first_seen": "2026-09-01T12:47:02.181626+00:00"}, {"job_title": "Project Manager (Paradise, PA)", "company": "Paradise Energy Solutions", "location": "Paradise, PA", "job_url": "https://secure2.entertimeonline.com/ta/ParadiseEnergy.careers?CareersSearch=&ein_id=655624&lang=en-US#job-872595971", "first_seen": "2026-08-28T19:33:00.987775+00:00"}, {"job_title": "Assistant Commissioning Project Manager, PV", "company": "SOLV Energy", "location": "Remote - CA; Remote - AZ; Remote - AR; Remote - CO; Remote - CT; Remote - DE; Remote - FL; Remote - GA; Remote - HI; Remote - ID; Remote - IL; Remote - IN; Remote - IA; Remote - KS; Remote - KY; Remote - LA; Remote - ME; Remote - MD; Remote - MA; Remote - MI; Remote - MN; Remote - MS; Remote - MO; Remote - MT; Remote - NE; Remote - NV; Remote - NH; Remote - NJ; Remote - NM; Remote - NY; Remote - NC; Remote - ND; Remote - OH; Remote - OK; Remote - OR; Remote - PA; Remote - RI; Remote - SC; Remote - SD; Remote - TN; Remote - UT; Remote - VT; Remote - VA; Remote - WA; Remote - WV; Remote - WI; Remote - WY; Remote - TX; Remote - AL; Remote - AK", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Remote---CA/Assistant-Commissioning-Project-Manager--PV_J13223", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Assistant Commissioning Project Manager, PV", "company": "SOLV Energy", "location": "Remote - CA; Remote - KY; Remote - LA; Remote - ME; Remote - MD; Remote - MA; Remote - MI; Remote - MN; Remote - MS; Remote - MO; Remote - MT; Remote - NE; Remote - NV; Remote - NH; Remote - NJ; Remote - NM; Remote - NY; Remote - NC; Remote - ND; Remote - OH; Remote - OK; Remote - OR; Remote - PA; Remote - RI; Remote - SC; Remote - SD; Remote - TN; Remote - UT; Remote - VT; Remote - VA; Remote - WA; Remote - WV; Remote - WI; Remote - WY; Remote - TX; Remote - AL; Remote - AZ; Remote - AR; Remote - CO; Remote - CT; Remote - DE; Remote - FL; Remote - GA; Remote - ID; Remote - IL; Remote - IN; Remote - IA; Remote - KS", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Remote---CA/Assistant-Commissioning-Project-Manager--PV_J13771", "first_seen": "2026-08-27T19:55:28.697396+00:00"}]}, "supply": {"national_employment": 1066670.0}, "compensation": {"national_median_wage": 102320.0, "national_mean_wage": 110740.0, "state_median_wage": {"CA": 120910.0, "PA": 100150.0, "WA": 124160.0, "CO": 110050.0, "TX": 98440.0, "MA": 114190.0, "IL": 103470.0, "DE": 122190.0, "MN": 97860.0, "NC": 100820.0, "ME": 101830.0, "NY": 121040.0}, "city_median_wage": {"Houston-The Woodlands-Sugar Land, TX": 99510.0, "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD": 104160.0, "Boulder, CO": 122040.0, "Rochester, NY": 103520.0, "Portland-Vancouver-Hillsboro, OR-WA": 108340.0, "San Jose-Sunnyvale-Santa Clara, CA": 135120.0, "Raleigh-Cary, NC": 102280.0, "Boston-Cambridge-Newton, MA-NH": 114990.0, "Denver-Aurora-Lakewood, CO": 116740.0, "Chicago-Naperville-Elgin, IL-IN-WI": 105320.0, "Amarillo, TX": 83210.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 97860.0}, "scraped_salary_observations": 225, "scraped_salary_median": 129515}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer.", "San Jose-Sunnyvale-Santa Clara, CA pays the highest median ($135,120) among the areas we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "Solar O&M Technician", "soc_code": "49-9071", "precision": "broad", "demand": {"open_postings": 39, "postings_by_month": {"2026-08": 20, "2026-09": 19}, "growth_pct_change": -47.5, "top_locations": [{"state": "TX", "count": 14}, {"state": "CA", "count": 10}, {"state": "UT", "count": 3}, {"state": "IN", "count": 2}, {"state": "NY", "count": 1}], "sample_postings": [{"job_title": "Solar Field Service Technician (Castle Dale, UT)", "company": "SOLV Energy", "location": "Huntington, UT", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Huntington-UT/Solar-Field-Service-Technician--Castle-Dale--UT-_J13967", "first_seen": "2026-09-19T12:05:59.836530+00:00"}, {"job_title": "Solar Field Service Technician - Level 2 (Kermit, TX)", "company": "SOLV Energy", "location": "Kermit, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Kermit-TX/Solar-Field-Service-Technician---Level-2--Kermit--TX-_J13966", "first_seen": "2026-09-19T12:05:59.836530+00:00"}, {"job_title": "Solar Field Service Lead (Temp-to-Hire) (Brookesmith, TX)", "company": "SOLV Energy", "location": "Brownwood, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Brownwood-TX/Solar-Field-Service-Lead--Temp-to-Hire---Brookesmith--TX-_J13965", "first_seen": "2026-09-18T12:24:59.808404+00:00"}, {"job_title": "Solar Field Service Lead (Temp-to-Hire) (Haskell, TX)", "company": "SOLV Energy", "location": "Haskell, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Haskell-TX/Solar-Field-Service-Lead--Temp-to-Hire---Haskell--TX-_J13964", "first_seen": "2026-09-18T12:24:59.808404+00:00"}, {"job_title": "Advanced Solar Field Service Technician (Operations and Maintenance)", "company": "Pearce Services", "location": "Milpitas, California", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5427695008", "first_seen": "2026-09-18T12:24:55.957490+00:00"}, {"job_title": "Solar Field Service Technician I (Operations and Maintenance)", "company": "Pearce Services", "location": "San Jose, California", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5427424008", "first_seen": "2026-09-18T12:24:55.957490+00:00"}, {"job_title": "Solar Field Service Technician (Coyanosa, TX) (Temp-to-Hire)", "company": "SOLV Energy", "location": "Pecos, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Pecos-TX/Solar-Field-Service-Technician--Coyanosa--TX---Temp-to-Hire-_J13955", "first_seen": "2026-09-17T12:43:51.338338+00:00"}, {"job_title": "Solar HVAC Technician (Operations and Maintenance)", "company": "Pearce Services", "location": "Mojave, California", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5263154008", "first_seen": "2026-09-17T12:43:47.715750+00:00"}, {"job_title": "Solar Field Service Technician II", "company": "Pearce Services", "location": "Los Angeles, California", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5421995008", "first_seen": "2026-09-12T11:44:41.382276+00:00"}, {"job_title": "Solar Field Service Technician II", "company": "Pearce Services", "location": "Los Angeles, California", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5422023008", "first_seen": "2026-09-12T11:44:41.382276+00:00"}, {"job_title": "Solar Field Service Technician III", "company": "Pearce Services", "location": "Dallas, Texas", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5422037008", "first_seen": "2026-09-12T11:44:41.382276+00:00"}, {"job_title": "Solar Field Service Technician III", "company": "Pearce Services", "location": "Houston, Texas", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5422074008", "first_seen": "2026-09-12T11:44:41.382276+00:00"}, {"job_title": "Advanced Solar Field Service Technician (Operations and Maintenance)", "company": "Pearce Services", "location": "Grants Pass, Oregon", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5416934008", "first_seen": "2026-09-09T12:34:23.296555+00:00"}, {"job_title": "Advanced Solar Field Service Technician (Operations and Maintenance)", "company": "Pearce Services", "location": "New Brunswick, New Jersey", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5416928008", "first_seen": "2026-09-09T12:34:23.296555+00:00"}, {"job_title": "Solar Field Service Technician (Kirtland, NM)", "company": "SOLV Energy", "location": "Kirtland, NM", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Kirtland-NM/Solar-Field-Service-Technician--Kirtland--NM-_J13904", "first_seen": "2026-09-04T12:32:32.755386+00:00"}, {"job_title": "Advanced Solar Field Service Technician (Operations and Maintenance)", "company": "Pearce Services", "location": "Mccamey, Texas", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5415733008", "first_seen": "2026-09-04T12:32:27.389510+00:00"}, {"job_title": "Solar Field Service Technician I", "company": "Pearce Services", "location": "Houston, Texas", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5412764008", "first_seen": "2026-09-04T12:32:27.389510+00:00"}, {"job_title": "Solar Field Service Technician I", "company": "Pearce Services", "location": "Tehachapi, California", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5412789008", "first_seen": "2026-09-02T12:27:12.538186+00:00"}, {"job_title": "Solar Field Service Technician (Coyanosa, TX) (Temp-to-Hire)", "company": "SOLV Energy", "location": "Coyanosa, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Coyanosa-TX/Solar-Field-Service-Technician--Coyanosa--TX---Temp-to-Hire-_J13889", "first_seen": "2026-09-01T12:47:07.360492+00:00"}, {"job_title": "Solar Field Service Technician (Castle Dale, UT)", "company": "SOLV Energy", "location": "Castle Dale, UT", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Castle-Dale-UT/Solar-Field-Service-Technician--Castle-Dale--UT-_J13811", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Coulterville, IL)", "company": "SOLV Energy", "location": "San Diego CA Renewable Group; Eldorado, IL; Carmi, IL; Enfield, IL; Chicago, IL; Decatur, IL", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/San-Diego-CA-Renewable-Group/Solar-Field-Service-Technician--Coulterville--IL-_J13702", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Coyanosa, TX)", "company": "SOLV Energy", "location": "Pecos, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Pecos-TX/Solar-Field-Service-Technician--Coyanosa--TX-_J13707", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Grantsville, UT)", "company": "SOLV Energy", "location": "Grantsville, UT", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Grantsville-UT/Solar-Field-Service-Technician--Grantsville--UT-_J13709", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Haskell, TX)", "company": "SOLV Energy", "location": "Haskell, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Haskell-TX/Solar-Field-Service-Technician--Haskell--TX-_J12231", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Livermore, CA)", "company": "SOLV Energy", "location": "Field; San Jose CA", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Field/Solar-Field-Service-Technician--Livermore--CA-_J12828", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (McCamey, TX)", "company": "SOLV Energy", "location": "Fort Stockon, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Fort-Stockon-TX/Solar-Field-Service-Technician--McCamey--TX-_J13708", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Ramsey, IL)", "company": "SOLV Energy", "location": "San Diego CA Renewable Group; Eldorado, IL; Carmi, IL; Enfield, IL; Chicago, IL; Decatur, IL", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/San-Diego-CA-Renewable-Group/Solar-Field-Service-Technician--Ramsey--IL-_J13704", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Shelbyville, NC) (Temp-to-Hire)", "company": "SOLV Energy", "location": "Morristown, IN", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Morristown-IN/Solar-Field-Service-Technician--Shelbyville--NC---Temp-to-Hire-_J13766", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Surry, VA)", "company": "SOLV Energy", "location": "Spring Grove, VA", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Spring-Grove-VA/Solar-Field-Service-Technician--Surry--VA-_J11836", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Solar Field Service Technician (Wharton County, TX)", "company": "SOLV Energy", "location": "Houston, TX", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Houston-TX/Solar-Field-Service-Technician--Wharton-County--TX-_J13378", "first_seen": "2026-08-27T19:55:28.697396+00:00"}]}, "supply": {"national_employment": 1529700.0}, "compensation": {"national_median_wage": 49590.0, "national_mean_wage": 53780.0, "state_median_wage": {}, "city_median_wage": {}, "scraped_salary_observations": 57, "scraped_salary_median": 63596}, "fill_difficulty": {"label": "Lower", "explanation": ["Supply and demand for this role currently look balanced."], "flags": []}, "recommended_strategy": ["Current market conditions for this role look favorable - standard sourcing channels and typical hiring timelines should apply."]}, {"role": "Electrical Engineer", "soc_code": "17-2071", "precision": "exact", "demand": {"open_postings": 35, "postings_by_month": {"2026-07": 14, "2026-08": 16, "2026-09": 5}, "growth_pct_change": -73.1, "top_locations": [{"state": "CA", "count": 7}, {"state": "IL", "count": 5}, {"state": "NV", "count": 5}, {"state": "OH", "count": 2}, {"state": "IN", "count": 1}], "sample_postings": [{"job_title": "Electrical Engineer II or III", "company": "Duke Energy", "location": "Charlotte, NC; Raleigh, NC", "job_url": "https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Charlotte-NC/Electrical-Engineer-II-or-III_R41488", "first_seen": "2026-09-12T11:33:45.662589+00:00"}, {"job_title": "Electrical Engineer", "company": "Commonwealth Fusion Systems", "location": "Devens, MA", "job_url": "https://jobs.lever.co/cfsenergy/fb64e095-3d79-44d6-a73f-fa19c2d2a30f", "first_seen": "2026-09-12T11:22:47.135840+00:00"}, {"job_title": "Electrical Engineer II or Electrical Engineer III", "company": "Duke Energy", "location": "Union, KY; Florence, IN", "job_url": "https://dukeenergy.wd1.myworkdayjobs.com/Search/job/Union-KY/Electrical-Engineer-II-or-Electrical-Engineer-III_R41464-1", "first_seen": "2026-09-11T12:12:00.223045+00:00"}, {"job_title": "Electrical Engineer", "company": "Vestas", "location": "Aarhus N, Region Central Jutland, DK, 8200", "job_url": "https://careers.vestas.com/job/Aarhus-N-Electrical-Engineer-Regi-8200/1435567433/", "first_seen": "2026-09-10T12:05:10.290813+00:00"}, {"job_title": "Staff Electrical Engineer", "company": "Commonwealth Fusion Systems", "location": "Milpitas, CA", "job_url": "https://jobs.lever.co/cfsenergy/60ac4feb-c7bd-4b39-b00f-3d353598a0f1", "first_seen": "2026-09-10T11:57:18.709680+00:00"}, {"job_title": "Electrical Engineer Sr", "company": "Lithion Battery", "location": "Henderson, NV", "job_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=c8842c22-2743-4df9-af35-f08182629130&jobId=9201780121191_1", "first_seen": "2026-08-27T19:55:08.839936+00:00"}, {"job_title": "Construction Electrical Engineer I & II - Solar", "company": "Mortenson", "location": "TX", "job_url": "https://www.mortenson.com/careers/solar-group/construction-electrical-engineer-i-ii-solar-23506", "first_seen": "2026-08-27T01:19:35.677425+00:00"}, {"job_title": "Electrical Engineer", "company": "Vanguard Energy Partners", "location": "Branchburg, NJ", "job_url": "https://vanguardenergypartnersllc.applytojob.com/apply/XbsIdMA3WG/Electrical-Engineer", "first_seen": "2026-08-24T01:05:25.751451+00:00"}, {"job_title": "Electrical Engineer", "company": "Northland Power", "location": "Careers: Warsaw, Poland", "job_url": "https://northlandpower.wd3.myworkdayjobs.com/ExternalCS/job/Careers-Warsaw-Poland/Electrical-Engineer_R-2679", "first_seen": "2026-08-22T17:31:00.413260+00:00"}, {"job_title": "Electrical Engineer III, Operations Engineering", "company": "Invenergy", "location": "Chicago, IL", "job_url": "https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Electrical-Engineer-III--Operations-Engineering_R11290-1", "first_seen": "2026-08-22T17:18:37.963196+00:00"}, {"job_title": "Senior Operations Electrical Engineer", "company": "Invenergy", "location": "Chicago, IL", "job_url": "https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Senior-Operations-Electrical-Engineer_R10992", "first_seen": "2026-08-22T17:18:37.963196+00:00"}, {"job_title": "Senior Staff Electrical Engineer, NPI", "company": "Bloom Energy", "location": "Office - 4353 North 1st Street", "job_url": "https://bloomenergy.wd1.myworkdayjobs.com/BloomEnergyCareers/job/Office---4353-North-1st-Street/Senior-Staff-Electrical-Engineer--NPI_JR-21033", "first_seen": "2026-08-21T07:34:19.172058+00:00"}, {"job_title": "Lead Electrical Engineer - Gas Power Generation", "company": "Blattner Energy", "location": "Remote/Traveling (For Corporate Use Only)", "job_url": "https://blattner.wd5.myworkdayjobs.com/BlattnerCompany/job/RemoteTraveling-For-Corporate-Use-Only/Lead-Electrical-Engineer---Gas-Power-Generation_R8441", "first_seen": "2026-08-19T07:50:16.937322+00:00"}, {"job_title": "Electrical Engineer II, Operations Engineering (Protection & Control)", "company": "Invenergy", "location": "Chicago, IL", "job_url": "https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Electrical-Engineer-II--Operations-Engineering--Protection---Control-_R10978-1", "first_seen": "2026-08-18T07:49:14.733478+00:00"}, {"job_title": "Sr. Electrical Engineer, NPI", "company": "Bloom Energy", "location": "San Jose, California", "job_url": "https://bloomenergy.wd1.myworkdayjobs.com/BloomEnergyCareers/job/San-Jose-California/Sr-Electrical-Engineer--NPI_JR-23975-1", "first_seen": "2026-08-18T07:29:21.631017+00:00"}, {"job_title": "Electrical Engineer, Energy Storage Project Engineering", "company": "Redwood Materials", "location": "McCarran, NV; San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/6143567004?gh_jid=6143567004", "first_seen": "2026-08-14T08:06:48.807804+00:00"}, {"job_title": "Electrical Engineer, Energy Storage Project Engineering", "company": "Redwood Materials", "location": "McCarran, NV; San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/6143587004?gh_jid=6143587004", "first_seen": "2026-08-14T08:06:48.807804+00:00"}, {"job_title": "Staff Electrical Engineer, Balance of Plant", "company": "Redwood Materials", "location": "San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/6139227004?gh_jid=6139227004", "first_seen": "2026-08-11T08:02:55.766527+00:00"}, {"job_title": "Sr. Electrical Engineer", "company": "Blattner Energy", "location": "Remote/Traveling (For Corporate Use Only)", "job_url": "https://blattner.wd5.myworkdayjobs.com/BlattnerCompany/job/RemoteTraveling-For-Corporate-Use-Only/Sr-Electrical-Engineer_R8411", "first_seen": "2026-08-09T08:05:01.029105+00:00"}, {"job_title": "Electrical Engineer II (Inverters), Operations Engineering", "company": "Invenergy", "location": "Chicago, IL", "job_url": "https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Electrical-Engineer-II--Inverters---Operations-Engineering_R11241", "first_seen": "2026-08-04T09:51:39.414155+00:00"}, {"job_title": "Senior Field Electrical Engineer", "company": "Terawatt Infrastructure", "location": "Remote", "job_url": "https://jobs.lever.co/terawattinfrastructure/b8ef86bc-e56d-491a-9058-04d95ab7fe88", "first_seen": "2026-08-01T12:07:52.682030+00:00"}, {"job_title": "Electrical Engineer (Distribution Planning)", "company": "AES Corporation", "location": "US, Dayton, OH", "job_url": "https://aes.wd1.myworkdayjobs.com/AES_US/job/US-Dayton-OH/Electrical-Engineer--Distribution-Planning-_R1064279-1", "first_seen": "2026-07-28T13:39:35.323163+00:00"}, {"job_title": "Senior Electrical Engineer", "company": "Fluence Energy", "location": "India - Bangalore", "job_url": "https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/India---Bangalore/Senior-Electrical-Engineer_JR101366", "first_seen": "2026-07-20T13:58:30.955557+00:00"}, {"job_title": "Nuclear Electrical Engineer - Senior", "company": "NextEra Energy", "location": "Palo, IA, US, 52324", "job_url": "https://jobs.nexteraenergy.com/job/Palo-Nuclear-Electrical-Engineer-Senior-IA-52324/1391729000/", "first_seen": "2026-07-16T12:15:13.845759+00:00"}, {"job_title": "Electrical Engineer, Metering", "company": "AES Corporation", "location": "US, Dayton, OH", "job_url": "https://aes.wd1.myworkdayjobs.com/AES_US/job/US-Dayton-OH/Electrical-Engineer--Metering_R1063048", "first_seen": "2026-07-15T12:07:31.143136+00:00"}, {"job_title": "Electrical Engineer Substation Lead", "company": "Avangrid Renewables", "location": "ME - Augusta - General Office", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/ME---Augusta---General-Office/Electrical-Engineer-Substation-Lead_R-25253", "first_seen": "2026-07-13T19:52:07.620641+00:00"}, {"job_title": "Electrical Engineer", "company": "AES Corporation", "location": "US, Indianapolis, IN", "job_url": "https://aes.wd1.myworkdayjobs.com/AES_US/job/US-Indianapolis-IN/Electrical-Engineer_R1064078-1", "first_seen": "2026-07-07T16:14:33.453256+00:00"}, {"job_title": "Electrical Engineer Substation Lead", "company": "Avangrid Renewables", "location": "United States Of America, New York, Binghamton; United States Of America, New York, Rochester", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-New-York-Binghamton/Electrical-Engineer-Substation-Lead_R-27984", "first_seen": "2026-07-02T15:08:09.662357+00:00"}, {"job_title": "Electrical Engineer III (Maintenance), Operations Engineering", "company": "Invenergy", "location": "Chicago, IL", "job_url": "https://invenergyllc.wd1.myworkdayjobs.com/invenergycareers/job/Chicago-IL/Electrical-Engineer-III--Operations-Engineering_R10408-1", "first_seen": "2026-07-02T15:07:44.376614+00:00"}, {"job_title": "Principal Electrical Engineer, NPI", "company": "Bloom Energy", "location": "Fremont, California", "job_url": "https://bloomenergy.wd1.myworkdayjobs.com/BloomEnergyCareers/job/Fremont-California/Principal-Electrical-Engineer--NPI_JR-22700", "first_seen": "2026-07-02T15:03:53.124684+00:00"}]}, "supply": {"national_employment": 198750.0}, "compensation": {"national_median_wage": 120630.0, "national_mean_wage": 125100.0, "state_median_wage": {"IL": 107860.0, "OH": 100620.0, "MN": 109510.0, "CT": 104160.0, "NY": 119010.0, "NV": 107400.0, "CA": 144040.0, "SC": 98440.0, "CO": 120760.0, "TX": 129450.0}, "city_median_wage": {"Dayton-Kettering, OH": 103720.0, "New Haven-Milford, CT": 105250.0, "Binghamton, NY": 126010.0, "San Francisco-Oakland-Berkeley, CA": 166030.0, "San Jose-Sunnyvale-Santa Clara, CA": 187060.0, "Chicago-Naperville-Elgin, IL-IN-WI": 113520.0, "Amarillo, TX": 106130.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 117230.0, "Denver-Aurora-Lakewood, CO": 119020.0, "Pueblo, CO": 118520.0}, "scraped_salary_observations": 33, "scraped_salary_median": 123188}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer.", "San Jose-Sunnyvale-Santa Clara, CA pays the highest median ($187,060) among the areas we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "Software Engineer", "soc_code": "15-1252", "precision": "exact", "demand": {"open_postings": 30, "postings_by_month": {"2026-07": 19, "2026-08": 8, "2026-09": 3}, "growth_pct_change": -78.6, "top_locations": [{"state": "CA", "count": 8}, {"state": "MA", "count": 5}, {"state": "NV", "count": 4}, {"state": "IN", "count": 3}, {"state": "OH", "count": 3}], "sample_postings": [{"job_title": "Senior Software Engineer", "company": "ChargePoint", "location": "IN-Karnataka-Bangalore", "job_url": "https://www.chargepoint.com/about/opportunities/job/?gh_jid=8794600002", "first_seen": "2026-09-17T12:41:56.225636+00:00"}, {"job_title": "Converter Software Engineer - Specialist", "company": "Vestas", "location": "Chennai, TN, IN, 600 117", "job_url": "https://careers.vestas.com/job/Chennai-Converter-Software-Engineer-Specialist-TN-600-117/1438003233/", "first_seen": "2026-09-17T12:24:19.802018+00:00"}, {"job_title": "Senior/Staff Software Engineer", "company": "Zanskar", "location": "Salt Lake City, Utah", "job_url": "https://jobs.lever.co/Zanskar/116d7045-482b-4352-8e18-f2fee669fe58", "first_seen": "2026-09-05T11:30:51.221279+00:00"}, {"job_title": "Manufacturing Controls/Software Engineer", "company": "Lithion Battery", "location": "Henderson, NV", "job_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=c8842c22-2743-4df9-af35-f08182629130&jobId=9201699515009_1", "first_seen": "2026-08-27T19:55:08.839936+00:00"}, {"job_title": "Principal Software Engineer", "company": "Fluence Energy", "location": "India - Bangalore", "job_url": "https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/India---Bangalore/Principal-Software-Engineer_JR101573", "first_seen": "2026-08-25T07:58:05.186329+00:00"}, {"job_title": "Senior Software Engineer", "company": "Solar Landscape", "location": "New York, NY", "job_url": "https://jobs.lever.co/solarlandscape/09ae0270-2c56-4d1b-a044-cdb1f32639c9", "first_seen": "2026-08-24T01:05:34.985204+00:00"}, {"job_title": "Senior Embedded Software Engineer", "company": "Commonwealth Fusion Systems", "location": "Devens, MA", "job_url": "https://jobs.lever.co/cfsenergy/b7c5bd9d-bc19-457a-8c69-e7d7bfd62fc3", "first_seen": "2026-08-22T07:23:01.987133+00:00"}, {"job_title": "Senior Algorithms and Simulation Software Engineer", "company": "Commonwealth Fusion Systems", "location": "Devens, MA", "job_url": "https://jobs.lever.co/cfsenergy/8686a0a7-7cef-437e-ae03-8f26952a8d9f", "first_seen": "2026-08-21T07:34:18.781864+00:00"}, {"job_title": "Senior Data and Operations Software Engineer", "company": "Commonwealth Fusion Systems", "location": "Devens, MA", "job_url": "https://jobs.lever.co/cfsenergy/a472607e-b8f7-4983-b997-f32fef23436e", "first_seen": "2026-08-21T07:34:18.781864+00:00"}, {"job_title": "Software Developer .NET/C#", "company": "Vestas", "location": "Leça do Balio, Grande Porto, PT, 4465-671", "job_url": "https://careers.vestas.com/job/Le%C3%A7a-do-Balio-Software-Developer-_NETC-Gran-4465-671/1426083033/", "first_seen": "2026-08-14T08:12:31.091313+00:00"}, {"job_title": "Control Software Engineer", "company": "Commonwealth Fusion Systems", "location": "Devens, MA", "job_url": "https://jobs.lever.co/cfsenergy/ca1ae177-9781-4ea1-8fd3-f22c43e9e094", "first_seen": "2026-08-06T09:34:40.295709+00:00"}, {"job_title": "Senior Software Engineer - Full Stack", "company": "ChargePoint", "location": "IN-Karnataka-Bangalore", "job_url": "https://www.chargepoint.com/about/opportunities/job/?gh_jid=8557646002", "first_seen": "2026-07-17T12:30:19.267785+00:00"}, {"job_title": "Manager I - Software Engineer", "company": "First Solar", "location": "OH, United States", "job_url": "https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1024691", "first_seen": "2026-07-16T12:24:10.428254+00:00"}, {"job_title": "Software Engineer Intern (1st Shift)", "company": "First Solar", "location": "Perrysburg, OH, United States", "job_url": "https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1025137", "first_seen": "2026-07-16T12:24:10.428254+00:00"}, {"job_title": "Software Engineer- MES II USA", "company": "First Solar", "location": "Perrysburg, OH, United States", "job_url": "https://fa-esbv-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/1022790", "first_seen": "2026-07-16T12:24:10.428254+00:00"}, {"job_title": "Staff Software Engineer", "company": "ChargePoint", "location": "IN-Karnataka-Bangalore", "job_url": "https://www.chargepoint.com/about/opportunities/job/?gh_jid=8591782002", "first_seen": "2026-07-14T18:34:37.244716+00:00"}, {"job_title": "Embedded Software Engineer – Power Electronics, Energy Storage", "company": "Redwood Materials", "location": "San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/6003203004?gh_jid=6003203004", "first_seen": "2026-07-10T15:43:43.194517+00:00"}, {"job_title": "IT Senior Software Engineer (Hybrid)", "company": "Eversource Energy", "location": "Berlin, CT; Westwood, MA", "job_url": "https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Berlin-CT/IT-Senior-Software-Engineer--Hybrid-_R-031032", "first_seen": "2026-07-03T13:24:20.743536+00:00"}, {"job_title": "Senior/Staff Software Engineer", "company": "Fluence Energy", "location": "India - Bangalore", "job_url": "https://fluenceenergy.wd12.myworkdayjobs.com/fluenceenergy-jobs/job/India---Bangalore/Senior-Software-Engineer_JR100765", "first_seen": "2026-07-02T15:09:18.744459+00:00"}, {"job_title": "Principal Software Engineer, Edge Compute", "company": "Bloom Energy", "location": "San Jose, California", "job_url": "https://bloomenergy.wd1.myworkdayjobs.com/BloomEnergyCareers/job/San-Jose-California/Principal-Software-Engineer--Edge-Compute_JR-21980", "first_seen": "2026-07-02T15:03:53.124684+00:00"}, {"job_title": "Principal Software Engineer, Middleware & Data", "company": "Bloom Energy", "location": "San Jose, California", "job_url": "https://bloomenergy.wd1.myworkdayjobs.com/BloomEnergyCareers/job/San-Jose-California/Principal-Software-Engineer--Middleware---Data_JR-21982", "first_seen": "2026-07-02T15:03:53.124684+00:00"}, {"job_title": "Sr Staff Software Engineer - DevOps", "company": "Bloom Energy", "location": "San Jose, California", "job_url": "https://bloomenergy.wd1.myworkdayjobs.com/BloomEnergyCareers/job/San-Jose-California/Sr-Staff-Software-Engineer---DevOps_JR-21960-1", "first_seen": "2026-07-02T15:03:53.124684+00:00"}, {"job_title": "Sr. Staff Software Engineer, Automation", "company": "Bloom Energy", "location": "San Jose, California", "job_url": "https://bloomenergy.wd1.myworkdayjobs.com/BloomEnergyCareers/job/San-Jose-California/Sr-Staff-Software-Engineer--Automation_JR-21204", "first_seen": "2026-07-02T15:03:53.124684+00:00"}, {"job_title": "Senior Control Software Engineer", "company": "Commonwealth Fusion Systems", "location": "Devens, MA", "job_url": "https://jobs.lever.co/cfsenergy/ca49109b-6cff-4d2a-b64c-8d782f652244", "first_seen": "2026-07-02T15:03:52.448702+00:00"}, {"job_title": "Infrastructure Software Engineer, Energy Storage", "company": "Redwood Materials", "location": "San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/5737879004?gh_jid=5737879004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}, {"job_title": "Senior Software Engineer", "company": "Redwood Materials", "location": "McCarran, NV; San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/5804237004?gh_jid=5804237004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}, {"job_title": "Senior Software Engineer - Site Controller, Energy Storage", "company": "Redwood Materials", "location": "San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/6097367004?gh_jid=6097367004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}, {"job_title": "Senior Software Engineer, Energy Storage", "company": "Redwood Materials", "location": "San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/5823270004?gh_jid=5823270004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}, {"job_title": "Software Engineer - ML/Computer Vision (Battery Sorting)", "company": "Redwood Materials", "location": "McCarran, NV; San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/6099577004?gh_jid=6099577004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}, {"job_title": "Staff Software Engineer, Factory Automation", "company": "Redwood Materials", "location": "McCarran, NV", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/5689062004?gh_jid=5689062004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}]}, "supply": {"national_employment": 1687890.0}, "compensation": {"national_median_wage": 135980.0, "national_mean_wage": 148100.0, "state_median_wage": {"NV": 128810.0, "CA": 174410.0, "MA": 165210.0, "CT": 134120.0}, "city_median_wage": {"San Jose-Sunnyvale-Santa Clara, CA": 213110.0, "Hartford-East Hartford-Middletown, CT": 132520.0, "San Francisco-Oakland-Berkeley, CA": 186640.0}, "scraped_salary_observations": 22, "scraped_salary_median": 159750}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer.", "San Jose-Sunnyvale-Santa Clara, CA pays the highest median ($213,110) among the areas we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "Solar Photovoltaic Installer", "soc_code": "47-2231", "precision": "exact", "demand": {"open_postings": 29, "postings_by_month": {"2026-07": 1, "2026-08": 21, "2026-09": 7}, "growth_pct_change": -66.7, "top_locations": [{"state": "PA", "count": 13}, {"state": "MD", "count": 4}, {"state": "NY", "count": 3}, {"state": "NJ", "count": 2}, {"state": "CT", "count": 1}], "sample_postings": [{"job_title": "Solar Installer", "company": "Trinity Solar", "location": "Pittsburgh, PA", "job_url": "https://recruiting.adp.com/srccar/public/RTI.home?r=5001226353006&c=2211221&d=ExternalCareerSite&rb=VCCareerSite", "first_seen": "2026-09-19T12:03:56.428616+00:00"}, {"job_title": "Solar Installer", "company": "Trinity Solar", "location": "Reading, PA", "job_url": "https://recruiting.adp.com/srccar/public/RTI.home?r=5001226328606&c=2211221&d=ExternalCareerSite&rb=VCCareerSite", "first_seen": "2026-09-19T12:03:56.428616+00:00"}, {"job_title": "Solar Installer", "company": "Trinity Solar", "location": "Mechanicsburg, PA", "job_url": "https://recruiting.adp.com/srccar/public/RTI.home?r=5001226340306&c=2211221&d=ExternalCareerSite&rb=VCCareerSite", "first_seen": "2026-09-19T12:03:56.428616+00:00"}, {"job_title": "Solar Installer", "company": "SunCommon", "location": "Waterbury, VT", "job_url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4508856", "first_seen": "2026-09-16T12:46:31.928704+00:00"}, {"job_title": "Solar Installer (Talent Pool, Future)", "company": "Sunrun", "location": "HI, Lihue", "job_url": "https://sunrun.wd5.myworkdayjobs.com/Sunrun_Careers/job/HI-Lihue/Solar-Installer--Talent-Pool--Future-_R74601", "first_seen": "2026-09-12T11:24:02.488850+00:00"}, {"job_title": "Solar Installer", "company": "Green Power Energy", "location": "Annandale, New Jersey", "job_url": "https://apply.workable.com/j/95EA2BDB05", "first_seen": "2026-09-11T12:23:46.495867+00:00"}, {"job_title": "Solar Installer", "company": "Trinity Solar", "location": "Hanover, MD", "job_url": "https://recruiting.adp.com/srccar/public/RTI.home?r=5001222715006&c=2211221&d=ExternalCareerSite&rb=VCCareerSite", "first_seen": "2026-09-03T12:18:12.656664+00:00"}, {"job_title": "Solar Installer", "company": "Trinity Solar", "location": "Reading, PA", "job_url": "https://recruiting.adp.com/srccar/public/RTI.home?r=5001221523506&c=2211221&d=ExternalCareerSite&rb=VCCareerSite", "first_seen": "2026-08-27T19:21:02.312343+00:00"}, {"job_title": "Assistant Superintendent - Solar Install", "company": "Mortenson", "location": "FL", "job_url": "https://www.mortenson.com/careers/solar-group/assistant-superintendent-solar-install-23186", "first_seen": "2026-08-27T01:19:35.677425+00:00"}, {"job_title": "Superintendent I - Solar Install - Nationwide", "company": "Mortenson", "location": null, "job_url": "https://www.mortenson.com/careers/solar-group/superintendent-i-solar-install-nationwide-22583", "first_seen": "2026-08-27T01:19:35.677425+00:00"}, {"job_title": "PV Solar Installer (Salisbury, MD)", "company": "Paradise Energy Solutions", "location": "Salisbury, MD", "job_url": "https://secure2.entertimeonline.com/ta/ParadiseEnergy.careers?CareersSearch=&ein_id=655624&lang=en-US#job-872587138", "first_seen": "2026-08-26T17:14:20.126269+00:00"}, {"job_title": "Solar Installation Crew Lead", "company": "Trinity Solar", "location": "Hanover, MD", "job_url": "https://recruiting.adp.com/srccar/public/RTI.home?r=5001213923906&c=2211221&d=ExternalCareerSite&rb=VCCareerSite", "first_seen": "2026-08-25T07:58:58.279883+00:00"}, {"job_title": "Solar Installer", "company": "Trinity Solar", "location": "Pittsburgh, PA", "job_url": "https://recruiting.adp.com/srccar/public/RTI.home?r=5001213921006&c=2211221&d=ExternalCareerSite&rb=VCCareerSite", "first_seen": "2026-08-25T07:58:58.279883+00:00"}, {"job_title": "Solar Installer", "company": "Public Service Solar", "location": "Burlington, NJ", "job_url": "https://publicservicesolar.com/careers/#solar-installer", "first_seen": "2026-08-24T01:05:37.653427+00:00"}, {"job_title": "Foreman - Lead Solar Installer", "company": "ReNu Solar & Roofing", "location": "Dillsburg, PA", "job_url": "https://odoo.renucompany.com/jobs/detail/foreman-lead-solar-installer-129", "first_seen": "2026-08-23T22:53:57.538069+00:00"}, {"job_title": "Solar Installation Helper", "company": "ReNu Solar & Roofing", "location": "Dillsburg, PA", "job_url": "https://odoo.renucompany.com/jobs/detail/solar-installation-helper-128", "first_seen": "2026-08-23T22:53:57.538069+00:00"}, {"job_title": "Solar Installer - PA", "company": "ReNu Solar & Roofing", "location": "Harrisburg, PA", "job_url": "https://odoo.renucompany.com/jobs/detail/solar-installer-pa-1", "first_seen": "2026-08-23T22:53:57.538069+00:00"}, {"job_title": "Lead Solar Installer", "company": "Solar States", "location": "Philadelphia, PA", "job_url": "https://www.solar-states.com/careers/#lead-solar-installer", "first_seen": "2026-08-23T22:53:55.550741+00:00"}, {"job_title": "Solar Installer", "company": "Solar States", "location": "Philadelphia, PA", "job_url": "https://www.solar-states.com/careers/#solar-installer", "first_seen": "2026-08-23T22:53:55.550741+00:00"}, {"job_title": "Lead Solar Installer", "company": "Green Power Energy", "location": "Wallingford, Connecticut", "job_url": "https://apply.workable.com/j/1932356014", "first_seen": "2026-08-23T22:53:41.964874+00:00"}, {"job_title": "PV Solar Installer (Geneva, NY)", "company": "Paradise Energy Solutions", "location": "Geneva, NY", "job_url": "https://secure2.entertimeonline.com/ta/ParadiseEnergy.careers?CareersSearch=&ein_id=655624&lang=en-US#job-822245454", "first_seen": "2026-08-23T02:03:04.720214+00:00"}, {"job_title": "PV Solar Installer (Sugarcreek, OH)", "company": "Paradise Energy Solutions", "location": "Sugarcreek, OH", "job_url": "https://secure2.entertimeonline.com/ta/ParadiseEnergy.careers?CareersSearch=&ein_id=655624&lang=en-US#job-822245452", "first_seen": "2026-08-23T02:03:04.720214+00:00"}, {"job_title": "PV Solar Installer (Towanda, PA)", "company": "Paradise Energy Solutions", "location": "Towanda, PA", "job_url": "https://secure2.entertimeonline.com/ta/ParadiseEnergy.careers?CareersSearch=&ein_id=655624&lang=en-US#job-839053644", "first_seen": "2026-08-23T02:03:04.720214+00:00"}, {"job_title": "PV Solar Installer, Traveling (Paradise, PA)", "company": "Paradise Energy Solutions", "location": "Paradise, PA", "job_url": "https://secure2.entertimeonline.com/ta/ParadiseEnergy.careers?CareersSearch=&ein_id=655624&lang=en-US#job-855813517", "first_seen": "2026-08-23T02:03:04.720214+00:00"}, {"job_title": "PV Solar Installer, Traveling (Salisbury, MD)", "company": "Paradise Energy Solutions", "location": "Salisbury, MD", "job_url": "https://secure2.entertimeonline.com/ta/ParadiseEnergy.careers?CareersSearch=&ein_id=655624&lang=en-US#job-855810124", "first_seen": "2026-08-23T02:03:04.720214+00:00"}, {"job_title": "PV Solar Installer -- Hiring immediately", "company": "Green Solar Systems", "location": "Greensburg, Pennsylvania", "job_url": "https://greensolarsystems.bamboohr.com/careers/26", "first_seen": "2026-08-23T00:57:58.988080+00:00"}, {"job_title": "Commercial PV Installer", "company": "GreenSpark Solar", "location": "Rochester, NY", "job_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=37ed6174-6531-4a11-8add-1acf31abc5e0&ccId=19000101_000001&type=JS&lang=en_US&selectedMenuKey=CurrentOpenings&jobId=436578", "first_seen": "2026-08-23T00:57:09.054154+00:00"}, {"job_title": "Solar Installer", "company": "GreenSpark Solar", "location": "Rochester, NY", "job_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=37ed6174-6531-4a11-8add-1acf31abc5e0&ccId=19000101_000001&jobId=516267&lang=en_US", "first_seen": "2026-08-23T00:57:09.054154+00:00"}, {"job_title": "Solar Installer", "company": "Sunrun", "location": "IL, Bloomington", "job_url": "https://sunrun.wd5.myworkdayjobs.com/Sunrun_Careers/job/IL-Bloomington/Solar-Installer_R69487", "first_seen": "2026-07-02T15:04:05.111891+00:00"}]}, "supply": {"national_employment": 31350.0}, "compensation": {"national_median_wage": 53140.0, "national_mean_wage": 57900.0, "state_median_wage": {"TX": 48240.0, "IL": 59630.0}, "city_median_wage": {"Providence-Warwick, RI-MA": 53700.0, "Austin-Round Rock-Georgetown, TX": 50580.0, "Dallas-Fort Worth-Arlington, TX": 48350.0}, "scraped_salary_observations": 36, "scraped_salary_median": 52946}, "fill_difficulty": {"label": "Moderate", "explanation": ["The national talent pool for this role is relatively small."], "flags": ["small_talent_pool"]}, "recommended_strategy": ["The qualified talent pool for this role is relatively small (~31,350 nationally) - build a proactive pipeline through NABCEP-certified installer training programs rather than relying only on active job seekers.", "Providence-Warwick, RI-MA pays the highest median ($53,700) among the areas we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "Battery / Storage Engineer", "soc_code": "17-2199", "precision": "broad", "demand": {"open_postings": 18, "postings_by_month": {"2026-07": 4, "2026-08": 13, "2026-09": 1}, "growth_pct_change": -93.8, "top_locations": [{"state": "CA", "count": 7}, {"state": "FL", "count": 4}, {"state": "CO", "count": 2}, {"state": "AZ", "count": 2}, {"state": "NV", "count": 2}], "sample_postings": [{"job_title": "BESS Project Engineer, Senior or Staff", "company": "Redwood Materials", "location": "San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/6190880004?gh_jid=6190880004", "first_seen": "2026-09-13T12:26:18.545488+00:00"}, {"job_title": "BESS Engineer III (Remote)", "company": "SOLV Energy", "location": "Remote - CA; Remote - KY; Remote - LA; Remote - ME; Remote - MD; Remote - MA; Remote - MI; Remote - MN; Remote - MS; Remote - MO; Remote - MT; Remote - NE; Remote - NV; Remote - NH; Remote - NJ; Remote - NM; Remote - NY; Remote - NC; Remote - ND; Remote - OH; Remote - OK; Remote - OR; Remote - PA; Remote - RI; Remote - SC; Remote - SD; Remote - TN; Remote - UT; Remote - VT; Remote - VA; Remote - WA; Remote - WV; Remote - WI; Remote - WY; Remote - TX; Remote - AL; Remote - AZ; Remote - AR; Remote - CO; Remote - CT; Remote - DE; Remote - FL; Remote - GA; Remote - ID; Remote - IL; Remote - IN; Remote - IA; Remote - KS", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Remote---CA/BESS-Engineer-III--Remote-_J13825", "first_seen": "2026-08-28T19:42:44.132458+00:00"}, {"job_title": "BESS Engineer II (Remote)", "company": "SOLV Energy", "location": "Remote - CA; Remote - KY; Remote - LA; Remote - ME; Remote - MD; Remote - MA; Remote - MI; Remote - MN; Remote - MS; Remote - MO; Remote - MT; Remote - NE; Remote - NV; Remote - NH; Remote - NJ; Remote - NM; Remote - NY; Remote - NC; Remote - ND; Remote - OH; Remote - OK; Remote - OR; Remote - PA; Remote - RI; Remote - SC; Remote - SD; Remote - TN; Remote - UT; Remote - VT; Remote - VA; Remote - WA; Remote - WV; Remote - WI; Remote - WY; Remote - TX; Remote - AL; Remote - AZ; Remote - AR; Remote - CO; Remote - CT; Remote - DE; Remote - FL; Remote - GA; Remote - ID; Remote - IL; Remote - IN; Remote - IA; Remote - KS", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Remote---CA/BESS-Engineer-II--Remote-_J13228", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "BESS Senior Project Engineer (Holbrook, AZ)", "company": "SOLV Energy", "location": "Holbrook, AZ", "job_url": "https://solvenergy.wd1.myworkdayjobs.com/SOLV_External_Career/job/Holbrook-AZ/BESS-Senior-Project-Engineer--Holbrook--AZ-_J13625", "first_seen": "2026-08-27T19:55:28.697396+00:00"}, {"job_title": "Principal BESS Engineer", "company": "Clearway Energy", "location": "Houston, Texas, United States", "job_url": "https://job-boards.greenhouse.io/clearwayjobs/jobs/5212417007", "first_seen": "2026-08-22T07:32:58.132596+00:00"}, {"job_title": "Principal BESS Engineer", "company": "Clearway Energy", "location": "San Francisco, California, United States", "job_url": "https://job-boards.greenhouse.io/clearwayjobs/jobs/5212415007", "first_seen": "2026-08-22T07:32:58.132596+00:00"}, {"job_title": "Principal BESS Engineer", "company": "Clearway Energy", "location": "San Diego, California, United States", "job_url": "https://job-boards.greenhouse.io/clearwayjobs/jobs/5212414007", "first_seen": "2026-08-22T07:32:58.132596+00:00"}, {"job_title": "Principal BESS Engineer", "company": "Clearway Energy", "location": "Denver, Colorado, United States", "job_url": "https://job-boards.greenhouse.io/clearwayjobs/jobs/5212420007", "first_seen": "2026-08-22T07:32:58.132596+00:00"}, {"job_title": "Principal BESS Engineer", "company": "Clearway Energy", "location": "Scottsdale, Arizona, United States", "job_url": "https://job-boards.greenhouse.io/clearwayjobs/jobs/5205017007", "first_seen": "2026-08-22T07:32:58.132596+00:00"}, {"job_title": "Associate Solar & Battery Field Engineer - East Florida Region", "company": "NextEra Energy", "location": "Fort Pierce, FL, US, 34945", "job_url": "https://jobs.nexteraenergy.com/job/Fort-Pierce-Associate-Solar-&-Battery-Field-Engineer-East-Florida-Region-FL-34945/1421513600/", "first_seen": "2026-08-21T07:38:42.399745+00:00"}, {"job_title": "Associate Solar & Battery Field Engineer - Florida Panhandle Region", "company": "NextEra Energy", "location": "Panama City, FL, US, 32406", "job_url": "https://jobs.nexteraenergy.com/job/Panama-City-Associate-Solar-&-Battery-Field-Engineer-Florida-Panhandle-Region-FL-32406/1421473100/", "first_seen": "2026-08-21T07:38:42.399745+00:00"}, {"job_title": "Associate Solar & Battery Field Engineer - North Florida Region", "company": "NextEra Energy", "location": "Green Cove Springs, FL, US, 32043", "job_url": "https://jobs.nexteraenergy.com/job/Green-Cove-Springs-Associate-Solar-&-Battery-Field-Engineer-North-Florida-Region-FL-32043/1421506000/", "first_seen": "2026-08-21T07:38:42.399745+00:00"}, {"job_title": "Associate Solar & Battery Field Engineer - West Florida Region", "company": "NextEra Energy", "location": "Immokalee, FL, US, 34142", "job_url": "https://jobs.nexteraenergy.com/job/Immokalee-Associate-Solar-&-Battery-Field-Engineer-West-Florida-Region-FL-34142/1421502300/", "first_seen": "2026-08-21T07:38:42.399745+00:00"}, {"job_title": "Battery Software Integration Engineer", "company": "Redwood Materials", "location": "San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/6139225004?gh_jid=6139225004", "first_seen": "2026-08-08T07:39:57.728773+00:00"}, {"job_title": "Senior BESS Product Safety Engineer", "company": "AES Corporation", "location": "US, Louisville, CO; US, Flexible, VA; US, Flexible, IN; US, Flexible, UT; US, Flexible, TX; US, Dayton, OH; US, Flexible, CA; US, Salt Lake City, UT; US, Flexible, OH; US, Indianapolis, IN; US, Flexible, NC; US, Flexible, NY; US, New York, NY; US, Richmond, VA; US, Houston, TX; US, Conshohocken, PA; US, Long Beach (Clean Energy), CA; US, Charlotte, NC", "job_url": "https://aes.wd1.myworkdayjobs.com/AES_US/job/US-Louisville-CO/Senior-BESS-Product-Safety-Engineer_R1063376-2", "first_seen": "2026-07-02T15:06:59.387203+00:00"}, {"job_title": "Staff BESS Electrical Design Engineer, EPC", "company": "Redwood Materials", "location": "McCarran, NV", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/5989713004?gh_jid=5989713004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}, {"job_title": "Staff BESS Electrical Design Engineer, EPC", "company": "Redwood Materials", "location": "Carson City, NV", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/5991855004?gh_jid=5991855004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}, {"job_title": "Staff BESS Electrical Design Engineer, EPC", "company": "Redwood Materials", "location": "San Francisco, California, United States", "job_url": "https://boards.greenhouse.io/redwoodmaterials/jobs/5992294004?gh_jid=5992294004", "first_seen": "2026-07-02T15:03:50.033223+00:00"}]}, "supply": {"national_employment": 154070.0}, "compensation": {"national_median_wage": 122930.0, "national_mean_wage": 125330.0, "state_median_wage": {"NV": 103780.0, "CA": 130850.0, "CO": 132590.0}, "city_median_wage": {"Boulder, CO": 137530.0, "San Francisco-Oakland-Berkeley, CA": 159800.0}, "scraped_salary_observations": 10, "scraped_salary_median": 133631}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer.", "San Francisco-Oakland-Berkeley, CA pays the highest median ($159,800) among the areas we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "Wind Turbine Service Technician", "soc_code": "49-9081", "precision": "exact", "demand": {"open_postings": 10, "postings_by_month": {"2026-07": 5, "2026-08": 3, "2026-09": 2}, "growth_pct_change": -71.4, "top_locations": [{"state": "IL", "count": 2}, {"state": "CA", "count": 2}, {"state": "OR", "count": 1}, {"state": "PA", "count": 1}, {"state": "WY", "count": 1}], "sample_postings": [{"job_title": "Wind Turbine Technician - Power", "company": "Avangrid Renewables", "location": "United States Of America, Pennsylvania, Raven Run", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Pennsylvania-Raven-Run/Wind-Turbine-Technician---Power_R-32945-1", "first_seen": "2026-09-04T12:16:32.224878+00:00"}, {"job_title": "Wind Turbine Technician - Power", "company": "Avangrid Renewables", "location": "United States Of America, California, North Palm Springs", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-California-North-Palm-Springs/Wind-Turbine-Technician---Power_R-32944-1", "first_seen": "2026-09-02T12:12:49.699082+00:00"}, {"job_title": "Wind Turbine Technician - Power", "company": "Avangrid Renewables", "location": "United States Of America, California, Rosamond", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-California-Rosamond/Wind-Turbine-Technician---Power_R-32929", "first_seen": "2026-08-26T17:02:26.781779+00:00"}, {"job_title": "Wind Turbine Technician - Power", "company": "Avangrid Renewables", "location": "United States Of America, Illinois, Dana", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Illinois-Dana/Wind-Turbine-Technician---Power_R-32537", "first_seen": "2026-08-26T07:59:01.101705+00:00"}, {"job_title": "Wind Turbine Technician II -Glenns Ferry, ID", "company": "Vestas", "location": "Glenns Ferry, ID, US", "job_url": "https://careers.vestas.com/job/Glenns-Ferry-Wind-Turbine-Technician-II-Glenns-Ferry%2C-ID-ID-83623/1428877133/", "first_seen": "2026-08-22T07:24:50.879515+00:00"}, {"job_title": "Technicien·ne en éolien II / Wind Turbine Technician II - Lac-Mégantic, QC", "company": "Vestas", "location": "Lac-Megantic, Quebec, CA", "job_url": "https://careers.vestas.com/job/Lac-Megantic-Technicien%C2%B7ne-en-%C3%A9olien-II-Wind-Turbine-Technician-II-Lac-M%C3%A9gantic%2C-QC-Queb/1377148233/", "first_seen": "2026-07-19T11:26:47.843346+00:00"}, {"job_title": "Technicien éolienne I / Wind Turbine Technician I - Port Cartier, Quebec", "company": "Vestas", "location": "Riviere-Pentecote, Quebec, CA, G0H 1R0", "job_url": "https://careers.vestas.com/job/Riviere-Pentecote-Technicien-%C3%A9olienne-I-Wind-Turbine-Technician-I-Port-Cartier%2C-Quebec-Queb-G0H-1R0/1392912233/", "first_seen": "2026-07-16T12:16:32.238818+00:00"}, {"job_title": "Wind Turbine Technician II - Hanna, WY", "company": "Vestas", "location": "Hanna, WY, US", "job_url": "https://careers.vestas.com/job/Hanna-Wind-Turbine-Technician-II-Hanna%2C-WY-WY/1265012801/", "first_seen": "2026-07-16T12:16:32.238818+00:00"}, {"job_title": "Wind Turbine Technician - Power", "company": "Avangrid Renewables", "location": "United States Of America, Illinois, Tiskilwa", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Illinois-Tiskilwa/Wind-Turbine-Technician---Power_R-30930", "first_seen": "2026-07-10T15:46:31.468808+00:00"}, {"job_title": "Wind Turbine Technician - Power", "company": "Avangrid Renewables", "location": "United States Of America, Oregon, Arlington", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Oregon-Arlington/Wind-Turbine-Technician---Power_R-25847", "first_seen": "2026-07-08T12:10:25.356688+00:00"}]}, "supply": {"national_employment": 9980.0}, "compensation": {"national_median_wage": 64120.0, "national_mean_wage": 68980.0, "state_median_wage": {"OR": 61820.0, "NY": 81330.0, "IA": 74880.0, "CA": 77910.0, "PA": 60830.0, "TX": 61950.0}, "city_median_wage": {}, "scraped_salary_observations": 30, "scraped_salary_median": 68770}, "fill_difficulty": {"label": "Moderate", "explanation": ["The national talent pool for this role is relatively small."], "flags": ["small_talent_pool"]}, "recommended_strategy": ["The qualified talent pool for this role is relatively small (~9,980 nationally) - build a proactive pipeline through wind turbine technician certificate programs at community and technical colleges rather than relying only on active job seekers.", "NY pays the highest median ($81,330) among the regions we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "Solar Design Engineer", "soc_code": "17-2071", "precision": "broad", "demand": {"open_postings": 1, "postings_by_month": {"2026-08": 1}, "growth_pct_change": null, "top_locations": [], "sample_postings": [{"job_title": "Senior Solar Design Engineer [Remote]", "company": "EDF Renewables North America", "location": null, "job_url": "https://careers-edf-re.icims.com/jobs/4972/senior-solar-design-engineer-%5bremote%5d/job", "first_seen": "2026-08-26T17:15:47.387969+00:00"}]}, "supply": {"national_employment": 198750.0}, "compensation": {"national_median_wage": 120630.0, "national_mean_wage": 125100.0, "state_median_wage": {"IL": 107860.0, "OH": 100620.0, "MN": 109510.0, "CT": 104160.0, "NY": 119010.0, "NV": 107400.0, "CA": 144040.0, "SC": 98440.0, "CO": 120760.0, "TX": 129450.0}, "city_median_wage": {"Dayton-Kettering, OH": 103720.0, "New Haven-Milford, CT": 105250.0, "Binghamton, NY": 126010.0, "San Francisco-Oakland-Berkeley, CA": 166030.0, "San Jose-Sunnyvale-Santa Clara, CA": 187060.0, "Chicago-Naperville-Elgin, IL-IN-WI": 113520.0, "Amarillo, TX": 106130.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 117230.0, "Denver-Aurora-Lakewood, CO": 119020.0, "Pueblo, CO": 118520.0}, "scraped_salary_observations": 1, "scraped_salary_median": 142900}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer.", "San Jose-Sunnyvale-Santa Clara, CA pays the highest median ($187,060) among the areas we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "Wind Turbine Engineer", "soc_code": "17-2071", "precision": "broad", "demand": {"open_postings": 1, "postings_by_month": {"2026-08": 1}, "growth_pct_change": null, "top_locations": [{"state": "OR", "count": 1}], "sample_postings": [{"job_title": "Wind Turbine Engineer - Mechanical Systems", "company": "Avangrid Renewables", "location": "United States Of America, Oregon, Portland", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Oregon-Portland/Wind-Turbine-Engineer---Mechanical-Systems_R-32328", "first_seen": "2026-08-13T08:33:41.042236+00:00"}]}, "supply": {"national_employment": 198750.0}, "compensation": {"national_median_wage": 120630.0, "national_mean_wage": 125100.0, "state_median_wage": {"IL": 107860.0, "OH": 100620.0, "MN": 109510.0, "CT": 104160.0, "NY": 119010.0, "NV": 107400.0, "CA": 144040.0, "SC": 98440.0, "CO": 120760.0, "TX": 129450.0}, "city_median_wage": {"Dayton-Kettering, OH": 103720.0, "New Haven-Milford, CT": 105250.0, "Binghamton, NY": 126010.0, "San Francisco-Oakland-Berkeley, CA": 166030.0, "San Jose-Sunnyvale-Santa Clara, CA": 187060.0, "Chicago-Naperville-Elgin, IL-IN-WI": 113520.0, "Amarillo, TX": 106130.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 117230.0, "Denver-Aurora-Lakewood, CO": 119020.0, "Pueblo, CO": 118520.0}, "scraped_salary_observations": 1, "scraped_salary_median": 98500}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer.", "San Jose-Sunnyvale-Santa Clara, CA pays the highest median ($187,060) among the areas we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "Grid / Interconnection Analyst", "soc_code": "17-2071", "precision": "broad", "demand": {"open_postings": 1, "postings_by_month": {"2026-07": 1}, "growth_pct_change": null, "top_locations": [{"state": "CA", "count": 1}], "sample_postings": [{"job_title": "Interconnection Engineer (CAISO)", "company": "AES Corporation", "location": "US, Long Beach (Clean Energy), CA; US, San Francisco, CA; US, Salt Lake City, UT; US, Louisville, CO; US, San Diego, CA", "job_url": "https://aes.wd1.myworkdayjobs.com/AES_US/job/US-Long-Beach-Clean-Energy-CA/Interconnection-Engineer--CAISO-_R1063554-1", "first_seen": "2026-07-02T15:06:59.387203+00:00"}]}, "supply": {"national_employment": 198750.0}, "compensation": {"national_median_wage": 120630.0, "national_mean_wage": 125100.0, "state_median_wage": {"IL": 107860.0, "OH": 100620.0, "MN": 109510.0, "CT": 104160.0, "NY": 119010.0, "NV": 107400.0, "CA": 144040.0, "SC": 98440.0, "CO": 120760.0, "TX": 129450.0}, "city_median_wage": {"Dayton-Kettering, OH": 103720.0, "New Haven-Milford, CT": 105250.0, "Binghamton, NY": 126010.0, "San Francisco-Oakland-Berkeley, CA": 166030.0, "San Jose-Sunnyvale-Santa Clara, CA": 187060.0, "Chicago-Naperville-Elgin, IL-IN-WI": 113520.0, "Amarillo, TX": 106130.0, "Minneapolis-St. Paul-Bloomington, MN-WI": 117230.0, "Denver-Aurora-Lakewood, CO": 119020.0, "Pueblo, CO": 118520.0}, "scraped_salary_observations": 3, "scraped_salary_median": 78334}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer.", "San Jose-Sunnyvale-Santa Clara, CA pays the highest median ($187,060) among the areas we track for this role - a useful benchmark if you're sourcing there or want to stay competitive against it."]}, {"role": "EV Infrastructure PM", "soc_code": "11-9199", "precision": "broad", "demand": {"open_postings": 0, "postings_by_month": {}, "growth_pct_change": null, "top_locations": [], "sample_postings": []}, "supply": {"national_employment": 622190.0}, "compensation": {"national_median_wage": 141900.0, "national_mean_wage": 153890.0, "state_median_wage": {}, "city_median_wage": {}, "scraped_salary_observations": 0, "scraped_salary_median": null}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer."]}, {"role": "Energy Policy Analyst", "soc_code": "19-3099", "precision": "broad", "demand": {"open_postings": 0, "postings_by_month": {}, "growth_pct_change": null, "top_locations": [], "sample_postings": []}, "supply": {"national_employment": 37100.0}, "compensation": {"national_median_wage": 101110.0, "national_mean_wage": 107690.0, "state_median_wage": {}, "city_median_wage": {}, "scraped_salary_observations": 2, "scraped_salary_median": 88833}, "fill_difficulty": {"label": "High", "explanation": ["The national talent pool for this role is relatively small.", "Openings are outpacing hires in this market right now."], "flags": ["small_talent_pool", "tight_market"]}, "recommended_strategy": ["The qualified talent pool for this role is relatively small (~37,100 nationally) - build a proactive pipeline through training and certificate programs that feed this specialty rather than relying only on active job seekers.", "Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer."]}, {"role": "Sustainability / ESG Analyst", "soc_code": "13-1199", "precision": "broad", "demand": {"open_postings": 0, "postings_by_month": {}, "growth_pct_change": null, "top_locations": [], "sample_postings": []}, "supply": {"national_employment": 1087090.0}, "compensation": {"national_median_wage": 83050.0, "national_mean_wage": 93970.0, "state_median_wage": {}, "city_median_wage": {}, "scraped_salary_observations": 2, "scraped_salary_median": 61875}, "fill_difficulty": {"label": "Moderate", "explanation": ["Openings are outpacing hires in this market right now."], "flags": ["tight_market"]}, "recommended_strategy": ["Hiring conditions are tight right now - expect longer time-to-fill, and move quickly through your interview process so strong candidates don't slip to a competing offer."]}], "pending": []}</script>
-
 <script>
-// Validated categorical palette for a dark chart surface (8 hues, CVD-checked
-// against #131313 - see the dataviz skill's palette.md). Assigned to each
-// sector/role by fixed identity below, never by current sort position, so a
-// slice's color never shifts just because the ranking changes month to month.
-const CATEGORICAL_DARK = ["#3987e5", "#199e70", "#c98500", "#008300", "#9085e9", "#e66767", "#d55181", "#d95926"];
-const NEUTRAL_OTHER = "#898781";
-
-const SECTORS = ["Solar", "Wind", "Storage", "Grid", "EV", "Hydrogen", "Policy", "Sustainability"];
-const SECTOR_COLORS = Object.fromEntries(SECTORS.map((s, i) => [s, CATEGORICAL_DARK[i]]));
-
-// Fixed order (not derived from any month's demand ranking) covering the roles
-// that currently have tracked postings first, so the 8 validated hues go to the
-// roles most likely to actually appear; anything beyond slot 8 shares a neutral
-// "other" tone rather than reusing a hue and creating a duplicate.
-const ROLE_COLOR_ORDER = [
-  "Project Manager", "Electrical Engineer", "Software Engineer", "Battery / Storage Engineer",
-  "Wind Turbine Service Technician", "Solar Photovoltaic Installer", "Grid / Interconnection Analyst",
-  "Solar Design Engineer", "Wind Turbine Engineer", "EV Infrastructure PM", "Energy Policy Analyst",
-  "Sustainability / ESG Analyst", "Solar O&M Technician",
-];
-const ROLE_COLORS = Object.fromEntries(
-  ROLE_COLOR_ORDER.map((role, i) => [role, i < CATEGORICAL_DARK.length ? CATEGORICAL_DARK[i] : NEUTRAL_OTHER])
-);
-
-const DIFFICULTY_COLORS = {"Lower": "var(--grn)", "Moderate": "var(--blu)", "High": "var(--amb)", "Very High": "var(--cor)"};
-
-// Shared Chart.js theming for the dark background.
-const CHART_TEXT = "rgba(255,255,255,0.55)";
-const CHART_GRID = "rgba(255,255,255,0.06)";
-Chart.defaults.color = CHART_TEXT;
-Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif";
-Chart.defaults.font.size = 11;
-
-let ROLE_PROFILES = [];
-const chartInstances = [];
-
-function fmtMoney(n) {
-  if (n === null || n === undefined) return "—";
-  return "$" + Math.round(n).toLocaleString();
-}
-function fmtNumber(n) {
-  if (n === null || n === undefined) return "—";
-  return Math.round(n).toLocaleString();
-}
-function fmtCompact(n) {
-  if (n === null || n === undefined) return "—";
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
-  if (n >= 1_000) return (n / 1_000).toFixed(0) + "K";
-  return String(Math.round(n));
-}
-function fmtDate(iso) {
-  if (!iso) return "—";
-  return new Date(iso).toLocaleDateString(undefined, {year: "numeric", month: "short", day: "numeric"});
-}
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function registerChart(chart) {
-  chartInstances.push(chart);
-  return chart;
-}
-
-function renderMasthead(data) {
-  const macro = data.macro_context;
-  if (macro && macro.figures.overall_us_workforce_yoy_growth_pct > 0) {
-    const multiple = macro.figures.clean_energy_yoy_growth_pct / macro.figures.overall_us_workforce_yoy_growth_pct;
-    document.getElementById("masthead-headline").innerHTML =
-      `Clean energy hiring is growing <span class="accent">${multiple.toFixed(0)}x faster</span> than the rest of the U.S. economy`;
+(function(){
+  var map = document.getElementById('us-map');
+  var jobs = document.getElementById('view-jobs');
+  var mw = document.getElementById('view-mw');
+  if (!map || !jobs || !mw) return;
+  function show(view){
+    map.dataset.view = view;
+    jobs.setAttribute('aria-pressed', view === 'jobs');
+    mw.setAttribute('aria-pressed', view === 'mw');
   }
-}
-
-function renderStatStrip(data) {
-  const macro = data.macro_context;
-  const topSkill = data.top_skills.top_skills[0];
-  const sectorTotals = SECTORS.map(s => {
-    const months = data.demand_trend_by_sector[s] || {};
-    return {sector: s, count: Object.values(months).reduce((a, b) => a + b, 0)};
-  }).sort((a, b) => b.count - a.count);
-  const leadSector = sectorTotals[0];
-
-  const tiles = [
-    macro ? {num: fmtCompact(macro.figures.clean_energy_total_jobs), label: "Clean energy jobs nationally", color: "var(--grn)"} : null,
-    macro ? {num: fmtCompact(macro.figures.renewable_energy_generation_jobs), label: "Renewable generation jobs", color: "var(--blu)"} : null,
-    macro ? {num: `+${macro.figures.clean_energy_5yr_growth_pct}%`, label: "Clean energy job growth, 5-yr", color: "var(--amb)"} : null,
-    leadSector ? {num: leadSector.sector, label: "Leading sector by hiring activity", color: "var(--pur)"} : null,
-  ].filter(Boolean);
-
-  document.getElementById("stat-strip").innerHTML = `
-    <div class="stat-strip">
-      ${tiles.map(t => `
-        <div class="stat-tile">
-          <div class="stat-num" style="color:${t.color};">${t.num}</div>
-          <div class="stat-label">${t.label}</div>
-        </div>`).join("")}
-    </div>`;
-}
-
-/* ---------- 01: Where the jobs are (sector pie + roles pie) ---------- */
-
-function renderDemandAndFastest(trendBySector, fastest, roleProfiles) {
-  const latestMonth = Object.values(trendBySector).flatMap(m => Object.keys(m)).sort().slice(-1)[0];
-  const shareData = SECTORS
-    .map(s => ({sector: s, count: (trendBySector[s] && trendBySector[s][latestMonth]) || 0}))
-    .filter(x => x.count > 0)
-    .sort((a, b) => b.count - a.count);
-  const leader = shareData[0];
-
-  const topRoles = (roleProfiles || []).filter(p => p.demand.open_postings > 0)
-    .slice().sort((a, b) => b.demand.open_postings - a.demand.open_postings);
-  const topRoleName = topRoles[0];
-
-  return `
-  <div class="report-section">
-    <div class="section-kicker"><span class="section-num">01</span><span class="section-title">Where the jobs are</span></div>
-    <p class="section-lead">${leader ? `${leader.sector} leads current hiring activity across the sectors we track, followed by ${shareData.slice(1,3).map(x=>x.sector).join(" and ")}.` : "Hiring activity across the clean energy sectors we track."}${topRoleName ? ` ${escapeHtml(topRoleName.role)} is the single most in-demand role right now.` : ""}</p>
-    <div class="chart-row">
-      <div class="chart-card">
-        <h4>Share of open postings by sector</h4>
-        <div class="chart-canvas-wrap"><canvas id="sector-pie-chart"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <h4>Most in-demand roles</h4>
-        <div class="chart-canvas-wrap"><canvas id="roles-pie-chart"></canvas></div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function drawSectorPieChart(trendBySector) {
-  const canvas = document.getElementById("sector-pie-chart");
-  if (!canvas) return;
-  const latestMonth = Object.values(trendBySector).flatMap(m => Object.keys(m)).sort().slice(-1)[0];
-  const entries = SECTORS
-    .map(s => ({sector: s, count: (trendBySector[s] && trendBySector[s][latestMonth]) || 0}))
-    .filter(x => x.count > 0);
-  registerChart(new Chart(canvas, {
-    type: "pie",
-    data: {
-      labels: entries.map(e => e.sector),
-      datasets: [{
-        data: entries.map(e => e.count),
-        backgroundColor: entries.map(e => SECTOR_COLORS[e.sector]),
-        borderColor: "#131313",
-        borderWidth: 2,
-      }],
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position: "right", labels: { boxWidth: 10, padding: 12 } },
-        tooltip: { enabled: false },
-      },
-    },
-  }));
-}
-
-function drawRolesPieChart(roleProfiles) {
-  const canvas = document.getElementById("roles-pie-chart");
-  if (!canvas) return;
-  const entries = (roleProfiles || []).filter(p => p.demand.open_postings > 0)
-    .slice().sort((a, b) => b.demand.open_postings - a.demand.open_postings);
-  registerChart(new Chart(canvas, {
-    type: "pie",
-    data: {
-      labels: entries.map(e => e.role),
-      datasets: [{
-        data: entries.map(e => e.demand.open_postings),
-        backgroundColor: entries.map(e => ROLE_COLORS[e.role] || NEUTRAL_OTHER),
-        borderColor: "#131313",
-        borderWidth: 2,
-      }],
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: "right", labels: { boxWidth: 10, padding: 10, font: { size: 10 } } }, tooltip: { enabled: false } },
-    },
-  }));
-}
-
-/* ---------- 02: Supply & demand by role (small multiples, not dual-axis) ---------- */
-// Two single-measure charts, not one dual-axis chart: talent pool (hundreds of
-// thousands) and open postings (tens) live on wildly different scales, and a
-// shared/overlapping axis is what caused illegible, overlapping tick labels
-// before. Same role order in both panels so a role sits at the same row in each.
-
-function renderSupplyDemand(profiles) {
-  const withSupply = (profiles || []).filter(p => p.supply.national_employment);
-  if (!withSupply.length) {
-    return `<div class="report-section"><div class="section-kicker"><span class="section-num">02</span><span class="section-title">Supply &amp; demand by role</span></div><div class="empty-note">Not available yet.</div></div>`;
-  }
-  const smallest = withSupply.slice().sort((a, b) => a.supply.national_employment - b.supply.national_employment)[0];
-  return `
-  <div class="report-section">
-    <div class="section-kicker"><span class="section-num">02</span><span class="section-title">Supply &amp; demand by role</span></div>
-    <p class="section-lead">National talent pool size - how many people work in this occupation nationally. ${smallest ? `${escapeHtml(smallest.role)} has the smallest national talent pool of the roles we track.` : ""} A smaller pool is inherently harder to source for, independent of current demand.</p>
-    <div class="chart-card">
-      <div class="chart-canvas-wrap tall"><canvas id="talent-pool-chart"></canvas></div>
-    </div>
-    <div class="section-note">Talent pool size is sourced from public labor statistics. We'll add tracked-postings demand back into this view once more history has accumulated.</div>
-  </div>`;
-}
-
-function drawSupplyDemandChart(profiles) {
-  const talentCanvas = document.getElementById("talent-pool-chart");
-  if (!talentCanvas) return;
-  const withSupply = (profiles || []).filter(p => p.supply.national_employment);
-  const top = withSupply.slice().sort((a, b) => b.demand.open_postings - a.demand.open_postings).slice(0, 8).reverse();
-
-  registerChart(new Chart(talentCanvas, {
-    type: "bar",
-    data: {
-      labels: top.map(p => p.role),
-      datasets: [{
-        data: top.map(p => p.supply.national_employment),
-        backgroundColor: top.map(p => ROLE_COLORS[p.role] || NEUTRAL_OTHER),
-        borderRadius: 4,
-      }],
-    },
-    options: {
-      indexAxis: "y", responsive: true, maintainAspectRatio: false,
-      scales: {
-        x: { type: "logarithmic", grid: { color: CHART_GRID }, ticks: { maxTicksLimit: 5, callback: v => fmtCompact(v) } },
-        y: { grid: { display: false } },
-      },
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => fmtNumber(ctx.parsed.x) } } },
-    },
-  }));
-}
-
-/* ---------- 03: Compensation benchmarks (ranking bar + cards) ---------- */
-
-function renderSalaryBenchmarks(benchmarks) {
-  if (!benchmarks || !benchmarks.roles.length) {
-    return `<div class="report-section"><div class="section-kicker"><span class="section-num">03</span><span class="section-title">Compensation benchmarks</span></div><div class="empty-note">Not available yet.</div></div>`;
-  }
-  const topPaid = benchmarks.roles.slice().sort((a, b) => b.national_mean_wage - a.national_mean_wage)[0];
-  const cards = benchmarks.roles.map(r => {
-    const displayed = r.scraped_salary_median || r.national_mean_wage;
-    return `
-    <div class="sal-card">
-      <div class="sal-role">${escapeHtml(r.role)}</div>
-      <div class="sal-median">${fmtMoney(displayed)}</div>
-      <div class="sal-range">National average</div>
-      <div class="sal-locked">
-        <i class="ti ti-lock" style="font-size:15px;color:var(--t3);"></i>
-        <span>Metro-area breakdown is part of Pro</span>
-      </div>
-    </div>`;
-  }).join("");
-  return `
-  <div class="report-section">
-    <div class="section-kicker"><span class="section-num">03</span><span class="section-title">Compensation benchmarks</span></div>
-    <p class="section-lead">Average pay across the clean energy roles we track. ${topPaid ? `${escapeHtml(topPaid.role)} commands the highest average at ${fmtMoney(topPaid.national_mean_wage)}.` : ""} Free for every role; metro-area breakdowns are part of Pro.</p>
-    <div class="chart-card" style="margin-bottom:14px;">
-      <h4>National average salary by role</h4>
-      <div class="chart-canvas-wrap tall"><canvas id="salary-ranking-chart"></canvas></div>
-    </div>
-    <div class="salary-grid">${cards}</div>
-  </div>`;
-}
-
-function drawSalaryRankingChart(benchmarks) {
-  const canvas = document.getElementById("salary-ranking-chart");
-  if (!canvas || !benchmarks) return;
-  const roles = benchmarks.roles.slice().sort((a, b) => a.national_mean_wage - b.national_mean_wage);
-  registerChart(new Chart(canvas, {
-    type: "bar",
-    data: {
-      labels: roles.map(r => r.role),
-      datasets: [{
-        data: roles.map(r => r.national_mean_wage),
-        backgroundColor: roles.map(r => ROLE_COLORS[r.role] || NEUTRAL_OTHER),
-        borderRadius: 4,
-      }],
-    },
-    options: {
-      indexAxis: "y",
-      responsive: true, maintainAspectRatio: false,
-      scales: {
-        x: { grid: { color: CHART_GRID }, ticks: { callback: v => "$" + (v / 1000) + "k" } },
-        y: { grid: { display: false } },
-      },
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => fmtMoney(ctx.parsed.x) } },
-      },
-    },
-  }));
-}
-
-/* ---------- 04: Role explorer (search + drill-down) ---------- */
-
-// The entire Role Explorer is a locked preview - Pro only, no free roles. Real
-// role names/difficulty/median salary stay visible in the list (teaser-level,
-// same idea as resume-vault.html showing real sector pills on redacted cards),
-// but the detail panel always renders as a redacted mockup with a fade-to-black
-// overlay (see .explorer-detail-card::after), never the role's real numbers.
-// This is a front-end preview gate only - there's no real account/payment system
-// behind it yet, so nothing here should be mistaken for enforced access control.
-
-function roleListItemHtml(p, idx) {
-  const color = DIFFICULTY_COLORS[p.fill_difficulty.label] || "var(--t3)";
-  return `
-    <div class="role-list-item" data-idx="${idx}" data-role="${escapeHtml(p.role.toLowerCase())}" onclick="selectRole(${idx})">
-      <div class="role-list-name">${escapeHtml(p.role)} <i class="ti ti-lock" style="font-size:11px;color:var(--t3);"></i></div>
-      <div class="role-list-meta">
-        <span class="diff-badge" style="color:${color};border-color:${color};">${p.fill_difficulty.label}</span>
-        <span class="pro-tag">PRO</span>
-      </div>
-      <div class="role-list-salary">${fmtMoney(p.compensation.national_mean_wage)} avg</div>
-    </div>`;
-}
-
-function roleRedactedPreviewHtml(p) {
-  const color = DIFFICULTY_COLORS[p.fill_difficulty.label] || "var(--t3)";
-  return `
-    <div class="role-detail-header">
-      <h3>${escapeHtml(p.role)}</h3>
-      <span class="diff-badge large" style="color:${color};border-color:${color};">${p.fill_difficulty.label} difficulty to fill</span>
-    </div>
-    <div class="role-detail-grid">
-      <div>
-        <div class="detail-subhead">Compensation</div>
-        <div class="redact-lg"></div>
-        <div class="redact" style="width:72%;"></div>
-        <div class="redact" style="width:58%;"></div>
-        <div class="redact" style="width:64%;"></div>
-      </div>
-      <div>
-        <div class="detail-subhead">Supply &amp; demand</div>
-        <div class="redact-chart"><i class="ti ti-chart-bar" style="font-size:24px;color:var(--t3);"></i></div>
-      </div>
-    </div>
-    <div class="detail-subhead" style="margin-top:1.25rem;">Why this rating</div>
-    <div class="redact" style="width:92%;"></div>
-    <div class="redact" style="width:63%;"></div>
-    <div class="detail-subhead" style="margin-top:1.25rem;">Recommended recruitment strategy</div>
-    <div class="redact" style="width:96%;"></div>
-    <div class="redact" style="width:88%;"></div>
-    <div class="redact" style="width:74%;"></div>
-    <div class="unlock-footer">
-      <h4><i class="ti ti-lock" style="color:var(--grn);margin-right:5px;"></i>Unlock the full profile for ${escapeHtml(p.role)}</h4>
-      <p>Metro-area pay, supply vs. demand, fill-difficulty reasoning, sourcing strategy, and live open postings.</p>
-      <button class="btn btn-grn" onclick="document.getElementById('cta-band').scrollIntoView({behavior:'smooth'})">Upgrade to Pro</button>
-    </div>
-  `;
-}
-
-function selectRole(idx) {
-  const detail = document.getElementById("role-detail");
-  const profile = ROLE_PROFILES[idx];
-  detail.innerHTML = roleRedactedPreviewHtml(profile);
-  document.querySelectorAll(".role-list-item").forEach(el => el.classList.remove("active"));
-  const item = document.querySelector(`.role-list-item[data-idx="${idx}"]`);
-  if (item) item.classList.add("active");
-}
-
-function filterRoles(query) {
-  const q = query.trim().toLowerCase();
-  document.querySelectorAll(".role-list-item").forEach(el => {
-    el.style.display = el.dataset.role.includes(q) ? "" : "none";
-  });
-}
-
-function renderRoleExplorer(profiles) {
-  if (!profiles || !profiles.length) {
-    return `<div class="report-section" id="explore"><div class="section-kicker"><span class="section-num">04</span><span class="section-title">Explore roles in depth</span></div><div class="empty-note">Not available yet.</div></div>`;
-  }
-  ROLE_PROFILES = profiles;
-  const listHtml = profiles.map((p, i) => roleListItemHtml(p, i)).join("");
-  return `
-  <div class="report-section" id="explore">
-    <div class="section-kicker"><span class="section-num">04</span><span class="section-title">Explore roles in depth</span></div>
-    <p class="section-lead">Search any role to see what's in a full profile - compensation, supply and demand, fill-difficulty, and a recommended sourcing strategy. Full profiles are part of Verde Talent Intelligence Pro.</p>
-    <div class="explorer-row">
-      <div class="explorer-list-card">
-        <input type="text" class="role-search-input" placeholder="Search a role..." oninput="filterRoles(this.value)"/>
-        <div class="role-list" id="role-list">${listHtml}</div>
-      </div>
-      <div class="explorer-detail-card" id="role-detail">
-        <div class="empty-note">Select a role on the left to preview its profile.</div>
-      </div>
-    </div>
-  </div>`;
-}
-
-/* ---------- CTA + footer ---------- */
-
-function renderCtaBand() {
-  return `
-  <div class="cta-band" id="cta-band">
-    <h2>Want this level of insight for your own hiring strategy?</h2>
-    <p>Verde Talent Intelligence can be tailored to your roles, regions, and competitors — talk to our team about what's possible.</p>
-    <div class="cta-actions">
-      <a href="mailto:contact@verdetalent.com" class="btn btn-grn btn-lg" style="text-decoration:none;display:inline-block;">Talk to our team</a>
-      <button class="btn btn-ghost btn-lg"><i class="ti ti-download" style="font-size:14px;margin-right:6px;"></i>Download the full report</button>
-    </div>
-  </div>`;
-}
-
-function renderFooter(data) {
-  return `
-  <div class="footer-note">
-    Verde Talent Intelligence combines job seeker activity, employer and posting data, and public labor market sources
-    (including the U.S. Bureau of Labor Statistics) to power these insights. Last updated ${fmtDate(data.generated_at)}.
-  </div>`;
-}
-
-async function main() {
-  const dataEl = document.getElementById("intelligence-data");
-  if (!dataEl) throw new Error("No embedded intelligence-data script tag found");
-  const data = JSON.parse(dataEl.textContent);
-
-  renderMasthead(data);
-  renderStatStrip(data);
-
-  document.getElementById("content").innerHTML =
-    renderDemandAndFastest(data.demand_trend_by_sector, data.fastest_growing_roles, data.role_profiles) +
-    renderSupplyDemand(data.role_profiles) +
-    renderSalaryBenchmarks(data.salary_benchmarks) +
-    renderRoleExplorer(data.role_profiles) +
-    renderCtaBand() +
-    renderFooter(data);
-
-  // Charts are drawn after the HTML (and their <canvas> elements) exist in the DOM.
-  drawSectorPieChart(data.demand_trend_by_sector);
-  drawRolesPieChart(data.role_profiles);
-  drawSupplyDemandChart(data.role_profiles);
-  drawSalaryRankingChart(data.salary_benchmarks);
-}
-
-main().catch(err => {
-  document.getElementById("content").innerHTML =
-    `<div class="loading" style="color:var(--cor);">Couldn't load market intelligence data.</div>`;
-  console.error(err);
-});
+  jobs.addEventListener('click', function(){ show('jobs'); });
+  mw.addEventListener('click', function(){ show('mw'); });
+})();
 </script>
 </body>
 </html>
