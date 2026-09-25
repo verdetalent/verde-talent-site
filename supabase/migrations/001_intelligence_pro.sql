@@ -72,7 +72,7 @@ create table if not exists public.intel_role_area (
   bls_precision      text,
   bls_pool           integer,
   bls_median_wage    integer,
-  median_days_listed integer,
+  median_days_to_fill integer,     -- how long a search stays open; see time_to_fill.py
   updated_at         timestamptz not null default now(),
   primary key (scope, area_key, role)
 );
