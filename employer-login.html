@@ -180,9 +180,9 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
     // Back to the page that sent them here (?next=, e.g. the credits page
     // from the homepage's "Buy a posting pack"). Only these employer pages
     // are accepted, so the parameter can't bounce anyone to another site.
-    const NEXT_ALLOWED = ['employer-account.html', 'employer-dashboard.html', 'post-job.html'];
+    const NEXT_ALLOWED = ['employer-home.html', 'employer-account.html', 'employer-dashboard.html', 'post-job.html'];
     const nextParam = new URLSearchParams(window.location.search).get('next');
-    const afterLogin = NEXT_ALLOWED.includes(nextParam) ? nextParam : 'employer-dashboard.html';
+    const afterLogin = NEXT_ALLOWED.includes(nextParam) ? nextParam : 'employer-home.html';
 
     if (mode === 'signup') {
       // GA4 key event. The redirect is immediate, so wait for GA to confirm

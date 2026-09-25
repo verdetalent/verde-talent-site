@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CNGTGW71QP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CNGTGW71QP');
+</script>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<script src="/fullstory.js"></script>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="canonical" href="https://verdetalent.com/employer-home.html"/>
+<title>Your Account — Verde Talent</title>
+<link rel="stylesheet" href="/tabler-icons.css"/>
+<style>
+/* Account home: where every employer lands after signing in. Three products, one card
+   each, and each card responsible for its own state - an account may own any mix of them,
+   and owning Jobs says nothing about having a job live today. */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--cor:#FF7055;--vio:#B79CFF;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right{display:flex;gap:20px;align-items:center;font-size:13px;flex-wrap:wrap;}
+.nav-right a{color:var(--t2);text-decoration:none;}
+.nav-right a:hover{color:var(--grn);}
+.nav-right a.here{color:var(--t1);font-weight:600;}
+.wrap{max-width:1180px;margin:0 auto;padding:2.2rem 1.5rem 4rem;}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:1.6rem;}
+.hero h1{font-size:26px;font-weight:700;letter-spacing:-.02em;}
+.hero p{font-size:13.5px;color:var(--t2);margin-top:6px;}
+.hero .who{font-size:12.5px;color:var(--t3);text-align:right;line-height:1.6;}
+
+.attn{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1rem 1.2rem;margin-bottom:14px;}
+.attn h2{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--t3);}
+.attn ul{list-style:none;margin-top:.7rem;display:grid;gap:2px;}
+.attn li{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:center;padding:8px 0;
+border-bottom:0.5px solid var(--bdr);font-size:13.5px;color:var(--t2);}
+.attn li:last-child{border-bottom:0;}
+.attn li b{color:var(--t1);font-weight:600;}
+.attn li i{font-size:16px;}
+.attn li a{color:var(--grn);text-decoration:none;font-size:12.5px;font-weight:600;white-space:nowrap;}
+
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch;}
+.card{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.25rem 1.3rem;
+display:flex;flex-direction:column;min-height:420px;}
+.card.off{background:linear-gradient(180deg,#121212,#0f0f0f);}
+.chead{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.cicon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:18px;flex:0 0 auto;}
+.cicon.jobs{background:rgba(34,224,154,.12);color:var(--grn);}
+.cicon.db{background:rgba(183,156,255,.13);color:var(--vio);}
+.cicon.intel{background:rgba(79,179,255,.13);color:var(--blu);}
+.ctitle{font-size:16px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;}
+.csub{font-size:12px;color:var(--t3);margin-top:1px;}
+.pill{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+padding:4px 9px;border-radius:999px;white-space:nowrap;}
+.pill.live{background:rgba(34,224,154,.12);color:var(--grn);}
+.pill.idle{background:rgba(255,255,255,.07);color:var(--t2);}
+.pill.soon{background:rgba(183,156,255,.14);color:var(--vio);}
+.pill.lock{background:transparent;color:var(--t3);border:0.5px solid var(--bdr2);}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem;}
+.kpi{background:var(--card2);border-radius:10px;padding:.7rem .75rem;}
+.kpi b{display:block;font-size:1.3rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+.kpi span{font-size:11px;color:var(--t3);line-height:1.35;display:block;margin-top:2px;}
+.list{display:grid;margin-bottom:.4rem;}
+.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 0;
+border-bottom:0.5px solid var(--bdr);font-size:13px;}
+.row:last-child{border-bottom:0;}
+.row .t{font-weight:600;line-height:1.3;}
+.row .s{font-size:11.5px;color:var(--t3);margin-top:2px;}
+.row .r{text-align:right;font-size:12px;color:var(--t2);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.warn{color:var(--amb);}
+.blurb{font-size:13.5px;color:var(--t2);line-height:1.65;margin-bottom:1rem;}
+.blurb b{color:var(--t1);font-weight:600;}
+.blurb.quiet{font-size:12.5px;color:var(--t3);}
+.progress{margin:.2rem 0 1rem;}
+.progress .bar{height:9px;background:rgba(255,255,255,.07);border-radius:5px;overflow:hidden;}
+.progress .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--vio),rgba(183,156,255,.5));border-radius:5px;}
+.progress .lab{display:flex;justify-content:space-between;font-size:11.5px;color:var(--t3);margin-top:6px;font-variant-numeric:tabular-nums;}
+.ticks{list-style:none;display:grid;gap:7px;margin-bottom:1rem;font-size:13px;color:var(--t2);}
+.ticks li{display:flex;gap:8px;align-items:flex-start;line-height:1.45;}
+.ticks i{color:var(--t3);font-size:15px;margin-top:1px;}
+.cfoot{margin-top:auto;padding-top:1rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.btn{border-radius:10px;font-size:13px;font-weight:600;padding:9px 14px;text-decoration:none;
+display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);cursor:pointer;border:0;}
+.btn.grn{background:var(--grn);color:#052e1e;}
+.btn.vio{background:var(--vio);color:#1c1233;}
+.btn.blu{background:var(--blu);color:#04202f;}
+.btn.ghost{background:transparent;color:var(--t1);border:0.5px solid var(--bdr2);}
+.btn.ghost:hover{border-color:rgba(34,224,154,.4);color:var(--grn);}
+.btn.small{padding:5px 10px;font-size:12px;}
+.cfoot .note{font-size:11.5px;color:var(--t3);}
+.loading{font-size:13px;color:var(--t3);}
+.err{font-size:13px;color:var(--cor);line-height:1.6;}
+.err a{color:var(--grn);}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+
+/* The three products stay side by side at every width. Between phone and desktop the cards
+   keep their content, tighter. On a phone a column is ~110px, so each card collapses to its
+   summary and tapping it opens that product in full in the panel below. */
+.mini{display:none;}
+.detail{display:none;}  /* before the phone rule that opens it */
+@media (max-width:980px){
+  .wrap{padding:1.8rem 1rem 3rem;}
+  .cards{gap:10px;}
+  .card{padding:1rem;min-height:0;}
+  .kpis{grid-template-columns:1fr 1fr;}
+  .kpis .kpi:nth-child(3){display:none;}
+  .csub{display:none;}
+}
+@media (max-width:760px){
+  .nav{padding:.9rem 1rem;flex-wrap:wrap;gap:8px;}
+  .logo-img{height:56px;}
+  .nav-right{gap:12px;font-size:12px;}
+  .hero h1{font-size:21px;}
+  .hero .who{display:none;}
+  .attn{padding:.8rem .9rem;}
+  .attn li{grid-template-columns:18px 1fr;font-size:12.5px;}
+  .attn li a{grid-column:2;}
+  .cards{gap:8px;}
+  .cards .card{padding:.8rem .7rem;border-radius:12px;cursor:pointer;
+    transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent;}
+  .cards .card[aria-pressed="true"]{border-color:rgba(255,255,255,.35);background:#181818;}
+  .cards .card.jobs-on[aria-pressed="true"]{border-color:rgba(34,224,154,.6);}
+  .cards .card.intel-on[aria-pressed="true"]{border-color:rgba(79,179,255,.65);}
+  .cards .card.db-on[aria-pressed="true"]{border-color:rgba(183,156,255,.65);}
+  .cards .chead{flex-direction:column;align-items:flex-start;gap:7px;margin-bottom:.7rem;}
+  .cards .cicon{width:28px;height:28px;font-size:15px;border-radius:8px;}
+  .cards .ctitle{font-size:13px;white-space:normal;line-height:1.2;}
+  .cards .pill{margin-left:0;font-size:9px;padding:3px 6px;letter-spacing:.04em;}
+  .cards .kpis,.cards .list,.cards .ticks,.cards .blurb,.cards .progress,.cards .cfoot,.cards .err,.cards .loading{display:none;}
+  .cards .mini{display:block;}
+  .mini b{display:block;font-size:1.35rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+  .mini span{display:block;font-size:10.5px;color:var(--t3);line-height:1.35;margin-top:2px;}
+  .detail{display:flex;margin-top:10px;min-height:0;}
+  .detail .pill{margin-left:auto;}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.webp" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right">
+    <a href="employer-home.html" class="here">Home</a>
+    <a href="employer-dashboard.html">Jobs</a>
+    <a href="intelligence.html">Intelligence</a>
+    <a href="resume-vault.html">Resume Vault</a>
+    <a href="employer-account.html">Account &amp; credits</a>
+    <a href="#" id="signOutLink">Sign out</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1 id="hello">Welcome back</h1>
+      <p id="summary">&nbsp;</p>
+    </div>
+    <div class="who" id="who"></div>
+  </div>
+
+  <div class="attn" id="attn" style="display:none"></div>
+  <!-- Intelligence before the Vault: the Vault is not open to employers yet, so the live
+       product sits in the middle and the coming-soon one at the end. -->
+  <div class="cards">
+    <section class="card jobs-on" id="jobs"><p class="loading">Loading your postings…</p></section>
+    <section class="card intel-on off" id="intel"></section>
+    <section class="card db-on" id="db"></section>
+  </div>
+  <section class="card detail" id="detail" aria-live="polite"></section>
+</div>
+<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+
+<script>
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+const MANAGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/manage-posting`;
+const MANAGE_CREDITS_URL = `${SUPABASE_URL}/functions/v1/manage-credits`;
+// Counts-only Intelligence teaser (supabase/migrations/003_intel_posting_teaser.sql). Until
+// that migration has run this 404s, and the card falls back to the plain pitch.
+const TEASER_URL = `${SUPABASE_URL}/rest/v1/rpc/intel_posting_teaser`;
+// Pro cannot be bought online yet; this is the same route the public Intelligence page uses.
+const START_PRO = 'mailto:contact@verdetalent.com?subject=Verde%20Talent%20Intelligence%20Pro';
+// The same figure the public Resume Vault page shows, deliberately not recomputed here.
+const VAULT = { profiles: 287, unlockAt: 500 };
+const ENDING_SOON_DAYS = 5;
+const DAY = 86400000;
+
+const el = id => document.getElementById(id);
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g,
+  c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const plural = (n, one, many) => n === 1 ? one : many;
+
+// Sample data for looking at the layout on a local copy only. It can never switch on for
+// the live site: the hostname check means verdetalent.com always reads real data.
+const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
+const SAMPLE = LOCAL ? new URLSearchParams(location.search).get('sample') : null;
+
+function getEmployerSession() {
+  try {
+    const raw = localStorage.getItem('vt_employer_session');
+    if (!raw) return null;
+    const session = JSON.parse(raw);
+    if (!session.access_token || session.expires_at < Date.now()) return null;
+    return session;
+  } catch {
+    return null;
+  }
+}
+
+const session = SAMPLE ? { email: 'hiring@acmesolar.com', access_token: 'sample' } : getEmployerSession();
+if (!session) window.location.href = 'employer-login.html?next=employer-home.html';
+
+el('signOutLink').addEventListener('click', e => {
+  e.preventDefault();
+  localStorage.removeItem('vt_employer_session');
+  window.location.href = 'employer-login.html';
+});
+
+async function callFunction(url, body) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}`,
+               'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+  return data;
+}
+
+async function loadPostings() {
+  if (SAMPLE) return sampleData().postings;
+  return (await callFunction(MANAGE_FUNCTION_URL, { action: 'list' })).postings || [];
+}
+async function loadCredits() {
+  if (SAMPLE) return sampleData().credits;
+  return (await callFunction(MANAGE_CREDITS_URL, { action: 'list' })).totalAvailable;
+}
+async function loadTeaser() {
+  if (SAMPLE) return sampleData().teaser;
+  try {
+    const res = await fetch(TEASER_URL, { method: 'POST', body: '{}', headers: {
+      'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}`,
+      'Content-Type': 'application/json' } });
+    if (!res.ok) return null;          // not deployed yet, or no postings - plain pitch
+    const rows = await res.json();
+    return Array.isArray(rows) ? rows[0] || null : rows;
+  } catch {
+    return null;
+  }
+}
+
+function sampleData() {
+  const now = Date.now();
+  const at = d => new Date(now + d * DAY).toISOString();
+  const post = (id, title, daysLive, endsIn, status = 'paid') => ({
+    id, job_title: title, company_name: 'Acme Solar', status, duration_days: 30,
+    created_at: at(-daysLive), paid_at: at(-daysLive), expires_at: at(endsIn) });
+  const sets = {
+    live: { postings: [post('1', 'Wind Turbine Technician', 26, 4), post('2', 'Solar O&M Technician', 9, 21),
+                       post('3', 'Project Manager', 22, 38), post('4', 'Solar Field Technician', 6, 24)],
+            credits: 2, teaser: { live_postings: 4, benchmarked: 3, below_market: 2, slow: 2 } },
+    idle: { postings: [post('5', 'Wind Turbine Technician', 40, -12), post('6', 'Project Manager', 51, -21)],
+            credits: 3, teaser: null },
+    new:  { postings: [], credits: 0, teaser: null },
+  };
+  return sets[SAMPLE] || sets.live;
+}
+
+// ------------------------------------------------------------------ state --------------
+function classify(postings) {
+  const now = Date.now();
+  const isLive = p => p.status === 'paid' && p.expires_at && new Date(p.expires_at) > now;
+  const live = postings.filter(isLive);
+  const ended = postings.filter(p => !isLive(p) && (p.status === 'paid' || p.status === 'removed'))
+    .sort((a, b) => new Date(b.expires_at || 0) - new Date(a.expires_at || 0));
+  const pending = postings.filter(p => p.status === 'pending_payment');
+  const daysLive = p => Math.max(0, Math.floor((now - new Date(p.paid_at || p.created_at)) / DAY));
+  const endsIn = p => Math.ceil((new Date(p.expires_at) - now) / DAY);
+  return { live, ended, pending, daysLive, endsIn };
+}
+
+// ------------------------------------------------------------------ Jobs ---------------
+function jobsCard(j, credits) {
+  const head = pill => `<div class="chead"><div class="cicon jobs"><i class="ti ti-briefcase"></i></div>
+    <div><div class="ctitle">Jobs</div><div class="csub">Post and manage openings</div></div>${pill}</div>`;
+  const creditsKpi = credits == null ? '' : `<div class="kpi"><b>${credits}</b><span>credits left</span></div>`;
+
+  if (j.live.length) {
+    const soon = j.live.filter(p => j.endsIn(p) <= ENDING_SOON_DAYS).length;
+    return head(`<span class="pill live">${j.live.length} live</span>`) + `
+      <div class="kpis">
+        <div class="kpi"><b>${j.live.length}</b><span>postings live</span></div>
+        ${creditsKpi}
+        <div class="kpi"><b class="${soon ? 'warn' : ''}">${soon}</b><span>ending within ${ENDING_SOON_DAYS} days</span></div>
+      </div>
+      <div class="list">${j.live.slice(0, 4).map(p => { const e = j.endsIn(p); return `<div class="row">
+        <div><div class="t">${escapeHtml(p.job_title)}</div>
+          <div class="s">${j.daysLive(p)} days live</div></div>
+        <div class="r ${e <= ENDING_SOON_DAYS ? 'warn' : ''}">ends in ${e} ${plural(e, 'day', 'days')}</div></div>`; }).join('')}</div>
+      ${j.live.length > 4 ? `<p class="blurb quiet">and ${j.live.length - 4} more</p>` : ''}
+      <div class="cfoot"><a class="btn grn" href="post-job.html"><i class="ti ti-plus"></i>Post a job</a>
+        <a class="btn ghost" href="employer-dashboard.html">Manage all</a></div>`;
+  }
+  if (j.ended.length || credits) return head('<span class="pill idle">Nothing live</span>') + `
+      <p class="blurb">No postings are live right now.${credits ? ` You have <b>${credits}
+        ${plural(credits, 'credit', 'credits')}</b> ready to use.` : ''}${j.ended.length
+        ? ' Recent postings can go back up in one click.' : ''}</p>
+      <div class="list">${j.ended.slice(0, 3).map(p => `<div class="row">
+        <div><div class="t">${escapeHtml(p.job_title)}</div>
+          <div class="s">${p.status === 'removed' ? 'removed' : 'ended'} ${p.expires_at
+            ? new Date(p.expires_at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : ''}</div></div>
+        <div class="r"><a class="btn ghost small" href="post-job.html?repost=${encodeURIComponent(p.id)}">Repost</a></div></div>`).join('')}</div>
+      <div class="cfoot"><a class="btn grn" href="post-job.html"><i class="ti ti-plus"></i>Post a job</a>
+        ${credits ? `<span class="note">${credits} ${plural(credits, 'credit', 'credits')} available</span>` : ''}</div>`;
+  return head('<span class="pill idle">Not started</span>') + `
+      <p class="blurb">Post a role and it goes out across the site, the job feed and the matching
+        career pages the same day.</p>
+      <ul class="ticks">
+        <li><i class="ti ti-check"></i>Seen by people searching clean energy roles specifically</li>
+        <li><i class="ti ti-check"></i>Live for 30 or 60 days, repostable from here</li>
+        <li><i class="ti ti-check"></i>Manage and repost from this page</li>
+      </ul>
+      <div class="cfoot"><a class="btn grn" href="post-job.html"><i class="ti ti-plus"></i>Post your first job</a>
+        <a class="btn ghost" href="employer-account.html">Buy credits</a></div>`;
+}
+
+// ------------------------------------------------------------------ Intelligence -------
+function intelCard(t) {
+  const head = `<div class="chead"><div class="cicon intel"><i class="ti ti-chart-bar"></i></div>
+    <div><div class="ctitle">Intelligence</div><div class="csub">Pay, competition and markets</div></div>
+    <span class="pill lock">Not included</span></div>`;
+  const cta = `<div class="cfoot"><a class="btn blu" href="${START_PRO}">Get my market report</a>
+    <span class="note">$199/mo &middot; $1,990/yr</span></div>`;
+
+  // With a teaser we can talk about their own postings - the strongest pitch there is.
+  // The database hands over counts only; there are no figures on this page to reveal.
+  if (t && t.benchmarked) {
+    const below = t.below_market, slow = t.slow;
+    return head + `
+      <p class="blurb">We compared your live postings with their markets overnight.
+        <b>${below} of ${t.benchmarked}</b> ${plural(below, 'is', 'are')} advertising below
+        ${plural(below, 'its', 'their')} market${slow ? `, and <b>${slow}</b> ${plural(slow, 'has', 'have')}
+        been up longer than ${plural(slow, 'that role usually takes', 'those roles usually take')}` : ''}.</p>
+      <div class="kpis" style="grid-template-columns:1fr 1fr;">
+        <div class="kpi"><b class="${below ? 'warn' : ''}"><i class="ti ti-lock" style="font-size:.85em;color:var(--t3);margin-right:4px;"></i>${below}</b><span>below market</span></div>
+        <div class="kpi"><b class="${slow ? 'warn' : ''}"><i class="ti ti-lock" style="font-size:.85em;color:var(--t3);margin-right:4px;"></i>${slow}</b><span>slower than usual</span></div>
+      </div>
+      <p class="blurb quiet">Intelligence shows which ones, by how much, and who you are losing them to.</p>` + cta;
+  }
+  return head + `
+      <p class="blurb">See what a role pays in one market, who you are bidding against, and what the
+        place looks like before you hire there.</p>
+      <ul class="ticks">
+        <li><i class="ti ti-check"></i>Pay by role and market, against the BLS range</li>
+        <li><i class="ti ti-check"></i>Every employer hiring the same role, and how fast</li>
+        <li><i class="ti ti-check"></i>Build pipeline, training output and who is moving in</li>
+      </ul>` + cta;
+}
+
+// ------------------------------------------------------------------ Resume Vault -------
+function vaultCard() {
+  const pct = Math.round(100 * VAULT.profiles / VAULT.unlockAt);
+  return `<div class="chead"><div class="cicon db"><i class="ti ti-users"></i></div>
+      <div><div class="ctitle">Resume Vault</div><div class="csub">Search candidate profiles</div></div>
+      <span class="pill soon">Opening soon</span></div>
+    <p class="blurb">The Vault opens to employers once it holds <b>${VAULT.unlockAt}</b> verified
+      profiles, so the first search you run is worth running.</p>
+    <div class="progress"><div class="bar"><span style="width:${pct}%"></span></div>
+      <div class="lab"><span>${VAULT.profiles} profiles</span><span>${VAULT.unlockAt - VAULT.profiles} to go</span></div></div>
+    <ul class="ticks">
+      <li><i class="ti ti-check"></i>Full profiles, not contact scraps</li>
+      <li><i class="ti ti-check"></i>Searchable by role, certification and location</li>
+    </ul>
+    <div class="cfoot"><a class="btn vio" href="resume-vault.html">Get early access</a>
+      <span class="note">One email when it opens</span></div>`;
+}
+
+// ------------------------------------------------------------------ phone view ---------
+const PICK_KEY = 'vt_home_open';
+function openDetail(kind, html) {
+  el('detail').innerHTML = html;
+  ['jobs', 'intel', 'db'].forEach(k => el(k).setAttribute('aria-pressed', String(k === kind)));
+  try { localStorage.setItem(PICK_KEY, kind); } catch { /* private mode */ }
+}
+function place(kind, html, miniHtml) {
+  const cut = html.indexOf('</div>', html.indexOf('class="pill')) + 6;  // after the header
+  el(kind).innerHTML = html.slice(0, cut) + miniHtml + html.slice(cut);
+  el(kind).setAttribute('role', 'button');
+  el(kind).setAttribute('tabindex', '0');
+  const pick = e => {
+    if (!window.matchMedia('(max-width:760px)').matches || e.target.closest('a')) return;
+    openDetail(kind, html);
+  };
+  el(kind).onclick = pick;
+  el(kind).onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(e); } };
+}
+const mini = (b, span) => `<div class="mini"><b>${b}</b><span>${span}</span></div>`;
+
+// ------------------------------------------------------------------ render -------------
+async function render() {
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  el('who').textContent = session.email || '';
+
+  // Each product loads on its own; one failing never blanks the others.
+  const [postingsR, creditsR, teaserR] = await Promise.allSettled([loadPostings(), loadCredits(), loadTeaser()]);
+  const postings = postingsR.status === 'fulfilled' ? postingsR.value : null;
+  const credits = creditsR.status === 'fulfilled' ? creditsR.value : null;
+  const teaser = teaserR.status === 'fulfilled' ? teaserR.value : null;
+
+  const company = postings && postings[0] && postings[0].company_name;
+  el('hello').textContent = `${greet}${company ? ', ' + company : ''}`;
+
+  const html = {};
+  let j = null;
+  if (postings) {
+    j = classify(postings);
+    html.jobs = jobsCard(j, credits);
+  } else {
+    html.jobs = `<div class="chead"><div class="cicon jobs"><i class="ti ti-briefcase"></i></div>
+      <div><div class="ctitle">Jobs</div></div></div>
+      <p class="err">We couldn't load your postings just now. <a href="employer-home.html">Try again</a>
+      or open <a href="employer-dashboard.html">your postings</a> directly.</p>`;
+  }
+  html.intel = intelCard(teaser);
+  html.db = vaultCard();
+
+  place('jobs', html.jobs, j ? (j.live.length ? mini(j.live.length, 'postings live')
+    : mini(credits || 0, credits ? 'credits, nothing live' : 'postings live')) : mini('&mdash;', 'not loaded'));
+  place('intel', html.intel, teaser && teaser.benchmarked
+    ? mini(teaser.below_market, 'postings below market') : mini('$199', 'a month'));
+  place('db', html.db, mini(VAULT.profiles, `of ${VAULT.unlockAt} profiles`));
+
+  // Open on the product they use, not the one we are selling; after that, whatever they
+  // last tapped.
+  let pickDefault = 'jobs';
+  try { const v = localStorage.getItem(PICK_KEY); if (['jobs', 'intel', 'db'].includes(v)) pickDefault = v; } catch {}
+  openDetail(pickDefault, html[pickDefault]);
+
+  // Attention: only things to act on, only from data this account can see.
+  const items = [];
+  if (j) {
+    j.live.filter(p => j.endsIn(p) <= ENDING_SOON_DAYS).forEach(p => items.push(['ti-clock', 'var(--amb)',
+      `<b>${escapeHtml(p.job_title)}</b> ends in ${j.endsIn(p)} ${plural(j.endsIn(p), 'day', 'days')}`,
+      'Manage', 'employer-dashboard.html']));
+    j.pending.forEach(p => items.push(['ti-alert-triangle', 'var(--amb)',
+      `<b>${escapeHtml(p.job_title)}</b> is saved but not paid for, so it isn't live yet`,
+      'Finish', 'employer-dashboard.html']));
+    if (!j.live.length && credits) items.push(['ti-briefcase', 'var(--t3)',
+      `You have <b>${credits} ${plural(credits, 'credit', 'credits')}</b> and nothing live`, 'Post a job', 'post-job.html']);
+  }
+  if (teaser && teaser.below_market) items.push(['ti-lock', 'var(--blu)',
+    `<b>${teaser.below_market} of your ${teaser.benchmarked} priced postings</b>
+     ${plural(teaser.below_market, 'is', 'are')} advertising below ${plural(teaser.below_market, 'its', 'their')} market`,
+    'Get my market report', START_PRO]);
+  el('attn').style.display = items.length ? '' : 'none';
+  el('attn').innerHTML = `<h2>Needs your attention</h2><ul>${items.slice(0, 5).map(([icon, colour, text, cta, href]) =>
+    `<li><i class="ti ${icon}" style="color:${colour}"></i><span>${text}</span><a href="${href}">${cta} &rarr;</a></li>`).join('')}</ul>`;
+
+  const live = j ? j.live.length : null;
+  el('summary').innerHTML = [
+    live === null ? null : live ? `${live} ${plural(live, 'posting', 'postings')} live` : 'No postings live',
+    `Resume Vault opens at ${VAULT.unlockAt} profiles`,
+  ].filter(Boolean).join(' &middot; ');
+}
+
+if (session) render();
+</script>
+</body>
+</html>
