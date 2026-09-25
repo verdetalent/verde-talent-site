@@ -478,10 +478,8 @@ async function render() {
     `<li><i class="ti ${icon}" style="color:${colour}"></i><span>${text}</span><a href="${href}">${cta} &rarr;</a></li>`).join('')}</ul>`;
 
   const live = j ? j.live.length : null;
-  el('summary').innerHTML = [
-    live === null ? null : live ? `${live} ${plural(live, 'posting', 'postings')} live` : 'No postings live',
-    `Resume Vault opens at ${VAULT.unlockAt} profiles`,
-  ].filter(Boolean).join(' &middot; ');
+  el('summary').innerHTML = live === null ? '&nbsp;'
+    : live ? `${live} ${plural(live, 'posting', 'postings')} live` : 'No postings live';
 }
 
 if (session) render();
