@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CNGTGW71QP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CNGTGW71QP');
+</script>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<script src="/fullstory.js"></script>
+<title>Intelligence — Verde Talent</title>
+<link rel="stylesheet" href="/tabler-icons.css"/>
+<style>
+/* Shell tokens and chrome are employer-dashboard.html's, unchanged, so this reads as
+   another tab of the same account rather than a second product. Only .wrap widens:
+   the dashboard lists postings in 800px, this page puts panels side by side. */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --track:rgba(255,255,255,0.07);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right{display:flex;gap:20px;align-items:center;font-size:13px;flex-wrap:wrap;}
+.nav-right a{color:var(--t2);text-decoration:none;}
+.nav-right a:hover{color:var(--grn);}
+.nav-right a.here{color:var(--t1);font-weight:600;}
+.wrap{max-width:1180px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;flex-wrap:wrap;gap:14px;}
+.hero h1{font-size:26px;font-weight:700;letter-spacing:-.02em;}
+.hero p{font-size:13.5px;color:var(--t2);margin-top:6px;line-height:1.6;max-width:72ch;}
+.hero p b{color:var(--t1);font-weight:600;}
+.btn-grn{background:var(--grn);color:#052e1e;border:none;padding:11px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);white-space:nowrap;}
+.btn-ghost{background:transparent;color:var(--t1);border:0.5px solid var(--bdr2);padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);}
+.btn-ghost:hover{border-color:rgba(34,224,154,0.4);color:var(--grn);}
+
+.picker{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:1.4rem;}
+.field{display:grid;gap:6px;}
+.field label{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--t3);}
+select{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 12px;font-size:13.5px;color:var(--t1);outline:none;font-family:var(--font-sans);min-width:240px;cursor:pointer;}
+select:focus{border-color:rgba(34,224,154,0.5);}
+
+.grid{display:grid;grid-template-columns:1.35fr 1fr;gap:12px;margin-bottom:12px;align-items:start;}
+.panel{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.3rem 1.35rem;}
+.panel h2{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--t3);
+margin-bottom:1.05rem;display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+.panel h2 em{font-style:normal;text-transform:none;letter-spacing:0;font-size:12px;font-weight:400;}
+.big{font-size:2.3rem;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.05;}
+.big small{font-size:13px;font-weight:500;color:var(--t3);margin-left:8px;letter-spacing:0;}
+.vs{font-size:13px;color:var(--t2);margin-top:.65rem;line-height:1.65;}
+.vs b{color:var(--t1);font-weight:600;}
+.pipe{display:grid;grid-template-columns:1.1fr 1fr;gap:1.6rem;align-items:start;}
+.pipebars{display:grid;gap:.75rem;}
+.piperow{display:grid;grid-template-columns:104px 1fr 78px;gap:10px;align-items:center;font-size:12.5px;}
+.piperow i{font-style:normal;color:var(--t3);}
+.piperow u{text-decoration:none;text-align:right;font-variant-numeric:tabular-nums;color:var(--t2);}
+.pipetrack{height:14px;background:var(--track);border-radius:4px;overflow:hidden;}
+.pipetrack span{display:block;height:100%;border-radius:4px;}
+.pipe-soon span{background:var(--grn);}
+.pipe-mid span{background:rgba(34,224,154,.5);}
+.pipe-late span{background:rgba(255,255,255,.22);}
+.pipe-over span{background:rgba(255,181,71,.6);}
+.devs{display:grid;gap:7px;font-size:13px;}
+.devrow{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:0.5px solid var(--bdr);}
+.devrow:last-child{border-bottom:0;}
+.devrow u{text-decoration:none;color:var(--t3);font-variant-numeric:tabular-nums;white-space:nowrap;}
+@media (max-width:880px){.pipe{grid-template-columns:1fr;}}
+.tabs{display:flex;gap:4px;border-bottom:0.5px solid var(--bdr);margin-bottom:14px;flex-wrap:wrap;}
+.tab{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--t3);
+font:inherit;font-size:13.5px;font-weight:600;padding:9px 14px;cursor:pointer;
+font-family:var(--font-sans);margin-bottom:-1px;}
+.tab:hover{color:var(--t2);}
+.tab[aria-selected="true"]{color:var(--t1);border-bottom-color:var(--grn);}
+.tab small{display:block;font-size:11px;font-weight:400;color:var(--t3);margin-top:1px;}
+.pane[hidden]{display:none;}
+.qrow{display:grid;grid-template-columns:1fr 92px 62px 78px;gap:10px;align-items:center;
+padding:8px 0;border-bottom:0.5px solid var(--bdr);font-size:13.5px;}
+.qrow:last-child{border-bottom:0;}
+.qrow u,.qrow em{text-decoration:none;font-style:normal;color:var(--t3);font-size:12px;
+text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.qrow b{font-variant-numeric:tabular-nums;text-align:right;font-size:13px;}
+.lq{font-weight:700;}
+.lq.hot{color:var(--grn);}
+.bands{margin-top:1.4rem;}
+.bandrow{margin-bottom:1rem;}
+.bandrow:last-of-type{margin-bottom:0;}
+.bandlab{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:6px;gap:10px;}
+.bandlab b{font-size:12.5px;font-weight:600;color:var(--t2);}
+.bandlab u{text-decoration:none;color:var(--t3);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.bandtrack{position:relative;height:20px;background:var(--track);border-radius:5px;}
+.bandfill{position:absolute;top:0;height:100%;border-radius:5px;}
+.bandfill.ours{background:rgba(79,179,255,.30);border:1px solid rgba(79,179,255,.85);}
+.bandfill.bls{background:rgba(255,181,71,.16);border:1px solid rgba(255,181,71,.6);}
+.bandtick{position:absolute;top:-3px;width:3px;height:26px;border-radius:2px;}
+.bandtick.ours{background:#fff;}
+.bandtick.bls{background:var(--amb);}
+.bandaxis{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);
+margin-top:10px;font-variant-numeric:tabular-nums;border-top:0.5px solid var(--bdr);padding-top:7px;}
+.bandnote{font-size:12.5px;color:var(--t2);line-height:1.6;margin-top:.9rem;}
+.bandnote b{color:var(--t1);font-weight:600;}
+.bandnote.warn b{color:var(--amb);}
+.range{margin-top:1.45rem;}
+.rtrack{position:relative;height:9px;background:var(--track);border-radius:5px;}
+.rband{position:absolute;top:-4px;height:17px;background:rgba(79,179,255,.26);border:1px solid rgba(79,179,255,.85);border-radius:5px;}
+.rmed{position:absolute;top:-8px;width:3px;height:25px;background:#fff;border-radius:2px;}
+.rbls{position:absolute;top:-1px;width:11px;height:11px;background:var(--amb);transform:rotate(45deg);margin-left:-5px;}
+.rkey{display:flex;gap:16px;font-size:11.5px;color:var(--t3);margin-top:14px;flex-wrap:wrap;font-variant-numeric:tabular-nums;}
+.rkey i{font-style:normal;display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.stat{background:var(--card2);border-radius:10px;padding:.85rem .95rem;}
+.stat b{display:block;font-size:1.3rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+.stat span{font-size:11.5px;color:var(--t3);line-height:1.45;display:block;margin-top:3px;}
+.erow{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:8px 0;border-bottom:0.5px solid var(--bdr);font-size:13.5px;}
+.erow:last-child{border-bottom:0;}
+.erow u{text-decoration:none;color:var(--t3);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.chip.up{color:var(--grn);background:rgba(34,224,154,0.1);border:0.5px solid rgba(34,224,154,0.3);}
+.chip.dn{color:var(--cor);background:rgba(255,112,85,0.08);border:0.5px solid rgba(255,112,85,0.25);}
+.chip.eq{color:var(--t2);background:rgba(255,255,255,0.05);border:0.5px solid var(--bdr2);}
+.chip.no{color:var(--t3);background:transparent;font-weight:500;}
+.trend{font-size:11px;color:var(--t3);white-space:nowrap;font-variant-numeric:tabular-nums;}
+.trend.up{color:var(--grn);}
+.trend.dn{color:var(--cor);}
+.reqrow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:7px 0;
+border-bottom:0.5px solid var(--bdr);font-size:13.5px;}
+.reqrow:last-child{border-bottom:0;}
+.meter{width:120px;height:7px;background:var(--track);border-radius:4px;overflow:hidden;}
+.meter span{display:block;height:100%;background:var(--blu);border-radius:4px;}
+.meter.soft span{background:rgba(79,179,255,.4);}
+.reqnum{font-size:12px;color:var(--t3);font-variant-numeric:tabular-nums;min-width:38px;text-align:right;}
+.reqwrap{display:flex;align-items:center;gap:10px;}
+.c-item{margin-bottom:.95rem;}
+.c-item:last-child{margin-bottom:0;}
+.c-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;margin-bottom:6px;gap:12px;}
+.c-top u{text-decoration:none;color:var(--t3);font-size:11.5px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.c-bar{height:22px;background:var(--track);border-radius:5px;position:relative;overflow:hidden;}
+.c-fill{height:100%;background:linear-gradient(90deg,rgba(79,179,255,.85),rgba(79,179,255,.45));
+border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;
+font-size:11.5px;font-weight:700;color:#04202f;}
+.c-ghost{position:absolute;top:0;height:100%;border-right:1px dashed rgba(255,255,255,.35);}
+.e-row{display:grid;grid-template-columns:1fr 84px 96px;gap:10px;align-items:center;padding:9px 0;
+border-bottom:0.5px solid var(--bdr);font-size:13.5px;}
+.e-row:last-of-type{border-bottom:0;}
+.e-head{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);font-weight:600;padding-bottom:7px;}
+.e-mkt{font-variant-numeric:tabular-nums;text-align:right;color:var(--t2);}
+.e-you{text-align:right;font-variant-numeric:tabular-nums;}
+.tick{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:20px;display:inline-block;}
+.tick.yes{color:var(--grn);background:rgba(34,224,154,0.1);border:0.5px solid rgba(34,224,154,0.3);}
+.tick.no{color:var(--cor);background:rgba(255,112,85,0.08);border:0.5px solid rgba(255,112,85,0.25);}
+.tick.na{color:var(--t3);}
+.facts{display:grid;gap:7px;margin-top:1.1rem;font-size:13px;color:var(--t2);line-height:1.6;}
+.facts b{color:var(--t1);font-weight:600;}
+.facts div{display:flex;gap:8px;}
+.facts i{font-style:normal;color:var(--t3);flex:0 0 auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{padding:8px 10px;text-align:left;border-bottom:0.5px solid var(--bdr);}
+thead th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);font-weight:600;}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;}
+tbody tr:last-child td{border-bottom:0;}
+tr.self td{background:rgba(79,179,255,.08);font-weight:600;}
+.foot{font-size:11.5px;color:var(--t3);margin-top:1.6rem;line-height:1.75;max-width:92ch;}
+.state-note{font-size:14px;color:var(--t3);padding:3rem 0;text-align:center;line-height:1.8;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+
+/* Locked state: what the same page shows an account without the entitlement. The data is
+   not hidden here, it is never sent - row-level security returns nothing. */
+.lock{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:2.2rem;text-align:center;}
+.lock h2{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:.6rem;}
+.lock p{font-size:14px;color:var(--t2);line-height:1.7;max-width:56ch;margin:0 auto 1.4rem;}
+.lock .price{font-size:13px;color:var(--t3);margin-top:1rem;}
+.lockgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:1.6rem auto 0;max-width:820px;text-align:left;}
+.lockgrid div{background:var(--card2);border-radius:10px;padding:.9rem 1rem;font-size:13px;color:var(--t2);line-height:1.5;}
+.lockgrid b{display:block;color:var(--t1);font-size:13.5px;margin-bottom:3px;}
+@media (max-width:880px){.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.webp" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right">
+    <a href="employer-home.html">Home</a>
+    <a href="employer-dashboard.html">Jobs</a>
+    <a href="employer-intel-home.html" class="here">Intelligence</a>
+    <a href="resume-vault.html">Resume Vault</a>
+    <a href="employer-account.html">Account &amp; credits</a>
+    <a href="#" id="signOutLink">Sign out</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1 id="title">Intelligence</h1>
+      <p id="lede"></p>
+    </div>
+  </div>
+
+  <div class="picker" id="picker" style="display:none;">
+    <div class="field"><label for="role">Role</label><select id="role"></select></div>
+    <div class="field"><label for="state">Market</label><select id="state"></select></div>
+  </div>
+
+  <div id="content" class="state-note">Loading…</div>
+  <p class="foot" id="foot"></p>
+</div>
+<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+
+<script src="intel-data.js"></script>
+<script>
+// The dataset comes from Supabase with the signed-in employer's token (intel-data.js), and
+// intel_subscriptions decides whether any rows come back: no Intelligence, no rows, and the
+// locked view below. Nothing paid is in this page or anywhere on this site.
+let D = null;
+let POSTINGS = [];
+const money = v => (v === null || v === undefined) ? '&mdash;' : '$' + Math.round(v).toLocaleString();
+const el = id => document.getElementById(id);
+const isMetro = key => Boolean(D.metros && D.metros[key]);
+const areaOf = key => key === 'US' ? { name: 'the United States' }
+  : isMetro(key) ? D.metros[key] : D.states[key];
+const src = key => key === 'US' ? D.national : areaOf(key).roles;
+
+function options(select, items, selected){
+  select.innerHTML = items.map(([v, l]) => `<option value="${v}"${v === selected ? ' selected' : ''}>${l}</option>`).join('');
+}
+
+function chip(delta, pay){
+  if (pay === null) return '<span class="chip no">no pay stated</span>';
+  if (delta === null) return '';
+  if (delta >= 3) return `<span class="chip up">+${delta}%</span>`;
+  if (delta <= -3) return `<span class="chip dn">${delta}%</span>`;
+  return '<span class="chip eq">at market</span>';
+}
+
+function showLocked(){
+  el('lede').innerHTML = 'Pay, competition and time-to-fill for every clean energy role and market we track.';
+  el('content').className = '';
+  el('content').innerHTML = `<div class="lock">
+    <h2>Intelligence is not on this account yet</h2>
+    <p>You have the free national picture already. Pro adds the parts that change a hiring decision:
+       what a role pays in one state rather than the whole country, which employers you are bidding
+       against, and how long searches take to fill.</p>
+    <a class="btn-grn" href="intelligence.html#plans">See what Pro includes</a>
+    <p class="price">$199 a month, or $1,990 a year &mdash; two months free.</p>
+    <div class="lockgrid">
+      <div><b>Pay by role and market</b>The middle 50% of advertised pay for one role in one state, against the BLS median.</div>
+      <div><b>Who you are bidding against</b>Every employer hiring that role there, what they advertise, and how far off market they sit.</div>
+      <div><b>Time to fill</b>How long searches stay open here compared with the rest of the country.</div>
+      <div><b>Where else to look</b>The same role across every market, ranked by how busy it is.</div>
+    </div>
+  </div>`;
+}
+
+
+
+function pipelinePanel(area){
+  // EIA-860M, already ingested and previously reduced to a single state MW total. The
+  // date is the point: capacity landing inside a year is a hiring wave inside a year, and
+  // the developer building it is who you will be bidding against for the people.
+  const p = area.pipe;
+  if (!p) return '';
+  const mw = p.mw, max = Math.max(mw.overdue, mw.within_12mo, mw.within_24mo, mw.later, 1);
+  const gw = v => v >= 1000 ? (v / 1000).toFixed(1) + ' GW' : Math.round(v) + ' MW';
+  const row = (cls, label, value) => `<div class="piperow"><i>${label}</i>
+      <div class="pipetrack ${cls}"><span style="width:${Math.max(100 * value / max, value ? 2 : 0)}%"></span></div>
+      <u>${value ? gw(value) : '&mdash;'}</u></div>`;
+
+  const tech = Object.entries(p.by_technology).map(([k, v]) => `${k} ${gw(v)}`).join(' · ');
+  return `<div class="panel" style="margin-bottom:12px;">
+    <h2>What is being built here<em>${p.projects} projects across ${p.counties} counties · EIA-860M</em></h2>
+    <div class="pipe">
+      <div class="pipebars">
+        ${row('pipe-soon', 'Next 12 months', mw.within_12mo)}
+        ${row('pipe-mid', '12 to 24 months', mw.within_24mo)}
+        ${row('pipe-late', 'Beyond that', mw.later)}
+        ${row('pipe-over', 'Date already passed', mw.overdue)}
+        <p class="vs" style="font-size:12.5px;margin-top:.4rem;">${tech}.
+          ${mw.overdue ? `The last row is capacity whose scheduled date has been and gone, kept separate
+          because a late project is not an imminent one.` : ''}</p>
+      </div>
+      <div>
+        <h2 style="margin-bottom:.8rem;">Who is building it</h2>
+        <div class="devs">${p.top_developers.map(d => `<div class="devrow">
+          <span>${d.entity.trim()}</span><u>${gw(d.mw)}</u></div>`).join('')}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+
+function trainingPanel(area){
+  // IPEDS. The point of this panel is the gap between the programme an employer imagines
+  // hiring from and the one that actually produces people. Nationally there were 108 wind
+  // technology completions last year and 80 of them were in Kansas, so naming only the
+  // renewable programmes would describe a pipeline that does not exist.
+  const t = area.train;
+  if (!t || !t.programs || !t.total) return '';
+  const scope = area.kind === 'metro' ? 'metro' : 'state';
+  const rows = Object.entries(t.programs).filter(([, v]) => v > 0)
+    .sort((a, b) => b[1] - a[1]).slice(0, 6);
+  const max = rows.length ? rows[0][1] : 1;
+  const nat = D.train_national || {};
+  const thin = ['Wind', 'Solar'].filter(k => !t.programs[k]);
+
+  return `<div class="panel">
+    <h2>Who is being trained here<em>${t.total.toLocaleString()} completions in ${D.train_year} · IPEDS · ${scope}</em></h2>
+    <div class="pipebars">
+      ${rows.map(([name, value]) => `<div class="piperow" style="grid-template-columns:190px 1fr 62px;">
+        <i>${name}</i>
+        <div class="pipetrack pipe-soon"><span style="width:${Math.max(100 * value / max, 2)}%"></span></div>
+        <u>${value.toLocaleString()}</u></div>`).join('')}
+    </div>
+    <p class="vs" style="font-size:12.5px;margin-top:1rem;">
+      ${thin.length ? `No ${thin.map(x => x.toLowerCase()).join(' or ')} programme here produced anyone last year.
+        Nationally there were only <b>${(nat['Wind'] || 0)}</b> wind and <b>${(nat['Solar'] || 0)}</b> solar
+        completions in total, against <b>${(nat['Electricians and line work'] || 0).toLocaleString()}</b> electricians —
+        so the people doing this work come out of the trades, not out of renewable programmes. ` : ''}
+      ${area.schools && area.schools.length ? `Biggest local providers: ${area.schools.slice(0, 3).map(x => x.name).join(', ')}.` : ''}
+    </p>
+  </div>`;
+}
+
+
+function migrationPanel(area){
+  // IRS. Households, not people, and a record of moves already made rather than intent -
+  // which is what makes the origin list a recruiting pool rather than a forecast.
+  const m = area.move;
+  if (!m || !m.arrived_households) return '';
+  const net = m.net_households;
+  const from = (m.top_origins || []).slice(0, 5);
+  const to = (m.top_destinations || []).slice(0, 5);
+  const max = Math.max(...from.map(x => x.households), ...to.map(x => x.households), 1);
+  const col = (title, rows, cls) => `<div><h2 style="margin-bottom:.8rem;">${title}</h2>
+    <div class="pipebars">${rows.map(r => `<div class="piperow" style="grid-template-columns:52px 1fr 62px;">
+      <i>${r.state}</i>
+      <div class="pipetrack ${cls}"><span style="width:${Math.max(100 * r.households / max, 2)}%"></span></div>
+      <u>${r.households.toLocaleString()}</u></div>`).join('')}</div></div>`;
+
+  return `<div class="panel">
+    <h2>Who moves in and out<em>${D.move_period} · IRS · households</em></h2>
+    <p class="vs" style="margin-top:-.4rem;margin-bottom:1.1rem;">
+      <b>${m.arrived_households.toLocaleString()}</b> households arrived and
+      <b>${m.left_households.toLocaleString()}</b> left, a net of
+      <b style="color:${net >= 0 ? 'var(--grn)' : 'var(--cor)'}">${net >= 0 ? '+' : ''}${net.toLocaleString()}</b>.
+      These are moves already made, so the places on the left are a pool that has demonstrably
+      been willing to come here.</p>
+    <div class="pipe">
+      ${col('Where they came from', from, 'pipe-soon')}
+      ${col('Where they went', to, 'pipe-late')}
+    </div>
+  </div>`;
+}
+
+
+function industryPanel(area){
+  // QCEW. Location quotient is the point: 1.0 is the national average share of
+  // employment, so 4.62 means the industry is four and a half times as concentrated here
+  // as it is nationally. That is the difference between a market with employers to poach
+  // from and one where you would be the only game in town.
+  const rows = area.industry;
+  if (!rows || !rows.length) return '';
+  return `<div class="panel">
+    <h2>How concentrated the industry is<em>QCEW &middot; 1.0 = national average</em></h2>
+    <div class="qrow" style="border-bottom:0.5px solid var(--bdr);color:var(--t3);font-size:10.5px;
+      letter-spacing:.06em;text-transform:uppercase;">
+      <div>Industry</div><u>Employment</u><em>Sites</em><em>Concentration</em></div>
+    ${rows.map(r => `<div class="qrow">
+      <div>${r.title}</div>
+      <b>${r.employment.toLocaleString()}</b>
+      <em>${r.establishments ? r.establishments.toLocaleString() : '&mdash;'}</em>
+      <em class="lq ${r.lq >= 1.5 ? 'hot' : ''}">${r.lq ? r.lq.toFixed(2) + '×' : '&mdash;'}</em>
+    </div>`).join('')}
+    <p class="vs" style="font-size:12.5px;margin-top:.9rem;">Cells QCEW suppresses to protect
+      identifiable employers are left out rather than shown as zero.</p>
+  </div>`;
+}
+
+function labourPanel(area, c){
+  const bits = [];
+  if (area.labor_force && area.labor_force.latest)
+    bits.push(['Workforce', `<b>${Math.round(area.labor_force.latest).toLocaleString()}</b> people in the
+      labour force${area.unemp ? `, <b>${area.unemp.latest}%</b> of them unemployed` : ''}.`]);
+  const ch = c.churn;
+  if (ch && ch.nat_openings)
+    bits.push(['Openings', `Nationally <b>${ch.industry}</b> runs <b>${ch.nat_openings[0]}</b> openings
+      per 100 jobs${ch.nat_hires ? `, and fills <b>${ch.nat_hires[0]}</b> of them a month` : ''}.`]);
+  if (ch && ch.nat_layoffs)
+    bits.push(['Layoffs', `<b>${ch.nat_layoffs[0]}</b> per 100 jobs a month, against
+      <b>${ch.nat[0]}</b> leaving voluntarily — ${ch.nat_layoffs[0] === ch.nat[0]
+        ? 'as many are let go as leave of their own accord'
+        : ch.nat_layoffs[0] < ch.nat[0] ? 'people are choosing to go, not being let go'
+        : 'more are being let go than are leaving'}.`]);
+  if (c.wage_growth && c.wage_growth.total_pct)
+    bits.push(['Total cost', `Wages in <b>${c.wage_growth.industry}</b> are up
+      <b>${c.wage_growth.pct}%</b> and total compensation <b>${c.wage_growth.total_pct}%</b> —
+      ${c.wage_growth.total_pct === c.wage_growth.pct ? 'benefits are keeping pace with pay'
+        : c.wage_growth.total_pct > c.wage_growth.pct ? 'benefits are rising faster than pay'
+        : 'pay is rising faster than the total package'}.`]);
+  if (!bits.length) return '';
+  return `<div class="panel"><h2>The labour market around it</h2>
+    <div class="facts">${bits.map(([k, v]) => `<div><i>${k}</i><span>${v}</span></div>`).join('')}</div></div>`;
+}
+
+function requirementsPanel(c){
+  const s = c.sig;
+  if (!s || !s.readable) return `<div class="panel"><h2>What this role asks for</h2>
+    <p class="vs">Too few postings here carry a description we can read. The national profile is
+    the better guide for this one.</p></div>`;
+
+  // Option C: the bar is what employers REQUIRE; the dashed mark is how many mention it at
+  // all. The gap between them is the negotiable part, and it is the whole reason the
+  // parser distinguishes required from preferred.
+  const bar = (label, required, mentioned, note) => `<div class="c-item">
+      <div class="c-top"><span>${label}</span><u>${note}</u></div>
+      <div class="c-bar"><div class="c-fill" style="width:${Math.max(required, 3)}%">${required}%</div>
+      ${mentioned && mentioned > required ? `<div class="c-ghost" style="left:${mentioned}%"></div>` : ''}</div>
+    </div>`;
+
+  // A credential nobody requires gets a sentence, not a bar three pixels wide labelled 0%.
+  const optional = s.certs.filter(([, req]) => req < 10);
+  const rows = s.certs.filter(([, req]) => req >= 10).map(([name, req, any]) =>
+    bar(name, req, any, any > req ? `${req}% require · ${any}% mention` : `${req}% require`));
+
+  const d = s.degree || {};
+  const level = d.levels && Object.keys(d.levels)[0];
+  if (d.asked_pct) rows.push(bar(level ? level + ' diploma or above' : 'Education', d.asked_pct, null,
+    d.experience_accepted_pct ? `${d.asked_pct}% require · ${d.experience_accepted_pct}% take experience instead`
+                              : `${d.asked_pct}% require`));
+  if (s.travel && s.travel.mentioned_pct) rows.push(bar('Travel', s.travel.mentioned_pct, null,
+    s.travel.median_pct ? `${s.travel.mentioned_pct}% mention · median ${s.travel.median_pct}%`
+                        : `${s.travel.mentioned_pct}% mention`));
+
+  const tail = [];
+  if (s.years) tail.push(`<b>${Number(s.years).toFixed(1).replace(/\.0$/, '')} years</b> is the typical floor`);
+  if (s.reloc) tail.push(`<b>${s.reloc}%</b> offer relocation help`);
+  if (s.union) tail.push(`<b>${s.union}%</b> mention union labour`);
+  if (s.appr) tail.push(`<b>${s.appr}%</b> mention an apprenticeship`);
+  if (s.pw) tail.push(`<b>${s.pw}%</b> reference prevailing wage`);
+  optional.forEach(([name, , any]) => tail.push(`<b>${name}</b> is asked for by ${any}% but required by none`));
+
+  return `<div class="panel">
+    <h2>What this role asks for<em>${s.readable} ads read · bar = required, dash = mentioned</em></h2>
+    ${rows.join('')}
+    ${tail.length ? `<p class="vs" style="margin-top:1.1rem;">${tail.join('. ')}.</p>` : ''}
+  </div>`;
+}
+
+function yourPostingPanel(c, roleKey, stateKey){
+  // Option E, and the reason the drill-down has two modes: this panel exists only when the
+  // employer has a live posting in this exact role and market. Arriving here by clicking
+  // your own posting and losing the comparison would be the worst moment to drop it.
+  const mine = POSTINGS.find(p => p.role === roleKey && p.state === stateKey);
+  const s = c.sig;
+  if (!mine || !mine.requirements || !s || !s.readable) return '';
+
+  const yours = mine.requirements || {};
+  const tick = v => v ? '<span class="tick yes">asked</span>' : '<span class="tick no">not asked</span>';
+  const rows = s.certs.map(([name, req]) => `<div class="e-row"><div>${name}</div>
+      <div class="e-mkt">${req}%</div><div class="e-you">${tick((yours.certs || []).includes(name))}</div></div>`);
+
+  const d = s.degree || {};
+  if (d.asked_pct) rows.push(`<div class="e-row"><div>Education stated</div>
+    <div class="e-mkt">${d.asked_pct}%</div><div class="e-you">${tick(yours.degree)}</div></div>`);
+  if (s.years) rows.push(`<div class="e-row"><div>Years of experience</div>
+    <div class="e-mkt">${Number(s.years).toFixed(1).replace(/\.0$/, '')} yrs</div>
+    <div class="e-you">${yours.years ? yours.years + ' yrs' : '<span class="tick na">&mdash;</span>'}</div></div>`);
+  if (s.reloc) rows.push(`<div class="e-row"><div>Relocation help</div>
+    <div class="e-mkt">${s.reloc}%</div><div class="e-you">${tick(yours.reloc)}</div></div>`);
+
+  const notes = [];
+  const missing = s.certs.filter(([name, req]) => req >= 25 && !(yours.certs || []).includes(name));
+  if (missing.length) notes.push(`You do not ask for <b>${missing[0][0]}</b>, which ${missing[0][1]}% of this market requires.`);
+  if (yours.years && s.years && yours.years > s.years)
+    notes.push(`You ask for <b>${Math.round(yours.years - s.years)} more years</b> than this market typically does.`);
+  if (s.band && mine.band && mine.band < s.band.median_spread * 0.6)
+    notes.push(`Your pay band is <b>$${mine.band.toLocaleString()}</b> against a typical
+      <b>$${s.band.median_spread.toLocaleString()}</b>, leaving little room to close someone.`);
+
+  return `<div class="panel">
+    <h2>Your posting against this market<em>${mine.title} · ${mine.where}</em></h2>
+    <div class="e-row e-head"><div>Requirement</div><div class="e-mkt">Market</div><div class="e-you">You</div></div>
+    ${rows.join('')}
+    ${notes.length ? `<p class="vs" style="margin-top:1.1rem;">${notes.join(' ')}</p>` : ''}
+  </div>`;
+}
+
+function marketShapePanel(c){
+  const s = c.sig || {};
+  const band = s.band, repost = s.repost;
+  const bits = [];
+  if (band) bits.push(['Room to move', `Employers advertise a band about <b>$${band.median_spread.toLocaleString()}</b> wide
+    (<b>${band.median_spread_pct}%</b> of the bottom of the range). <b>${band.with_range_pct}%</b> publish a range rather than a single figure.`]);
+  if (repost && repost.reposted_pct !== null) bits.push(['Reposted', `<b>${repost.reposted_pct}%</b> of closed searches
+    here came back within six weeks, across ${repost.searches} searches we watched close.`]);
+  if (s.remote !== null && s.remote !== undefined) bits.push(['Remote', `<b>${s.remote}%</b> of postings are remote.`]);
+
+  // JOLTS. Named explicitly, because a quits rate for "construction nationally" is not a
+  // quits rate for this role in this state - BLS does not publish state by industry, and
+  // implying it did would be the easiest lie on the page to tell by accident.
+  const ch = c.churn;
+  if (ch && ch.nat){
+    const [now, avg, period] = ch.nat;
+    const direction = avg === null ? '' : now > avg ? ` — above its 12-month average of ${avg}`
+                                                    : now < avg ? ` — below its 12-month average of ${avg}` : '';
+    bits.push(['Churn', `Nationally, <b>${ch.industry}</b> loses <b>${now} per 100 jobs</b> a month to
+      resignations${direction}. ${ch.state ? `Across all industries this market runs
+      <b>${ch.state[0]}</b> (${ch.state[1]}).` : ''} <span style="color:var(--t3)">BLS publishes churn by
+      industry nationally and by state only for all industries together, never both at once.</span>`]);
+  }
+  if (!bits.length) return '';
+  return `<div class="panel"><h2>How the market behaves</h2>
+    <div class="facts">${bits.map(([k, v]) => `<div><i>${k}</i><span>${v}</span></div>`).join('')}</div></div>`;
+}
+
+function render(){
+  const stateKey = el('state').value, roleKey = el('role').value;
+  const area = areaOf(stateKey);
+  const metro = isMetro(stateKey);
+  const c = src(stateKey)[roleKey];
+  const nat = D.national[roleKey];
+  const title = D.titles[roleKey] || roleKey;
+  el('title').textContent = `${title}s — ${area.name}`;
+
+  if (!c){ el('content').innerHTML = '<p class="state-note">No open roles here right now.</p>'; return; }
+
+  const pay = c.pay, bls = c.bls;
+  const lo = pay && pay[0], mid = pay && pay[1], hi = pay && pay[2];
+  el('lede').innerHTML = pay
+    ? `<b>${c.nemp}</b> employers are hiring, and the middle half of advertised pay sits between
+       <b>${money(lo)}</b> and <b>${money(hi)}</b>. ${c.days ? `Searches here take about <b>${c.days} days</b> to fill.`
+       : c.days_over ? `Most searches here are still open after <b>${c.days_over} days</b>.` : ''}`
+    : metro
+      ? `We see <b>${c.open || 'no'}</b> open ${c.open === 1 ? 'role' : 'roles'} for this in ${area.name} —
+         too few to price a market from. The BLS band below is the reliable figure at this resolution, and
+         everything under it describes the place rather than our postings.`
+      : `<b>${c.nemp}</b> employers are hiring here, but ${c.reason}, so there is no reliable pay figure
+         for this market yet. Everything else below still holds.`;
+
+  // Two bars on one scale: what BLS says people in this job earn, and what employers are
+  // advertising for it. Overlaying them on a single track hid the comparison - the whole
+  // point is that in some markets the advertised band sits under the BLS 25th percentile.
+  // BLS suppresses percentiles far more often than medians, so this falls back to the
+  // single-marker treatment whenever the band is not available.
+  let range = '';
+  const anyBand = pay || (bls && bls[3] && bls[4]);
+  if (anyBand){
+    const blsMed = bls && bls[0], blsLo = bls && bls[3], blsHi = bls && bls[4];
+    const haveBlsBand = Boolean(blsLo && blsHi);
+    const marks = [lo, hi, blsMed, blsLo, blsHi].filter(Boolean);
+    if (!marks.length) return;
+    const min = Math.min(...marks) * 0.92, max = Math.max(...marks) * 1.06;
+    const pos = v => ((v - min) / (max - min)) * 100;
+    const bar = (cls, bandLo, bandHi, tick, label, note) => `<div class="bandrow">
+        <div class="bandlab"><b>${label}</b><u>${note}</u></div>
+        <div class="bandtrack">
+          ${bandLo && bandHi ? `<div class="bandfill ${cls}" style="left:${pos(bandLo)}%;width:${pos(bandHi) - pos(bandLo)}%"></div>` : ''}
+          ${tick ? `<div class="bandtick ${cls}" style="left:${pos(tick)}%"></div>` : ''}
+        </div></div>`;
+
+    const rows = pay ? [bar('ours', lo, hi, mid, 'What employers advertise',
+                      `${money(lo)}–${money(hi)} · median ${money(mid)}`)] : [];
+    if (haveBlsBand)
+      rows.push(bar('bls', blsLo, blsHi, blsMed, 'What people in this job earn (BLS)',
+                    `${money(blsLo)}–${money(blsHi)} · median ${money(blsMed)}`));
+    else if (blsMed)
+      rows.push(bar('bls', null, null, blsMed, 'What people in this job earn (BLS)',
+                    `median ${money(blsMed)} · percentiles not published here`));
+
+    // The line worth putting in words, when it is true.
+    let note = '';
+    if (!pay && haveBlsBand)
+      note = `<p class="bandnote">This is what people in the occupation earn here, from BLS. We do not
+        see enough postings in this market to say what employers are advertising against it.</p>`;
+    else if (haveBlsBand && hi < blsLo)
+      note = `<p class="bandnote warn">Every figure advertised here sits <b>below the BLS 25th percentile</b>
+        of ${money(blsLo)}. Employers in this market are offering less than three quarters of the people
+        already doing the job are paid.</p>`;
+    else if (haveBlsBand && mid < blsLo)
+      note = `<p class="bandnote warn">The advertised median of ${money(mid)} sits <b>below the BLS 25th
+        percentile</b> of ${money(blsLo)}.</p>`;
+    else if (haveBlsBand && mid > blsHi)
+      note = `<p class="bandnote">The advertised median sits <b>above the BLS 75th percentile</b> of
+        ${money(blsHi)} — this market pays over the odds for the occupation.</p>`;
+
+    range = `<div class="bands">${rows.join('')}
+      <div class="bandaxis"><span>${money(min)}</span><span>${money(max)}</span></div>
+      ${note}</div>`;
+  }
+
+  const hourly = mid ? (mid / 2080).toFixed(2) : null;
+  const rows = Object.entries(D.states)
+    .filter(([, s]) => s.roles[roleKey] && s.roles[roleKey].pay)
+    .map(([k, s]) => [k, s.name, s.roles[roleKey]])
+    .sort((a, b) => b[2].open - a[2].open).slice(0, 9);
+
+  el('content').className = '';
+  const yours = yourPostingPanel(c, roleKey, stateKey);
+  // Three questions, three panes. The page had grown to a dozen panels in one scroll,
+  // which buries the pay answer most visits come for under everything else. Your own
+  // posting stays above the tabs: it is a verdict, not a topic.
+  el('content').innerHTML = `
+  ${yours ? `<div class="grid" style="grid-template-columns:1fr;">${yours}</div>` : ''}
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-pane="pay" aria-selected="true">What it costs<small>pay, prices, movement</small></button>
+    <button class="tab" role="tab" data-pane="rivals" aria-selected="false">Who you are against<small>employers, requirements, churn</small></button>
+    <button class="tab" role="tab" data-pane="place" aria-selected="false">The place<small>industry, build, training, people</small></button>
+  </div>
+
+  <div class="pane" data-pane="pay">
+  <div class="grid">
+    <div class="panel">
+      <h2>What you would have to pay${pay ? `<em>${pay[4]} postings from ${pay[3]} employers${
+        pay[5] === 'early' ? ' &middot; early read' : ''}</em>` : ''}</h2>
+      ${pay
+        ? `<div class="big">${money(mid)}<small>median advertised${hourly ? ` &middot; $${hourly}/hr` : ''}</small></div>`
+        : bls && bls[0]
+          // With no advertised figure, the BLS median is the headline rather than a dash.
+          // Labelled, because it answers a different question: what people earn, not what
+          // employers are currently offering.
+          ? `<div class="big">${money(bls[0])}<small>BLS median &middot; what people here earn</small></div>`
+          : '<div class="big">&mdash;</div>'}
+      <p class="vs">
+        ${nat && nat.pay && stateKey !== 'US' && pay ? `The national median for this role is <b>${money(nat.pay[1])}</b>, so this market runs
+          <b>${Math.abs(Math.round(100 * (mid / nat.pay[1] - 1)))}% ${mid >= nat.pay[1] ? 'above' : 'below'}</b> it. ` : ''}
+        ${bls && bls[0] && bls[2] ? `The BLS bar below covers <b>the wider occupation this role sits in</b>, not the role itself.` : ''}
+      </p>
+      ${range}
+      ${c.wage_growth ? `<p class="vs" style="font-size:12.5px;">Wages in <b>${c.wage_growth.industry}</b>
+        are rising <b>${c.wage_growth.pct}%</b> a year, so a band set twelve months ago is already
+        about that far behind (BLS Employment Cost Index, ${c.wage_growth.period}).</p>` : ''}
+    </div>
+    <div class="panel">
+      <h2>The market</h2>
+      <div class="stats">
+        <div class="stat"><b>${c.open}</b><span>roles open now${metro ? ' (we see)' : ''}</span></div>
+        <div class="stat"><b>${c.nemp}</b><span>employers hiring</span></div>
+        <div class="stat"><b>${c.days ? c.days + ' days' : c.days_over ? 'over ' + c.days_over : '&mdash;'}</b><span>typical time to fill${nat && nat.days ? ` &middot; ${nat.days} nationally` : ''}</span></div>
+        <div class="stat"><b>${c.disclose === null ? '&mdash;' : c.disclose + '%'}</b><span>of postings state a salary</span></div>
+        ${area.unemp ? `<div class="stat"><b>${area.unemp.latest}%</b><span>unemployment here &middot;
+          ${D.unemp_median}% median state</span></div>` : ''}
+      </div>
+      ${area.workforce ? `<p class="vs">${area.name === 'the United States' ? 'The US' : area.name} has
+        <b>${area.workforce.toLocaleString()}</b> clean energy workers${area.mw ? ` and <b>${area.mw.toLocaleString()} MW</b> scheduled to be built` : ''}.</p>` : ''}
+    </div>
+  </div>
+
+  </div>
+
+  <div class="pane" data-pane="rivals" hidden>
+  <div class="grid">
+    ${!c.emp.length ? '' : `<div class="panel">
+      <h2>Who you are bidding against<em>pay vs this market &middot; trend is national</em></h2>
+      <div>${c.emp.map(e => {
+        // Hiring direction, national across all roles - this employer's whole posting
+        // volume, not their volume in this market, which JOLTS-style detail we do not have.
+        const v = (D.velocity || {})[e[0]];
+        const trend = v === undefined ? ''
+          : `<div class="trend ${v > 0 ? 'up' : v < 0 ? 'dn' : ''}">${v > 0 ? '+' : ''}${v}% hiring</div>`;
+        return `<div class="erow">
+          <div>${e[0]}${trend}</div>
+          <u>${e[1]} open${e[2] ? ` &middot; ${money(e[2])}` : ''}</u>
+          ${chip(e[3], e[2])}</div>`;
+      }).join('')}</div>
+    </div>`}
+    ${!rows.length ? '' : `<div class="panel">
+      <h2>The same role elsewhere<em>${metro ? 'states, for comparison' : 'busiest markets'}</em></h2>
+      <table><thead><tr><th>Market</th><th class="n">Median</th>
+        <th class="n">Open</th><th class="n">Days to fill</th></tr></thead>
+      <tbody>${rows.map(([k, n, r]) => `<tr class="${k === stateKey ? 'self' : ''}">
+        <td>${n}</td><td class="n">${money(r.pay[1])}</td>
+        <td class="n">${r.open}</td>
+        <td class="n">${r.days || '&mdash;'}</td></tr>`).join('')}</tbody></table>
+    </div>`}
+  </div>
+    <div class="grid">
+      ${requirementsPanel(c)}
+      ${marketShapePanel(c)}
+    </div>
+  </div>
+
+  <div class="pane" data-pane="place" hidden>
+    <div class="grid">
+      ${industryPanel(area)}
+      ${labourPanel(area, c)}
+    </div>
+    ${stateKey === 'US' ? '' : `<div class="grid" style="grid-template-columns:1fr;">${pipelinePanel(area)}</div>`}
+    ${stateKey === 'US' ? '' : `<div class="grid" style="grid-template-columns:1fr;">${trainingPanel(area)}</div>`}
+    ${stateKey === 'US' ? '' : `<div class="grid" style="grid-template-columns:1fr;">${migrationPanel(area)}</div>`}
+  </div>`;
+
+  // Remembered per browser only - which tab someone likes is a convenience, not state we
+  // need to be able to read back.
+  const tabs = [...el('content').querySelectorAll('.tab')];
+  const panes = [...el('content').querySelectorAll('.pane')];
+  const show = name => {
+    tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.pane === name)));
+    panes.forEach(p => { p.hidden = p.dataset.pane !== name; });
+    try { localStorage.setItem('vt_intel_tab', name); } catch { /* private mode */ }
+  };
+  tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.pane)));
+  let remembered = 'pay';
+  try { remembered = localStorage.getItem('vt_intel_tab') || 'pay'; } catch { /* ignore */ }
+  show(panes.some(p => p.dataset.pane === remembered) ? remembered : 'pay');
+
+  el('foot').innerHTML = `Pay figures are what employers advertise, not offers accepted. BLS medians are
+    Occupational Employment &amp; Wage Statistics; workforce counts are the DOE US Energy &amp; Employment
+    Report; build pipeline is EIA-860M; training completions are IPEDS; migration is IRS Statistics of Income. Requirements are read from the text of postings we could
+    parse, counted once per distinct advertisement rather than per site. Rebuilt ${D.generated}.`;
+}
+
+function rolesFor(stateKey){
+  const s = src(stateKey);
+  return Object.keys(s).sort((a, b) => s[b].open - s[a].open);
+}
+
+function refreshRoles(){
+  const current = el('role').value;
+  const items = rolesFor(el('state').value).map(r => [r, D.titles[r] || r]);
+  options(el('role'), items, items.some(i => i[0] === current) ? current : items[0][0]);
+}
+
+el('signOutLink').addEventListener('click', e => { e.preventDefault(); VTIntel.signOut(); });
+
+function marketOptions(selected){
+    const states = Object.entries(D.states).sort((a, b) => a[1].name.localeCompare(b[1].name));
+    const byState = {};
+    Object.entries(D.metros || {}).forEach(([code, m]) => {
+      (byState[m.state] = byState[m.state] || []).push([code, m.name]);
+    });
+    const opt = ([v, l]) => `<option value="${v}"${v === selected ? ' selected' : ''}>${l}</option>`;
+    let html = opt(['US', 'United States']);
+    html += `<optgroup label="States">${states.map(([k, s]) => opt([k, s.name])).join('')}</optgroup>`;
+    // Metros sit under their state so a long flat list does not bury them, and are
+    // labelled as what they are: public data at metro resolution, not our own pay figures.
+    Object.keys(byState).sort().forEach(st => {
+      const name = (D.states[st] || {}).name || st;
+      html += `<optgroup label="${name} — metros">${byState[st]
+        .sort((a, b) => a[1].localeCompare(b[1])).map(opt).join('')}</optgroup>`;
+    });
+    return html;
+  }
+
+(async () => {
+  const got = await VTIntel.load();
+  if (got.status === 'signin') return VTIntel.signIn('employer-intel-home.html');
+  if (got.status === 'locked') return showLocked();
+  D = got.data;
+  POSTINGS = await VTIntel.myPostings();
+  {
+    el('picker').style.display = 'flex';
+    // Arriving from the dashboard, which links role+market straight through.
+    const q = new URLSearchParams(location.search);
+    const asked = q.get('state');
+    const wantState = (D.states[asked] || (D.metros || {})[asked] || asked === 'US') ? asked : 'CA';
+    const wantRole = q.get('role');
+    el('state').innerHTML = marketOptions(wantState);
+    refreshRoles();
+    if (wantRole && src(wantState)[wantRole]) el('role').value = wantRole;
+    else if (src(wantState)['Solar O&M technician']) el('role').value = 'Solar O&M technician';
+    el('state').addEventListener('change', () => { refreshRoles(); render(); });
+    el('role').addEventListener('change', render);
+    render();
+  }
+})().catch(err => {
+  console.error(err);
+  el('content').innerHTML = 'Intelligence could not load just now. Refresh the page, or email contact@verdetalent.com if it keeps happening.';
+});
+</script>
+</body>
+</html>

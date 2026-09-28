@@ -161,7 +161,7 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="nav-right">
     <a href="employer-home.html" class="here">Home</a>
     <a href="employer-dashboard.html">Jobs</a>
-    <a href="intelligence.html">Intelligence</a>
+    <a href="employer-intel-home.html">Intelligence</a>
     <a href="resume-vault.html">Resume Vault</a>
     <a href="employer-account.html">Account &amp; credits</a>
     <a href="#" id="signOutLink">Sign out</a>
@@ -197,6 +197,9 @@ const MANAGE_CREDITS_URL = `${SUPABASE_URL}/functions/v1/manage-credits`;
 // Counts-only Intelligence teaser (supabase/migrations/003_intel_posting_teaser.sql). Until
 // that migration has run this 404s, and the card falls back to the plain pitch.
 const TEASER_URL = `${SUPABASE_URL}/rest/v1/rpc/intel_posting_teaser`;
+// Whether this account has Intelligence (001_intelligence_pro.sql). Until the migration has
+// run this 404s and the card reads as not included.
+const ACCESS_URL = `${SUPABASE_URL}/rest/v1/rpc/has_intel_access`;
 // Pro cannot be bought online yet; this is the same route the public Intelligence page uses.
 const START_PRO = 'mailto:contact@verdetalent.com?subject=Verde%20Talent%20Intelligence%20Pro';
 // The same figure the public Resume Vault page shows, deliberately not recomputed here.
@@ -266,6 +269,18 @@ async function loadTeaser() {
     return Array.isArray(rows) ? rows[0] || null : rows;
   } catch {
     return null;
+  }
+}
+
+async function loadAccess() {
+  if (SAMPLE) return SAMPLE === 'intel';
+  try {
+    const res = await fetch(ACCESS_URL, { method: 'POST', body: '{}', headers: {
+      'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}`,
+      'Content-Type': 'application/json' } });
+    return res.ok ? (await res.json()) === true : false;
+  } catch {
+    return false;
   }
 }
 
@@ -345,7 +360,20 @@ function jobsCard(j, credits) {
 }
 
 // ------------------------------------------------------------------ Intelligence -------
-function intelCard(t) {
+function intelCard(t, hasIntel) {
+  if (hasIntel) {
+    // A subscriber: the counts become a way in rather than a pitch.
+    const found = t && t.benchmarked
+      ? `<b>${t.below_market} of ${t.benchmarked}</b> of your live postings ${plural(t.below_market, 'is', 'are')} advertising
+         below ${plural(t.below_market, 'its', 'their')} market${t.slow ? `, and <b>${t.slow}</b> ${plural(t.slow, 'has', 'have')}
+         been up longer than usual` : ''}.`
+      : 'Pay, who is hiring and how long roles take to fill, for every clean energy role and market we track.';
+    return `<div class="chead"><div class="cicon intel"><i class="ti ti-chart-bar"></i></div>
+      <div><div class="ctitle">Intelligence</div><div class="csub">Pay, competition and markets</div></div>
+      <span class="pill live">Included</span></div>
+      <p class="blurb">${found}</p>
+      <div class="cfoot"><a class="btn blu" href="employer-intel-home.html">Open Intelligence</a></div>`;
+  }
   const head = `<div class="chead"><div class="cicon intel"><i class="ti ti-chart-bar"></i></div>
     <div><div class="ctitle">Intelligence</div><div class="csub">Pay, competition and markets</div></div>
     <span class="pill lock">Not included</span></div>`;
@@ -423,10 +451,11 @@ async function render() {
   el('who').textContent = session.email || '';
 
   // Each product loads on its own; one failing never blanks the others.
-  const [postingsR, creditsR, teaserR] = await Promise.allSettled([loadPostings(), loadCredits(), loadTeaser()]);
+  const [postingsR, creditsR, teaserR, accessR] = await Promise.allSettled([loadPostings(), loadCredits(), loadTeaser(), loadAccess()]);
   const postings = postingsR.status === 'fulfilled' ? postingsR.value : null;
   const credits = creditsR.status === 'fulfilled' ? creditsR.value : null;
   const teaser = teaserR.status === 'fulfilled' ? teaserR.value : null;
+  const hasIntel = accessR.status === 'fulfilled' && accessR.value === true;
 
   const company = postings && postings[0] && postings[0].company_name;
   el('hello').textContent = `${greet}${company ? ', ' + company : ''}`;
@@ -442,13 +471,13 @@ async function render() {
       <p class="err">We couldn't load your postings just now. <a href="employer-home.html">Try again</a>
       or open <a href="employer-dashboard.html">your postings</a> directly.</p>`;
   }
-  html.intel = intelCard(teaser);
+  html.intel = intelCard(teaser, hasIntel);
   html.db = vaultCard();
 
   place('jobs', html.jobs, j ? (j.live.length ? mini(j.live.length, 'postings live')
     : mini(credits || 0, credits ? 'credits, nothing live' : 'postings live')) : mini('&mdash;', 'not loaded'));
   place('intel', html.intel, teaser && teaser.benchmarked
-    ? mini(teaser.below_market, 'postings below market') : mini('$199', 'a month'));
+    ? mini(teaser.below_market, 'postings below market') : hasIntel ? mini('&check;', 'included') : mini('$199', 'a month'));
   place('db', html.db, mini(VAULT.profiles, `of ${VAULT.unlockAt} profiles`));
 
   // Open on the product they use, not the one we are selling; after that, whatever they
@@ -469,10 +498,10 @@ async function render() {
     if (!j.live.length && credits) items.push(['ti-briefcase', 'var(--t3)',
       `You have <b>${credits} ${plural(credits, 'credit', 'credits')}</b> and nothing live`, 'Post a job', 'post-job.html']);
   }
-  if (teaser && teaser.below_market) items.push(['ti-lock', 'var(--blu)',
+  if (teaser && teaser.below_market) items.push([hasIntel ? 'ti-chart-bar' : 'ti-lock', 'var(--blu)',
     `<b>${teaser.below_market} of your ${teaser.benchmarked} priced postings</b>
      ${plural(teaser.below_market, 'is', 'are')} advertising below ${plural(teaser.below_market, 'its', 'their')} market`,
-    'Get my market report', START_PRO]);
+    hasIntel ? 'See which' : 'Get my market report', hasIntel ? 'employer-intel-home.html' : START_PRO]);
   el('attn').style.display = items.length ? '' : 'none';
   el('attn').innerHTML = `<h2>Needs your attention</h2><ul>${items.slice(0, 5).map(([icon, colour, text, cta, href]) =>
     `<li><i class="ti ${icon}" style="color:${colour}"></i><span>${text}</span><a href="${href}">${cta} &rarr;</a></li>`).join('')}</ul>`;

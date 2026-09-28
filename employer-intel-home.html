@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CNGTGW71QP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CNGTGW71QP');
+</script>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<script src="/fullstory.js"></script>
+<title>Intelligence — Verde Talent</title>
+<link rel="stylesheet" href="/tabler-icons.css"/>
+<style>
+/* Intelligence home. Built on the roles and markets an account FOLLOWS, not on the jobs it
+   has posted: plenty of Intelligence customers never post a job with us, and for them a
+   page organised around postings is empty. Postings, where they exist, pre-fill the
+   watchlist and add one optional section - they are not the spine. */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--cor:#FF7055;--vio:#B79CFF;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right{display:flex;gap:20px;align-items:center;font-size:13px;flex-wrap:wrap;}
+.nav-right a{color:var(--t2);text-decoration:none;}
+.nav-right a:hover{color:var(--grn);}
+.nav-right a.here{color:var(--t1);font-weight:600;}
+.wrap{max-width:1180px;margin:0 auto;padding:2.2rem 1.5rem 4rem;}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:1.4rem;}
+.hero h1{font-size:26px;font-weight:700;letter-spacing:-.02em;}
+.hero p{font-size:13.5px;color:var(--t2);margin-top:6px;line-height:1.6;max-width:70ch;}
+.hero p b{color:var(--t1);font-weight:600;}
+.hero .acts{display:flex;gap:8px;flex-wrap:wrap;}
+.btn{border-radius:10px;font-size:13px;font-weight:600;padding:9px 14px;text-decoration:none;
+display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);cursor:pointer;border:0;}
+.btn.blu{background:var(--blu);color:#04202f;}
+.btn.ghost{background:transparent;color:var(--t1);border:0.5px solid var(--bdr2);}
+.btn.ghost:hover{border-color:rgba(79,179,255,.5);color:var(--blu);}
+.btn:disabled{opacity:.4;cursor:default;}
+
+.section-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--t3);
+margin:2rem 0 .8rem;display:flex;align-items:baseline;gap:10px;justify-content:space-between;}
+.section-title em{font-style:normal;text-transform:none;letter-spacing:0;font-size:12px;font-weight:400;}
+.panel{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.2rem 1.3rem;}
+
+/* Pulse: four numbers across everything the account follows. */
+.pulse{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.pulse div{background:var(--card);border:0.5px solid var(--bdr);border-radius:12px;padding:1rem 1.1rem;}
+.pulse b{display:block;font-size:1.6rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.pulse span{font-size:12px;color:var(--t3);line-height:1.4;display:block;margin-top:3px;}
+
+/* What stands out: findings generated from the data for this watchlist. */
+.finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;}
+.find{background:var(--card);border:0.5px solid var(--bdr);border-left:3px solid var(--blu);border-radius:12px;
+padding:.95rem 1.1rem;display:flex;flex-direction:column;gap:6px;}
+.find.warn{border-left-color:var(--amb);}
+.find.good{border-left-color:var(--grn);}
+.find .k{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);font-weight:600;}
+.find p{font-size:13.5px;color:var(--t2);line-height:1.55;}
+.find p b{color:var(--t1);font-weight:600;}
+.find a{color:var(--blu);text-decoration:none;font-size:12.5px;font-weight:600;margin-top:auto;}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th,td{padding:10px 10px;text-align:left;border-bottom:0.5px solid var(--bdr);}
+thead th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);font-weight:600;}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr.link{cursor:pointer;}
+tbody tr.link:hover td{background:rgba(255,255,255,0.025);}
+td .role{font-weight:600;}
+td .where{font-size:12px;color:var(--t3);margin-top:2px;}
+.chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;display:inline-block;}
+.chip.lo{color:var(--amb);background:rgba(255,181,71,0.1);border:0.5px solid rgba(255,181,71,0.3);}
+.chip.mid{color:var(--t2);background:rgba(255,255,255,0.05);border:0.5px solid var(--bdr2);}
+.chip.hi{color:var(--grn);background:rgba(34,224,154,0.1);border:0.5px solid rgba(34,224,154,0.3);}
+.chip.up{color:var(--grn);background:rgba(34,224,154,0.1);border:0.5px solid rgba(34,224,154,0.3);}
+.chip.dn{color:var(--cor);background:rgba(255,112,85,0.08);border:0.5px solid rgba(255,112,85,0.25);}
+.chip.eq{color:var(--t2);background:rgba(255,255,255,0.05);border:0.5px solid var(--bdr2);}
+.chip.no{color:var(--t3);background:transparent;border:0;font-weight:500;}
+.muted{color:var(--t3);}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;}
+.erow{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:8px 0;
+border-bottom:0.5px solid var(--bdr);font-size:13.5px;}
+.erow:last-child{border-bottom:0;}
+.erow u{text-decoration:none;color:var(--t3);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.trend{font-size:11px;color:var(--t3);}
+.trend.up{color:var(--grn);} .trend.dn{color:var(--cor);}
+select{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:9px;padding:9px 11px;font-size:13.5px;
+color:var(--t1);outline:none;font-family:var(--font-sans);cursor:pointer;}
+.cmp-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem;font-size:13px;color:var(--t3);}
+.note{font-size:12px;color:var(--t3);line-height:1.6;margin-top:.8rem;}
+.gapnote{font-size:12px;color:var(--amb);margin-top:3px;}
+
+/* Setup: two questions. Also the watchlist editor. */
+.setup{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:2rem 2.1rem;max-width:880px;}
+.setup h2{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem;}
+.setup p.lead{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:1.4rem;max-width:64ch;}
+.setup .step{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--t3);margin:1.4rem 0 .7rem;}
+.picks{display:flex;flex-wrap:wrap;gap:7px;}
+.pick{font-size:13px;padding:7px 12px;border-radius:999px;border:0.5px solid var(--bdr2);
+background:transparent;color:var(--t2);cursor:pointer;font-family:var(--font-sans);}
+.pick:hover{border-color:rgba(79,179,255,.45);color:var(--t1);}
+.pick[aria-pressed="true"]{background:rgba(79,179,255,.13);border-color:rgba(79,179,255,.55);color:var(--blu);font-weight:600;}
+.setup .actions{display:flex;align-items:center;gap:14px;margin-top:1.8rem;flex-wrap:wrap;}
+.setup .count{font-size:12.5px;color:var(--t3);}
+
+.lock{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:2.2rem;text-align:center;}
+.lock h2{font-size:20px;font-weight:700;margin-bottom:.6rem;}
+.lock p{font-size:14px;color:var(--t2);line-height:1.7;max-width:58ch;margin:0 auto 1.4rem;}
+
+.switcher{position:sticky;top:0;z-index:5;background:#1b1405;border-bottom:0.5px solid rgba(255,181,71,.3);
+padding:.55rem 1.5rem;display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--amb);}
+.switcher[hidden]{display:none;}
+.switcher select{background:#241a06;color:var(--t1);border:0.5px solid rgba(255,181,71,.35);border-radius:6px;padding:4px 6px;font-size:12px;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+
+/* Tabs: Explore (the national picture, for everyone) and Your markets (what they follow). */
+.tabs{display:flex;gap:4px;border-bottom:0.5px solid var(--bdr);margin-bottom:1.3rem;flex-wrap:wrap;}
+.tab{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--t3);font-size:14px;font-weight:600;
+padding:10px 14px;cursor:pointer;font-family:var(--font-sans);margin-bottom:-1px;text-align:left;}
+.tab:hover{color:var(--t2);}
+.tab[aria-selected="true"]{color:var(--t1);border-bottom-color:var(--blu);}
+.tab small{display:block;font-size:11px;font-weight:400;color:var(--t3);margin-top:1px;}
+.pane[hidden]{display:none;}
+.panehead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:1rem;}
+.panehead p{font-size:13.5px;color:var(--t2);} .panehead p b{color:var(--t1);}
+
+/* Sector first, then a role inside it. Sectors are buttons, not a dropdown: there are
+   five of them and the choice is the whole point of the page. */
+.sectors{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;}
+.sector{font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:10px;border:0.5px solid var(--bdr2);
+background:var(--card);color:var(--t2);cursor:pointer;font-family:var(--font-sans);}
+.sector:hover{color:var(--t1);border-color:rgba(79,179,255,.45);}
+.sector[aria-pressed="true"]{background:rgba(79,179,255,.13);border-color:rgba(79,179,255,.6);color:var(--blu);}
+.hint{font-size:13px;color:var(--t3);margin:-.2rem 0 1rem;}
+.secsum{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:1rem;}
+.secstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:1rem;}
+.secstats b{display:block;font-size:1.35rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.secstats span{font-size:12px;color:var(--t3);line-height:1.4;display:block;margin-top:2px;}
+.rp-k{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);font-weight:600;display:block;margin-bottom:.55rem;}
+.rchip{font-size:12.5px;padding:6px 11px;border-radius:999px;border:0.5px solid var(--bdr2);background:transparent;
+color:var(--t2);cursor:pointer;font-family:var(--font-sans);}
+.rchip:hover{color:var(--t1);border-color:rgba(79,179,255,.45);}
+.rchip i{font-style:normal;color:var(--t3);margin-left:5px;font-size:11.5px;font-variant-numeric:tabular-nums;}
+.rchip[aria-pressed="true"]{background:rgba(79,179,255,.13);border-color:rgba(79,179,255,.55);color:var(--blu);font-weight:600;}
+.rchip[aria-pressed="true"] i{color:var(--blu);}
+.rchip.more{border-style:dashed;color:var(--t3);}
+@media (max-width:640px){.secstats{grid-template-columns:1fr 1fr;gap:12px;}.secstats b{font-size:1.1rem;}
+  .sector{padding:8px 12px;font-size:13px;}.rchip{font-size:12px;padding:5px 9px;}}
+/* Shown on the BLS layer when BLS leaves states blank: points to our own advertised pay. */
+.gap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+background:rgba(79,179,255,.07);border:0.5px solid rgba(79,179,255,.35);border-radius:12px;
+padding:.8rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--t2);line-height:1.55;}
+.gap b{color:var(--t1);font-weight:600;}
+.gap .btn{padding:7px 12px;font-size:12.5px;}
+/* Explore: layer pills, tile map, state panel. */
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.9rem;}
+.controls label{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--t3);}
+.layers{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;}
+.layer{font-size:12.5px;padding:6px 11px;border-radius:999px;border:0.5px solid var(--bdr2);background:transparent;
+color:var(--t2);cursor:pointer;font-family:var(--font-sans);}
+.layer:hover{color:var(--t1);}
+.layer[aria-pressed="true"]{background:rgba(245,176,65,.14);border-color:rgba(245,176,65,.55);color:#F5B041;font-weight:600;}
+.mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:14px;align-items:start;}
+.map{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px;}
+.tile{aspect-ratio:1/0.92;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+font-size:12.5px;font-weight:700;cursor:pointer;border:1.5px solid transparent;transition:transform .08s;
+font-variant-numeric:tabular-nums;line-height:1.15;padding:2px;text-align:center;}
+.tile span{font-size:10.5px;font-weight:500;opacity:.85;margin-top:2px;}
+.tile:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.35);}
+.tile.sel{border-color:#fff;}
+.tile.none{background:#151515;color:var(--t3);}
+.tile.blank{visibility:hidden;cursor:default;}
+.legend{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--t3);margin-top:.8rem;flex-wrap:wrap;}
+.legend i{display:inline-block;width:22px;height:10px;border-radius:3px;}
+.mapnote{font-size:12px;color:var(--t3);line-height:1.6;margin-top:.5rem;}
+.side{display:grid;gap:10px;}
+.nf{background:var(--card);border:0.5px solid var(--bdr);border-radius:12px;padding:.9rem 1rem;cursor:pointer;}
+.nf:hover{border-color:var(--bdr2);}
+.nf .k{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);font-weight:600;}
+.nf b{display:block;font-size:1.15rem;margin-top:4px;letter-spacing:-.01em;}
+.nf p{font-size:12.5px;color:var(--t2);line-height:1.5;margin-top:3px;}
+.statepanel{margin-top:1.6rem;}
+.statehead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:.9rem;}
+.statehead h2{font-size:20px;font-weight:700;letter-spacing:-.02em;}
+.statehead p{font-size:12.5px;color:var(--t3);margin-top:3px;}
+.sstats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:12px;}
+.sstats div{background:var(--card);border:0.5px solid var(--bdr);border-radius:10px;padding:.75rem .8rem;}
+.sstats b{display:block;font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums;}
+.sstats span{font-size:11px;color:var(--t3);line-height:1.35;display:block;margin-top:2px;}
+.follow{font-size:11.5px;font-weight:600;color:var(--blu);background:transparent;border:0.5px solid rgba(79,179,255,.4);
+border-radius:999px;padding:3px 9px;cursor:pointer;font-family:var(--font-sans);white-space:nowrap;}
+.follow.on{color:var(--grn);border-color:rgba(34,224,154,.4);}
+tr.hl td{background:rgba(245,176,65,.07);}
+.empty{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:2rem;text-align:center;}
+.empty h2{font-size:18px;font-weight:700;margin-bottom:.5rem;}
+.empty p{font-size:13.5px;color:var(--t2);line-height:1.65;max-width:56ch;margin:0 auto 1.2rem;}
+@media (max-width:980px){.mapwrap{grid-template-columns:1fr;}.side{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .sstats{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:640px){.map{gap:3px;}.tile{font-size:9.5px;border-radius:5px;}.tile span{font-size:8px;}
+  .side{grid-template-columns:1fr;}.sstats{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:900px){.pulse{grid-template-columns:1fr 1fr;}.two{grid-template-columns:1fr;}}
+@media (max-width:640px){
+  .logo-img{height:56px;} .nav{flex-wrap:wrap;gap:8px;padding:.9rem 1rem;} .nav-right{gap:12px;font-size:12px;}
+  .wrap{padding:1.6rem 1rem 3rem;} .hero h1{font-size:22px;}
+  .hide-sm{display:none;}
+  th,td{padding:9px 6px;}
+}
+</style>
+</head>
+<body>
+<div class="switcher" id="switcher" hidden>
+  <b>Preview</b>
+  <label>Sample account <select id="asSel">
+    <option value="data">Intelligence only, no postings</option>
+    <option value="postings">Intelligence and live postings</option>
+    <option value="new">First visit, not set up</option>
+    <option value="locked">No Intelligence</option>
+  </select></label>
+</div>
+
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.webp" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right">
+    <a href="employer-home.html">Home</a>
+    <a href="employer-dashboard.html">Jobs</a>
+    <a href="employer-intel-home.html" class="here">Intelligence</a>
+    <a href="resume-vault.html">Resume Vault</a>
+    <a href="employer-account.html">Account &amp; credits</a>
+    <a href="#" id="signOutLink">Sign out</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div><h1>Intelligence</h1><p id="lede">&nbsp;</p></div>
+    <div class="acts" id="acts"></div>
+  </div>
+  <div id="content"><p class="muted">Loading…</p></div>
+</div>
+<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+
+<script src="intel-data.js"></script>
+<script>
+// Every figure comes from Supabase behind the subscriber check and what the account follows
+// is intel_watchlist - both through intel-data.js. Nothing paid is in this page or on this
+// site; without Intelligence the dataset request returns no rows and the locked view shows.
+let D = null;
+// 'data' (follows roles, no postings), 'postings' (has live postings), 'locked'; a local
+// sample can also be 'new' (first visit).
+let MODE = 'data';
+let POSTINGS = [];
+let WATCH = null;
+const el = id => document.getElementById(id);
+const money = v => v == null ? '&mdash;' : '$' + Math.round(v).toLocaleString();
+const gw = v => v >= 1000 ? (v / 1000).toFixed(1) + ' GW' : Math.round(v) + ' MW';
+const plural = (n, one, many) => n === 1 ? one : many;
+const link = (role, st) => `employer-intelligence.html?role=${encodeURIComponent(role)}&state=${st}`;
+// Local sample only: what a data-only customer might follow after setup. Pairs chosen
+// because each has published pay and a BLS range, so the sample shows the page working.
+const SAMPLE_WATCH = [['Wind turbine technician', 'TX'], ['Wind turbine technician', 'CO'],
+  ['Solar O&M technician', 'CA'], ['Solar O&M technician', 'TX'], ['Solar O&M technician', 'NV'],
+  ['Project manager', 'CA'], ['Project manager', 'MA']];
+
+const mode = () => MODE;
+const cellOf = (role, st) => ((D.states[st] || {}).roles || {})[role] || null;
+const title = role => D.titles[role] || role;
+
+// A copy: callers edit what they get back, and saveWatch diffs it against WATCH.
+function loadWatch(){ return WATCH ? WATCH.map(r => ({ ...r })) : null; }
+function saveWatch(rows){
+  const before = WATCH;
+  WATCH = rows.map(r => ({ role: r.role, state: r.state }));
+  VTIntel.watch.save(before, WATCH);
+}
+
+// The watchlist is the spine. Postings, when an account has them, only add pairs to it.
+function watchlist(){
+  const m = mode();
+  let rows = loadWatch();
+  if (!rows && m === 'data' && VTIntel.SAMPLE) rows = SAMPLE_WATCH.map(([role, state]) => ({ role, state }));
+  rows = (rows || []).map(r => ({ ...r }));
+  if (m === 'postings') POSTINGS.forEach(p => rows.push({ role: p.role, state: p.state, fromPosting: true }));
+  const seen = new Set();
+  return rows.filter(r => { const k = r.role + '|' + r.state; if (seen.has(k) || !cellOf(r.role, r.state)) return false; seen.add(k); return true; });
+}
+
+function bandChip(c){
+  const pay = c.pay, bls = c.bls;
+  if (!pay) return '<span class="chip no">too few advertise pay</span>';
+  if (!bls || !bls[3]) return '<span class="chip no">no BLS range</span>';
+  if (pay[1] < bls[3]) return '<span class="chip lo">below BLS 25th</span>';
+  if (pay[1] > bls[4]) return '<span class="chip hi">above BLS 75th</span>';
+  return '<span class="chip mid">within BLS range</span>';
+}
+// BLS pay for a role in a state: [median, p25, p75, employment], or null where BLS does
+// not publish. Independent of whether we hold any postings there.
+// Advertised pay below the 5-postings-from-3-employers bar is an early read: shown, but
+// with its sample, so a figure built on two postings never reads like one built on forty.
+const early = c => c && c.pay && c.pay[5] === 'early';
+const advertised = c => !c || !c.pay ? '<span class="muted">&mdash;</span>'
+  : money(c.pay[1]) + (early(c) ? `<div class="where">early read &middot; ${c.pay[4]} from ${c.pay[3]}</div>` : '');
+const blsOf = (role, st) => ((D.bls || {})[role] || { states: {} }).states[st] || null;
+
+// ---------------------------------------------------------------- findings -------------
+// Plain statements the data supports for THIS watchlist, ranked and capped at five. Each
+// one names the role and market it is about and links to it. Nothing here needs postings.
+function findings(rows){
+  const out = [];
+  const statesSeen = new Set();
+  rows.forEach(r => {
+    const c = cellOf(r.role, r.state), st = D.states[r.state], nat = D.national[r.role] || {};
+    const name = st.name, t = title(r.role);
+    if (c.pay && c.bls && c.bls[3] && c.pay[1] < c.bls[3])
+      out.push([90, 'warn', 'Pay', `Employers advertise <b>${t}s</b> in ${name} at ${money(c.pay[1])} &mdash; below the
+        BLS 25th percentile of ${money(c.bls[3])} for people already doing the job.`, r]);
+    if (c.days && nat.days && c.days >= nat.days * 1.5)
+      out.push([66, 'warn', 'Time to fill', `<b>${t}</b> searches in ${name} take <b>${c.days} days</b> to fill, against
+        ${nat.days} nationally.`, r]);
+    const top = (c.emp || [])[0];
+    if (top && c.open >= 8 && top[1] / c.open >= 0.4)
+      out.push([56, '', 'Competition', `<b>${top[0]}</b> accounts for ${top[1]} of the ${c.open} open ${t} roles
+        in ${name}.`, r]);
+    const cert = ((c.sig || {}).certs || [])[0];
+    if (cert && cert[1] >= 40)
+      out.push([48, '', 'Requirements', `<b>${cert[1]}%</b> of ${t} postings in ${name} require <b>${cert[0]}</b>.`, r]);
+    if (!statesSeen.has(r.state) && st.pipe && st.pipe.mw.within_12mo >= 3000){
+      statesSeen.add(r.state);
+      const dev = (st.pipe.top_developers || [])[0];
+      out.push([70, 'good', 'Demand ahead', `<b>${gw(st.pipe.mw.within_12mo)}</b> is due online in ${name} in the next
+        12 months${dev ? `, led by ${dev.entity.trim()}` : ''} &mdash; a hiring wave for anyone staffing sites there.`, r]);
+    }
+  });
+  const seen = new Set();
+  return out.sort((a, b) => b[0] - a[0]).filter(f => { const k = f[2] + f[4].role + f[4].state; return seen.has(k) ? false : seen.add(k); }).slice(0, 5);
+}
+
+// ---------------------------------------------------------------- dashboard ------------
+function renderDashboard(rows){
+  const m = mode();
+  const cells = rows.map(r => cellOf(r.role, r.state));
+  const states = [...new Set(rows.map(r => r.state))];
+  const open = cells.reduce((a, c) => a + c.open, 0);
+  // Distinct names across the markets followed. Live this is a COUNT(DISTINCT) in the
+  // database; the prototype file keeps only each market's top ten employers.
+  const employers = new Set(cells.flatMap(c => (c.emp || []).map(e => e[0]))).size;
+  const soonMW = states.reduce((a, s) => a + ((((D.states[s] || {}).pipe || {}).mw || {}).within_12mo || 0), 0);
+  const days = cells.map(c => c.days).filter(Boolean).sort((a, b) => a - b);
+  const medDays = days.length ? days[Math.floor(days.length / 2)] : null;
+  const roles = [...new Set(rows.map(r => r.role))];
+
+
+  const finds = findings(rows);
+  const postings = m === 'postings' ? POSTINGS : [];
+
+  PANE.innerHTML = `
+  <div class="panehead"><p>Following <b>${roles.length}</b> ${plural(roles.length, 'role', 'roles')} across
+    <b>${states.length}</b> ${plural(states.length, 'market', 'markets')}.</p>
+    <button class="btn ghost" id="editWatch">Edit what you follow</button></div>
+  <div class="pulse">
+    <div><b>${open.toLocaleString()}</b><span>open roles in your markets</span></div>
+    <div><b>${employers}</b><span>employers hiring them</span></div>
+    <div><b>${soonMW ? gw(soonMW) : '&mdash;'}</b><span>due online in your markets within 12 months</span></div>
+    <div><b>${medDays ? medDays + ' days' : '&mdash;'}</b><span>typical time to fill</span></div>
+  </div>
+
+  ${finds.length ? `<div class="section-title"><span>What stands out</span><em>from this morning's data</em></div>
+  <div class="finds">${finds.map(([, tone, k, text, r]) => `<div class="find ${tone}"><span class="k">${k}</span>
+    <p>${text}</p><a href="${link(r.role, r.state)}">Open ${title(r.role)} &middot; ${D.states[r.state].name} &rarr;</a></div>`).join('')}</div>` : ''}
+
+  <div class="section-title"><span>Roles and markets you follow</span><em>click any row for the full picture</em></div>
+  <div class="panel" style="padding:.4rem 1.1rem;"><table>
+    <thead><tr><th>Role and market</th><th class="n">Pay (BLS)</th><th class="n hide-sm">Advertised</th>
+      <th class="hide-sm">Advertised vs BLS</th><th class="n">Open</th><th class="n hide-sm">Employers</th><th class="n">Days to fill</th></tr></thead>
+    <tbody>${rows.map(r => { const c = cellOf(r.role, r.state); return `<tr class="link" data-href="${link(r.role, r.state)}">
+      <td><div class="role">${title(r.role)}</div><div class="where">${D.states[r.state].name}${r.fromPosting ? ' &middot; you are hiring' : ''}</div></td>
+      <td class="n">${blsOf(r.role, r.state) ? money(blsOf(r.role, r.state)[0]) : '<span class="muted">&mdash;</span>'}</td>
+      <td class="n hide-sm">${advertised(c)}</td>
+      <td class="hide-sm">${bandChip(c)}</td>
+      <td class="n">${c.open}</td><td class="n hide-sm">${c.nemp}</td>
+      <td class="n">${c.days || '&mdash;'}</td></tr>`; }).join('')}</tbody></table>
+    <p class="note" style="margin:.4rem 0 .8rem;">Pay (BLS) is what people in the job earn; advertised is what employers
+      put in the postings we track, shown only where enough of them state a salary.</p></div>
+
+  ${postings.length ? postingsSection(postings) : ''}
+
+  <div class="two" style="margin-top:2rem;">
+    <div>
+      <div class="section-title" style="margin-top:0;"><span>Who is hiring in your markets</span><em>trend is national</em></div>
+      <div class="panel">${rivals(rows)}</div>
+    </div>
+    <div id="compare">
+      <div class="section-title" style="margin-top:0;"><span>Compare a role across markets</span><em>where to hire or build</em></div>
+      <div class="panel">
+        <div class="cmp-head"><select id="cmpRole">${Object.keys(D.national)
+          .sort((a, b) => (roles.includes(b) - roles.includes(a)) || D.national[b].open - D.national[a].open)
+          .map(r => `<option value="${r}">${title(r)}</option>`).join('')}</select><span>busiest markets first</span></div>
+        <div id="cmpBody"></div>
+      </div>
+    </div>
+  </div>`;
+
+  PANE.querySelectorAll('tr.link').forEach(tr => tr.onclick = () => { location.href = tr.dataset.href; });
+  el('editWatch').onclick = () => renderSetup(rows.filter(r => !r.fromPosting));
+  el('cmpRole').onchange = () => renderCompare(el('cmpRole').value);
+  renderCompare(el('cmpRole').value);
+}
+
+function rivals(rows){
+  const tally = {};
+  rows.forEach(r => (cellOf(r.role, r.state).emp || []).forEach(([name, open, , delta]) => {
+    const t = tally[name] || (tally[name] = { open: 0, markets: new Set(), deltas: [] });
+    t.open += open; t.markets.add(r.state); if (delta != null) t.deltas.push(delta);
+  }));
+  const list = Object.entries(tally).sort((a, b) => b[1].open - a[1].open).slice(0, 8);
+  if (!list.length) return '<p class="muted">No employers hiring these roles in your markets right now.</p>';
+  return list.map(([name, t]) => {
+    const avg = t.deltas.length ? Math.round(t.deltas.reduce((a, b) => a + b, 0) / t.deltas.length) : null;
+    const chip = avg == null ? '<span class="chip no">no pay stated</span>'
+      : avg >= 3 ? `<span class="chip up">+${avg}%</span>` : avg <= -3 ? `<span class="chip dn">${avg}%</span>` : '<span class="chip eq">at market</span>';
+    const v = (D.velocity || {})[name];
+    return `<div class="erow"><div>${name}${v == null ? '' : `<div class="trend ${v > 0 ? 'up' : v < 0 ? 'dn' : ''}">${v > 0 ? '+' : ''}${v}% hiring</div>`}</div>
+      <u>${t.open} open &middot; ${t.markets.size} ${plural(t.markets.size, 'market', 'markets')}</u>${chip}</div>`;
+  }).join('');
+}
+
+// Site selection: one role, every state with open roles, ranked by how busy it is.
+function renderCompare(role){
+  const list = Object.entries(D.states).map(([k, s]) => [k, s, s.roles[role]])
+    .filter(([, , c]) => c && c.open).sort((a, b) => b[2].open - a[2].open).slice(0, 8);
+  el('cmpBody').innerHTML = list.length ? `<table><thead><tr><th>Market</th><th class="n">Pay (BLS)</th>
+      <th class="n hide-sm">Advertised</th><th class="n">Open</th><th class="n hide-sm">Days to fill</th><th class="n hide-sm">Due in 12 mo</th></tr></thead>
+    <tbody>${list.map(([k, s, c]) => `<tr class="link" data-href="${link(role, k)}"><td>${s.name}</td>
+      <td class="n">${blsOf(role, k) ? money(blsOf(role, k)[0]) : '&mdash;'}</td>
+      <td class="n hide-sm">${advertised(c)}</td><td class="n">${c.open}</td>
+      <td class="n hide-sm">${c.days || '&mdash;'}</td>
+      <td class="n hide-sm">${s.pipe && s.pipe.mw.within_12mo ? gw(s.pipe.mw.within_12mo) : '&mdash;'}</td></tr>`).join('')}</tbody></table>`
+    : '<p class="muted">No market has open roles for this right now.</p>';
+  el('cmpBody').querySelectorAll('tr.link').forEach(tr => tr.onclick = () => { location.href = tr.dataset.href; });
+}
+
+// Only for accounts with postings, and after the market view - a module, not the spine.
+function postingsSection(posts){
+  const rows = posts.map(p => {
+    const c = cellOf(p.role, p.state), market = c && c.pay ? c.pay[1] : null;
+    const delta = market ? Math.round(100 * (p.advertised / market - 1)) : null;
+    const sig = c && c.sig, missing = sig && p.requirements && (sig.certs || []).find(([n, req]) => req >= 25 && !p.requirements.certs.includes(n));
+    return { p, c, market, delta, missing };
+  });
+  const chip = d => d == null ? '<span class="chip no">no benchmark yet</span>'
+    : d >= 3 ? `<span class="chip up">+${d}%</span>` : d <= -3 ? `<span class="chip dn">${d}%</span>` : '<span class="chip eq">at market</span>';
+  return `<div class="section-title"><span>Your live postings against their markets</span><em>because you post with us</em></div>
+  <div class="panel" style="padding:.4rem 1.1rem;"><table>
+    <thead><tr><th>Posting</th><th class="n">You advertise</th><th class="n">Market</th><th class="n">Gap</th><th class="n hide-sm">Days live</th></tr></thead>
+    <tbody>${rows.map(({ p, c, market, delta, missing }) => `<tr class="link" data-href="${link(p.role, p.state)}">
+      <td><div class="role">${p.title}</div><div class="where">${D.states[p.where] ? D.states[p.where].name : p.where}</div>
+        ${missing ? `<div class="gapnote">${missing[1]}% here require ${missing[0]}, you don't ask</div>` : ''}</td>
+      <td class="n">${money(p.advertised)}</td><td class="n">${market ? money(market) : '&mdash;'}</td>
+      <td class="n">${chip(delta)}</td>
+      <td class="n hide-sm">${p.days}${c && c.days ? `<div class="where">typical ${c.days}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>`;
+}
+
+// ---------------------------------------------------------------- setup ----------------
+// Two questions for everyone. An account that posts with us gets its posted roles and
+// markets ticked already; it can untick them.
+function renderSetup(existing){
+  const pre = existing && existing.length ? existing
+    : (mode() === 'postings' ? POSTINGS.map(p => ({ role: p.role, state: p.state })) : []);
+  const roles = Object.entries(D.national).sort((a, b) => b[1].open - a[1].open).slice(0, 18).map(([r]) => r);
+  pre.forEach(r => { if (!roles.includes(r.role)) roles.push(r.role); });
+  const markets = Object.entries(D.states).map(([k, v]) => [k, v.name, Object.values(v.roles).reduce((n, c) => n + c.open, 0)])
+    .sort((a, b) => b[2] - a[2]).slice(0, 16);
+  pre.forEach(r => { if (!markets.some(mk => mk[0] === r.state) && D.states[r.state]) markets.push([r.state, D.states[r.state].name, 0]); });
+  const picked = { roles: new Set(pre.map(r => r.role)), markets: new Set(pre.map(r => r.state)) };
+
+  PANE.innerHTML = `<div class="setup">
+    <h2>Which roles and markets do you want to follow?</h2>
+    <p class="lead">They will be tracked here: pay, who is hiring, how long roles stay open and what stands out.
+      Change them any time; everything else stays open to explore.</p>
+    <div class="step">Roles</div>
+    <div class="picks">${roles.map(r => `<button class="pick" type="button" data-kind="roles" data-value="${r}"
+      aria-pressed="${picked.roles.has(r)}">${title(r)}</button>`).join('')}</div>
+    <div class="step">Markets</div>
+    <div class="picks">${markets.map(([k, name]) => `<button class="pick" type="button" data-kind="markets" data-value="${k}"
+      aria-pressed="${picked.markets.has(k)}">${name}</button>`).join('')}</div>
+    <div class="actions"><button class="btn blu" id="setupDone">Save</button><span class="count" id="setupCount"></span></div>
+  </div>`;
+  const count = () => {
+    const ready = picked.roles.size && picked.markets.size;
+    el('setupDone').disabled = !ready;
+    el('setupCount').textContent = ready ? `${picked.roles.size} ${plural(picked.roles.size, 'role', 'roles')} in
+      ${picked.markets.size} ${plural(picked.markets.size, 'market', 'markets')}` : 'Pick at least one of each.';
+  };
+  PANE.querySelectorAll('.pick').forEach(b => b.onclick = () => {
+    const set = picked[b.dataset.kind], on = b.getAttribute('aria-pressed') === 'true';
+    on ? set.delete(b.dataset.value) : set.add(b.dataset.value);
+    b.setAttribute('aria-pressed', String(!on)); count();
+  });
+  count();
+  el('setupDone').onclick = () => {
+    const rows = [];
+    picked.roles.forEach(role => picked.markets.forEach(state => { if (cellOf(role, state)) rows.push({ role, state }); }));
+    saveWatch(rows);
+    renderMine();
+  };
+}
+
+function renderLocked(){
+  el('lede').textContent = 'Pay, competition and markets for every clean energy role we track.';
+  el('acts').innerHTML = '';
+  el('content').innerHTML = `<div class="lock"><h2>Intelligence is not on this account yet</h2>
+    <p>Follow the roles you hire and the markets you hire in, and see what they pay, who else is hiring,
+      and what the place looks like before you commit to it.</p>
+    <a class="btn blu" href="mailto:contact@verdetalent.com?subject=Verde%20Talent%20Intelligence%20Pro">Get my market report</a></div>`;
+}
+
+// ================================================================ explore =============
+// The first thing anyone sees: the national picture, then a state, then a role in it. It
+// needs no postings and no setup, so it is the same useful page for every subscriber.
+let PANE = null;
+const GRID = [
+  ['AK','','','','','','','','','','ME'],
+  ['','','','','','','','','VT','NH',''],
+  ['WA','ID','MT','ND','MN','IL','WI','MI','NY','RI','MA'],
+  ['OR','NV','WY','SD','IA','IN','OH','PA','NJ','CT',''],
+  ['CA','UT','CO','NE','MO','KY','WV','VA','MD','DC',''],
+  ['AZ','NM','KS','AR','TN','NC','SC','DE','','',''],
+  ['','','OK','LA','MS','AL','GA','','','',''],
+  ['HI','','TX','','','','FL','','','',''],
+];
+// Same amber ramp as the public map, so the paid view reads as a deeper cut of it.
+const RAMP = ['#2a2014', '#46331a', '#6a4a1f', '#8f6425', '#c1852f', '#F5B041'];
+const NEG = ['#5a2a22', '#8a3b2d', '#c24f39'], POS = ['#1c4a39', '#237a58', '#22E09A'];
+const EX = { sector: '', role: '', layer: 'workforce', sel: null, more: false };
+const SECTOR_LABEL = { Solar: 'Solar', Wind: 'Wind', Storage: 'Storage', Grid: 'Grid & Utilities' };
+const SECTOR_WORD = { Solar: 'solar', Wind: 'wind', Storage: 'storage', Grid: 'grid' };
+const sw = () => SECTOR_WORD[EX.sector] || '';
+const secNat = () => EX.sector ? D.sectors[EX.sector].national : null;
+const secArea = k => EX.sector ? (D.sectors[EX.sector].states[k] || null) : null;
+// Open postings for one role from this sector's employers in one place ('US' for national).
+const secRoleOpen = (k, role) => {
+  const a = k === 'US' ? secNat() : secArea(k), hit = a && a.roles.find(r => r[0] === role);
+  return hit ? hit[1] : null;
+};
+const INDUSTRY_SHORT = { Solar: 'solar generation', Wind: 'wind generation', Storage: 'storage and battery', Grid: 'transmission, distribution and line' };
+const txt = v => typeof v === 'function' ? v() : v;
+const INDUSTRY_OF = { Solar: 'solar electric power generation', Wind: 'wind electric power generation',
+  Storage: 'other generation including storage, and battery manufacturing',
+  Grid: 'transmission, distribution and power line construction' };
+
+const kfmt = v => v >= 1000 ? (Math.round(v / 100) / 10).toString().replace(/\.0$/, '') + 'K' : Math.round(v).toString();
+const moneyK = v => '$' + (v >= 1000 ? Math.round(v / 1000) + 'K' : Math.round(v));
+const gwShort = v => v >= 1000 ? (v / 1000).toFixed(1) + 'GW' : Math.round(v) + 'MW';
+const signedK = v => (v > 0 ? '+' : v < 0 ? '−' : '') + kfmt(Math.abs(v));
+const openAll = st => Object.values(st.roles || {}).reduce((a, c) => a + (c.open || 0), 0);
+const acrossSectors = () => EX.sector ? ' Pay and time to fill cover the role wherever it is hired, not only in ' + sw() + '.' : '';
+
+const LAYERS = {
+  workforce: { label: 'Clean energy workforce', get: st => st.workforce, fmt: kfmt,
+    note: 'People working in solar, wind, storage and grid modernisation (DOE US Energy & Employment Report).' },
+  open: { label: 'Open roles', fmt: v => v.toLocaleString(),
+    get: (st, c, k) => !EX.role ? openAll(st) : EX.sector ? secRoleOpen(k, EX.role) : (c ? c.open : null),
+    note: () => EX.role && EX.sector ? `Open ${title(EX.role)} postings from ${sw()} employers we track right now.`
+      : 'Open postings we track right now.' },
+  bls: { label: 'Pay (BLS)', get: (st, c, k) => blsOf(EX.role, k) ? blsOf(EX.role, k)[0] : null, fmt: moneyK,
+    note: 'Median annual wage for people already doing this job (BLS Occupational Employment and Wage Statistics). '
+      + 'Blank where BLS does not publish because too few people do the job there.' },
+  pay: { label: 'Advertised pay (our postings)', get: (st, c) => c && c.pay ? c.pay[1] : null, fmt: moneyK,
+    note: () => 'Median pay advertised in the postings we track, bottom of the posted range, from every posting we have '
+      + 'seen there - live and closed - with older pay brought up to today by BLS wage growth. Shown from 2 postings '
+      + 'by 2 employers; below 5 postings from 3 employers it is an early read.' + acrossSectors() },
+  days: { label: 'Days to fill', get: (st, c) => c && c.days ? c.days : null, fmt: v => v + 'd',
+    note: () => 'How long a search stays open, counting a repost as the same search and including searches still open. '
+      + 'Always-open talent-pipeline postings are left out.' + acrossSectors() },
+  pipeline: { label: 'Due online in 12 months', get: st => st.pipe ? st.pipe.mw.within_12mo || null : null, fmt: gwShort,
+    note: 'Solar, wind and storage capacity scheduled to come online within a year (EIA-860M).' },
+  sworkforce: { label: () => EX.sector === 'Grid' ? 'Grid modernisation workforce' : `${SECTOR_LABEL[EX.sector]} workforce`, fmt: kfmt,
+    get: (st, c, k) => (secArea(k) || {}).workforce || null,
+    note: () => EX.sector === 'Grid'
+      ? 'People in grid modernisation (DOE US Energy & Employment Report, "smart grid"). DOE counts only this slice of '
+        + 'grid work - utility and line crews sit outside it - so Industry concentration is the fuller view.'
+      : `People working in ${sw()} (DOE US Energy & Employment Report).` },
+  sopen: { label: () => `Open ${sw()} roles`, fmt: v => v.toLocaleString(),
+    get: (st, c, k) => (secArea(k) || {}).open || null,
+    note: () => `Open postings from ${sw()} employers we track right now. A posting that covers several technologies counts in each.` },
+  spipe: { label: 'Due online in 12 months', fmt: gwShort,
+    get: (st, c, k) => { const p = (secArea(k) || {}).pipe; return p && p.mw12 ? p.mw12 : null; },
+    note: () => `${SECTOR_LABEL[EX.sector]} capacity scheduled to come online within a year (EIA-860M). Every project needs crews to build, commission and run it.` },
+  sind: { label: 'Industry concentration', fmt: v => v.toFixed(1) + '×',
+    get: (st, c, k) => { const i = (secArea(k) || {}).ind; return i && i.lq ? i.lq : null; },
+    note: () => `How concentrated ${sw()} industry employment is against the national average - 2.0× is twice the national `
+      + `share (BLS QCEW: ${INDUSTRY_OF[EX.sector]}). Blank where BLS withholds the figure to protect individual employers.` },
+  unemp: { label: 'Unemployment', get: st => st.unemp ? st.unemp.latest : null, fmt: v => v + '%',
+    note: 'Latest monthly unemployment rate (BLS Local Area Unemployment Statistics).' },
+  migration: { label: 'Net migration', diverging: true, get: st => st.move ? st.move.net_households : null, fmt: signedK,
+    note: 'Households moving in minus moving out, 2022-23 (IRS migration data).' },
+  trained: { label: 'Trades trained', get: st => st.train && st.train.total ? st.train.total : null, fmt: kfmt,
+    note: 'Completions last year in electrical, welding, maintenance, driving and related programmes (IPEDS).' },
+};
+// All sectors: the general picture. A sector: its own figures first. A role in a sector: pay
+// and time to fill for the role, with the sector's backdrop still one click away.
+const layerKeys = () => {
+  if (!EX.sector) return ['workforce', 'open', 'pipeline', 'unemp', 'migration', 'trained'];
+  const pipe = EX.sector === 'Grid' ? [] : ['spipe'];
+  if (EX.role) return ['bls', 'pay', 'open', 'days', 'sworkforce', ...pipe, 'unemp', 'migration', 'trained'];
+  return ['sworkforce', 'sopen', ...pipe, 'sind', 'unemp', 'migration', 'trained'];
+};
+const defaultLayer = () => EX.role ? 'bls' : EX.sector === 'Grid' ? 'sind' : EX.sector ? 'sworkforce' : 'workforce';
+
+function values(){
+  const L = LAYERS[EX.layer], out = {};
+  Object.entries(D.states).forEach(([k, st]) => {
+    const c = EX.role ? (st.roles || {})[EX.role] : null;
+    const v = L.get(st, c, k);
+    if (v !== null && v !== undefined && !(typeof v === 'number' && isNaN(v))) out[k] = v;
+  });
+  return out;
+}
+
+// Colour by rank rather than by value, so one giant (California's workforce is 2.5x the
+// next state) does not wash every other state into the same shade.
+function colours(vals){
+  const L = LAYERS[EX.layer], out = {};
+  const bands = (keys, ramp) => {
+    const sorted = keys.slice().sort((a, b) => vals[a] - vals[b]);
+    sorted.forEach((k, i) => { out[k] = ramp[Math.min(ramp.length - 1, Math.floor(i * ramp.length / sorted.length))]; });
+  };
+  if (L.diverging){
+    bands(Object.keys(vals).filter(k => vals[k] > 0), POS);
+    const neg = Object.keys(vals).filter(k => vals[k] < 0);
+    const sorted = neg.slice().sort((a, b) => vals[b] - vals[a]);
+    sorted.forEach((k, i) => { out[k] = NEG[Math.min(NEG.length - 1, Math.floor(i * NEG.length / sorted.length))]; });
+  } else bands(Object.keys(vals), RAMP);
+  return out;
+}
+const lightBg = col => ['#c1852f', '#F5B041', '#22E09A'].includes(col);
+
+function sectorBar(){
+  return `<div class="sectors" role="group" aria-label="Sector">${['', ...Object.keys(SECTOR_LABEL)].map(s =>
+    `<button class="sector" data-s="${s}" aria-pressed="${s === EX.sector}">${s ? SECTOR_LABEL[s] : 'All sectors'}</button>`).join('')}</div>`;
+}
+
+// The sector's own national picture, then the roles its employers are hiring - which is
+// also where a role is picked, ranked by how much of that hiring it is.
+function sectorSummary(){
+  if (!EX.sector) return '<p class="hint">Pick a sector to see its own market, then the roles inside it.</p>';
+  const n = secNat(), p = n.pipe, top = n.emp[0];
+  const roles = n.roles.filter(([r]) => D.national[r]);
+  const shown = EX.more ? roles.slice() : roles.slice(0, 10);
+  if (EX.role && !shown.some(([r]) => r === EX.role)) shown.push(roles.find(([r]) => r === EX.role));
+  return `<div class="secsum">
+    <div class="secstats">
+      <div><b>${n.workforce ? n.workforce.toLocaleString() : '&mdash;'}</b><span>${EX.sector === 'Grid' ? 'grid modernisation' : sw()} workers nationally</span></div>
+      <div><b>${n.open.toLocaleString()}</b><span>open roles from ${n.nemp} ${sw()} employers we track</span></div>
+      ${p ? `<div><b>${gw(p.mw12)}</b><span>due online in the next 12 months, of ${gw(p.mw)} planned in ${p.projects.toLocaleString()} projects</span></div>` : ''}
+      ${top ? `<div><b>${top[0]}</b><span>hiring most: ${top[1]} open</span></div>` : ''}
+    </div>
+    <span class="rp-k">Roles ${sw()} employers are hiring &middot; open now</span>
+    <div class="picks">
+      <button class="rchip" data-r="" aria-pressed="${!EX.role}">All ${sw()} roles</button>
+      ${shown.map(([r, c]) => `<button class="rchip" data-r="${r}" aria-pressed="${r === EX.role}">${title(r)}<i>${c}</i></button>`).join('')}
+      ${roles.length > 10 ? `<button class="rchip more" id="rpMore">${EX.more ? 'Fewer' : `+${roles.length - 10} more`}</button>` : ''}
+    </div></div>`;
+}
+
+// On the BLS layer, say where BLS is silent and send people to our own advertised pay.
+// BLS leaves a state blank when too few people do the job there to publish, and some roles
+// (project developer) have no BLS occupation at all - an empty map with no explanation
+// reads as broken.
+function blsGap(vals){
+  if (EX.layer !== 'bls' || !EX.role) return '';
+  const ours = Object.keys(D.states).filter(k => ((D.states[k].roles || {})[EX.role] || {}).pay);
+  const blank = Object.keys(D.states).filter(k => !(k in vals));
+  if (!blank.length) return '';
+  const fills = ours.filter(k => !(k in vals));
+  const btn = ours.length ? '<button class="btn blu" type="button" id="gapGo">Show advertised pay &rarr;</button>' : '';
+  const t = title(EX.role);
+  let msg;
+  if (!Object.keys(vals).length)
+    msg = `BLS does not publish pay for <b>${t}s</b>${D.bls[EX.role] ? ' in any state' : ' - there is no government occupation that matches this role'}. `
+      + (ours.length ? `Check <b>Advertised pay (our postings)</b> for what employers on our site are offering: ${ours.length} ${plural(ours.length, 'state has', 'states have')} a figure.`
+        : 'We do not yet have enough advertised pay to show a figure either; it builds as more employers post.');
+  else if (fills.length)
+    msg = `BLS leaves <b>${blank.length} ${plural(blank.length, 'state', 'states')}</b> blank for ${t}s because too few people do the job there to publish. `
+      + `<b>Advertised pay (our postings)</b> has a figure for ${fills.length} of them.`;
+  else
+    msg = `BLS leaves <b>${blank.length} ${plural(blank.length, 'state', 'states')}</b> blank for ${t}s because too few people do the job there to publish.`
+      + (ours.length ? ' Check <b>Advertised pay (our postings)</b> for what employers on our site are offering.'
+        : ' Advertised pay (our postings) does not have enough on-site data for this role yet either; it builds as more employers post.');
+  return `<div class="gap"><span>${msg}</span>${btn}</div>`;
+}
+
+function renderExplore(){
+  const pane = el('explore');
+  if (!layerKeys().includes(EX.layer)) EX.layer = defaultLayer();
+  const L = LAYERS[EX.layer], vals = values(), cols = colours(vals);
+  const ranked = Object.keys(vals).sort((a, b) => vals[b] - vals[a]);
+  if (!EX.sel || !D.states[EX.sel]) EX.sel = ranked[0] || 'TX';
+
+  pane.innerHTML = `${sectorBar()}${sectorSummary()}
+    <div class="layers">${layerKeys().map(k => `<button class="layer" data-k="${k}"
+      aria-pressed="${k === EX.layer}">${txt(LAYERS[k].label)}</button>`).join('')}</div>
+    ${blsGap(vals)}
+    <div class="mapwrap">
+      <div>
+        <div class="map">${GRID.flat().map(k => {
+          if (!k) return '<div class="tile blank"></div>';
+          const has = k in vals, bg = cols[k];
+          const faded = EX.layer === 'pay' && early(((D.states[k] || {}).roles || {})[EX.role]);
+          return `<div class="tile ${has ? '' : 'none'} ${k === EX.sel ? 'sel' : ''}" data-st="${k}"
+            style="${has ? `background:${bg};color:${lightBg(bg) ? '#1d1407' : '#fff'}${faded ? ';opacity:.55' : ''}` : ''}">${k}
+            <span>${has ? L.fmt(vals[k]) : '&mdash;'}</span></div>`;
+        }).join('')}</div>
+        <div class="legend">${L.diverging
+          ? `<span>more leaving</span>${NEG.slice().reverse().map(c => `<i style="background:${c}"></i>`).join('')}${POS.map(c => `<i style="background:${c}"></i>`).join('')}<span>more arriving</span>`
+          : `<span>lower</span>${RAMP.map(c => `<i style="background:${c}"></i>`).join('')}<span>higher</span>`}
+          <span style="margin-left:6px;">&middot; &mdash; means no published figure${EX.layer === 'pay'
+            ? ' &middot; faded tiles are early reads, from fewer than 5 postings or 3 employers' : ''}</span></div>
+        <p class="mapnote">${txt(L.note)}${EX.role ? ` Showing <b>${title(EX.role)}</b>.` : ''}${
+          EX.layer === 'bls' && D.bls[EX.role] && D.bls[EX.role].broad
+            ? ' BLS has no occupation this narrow, so this is the wider occupation the role sits in.' : ''}</p>
+      </div>
+      <div class="side">${nationalFacts()}</div>
+    </div>
+    <div class="statepanel" id="statePanel"></div>`;
+
+  pane.querySelectorAll('.sector').forEach(b => b.onclick = () => {
+    EX.sector = b.dataset.s; EX.role = ''; EX.more = false; EX.layer = defaultLayer(); renderExplore();
+  });
+  pane.querySelectorAll('.rchip[data-r]').forEach(b => b.onclick = () => {
+    EX.role = b.dataset.r; EX.layer = defaultLayer(); renderExplore();
+  });
+  if (el('rpMore')) el('rpMore').onclick = () => { EX.more = !EX.more; renderExplore(); };
+  pane.querySelectorAll('.layer').forEach(b => b.onclick = () => { EX.layer = b.dataset.k; renderExplore(); });
+  if (el('gapGo')) el('gapGo').onclick = () => { EX.layer = 'pay'; renderExplore(); };
+  pane.querySelectorAll('.tile[data-st]').forEach(t => t.onclick = () => {
+    EX.sel = t.dataset.st; renderExplore();
+    el('statePanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  pane.querySelectorAll('.nf[data-st]').forEach(n => n.onclick = () => { EX.sel = n.dataset.st; renderExplore(); });
+  renderStatePanel(EX.sel);
+}
+
+// Three national facts beside the map. Each is clickable and selects its state.
+function nationalFacts(){
+  const top = (get, dir = 1) => Object.entries(D.states).map(([k, st]) => [k, st, get(st, k)])
+    .filter(([, , v]) => v != null && !isNaN(v)).sort((a, b) => dir * (b[2] - a[2]))[0];
+  const card = (label, hit, text) => hit ? `<div class="nf" data-st="${hit[0]}"><span class="k">${label}</span>
+    <b>${hit[1].name}</b><p>${text(hit)}</p></div>` : '';
+  if (!EX.role && !EX.sector){
+    return card('Largest workforce', top(st => st.workforce), h => `${h[2].toLocaleString()} people in clean energy.`)
+      + card('Most capacity coming', top(st => st.pipe && st.pipe.mw.within_12mo), h => `${gw(h[2])} due online within 12 months.`)
+      + card('Most people moving in', top(st => st.move && st.move.net_households), h => `${h[2].toLocaleString()} more households arrived than left.`);
+  }
+  if (!EX.role){
+    const a = k => secArea(k) || {};
+    return card(`Largest ${sw()} workforce`, top((st, k) => a(k).workforce),
+        h => `${h[2].toLocaleString()} people in ${EX.sector === 'Grid' ? 'grid modernisation' : sw()}.`)
+      + (EX.sector === 'Grid'
+        ? card('Most concentrated', top((st, k) => a(k).ind && a(k).ind.lq), h => `Grid industry jobs are ${h[2].toFixed(1)}&times; the national share.`)
+        : card(`Most ${sw()} coming`, top((st, k) => a(k).pipe && a(k).pipe.mw12), h => `${gw(h[2])} due online within 12 months.`))
+      + card(`Most open ${sw()} roles`, top((st, k) => a(k).open || null), h => `${h[2]} open, from ${a(h[0]).nemp} employers.`);
+  }
+  const c = st => (st.roles || {})[EX.role];
+  return card('Highest pay (BLS)', top((st, k) => blsOf(EX.role, k) ? blsOf(EX.role, k)[0] : null),
+      h => `Median ${money(h[2])} for people doing the job.`)
+    + (EX.sector
+      ? card('Most open roles', top((st, k) => secRoleOpen(k, EX.role)), h => `${h[2]} open with ${sw()} employers.`)
+      : card('Most open roles', top(st => c(st) ? c(st).open : null), h => `${h[2]} open, from ${c(h[1]).nemp} employers.`))
+    + card('Slowest to fill', top(st => c(st) && c(st).days ? c(st).days : null), h => `Searches take ${h[2]} days to fill.`);
+}
+
+function followRows(){
+  const stored = loadWatch();
+  if (stored) return stored;
+  return mode() === 'data' && VTIntel.SAMPLE ? SAMPLE_WATCH.map(([role, state]) => ({ role, state })) : [];
+}
+const isFollowed = (role, st) => watchlist().some(r => r.role === role && r.state === st);
+function toggleFollow(role, st){
+  let rows = followRows();
+  const i = rows.findIndex(r => r.role === role && r.state === st);
+  i >= 0 ? rows.splice(i, 1) : rows.push({ role, state: st });
+  saveWatch(rows);
+  renderMine();
+}
+
+function stateStats(st, sa){
+  const mv = st.move;
+  if (!sa) return `
+      <div><b>${st.workforce ? st.workforce.toLocaleString() : '&mdash;'}</b><span>clean energy workers</span></div>
+      <div><b>${openAll(st).toLocaleString()}</b><span>open roles we track</span></div>
+      <div><b>${st.pipe && st.pipe.mw.within_12mo ? gw(st.pipe.mw.within_12mo) : '&mdash;'}</b><span>due online in 12 months</span></div>
+      <div><b>${st.unemp ? st.unemp.latest + '%' : '&mdash;'}</b><span>unemployment</span></div>
+      <div><b>${mv ? signedK(mv.net_households) : '&mdash;'}</b><span>net households moving in</span></div>
+      <div><b>${st.train && st.train.total ? st.train.total.toLocaleString() : '&mdash;'}</b><span>trained in the trades last year</span></div>`;
+  const i = sa.ind || {}, p = sa.pipe;
+  // USEER counts everyone doing the sector's work (installers, manufacturers, developers);
+  // QCEW counts only companies classed in its NAICS codes. Different questions, so they are
+  // labelled as such. QCEW's average wage is left out: it includes head-office staff and
+  // reads as a pay figure it is not.
+  return `
+      <div><b>${sa.workforce ? sa.workforce.toLocaleString() : '&mdash;'}</b><span>people in ${EX.sector === 'Grid' ? 'grid modernisation' : sw() + ' work'} (DOE)</span></div>
+      <div><b>${sa.open.toLocaleString()}</b><span>open ${sw()} roles &middot; ${sa.nemp} ${plural(sa.nemp, 'employer', 'employers')}</span></div>
+      ${EX.sector === 'Grid'
+        ? `<div><b>${st.train && st.train.total ? st.train.total.toLocaleString() : '&mdash;'}</b><span>trained in the trades last year</span></div>`
+        : `<div><b>${p && p.mw12 ? gw(p.mw12) : '&mdash;'}</b><span>due online in 12 months${p ? ` &middot; ${p.projects} projects planned` : ''}</span></div>`}
+      <div><b>${i.emp ? i.emp.toLocaleString() : '&mdash;'}</b><span>employed by ${INDUSTRY_SHORT[EX.sector]} companies (QCEW)</span></div>
+      <div><b>${i.lq ? i.lq.toFixed(1) + '&times;' : '&mdash;'}</b><span>as concentrated as nationally</span></div>
+      <div><b>${st.unemp ? st.unemp.latest + '%' : '&mdash;'}</b><span>unemployment, all industries</span></div>`;
+}
+
+function renderStatePanel(k){
+  const st = D.states[k], box = el('statePanel');
+  if (!st){ box.innerHTML = ''; return; }
+  const sa = secArea(k);
+  // [role, cell, open]: with a sector, only its employers' postings count towards open.
+  let roleRows = sa ? sa.roles.filter(([r]) => (st.roles || {})[r]).map(([r, n]) => [r, st.roles[r], n])
+    : Object.entries(st.roles || {}).map(([r, c]) => [r, c, c.open]);
+  roleRows = roleRows.sort((a, b) => {
+    if (EX.role && a[0] === EX.role) return -1;
+    if (EX.role && b[0] === EX.role) return 1;
+    return b[2] - a[2];
+  }).slice(0, 8);
+  let employers;
+  if (sa) employers = sa.emp;
+  else {
+    const tally = {};
+    Object.values(st.roles || {}).forEach(c => (c.emp || []).forEach(([name, open]) => { tally[name] = (tally[name] || 0) + open; }));
+    employers = Object.entries(tally).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  }
+  const ind = (st.industry || [])[0];
+  const mv = st.move;
+  const builders = sa && sa.pipe ? sa.pipe.dev : [];
+  const sub = sa
+    ? (sa.ind && sa.ind.lq ? `${SECTOR_LABEL[EX.sector]} industry jobs are ${sa.ind.lq.toFixed(1)}&times; as concentrated here as nationally` : `${SECTOR_LABEL[EX.sector]} in ${st.name}`)
+    : (ind ? `${ind.title} is ${ind.lq.toFixed(1)}&times; as concentrated here as nationally` : '');
+
+  box.innerHTML = `
+    <div class="statehead"><div><h2>${st.name}${EX.sector ? ` <span class="muted" style="font-weight:500;">&middot; ${SECTOR_LABEL[EX.sector]}</span>` : ''}</h2>
+      <p>${sub}</p></div>
+      ${EX.role && (st.roles || {})[EX.role] ? `<a class="btn blu" href="${link(EX.role, k)}">Open ${title(EX.role)} in ${st.name} &rarr;</a>` : ''}</div>
+    <div class="sstats">${stateStats(st, sa)}</div>
+    <div class="two">
+      <div class="panel" style="padding:.5rem 1.1rem;">
+        <div class="section-title" style="margin:.6rem 0 .2rem;"><span>${sa ? `Roles ${sw()} employers are hiring here` : 'Roles hiring here'}</span><em>click for the full picture</em></div>
+        ${roleRows.length ? `<table><thead><tr><th>Role</th><th class="n">Pay (BLS)</th><th class="n hide-sm">Advertised</th>
+          <th class="n">Open</th><th></th></tr></thead><tbody>${roleRows.map(([role, c, open]) => `
+          <tr class="link ${role === EX.role ? 'hl' : ''}" data-href="${link(role, k)}">
+            <td><div class="role">${title(role)}</div><div class="where">${sa ? '' : `${c.nemp} ${plural(c.nemp, 'employer', 'employers')}${c.days ? ' &middot; ' : ''}`}${c.days ? `${c.days} days to fill` : ''}</div></td>
+            <td class="n">${blsOf(role, k) ? money(blsOf(role, k)[0]) : '<span class="muted">&mdash;</span>'}</td>
+            <td class="n hide-sm">${advertised(c)}</td><td class="n">${open}</td>
+            <td class="n"><button class="follow ${isFollowed(role, k) ? 'on' : ''}" data-role="${role}">${isFollowed(role, k) ? 'Following' : '+ Follow'}</button></td>
+          </tr>`).join('')}</tbody></table>`
+          : `<p class="muted" style="padding:.8rem 0;">No ${sa ? sw() + ' ' : ''}roles open here right now. The figures above still describe the market.</p>`}
+      </div>
+      <div class="panel">
+        <div class="section-title" style="margin:0 0 .4rem;"><span>${sa ? `${SECTOR_LABEL[EX.sector]} employers hiring here` : 'Who is hiring here'}</span><em>trend is national</em></div>
+        ${employers.length ? employers.map(([name, open]) => { const v = (D.velocity || {})[name]; return `<div class="erow">
+          <div>${name}${v == null ? '' : `<div class="trend ${v > 0 ? 'up' : v < 0 ? 'dn' : ''}">${v > 0 ? '+' : ''}${v}% hiring</div>`}</div>
+          <u>${open} open</u><span></span></div>`; }).join('') : `<p class="muted">No ${sa ? sw() + ' ' : ''}employers hiring here right now.</p>`}
+        ${builders.length ? `<div class="section-title" style="margin:1.2rem 0 .4rem;"><span>Building ${sw()} here</span><em>planned capacity</em></div>
+          ${builders.map(([name, mw]) => `<div class="erow"><div>${name}</div><u>${gw(mw)}</u><span></span></div>`).join('')}` : ''}
+        ${!sa && mv && mv.top_origins && mv.top_origins.length ? `<p class="note">Most arrivals came from ${mv.top_origins.slice(0, 3)
+          .map(o => (D.states[o.state] || {}).name || o.state).join(', ')}.</p>` : ''}
+      </div>
+    </div>`;
+  box.querySelectorAll('tr.link').forEach(tr => tr.onclick = e => {
+    if (e.target.closest('.follow')) return;
+    location.href = tr.dataset.href;
+  });
+  box.querySelectorAll('.follow').forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    toggleFollow(b.dataset.role, k);
+    const on = isFollowed(b.dataset.role, k);
+    b.classList.toggle('on', on); b.textContent = on ? 'Following' : '+ Follow';
+  });
+}
+
+// ================================================================ your markets ========
+function renderMine(){
+  PANE = el('mine');
+  const rows = watchlist();
+  if (!rows.length){
+    PANE.innerHTML = `<div class="empty"><h2>You are not following anything yet</h2>
+      <p>Follow the roles and markets you care about and they are tracked here: pay against the market, who is
+        hiring, how long roles stay open, and anything that stands out. Use <b>+ Follow</b> on any state in Explore,
+        or pick them all at once.</p>
+      <button class="btn blu" id="pickNow">Choose what to follow</button></div>`;
+    el('pickNow').onclick = () => renderSetup(null);
+    return;
+  }
+  renderDashboard(rows);
+}
+
+const TAB_KEY = 'vt_intel_home_tab';
+function showTab(name){
+  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.pane === name)));
+  document.querySelectorAll('.pane').forEach(p => { p.hidden = p.dataset.pane !== name; });
+  try { localStorage.setItem(TAB_KEY, name); } catch {}
+}
+
+function start(){
+  const m = mode();
+  if (m === 'locked') return renderLocked();
+  el('lede').innerHTML = 'Every clean energy market we track, rebuilt each morning. Start with the national picture, pick a sector, then narrow to a state or a role.';
+  el('acts').innerHTML = '';
+  el('content').innerHTML = `
+    <div class="tabs" role="tablist">
+      <button class="tab" data-pane="explore" role="tab">Explore<small>the national picture, then a sector, state or role</small></button>
+      <button class="tab" data-pane="mine" role="tab">Your markets<small>the roles and markets you follow</small></button>
+    </div>
+    <div class="pane" data-pane="explore" id="explore"></div>
+    <div class="pane" data-pane="mine" id="mine" hidden></div>`;
+  document.querySelectorAll('.tab').forEach(t => t.onclick = () => showTab(t.dataset.pane));
+  renderExplore();
+  renderMine();
+  // Explore first, always, on a first visit; after that, wherever they last were.
+  let tab = 'explore';
+  try { tab = localStorage.getItem(TAB_KEY) || 'explore'; } catch {}
+  showTab(m === 'new' ? 'explore' : tab);
+}
+
+el('signOutLink').onclick = e => { e.preventDefault(); VTIntel.signOut(); };
+if (VTIntel.SAMPLE){
+  el('switcher').hidden = false;
+  el('asSel').value = VTIntel.SAMPLE;
+  el('asSel').onchange = () => { location.search = '?sample=' + el('asSel').value; };
+}
+
+(async () => {
+  const got = await VTIntel.load();
+  if (got.status === 'signin') return VTIntel.signIn('employer-intel-home.html');
+  if (got.status === 'locked') { MODE = 'locked'; return renderLocked(); }
+  D = got.data;
+  POSTINGS = (await VTIntel.myPostings()).filter(p => D.states[p.state] && cellOf(p.role, p.state));
+  WATCH = await VTIntel.watch.load();
+  MODE = VTIntel.SAMPLE && VTIntel.SAMPLE !== 'postings' ? VTIntel.SAMPLE : (POSTINGS.length ? 'postings' : 'data');
+  start();
+})().catch(err => {
+  console.error(err);
+  el('content').innerHTML = '<p class="muted">Intelligence could not load just now. Refresh the page, or email contact@verdetalent.com if it keeps happening.</p>';
+});
+</script>
+</body>
+</html>
