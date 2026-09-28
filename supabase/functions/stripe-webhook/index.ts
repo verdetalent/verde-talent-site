@@ -4,6 +4,10 @@
 // on its own (a URL can be visited without paying); the signature check
 // below is what makes this trustworthy.
 //
+// Also keeps Intelligence subscriptions in step with Stripe (see syncIntelSubscription).
+// Stripe must send checkout.session.completed, customer.subscription.updated and
+// customer.subscription.deleted to this endpoint.
+//
 // Env vars required (set via `supabase secrets set`):
 //   STRIPE_SECRET_KEY         - same key create-checkout-session uses
 //   STRIPE_WEBHOOK_SECRET     - from the Stripe Dashboard webhook endpoint (whsec_...)
@@ -25,6 +29,88 @@ const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
 );
+
+// ------------------------------------------------------------ Intelligence --------------
+// Stripe owns the subscription; intel_subscriptions mirrors it (migration 006), and
+// has_intel_access() reads the mirror. Every event re-reads the subscription from Stripe
+// rather than trusting the event body, so an out-of-order or replayed event still writes
+// the current truth, and the API version pinned above decides the shape - not whatever
+// version the webhook endpoint happens to be set to.
+const INTEL_STATUS: Record<string, string> = {
+  active: "active", trialing: "active", past_due: "past_due",
+  unpaid: "canceled", canceled: "canceled", incomplete: "canceled",
+  incomplete_expired: "canceled", paused: "canceled",
+};
+const LIVE_STRIPE_STATUSES = ["active", "trialing", "past_due"];
+
+function ok(extra: Record<string, unknown> = {}) {
+  return new Response(JSON.stringify({ received: true, ...extra }), {
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+async function syncIntelSubscription(subscriptionId: string, userIdHint?: string, welcome = false): Promise<Response> {
+  const sub = await stripe.subscriptions.retrieve(subscriptionId);
+  const userId = sub.metadata?.intel_user_id || userIdHint;
+  if (!userId) return ok({ ignored: "not an Intelligence subscription" });
+
+  const { data: existing } = await supabase
+    .from("intel_subscriptions")
+    .select("plan, stripe_subscription_id")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  // A hand-granted row (internal, enterprise) is never overwritten by a card subscription.
+  if (existing && existing.plan !== "pro") {
+    console.warn("Intelligence subscription for an account with a hand-granted plan; left as is", userId, sub.id);
+    return ok({ ignored: "hand-granted plan" });
+  }
+  // A late event about an old, finished subscription must not cancel a newer one.
+  if (existing?.stripe_subscription_id && existing.stripe_subscription_id !== sub.id
+      && !LIVE_STRIPE_STATUSES.includes(sub.status)) {
+    return ok({ ignored: "superseded subscription" });
+  }
+
+  const interval = sub.items.data[0]?.price?.recurring?.interval;
+  const { error } = await supabase.from("intel_subscriptions").upsert({
+    user_id: userId,
+    plan: "pro",
+    status: INTEL_STATUS[sub.status] ?? "canceled",
+    current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+    stripe_customer_id: typeof sub.customer === "string" ? sub.customer : sub.customer.id,
+    stripe_subscription_id: sub.id,
+    billing_interval: interval === "year" ? "year" : "month",
+    cancel_at_period_end: sub.cancel_at_period_end,
+    note: "Stripe",
+    updated_at: new Date().toISOString(),
+  }, { onConflict: "user_id" });
+  if (error) {
+    console.error("Failed to write Intelligence subscription", userId, sub.id, error);
+    return new Response("Database update failed", { status: 500 });
+  }
+
+  if (welcome) {
+    const { data: userData } = await supabase.auth.admin.getUserById(userId);
+    const email = userData?.user?.email;
+    if (email) {
+      await resend.emails.send({
+        from: "Verde Talent <postings@updates.verdetalent.com>",
+        to: email,
+        subject: "Verde Talent Intelligence is on",
+        text: [
+          `Intelligence is now on for your Verde Talent account, billed ${interval === "year" ? "yearly" : "monthly"}.`,
+          ``,
+          `Start with the national picture, pick a sector, then narrow to a state or a role:`,
+          `https://verdetalent.com/employer-intel-home.html`,
+          ``,
+          `Manage billing, change your card or cancel any time from your account:`,
+          `https://verdetalent.com/employer-account.html`,
+        ].join("\n"),
+      }).catch((err: unknown) => console.error("Failed to send Intelligence welcome email", userId, err));
+    }
+  }
+  return ok();
+}
 
 async function handleCreditPackPurchase(session: Stripe.Checkout.Session, purchaseId: string): Promise<Response> {
   const { data: purchase, error: fetchError } = await supabase
@@ -102,6 +188,12 @@ Deno.serve(async (req) => {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
+
+    if (session.mode === "subscription" && session.metadata?.intel_user_id && session.subscription) {
+      const subscriptionId = typeof session.subscription === "string" ? session.subscription : session.subscription.id;
+      return await syncIntelSubscription(subscriptionId, session.metadata.intel_user_id, true);
+    }
+
     const jobPostingId = session.metadata?.job_posting_id;
     const purchaseId = session.metadata?.purchase_id;
 
@@ -171,6 +263,13 @@ Deno.serve(async (req) => {
       // the employer can be helped manually if they never got the link.
       console.error("Failed to send manage-link email", jobPostingId, emailError);
     }
+  }
+
+  // Renewals, cancellations (immediate or at period end), card failures and reactivations
+  // all arrive as one of these two.
+  if (event.type === "customer.subscription.updated" || event.type === "customer.subscription.deleted") {
+    const sub = event.data.object as Stripe.Subscription;
+    if (sub.metadata?.intel_user_id) return await syncIntelSubscription(sub.id);
   }
 
   return new Response(JSON.stringify({ received: true }), {

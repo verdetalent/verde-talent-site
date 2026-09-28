@@ -200,8 +200,8 @@ const TEASER_URL = `${SUPABASE_URL}/rest/v1/rpc/intel_posting_teaser`;
 // Whether this account has Intelligence (001_intelligence_pro.sql). Until the migration has
 // run this 404s and the card reads as not included.
 const ACCESS_URL = `${SUPABASE_URL}/rest/v1/rpc/has_intel_access`;
-// Pro cannot be bought online yet; this is the same route the public Intelligence page uses.
-const START_PRO = 'mailto:contact@verdetalent.com?subject=Verde%20Talent%20Intelligence%20Pro';
+// The plan picker on the Intelligence page, which goes on to Stripe Checkout.
+const START_PRO = 'employer-intel-home.html';
 // The same figure the public Resume Vault page shows, deliberately not recomputed here.
 const VAULT = { profiles: 287, unlockAt: 500 };
 const ENDING_SOON_DAYS = 5;

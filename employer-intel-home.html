@@ -120,6 +120,21 @@ background:transparent;color:var(--t2);cursor:pointer;font-family:var(--font-san
 .lock{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:2.2rem;text-align:center;}
 .lock h2{font-size:20px;font-weight:700;margin-bottom:.6rem;}
 .lock p{font-size:14px;color:var(--t2);line-height:1.7;max-width:58ch;margin:0 auto 1.4rem;}
+/* Plan picker: the two ways to buy, side by side. */
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,220px));gap:12px;justify-content:center;margin:0 auto 1.2rem;}
+.plan{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:12px;padding:1.1rem 1rem;cursor:pointer;
+color:var(--t1);font-family:var(--font-sans);text-align:center;display:flex;flex-direction:column;gap:3px;}
+.plan:hover{border-color:rgba(79,179,255,.6);}
+.plan.best{border-color:rgba(79,179,255,.55);background:rgba(79,179,255,.08);}
+.plan b{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;}
+.plan span{font-size:13px;color:var(--t2);}
+.plan small{font-size:12px;color:var(--grn);margin-top:4px;}
+.plan:disabled{opacity:.5;cursor:default;}
+.lock .fine{font-size:12.5px;color:var(--t3);margin-bottom:0;}
+.lock .fine a{color:var(--blu);text-decoration:none;}
+.lock .err{color:var(--cor);font-size:13px;margin:.8rem 0 0;}
+.lock .notice{font-size:13.5px;color:var(--amb);margin-bottom:1rem;}
+@media (max-width:520px){.plans{grid-template-columns:1fr;}}
 
 .switcher{position:sticky;top:0;z-index:5;background:#1b1405;border-bottom:0.5px solid rgba(255,181,71,.3);
 padding:.55rem 1.5rem;display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--amb);}
@@ -519,13 +534,49 @@ function renderSetup(existing){
   };
 }
 
+// Not subscribed: pick monthly or yearly and go to Stripe Checkout. Access switches on when
+// Stripe confirms the payment to stripe-webhook, not when the browser comes back here.
 function renderLocked(){
+  const q = new URLSearchParams(location.search);
   el('lede').textContent = 'Pay, competition and markets for every clean energy role we track.';
   el('acts').innerHTML = '';
   el('content').innerHTML = `<div class="lock"><h2>Intelligence is not on this account yet</h2>
+    ${q.has('canceled') ? '<p class="notice">Checkout was cancelled, and nothing was charged.</p>' : ''}
     <p>Follow the roles you hire and the markets you hire in, and see what they pay, who else is hiring,
       and what the place looks like before you commit to it.</p>
-    <a class="btn blu" href="mailto:contact@verdetalent.com?subject=Verde%20Talent%20Intelligence%20Pro">Get my market report</a></div>`;
+    <div class="plans">
+      <button class="plan" type="button" data-interval="month"><b>$199</b><span>a month</span><small>Cancel any time</small></button>
+      <button class="plan best" type="button" data-interval="year"><b>$1,990</b><span>a year</span><small>Two months free</small></button>
+    </div>
+    <p class="fine">Secure checkout by Stripe. Change your card or cancel any time from Account &amp; credits.
+      Several seats or research built around you? <a href="mailto:contact@verdetalent.com?subject=Verde%20Talent%20Intelligence%20Enterprise">Talk to us about Enterprise</a>.</p>
+    <p class="err" id="buyErr"></p></div>`;
+  el('content').querySelectorAll('.plan').forEach(b => b.onclick = async () => {
+    el('content').querySelectorAll('.plan').forEach(x => { x.disabled = true; });
+    el('buyErr').textContent = '';
+    try {
+      await VTIntel.checkout(b.dataset.interval);
+    } catch (e) {
+      if (e instanceof VTIntel.SignInNeeded) return VTIntel.signIn('employer-intel-home.html');
+      el('buyErr').textContent = e.message;
+    }
+    el('content').querySelectorAll('.plan').forEach(x => { x.disabled = false; });
+  });
+}
+
+// Back from Stripe: the webhook usually lands within seconds, but not always before the
+// browser does. Keep asking for a minute rather than showing a paying customer the paywall.
+async function waitForAccess(){
+  el('content').innerHTML = '<div class="lock"><h2>Payment received</h2><p>Switching Intelligence on for your account&hellip;</p></div>';
+  for (let i = 0; i < 20; i++){
+    await new Promise(r => setTimeout(r, 3000));
+    const got = await VTIntel.load();
+    if (got.status === 'ok') return got;
+  }
+  el('content').innerHTML = `<div class="lock"><h2>Almost there</h2><p>Your payment went through, but access has not
+    switched on yet. Refresh this page in a minute. If it still shows this, email
+    <a href="mailto:contact@verdetalent.com" style="color:var(--blu);">contact@verdetalent.com</a> and we will sort it straight away.</p></div>`;
+  return null;
 }
 
 // ================================================================ explore =============
@@ -942,9 +993,12 @@ if (VTIntel.SAMPLE){
 }
 
 (async () => {
-  const got = await VTIntel.load();
+  let got = await VTIntel.load();
   if (got.status === 'signin') return VTIntel.signIn('employer-intel-home.html');
+  const welcome = new URLSearchParams(location.search).has('welcome');
+  if (got.status === 'locked' && welcome){ const after = await waitForAccess(); if (!after) return; got = after; }
   if (got.status === 'locked') { MODE = 'locked'; return renderLocked(); }
+  if (welcome) history.replaceState(null, '', location.pathname);
   D = got.data;
   POSTINGS = (await VTIntel.myPostings()).filter(p => D.states[p.state] && cellOf(p.role, p.state));
   WATCH = await VTIntel.watch.load();

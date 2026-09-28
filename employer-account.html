@@ -60,6 +60,17 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .pack-per{font-size:11px;color:var(--t3);margin:4px 0 1rem;}
 .btn-buy{background:var(--grn);color:#052e1e;border:none;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;width:100%;font-family:var(--font-sans);}
 .btn-buy:disabled{opacity:.6;cursor:default;}
+.intel-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:16px;padding:1.25rem 1.5rem;display:flex;
+justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+.intel-card b{font-size:16px;display:block;}
+.intel-card .sub{font-size:12.5px;color:var(--t3);margin-top:4px;}
+.intel-card .sub.warn{color:#FFB547;}
+.intel-acts{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-intel{background:#4FB3FF;color:#04202f;border:none;padding:9px 15px;border-radius:9px;font-size:13px;font-weight:600;
+cursor:pointer;font-family:var(--font-sans);text-decoration:none;display:inline-block;}
+.btn-line{background:transparent;color:var(--t1);border:0.5px solid var(--bdr2);padding:9px 15px;border-radius:9px;font-size:13px;
+font-weight:600;cursor:pointer;font-family:var(--font-sans);text-decoration:none;display:inline-block;}
+.btn-line:disabled{opacity:.6;cursor:default;}
 
 .batch-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:0.5px solid var(--bdr);font-size:13px;}
 .batch-row:last-child{border-bottom:none;}
@@ -121,6 +132,10 @@ footer a{color:var(--t3);text-decoration:none;}
 
   <div class="section-title">Credit batches</div>
   <div id="batchList" class="state-note">Loading…</div>
+
+  <div class="section-title">Intelligence</div>
+  <div class="intel-card" id="intelCard"><span class="state-note">Loading…</span></div>
+  <div class="state-note" id="intelNote"></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -163,6 +178,68 @@ document.getElementById('signOutLink').addEventListener('click', function(e){
 const params = new URLSearchParams(location.search);
 if (params.get('credits_success')) document.getElementById('successNote').style.display = 'block';
 if (params.get('canceled')) document.getElementById('cancelNote').style.display = 'block';
+
+// ------------------------------------------------------------------ Intelligence -------
+// The account's own intel_subscriptions row (readable by its owner only), mirrored from
+// Stripe by stripe-webhook. Changing the card, switching plan or cancelling all happen in
+// Stripe's customer portal, reached through the intel-billing function.
+const INTEL_BILLING_URL = `${SUPABASE_URL}/functions/v1/intel-billing`;
+const dateText = iso => new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+
+async function loadIntel() {
+  const card = document.getElementById('intelCard');
+  let row = null;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/intel_subscriptions?select=plan,status,current_period_end,billing_interval,cancel_at_period_end,stripe_customer_id`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}` },
+    });
+    if (res.ok) row = (await res.json())[0] || null;
+  } catch { /* shown as not subscribed */ }
+
+  const live = row && ['active', 'past_due'].includes(row.status) && new Date(row.current_period_end) > new Date();
+  const open = '<a class="btn-intel" href="employer-intel-home.html">Open Intelligence</a>';
+  const manage = row && row.stripe_customer_id ? '<button type="button" class="btn-line" id="manageBilling">Manage billing</button>' : '';
+
+  let title, sub, acts;
+  if (live && row.plan !== 'pro') {
+    title = 'Intelligence is included';
+    sub = row.current_period_end > '2090' ? 'On this account with no end date.' : `Through ${dateText(row.current_period_end)}.`;
+    acts = open;
+  } else if (live) {
+    title = `Intelligence Pro · ${row.billing_interval === 'year' ? '$1,990 a year' : '$199 a month'}`;
+    sub = row.status === 'past_due'
+      ? '<span class="sub warn">Your last payment did not go through. Update your card to keep access.</span>'
+      : row.cancel_at_period_end ? `Cancelled. Access continues until ${dateText(row.current_period_end)}.`
+      : `Renews ${dateText(row.current_period_end)}.`;
+    acts = open + manage;
+  } else {
+    title = 'Intelligence is not on this account';
+    sub = row && row.plan === 'pro' ? `Your subscription ended ${dateText(row.current_period_end)}.`
+      : 'Pay, competition and markets for every clean energy role and market we track.';
+    acts = '<a class="btn-intel" href="employer-intel-home.html">Choose a plan</a>' + manage;
+  }
+  card.innerHTML = `<div><b>${title}</b><div class="sub">${sub}</div></div><div class="intel-acts">${acts}</div>`;
+
+  const btn = document.getElementById('manageBilling');
+  if (btn) btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    const note = document.getElementById('intelNote');
+    note.textContent = '';
+    try {
+      const r = await fetch(INTEL_BILLING_URL, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'portal' }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok || !data.url) throw new Error(data.error || 'Could not open billing just now.');
+      window.location.href = data.url;
+    } catch (e) {
+      note.textContent = e.message;
+      btn.disabled = false;
+    }
+  });
+}
 
 async function callCredits(body) {
   const res = await fetch(MANAGE_CREDITS_URL, {
@@ -269,7 +346,7 @@ document.querySelectorAll('.btn-buy').forEach(btn => {
   });
 });
 
-if (session) loadCredits();
+if (session) { loadCredits(); loadIntel(); }
 </script>
 </body>
 </html>

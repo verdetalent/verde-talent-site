@@ -147,10 +147,36 @@
     },
   };
 
+  // Billing (supabase/functions/intel-billing). Checkout only starts the purchase; access
+  // turns on when Stripe tells stripe-webhook the subscription exists.
+  async function billing(body) {
+    if (SAMPLE) { alert('Sample page: checkout is not available here.'); return null; }
+    const s = session();
+    if (!s) throw new SignInNeeded();
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/intel-billing`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${s.access_token}`,
+                 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401) throw new SignInNeeded();
+    if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+    return data;
+  }
+  async function checkout(interval) {
+    const data = await billing({ action: 'checkout', interval });
+    if (data && data.url) location.href = data.url;
+  }
+  async function portal() {
+    const data = await billing({ action: 'portal' });
+    if (data && data.url) location.href = data.url;
+  }
+
   function signOut() {
     localStorage.removeItem('vt_employer_session');
     location.href = 'employer-login.html';
   }
 
-  window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, signIn, signOut };
+  window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, signIn, signOut, checkout, portal, SignInNeeded };
 })();
