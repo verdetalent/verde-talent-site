@@ -181,7 +181,7 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
     // from the homepage's "Buy a posting pack"). Only these employer pages
     // are accepted, so the parameter can't bounce anyone to another site.
     const NEXT_ALLOWED = ['employer-home.html', 'employer-account.html', 'employer-dashboard.html', 'post-job.html',
-      'employer-intel-home.html'];
+      'employer-intel-home.html', 'employer-intel-report.html'];
     const nextParam = new URLSearchParams(window.location.search).get('next');
     const afterLogin = NEXT_ALLOWED.includes(nextParam) ? nextParam : 'employer-home.html';
 

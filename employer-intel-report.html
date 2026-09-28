@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CNGTGW71QP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CNGTGW71QP');
+</script>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<script src="/fullstory.js"></script>
+<title>Market report — Verde Talent</title>
+<link rel="stylesheet" href="/tabler-icons.css"/>
+<style>
+/* The monthly market report: one document covering the roles and markets an account
+   follows. The same page is what the monthly email links to, and "Download PDF" is the
+   browser's print-to-PDF with the print stylesheet at the bottom - generated on the
+   subscriber's own machine from data they can already read, so no file is ever published. */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--blu:#4FB3FF;--amb:#FFB547;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.62);--t3:rgba(255,255,255,0.38);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--bdr);max-width:1400px;margin:0 auto;}
+.logo{display:flex;align-items:center;text-decoration:none;}
+.logo-img{height:104px;width:auto;display:block;}
+.nav-right{display:flex;gap:20px;align-items:center;font-size:13px;flex-wrap:wrap;}
+.nav-right a{color:var(--t2);text-decoration:none;}
+.nav-right a:hover{color:var(--grn);}
+.nav-right a.here{color:var(--t1);font-weight:600;}
+.wrap{max-width:980px;margin:0 auto;padding:2.2rem 1.5rem 4rem;}
+.switcher{position:sticky;top:0;z-index:5;background:#1b1405;border-bottom:0.5px solid rgba(255,181,71,.3);
+padding:.55rem 1.5rem;font-size:12px;color:var(--amb);}
+.switcher[hidden]{display:none;}
+
+.doc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:1.6rem;}
+.doc-head .kicker{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--grn);font-weight:700;}
+.doc-head h1{font-size:28px;font-weight:700;letter-spacing:-.02em;margin-top:4px;}
+.doc-head p{font-size:13.5px;color:var(--t2);margin-top:6px;line-height:1.6;}
+.acts{display:flex;gap:8px;flex-wrap:wrap;}
+.btn{border-radius:10px;font-size:13px;font-weight:600;padding:9px 14px;text-decoration:none;display:inline-flex;
+align-items:center;gap:6px;font-family:var(--font-sans);cursor:pointer;border:0;}
+.btn.blu{background:var(--blu);color:#04202f;}
+.btn.ghost{background:transparent;color:var(--t1);border:0.5px solid var(--bdr2);}
+
+h2{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin:2.2rem 0 .8rem;}
+.pulse{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.pulse div{background:var(--card);border:0.5px solid var(--bdr);border-radius:12px;padding:1rem 1.1rem;}
+.pulse b{display:block;font-size:1.55rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.pulse span{font-size:12px;color:var(--t3);line-height:1.4;display:block;margin-top:3px;}
+
+/* Key takeaways: at most three, one per kind, each a number you can read at a glance. */
+.takeaways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.take{background:var(--card);border:0.5px solid var(--bdr);border-top:3px solid var(--blu);border-radius:12px;padding:1rem 1.1rem;}
+.take.warn{border-top-color:var(--amb);} .take.good{border-top-color:var(--grn);}
+.take .k{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);font-weight:600;}
+.take b{display:block;font-size:1.6rem;font-weight:700;letter-spacing:-.02em;margin:.35rem 0 .2rem;font-variant-numeric:tabular-nums;}
+.take p{font-size:13px;color:var(--t2);line-height:1.5;}
+/* Flags: the smaller findings, shown on the market they are about. */
+.flags{display:flex;flex-wrap:wrap;gap:6px;margin:-.3rem 0 .9rem;}
+.flag{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:20px;background:rgba(79,179,255,.1);color:var(--blu);}
+.flag.warn{background:rgba(255,181,71,.12);color:var(--amb);}
+.market{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.2rem 1.3rem;margin-bottom:12px;}
+.market-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:.9rem;}
+.market-head h3{font-size:18px;font-weight:700;letter-spacing:-.01em;}
+.market-head a{font-size:12.5px;color:var(--blu);text-decoration:none;font-weight:600;}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:1rem;}
+.stats div{background:var(--card2);border-radius:10px;padding:.7rem .8rem;}
+.stats b{display:block;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums;}
+.stats span{font-size:11.5px;color:var(--t3);line-height:1.35;display:block;margin-top:2px;}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cols h4{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);font-weight:600;margin-bottom:.5rem;}
+.line{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:5px 0;border-bottom:0.5px solid var(--bdr);}
+.line:last-child{border-bottom:0;}
+.line u{text-decoration:none;color:var(--t3);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.band{margin:.2rem 0 1rem;font-size:13px;color:var(--t2);line-height:1.6;}
+.band b{color:var(--t1);}
+.muted{color:var(--t3);}
+.chip{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.chip.lo{color:var(--amb);background:rgba(255,181,71,0.1);}
+.chip.hi{color:var(--grn);background:rgba(34,224,154,0.1);}
+.chip.mid{color:var(--t2);background:rgba(255,255,255,0.06);}
+
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{padding:8px 8px;text-align:left;border-bottom:0.5px solid var(--bdr);}
+thead th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);font-weight:600;}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;}
+tbody tr:last-child td{border-bottom:0;}
+.panel{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:.6rem 1.1rem;}
+.empty{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:2rem;text-align:center;}
+.empty h2{font-size:18px;color:var(--t1);text-transform:none;letter-spacing:0;margin:0 0 .5rem;}
+.empty p{font-size:13.5px;color:var(--t2);line-height:1.65;max-width:56ch;margin:0 auto 1.2rem;}
+.method{font-size:11.5px;color:var(--t3);line-height:1.65;margin-top:2.2rem;border-top:0.5px solid var(--bdr);padding-top:1rem;}
+.print-only{display:none;}
+footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--t3);}
+footer a{color:var(--t3);text-decoration:none;}
+@media (max-width:760px){.pulse,.stats{grid-template-columns:1fr 1fr;}.cols{grid-template-columns:1fr;}.takeaways{grid-template-columns:1fr;}}
+@media (max-width:640px){.logo-img{height:56px;}.nav{flex-wrap:wrap;gap:8px;padding:.9rem 1rem;}.nav-right{gap:12px;font-size:12px;}
+  .wrap{padding:1.6rem 1rem 3rem;}.doc-head h1{font-size:23px;}}
+
+/* ---- Download PDF: a light, paper-shaped version of the same document. ---- */
+@page{size:letter;margin:14mm 13mm;}
+@media print{
+  :root{--blk:#fff;--card:#fff;--card2:#F4F6F5;--bdr:#DADFDC;--bdr2:#C9CFCB;--t1:#111;--t2:#333;--t3:#6B716E;--grn:#0E8A5F;--blu:#1D6FB8;--amb:#A35F00;}
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .nav,.switcher,.acts,footer,.market-head a{display:none !important;}
+  .print-only{display:flex;}
+  .wrap{max-width:none;padding:0;}
+  .pulse div,.market,.take,.panel,.stats div{break-inside:avoid;}
+  .flag{border:1px solid currentColor;}
+  .market{border:1px solid var(--bdr);}
+  h2{break-after:avoid;margin-top:1.4rem;}
+  .brand{justify-content:space-between;align-items:center;border-bottom:2px solid #0E8A5F;padding-bottom:6px;margin-bottom:14px;font-size:11px;color:#6B716E;}
+  .brand b{color:#0E8A5F;font-size:13px;letter-spacing:.02em;}
+}
+</style>
+</head>
+<body>
+<div class="switcher" id="switcher" hidden>Preview &middot; sample data</div>
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo.webp" alt="Verde Talent" class="logo-img"></a>
+  <div class="nav-right">
+    <a href="employer-home.html">Home</a>
+    <a href="employer-dashboard.html">Jobs</a>
+    <a href="employer-intel-home.html" class="here">Intelligence</a>
+    <a href="resume-vault.html">Resume Vault</a>
+    <a href="employer-account.html">Account &amp; credits</a>
+    <a href="#" id="signOutLink">Sign out</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="brand print-only"><b>VERDE TALENT &middot; INTELLIGENCE</b><span id="printFor"></span></div>
+  <div class="doc-head">
+    <div>
+      <div class="kicker">Market report</div>
+      <h1 id="title">Your market report</h1>
+      <p id="lede">&nbsp;</p>
+    </div>
+    <div class="acts">
+      <a class="btn ghost" href="employer-intel-home.html"><i class="ti ti-arrow-left"></i>Intelligence</a>
+      <button class="btn blu" type="button" id="pdfBtn" disabled><i class="ti ti-download"></i>Download PDF</button>
+    </div>
+  </div>
+  <div id="content"><p class="muted">Loading&hellip;</p></div>
+</div>
+<footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
+
+<script src="intel-data.js"></script>
+<script>
+let D = null;
+const el = id => document.getElementById(id);
+const money = v => v == null ? '&mdash;' : '$' + Math.round(v).toLocaleString();
+const gw = v => v >= 1000 ? (v / 1000).toFixed(1) + ' GW' : Math.round(v) + ' MW';
+const plural = (n, one, many) => n === 1 ? one : many;
+const title = role => (D.titles || {})[role] || role;
+const cellOf = (role, st) => ((D.states[st] || {}).roles || {})[role] || null;
+const blsOf = (role, st) => ((D.bls || {})[role] || { states: {} }).states[st] || null;
+const link = (role, st) => `employer-intelligence.html?role=${encodeURIComponent(role)}&state=${st}`;
+const days = c => c && c.days ? c.days + ' days' : c && c.days_over ? 'over ' + c.days_over + ' days' : '&mdash;';
+// Local sample only, matching the Intelligence home's sample watchlist.
+const SAMPLE_WATCH = [['Wind turbine technician', 'TX'], ['Wind turbine technician', 'CO'],
+  ['Solar O&M technician', 'CA'], ['Solar O&M technician', 'TX'], ['Project manager', 'CA']];
+
+el('signOutLink').onclick = e => { e.preventDefault(); VTIntel.signOut(); };
+
+// What stands out, as data: each finding has a kind, a headline figure, a sentence for the
+// takeaway tile and a short flag for its market card. The strongest of each kind becomes a
+// takeaway (three at most); everything else is a flag on the card it is about.
+function findings(rows){
+  const out = [], statesSeen = new Set();
+  rows.forEach(r => {
+    const c = cellOf(r.role, r.state), st = D.states[r.state], nat = D.national[r.role] || {};
+    const name = st.name, t = title(r.role), b = blsOf(r.role, r.state), key = r.role + '|' + r.state;
+    if (c.pay && b && b[1] && c.pay[1] < b[1])
+      out.push({ kind: 'Pay', tone: 'warn', score: 90 + (b[1] - c.pay[1]) / b[1] * 100, key, figure: money(c.pay[1]),
+        text: `advertised for ${t}s in ${name}, below the BLS 25th percentile of ${money(b[1])}.`,
+        flag: 'Advertised pay below BLS 25th' });
+    if (c.days && nat.days && c.days >= nat.days * 1.5)
+      out.push({ kind: 'Time to fill', tone: 'warn', score: 60 + c.days / nat.days * 5, key, figure: `${c.days} days`,
+        text: `for ${t} searches in ${name}, against ${nat.days} nationally.`,
+        flag: `Fills ${(c.days / nat.days).toFixed(1)}&times; slower than nationally` });
+    const top = (c.emp || [])[0];
+    if (top && c.open >= 8 && top[1] / c.open >= 0.4)
+      out.push({ kind: 'Competition', tone: '', score: 50 + top[1] / c.open * 10, key, figure: `${Math.round(100 * top[1] / c.open)}%`,
+        text: `of open ${t} roles in ${name} are ${top[0]}'s.`,
+        flag: `${top[0]} holds ${Math.round(100 * top[1] / c.open)}% of openings` });
+    const cert = ((c.sig || {}).certs || [])[0];
+    if (cert && cert[1] >= 40)
+      out.push({ kind: 'Requirements', tone: '', score: 40 + cert[1] / 10, key, figure: `${cert[1]}%`,
+        text: `of ${t} postings in ${name} require ${cert[0]}.`, flag: `${cert[1]}% require ${cert[0]}` });
+    if (!statesSeen.has(r.state) && st.pipe && st.pipe.mw.within_12mo >= 3000){
+      statesSeen.add(r.state);
+      const dev = (st.pipe.top_developers || [])[0];
+      out.push({ kind: 'Demand ahead', tone: 'good', score: 70 + st.pipe.mw.within_12mo / 1000, key: null, figure: gw(st.pipe.mw.within_12mo),
+        text: `due online in ${name} within 12 months${dev ? `, led by ${dev.entity.trim()}` : ''}.` });
+    }
+  });
+  out.sort((a, b) => b.score - a.score);
+  const kinds = new Set(), takeaways = [];
+  out.forEach(f => { if (takeaways.length < 3 && !kinds.has(f.kind)) { kinds.add(f.kind); takeaways.push(f); } });
+  const flags = {};
+  out.filter(f => !takeaways.includes(f) && f.key).forEach(f => { (flags[f.key] = flags[f.key] || []).push(f); });
+  return { takeaways, flags };
+}
+
+function payLine(role, st, c){
+  const b = blsOf(role, st), pay = c.pay;
+  const parts = [];
+  if (b) parts.push(`People doing this job here earn a median <b>${money(b[0])}</b>${b[1] && b[2] ? `, middle half ${money(b[1])}&ndash;${money(b[2])}` : ''} (BLS).`);
+  if (pay) {
+    let chip = '';
+    if (b && b[1] && b[2]) chip = pay[1] < b[1] ? ' <span class="chip lo">below BLS 25th</span>'
+      : pay[1] > b[2] ? ' <span class="chip hi">above BLS 75th</span>' : ' <span class="chip mid">within BLS range</span>';
+    parts.push(`Employers advertise a median <b>${money(pay[1])}</b>, middle half ${money(pay[0])}&ndash;${money(pay[2])}${
+      pay[5] === 'early' ? ` <span class="muted">(early read: ${pay[4]} postings from ${pay[3]} employers)</span>` : ''}.${chip}`);
+  }
+  if (c.wage_growth) parts.push(`Wages in ${c.wage_growth.industry} are rising <b>${c.wage_growth.pct}%</b> a year.`);
+  return parts.length ? `<p class="band">${parts.join(' ')}</p>` : '';
+}
+
+function marketCard(r, flags){
+  const c = cellOf(r.role, r.state), st = D.states[r.state], nat = D.national[r.role] || {};
+  const mine = flags[r.role + '|' + r.state] || [];
+  const emp = (c.emp || []).slice(0, 5), certs = ((c.sig || {}).certs || []).slice(0, 4);
+  return `<section class="market">
+    <div class="market-head"><h3>${title(r.role)} &middot; ${st.name}</h3><a href="${link(r.role, r.state)}">Full picture &rarr;</a></div>
+    ${mine.length ? `<div class="flags">${mine.map(f => `<span class="flag ${f.tone}">${f.flag}</span>`).join('')}</div>` : ''}
+    <div class="stats">
+      <div><b>${c.open}</b><span>open roles now</span></div>
+      <div><b>${c.nemp}</b><span>${plural(c.nemp, 'employer', 'employers')} hiring</span></div>
+      <div><b>${days(c)}</b><span>to fill here${nat.days ? ` &middot; ${nat.days} nationally` : ''}</span></div>
+      <div><b>${blsOf(r.role, r.state) ? money(blsOf(r.role, r.state)[0]) : '&mdash;'}</b><span>median pay (BLS)</span></div>
+    </div>
+    ${payLine(r.role, r.state, c)}
+    <div class="cols">
+      <div><h4>Who is hiring</h4>${emp.length ? emp.map(([name, open, med]) =>
+        `<div class="line"><span>${name}</span><u>${open} open${med ? ' &middot; ' + money(med) : ''}</u></div>`).join('')
+        : '<p class="muted" style="font-size:13px;">No one is hiring this role here right now.</p>'}</div>
+      <div><h4>What postings ask for</h4>${certs.length ? certs.map(([name, req, any]) =>
+        `<div class="line"><span>${name}</span><u>${req ? `${req}% require${any > req ? ` &middot; ${any}% mention` : ''}` : `mentioned by ${any}%`}</u></div>`).join('')
+        : '<p class="muted" style="font-size:13px;">Too few readable postings to say.</p>'}</div>
+    </div>
+  </section>`;
+}
+
+function placeTable(states){
+  return `<div class="panel"><table><thead><tr><th>Market</th><th class="n">Clean energy workers</th>
+    <th class="n">Due online in 12 mo</th><th class="n">Unemployment</th><th class="n">Trained last year</th><th class="n">Net households</th></tr></thead>
+    <tbody>${states.map(k => { const s = D.states[k], mv = s.move; return `<tr><td>${s.name}</td>
+      <td class="n">${s.workforce ? s.workforce.toLocaleString() : '&mdash;'}</td>
+      <td class="n">${s.pipe && s.pipe.mw.within_12mo ? gw(s.pipe.mw.within_12mo) : '&mdash;'}</td>
+      <td class="n">${s.unemp ? s.unemp.latest + '%' : '&mdash;'}</td>
+      <td class="n">${s.train && s.train.total ? s.train.total.toLocaleString() : '&mdash;'}</td>
+      <td class="n">${mv ? (mv.net_households > 0 ? '+' : '') + mv.net_households.toLocaleString() : '&mdash;'}</td></tr>`; }).join('')}</tbody></table></div>
+    ${states.map(k => { const p = D.states[k].pipe; const devs = p && (p.top_developers || []).slice(0, 3);
+      return devs && devs.length ? `<p class="band" style="margin:.7rem 0 0;"><b>${D.states[k].name}:</b> biggest builders are ${
+        devs.map(d => `${d.entity.trim()} (${gw(d.mw)})`).join(', ')}.</p>` : ''; }).join('')}`;
+}
+
+function postingsTable(posts){
+  return `<div class="panel"><table><thead><tr><th>Posting</th><th class="n">You advertise</th><th class="n">Market</th><th class="n">Gap</th><th class="n">Days live</th></tr></thead>
+    <tbody>${posts.map(p => { const c = cellOf(p.role, p.state), m = c && c.pay ? c.pay[1] : null;
+      const gap = m && p.advertised ? Math.round(100 * (p.advertised / m - 1)) : null;
+      return `<tr><td>${p.title}<div class="muted" style="font-size:12px;">${(D.states[p.state] || {}).name || p.state}</div></td>
+        <td class="n">${money(p.advertised)}</td><td class="n">${m ? money(m) : '&mdash;'}</td>
+        <td class="n">${gap == null ? '&mdash;' : (gap > 0 ? '+' : '') + gap + '%'}</td>
+        <td class="n">${p.days != null ? p.days : '&mdash;'}${c && c.days ? `<div class="muted" style="font-size:12px;">typical ${c.days}</div>` : ''}</td></tr>`; }).join('')}</tbody></table></div>`;
+}
+
+function render(rows, posts){
+  const month = new Date().toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+  el('title').textContent = `Market report · ${month}`;
+  el('printFor').textContent = month;
+  if (!rows.length){
+    el('lede').textContent = 'Built from the roles and markets you follow.';
+    el('content').innerHTML = `<div class="empty"><h2>Follow a few roles and markets first</h2>
+      <p>This report covers what you follow: pay against the market, who is hiring, how long searches take, and
+        what stands out. Pick them on the Intelligence page with <b>+ Follow</b>, then come back here.</p>
+      <a class="btn blu" href="employer-intel-home.html">Choose what to follow</a></div>`;
+    return;
+  }
+  const states = [...new Set(rows.map(r => r.state))];
+  const cells = rows.map(r => cellOf(r.role, r.state));
+  const open = cells.reduce((a, c) => a + c.open, 0);
+  const employers = new Set(cells.flatMap(c => (c.emp || []).map(e => e[0]))).size;
+  const soon = states.reduce((a, s) => a + ((((D.states[s] || {}).pipe || {}).mw || {}).within_12mo || 0), 0);
+  const dd = cells.map(c => c.days).filter(Boolean).sort((a, b) => a - b);
+  const { takeaways, flags } = findings(rows);
+
+  el('lede').innerHTML = `${rows.length} ${plural(rows.length, 'role and market', 'roles and markets')} you follow, across
+    ${states.length} ${plural(states.length, 'state', 'states')}. Figures rebuilt ${D.generated}.`;
+  el('content').innerHTML = `
+    <div class="pulse">
+      <div><b>${open.toLocaleString()}</b><span>open roles in your markets</span></div>
+      <div><b>${employers}</b><span>employers hiring them</span></div>
+      <div><b>${soon ? gw(soon) : '&mdash;'}</b><span>due online in your markets within 12 months</span></div>
+      <div><b>${dd.length ? dd[Math.floor(dd.length / 2)] + ' days' : '&mdash;'}</b><span>typical time to fill</span></div>
+    </div>
+    ${takeaways.length ? `<h2>Key takeaways</h2><div class="takeaways">${takeaways.map(f =>
+      `<div class="take ${f.tone}"><span class="k">${f.kind}</span><b>${f.figure}</b><p>${f.text}</p></div>`).join('')}</div>` : ''}
+    <h2>Your roles and markets</h2>
+    ${rows.map(r => marketCard(r, flags)).join('')}
+    ${posts.length ? `<h2>Your live postings against their markets</h2>${postingsTable(posts)}` : ''}
+    <h2>The places</h2>
+    ${placeTable(states)}
+    <p class="method">Pay (BLS) is what people already in the job earn: BLS Occupational Employment and Wage Statistics.
+      Advertised pay is the bottom of the range employers post, from every posting we have seen in that market, live and
+      closed, brought up to today by BLS wage growth; it is an early read below 5 postings from 3 employers. Time to fill is how
+      long a search stays open, counting a repost within 14 days as the same search and including searches still open;
+      always-open pipeline postings are left out. Build pipeline is EIA-860M; workforce is the DOE US Energy &amp; Employment
+      Report; unemployment is BLS LAUS; training is IPEDS; migration is IRS Statistics of Income. Figures rebuilt ${D.generated}.
+      Prepared for your account by Verde Talent; not for redistribution.</p>`;
+  el('pdfBtn').disabled = false;
+}
+
+el('pdfBtn').onclick = () => window.print();
+
+(async () => {
+  if (VTIntel.SAMPLE) el('switcher').hidden = false;
+  const got = await VTIntel.load();
+  if (got.status === 'signin') return VTIntel.signIn('employer-intel-report.html');
+  // Not subscribed: the plan picker lives on the Intelligence page.
+  if (got.status === 'locked') { location.replace('employer-intel-home.html'); return; }
+  D = got.data;
+  const [watch, posts] = await Promise.all([VTIntel.watch.load(), VTIntel.myPostings()]);
+  let rows = watch || (VTIntel.SAMPLE ? SAMPLE_WATCH.map(([role, state]) => ({ role, state })) : []);
+  const mine = posts.filter(p => D.states[p.state] && cellOf(p.role, p.state));
+  // Roles you are posting count as followed, as on the Intelligence home.
+  mine.forEach(p => rows.push({ role: p.role, state: p.state }));
+  const seen = new Set();
+  rows = rows.filter(r => { const k = r.role + '|' + r.state; if (seen.has(k) || !cellOf(r.role, r.state)) return false; seen.add(k); return true; });
+  render(rows, mine);
+})().catch(err => {
+  console.error(err);
+  el('content').innerHTML = '<p class="muted">The report could not load just now. Refresh the page, or email contact@verdetalent.com if it keeps happening.</p>';
+});
+</script>
+</body>
+</html>

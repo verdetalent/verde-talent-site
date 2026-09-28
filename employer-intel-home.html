@@ -62,15 +62,20 @@ margin:2rem 0 .8rem;display:flex;align-items:baseline;gap:10px;justify-content:s
 .pulse span{font-size:12px;color:var(--t3);line-height:1.4;display:block;margin-top:3px;}
 
 /* What stands out: findings generated from the data for this watchlist. */
-.finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;}
-.find{background:var(--card);border:0.5px solid var(--bdr);border-left:3px solid var(--blu);border-radius:12px;
-padding:.95rem 1.1rem;display:flex;flex-direction:column;gap:6px;}
-.find.warn{border-left-color:var(--amb);}
-.find.good{border-left-color:var(--grn);}
-.find .k{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);font-weight:600;}
-.find p{font-size:13.5px;color:var(--t2);line-height:1.55;}
-.find p b{color:var(--t1);font-weight:600;}
-.find a{color:var(--blu);text-decoration:none;font-size:12.5px;font-weight:600;margin-top:auto;}
+/* Key takeaways (three at most, one per kind) and flags on the rows they are about - the
+   same layout as the market report. */
+.takeaways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.take{background:var(--card);border:0.5px solid var(--bdr);border-top:3px solid var(--blu);border-radius:12px;padding:1rem 1.1rem;
+display:flex;flex-direction:column;gap:2px;}
+.take.warn{border-top-color:var(--amb);} .take.good{border-top-color:var(--grn);}
+.take .k{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);font-weight:600;}
+.take b{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;margin:.3rem 0 .15rem;font-variant-numeric:tabular-nums;}
+.take p{font-size:13px;color:var(--t2);line-height:1.5;}
+.take a{color:var(--blu);text-decoration:none;font-size:12.5px;font-weight:600;margin-top:.6rem;}
+.flags{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;}
+.flag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:rgba(79,179,255,.1);color:var(--blu);}
+.flag.warn{background:rgba(255,181,71,.12);color:var(--amb);}
+@media (max-width:760px){.takeaways{grid-template-columns:1fr;}}
 
 table{width:100%;border-collapse:collapse;font-size:13.5px;}
 th,td{padding:10px 10px;text-align:left;border-bottom:0.5px solid var(--bdr);}
@@ -335,33 +340,40 @@ const blsOf = (role, st) => ((D.bls || {})[role] || { states: {} }).states[st] |
 // Plain statements the data supports for THIS watchlist, ranked and capped at five. Each
 // one names the role and market it is about and links to it. Nothing here needs postings.
 function findings(rows){
-  const out = [];
-  const statesSeen = new Set();
+  const out = [], statesSeen = new Set();
   rows.forEach(r => {
     const c = cellOf(r.role, r.state), st = D.states[r.state], nat = D.national[r.role] || {};
-    const name = st.name, t = title(r.role);
+    const name = st.name, t = title(r.role), key = r.role + '|' + r.state;
     if (c.pay && c.bls && c.bls[3] && c.pay[1] < c.bls[3])
-      out.push([90, 'warn', 'Pay', `Employers advertise <b>${t}s</b> in ${name} at ${money(c.pay[1])} &mdash; below the
-        BLS 25th percentile of ${money(c.bls[3])} for people already doing the job.`, r]);
+      out.push({ kind: 'Pay', tone: 'warn', score: 90 + (c.bls[3] - c.pay[1]) / c.bls[3] * 100, key, r, figure: money(c.pay[1]),
+        text: `advertised for ${t}s in ${name}, below the BLS 25th percentile of ${money(c.bls[3])}.`,
+        flag: 'Advertised pay below BLS 25th' });
     if (c.days && nat.days && c.days >= nat.days * 1.5)
-      out.push([66, 'warn', 'Time to fill', `<b>${t}</b> searches in ${name} take <b>${c.days} days</b> to fill, against
-        ${nat.days} nationally.`, r]);
+      out.push({ kind: 'Time to fill', tone: 'warn', score: 60 + c.days / nat.days * 5, key, r, figure: `${c.days} days`,
+        text: `for ${t} searches in ${name}, against ${nat.days} nationally.`,
+        flag: `Fills ${(c.days / nat.days).toFixed(1)}&times; slower than nationally` });
     const top = (c.emp || [])[0];
     if (top && c.open >= 8 && top[1] / c.open >= 0.4)
-      out.push([56, '', 'Competition', `<b>${top[0]}</b> accounts for ${top[1]} of the ${c.open} open ${t} roles
-        in ${name}.`, r]);
+      out.push({ kind: 'Competition', tone: '', score: 50 + top[1] / c.open * 10, key, r, figure: `${Math.round(100 * top[1] / c.open)}%`,
+        text: `of open ${t} roles in ${name} are ${top[0]}'s.`,
+        flag: `${top[0]} holds ${Math.round(100 * top[1] / c.open)}% of openings` });
     const cert = ((c.sig || {}).certs || [])[0];
     if (cert && cert[1] >= 40)
-      out.push([48, '', 'Requirements', `<b>${cert[1]}%</b> of ${t} postings in ${name} require <b>${cert[0]}</b>.`, r]);
+      out.push({ kind: 'Requirements', tone: '', score: 40 + cert[1] / 10, key, r, figure: `${cert[1]}%`,
+        text: `of ${t} postings in ${name} require ${cert[0]}.`, flag: `${cert[1]}% require ${cert[0]}` });
     if (!statesSeen.has(r.state) && st.pipe && st.pipe.mw.within_12mo >= 3000){
       statesSeen.add(r.state);
       const dev = (st.pipe.top_developers || [])[0];
-      out.push([70, 'good', 'Demand ahead', `<b>${gw(st.pipe.mw.within_12mo)}</b> is due online in ${name} in the next
-        12 months${dev ? `, led by ${dev.entity.trim()}` : ''} &mdash; a hiring wave for anyone staffing sites there.`, r]);
+      out.push({ kind: 'Demand ahead', tone: 'good', score: 70 + st.pipe.mw.within_12mo / 1000, key: null, r, figure: gw(st.pipe.mw.within_12mo),
+        text: `due online in ${name} within 12 months${dev ? `, led by ${dev.entity.trim()}` : ''}.` });
     }
   });
-  const seen = new Set();
-  return out.sort((a, b) => b[0] - a[0]).filter(f => { const k = f[2] + f[4].role + f[4].state; return seen.has(k) ? false : seen.add(k); }).slice(0, 5);
+  out.sort((a, b) => b.score - a.score);
+  const kinds = new Set(), takeaways = [];
+  out.forEach(f => { if (takeaways.length < 3 && !kinds.has(f.kind)) { kinds.add(f.kind); takeaways.push(f); } });
+  const flags = {};
+  out.filter(f => !takeaways.includes(f) && f.key).forEach(f => { (flags[f.key] = flags[f.key] || []).push(f); });
+  return { takeaways, flags };
 }
 
 // ---------------------------------------------------------------- dashboard ------------
@@ -379,7 +391,7 @@ function renderDashboard(rows){
   const roles = [...new Set(rows.map(r => r.role))];
 
 
-  const finds = findings(rows);
+  const { takeaways, flags } = findings(rows);
   const postings = m === 'postings' ? POSTINGS : [];
 
   PANE.innerHTML = `
@@ -393,16 +405,18 @@ function renderDashboard(rows){
     <div><b>${medDays ? medDays + ' days' : '&mdash;'}</b><span>typical time to fill</span></div>
   </div>
 
-  ${finds.length ? `<div class="section-title"><span>What stands out</span><em>from this morning's data</em></div>
-  <div class="finds">${finds.map(([, tone, k, text, r]) => `<div class="find ${tone}"><span class="k">${k}</span>
-    <p>${text}</p><a href="${link(r.role, r.state)}">Open ${title(r.role)} &middot; ${D.states[r.state].name} &rarr;</a></div>`).join('')}</div>` : ''}
+  ${takeaways.length ? `<div class="section-title"><span>Key takeaways</span><em>from this morning's data</em></div>
+  <div class="takeaways">${takeaways.map(f => `<div class="take ${f.tone}"><span class="k">${f.kind}</span><b>${f.figure}</b>
+    <p>${f.text}</p><a href="${link(f.r.role, f.r.state)}">Open ${title(f.r.role)} &middot; ${D.states[f.r.state].name} &rarr;</a></div>`).join('')}</div>` : ''}
 
   <div class="section-title"><span>Roles and markets you follow</span><em>click any row for the full picture</em></div>
   <div class="panel" style="padding:.4rem 1.1rem;"><table>
     <thead><tr><th>Role and market</th><th class="n">Pay (BLS)</th><th class="n hide-sm">Advertised</th>
       <th class="hide-sm">Advertised vs BLS</th><th class="n">Open</th><th class="n hide-sm">Employers</th><th class="n">Days to fill</th></tr></thead>
     <tbody>${rows.map(r => { const c = cellOf(r.role, r.state); return `<tr class="link" data-href="${link(r.role, r.state)}">
-      <td><div class="role">${title(r.role)}</div><div class="where">${D.states[r.state].name}${r.fromPosting ? ' &middot; you are hiring' : ''}</div></td>
+      <td><div class="role">${title(r.role)}</div><div class="where">${D.states[r.state].name}${r.fromPosting ? ' &middot; you are hiring' : ''}</div>
+        ${(flags[r.role + '|' + r.state] || []).length ? `<div class="flags">${flags[r.role + '|' + r.state].map(f =>
+          `<span class="flag ${f.tone}">${f.flag}</span>`).join('')}</div>` : ''}</td>
       <td class="n">${blsOf(r.role, r.state) ? money(blsOf(r.role, r.state)[0]) : '<span class="muted">&mdash;</span>'}</td>
       <td class="n hide-sm">${advertised(c)}</td>
       <td class="hide-sm">${bandChip(c)}</td>
@@ -968,7 +982,7 @@ function start(){
   const m = mode();
   if (m === 'locked') return renderLocked();
   el('lede').innerHTML = 'Every clean energy market we track, rebuilt each morning. Start with the national picture, pick a sector, then narrow to a state or a role.';
-  el('acts').innerHTML = '';
+  el('acts').innerHTML = '<a class="btn blu" href="employer-intel-report.html"><i class="ti ti-file-text"></i>Market report</a>';
   el('content').innerHTML = `
     <div class="tabs" role="tablist">
       <button class="tab" data-pane="explore" role="tab">Explore<small>the national picture, then a sector, state or role</small></button>
