@@ -49,6 +49,32 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .picker{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:1.4rem;}
 .field{display:grid;gap:6px;}
 .field label{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--t3);}
+/* Sector, then a role inside it - the same pattern as the Explore page, in place of one
+   long role dropdown. */
+.rolepick{margin:-.4rem 0 1.4rem;}
+.pick-k{display:block;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--t3);margin:0 0 .5rem;}
+.secbtns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;}
+.sec{font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:10px;border:0.5px solid var(--bdr2);
+background:var(--card);color:var(--t2);cursor:pointer;font-family:var(--font-sans);}
+.sec:hover{color:var(--t1);border-color:var(--c);}
+/* Each sector has its own colour, carried into its selected role chip, so the three levels
+   on this page - sector, role, view - no longer all read as the same blue. */
+.sec[data-s="Solar"],.rolepick[data-s="Solar"]{--c:#F5B041;--c-bg:rgba(245,176,65,.14);}
+.sec[data-s="Wind"],.rolepick[data-s="Wind"]{--c:#4FB3FF;--c-bg:rgba(79,179,255,.14);}
+.sec[data-s="Storage"],.rolepick[data-s="Storage"]{--c:#B79CFF;--c-bg:rgba(183,156,255,.15);}
+.sec[data-s="Grid"],.rolepick[data-s="Grid"]{--c:#FF6B6B;--c-bg:rgba(255,107,107,.14);}
+.sec[data-s="Other"],.rolepick[data-s="Other"]{--c:#D6D6D6;--c-bg:rgba(255,255,255,.1);}
+.sec::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:8px;vertical-align:1px;}
+.sec[aria-pressed="true"]{background:var(--c-bg);border-color:var(--c);color:var(--c);}
+.rolechips{display:flex;gap:7px;flex-wrap:wrap;}
+.rc{font-size:12.5px;padding:6px 11px;border-radius:999px;border:0.5px solid var(--bdr2);background:transparent;
+color:var(--t2);cursor:pointer;font-family:var(--font-sans);}
+.rc:hover{color:var(--t1);border-color:var(--c);}
+.rc i{font-style:normal;color:var(--t3);margin-left:5px;font-size:11.5px;font-variant-numeric:tabular-nums;}
+.rc[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#111;font-weight:700;}
+.rc[aria-pressed="true"] i{color:rgba(0,0,0,.6);}
+.rc.more{border-style:dashed;color:var(--t3);}
+@media (max-width:640px){.sec{padding:8px 12px;font-size:13px;}.rc{font-size:12px;padding:5px 9px;}}
 select{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 12px;font-size:13.5px;color:var(--t1);outline:none;font-family:var(--font-sans);min-width:240px;cursor:pointer;}
 select:focus{border-color:rgba(34,224,154,0.5);}
 
@@ -77,13 +103,21 @@ margin-bottom:1.05rem;display:flex;justify-content:space-between;align-items:bas
 .devrow:last-child{border-bottom:0;}
 .devrow u{text-decoration:none;color:var(--t3);font-variant-numeric:tabular-nums;white-space:nowrap;}
 @media (max-width:880px){.pipe{grid-template-columns:1fr;}}
-.tabs{display:flex;gap:4px;border-bottom:0.5px solid var(--bdr);margin-bottom:14px;flex-wrap:wrap;}
-.tab{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--t3);
-font:inherit;font-size:13.5px;font-weight:600;padding:9px 14px;cursor:pointer;
-font-family:var(--font-sans);margin-bottom:-1px;}
-.tab:hover{color:var(--t2);}
-.tab[aria-selected="true"]{color:var(--t1);border-bottom-color:var(--grn);}
-.tab small{display:block;font-size:11px;font-weight:400;color:var(--t3);margin-top:1px;}
+/* The three views of a role, as three large buttons: the data behind the second and third
+   was easy to miss when these were small grey tab labels. */
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 16px;}
+.tab{display:flex;align-items:center;gap:12px;text-align:left;background:var(--card);border:1px solid var(--bdr2);
+border-radius:14px;padding:14px 16px;cursor:pointer;color:var(--t2);font-family:var(--font-sans);
+transition:border-color .12s,background .12s,transform .08s;}
+.tab:hover{border-color:rgba(34,224,154,.5);color:var(--t1);transform:translateY(-1px);}
+.tab .ic{flex:none;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;
+background:rgba(255,255,255,.06);color:var(--t2);}
+.tab b{display:block;font-size:15px;font-weight:700;color:var(--t1);letter-spacing:-.01em;}
+.tab small{display:block;font-size:12px;font-weight:400;color:var(--t3);margin-top:2px;line-height:1.35;}
+.tab[aria-selected="true"]{background:rgba(34,224,154,.1);border-color:#22E09A;box-shadow:0 0 0 1px #22E09A inset;}
+.tab[aria-selected="true"] .ic{background:#22E09A;color:#052e1e;}
+.tab[aria-selected="true"] small{color:var(--t2);}
+@media (max-width:640px){.tabs{grid-template-columns:1fr;gap:8px;}.tab{padding:11px 13px;}.tab .ic{width:34px;height:34px;font-size:17px;}}
 .pane[hidden]{display:none;}
 .qrow{display:grid;grid-template-columns:1fr 92px 62px 78px;gap:10px;align-items:center;
 padding:8px 0;border-bottom:0.5px solid var(--bdr);font-size:13.5px;}
@@ -209,9 +243,10 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
 
   <div class="picker" id="picker" style="display:none;">
-    <div class="field"><label for="role">Role</label><select id="role"></select></div>
     <div class="field"><label for="state">Market</label><select id="state"></select></div>
+    <select id="role" hidden aria-hidden="true"></select>
   </div>
+  <div class="rolepick" id="rolepick" hidden></div>
 
   <div id="content" class="state-note">Loading…</div>
   <p class="foot" id="foot"></p>
@@ -613,9 +648,9 @@ function render(){
   el('content').innerHTML = `
   ${yours ? `<div class="grid" style="grid-template-columns:1fr;">${yours}</div>` : ''}
   <div class="tabs" role="tablist">
-    <button class="tab" role="tab" data-pane="pay" aria-selected="true">What it costs<small>pay, prices, movement</small></button>
-    <button class="tab" role="tab" data-pane="rivals" aria-selected="false">Who you are against<small>employers, requirements, churn</small></button>
-    <button class="tab" role="tab" data-pane="place" aria-selected="false">The place<small>industry, build, training, people</small></button>
+    <button class="tab" role="tab" data-pane="pay" aria-selected="true"><span class="ic"><i class="ti ti-currency-dollar"></i></span><span><b>What it costs</b><small>pay, prices, movement</small></span></button>
+    <button class="tab" role="tab" data-pane="rivals" aria-selected="false"><span class="ic"><i class="ti ti-users"></i></span><span><b>Who you are against</b><small>employers, requirements, churn</small></span></button>
+    <button class="tab" role="tab" data-pane="place" aria-selected="false"><span class="ic"><i class="ti ti-map-pin"></i></span><span><b>The place</b><small>industry, build, training, people</small></span></button>
   </div>
 
   <div class="pane" data-pane="pay">
@@ -725,6 +760,65 @@ function rolesFor(stateKey){
   return Object.keys(s).sort((a, b) => s[b].open - s[a].open);
 }
 
+// ---- sector, then role -------------------------------------------------------------
+// The hidden #role select still holds the choice (render() reads it); these buttons set it.
+// No 'Other': the two roles outside every sector (EV charging, HVAC) are too thin to earn a
+// button. A link straight to one still opens it; it just has no sector highlighted.
+const SECTORS = [['Solar', 'Solar'], ['Wind', 'Wind'], ['Storage', 'Storage'], ['Grid', 'Grid & Utilities']];
+let SECTOR = null, MORE = false;
+
+// [role, open here, open nationally] for one sector, only roles this market has.
+function sectorRoles(sec, stateKey){
+  const avail = src(stateKey);
+  const x = (D.sectors || {})[sec];
+  if (!x) return [];
+  const local = new Map(((x.states || {})[stateKey] || { roles: [] }).roles);
+  return x.national.roles.filter(([r]) => avail[r]).map(([r, nat]) => [r, local.get(r) || 0, nat])
+    .sort((a, b) => b[1] - a[1] || b[2] - a[2]);
+}
+
+// The sector a role mostly belongs to: where it is hired most here, else nationally.
+function sectorOf(role, stateKey){
+  let best = null, bestN = -1;
+  SECTORS.forEach(([k]) => {
+    const x = (D.sectors || {})[k];
+    if (!x) return;
+    const nat = x.national.roles.find(r => r[0] === role);
+    if (!nat) return;
+    const loc = (((x.states || {})[stateKey] || { roles: [] }).roles.find(r => r[0] === role) || [0, 0])[1];
+    const n = loc * 100000 + nat[1];
+    if (n > bestN){ best = k; bestN = n; }
+  });
+  return best;
+}
+
+function renderRolePick(){
+  const stateKey = el('state').value, role = el('role').value;
+  if (!SECTOR || !sectorRoles(SECTOR, stateKey).some(([r]) => r === role)) SECTOR = sectorOf(role, stateKey);
+  const secs = SECTORS.filter(([k]) => sectorRoles(k, stateKey).length);
+  const roles = SECTOR ? sectorRoles(SECTOR, stateKey) : [];
+  const shown = MORE ? roles : roles.slice(0, 12);
+  if (!shown.some(([r]) => r === role)) { const hit = roles.find(([r]) => r === role); if (hit) shown.push(hit); }
+  const box = el('rolepick');
+  box.hidden = false;
+  box.dataset.s = SECTOR || '';
+  box.innerHTML = `<span class="pick-k">Sector</span>
+    <div class="secbtns">${secs.map(([k, l]) => `<button type="button" class="sec" data-s="${k}" aria-pressed="${k === SECTOR}">${l}</button>`).join('')}</div>
+    <span class="pick-k">Role</span>
+    <div class="rolechips">${shown.map(([r, n]) => `<button type="button" class="rc" data-r="${r}" aria-pressed="${r === role}">${D.titles[r] || r}${n ? `<i>${n}</i>` : ''}</button>`).join('')}
+      ${roles.length > 12 ? `<button type="button" class="rc more" id="rcMore">${MORE ? 'Fewer' : `+${roles.length - 12} more`}</button>` : ''}</div>`;
+  box.querySelectorAll('.sec').forEach(b => b.onclick = () => {
+    // A sector click always lands on that sector's busiest role here: a role hired across
+    // sectors (a NextEra wind-and-solar posting) would otherwise stay put and look stuck.
+    SECTOR = b.dataset.s; MORE = false;
+    const first = sectorRoles(SECTOR, stateKey)[0];
+    if (first) el('role').value = first[0];
+    render(); renderRolePick();
+  });
+  box.querySelectorAll('.rc[data-r]').forEach(b => b.onclick = () => { el('role').value = b.dataset.r; render(); renderRolePick(); });
+  if (el('rcMore')) el('rcMore').onclick = () => { MORE = !MORE; renderRolePick(); };
+}
+
 function refreshRoles(){
   const current = el('role').value;
   const items = rolesFor(el('state').value).map(r => [r, D.titles[r] || r]);
@@ -735,20 +829,10 @@ el('signOutLink').addEventListener('click', e => { e.preventDefault(); VTIntel.s
 
 function marketOptions(selected){
     const states = Object.entries(D.states).sort((a, b) => a[1].name.localeCompare(b[1].name));
-    const byState = {};
-    Object.entries(D.metros || {}).forEach(([code, m]) => {
-      (byState[m.state] = byState[m.state] || []).push([code, m.name]);
-    });
     const opt = ([v, l]) => `<option value="${v}"${v === selected ? ' selected' : ''}>${l}</option>`;
+    // Metro areas are left out until we hold enough postings to say something at metro level.
     let html = opt(['US', 'United States']);
     html += `<optgroup label="States">${states.map(([k, s]) => opt([k, s.name])).join('')}</optgroup>`;
-    // Metros sit under their state so a long flat list does not bury them, and are
-    // labelled as what they are: public data at metro resolution, not our own pay figures.
-    Object.keys(byState).sort().forEach(st => {
-      const name = (D.states[st] || {}).name || st;
-      html += `<optgroup label="${name} — metros">${byState[st]
-        .sort((a, b) => a[1].localeCompare(b[1])).map(opt).join('')}</optgroup>`;
-    });
     return html;
   }
 
@@ -763,15 +847,15 @@ function marketOptions(selected){
     // Arriving from the dashboard, which links role+market straight through.
     const q = new URLSearchParams(location.search);
     const asked = q.get('state');
-    const wantState = (D.states[asked] || (D.metros || {})[asked] || asked === 'US') ? asked : 'CA';
+    const wantState = (D.states[asked] || asked === 'US') ? asked : 'CA';
     const wantRole = q.get('role');
     el('state').innerHTML = marketOptions(wantState);
     refreshRoles();
     if (wantRole && src(wantState)[wantRole]) el('role').value = wantRole;
     else if (src(wantState)['Solar O&M technician']) el('role').value = 'Solar O&M technician';
-    el('state').addEventListener('change', () => { refreshRoles(); render(); });
-    el('role').addEventListener('change', render);
+    el('state').addEventListener('change', () => { refreshRoles(); render(); renderRolePick(); });
     render();
+    renderRolePick();
   }
 })().catch(err => {
   console.error(err);
