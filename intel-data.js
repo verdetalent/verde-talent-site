@@ -178,5 +178,14 @@
     location.href = 'employer-login.html';
   }
 
+  // Local sample only: links between the Intelligence pages keep ?sample=, so clicking
+  // through the preview never lands on the real sign-in.
+  if (SAMPLE) document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="employer-intel"]');
+    if (!a || /[?&]sample=/.test(a.getAttribute('href'))) return;
+    const href = a.getAttribute('href');
+    a.setAttribute('href', href + (href.includes('?') ? '&' : '?') + 'sample=' + encodeURIComponent(SAMPLE));
+  }, true);
+
   window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, signIn, signOut, checkout, portal, SignInNeeded };
 })();

@@ -81,6 +81,8 @@ table{width:100%;border-collapse:collapse;font-size:13.5px;}
 th,td{padding:10px 10px;text-align:left;border-bottom:0.5px solid var(--bdr);}
 thead th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);font-weight:600;}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;}
+/* Your markets: number columns centred, headings and figures alike. */
+#mine td.n,#mine th.n,#mine td.c,#mine th.c{text-align:center;}
 tbody tr:last-child td{border-bottom:0;}
 tbody tr.link{cursor:pointer;}
 tbody tr.link:hover td{background:rgba(255,255,255,0.025);}
@@ -151,7 +153,8 @@ footer a{color:var(--t3);text-decoration:none;}
 /* Tabs: Explore (the national picture, for everyone) and Your markets (what they follow). */
 /* Explore and Your markets as two large buttons, green when selected - the same treatment as
    the role page's views, so it is obvious there are two sides to this page. */
-.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:1.4rem;max-width:760px;}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.4rem;}
+a.tab{text-decoration:none;}
 .tab{display:flex;align-items:center;gap:12px;text-align:left;background:var(--card);border:1px solid var(--bdr2);
 border-radius:14px;padding:14px 16px;cursor:pointer;color:var(--t2);font-family:var(--font-sans);
 transition:border-color .12s,background .12s,transform .08s;}
@@ -163,8 +166,8 @@ background:rgba(255,255,255,.06);color:var(--t2);}
 .tab[aria-selected="true"]{background:rgba(34,224,154,.1);border-color:#22E09A;box-shadow:0 0 0 1px #22E09A inset;}
 .tab[aria-selected="true"] .ic{background:#22E09A;color:#052e1e;}
 .tab[aria-selected="true"] small{color:var(--t2);}
-@media (max-width:640px){.tabs{gap:8px;}.tab{padding:11px 12px;gap:10px;}.tab .ic{width:34px;height:34px;font-size:17px;}
-  .tab small{display:none;}}
+@media (max-width:640px){.tabs{gap:6px;}.tab{padding:9px 10px;gap:8px;}.tab .ic{width:28px;height:28px;font-size:15px;}
+  .tab small{display:none;}.tab b{font-size:12.5px;}}
 .pane[hidden]{display:none;}
 .panehead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:1rem;}
 .panehead p{font-size:13.5px;color:var(--t2);} .panehead p b{color:var(--t1);}
@@ -189,6 +192,9 @@ color:var(--t2);cursor:pointer;font-family:var(--font-sans);}
 .rchip[aria-pressed="true"]{background:rgba(79,179,255,.13);border-color:rgba(79,179,255,.55);color:var(--blu);font-weight:600;}
 .rchip[aria-pressed="true"] i{color:var(--blu);}
 .rchip.more{border-style:dashed;color:var(--t3);}
+.secsum .deep{margin-top:1rem;}
+td .role .go{color:var(--blu);font-weight:700;margin-left:6px;}
+tr.link:hover td .role .go{margin-left:9px;}
 @media (max-width:640px){.secstats{grid-template-columns:1fr 1fr;gap:12px;}.secstats b{font-size:1.1rem;}
   .sector{padding:8px 12px;font-size:13px;}.rchip{font-size:12px;padding:5px 9px;}}
 /* Shown on the BLS layer when BLS leaves states blank: points to our own advertised pay. */
@@ -422,14 +428,14 @@ function renderDashboard(rows){
   <div class="section-title"><span>Roles and markets you follow</span><em>click any row for the full picture</em></div>
   <div class="panel" style="padding:.4rem 1.1rem;"><table>
     <thead><tr><th>Role and market</th><th class="n">Pay (BLS)</th><th class="n hide-sm">Advertised</th>
-      <th class="hide-sm">Advertised vs BLS</th><th class="n">Open</th><th class="n hide-sm">Employers</th><th class="n">Days to fill</th></tr></thead>
+      <th class="c hide-sm">Advertised vs BLS</th><th class="n">Open</th><th class="n hide-sm">Employers</th><th class="n">Days to fill</th></tr></thead>
     <tbody>${rows.map(r => { const c = cellOf(r.role, r.state); return `<tr class="link" data-href="${link(r.role, r.state)}">
-      <td><div class="role">${title(r.role)}</div><div class="where">${D.states[r.state].name}${r.fromPosting ? ' &middot; you are hiring' : ''}</div>
+      <td><div class="role">${title(r.role)}<span class="go">&rarr;</span></div><div class="where">${D.states[r.state].name}${r.fromPosting ? ' &middot; you are hiring' : ''}</div>
         ${(flags[r.role + '|' + r.state] || []).length ? `<div class="flags">${flags[r.role + '|' + r.state].map(f =>
           `<span class="flag ${f.tone}">${f.flag}</span>`).join('')}</div>` : ''}</td>
       <td class="n">${blsOf(r.role, r.state) ? money(blsOf(r.role, r.state)[0]) : '<span class="muted">&mdash;</span>'}</td>
       <td class="n hide-sm">${advertised(c)}</td>
-      <td class="hide-sm">${bandChip(c)}</td>
+      <td class="c hide-sm">${bandChip(c)}</td>
       <td class="n">${c.open}</td><td class="n hide-sm">${c.nemp}</td>
       <td class="n">${c.days || '&mdash;'}</td></tr>`; }).join('')}</tbody></table>
     <p class="note" style="margin:.4rem 0 .8rem;">Pay (BLS) is what people in the job earn; advertised is what employers
@@ -749,7 +755,10 @@ function sectorSummary(){
       <button class="rchip" data-r="" aria-pressed="${!EX.role}">All ${sw()} roles</button>
       ${shown.map(([r, c]) => `<button class="rchip" data-r="${r}" aria-pressed="${r === EX.role}">${title(r)}<i>${c}</i></button>`).join('')}
       ${roles.length > 10 ? `<button class="rchip more" id="rpMore">${EX.more ? 'Fewer' : `+${roles.length - 10} more`}</button>` : ''}
-    </div></div>`;
+    </div>
+    ${EX.role ? `<a class="btn blu deep" href="${link(EX.role, EX.sel && (D.states[EX.sel] || {}).roles && D.states[EX.sel].roles[EX.role] ? EX.sel : 'US')}">
+      <i class="ti ti-search"></i>Open the full ${title(EX.role)} page${EX.sel && D.states[EX.sel] && D.states[EX.sel].roles[EX.role] ? ` for ${D.states[EX.sel].name}` : ''} &rarr;</a>` : ''}
+    </div>`;
 }
 
 // On the BLS layer, say where BLS is silent and send people to our own advertised pay.
@@ -935,7 +944,7 @@ function renderStatePanel(k){
         ${roleRows.length ? `<table><thead><tr><th>Role</th><th class="n">Pay (BLS)</th><th class="n hide-sm">Advertised</th>
           <th class="n">Open</th><th></th></tr></thead><tbody>${roleRows.map(([role, c, open]) => `
           <tr class="link ${role === EX.role ? 'hl' : ''}" data-href="${link(role, k)}">
-            <td><div class="role">${title(role)}</div><div class="where">${sa ? '' : `${c.nemp} ${plural(c.nemp, 'employer', 'employers')}${c.days ? ' &middot; ' : ''}`}${c.days ? `${c.days} days to fill` : ''}</div></td>
+            <td><div class="role">${title(role)}<span class="go">&rarr;</span></div><div class="where">${sa ? '' : `${c.nemp} ${plural(c.nemp, 'employer', 'employers')}${c.days ? ' &middot; ' : ''}`}${c.days ? `${c.days} days to fill` : ''}</div></td>
             <td class="n">${blsOf(role, k) ? money(blsOf(role, k)[0]) : '<span class="muted">&mdash;</span>'}</td>
             <td class="n hide-sm">${advertised(c)}</td><td class="n">${open}</td>
             <td class="n"><button class="follow ${isFollowed(role, k) ? 'on' : ''}" data-role="${role}">${isFollowed(role, k) ? 'Following' : '+ Follow'}</button></td>
@@ -983,7 +992,7 @@ function renderMine(){
 
 const TAB_KEY = 'vt_intel_home_tab';
 function showTab(name){
-  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.pane === name)));
+  document.querySelectorAll('.tab[data-pane]').forEach(t => t.setAttribute('aria-selected', String(t.dataset.pane === name)));
   document.querySelectorAll('.pane').forEach(p => { p.hidden = p.dataset.pane !== name; });
   try { localStorage.setItem(TAB_KEY, name); } catch {}
 }
@@ -996,16 +1005,19 @@ function start(){
   el('content').innerHTML = `
     <div class="tabs" role="tablist">
       <button class="tab" data-pane="explore" role="tab"><span class="ic"><i class="ti ti-world"></i></span><span><b>Explore</b><small>the national picture, then a sector, state or role</small></span></button>
+      <a class="tab" href="employer-intelligence.html"><span class="ic"><i class="ti ti-search"></i></span><span><b>Role deep dive</b><small>pay, competitors and the place, for one role</small></span></a>
       <button class="tab" data-pane="mine" role="tab"><span class="ic"><i class="ti ti-eye"></i></span><span><b>Your markets</b><small>the roles and markets you follow</small></span></button>
     </div>
     <div class="pane" data-pane="explore" id="explore"></div>
     <div class="pane" data-pane="mine" id="mine" hidden></div>`;
-  document.querySelectorAll('.tab').forEach(t => t.onclick = () => showTab(t.dataset.pane));
+  document.querySelectorAll('.tab[data-pane]').forEach(t => t.onclick = () => showTab(t.dataset.pane));
   renderExplore();
   renderMine();
   // Explore first, always, on a first visit; after that, wherever they last were.
   let tab = 'explore';
   try { tab = localStorage.getItem(TAB_KEY) || 'explore'; } catch {}
+  const asked = new URLSearchParams(location.search).get('tab');
+  if (asked === 'explore' || asked === 'mine') tab = asked;
   showTab(m === 'new' ? 'explore' : tab);
 }
 

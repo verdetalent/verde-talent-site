@@ -52,6 +52,18 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 /* Sector, then a role inside it - the same pattern as the Explore page, in place of one
    long role dropdown. */
 .rolepick{margin:-.4rem 0 1.4rem;}
+/* The Intelligence sections, as on employer-intel-home.html: this page is Role deep dive. */
+.sections{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 1.6rem;}
+.section{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--bdr2);border-radius:13px;
+padding:11px 14px;text-decoration:none;color:var(--t2);}
+.section:hover{border-color:rgba(34,224,154,.5);}
+.section .ic{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:17px;background:rgba(255,255,255,.06);}
+.section b{display:block;font-size:14px;color:var(--t1);}
+.section small{display:block;font-size:11.5px;color:var(--t3);}
+.section.on{background:rgba(34,224,154,.1);border-color:#22E09A;box-shadow:0 0 0 1px #22E09A inset;}
+.section.on .ic{background:#22E09A;color:#052e1e;}
+@media (max-width:640px){.sections{gap:6px;}.section{padding:9px 10px;gap:8px;}.section small{display:none;}
+  .section .ic{width:28px;height:28px;font-size:15px;}.section b{font-size:12.5px;}}
 .pick-k{display:block;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--t3);margin:0 0 .5rem;}
 .secbtns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;}
 .sec{font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:10px;border:0.5px solid var(--bdr2);
@@ -235,6 +247,12 @@ footer a{color:var(--t3);text-decoration:none;}
 </nav>
 
 <div class="wrap">
+  <nav class="sections" aria-label="Intelligence">
+    <a class="section" href="employer-intel-home.html?tab=explore"><span class="ic"><i class="ti ti-world"></i></span><span><b>Explore</b><small>the national picture</small></span></a>
+    <a class="section on" href="employer-intelligence.html" aria-current="page"><span class="ic"><i class="ti ti-search"></i></span><span><b>Role deep dive</b><small>one role in one market</small></span></a>
+    <a class="section" href="employer-intel-home.html?tab=mine"><span class="ic"><i class="ti ti-eye"></i></span><span><b>Your markets</b><small>what you follow</small></span></a>
+  </nav>
+
   <div class="hero">
     <div>
       <h1 id="title">Intelligence</h1>
@@ -772,7 +790,7 @@ function sectorRoles(sec, stateKey){
   const avail = src(stateKey);
   const x = (D.sectors || {})[sec];
   if (!x) return [];
-  const local = new Map(((x.states || {})[stateKey] || { roles: [] }).roles);
+  const local = new Map(stateKey === 'US' ? x.national.roles : ((x.states || {})[stateKey] || { roles: [] }).roles);
   return x.national.roles.filter(([r]) => avail[r]).map(([r, nat]) => [r, local.get(r) || 0, nat])
     .sort((a, b) => b[1] - a[1] || b[2] - a[2]);
 }
@@ -785,7 +803,7 @@ function sectorOf(role, stateKey){
     if (!x) return;
     const nat = x.national.roles.find(r => r[0] === role);
     if (!nat) return;
-    const loc = (((x.states || {})[stateKey] || { roles: [] }).roles.find(r => r[0] === role) || [0, 0])[1];
+    const loc = ((stateKey === 'US' ? x.national : ((x.states || {})[stateKey] || { roles: [] })).roles.find(r => r[0] === role) || [0, 0])[1];
     const n = loc * 100000 + nat[1];
     if (n > bestN){ best = k; bestN = n; }
   });
@@ -847,7 +865,7 @@ function marketOptions(selected){
     // Arriving from the dashboard, which links role+market straight through.
     const q = new URLSearchParams(location.search);
     const asked = q.get('state');
-    const wantState = (D.states[asked] || asked === 'US') ? asked : 'CA';
+    const wantState = (D.states[asked] || asked === 'US') ? asked : 'US';
     const wantRole = q.get('role');
     el('state').innerHTML = marketOptions(wantState);
     refreshRoles();
