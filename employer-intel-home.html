@@ -149,12 +149,22 @@ footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;text-align:center;f
 footer a{color:var(--t3);text-decoration:none;}
 
 /* Tabs: Explore (the national picture, for everyone) and Your markets (what they follow). */
-.tabs{display:flex;gap:4px;border-bottom:0.5px solid var(--bdr);margin-bottom:1.3rem;flex-wrap:wrap;}
-.tab{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--t3);font-size:14px;font-weight:600;
-padding:10px 14px;cursor:pointer;font-family:var(--font-sans);margin-bottom:-1px;text-align:left;}
-.tab:hover{color:var(--t2);}
-.tab[aria-selected="true"]{color:var(--t1);border-bottom-color:var(--blu);}
-.tab small{display:block;font-size:11px;font-weight:400;color:var(--t3);margin-top:1px;}
+/* Explore and Your markets as two large buttons, green when selected - the same treatment as
+   the role page's views, so it is obvious there are two sides to this page. */
+.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:1.4rem;max-width:760px;}
+.tab{display:flex;align-items:center;gap:12px;text-align:left;background:var(--card);border:1px solid var(--bdr2);
+border-radius:14px;padding:14px 16px;cursor:pointer;color:var(--t2);font-family:var(--font-sans);
+transition:border-color .12s,background .12s,transform .08s;}
+.tab:hover{border-color:rgba(34,224,154,.5);color:var(--t1);transform:translateY(-1px);}
+.tab .ic{flex:none;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;
+background:rgba(255,255,255,.06);color:var(--t2);}
+.tab b{display:block;font-size:15px;font-weight:700;color:var(--t1);letter-spacing:-.01em;}
+.tab small{display:block;font-size:12px;font-weight:400;color:var(--t3);margin-top:2px;line-height:1.35;}
+.tab[aria-selected="true"]{background:rgba(34,224,154,.1);border-color:#22E09A;box-shadow:0 0 0 1px #22E09A inset;}
+.tab[aria-selected="true"] .ic{background:#22E09A;color:#052e1e;}
+.tab[aria-selected="true"] small{color:var(--t2);}
+@media (max-width:640px){.tabs{gap:8px;}.tab{padding:11px 12px;gap:10px;}.tab .ic{width:34px;height:34px;font-size:17px;}
+  .tab small{display:none;}}
 .pane[hidden]{display:none;}
 .panehead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:1rem;}
 .panehead p{font-size:13.5px;color:var(--t2);} .panehead p b{color:var(--t1);}
@@ -985,8 +995,8 @@ function start(){
   el('acts').innerHTML = '<a class="btn blu" href="employer-intel-report.html"><i class="ti ti-file-text"></i>Market report</a>';
   el('content').innerHTML = `
     <div class="tabs" role="tablist">
-      <button class="tab" data-pane="explore" role="tab">Explore<small>the national picture, then a sector, state or role</small></button>
-      <button class="tab" data-pane="mine" role="tab">Your markets<small>the roles and markets you follow</small></button>
+      <button class="tab" data-pane="explore" role="tab"><span class="ic"><i class="ti ti-world"></i></span><span><b>Explore</b><small>the national picture, then a sector, state or role</small></span></button>
+      <button class="tab" data-pane="mine" role="tab"><span class="ic"><i class="ti ti-eye"></i></span><span><b>Your markets</b><small>the roles and markets you follow</small></span></button>
     </div>
     <div class="pane" data-pane="explore" id="explore"></div>
     <div class="pane" data-pane="mine" id="mine" hidden></div>`;

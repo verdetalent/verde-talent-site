@@ -210,7 +210,10 @@ table.data{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px;
 table.data th,table.data td{padding:10px 13px;text-align:left;border-bottom:0.5px solid var(--bdr);}
 table.data thead th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);background:var(--card);font-weight:600;}
 table.data tbody tr:last-child td{border-bottom:0;}
-table.data td.n{text-align:right;font-variant-numeric:tabular-nums;}
+/* Number columns centred, heading and figures alike: a left heading over right-aligned
+   figures read as misaligned. */
+table.data th.n,table.data td.n{text-align:center;}
+table.data td.n{font-variant-numeric:tabular-nums;}
 table.data th.c,table.data td.c{text-align:center;}
 table.data a{color:var(--grn);text-decoration:none;}
 table.data a:hover{text-decoration:underline;}
