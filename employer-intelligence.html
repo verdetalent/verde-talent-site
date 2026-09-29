@@ -131,6 +131,13 @@ background:rgba(255,255,255,.06);color:var(--t2);}
 .tab[aria-selected="true"] small{color:var(--t2);}
 @media (max-width:640px){.tabs{grid-template-columns:1fr;gap:8px;}.tab{padding:11px 13px;}.tab .ic{width:34px;height:34px;font-size:17px;}}
 .pane[hidden]{display:none;}
+/* This month: what moved in the last 30 days (build_intel_monthly.py). */
+.mline{display:grid;grid-template-columns:118px 1fr;gap:12px;align-items:baseline;padding:8px 0;border-bottom:0.5px solid var(--bdr);font-size:13.5px;line-height:1.5;}
+.mline:last-child{border-bottom:0;}
+.mk{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);}
+.mk.up{color:var(--grn);} .mk.dn{color:var(--cor);} .mk.new{color:var(--blu);} .mk.warn{color:var(--amb);}
+.mline .sub{display:block;font-size:12px;color:var(--t3);}
+.mempty{font-size:13px;color:var(--t3);padding:.4rem 0;}
 .btn-dl{background:#4FB3FF;color:#04202f;border:0;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;
 cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);white-space:nowrap;}
 .btn-dl[hidden]{display:none;}
@@ -348,6 +355,55 @@ function showLocked(){
 }
 
 
+
+// ---- This month ---------------------------------------------------------------------
+const esc = v => VTIntel.esc(v);
+const SECTOR_WORD_M = { Solar: 'solar', Wind: 'wind', Storage: 'storage', Grid: 'grid' };
+const gwM = v => v >= 1000 ? (v / 1000).toFixed(1) + ' GW' : Math.round(v) + ' MW';
+
+function monthPanel(roleKey, stateKey){
+  const M = D.monthly;
+  if (!M || stateKey === 'US') return '';
+  const r = (M.roles || {})[roleKey + '|' + stateKey] || {};
+  const sec = sectorOf(roleKey, stateKey);
+  const mv = sec ? ((M.moves || {})[stateKey] || {})[sec] : null;
+  const word = SECTOR_WORD_M[sec] || '';
+  const lines = [];
+  if (r.top) lines.push(['', 'Top offer', `<b>${money(r.top[1])}</b> from ${esc(r.top[0])}
+    <span class="sub">${esc(r.top[2])}${r.top[3] ? ' &middot; ' + esc(r.top[3]) : ''}</span>`]);
+  (r.pay_moves || []).slice(0, 3).forEach(([c, a, b, pct]) => lines.push([pct > 0 ? 'up' : 'dn', pct > 0 ? 'Raised pay' : 'Cut pay',
+    `<b>${esc(c)}</b> ${money(a)} &rarr; ${money(b)} <span class="chip ${pct > 0 ? 'up' : 'dn'}">${pct > 0 ? '+' : ''}${pct}%</span>`]));
+  if (mv){
+    (mv.up || []).forEach(([c, now, then]) => lines.push(['up', 'Hiring more', `<b>${esc(c)}</b> has ${now} open ${word} roles here, up from ${then} four weeks ago`]));
+    (mv.down || []).forEach(([c, now, then]) => lines.push(['dn', 'Cutting back', `<b>${esc(c)}</b> has ${now} open ${word} roles here, down from ${then} four weeks ago`]));
+    (mv.new || []).forEach(([c, n, role]) => lines.push(['new', 'New here', `<b>${esc(c)}</b> started hiring here: ${n} open${role ? `, mostly ${esc(D.titles[role] || role)}` : ''}`]));
+    (mv.quiet || []).forEach(([c]) => lines.push(['warn', 'Gone quiet', `<b>${esc(c)}</b> has posted nothing new here in six weeks`]));
+  }
+  const slow = r.struggling || [];
+  const body = lines.length ? lines.map(([cls, k, t]) => `<div class="mline"><span class="mk ${cls}">${k}</span><span>${t}</span></div>`).join('')
+    : '<p class="mempty">No moves worth flagging in the last 30 days.</p>';
+  return `<div class="grid" style="grid-template-columns:1fr;"><div class="panel">
+    <h2>This month<em>last 30 days &middot; ${word ? word + ' employers in ' : ''}${esc(areaOf(stateKey).name)}</em></h2>
+    ${body}
+    ${slow.length ? `<h2 style="margin-top:1.2rem;">Struggling to fill<em>open over twice the usual ${r.typical ? r.typical + ' days' : 'time'}, or reposted</em></h2>
+      ${slow.map(([c, t, loc, days, reposts]) => `<div class="mline"><span class="mk warn">${days} days</span><span><b>${esc(c)}</b> &middot; ${esc(t)}
+        <span class="sub">${esc(loc)}${reposts ? ` &middot; reposted ${reposts} ${reposts === 1 ? 'time' : 'times'}` : ''}</span></span></div>`).join('')}` : ''}
+  </div></div>`;
+}
+
+function projectsPanel(stateKey){
+  const M = D.monthly;
+  const p = M && stateKey !== 'US' ? (M.projects || {})[stateKey] : null;
+  if (!p || (!p.new.length && !p.delayed.length)) return '';
+  const ed = (M.eia_editions || [])[1] ? M.eia_editions[1].replace('_', ' ') : 'the latest edition';
+  const row = ([plant, entity, tech, mw, online, county, was]) => `<div class="mline"><span class="mk ${was ? 'warn' : 'new'}">${gwM(mw)}</span>
+    <span><b>${esc(plant)}</b> &middot; ${esc(tech)}<span class="sub">${esc(entity)}${county ? ` &middot; ${esc(county)} County` : ''} &middot;
+    ${was ? `now ${esc(online)}, was ${esc(was)}` : `due ${esc(online)}`}</span></span></div>`;
+  return `<div class="grid"><div class="panel"><h2>New to the pipeline<em>added in the ${esc(ed)} EIA-860M</em></h2>
+      ${p.new.length ? p.new.slice(0, 6).map(row).join('') : '<p class="mempty">No new projects this edition.</p>'}</div>
+    <div class="panel"><h2>Delayed<em>online date pushed back</em></h2>
+      ${p.delayed.length ? p.delayed.slice(0, 6).map(row).join('') : '<p class="mempty">No delays this edition.</p>'}</div></div>`;
+}
 
 function pipelinePanel(area){
   // EIA-860M, already ingested and previously reduced to a single state MW total. The
@@ -745,6 +801,7 @@ function render(){
 
   <div class="pane" data-pane="rivals" hidden>
   <h2 class="pane-title">Who you are against</h2>
+  ${monthPanel(roleKey, stateKey)}
   <div class="grid">
     ${!c.emp.length ? '' : `<div class="panel">
       <h2>Who you are bidding against<em>pay vs this market &middot; trend is national</em></h2>
@@ -783,6 +840,7 @@ function render(){
       ${labourPanel(area, c)}
     </div>
     ${stateKey === 'US' ? '' : `<div class="grid" style="grid-template-columns:1fr;">${pipelinePanel(area)}</div>`}
+    ${projectsPanel(stateKey)}
     ${stateKey === 'US' ? '' : `<div class="grid" style="grid-template-columns:1fr;">${trainingPanel(area)}</div>`}
     ${stateKey === 'US' ? '' : `<div class="grid" style="grid-template-columns:1fr;">${migrationPanel(area)}</div>`}
   </div>`;

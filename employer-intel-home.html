@@ -99,6 +99,15 @@ td .where{font-size:12px;color:var(--t3);margin-top:2px;}
 .muted{color:var(--t3);}
 
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;}
+/* This month in your markets (build_intel_monthly.py). */
+.mline{display:grid;grid-template-columns:104px 1fr;gap:10px;align-items:baseline;padding:7px 0;border-bottom:0.5px solid var(--bdr);font-size:13px;line-height:1.5;}
+.mline:last-child{border-bottom:0;}
+.mk{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);}
+.mk.up{color:var(--grn);} .mk.dn{color:var(--cor);} .mk.new{color:var(--blu);} .mk.warn{color:var(--amb);}
+.mline .sub{display:block;font-size:11.5px;color:var(--t3);}
+.mempty{font-size:12.5px;color:var(--t3);padding:.3rem 0;}
+.panel h3{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin:0 0 .5rem;}
+.news a{color:var(--t1);text-decoration:none;} .news a:hover{color:var(--blu);}
 .erow{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:8px 0;
 border-bottom:0.5px solid var(--bdr);font-size:13.5px;}
 .erow:last-child{border-bottom:0;}
@@ -401,6 +410,62 @@ function findings(rows){
   return { takeaways, flags };
 }
 
+// ---------------------------------------------------------------- this month ----------
+// What moved in the last 30 days across the states, sectors and roles an account follows.
+// The same insights feed the role pages, the market report and the monthly email.
+function monthSection(rows, states, sectors){
+  const M = D.monthly;
+  if (!M) return '';
+  const esc = VTIntel.esc, word = { Solar: 'solar', Wind: 'wind', Storage: 'storage', Grid: 'grid' };
+  const line = (cls, k, t) => `<div class="mline"><span class="mk ${cls}">${k}</span><span>${t}</span></div>`;
+  const moves = [];
+  states.forEach(st => sectors.forEach(sec => {
+    const mv = ((M.moves || {})[st] || {})[sec];
+    if (!mv) return;
+    const where = `${word[sec]} in ${D.states[st].name}`;
+    (mv.up || []).forEach(([c, now, then]) => moves.push([now - then, line('up', 'Hiring more', `<b>${esc(c)}</b> &middot; ${then} &rarr; ${now} open<span class="sub">${where}</span>`)]));
+    (mv.down || []).forEach(([c, now, then]) => moves.push([then - now, line('dn', 'Cutting back', `<b>${esc(c)}</b> &middot; ${then} &rarr; ${now} open<span class="sub">${where}</span>`)]));
+    (mv.new || []).forEach(([c, n]) => moves.push([n + 5, line('new', 'New here', `<b>${esc(c)}</b> &middot; ${n} open<span class="sub">${where}</span>`)]));
+    (mv.quiet || []).forEach(([c]) => moves.push([1, line('warn', 'Gone quiet', `<b>${esc(c)}</b> &middot; nothing new in six weeks<span class="sub">${where}</span>`)]));
+  }));
+  const pay = [], slow = [];
+  rows.forEach(r => {
+    const x = (M.roles || {})[r.role + '|' + r.state];
+    if (!x) return;
+    const where = `${title(r.role)} &middot; ${D.states[r.state].name}`;
+    if (x.top) pay.push(line('', 'Top offer', `<b>${money(x.top[1])}</b> from ${esc(x.top[0])}<span class="sub">${where}</span>`));
+    (x.pay_moves || []).slice(0, 2).forEach(([c, a, b, pct]) => pay.push(line(pct > 0 ? 'up' : 'dn', pct > 0 ? 'Raised pay' : 'Cut pay',
+      `<b>${esc(c)}</b> ${money(a)} &rarr; ${money(b)}<span class="sub">${where}</span>`)));
+    (x.struggling || []).forEach(([c, t, loc, days, reposts]) => slow.push([days + reposts * 60, line('warn', days + ' days',
+      `<b>${esc(c)}</b> &middot; ${esc(t)}<span class="sub">${esc(loc)}${reposts ? ` &middot; reposted ${reposts}&times;` : ''} &middot; usually ${x.typical || '?'} days</span>`)]));
+  });
+  const proj = [];
+  states.forEach(st => {
+    const p = (M.projects || {})[st];
+    if (!p) return;
+    p.new.slice(0, 3).forEach(([plant, entity, tech, mw, online]) => proj.push(line('new', 'New', `<b>${esc(plant)}</b> &middot; ${esc(tech)}, ${gw(mw)}<span class="sub">${D.states[st].name} &middot; ${esc(entity)} &middot; due ${esc(online)}</span>`)));
+    p.delayed.slice(0, 2).forEach(([plant, entity, tech, mw, online, county, was]) => proj.push(line('warn', 'Delayed', `<b>${esc(plant)}</b> &middot; ${esc(tech)}, ${gw(mw)}<span class="sub">${D.states[st].name} &middot; now ${esc(online)}, was ${esc(was)}</span>`)));
+  });
+  // WARN layoff notices in their states: energy first, then plants, construction and the
+  // like - people with the skills to move into this work. Collected weekly, separately.
+  const laid = [];
+  states.forEach(st => ((M.layoffs || {})[st] || []).forEach(([co, city, n, when, kind]) => laid.push([kind === 'energy' || kind === true ? 1e6 + (n || 0) : (n || 0),
+    line(kind === 'energy' || kind === true ? 'new' : '', n ? n.toLocaleString() + ' jobs' : 'Layoff', `<b>${esc(co)}</b><span class="sub">${esc(city)}${city ? ', ' : ''}${D.states[st].name} &middot; notice ${esc(when)}</span>`)])));
+  const news = sectors.flatMap(sec => ((M.news || {})[sec] || []).slice(0, 2)).slice(0, 5);
+  const box = (h, items, empty) => `<div class="panel"><h3>${h}</h3>${items.length ? items.join('') : `<p class="mempty">${empty}</p>`}</div>`;
+  return `<div class="section-title"><span>This month in your markets</span><em>last 30 days</em></div>
+  <div class="two">
+    ${box('Competitor moves', moves.sort((a, b) => b[0] - a[0]).slice(0, 6).map(x => x[1]), 'No big moves by employers in your markets.')}
+    ${box('Pay watch', pay.slice(0, 6), 'No advertised pay in your roles this month.')}
+    ${box('Struggling to fill', slow.sort((a, b) => b[0] - a[0]).slice(0, 5).map(x => x[1]), 'No searches in your roles are dragging.')}
+    ${box('New and delayed projects', proj.slice(0, 6), 'No pipeline changes in your states this edition.')}
+    ${box('Layoffs near you', laid.sort((a, b) => b[0] - a[0]).slice(0, 6).map(x => x[1]),
+      M.layoffs_collected ? 'No layoff notices in energy or the trades in your states lately.' : 'Layoff notices are collected weekly and will show here.')}
+  </div>
+  ${news.length ? `<div class="panel news" style="margin-top:12px;"><h3>In the news for your sectors</h3>${news.map(([t, url, src, when]) =>
+    `<div class="mline"><span class="mk">${esc(when).slice(5)}</span><span><a href="${VTIntel.safeUrl(url)}" target="_blank" rel="noopener">${esc(t)}</a>${src ? `<span class="sub">${esc(src)}</span>` : ''}</span></div>`).join('')}</div>` : ''}`;
+}
+
 // ---------------------------------------------------------------- dashboard ------------
 function renderDashboard(rows){
   const m = mode();
@@ -434,6 +499,9 @@ function renderDashboard(rows){
   ${takeaways.length ? `<div class="section-title"><span>Key takeaways</span><em>from this morning's data</em></div>
   <div class="takeaways">${takeaways.map(f => `<div class="take ${f.tone}"><span class="k">${f.kind}</span><b>${f.figure}</b>
     <p>${f.text}</p><a href="${link(f.r.role, f.r.state)}">Open ${title(f.r.role)} &middot; ${D.states[f.r.state].name} &rarr;</a></div>`).join('')}</div>` : ''}
+
+  ${monthSection(rows, [...new Set([...states, ...FOLLOWS.markets.filter(k => D.states[k])])],
+      [...new Set([...FOLLOWS.sectors, ...rows.map(r => sectorOfRole(r.role, r.state)).filter(Boolean)])])}
 
   <div class="section-title"><span>Roles and markets you follow</span><em>click any row for the full picture</em></div>
   <div class="panel" style="padding:.4rem 1.1rem;"><table>
@@ -1047,7 +1115,8 @@ function renderMine(){
       <p>Your market report is built around these. Add the roles you hire and each one is tracked here as well: pay against
         the market, who else is hiring and how long searches take.</p>
       <a class="btn blu" href="employer-intel-report.html">Open my market report</a>
-      <button class="btn ghost" id="pickNow" style="margin-left:6px;">Add roles</button></div>`;
+      <button class="btn ghost" id="pickNow" style="margin-left:6px;">Add roles</button></div>
+      ${monthSection([], FOLLOWS.markets.filter(k => D.states[k]), FOLLOWS.sectors.length ? FOLLOWS.sectors : SETUP_SECTORS.map(([k]) => k))}`;
     el('pickNow').onclick = () => renderSetup(null);
     return;
   }

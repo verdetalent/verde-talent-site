@@ -229,5 +229,11 @@
     a.setAttribute('href', href + (href.includes('?') ? '&' : '?') + 'sample=' + encodeURIComponent(SAMPLE));
   }, true);
 
-  window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, follows, signIn, signOut, checkout, portal, SignInNeeded };
+  // Scraped text (job titles, locations, news headlines) goes through esc() before it is put
+  // into a page, and links through safeUrl(), which only lets http(s) through.
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g,
+    c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeUrl = v => /^https?:\/\//i.test(String(v || '')) ? esc(v) : '#';
+
+  window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, follows, signIn, signOut, checkout, portal, SignInNeeded, esc, safeUrl };
 })();
