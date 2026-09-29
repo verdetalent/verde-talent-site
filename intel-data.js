@@ -173,6 +173,48 @@
     if (data && data.url) location.href = data.url;
   }
 
+  // Sectors and markets followed on their own (intel_follows, migration 007): lets an
+  // account with no postings and no roles picked yet say "Storage, in Texas" and get a report
+  // built around that. Returned as { sectors: [...], markets: [...] }.
+  const SAMPLE_FOLLOWS_KEY = 'vt_intel_follows';
+  const follows = {
+    async load() {
+      const empty = { sectors: [], markets: [] };
+      if (SAMPLE) {
+        if (SAMPLE === 'new') { try { localStorage.removeItem(SAMPLE_FOLLOWS_KEY); } catch {} return empty; }
+        try { return JSON.parse(localStorage.getItem(SAMPLE_FOLLOWS_KEY) || 'null') || empty; } catch { return empty; }
+      }
+      try {
+        const res = await rest('intel_follows?select=kind,key&order=created_at');
+        if (!res.ok) return empty;
+        const rows = await res.json();
+        return { sectors: rows.filter(r => r.kind === 'sector').map(r => r.key),
+                 markets: rows.filter(r => r.kind === 'market').map(r => r.key) };
+      } catch {
+        return empty;
+      }
+    },
+    async save(before, after) {
+      if (SAMPLE) { try { localStorage.setItem(SAMPLE_FOLLOWS_KEY, JSON.stringify(after)); } catch {} return; }
+      const s = session();
+      const flat = f => [...(f.sectors || []).map(k => 'sector|' + k), ...(f.markets || []).map(k => 'market|' + k)];
+      const had = new Set(flat(before || {})), has = new Set(flat(after));
+      const added = [...has].filter(x => !had.has(x)), removed = [...had].filter(x => !has.has(x));
+      try {
+        if (added.length) await rest('intel_follows?on_conflict=user_id,kind,key', {
+          method: 'POST', headers: { Prefer: 'resolution=ignore-duplicates' },
+          body: JSON.stringify(added.map(x => { const [kind, key] = x.split('|'); return { user_id: s.user_id, kind, key }; })),
+        });
+        for (const x of removed) {
+          const [kind, key] = x.split('|');
+          await rest(`intel_follows?kind=eq.${kind}&key=eq.${encodeURIComponent(key)}`, { method: 'DELETE' });
+        }
+      } catch (e) {
+        console.error('Could not save followed sectors and markets', e);
+      }
+    },
+  };
+
   function signOut() {
     localStorage.removeItem('vt_employer_session');
     location.href = 'employer-login.html';
@@ -187,5 +229,5 @@
     a.setAttribute('href', href + (href.includes('?') ? '&' : '?') + 'sample=' + encodeURIComponent(SAMPLE));
   }, true);
 
-  window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, signIn, signOut, checkout, portal, SignInNeeded };
+  window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, follows, signIn, signOut, checkout, portal, SignInNeeded };
 })();

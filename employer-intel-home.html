@@ -123,6 +123,13 @@ background:transparent;color:var(--t2);cursor:pointer;font-family:var(--font-san
 .pick[aria-pressed="true"]{background:rgba(79,179,255,.13);border-color:rgba(79,179,255,.55);color:var(--blu);font-weight:600;}
 .setup .actions{display:flex;align-items:center;gap:14px;margin-top:1.8rem;flex-wrap:wrap;}
 .setup .count{font-size:12.5px;color:var(--t3);}
+.setup .step em{font-style:normal;text-transform:none;letter-spacing:0;color:var(--t3);font-size:11.5px;margin-left:6px;}
+.setup .group{font-size:12px;color:var(--t2);margin:.9rem 0 .45rem;font-weight:600;}
+.setup .group i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:7px;}
+.setup .hint{font-size:13px;color:var(--t3);}
+/* Sector picks carry their sector colour, as on the role page. */
+.pick.sec::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:8px;vertical-align:1px;}
+.pick.sec[aria-pressed="true"]{background:color-mix(in srgb, var(--c) 16%, transparent);border-color:var(--c);color:var(--c);}
 
 .lock{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:2.2rem;text-align:center;}
 .lock h2{font-size:20px;font-weight:700;margin-bottom:.6rem;}
@@ -301,6 +308,8 @@ let D = null;
 let MODE = 'data';
 let POSTINGS = [];
 let WATCH = null;
+// Sectors and markets followed on their own, without roles (intel_follows).
+let FOLLOWS = { sectors: [], markets: [] };
 const el = id => document.getElementById(id);
 const money = v => v == null ? '&mdash;' : '$' + Math.round(v).toLocaleString();
 const gw = v => v >= 1000 ? (v / 1000).toFixed(1) + ' GW' : Math.round(v) + ' MW';
@@ -412,7 +421,8 @@ function renderDashboard(rows){
 
   PANE.innerHTML = `
   <div class="panehead"><p>Following <b>${roles.length}</b> ${plural(roles.length, 'role', 'roles')} across
-    <b>${states.length}</b> ${plural(states.length, 'market', 'markets')}.</p>
+    <b>${states.length}</b> ${plural(states.length, 'market', 'markets')}${FOLLOWS.sectors.length
+      ? `, in ${SETUP_SECTORS.filter(([k]) => FOLLOWS.sectors.includes(k)).map(([, l]) => l).join(', ')}` : ''}.</p>
     <button class="btn ghost" id="editWatch">Edit what you follow</button></div>
   <div class="pulse">
     <div><b>${open.toLocaleString()}</b><span>open roles in your markets</span></div>
@@ -522,46 +532,97 @@ function postingsSection(posts){
 // ---------------------------------------------------------------- setup ----------------
 // Two questions for everyone. An account that posts with us gets its posted roles and
 // markets ticked already; it can untick them.
+// Setup, in three steps: sectors, then the roles those sectors hire, then markets. Roles are
+// optional - a company that knows it is "storage, in Texas" but not yet which roles to name
+// can follow just that, and the market report is built around it.
+const SETUP_SECTORS = [['Solar', 'Solar', '#F5B041'], ['Wind', 'Wind', '#4FB3FF'],
+  ['Storage', 'Storage', '#B79CFF'], ['Grid', 'Grid & Utilities', '#FF6B6B']];
+
+// The sector a role mostly belongs to in a state, else nationally (the role page's rule).
+function sectorOfRole(role, stateKey){
+  let best = null, bestN = -1;
+  SETUP_SECTORS.forEach(([k]) => {
+    const x = (D.sectors || {})[k];
+    if (!x) return;
+    const nat = x.national.roles.find(r => r[0] === role);
+    if (!nat) return;
+    const loc = (((x.states || {})[stateKey] || { roles: [] }).roles.find(r => r[0] === role) || [0, 0])[1];
+    const n = loc * 100000 + nat[1];
+    if (n > bestN){ best = k; bestN = n; }
+  });
+  return best;
+}
+
 function renderSetup(existing){
   const pre = existing && existing.length ? existing
     : (mode() === 'postings' ? POSTINGS.map(p => ({ role: p.role, state: p.state })) : []);
-  const roles = Object.entries(D.national).sort((a, b) => b[1].open - a[1].open).slice(0, 18).map(([r]) => r);
-  pre.forEach(r => { if (!roles.includes(r.role)) roles.push(r.role); });
+  const picked = {
+    sectors: new Set(FOLLOWS.sectors),
+    roles: new Set(pre.map(r => r.role)),
+    markets: new Set([...pre.map(r => r.state), ...FOLLOWS.markets].filter(k => D.states[k])),
+  };
+  if (!picked.sectors.size) pre.forEach(r => { const k = sectorOfRole(r.role, r.state); if (k) picked.sectors.add(k); });
   const markets = Object.entries(D.states).map(([k, v]) => [k, v.name, Object.values(v.roles).reduce((n, c) => n + c.open, 0)])
     .sort((a, b) => b[2] - a[2]).slice(0, 16);
-  pre.forEach(r => { if (!markets.some(mk => mk[0] === r.state) && D.states[r.state]) markets.push([r.state, D.states[r.state].name, 0]); });
-  const picked = { roles: new Set(pre.map(r => r.role)), markets: new Set(pre.map(r => r.state)) };
+  picked.markets.forEach(k => { if (!markets.some(mk => mk[0] === k)) markets.push([k, D.states[k].name, 0]); });
 
-  PANE.innerHTML = `<div class="setup">
-    <h2>Which roles and markets do you want to follow?</h2>
-    <p class="lead">They will be tracked here: pay, who is hiring, how long roles stay open and what stands out.
-      Change them any time; everything else stays open to explore.</p>
-    <div class="step">Roles</div>
-    <div class="picks">${roles.map(r => `<button class="pick" type="button" data-kind="roles" data-value="${r}"
-      aria-pressed="${picked.roles.has(r)}">${title(r)}</button>`).join('')}</div>
-    <div class="step">Markets</div>
-    <div class="picks">${markets.map(([k, name]) => `<button class="pick" type="button" data-kind="markets" data-value="${k}"
-      aria-pressed="${picked.markets.has(k)}">${name}</button>`).join('')}</div>
-    <div class="actions"><button class="btn blu" id="setupDone">Save</button><span class="count" id="setupCount"></span></div>
-  </div>`;
-  const count = () => {
-    const ready = picked.roles.size && picked.markets.size;
-    el('setupDone').disabled = !ready;
-    el('setupCount').textContent = ready ? `${picked.roles.size} ${plural(picked.roles.size, 'role', 'roles')} in
-      ${picked.markets.size} ${plural(picked.markets.size, 'market', 'markets')}` : 'Pick at least one of each.';
+  const pickBtn = (kind, value, label, extra = '') =>
+    `<button class="pick ${extra}" type="button" data-kind="${kind}" data-value="${value}" aria-pressed="${picked[kind].has(value)}">${label}</button>`;
+
+  const draw = () => {
+    const chosen = SETUP_SECTORS.filter(([k]) => picked.sectors.has(k));
+    const listed = new Set();
+    const groups = chosen.map(([k, label, colour]) => {
+      const roles = D.sectors[k].national.roles.filter(([r]) => D.national[r]).slice(0, 14).map(([r]) => r);
+      roles.forEach(r => listed.add(r));
+      return `<div class="group" style="--c:${colour}"><i></i>${label}</div>
+        <div class="picks">${roles.map(r => pickBtn('roles', r, title(r))).join('')}</div>`;
+    });
+    const extra = [...picked.roles].filter(r => !listed.has(r));
+    if (extra.length) groups.push(`<div class="group" style="--c:#888"><i></i>Also following</div>
+      <div class="picks">${extra.map(r => pickBtn('roles', r, title(r))).join('')}</div>`);
+
+    PANE.innerHTML = `<div class="setup">
+      <h2>What do you want to follow?</h2>
+      <p class="lead">Your sectors and markets shape your market report. Add the roles you hire and each one is tracked here
+        too: pay against the market, who else is hiring and how long searches take. Change any of it later.</p>
+      <div class="step">1 &middot; Your sectors</div>
+      <div class="picks">${SETUP_SECTORS.map(([k, label, colour]) =>
+        pickBtn('sectors', k, label, 'sec" style="--c:' + colour)).join('')}</div>
+      <div class="step">2 &middot; Roles you hire<em>optional</em></div>
+      ${groups.length ? groups.join('') : '<p class="hint">Pick a sector above to see the roles it hires.</p>'}
+      <div class="step">3 &middot; Markets</div>
+      <div class="picks">${markets.map(([k, name]) => pickBtn('markets', k, name)).join('')}</div>
+      <div class="actions"><button class="btn blu" id="setupDone">Save</button><span class="count" id="setupCount"></span></div>
+    </div>`;
+
+    const count = () => {
+      const ready = picked.markets.size && (picked.sectors.size || picked.roles.size);
+      el('setupDone').disabled = !ready;
+      const bits = [];
+      if (picked.sectors.size) bits.push(`${picked.sectors.size} ${plural(picked.sectors.size, 'sector', 'sectors')}`);
+      if (picked.roles.size) bits.push(`${picked.roles.size} ${plural(picked.roles.size, 'role', 'roles')}`);
+      if (picked.markets.size) bits.push(`${picked.markets.size} ${plural(picked.markets.size, 'market', 'markets')}`);
+      el('setupCount').textContent = ready ? bits.join(' · ') : 'Pick a sector or a role, and at least one market.';
+    };
+    PANE.querySelectorAll('.pick').forEach(b => b.onclick = () => {
+      const set = picked[b.dataset.kind], on = b.getAttribute('aria-pressed') === 'true';
+      on ? set.delete(b.dataset.value) : set.add(b.dataset.value);
+      if (b.dataset.kind === 'sectors') return draw();      // roles list follows the sectors
+      b.setAttribute('aria-pressed', String(!on)); count();
+    });
+    count();
+    el('setupDone').onclick = () => {
+      const rows = [];
+      picked.roles.forEach(role => picked.markets.forEach(state => { if (cellOf(role, state)) rows.push({ role, state }); }));
+      saveWatch(rows);
+      const before = FOLLOWS;
+      FOLLOWS = { sectors: [...picked.sectors], markets: [...picked.markets] };
+      VTIntel.follows.save(before, FOLLOWS);
+      renderMine();
+    };
   };
-  PANE.querySelectorAll('.pick').forEach(b => b.onclick = () => {
-    const set = picked[b.dataset.kind], on = b.getAttribute('aria-pressed') === 'true';
-    on ? set.delete(b.dataset.value) : set.add(b.dataset.value);
-    b.setAttribute('aria-pressed', String(!on)); count();
-  });
-  count();
-  el('setupDone').onclick = () => {
-    const rows = [];
-    picked.roles.forEach(role => picked.markets.forEach(state => { if (cellOf(role, state)) rows.push({ role, state }); }));
-    saveWatch(rows);
-    renderMine();
-  };
+  draw();
 }
 
 // Not subscribed: pick monthly or yearly and go to Stripe Checkout. Access switches on when
@@ -978,6 +1039,18 @@ function renderStatePanel(k){
 function renderMine(){
   PANE = el('mine');
   const rows = watchlist();
+  // Sectors and markets but no roles yet: say what is followed, point at the report.
+  if (!rows.length && (FOLLOWS.sectors.length || FOLLOWS.markets.length)){
+    const secs = SETUP_SECTORS.filter(([k]) => FOLLOWS.sectors.includes(k)).map(([, l]) => l);
+    const mkts = FOLLOWS.markets.filter(k => D.states[k]).map(k => D.states[k].name);
+    PANE.innerHTML = `<div class="empty"><h2>Following ${secs.length ? secs.join(', ') : 'clean energy'}${mkts.length ? ` in ${mkts.join(', ')}` : ''}</h2>
+      <p>Your market report is built around these. Add the roles you hire and each one is tracked here as well: pay against
+        the market, who else is hiring and how long searches take.</p>
+      <a class="btn blu" href="employer-intel-report.html">Open my market report</a>
+      <button class="btn ghost" id="pickNow" style="margin-left:6px;">Add roles</button></div>`;
+    el('pickNow').onclick = () => renderSetup(null);
+    return;
+  }
   if (!rows.length){
     PANE.innerHTML = `<div class="empty"><h2>You are not following anything yet</h2>
       <p>Follow the roles and markets you care about and they are tracked here: pay against the market, who is
@@ -1038,6 +1111,7 @@ if (VTIntel.SAMPLE){
   D = got.data;
   POSTINGS = (await VTIntel.myPostings()).filter(p => D.states[p.state] && cellOf(p.role, p.state));
   WATCH = await VTIntel.watch.load();
+  FOLLOWS = await VTIntel.follows.load();
   MODE = VTIntel.SAMPLE && VTIntel.SAMPLE !== 'postings' ? VTIntel.SAMPLE : (POSTINGS.length ? 'postings' : 'data');
   start();
 })().catch(err => {

@@ -131,6 +131,29 @@ background:rgba(255,255,255,.06);color:var(--t2);}
 .tab[aria-selected="true"] small{color:var(--t2);}
 @media (max-width:640px){.tabs{grid-template-columns:1fr;gap:8px;}.tab{padding:11px 13px;}.tab .ic{width:34px;height:34px;font-size:17px;}}
 .pane[hidden]{display:none;}
+.btn-dl{background:#4FB3FF;color:#04202f;border:0;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;
+cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);white-space:nowrap;}
+.btn-dl[hidden]{display:none;}
+.print-only,.pane-title{display:none;}
+
+/* ---- Download PDF: this role and market as one white document, all three views in order. ---- */
+@page{size:letter;margin:13mm 12mm;}
+@media print{
+  :root{--blk:#fff;--card:#fff;--card2:#F4F6F5;--bdr:#DADFDC;--bdr2:#C9CFCB;--t1:#111;--t2:#333;--t3:#6B716E;
+    --grn:#0E8A5F;--blu:#1D6FB8;--amb:#A35F00;--cor:#B2381F;--track:#E8ECEA;}
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .nav,.sections,.picker,.rolepick,.tabs,.btn-dl,footer{display:none !important;}
+  .wrap{max-width:none;padding:0;}
+  .print-only{display:flex;}
+  .brand{justify-content:space-between;align-items:center;border-bottom:2px solid #0E8A5F;padding-bottom:6px;margin-bottom:14px;
+    font-size:11px;color:#6B716E;}
+  .brand b{color:#0E8A5F;font-size:12px;letter-spacing:.02em;}
+  .pane[hidden]{display:block !important;}
+  .pane-title{display:block;font-size:17px;font-weight:700;color:#111;margin:0 0 10px;padding-top:4px;border-top:1px solid #DADFDC;}
+  .pane + .pane{break-before:page;}
+  .panel{border:1px solid #DADFDC;break-inside:avoid;}
+  .grid{break-inside:auto;}
+}
 .qrow{display:grid;grid-template-columns:1fr 92px 62px 78px;gap:10px;align-items:center;
 padding:8px 0;border-bottom:0.5px solid var(--bdr);font-size:13.5px;}
 .qrow:last-child{border-bottom:0;}
@@ -253,11 +276,13 @@ footer a{color:var(--t3);text-decoration:none;}
     <a class="section" href="employer-intel-home.html?tab=mine"><span class="ic"><i class="ti ti-eye"></i></span><span><b>Your markets</b><small>what you follow</small></span></a>
   </nav>
 
+  <div class="brand print-only"><b>VERDE TALENT &middot; INTELLIGENCE &middot; ROLE DEEP DIVE</b><span id="printDate"></span></div>
   <div class="hero">
     <div>
       <h1 id="title">Intelligence</h1>
       <p id="lede"></p>
     </div>
+    <button class="btn-dl" type="button" id="pdfBtn" hidden><i class="ti ti-download"></i>Download PDF</button>
   </div>
 
   <div class="picker" id="picker" style="display:none;">
@@ -672,6 +697,7 @@ function render(){
   </div>
 
   <div class="pane" data-pane="pay">
+  <h2 class="pane-title">What it costs</h2>
   <div class="grid">
     <div class="panel">
       <h2>What you would have to pay${pay ? `<em>${pay[4]} postings from ${pay[3]} employers${
@@ -712,6 +738,7 @@ function render(){
   </div>
 
   <div class="pane" data-pane="rivals" hidden>
+  <h2 class="pane-title">Who you are against</h2>
   <div class="grid">
     ${!c.emp.length ? '' : `<div class="panel">
       <h2>Who you are bidding against<em>pay vs this market &middot; trend is national</em></h2>
@@ -744,6 +771,7 @@ function render(){
   </div>
 
   <div class="pane" data-pane="place" hidden>
+  <h2 class="pane-title">The place</h2>
     <div class="grid">
       ${industryPanel(area)}
       ${labourPanel(area, c)}
@@ -844,6 +872,10 @@ function refreshRoles(){
 }
 
 el('signOutLink').addEventListener('click', e => { e.preventDefault(); VTIntel.signOut(); });
+el('pdfBtn').addEventListener('click', () => {
+  el('printDate').textContent = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+  window.print();
+});
 
 function marketOptions(selected){
     const states = Object.entries(D.states).sort((a, b) => a[1].name.localeCompare(b[1].name));
@@ -874,6 +906,7 @@ function marketOptions(selected){
     el('state').addEventListener('change', () => { refreshRoles(); render(); renderRolePick(); });
     render();
     renderRolePick();
+    el('pdfBtn').hidden = false;
   }
 })().catch(err => {
   console.error(err);
