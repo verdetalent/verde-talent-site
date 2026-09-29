@@ -4,7 +4,7 @@
 //
 // Triggered by Supabase Cron every Tuesday; it only sends in the second week of the month
 // (days 8-14), so it lands on the second Tuesday, after that month's government releases.
-// "Verify JWT" stays ON: the cron job calls it with the service-role key, and a browser can't.
+// "Verify JWT" stays ON, and the handler also refuses anything but the service role (the anon key is a JWT too).
 //
 // Body (all optional):
 //   { "preview": true, "as_email": "subscriber@x.com" }  returns that subscriber's email as HTML
@@ -325,7 +325,18 @@ ${news.length ? `<tr><td style="padding:22px 28px 2px;"><div style="font-size:11
 }
 
 // --------------------------------------------------------------------------------- run -----
+// The gateway has already verified the JWT's signature, but the public anon key is a valid JWT
+// too. Only the service role (the cron job, or us) may send or preview.
+function isServiceRole(req: Request): boolean {
+  try {
+    const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
+    const part = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+    return JSON.parse(atob(part.padEnd(part.length + (4 - part.length % 4) % 4, "="))).role === "service_role";
+  } catch { return false; }
+}
+
 Deno.serve(async (req) => {
+  if (!isServiceRole(req)) return new Response(JSON.stringify({ error: "forbidden" }), { status: 403, headers: { "Content-Type": "application/json" } });
   try {
     const body = await req.json().catch(() => ({}));
     const testTo: string | undefined = body.test_email;
