@@ -214,12 +214,30 @@ function roleFlags(r){
   return out;
 }
 
-// Three market-level takeaways, across the states followed (or every state).
+// Three market-level takeaways. Across the states followed when there are several; with
+// one, that state against the national picture - comparing it with itself says nothing, and
+// comparing it with every state surfaced South Dakota to a Texas-only account.
 function marketTakeaways(states){
+  const out = [];
+  if (states.length === 1){
+    const k = states[0], st = D.states[k], p = st.pipe, u = st.unemp, mv = st.move;
+    if (p && p.mw.within_12mo){
+      const dev = (p.top_developers || [])[0];
+      out.push({ kind: 'Demand ahead', tone: 'good', figure: gw(p.mw.within_12mo),
+        text: `due online in ${st.name} within 12 months${dev ? `, led by ${dev.entity.trim()}` : ''}.` });
+    }
+    if (u) out.push({ kind: 'Labour market', tone: u.latest < D.unemp_median ? 'warn' : '', figure: pct(u.latest),
+      text: `unemployment in ${st.name}, against ${pct(D.unemp_median)} in the median state${u.latest < D.unemp_median
+        ? '. Tighter than most: expect to pay up or recruit from further away.' : ', so there is more slack than in most states.'}` });
+    if (mv) out.push({ kind: mv.net_households >= 0 ? 'People moving in' : 'People moving out', tone: mv.net_households >= 0 ? '' : 'warn',
+      figure: signed(mv.net_households),
+      text: mv.net_households >= 0 ? `more households moved into ${st.name} than left (${D.move_period}), so its labour pool is growing.`
+        : `more households left ${st.name} than arrived (${D.move_period}), so its labour pool is shrinking.` });
+    return out;
+  }
   const pool = states.length >= 2 ? states : Object.keys(D.states);
   const best = (get, dir = 1) => pool.map(k => [k, get(D.states[k])]).filter(([, v]) => v != null && !isNaN(v))
     .sort((a, b) => dir * (b[1] - a[1]))[0];
-  const out = [];
   const pipe = best(st => st.pipe && st.pipe.mw.within_12mo);
   if (pipe){
     const st = D.states[pipe[0]], dev = (st.pipe.top_developers || [])[0];
@@ -235,8 +253,6 @@ function marketTakeaways(states){
   return out;
 }
 
-// The sector a followed role belongs to: where it is hired most in that state, else
-// nationally - the same rule the role page uses. Roles outside every sector count for none.
 function sectorOf(role, stateKey){
   let best = null, bestN = -1;
   SECTORS.forEach(([k]) => {

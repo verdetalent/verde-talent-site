@@ -152,6 +152,10 @@ cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--
   .pane-title{display:block;font-size:17px;font-weight:700;color:#111;margin:0 0 10px;padding-top:4px;border-top:1px solid #DADFDC;}
   .pane + .pane{break-before:page;}
   .panel{border:1px solid #DADFDC;break-inside:avoid;}
+  .bandfill.ours{background:#9FCBEF;border:1px solid #1D6FB8;}
+  .bandfill.bls{background:#F2CB86;border:1px solid #A35F00;}
+  .bandtick.ours{background:#0B3D66;}
+  .bandtick.bls{background:#6B3E00;}
   .grid{break-inside:auto;}
 }
 .qrow{display:grid;grid-template-columns:1fr 92px 62px 78px;gap:10px;align-items:center;
@@ -170,8 +174,8 @@ text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
 .bandlab u{text-decoration:none;color:var(--t3);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .bandtrack{position:relative;height:20px;background:var(--track);border-radius:5px;}
 .bandfill{position:absolute;top:0;height:100%;border-radius:5px;}
-.bandfill.ours{background:rgba(79,179,255,.30);border:1px solid rgba(79,179,255,.85);}
-.bandfill.bls{background:rgba(255,181,71,.16);border:1px solid rgba(255,181,71,.6);}
+.bandfill.ours{background:rgba(79,179,255,.34);border:1px solid rgba(79,179,255,.9);}
+.bandfill.bls{background:rgba(255,181,71,.34);border:1px solid rgba(255,181,71,.9);}
 .bandtick{position:absolute;top:-3px;width:3px;height:26px;border-radius:2px;}
 .bandtick.ours{background:#fff;}
 .bandtick.bls{background:var(--amb);}
@@ -450,10 +454,10 @@ function industryPanel(area){
   const rows = area.industry;
   if (!rows || !rows.length) return '';
   return `<div class="panel">
-    <h2>How concentrated the industry is<em>QCEW &middot; 1.0 = national average</em></h2>
+    <h2>Industry concentration<em>QCEW &middot; 1.0 = national average</em></h2>
     <div class="qrow" style="border-bottom:0.5px solid var(--bdr);color:var(--t3);font-size:10.5px;
       letter-spacing:.06em;text-transform:uppercase;">
-      <div>Industry</div><u>Employment</u><em>Sites</em><em>Concentration</em></div>
+      <div>Industry</div><u>Employment</u><em>Sites</em><em title="Concentration against the national average: 2.0&times; is twice the national share">vs US</em></div>
     ${rows.map(r => `<div class="qrow">
       <div>${r.title}</div>
       <b>${r.employment.toLocaleString()}</b>
