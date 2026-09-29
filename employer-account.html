@@ -71,6 +71,9 @@ cursor:pointer;font-family:var(--font-sans);text-decoration:none;display:inline-
 .btn-line{background:transparent;color:var(--t1);border:0.5px solid var(--bdr2);padding:9px 15px;border-radius:9px;font-size:13px;
 font-weight:600;cursor:pointer;font-family:var(--font-sans);text-decoration:none;display:inline-block;}
 .btn-line:disabled{opacity:.6;cursor:default;}
+.mail-toggle{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--t1);margin-top:.8rem;cursor:pointer;}
+.mail-toggle input{width:17px;height:17px;accent-color:#22E09A;cursor:pointer;}
+.mail-toggle span{color:var(--t3);font-size:12.5px;}
 
 .batch-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:0.5px solid var(--bdr);font-size:13px;}
 .batch-row:last-child{border-bottom:none;}
@@ -136,6 +139,7 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="section-title">Intelligence</div>
   <div class="intel-card" id="intelCard"><span class="state-note">Loading…</span></div>
   <div class="state-note" id="intelNote"></div>
+  <div id="intelMail"></div>
 </div>
 <footer>&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></footer>
 <script>
@@ -190,7 +194,7 @@ async function loadIntel() {
   const card = document.getElementById('intelCard');
   let row = null;
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/intel_subscriptions?select=plan,status,current_period_end,billing_interval,cancel_at_period_end,stripe_customer_id`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/intel_subscriptions?select=plan,status,current_period_end,billing_interval,cancel_at_period_end,stripe_customer_id,monthly_email`, {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}` },
     });
     if (res.ok) row = (await res.json())[0] || null;
@@ -219,6 +223,28 @@ async function loadIntel() {
     acts = '<a class="btn-intel" href="employer-intel-home.html">Choose a plan</a>' + manage;
   }
   card.innerHTML = `<div><b>${title}</b><div class="sub">${sub}</div></div><div class="intel-acts">${acts}</div>`;
+  // The monthly market report email: on by default, one switch to turn it off or back on.
+  if (live) {
+    const on = row.monthly_email !== false;
+    document.getElementById('intelMail').innerHTML = `<label class="mail-toggle"><input type="checkbox" id="monthlyEmail" ${on ? 'checked' : ''}>
+      Email me the monthly market report <span>(second Tuesday of each month)</span></label>`;
+    document.getElementById('monthlyEmail').addEventListener('change', async e => {
+      const box = e.target;
+      box.disabled = true;
+      try {
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/set_intel_monthly_email`, {
+          method: 'POST',
+          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ wanted: box.checked }),
+        });
+        if (!r.ok) throw new Error();
+      } catch {
+        box.checked = !box.checked;
+        alert('Could not save that just now. Please try again.');
+      }
+      box.disabled = false;
+    });
+  }
 
   const btn = document.getElementById('manageBilling');
   if (btn) btn.addEventListener('click', async () => {

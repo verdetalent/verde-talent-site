@@ -1160,6 +1160,8 @@ function start(){
   try { tab = localStorage.getItem(TAB_KEY) || 'explore'; } catch {}
   const asked = new URLSearchParams(location.search).get('tab');
   if (asked === 'explore' || asked === 'mine') tab = asked;
+  // From the monthly email's "Set up your roles" button: straight into the setup.
+  if (new URLSearchParams(location.search).has('setup')) { showTab('mine'); renderSetup(watchlist().filter(r => !r.fromPosting)); return; }
   showTab(m === 'new' ? 'explore' : tab);
 }
 
