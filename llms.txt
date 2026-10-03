@@ -2,25 +2,31 @@
 
 > Verde Talent is a US job board dedicated to the clean energy industry: solar,
 > wind, battery storage, grid and utilities, EV infrastructure, hydrogen, energy
-> policy and sustainability. Open roles are updated daily, so listings are
-> current and link straight to the employer's application. Searching and
-> applying are free and need no account; a free
-> candidate profile is optional and adds weekly job-match emails. Employers can
-> post a role from $100. Salary ranges are shown wherever an employer discloses
-> them, and the site publishes its own salary benchmarks and hiring data.
-> Contact: contact@verdetalent.com
+> policy and sustainability. Open roles are updated daily and link straight to
+> the employer's application. Searching and applying are free and need no
+> account; a free candidate profile is optional and adds weekly job-match emails.
+> Employers can post a role from $100. Salary ranges are shown wherever an
+> employer discloses them, and the site publishes its own salary benchmarks and
+> hiring data. Contact: contact@verdetalent.com
+
+## Key facts (updated October 3, 2026)
+- 3,900+ open clean energy jobs, refreshed every day.
+- 80 energy companies represented, with open roles in 48 US states.
+- 114 salary benchmark pages, 39 career profiles and 62 employer profiles.
+- 47 clean energy job terms defined in the glossary.
+- Free for job seekers; job postings for employers start at $100.
 
 ## Find jobs
 - [Job search](https://verdetalent.com/jobs.html): every open role, filterable by sector, location, salary, seniority, work style and skills. Also covers remote and international roles.
-- [Browse by location and role](https://verdetalent.com/browse.html): hub pages for each sector, job function and state - for example solar jobs in Texas, or wind technician jobs nationally.
-- [Companies hiring](https://verdetalent.com/companies.html): employers currently hiring in clean energy, with their open role counts.
+- [Browse by location and role](https://verdetalent.com/browse.html): pages for each sector, job function and state - for example solar jobs in Texas, or wind technician jobs nationally.
+- [Companies hiring](https://verdetalent.com/companies.html): the 80 energy companies on Verde Talent, with their open role counts.
 - Employer profiles, one page each, at https://verdetalent.com/companies/<employer-slug>.html - for example [Vestas](https://verdetalent.com/companies/vestas.html) or [First Solar](https://verdetalent.com/companies/first-solar.html): open roles, where that employer is hiring, what it posts most and what its postings advertise.
 
 ## Pay and career research
 - [Salary benchmarks](https://verdetalent.com/salaries.html): what clean energy roles pay, by role and state, drawn from posted salary ranges.
 - [Career profiles](https://verdetalent.com/careers.html): what each role does, the skills asked for, entry-level share, where the jobs are and which employers hire for it.
-- [Training and certifications](https://verdetalent.com/professional-development.html): certification paths and training providers by sector (NABCEP, NERC, EVITP, LEED and others).
-- [Hiring data and market intelligence](https://verdetalent.com/intelligence.html): which sectors and roles are hiring, supply and demand by role, and salary benchmarks.
+- [Training and certifications](https://verdetalent.com/professional-development.html): career pathways and certifications by sector (NABCEP, GWO, NERC, EVITP, LEED and others).
+- [Hiring data and market intelligence](https://verdetalent.com/intelligence.html): where clean energy hiring is happening, which employers are hiring most, what roles pay, and the capacity being built next.
 
 ## Definitions
 - [Clean energy jobs glossary](https://verdetalent.com/glossary.html): 47 industry terms - NABCEP, GWO, BESS, interconnection, PPA, O&M, prevailing wage and others - defined plainly, each with the number of open postings using it today.
@@ -30,7 +36,7 @@
 - [News feed (RSS)](https://verdetalent.com/feed.xml)
 
 ## For employers
-- [Post a job](https://verdetalent.com/post-job.html): $100 for a 30-day posting; 5- and 10-post packs work out at $85-$90 each.
+- [Post a job](https://verdetalent.com/post-job.html): $100 for a 30-day posting or $150 for 60 days; 5- and 10-post packs work out at $90 and $85 per post.
 - [Hiring and recruiting data](https://verdetalent.com/hire.html): hiring volumes, posted salary benchmarks and the employers competing for the same talent.
 
 ## For candidates
@@ -38,5 +44,5 @@
 - [Resume Vault](https://verdetalent.com/resume-vault.html)
 
 ## About
-- [About Verde Talent](https://verdetalent.com/about.html): what the site is, who runs it, and how the data is gathered.
+- [About Verde Talent](https://verdetalent.com/about.html): what the site is and who runs it.
 - [All pages (sitemap)](https://verdetalent.com/sitemap.xml)
