@@ -111,7 +111,7 @@ footer a{color:var(--t2);}
   .nav-right{gap:6px;}
   .nav-right .btn{padding:6px 9px;font-size:11px;}
 }
-
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--t3);margin-bottom:1.5rem;}.crumbs a{color:var(--t3);text-decoration:none;}.crumbs a:hover{color:var(--t1);}.crumbs .sep{opacity:.6;}.crumbs [aria-current]{color:var(--t2);max-width:32ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.updated{font-size:12.5px;color:var(--t3);margin:.5rem 0 1.1rem;}
 .band{display:flex;flex-wrap:wrap;align-items:flex-end;gap:1.5rem;background:var(--card);
 border:0.5px solid var(--bdr);border-radius:12px;padding:1.4rem 1.5rem;margin-bottom:.9rem;}
 .band-item{display:flex;flex-direction:column;gap:.3rem;}
@@ -203,8 +203,9 @@ border-top:0.5px solid var(--bdr);padding-top:1rem;}
   </div>
 </nav>
 <div class="wrap">
-  <a class="back-link" href="/salaries.html">&larr; All salary benchmarks</a>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/salaries.html">Salaries</a><span class="sep">&rsaquo;</span><span aria-current="page">HR &amp; Recruiting</span></nav>
   <h1>HR &amp; Recruiting Salary</h1>
+  <div class="updated">Updated October 3, 2026</div>
   <p class="lede">The median hr &amp; recruiting role advertised on Verde Talent posts $83,584 a year. Here is the spread, how it moves by state, and how it compares to neighbouring roles.</p>
 
   <div class="band">
@@ -221,7 +222,7 @@ border-top:0.5px solid var(--bdr);padding-top:1rem;}
 
   
 
-  <h2>How this compares</h2><div class="cmp"><a class="cmp-row" href="/salaries/software-data-engineer-salary.html"><span class="cmp-name">Software &amp; Data Engineer</span><span class="cmp-v">$140,000</span></a><a class="cmp-row" href="/salaries/lineworker-salary.html"><span class="cmp-name">Lineworker</span><span class="cmp-v">$117,146</span></a><a class="cmp-row" href="/salaries/finance-accounting-salary.html"><span class="cmp-name">Finance &amp; Accounting</span><span class="cmp-v">$115,000</span></a><a class="cmp-row" href="/salaries/project-manager-salary.html"><span class="cmp-name">Project Manager</span><span class="cmp-v">$113,500</span></a><a class="cmp-row" href="/salaries/electrical-power-systems-engineer-salary.html"><span class="cmp-name">Electrical &amp; Power Systems Engineer</span><span class="cmp-v">$112,166</span></a><a class="cmp-row" href="/salaries/mechanical-engineer-salary.html"><span class="cmp-name">Mechanical Engineer</span><span class="cmp-v">$110,000</span></a><a class="cmp-row" href="/salaries/superintendent-salary.html"><span class="cmp-name">Superintendent</span><span class="cmp-v">$107,757</span></a><a class="cmp-row" href="/salaries/legal-compliance-salary.html"><span class="cmp-name">Legal &amp; Compliance</span><span class="cmp-v">$105,000</span></a></div>
+  <h2>How this compares</h2><div class="cmp"><a class="cmp-row" href="/salaries/software-data-engineer-salary.html"><span class="cmp-name">Software &amp; Data Engineer</span><span class="cmp-v">$140,000</span></a><a class="cmp-row" href="/salaries/lineworker-salary.html"><span class="cmp-name">Lineworker</span><span class="cmp-v">$117,146</span></a><a class="cmp-row" href="/salaries/finance-accounting-salary.html"><span class="cmp-name">Finance &amp; Accounting</span><span class="cmp-v">$115,000</span></a><a class="cmp-row" href="/salaries/legal-compliance-salary.html"><span class="cmp-name">Legal &amp; Compliance</span><span class="cmp-v">$115,000</span></a><a class="cmp-row" href="/salaries/project-manager-salary.html"><span class="cmp-name">Project Manager</span><span class="cmp-v">$111,974</span></a><a class="cmp-row" href="/salaries/mechanical-engineer-salary.html"><span class="cmp-name">Mechanical Engineer</span><span class="cmp-v">$110,000</span></a><a class="cmp-row" href="/salaries/electrical-power-systems-engineer-salary.html"><span class="cmp-name">Electrical &amp; Power Systems Engineer</span><span class="cmp-v">$108,600</span></a><a class="cmp-row" href="/salaries/superintendent-salary.html"><span class="cmp-name">Superintendent</span><span class="cmp-v">$107,757</span></a></div>
 
   <h2>Common questions</h2><div class="faq"><div class="faq-q">What is the average hr &amp; recruiting salary?</div><p class="faq-a">The median advertised hr &amp; recruiting salary is $83,584 a year. Half of the postings behind that figure fall between $66,798 and $138,600, and the full advertised range runs $54,995 to $168,100.</p><div class="faq-q">What is hr &amp; recruiting pay per hour?</div><p class="faq-a">The median works out at $40.18 an hour, annualised over 2,080 hours. Postings that quote an hourly rate are converted the same way.</p><div class="faq-q">How does hr &amp; recruiting pay compare with similar roles?</div><p class="faq-a">Against the same benchmark on Verde Talent: Software &amp; Data Engineer at $140,000, Lineworker at $117,146 and Finance &amp; Accounting at $115,000, versus $83,584 for hr &amp; recruiting.</p><div class="faq-q">Where do these hr &amp; recruiting salary figures come from?</div><p class="faq-a">From 8 live US postings that advertise pay, across 5 employers, out of 11 open hr &amp; recruiting roles on Verde Talent. They are what employers advertise rather than offers made or salaries paid, and the page is rebuilt daily.</p></div>
 
@@ -232,7 +233,7 @@ border-top:0.5px solid var(--bdr);padding-top:1rem;}
 
   
 </div>
-<p class="data-updated" style="max-width:1180px;margin:0 auto;padding:0 1.5rem 2rem;font-size:12px;color:var(--t3);">Data updated October 2, 2026</p>
+<p class="data-updated" style="max-width:1180px;margin:0 auto;padding:0 1.5rem 2rem;font-size:12px;color:var(--t3);">Data updated October 3, 2026</p>
 <footer class="site-footer">
   <div class="footer-links">
     <a href="/jobs.html">Jobs</a>
@@ -270,5 +271,6 @@ document.addEventListener('click', function(){
 });
 </script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the average hr & recruiting salary?", "acceptedAnswer": {"@type": "Answer", "text": "The median advertised hr & recruiting salary is $83,584 a year. Half of the postings behind that figure fall between $66,798 and $138,600, and the full advertised range runs $54,995 to $168,100."}}, {"@type": "Question", "name": "What is hr & recruiting pay per hour?", "acceptedAnswer": {"@type": "Answer", "text": "The median works out at $40.18 an hour, annualised over 2,080 hours. Postings that quote an hourly rate are converted the same way."}}, {"@type": "Question", "name": "How does hr & recruiting pay compare with similar roles?", "acceptedAnswer": {"@type": "Answer", "text": "Against the same benchmark on Verde Talent: Software & Data Engineer at $140,000, Lineworker at $117,146 and Finance & Accounting at $115,000, versus $83,584 for hr & recruiting."}}, {"@type": "Question", "name": "Where do these hr & recruiting salary figures come from?", "acceptedAnswer": {"@type": "Answer", "text": "From 8 live US postings that advertise pay, across 5 employers, out of 11 open hr & recruiting roles on Verde Talent. They are what employers advertise rather than offers made or salaries paid, and the page is rebuilt daily."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "url": "https://verdetalent.com/salaries/hr-recruiting-salary.html", "name": "HR & Recruiting", "dateModified": "2026-10-03", "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://verdetalent.com/"}, {"@type": "ListItem", "position": 2, "name": "Salaries", "item": "https://verdetalent.com/salaries.html"}, {"@type": "ListItem", "position": 3, "name": "HR & Recruiting", "item": "https://verdetalent.com/salaries/hr-recruiting-salary.html"}]}}</script>
 </body>
 </html>

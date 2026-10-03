@@ -34,6 +34,7 @@
 <link rel="canonical" href="https://verdetalent.com/jobs/d0ba2d7c95e6ea2f982f.html"/>
 <link rel="stylesheet" href="/tabler-icons.css"/>
 <script type="application/ld+json">{"@context": "https://schema.org/", "@type": "JobPosting", "title": "General Application", "description": "****About the Position****\n\nPersefoni is continuing to grow, and we’re adding new roles and functions to the company. Finding the right talent is critical to the success of our organization. If you are interested in joining Persefoni but don’t see an opportunity that you’d like to apply to, please send us your resume. We’ll keep your information on file and will reach out if we find a match!", "identifier": {"@type": "PropertyValue", "name": "Verde Talent", "value": "https://job-boards.greenhouse.io/persefoniaiinc/jobs/4011886006"}, "datePosted": "2022-12-09", "hiringOrganization": {"@type": "Organization", "name": "Persefoni"}, "employmentType": "FULL_TIME", "directApply": false, "validThrough": "2023-02-07", "jobLocationType": "TELECOMMUTE", "applicantLocationRequirements": {"@type": "Country", "name": "US"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://verdetalent.com/"}, {"@type": "ListItem", "position": 2, "name": "Companies", "item": "https://verdetalent.com/companies.html"}, {"@type": "ListItem", "position": 3, "name": "Persefoni", "item": "https://verdetalent.com/companies/persefoni.html"}, {"@type": "ListItem", "position": 4, "name": "General Application", "item": "https://verdetalent.com/jobs/d0ba2d7c95e6ea2f982f.html"}]}</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -71,6 +72,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 4rem;}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--t3);margin-bottom:1.5rem;}.crumbs a{color:var(--t3);text-decoration:none;}.crumbs a:hover{color:var(--t1);}.crumbs .sep{opacity:.6;}.crumbs [aria-current]{color:var(--t2);max-width:32ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.updated{font-size:12.5px;color:var(--t3);margin:.5rem 0 1.1rem;}
+.crumb-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;margin-bottom:1.5rem;}
+.crumb-row .crumbs,.crumb-row .back-link{margin-bottom:0;}
+.back-link[hidden]{display:none;}
 .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;border:0.5px solid var(--bdr2);color:var(--t2);margin:0 6px 6px 0;}
 .tag.sector{font-weight:500;}
 h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
@@ -204,13 +209,21 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
 </nav>
 <div class="wrap">
-  <a class="back-link" href="/jobs.html">&larr; Back to job search</a>
+  <div class="crumb-row"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/companies.html">Companies</a><span class="sep">&rsaquo;</span><a href="/companies/persefoni.html">Persefoni</a><span class="sep">&rsaquo;</span><span aria-current="page">General Application</span></nav><a class="back-link" id="backToResults" href="/jobs.html" hidden>&larr; Back to search results</a></div>
+  <script>
+  // Visitors who arrived from the job search get a one-click way back to their
+  // results; history.back() keeps the filters they had set.
+  (function(){try{var r=document.referrer&&new URL(document.referrer);
+    if(r&&r.host===location.host&&(r.pathname==='/jobs.html'||r.pathname==='/jobs')){var b=document.getElementById('backToResults');
+    b.hidden=false;b.addEventListener('click',function(e){if(history.length>1){e.preventDefault();history.back();}});}}catch(e){}})();
+  </script>
   <h1>General Application</h1>
   <div class="co-line"><a href="/companies/persefoni.html">Persefoni</a></div>
   <div class="meta-row">
     <span><i class="ti ti-map-pin"></i>Remote</span>
     <span><i class='ti ti-briefcase'></i>Full-time</span>
     <span><i class='ti ti-stairs'></i>Individual Contributor</span>
+    <span><i class='ti ti-calendar'></i>Posted Dec 9, 2022</span>
     
   </div>
   <div><span class="tag sector" style="border-color:#22E09A66;color:#22E09A;background:#22E09A1a;">Sustainability</span></div>
