@@ -101,6 +101,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .team-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
 .team-name{font-size:16px;font-weight:600;}
 .team-title{font-size:13px;color:var(--t3);margin-top:3px;}
+.team-links{font-size:13px;margin-top:.7rem;}
+.team-links a{color:var(--grn);}
 .team-bio{font-size:13px;color:var(--t2);margin-top:.8rem;line-height:1.6;}
 /* Values */
 .values-section{padding:2.5rem 2rem;border-bottom:0.5px solid var(--bdr);}
@@ -166,6 +168,7 @@ footer a:hover{color:var(--grn);}
 .follow-links svg{width:16px;height:16px;display:block;}
 /*/social-css*/
 </style>
+<script type="application/ld+json">{"@type": "Person", "@id": "https://verdetalent.com/about.html#adam", "name": "Adam Heugel", "jobTitle": "Founder", "url": "https://verdetalent.com/about.html#adam", "image": "https://verdetalent.com/founder-adam.jpg", "description": "Adam Heugel is the founder of Verde Talent, the clean energy job board and hiring data source covering solar, wind, battery storage, grid, EV and hydrogen roles across 80 energy companies. He writes Verde Talent's monthly Clean Energy Hiring Report. Adam also founded Lotus Scout, an executive and specialist search firm focused on energy, technology and engineering.", "worksFor": {"@type": "Organization", "name": "Verde Talent", "url": "https://verdetalent.com/"}, "@context": "https://schema.org"}</script>
 </head>
 <body>
 <nav class="nav">
@@ -236,7 +239,7 @@ document.addEventListener('click', function(){
     <div class="num-card"><div class="num-val" id="about-stat-jobs" style="color:var(--grn);">3,900+</div><div class="num-label">Active jobs</div></div>
     <div class="num-card"><div class="num-val" id="about-stat-companies" style="color:var(--blu);">80</div><div class="num-label">Energy companies</div></div>
     <div class="num-card"><div class="num-val" style="color:var(--amb);">287</div><div class="num-label">Profiles</div></div>
-    <div class="num-card"><div class="num-val" id="about-stat-states" style="color:var(--cor);">47</div><div class="num-label">States covered</div></div>
+    <div class="num-card"><div class="num-val" id="about-stat-states" style="color:var(--cor);">48</div><div class="num-label">States covered</div></div>
     <div class="num-card"><div class="num-val" style="color:var(--pur);">8</div><div class="num-label">Sectors</div></div>
   </div>
 </div>
@@ -250,7 +253,7 @@ document.addEventListener('click', function(){
       <li><strong>Cost to employers:</strong> a job post is $100 for 30 days, or $85&ndash;$90 per post in 5- and 10-post packs.</li>
       <li><strong>Pay information:</strong> a listing shows its salary range whenever the employer discloses one, and the site publishes its own salary benchmarks by role and state.</li>
       <li><strong>Research pages:</strong> career profiles by role, training and certification paths, company pages, and a clean energy hiring report.</li>
-      <li><strong>Who runs it:</strong> founded by Adam Heugel. Questions and press: <a href="mailto:contact@verdetalent.com" style="color:var(--grn);">contact@verdetalent.com</a>.</li>
+      <li><strong>Who runs it:</strong> founded by <a href="#adam" style="color:var(--grn);">Adam Heugel</a>. Questions: <a href="mailto:contact@verdetalent.com" style="color:var(--grn);">contact@verdetalent.com</a>. Press: <a href="/press.html" style="color:var(--grn);">press &amp; media</a>.</li>
     </ul>
   </div>
 </div>
@@ -265,10 +268,12 @@ document.addEventListener('click', function(){
 <div class="team-section">
   <div class="section-label">Founder</div>
   <div class="team-grid">
-    <div class="team-card">
+    <div class="team-card" id="adam">
       <div class="team-avatar"><img src="founder-adam.jpg" alt="Adam Heugel"/></div>
       <div class="team-name">Adam Heugel</div>
       <div class="team-title">Founder</div>
+      <div class="team-bio">Adam Heugel is the founder of Verde Talent, the clean energy job board and hiring data source covering solar, wind, battery storage, grid, EV and hydrogen roles across 80 energy companies. He writes Verde Talent&#x27;s monthly Clean Energy Hiring Report. Adam also founded Lotus Scout, an executive and specialist search firm focused on energy, technology and engineering.</div>
+      <div class="team-links"><a href="/reports/">Clean Energy Hiring Report</a> &middot; <a href="/press.html">Press &amp; media</a></div>
     </div>
   </div>
 </div>
