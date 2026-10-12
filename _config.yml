@@ -1,0 +1,7 @@
+# GitHub Pages build settings. The only setting here keeps the database setup
+# files and Supabase Edge Function source out of the published site - they stay
+# in the repo (the Supabase CLI and code comments reference them) but are not
+# served on verdetalent.com.
+exclude:
+  - supabase
+  - "*.sql"
