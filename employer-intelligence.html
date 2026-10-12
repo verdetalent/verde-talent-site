@@ -159,8 +159,20 @@ cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--
   .brand img{height:100px;width:auto;display:block;margin:-10px 0 -8px -10px;}
   .pane[hidden]{display:block !important;}
   .pane-title{display:block;font-size:17px;font-weight:700;color:#111;margin:0 0 10px;padding-top:4px;border-top:1px solid #DADFDC;}
-  .pane + .pane{break-before:page;}
+  /* The views run on from each other: a forced new page per view, plus boxes that must stay whole,
+     left pages half empty. Short boxes still stay whole; long lists and tables may continue onto
+     the next page between rows, with their heading kept above the first row. */
+  .pane + .pane{margin-top:20px;}
+  .pane-title,.panel h2{break-after:avoid;}
   .panel{border:1px solid #DADFDC;break-inside:avoid;}
+  .panel:has(table,.erow,.e-row,.qrow,.mline,.piperow,.devrow,.c-item){break-inside:auto;}
+  /* The page is narrower than the screen breakpoints, so keep tiles in one row and the
+     two-column pipeline/migration boxes side by side: shorter boxes fit where they fall. */
+  .panel .stats{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));}
+  .panel .pipe{grid-template-columns:1.1fr 1fr;}
+  tr,.erow,.e-row,.qrow,.mline,.piperow,.devrow,.c-item,.stat,.bands,.range,.pipebars,.facts>div{break-inside:avoid;}
+  /* Never strand a box's closing line or last row alone at the top of the next page. */
+  .panel>:last-child,.panel :is(tr,.erow,.e-row,.qrow,.mline,.devrow,.c-item):last-child{break-before:avoid;}  .panel p,.vs{orphans:3;widows:3;}
   .bandfill.ours{background:#9FCBEF;border:1px solid #1D6FB8;}
   .bandfill.bls{background:#F2CB86;border:1px solid #A35F00;}
   .bandtick.ours{background:#0B3D66;}

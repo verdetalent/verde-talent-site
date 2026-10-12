@@ -134,7 +134,18 @@ footer a{color:var(--t3);text-decoration:none;}
   .nav,.switcher,.acts,footer,.market-head a,.screen-only{display:none !important;}
   .print-only{display:flex;}
   .wrap{max-width:none;padding:0;}
+  /* The printed page is narrower than the phone breakpoint above, which stacked every card into
+     one tall column and left one card per page. Print keeps the desktop layout instead. */
+  .pulse,.stats,.market.sector .stats{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .takeaways{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .two,.cols{grid-template-columns:1fr 1fr;}
   .pulse div,.market,.take,.panel,.stats div{break-inside:avoid;}
+  /* Long cards may continue onto the next page between rows, never mid-row, and never leave
+     a card's last row or closing line alone at the top of a page. */
+  .market:has(.line,.mline),.panel:has(tr,.mline){break-inside:auto;}
+  .line,.mline,tr,.stats{break-inside:avoid;}
+  .market>:not(.cols):last-child,.panel>:last-child,:is(.line,.mline,tr):last-child{break-before:avoid;}
+  .market-head,h3{break-after:avoid;}
   .flag{border:1px solid currentColor;}
   .market{border:1px solid var(--bdr);}
   .market.sector{border-top:3px solid var(--c);}
