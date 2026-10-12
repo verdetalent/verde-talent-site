@@ -946,6 +946,9 @@ function refreshRoles(){
 }
 
 el('signOutLink').addEventListener('click', e => { e.preventDefault(); VTIntel.signOut(); });
+// A box that doesn't fit moves to the next page whole; say what's there (also on Ctrl+P).
+addEventListener('beforeprint', () => VTIntel.printNotes({ root: document.querySelector('.wrap'), units: '.panel', heads: '.pane-title' }));
+addEventListener('afterprint', VTIntel.clearPrintNotes);
 el('pdfBtn').addEventListener('click', () => {
   el('printDate').textContent = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
   window.print();

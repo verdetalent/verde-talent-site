@@ -235,5 +235,93 @@
     c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const safeUrl = v => /^https?:\/\//i.test(String(v || '')) ? esc(v) : '#';
 
-  window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, follows, signIn, signOut, checkout, portal, SignInNeeded, esc, safeUrl };
+  // ---- PDF page notes ---------------------------------------------------------------------
+  // The print CSS keeps every box whole, so a box that doesn't fit moves to the next page and
+  // leaves white space behind. Just before printing, lay the page out at the printed width in a
+  // hidden frame, find those moves, force each break ourselves, and put a note at the foot of
+  // any sizeable gap saying what is on the next page. US Letter at the pages' @page margins
+  // leaves about 725 x 958 CSS px. If the browser's own layout differs slightly, the forced
+  // break still holds; the note sits well clear of the page end so it can't spill over.
+  const NOTE_MIN_GAP = 140;   // px of white space before a note is worth adding
+  function clearPrintNotes() {
+    document.querySelectorAll('.pnote').forEach(n => n.remove());
+    document.querySelectorAll('.pbreak').forEach(n => n.classList.remove('pbreak'));
+  }
+  function printNotes({ root, units, heads, page = { w: 725, h: 958 } }) {
+    clearPrintNotes();
+    if (!document.getElementById('pnoteCss')) document.head.insertAdjacentHTML('beforeend', `<style id="pnoteCss">
+      .pnote{display:none;}
+      @media print{.pbreak{break-before:page !important;}
+        .pnote{display:block;grid-column:1/-1;text-align:right;font-size:11px;color:#6B716E;break-inside:avoid;}
+        .pnote b{color:#333;font-weight:600;}}</style>`);
+    const frame = document.createElement('iframe');
+    frame.setAttribute('aria-hidden', 'true');
+    frame.style.cssText = `position:absolute;left:-10000px;top:0;width:${page.w}px;height:${page.h}px;border:0;visibility:hidden;`;
+    document.body.appendChild(frame);
+    try {
+      let printCss = '';
+      for (const sheet of document.styleSheets) {
+        let rules;
+        try { rules = sheet.cssRules; } catch { continue; }
+        for (const r of rules) if (r.media && [...r.media].includes('print')) printCss += [...r.cssRules].map(x => x.cssText).join('\n');
+      }
+      const doc = frame.contentDocument;
+      doc.open();
+      doc.write(`<!doctype html><html><head><base href="${esc(location.href)}">
+        ${[...document.querySelectorAll('style')].map(s => s.outerHTML).join('')}<style>${printCss}</style></head>
+        <body>${root.outerHTML}</body></html>`);
+      doc.close();
+
+      // Boxes and the headings that travel with them, in page order; boxes side by side in a
+      // grid row move together, so they count as one.
+      const sel = heads ? `${units},${heads}` : units;
+      const real = [...root.querySelectorAll(sel)], copy = [...doc.querySelectorAll(sel)];
+      const items = [];
+      copy.forEach((c, i) => {
+        const r = c.getBoundingClientRect();
+        if (!r.height) return;
+        const last = items[items.length - 1];
+        if (last && Math.abs(last.top - r.top) < 2 && !last.head) {
+          last.bottom = Math.max(last.bottom, r.bottom); last.els.push(real[i]); return;
+        }
+        items.push({ top: r.top, bottom: r.bottom, els: [real[i]], head: !!heads && c.matches(heads),
+          mtop: parseFloat(getComputedStyle(c).marginTop) || 0 });
+      });
+
+      const label = el => {
+        const h = heads && el.matches(heads) ? el : el.querySelector('h2,h3');
+        return h ? [...h.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim() : '';
+      };
+      let pageTop = 0, prevBottom = 0;
+      items.forEach((it, i) => {
+        while (it.top >= pageTop + page.h) pageTop += page.h;        // text in between ran on
+        if (it.head || it.bottom <= pageTop + page.h) { prevBottom = it.bottom; return; }
+        // This box won't fit: it moves, taking its heading with it.
+        const prev = items[i - 1];
+        const anchor = prev && prev.head && prev.top >= pageTop ? prev : it;
+        const before = anchor === prev ? (items[i - 2] ? items[i - 2].bottom : prevBottom) : prevBottom;
+        if (anchor.top - anchor.mtop <= pageTop + 1) {                 // already at the top: taller than a page
+          while (it.bottom > pageTop + page.h) pageTop += page.h;
+          prevBottom = it.bottom; return;
+        }
+        const gap = pageTop + page.h - before;
+        anchor.els[0].classList.add('pbreak');
+        if (gap >= NOTE_MIN_GAP) {
+          const names = (anchor === prev ? [prev.els[0]] : anchor.els).map(label).filter(Boolean);
+          const note = document.createElement('div');
+          note.className = 'pnote';
+          note.style.marginTop = Math.max(0, Math.round(gap - 90)) + 'px';
+          note.innerHTML = `Next page${names.length ? `: <b>${esc(names.join(' and '))}</b>` : ''} &darr;`;
+          anchor.els[0].before(note);
+        }
+        pageTop = anchor.top - anchor.mtop;
+        prevBottom = it.bottom;
+      });
+    } finally {
+      frame.remove();
+    }
+  }
+
+  window.VTIntel = { SAMPLE, LOCAL, load, myPostings, watch, follows, signIn, signOut, checkout, portal, SignInNeeded, esc, safeUrl,
+    printNotes, clearPrintNotes };
 })();

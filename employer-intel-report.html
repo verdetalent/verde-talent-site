@@ -481,6 +481,9 @@ function render(rows, posts, follows){
 }
 
 el('pdfBtn').onclick = () => window.print();
+// A card that doesn't fit moves to the next page whole; say what's there (also on Ctrl+P).
+addEventListener('beforeprint', () => VTIntel.printNotes({ root: document.querySelector('.wrap'), units: '.pulse,.takeaways,.market,.panel', heads: 'h2' }));
+addEventListener('afterprint', VTIntel.clearPrintNotes);
 
 (async () => {
   if (VTIntel.SAMPLE) el('switcher').hidden = false;
