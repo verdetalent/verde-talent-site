@@ -139,12 +139,10 @@ footer a{color:var(--t3);text-decoration:none;}
   .pulse,.stats,.market.sector .stats{grid-template-columns:repeat(4,minmax(0,1fr));}
   .takeaways{grid-template-columns:repeat(3,minmax(0,1fr));}
   .two,.cols{grid-template-columns:1fr 1fr;}
+  /* Every card stays whole (Adam: never cut a section mid-way); only one taller than a whole
+     page can still split, and then only between rows. */
   .pulse div,.market,.take,.panel,.stats div{break-inside:avoid;}
-  /* Long cards may continue onto the next page between rows, never mid-row, and never leave
-     a card's last row or closing line alone at the top of a page. */
-  .market:has(.line,.mline),.panel:has(tr,.mline){break-inside:auto;}
   .line,.mline,tr,.stats{break-inside:avoid;}
-  .market>:not(.cols):last-child,.panel>:last-child,:is(.line,.mline,tr):last-child{break-before:avoid;}
   .market-head,h3{break-after:avoid;}
   .flag{border:1px solid currentColor;}
   .market{border:1px solid var(--bdr);}
