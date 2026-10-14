@@ -340,7 +340,7 @@ document.addEventListener('click', function(){
         <div class="field"><label for="inp-headline">Professional headline</label><input type="text" id="inp-headline" placeholder="e.g. Senior Solar Design Engineer · Open to remote"/></div>
       </div>
       <div class="form-row">
-        <div class="field"><label for="inp-loc">Location</label><input type="text" id="inp-loc" placeholder="City, State, or ZIP" aria-describedby="inp-loc-hint"/><div id="inp-loc-hint" style="font-size:11.5px;color:var(--t3);margin-top:5px;">Outside the US? Enter your city and country.</div></div>
+        <div class="field"><label for="inp-loc">Location</label><input type="text" id="inp-loc" placeholder="City, State, or ZIP" aria-describedby="inp-loc-hint"/><div id="inp-loc-hint" style="font-size:11.5px;color:var(--t3);margin-top:5px;">Outside the US? Enter your city and country.</div><div id="inp-loc-note" role="status" style="display:none;font-size:12px;color:var(--cor);margin-top:5px;"></div></div>
         <div class="field"><label for="inp-exp">Years of experience</label>
           <select id="inp-exp"><option value="">Select…</option><option value="Less than 1 year">Less than 1 year</option><option value="1–3 years">1–3 years</option><option value="3–5 years">3–5 years</option><option value="5–10 years">5–10 years</option><option value="10+ years">10+ years</option></select>
         </div>
@@ -882,6 +882,161 @@ const SECTOR_KEYWORDS = {
   Sustainability: /sustainab|\besg\b/i,
 };
 
+// ---- Resume location + headline helpers ----------------------------------
+const US_STATES = {
+  'alabama':'AL','alaska':'AK','arizona':'AZ','arkansas':'AR','california':'CA','colorado':'CO',
+  'connecticut':'CT','delaware':'DE','florida':'FL','georgia':'GA','hawaii':'HI','idaho':'ID',
+  'illinois':'IL','indiana':'IN','iowa':'IA','kansas':'KS','kentucky':'KY','louisiana':'LA',
+  'maine':'ME','maryland':'MD','massachusetts':'MA','michigan':'MI','minnesota':'MN',
+  'mississippi':'MS','missouri':'MO','montana':'MT','nebraska':'NE','nevada':'NV',
+  'new hampshire':'NH','new jersey':'NJ','new mexico':'NM','new york':'NY','north carolina':'NC',
+  'north dakota':'ND','ohio':'OH','oklahoma':'OK','oregon':'OR','pennsylvania':'PA',
+  'rhode island':'RI','south carolina':'SC','south dakota':'SD','tennessee':'TN','texas':'TX',
+  'utah':'UT','vermont':'VT','virginia':'VA','washington':'WA','west virginia':'WV',
+  'wisconsin':'WI','wyoming':'WY','district of columbia':'DC',
+};
+const US_STATE_ABBRS = new Set(Object.values(US_STATES));
+// Countries a resume header is likely to name. Not exhaustive on purpose: a
+// country missing here just means that resume's location is left for the
+// person to type, same as before - it never produces a wrong one.
+const LOC_COUNTRIES = [
+  'United States','USA','United Kingdom','UK','England','Scotland','Wales','Ireland','Canada',
+  'South Africa','Nigeria','Kenya','Ghana','Zimbabwe','Botswana','Namibia','Zambia','Tanzania',
+  'Uganda','Ethiopia','Rwanda','Mozambique','Egypt','Morocco','India','Pakistan','Bangladesh',
+  'Philippines','Singapore','Malaysia','Indonesia','Thailand','Vietnam','Japan','China',
+  'South Korea','Australia','New Zealand','Germany','France','Spain','Italy','Netherlands',
+  'Portugal','Sweden','Norway','Denmark','Poland','Turkey','Israel','Jordan','Saudi Arabia',
+  'United Arab Emirates','UAE','Mexico','Brazil','Chile','Colombia','Argentina','Peru',
+];
+// Words that look like a capitalized place name but aren't one - what precedes
+// "ST" in "Systems Engineer, MS" or "Master of Science, MS".
+const LOC_NOT_CITY_WORDS = new Set([
+  'science','sciences','engineering','engineer','manager','management','technician','technology',
+  'degree','bachelor','bachelors','master','masters','university','college','institute','school',
+  'company','corporation','director','developer','analyst','specialist','coordinator','supervisor',
+  'consultant','president','intern','lead','senior','junior','associate','certified','professional',
+  'summary','experience','education','skills','email','phone','address','linkedin','mobile','tel',
+  'contact','resume','curriculum','vitae','objective','profile',
+]);
+const LOC_WORD_RE = /^[A-Z][A-Za-z.'’-]*$/;
+
+function resolveUsState(part) {
+  const cleaned = part.replace(/\s*\d.*$/, '').trim();
+  if (!cleaned) return null;
+  if (/^D\.?\s?C\.?$/i.test(cleaned)) return 'DC';
+  // Longest state name first ("North Carolina" before "North"), tolerating
+  // trailing text such as "TX USA" or "Illinois United States".
+  const words = cleaned.split(/\s+/);
+  for (let n = Math.min(3, words.length); n >= 1; n--) {
+    const candidate = words.slice(0, n).join(' ');
+    if (n === 1 && /^[A-Z]{2}$/.test(candidate)) return US_STATE_ABBRS.has(candidate) ? candidate : null;
+    const abbr = US_STATES[candidate.toLowerCase().replace(/\.$/, '')];
+    if (abbr) return abbr;
+  }
+  return null;
+}
+
+function resolveCountry(part) {
+  const lower = part.trim().toLowerCase().replace(/\.$/, '');
+  if (!lower) return null;
+  return LOC_COUNTRIES.find(c => c.toLowerCase() === lower) || null;
+}
+
+// City = the run of capitalized words (max 3: "Salt Lake City", "San Luis
+// Obispo") immediately before a comma, minus any job-title/degree words that
+// happen to sit in front of it on the same line.
+function cityBeforeComma(left) {
+  const words = left.trim().split(/[ \t]+/);
+  const run = [];
+  for (let i = words.length - 1; i >= 0 && run.length < 3; i--) {
+    if (!LOC_WORD_RE.test(words[i])) break;
+    run.unshift(words[i]);
+  }
+  let lastStop = -1;
+  run.forEach((w, i) => { if (LOC_NOT_CITY_WORDS.has(w.toLowerCase().replace(/\.$/, ''))) lastStop = i; });
+  const city = run.slice(lastStop + 1);
+  return city.length ? city.join(' ') : null;
+}
+
+function matchLocationInSegment(segment, usOnly) {
+  if (/@|https?:|linkedin\.com|github\.com/i.test(segment)) return null;
+
+  // "City, ST" / "City, State" / "City, ST 60601" / "City, State, Country"
+  let comma = -1;
+  while ((comma = segment.indexOf(',', comma + 1)) !== -1) {
+    const city = cityBeforeComma(segment.slice(0, comma));
+    if (!city) continue;
+    const parts = segment.slice(comma + 1).split(',').map(p => p.trim());
+    const usState = resolveUsState(parts[0].split('|')[0]);
+    if (usState) return `${city}, ${usState}`;
+    if (usOnly) continue;
+    const country0 = resolveCountry(parts[0].replace(/\s*\d.*$/, ''));
+    if (country0) return `${city}, ${country0}`;
+    // "Toronto, ON, Canada" / "Johannesburg, Gauteng, South Africa"
+    if (parts[1] && /^[A-Za-z. ]{2,25}$/.test(parts[0])) {
+      const country1 = resolveCountry(parts[1].replace(/\s*\d.*$/, ''));
+      if (country1) return `${city}, ${parts[0]}, ${country1}`;
+    }
+  }
+
+  // No comma at all: "Brooklyn NY 11201" - only accepted with a ZIP, so a
+  // stray pair of capital letters can't pass for a state.
+  const noComma = segment.match(/((?:[A-Z][A-Za-z.'’-]*[ \t]+){1,3})([A-Z]{2})[ \t]+\d{5}(?:-\d{4})?\b/);
+  if (noComma && US_STATE_ABBRS.has(noComma[2])) {
+    const city = cityBeforeComma(noComma[1].trim());
+    if (city) return `${city}, ${noComma[2]}`;
+  }
+  return null;
+}
+
+function findLocationIn(lines, usOnly) {
+  for (const line of lines) {
+    for (const segment of line.split(/\s*[|•·●▪–—]\s*|\t| {3,}/)) {
+      const hit = matchLocationInSegment(segment.trim(), usOnly);
+      if (hit) return hit;
+    }
+  }
+  return null;
+}
+
+// Contact details live in the first lines of a resume, so those are searched
+// first (the first line is the name - skipped, since credentials like "Jane
+// Doe, MD" read as a city and state). Only if the header has nothing does the
+// search widen to the whole document, and then only for US "City, ST" - an
+// employer's city further down is a better guess than blank, but a foreign
+// place name found mid-document is more likely a past job than home.
+function parseResumeLocation(lines) {
+  const nonEmpty = lines.filter(Boolean);
+  return findLocationIn(nonEmpty.slice(1, 15), false) || findLocationIn(nonEmpty.slice(15), true);
+}
+
+// "123 Main St, Austin, TX 78701" is a contact line, not a headline. Requires
+// a street-type word so a headline that merely starts with a number ("10+ years
+// in solar development") is left alone.
+const STREET_ADDRESS_RE = /^\d+[\w\s.#-]*\b(st|street|ave|avenue|rd|road|blvd|boulevard|dr|drive|ln|lane|way|ct|court|pkwy|parkway|hwy|highway|pl|place|suite|ste)\b/i;
+
+// True for a line that is only a place ("Chicago, IL 60601", "Durban, South
+// Africa") - those sit right under the name on many resumes and were being
+// taken as the headline.
+function isLocationOnlyLine(line) {
+  const hit = findLocationIn([line], false);
+  if (!hit) return false;
+  const hitLower = hit.toLowerCase();
+  const stateWords = new Set(Object.keys(US_STATES).join(' ').split(' '));
+  const countryWords = new Set(LOC_COUNTRIES.join(' ').toLowerCase().split(' '));
+  const leftover = line.replace(/\d{5}(-\d{4})?/g, '').split(/[\s,.]+/).filter(Boolean)
+    .filter(w => { const lw = w.toLowerCase(); return !hitLower.includes(lw) && !stateWords.has(lw) && !countryWords.has(lw); });
+  return leftover.length === 0;
+}
+
+// A line like "PROFESSIONAL SUMMARY" or "Contact" is a section heading, never
+// a person's headline.
+const HEADLINE_SKIP_RE = /^(contact(\s+(info|information|details))?|certifications?|licenses?(\s*&\s*certifications?)?|projects?|awards?|languages?|references|interests|key\s+skills|core\s+competencies|career\s+(summary|objective)|work\s+history|qualifications|summary\s+of\s+qualifications)$/i;
+function isSectionHeading(line) {
+  const clean = line.replace(/:$/, '').trim().replace(SECTION_HEADER_PREFIX_RE, '');
+  return Object.values(RESUME_SECTION_HEADERS).some(re => re.test(clean)) || HEADLINE_SKIP_RE.test(clean);
+}
+
 function parseResumeText(text) {
   const lines = text.split('\n').map(l => l.trim());
   const nonEmpty = lines.filter(Boolean);
@@ -906,6 +1061,8 @@ function parseResumeText(text) {
   // Headline: first short line after the name that isn't contact info
   for (let i = 1; i < Math.min(nonEmpty.length, 5); i++) {
     const l = nonEmpty[i];
+    if (isSectionHeading(l)) break;
+    if (isLocationOnlyLine(l) || STREET_ADDRESS_RE.test(l)) continue;
     if (l.length < 90 && l.length > 3 && !/@/.test(l) && !/\d{3}[\s.-]?\d{3}[\s.-]?\d{4}/.test(l) && !/linkedin\.com|github\.com/i.test(l)) {
       parsed.headline = l;
       break;
@@ -917,8 +1074,8 @@ function parseResumeText(text) {
   // onto a real "City, ST" that starts the next line (e.g. a job title
   // ending in "...Manager" immediately above a contact line beginning
   // "Austin, TX" was matching as one location, "Manager\nAustin, TX").
-  const locMatch = text.match(/\b([A-Z][a-zA-Z.]+(?:[ \t][A-Z][a-zA-Z.]+)?,[ \t]*[A-Z]{2})\b/);
-  if (locMatch) parsed.location = locMatch[1];
+  const parsedLocation = parseResumeLocation(lines);
+  if (parsedLocation) parsed.location = parsedLocation;
 
   const sections = findResumeSections(lines);
 
@@ -975,6 +1132,18 @@ function expandSection(summaryId, detailId) {
   document.getElementById(summaryId).style.display = 'none';
 }
 
+function setLocationNote(show) {
+  const note = document.getElementById('inp-loc-note');
+  if (!note) return;
+  note.textContent = show
+    ? "We couldn't find your location in your resume. Add it so employers and job alerts can match you to nearby roles."
+    : '';
+  note.style.display = show ? 'block' : 'none';
+}
+document.getElementById('inp-loc').addEventListener('input', function(){
+  if (this.value.trim()) setLocationNote(false);
+});
+
 function applyParsedResumeData(parsed) {
   const filled = [];
 
@@ -1022,7 +1191,13 @@ function applyParsedResumeData(parsed) {
     filled.push('education');
   }
 
-  if (filled.includes('name') || filled.includes('headline') || filled.includes('location') || filled.includes('bio')) {
+  // The basics section collapses into a one-line summary once the resume fills
+  // it in, which hid an empty Location box entirely - people never saw that it
+  // was blank. Leave it open and say so when no location was found.
+  const locationMissing = !document.getElementById('inp-loc').value.trim();
+  setLocationNote(locationMissing);
+
+  if (!locationMissing && (filled.includes('name') || filled.includes('headline') || filled.includes('location') || filled.includes('bio'))) {
     const first = document.getElementById('inp-first').value.trim();
     const last = document.getElementById('inp-last').value.trim();
     const headline = document.getElementById('inp-headline').value.trim();
@@ -1085,7 +1260,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     if (!text.trim()) throw new Error('Could not find any text in that file.');
     const parsed = parseResumeText(text);
     const filled = applyParsedResumeData(parsed);
-    trackProfile('profile_resume_upload', { file_type: ext, autofill: filled.length ? 'filled' : 'nothing_found', fields_filled: filled.length });
+    trackProfile('profile_resume_upload', { file_type: ext, autofill: filled.length ? 'filled' : 'nothing_found', fields_filled: filled.length, location: filled.includes('location') ? 'found' : 'missing' });
     box.classList.remove('parsing');
     icon.className = 'ti ti-check upload-icon';
     hint.textContent = filled.length
