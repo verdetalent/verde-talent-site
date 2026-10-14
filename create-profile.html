@@ -544,6 +544,20 @@ function withTimeout(promise, ms, message) {
   return Promise.race([promise, timeout]);
 }
 
+// Layout facts from the last PDF read, for parseResumeText. Null for .docx.
+let lastResumeHints = null;
+
+// Text of the largest-font line in the top ~45% of the page.
+function largestTopLine(items, pageHeight) {
+  const top = items.filter(it => it.height && it.transform[5] > pageHeight * 0.55);
+  if (!top.length) return null;
+  const maxH = Math.max(...top.map(it => it.height));
+  const big = top.filter(it => it.height >= maxH * 0.9);
+  const topY = Math.max(...big.map(it => it.transform[5]));
+  const row = big.filter(it => Math.abs(it.transform[5] - topY) <= 2).sort((a, b) => a.transform[4] - b.transform[4]);
+  return row.map(it => it.str.trim()).join(' ').replace(/\s+/g, ' ').trim() || null;
+}
+
 async function extractTextFromPdf(arrayBuffer) {
   // Groups text items into lines by their Y position rather than joining
   // everything into one run-on paragraph, so section headers and entries
@@ -560,6 +574,7 @@ async function extractTextFromPdf(arrayBuffer) {
     // header line), and that bounding box can span clean across a real
     // column gutter, masking it from detection below.
     const items = content.items.filter((it) => it.str && it.str.trim());
+    if (i === 1) lastResumeHints = { name: largestTopLine(items, viewport.height) };
     pagesColumns.push(splitIntoColumns(items, viewport.width));
   }
 
@@ -719,6 +734,15 @@ function collapseTrackedLine(line) {
   return line;
 }
 
+// A block's text as lines: a soft line break (Shift+Enter) inside a Word
+// paragraph is a line break, not nothing - textContent would glue
+// "Jane Doe<br>Austin, TX" into "Jane DoeAustin, TX".
+function textLinesOf(node) {
+  const clone = node.cloneNode(true);
+  clone.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+  return clone.textContent.split('\n').map(t => t.replace(/\s+/g, ' ').trim()).filter(Boolean);
+}
+
 function htmlToStructuredText(html) {
   const container = document.createElement('div');
   container.innerHTML = html;
@@ -730,15 +754,23 @@ function htmlToStructuredText(html) {
         const text = li.textContent.replace(/\s+/g, ' ').trim();
         if (text) lines.push('• ' + text);
       }
+    } else if (tag === 'table') {
+      // Header tables are a common Word template (name in one cell, contact
+      // details in another); textContent runs the cells together
+      // ("RiveraPhoenix, AZalex@..."), so each cell paragraph is its own line.
+      for (const cell of node.querySelectorAll('td, th')) {
+        const blocks = cell.children.length ? [...cell.children] : [cell];
+        for (const block of blocks) lines.push(...textLinesOf(block));
+      }
     } else {
-      const text = node.textContent.replace(/\s+/g, ' ').trim();
-      if (text) lines.push(text);
+      lines.push(...textLinesOf(node));
     }
   }
   return lines.join('\n');
 }
 
 async function extractTextFromResumeFile(file) {
+  lastResumeHints = null;
   const ext = file.name.toLowerCase().split('.').pop();
   if (ext === 'pdf') {
     return await withTimeout(
@@ -917,6 +949,7 @@ const LOC_NOT_CITY_WORDS = new Set([
   'consultant','president','intern','lead','senior','junior','associate','certified','professional',
   'summary','experience','education','skills','email','phone','address','linkedin','mobile','tel',
   'contact','resume','curriculum','vitae','objective','profile',
+  'dr','mr','mrs','ms','miss','prof','professor','sir','mx',
 ]);
 const LOC_WORD_RE = /^[A-Z][A-Za-z.'’-]*$/;
 
@@ -968,12 +1001,12 @@ function matchLocationInSegment(segment, usOnly) {
     if (!city) continue;
     const parts = segment.slice(comma + 1).split(',').map(p => p.trim());
     const usState = resolveUsState(parts[0].split('|')[0]);
-    if (usState) return `${city}, ${usState}`;
+    if (usState && !(usOnly && CREDENTIAL_LOOKALIKE_ABBRS.has(usState))) return `${city}, ${usState}`;
     if (usOnly) continue;
     const country0 = resolveCountry(parts[0].replace(/\s*\d.*$/, ''));
     if (country0) return `${city}, ${country0}`;
     // "Toronto, ON, Canada" / "Johannesburg, Gauteng, South Africa"
-    if (parts[1] && /^[A-Za-z. ]{2,25}$/.test(parts[0])) {
+    if (parts[1] && /^[A-Za-z. '’-]{2,25}$/.test(parts[0])) {
       const country1 = resolveCountry(parts[1].replace(/\s*\d.*$/, ''));
       if (country1) return `${city}, ${parts[0]}, ${country1}`;
     }
@@ -989,9 +1022,17 @@ function matchLocationInSegment(segment, usOnly) {
   return null;
 }
 
+// Pieces of a contact line: "Austin, TX | jane@x.com | 512-555-0100", or the
+// same joined with bullets, dashes or " - ".
+const CONTACT_SEPARATOR_RE = /\s*[|•·●▪–—]\s*|\s+-\s+|\t| {3,}/;
+// State abbreviations that are also credentials ("Dr. Sarah Smith, MD",
+// "Jane Jones, MA") - ignored when searching below the header, where a
+// reference's or colleague's name is far likelier than a home address.
+const CREDENTIAL_LOOKALIKE_ABBRS = new Set(['MD', 'MA', 'MS', 'PA']);
+
 function findLocationIn(lines, usOnly) {
   for (const line of lines) {
-    for (const segment of line.split(/\s*[|•·●▪–—]\s*|\t| {3,}/)) {
+    for (const segment of line.split(CONTACT_SEPARATOR_RE)) {
       const hit = matchLocationInSegment(segment.trim(), usOnly);
       if (hit) return hit;
     }
@@ -999,15 +1040,40 @@ function findLocationIn(lines, usOnly) {
   return null;
 }
 
-// Contact details live in the first lines of a resume, so those are searched
-// first (the first line is the name - skipped, since credentials like "Jane
-// Doe, MD" read as a city and state). Only if the header has nothing does the
-// search widen to the whole document, and then only for US "City, ST" - an
-// employer's city further down is a better guess than blank, but a foreign
-// place name found mid-document is more likely a past job than home.
-function parseResumeLocation(lines) {
-  const nonEmpty = lines.filter(Boolean);
-  return findLocationIn(nonEmpty.slice(1, 15), false) || findLocationIn(nonEmpty.slice(15), true);
+// Where someone lives is in the header block (before the job history or
+// school sections begin) or, on some templates, a contact footer. A city found
+// anywhere else - inside Experience, Education, Projects - is a past employer,
+// a school or a project site, and filling it in as home would be wrong, which
+// is worse than leaving it blank for the person to type.
+const BODY_SECTION_RE = /^((professional|work)\s+)?experience$|^employment(\s+history)?$|^work\s+history$|^education(\s+&\s+\w+)?$|^projects?$|^certifications?$/i;
+
+// The header is searched first and for any country. The name line only
+// contributes what follows its first separator ("Jane Doe | Austin, TX | ..."
+// yes; "Jane Doe, MD" no - credentials read as a city and state). The last two
+// lines count too, but only if they read as contact details (a place on its
+// own, or a line with an email/phone/website), and only for US "City, ST".
+function parseResumeLocation(nonEmpty, nameIdx, blocks) {
+  const bodyStart = (lines, after) => lines.findIndex((l, i) => i > after
+    && BODY_SECTION_RE.test(l.replace(/:$/, '').trim().replace(SECTION_HEADER_PREFIX_RE, '')));
+  let end = bodyStart(nonEmpty, nameIdx);
+  if (end === -1) end = nonEmpty.length;
+  const headerLines = nonEmpty.slice(0, Math.min(end, 15)).map((line, i) =>
+    i === nameIdx ? line.split(CONTACT_SEPARATOR_RE).slice(1).join(' | ') : line);
+  const fromHeader = findLocationIn(headerLines, false);
+  if (fromHeader) return fromHeader;
+
+  // A multi-column PDF is read one column at a time, blank-line separated, so
+  // a right-hand sidebar's contact block arrives after the whole main column.
+  // The top of each later column, up to its first job/school section, counts
+  // as header too.
+  for (const block of (blocks || []).slice(1)) {
+    const blockEnd = bodyStart(block, -1);
+    const fromColumn = findLocationIn(block.slice(0, Math.min(blockEnd === -1 ? block.length : blockEnd, 10)), false);
+    if (fromColumn) return fromColumn;
+  }
+
+  const footerLines = nonEmpty.slice(-2).filter(l => isLocationOnlyLine(l) || isContactLine(l));
+  return findLocationIn(footerLines, true);
 }
 
 // "123 Main St, Austin, TX 78701" is a contact line, not a headline. Requires
@@ -1031,15 +1097,113 @@ function isLocationOnlyLine(line) {
 
 // A line like "PROFESSIONAL SUMMARY" or "Contact" is a section heading, never
 // a person's headline.
-const HEADLINE_SKIP_RE = /^(contact(\s+(info|information|details))?|certifications?|licenses?(\s*&\s*certifications?)?|projects?|awards?|languages?|references|interests|key\s+skills|core\s+competencies|career\s+(summary|objective)|work\s+history|qualifications|summary\s+of\s+qualifications)$/i;
+const HEADLINE_SKIP_RE = /^(contact(\s+(info|information|details))?|certifications?|licenses?(\s*&\s*certifications?)?|projects?|awards?|languages?|references|interests|key\s+skills|core\s+competencies|career\s+(summary|objective|profile|highlights)|work\s+history|qualifications|summary\s+of\s+(qualifications|skills|experience)|professional\s+(profile|objective|overview)|executive\s+summary|personal\s+(statement|profile|summary|details)|profile\s+summary|areas\s+of\s+expertise|highlights)$/i;
 function isSectionHeading(line) {
   const clean = line.replace(/:$/, '').trim().replace(SECTION_HEADER_PREFIX_RE, '');
   return Object.values(RESUME_SECTION_HEADERS).some(re => re.test(clean)) || HEADLINE_SKIP_RE.test(clean);
 }
 
-function parseResumeText(text) {
+// Phone numbers in any layout - "(512) 555-0100", "+27 82 555 0100",
+// "555-123-4567" - and web addresses are contact lines, never a headline.
+const PHONE_LIKE_RE = /\+?\(?\d[\d\s().-]{7,}\d/;
+const WEBSITE_RE = /\bwww\.|https?:\/\/|\b[\w-]+\.(?:com|org|net|io|co|us|dev)\b/i;
+function isContactLine(line) {
+  return /@/.test(line) || PHONE_LIKE_RE.test(line) || WEBSITE_RE.test(line)
+    || /linkedin\.com|github\.com/i.test(line) || STREET_ADDRESS_RE.test(line);
+}
+
+// Role and section words that mean a line is a job title or heading, not a
+// person's name. Deliberately only words that are never surnames ("Power",
+// "Field" are real surnames, so they are not here).
+const NAME_NOT_NAME_WORDS = new Set([
+  'resume','curriculum','vitae','cv','summary','experience','education','skills','profile',
+  'objective','contact','engineer','engineers','engineering','manager','management','technician',
+  'technologist','director','developer','analyst','specialist','coordinator','supervisor',
+  'consultant','president','intern','lineman','installer','foreman','operator','estimator',
+  'scheduler','designer','architect','officer','assistant','administrator','lead','solar','wind',
+  'energy','storage','battery','renewable','electrical','mechanical','construction','maintenance',
+  'operations','project',
+]);
+const NAME_PREFIX_LINE_RE = /^(resume|r[eé]sum[eé]|curriculum\s+vitae|cv|c\.v\.)$/i;
+const NAME_HONORIFIC_RE = /^(dr|mr|mrs|ms|miss|mx|prof|eng|engr)\.?\s+/i;
+
+// The words of a person's name from raw text: before any contact separator,
+// before ", PE" / ", MBA, PMP" credentials, before an attached phone number or
+// email, minus a "Dr." prefix. Letters in any script, so "José García" works.
+function nameWordsFrom(raw) {
+  let candidate = raw.split(CONTACT_SEPARATOR_RE)[0];
+  candidate = candidate.split(',')[0];
+  candidate = candidate.replace(/\s*\S*@.*$/, '');
+  candidate = candidate.replace(/\s*[\d+(].*$/, '').trim();
+  candidate = candidate.replace(NAME_HONORIFIC_RE, '').trim();
+  if (!candidate || candidate.length >= 50) return null;
+  if (!/^[\p{L}.'’-]+(\s+[\p{L}.'’-]+){1,3}$/u.test(candidate)) return null;
+  return candidate.split(/\s+/);
+}
+
+const isNotNameWord = w => NAME_NOT_NAME_WORDS.has(w.toLowerCase().replace(/\.$/, ''));
+
+// A title following the name on the same line, after a separator
+// ("Jane Doe | Solar Engineer | Austin, TX") - the first piece that isn't
+// contact info, a place, or a section heading.
+function usableHeadline(p) {
+  return p.length >= 4 && p.length < 90 && !isContactLine(p) && !isLocationOnlyLine(p) && !isSectionHeading(p);
+}
+function headlineFromLineTail(line) {
+  for (const piece of line.split(CONTACT_SEPARATOR_RE).slice(1)) {
+    const p = piece.trim();
+    if (usableHeadline(p)) return p;
+  }
+  return null;
+}
+
+// The name is the first piece of the first real line (a leading "RESUME" /
+// "CURRICULUM VITAE" line is skipped). If a job title follows on the same
+// line ("Jane Doe Solar Engineer") the title is handed back as a headline hint.
+function parseResumeName(nonEmpty) {
+  let idx = 0;
+  if (nonEmpty[0] && NAME_PREFIX_LINE_RE.test(nonEmpty[0].replace(/[:\s]+$/, ''))) idx = 1;
+  const line = nonEmpty[idx];
+  if (!line) return null;
+
+  const words = nameWordsFrom(line);
+  if (!words) return null;
+  const firstBad = words.findIndex(isNotNameWord);
+  if (firstBad === -1) {
+    return { firstName: words[0], lastName: words.slice(1).join(' '), idx, headlineHint: headlineFromLineTail(line) };
+  }
+  if (firstBad < 2) return null;
+  return {
+    firstName: words[0],
+    lastName: words.slice(1, firstBad).join(' '),
+    idx,
+    headlineHint: usableHeadline(words.slice(firstBad).join(' ')) ? words.slice(firstBad).join(' ') : null,
+  };
+}
+
+// PDF-only cross-check. The name is almost always the largest text near the
+// top of page 1 - which finds it in layouts where line order doesn't (a
+// two-column resume reads the sidebar first, so the name is many lines
+// down) and splits it from a title sharing its line ("PRIYA NAIR  GRID
+// INTERCONNECTION ENGINEER"). Used only when the line-based guess found no
+// name, or had to peel a title off the line itself.
+function nameFromLargestText(nonEmpty, largestText) {
+  if (!largestText) return null;
+  const words = nameWordsFrom(largestText);
+  if (!words || words.some(isNotNameWord)) return null;
+  const hint = words.join(' ');
+  const idx = nonEmpty.findIndex(l => l.includes(hint));
+  if (idx === -1) return null;
+  const rest = nonEmpty[idx].slice(nonEmpty[idx].indexOf(hint) + hint.length).replace(/^[\s,|•·–—-]+/, '');
+  const headlineHint = usableHeadline(rest) ? rest : null;
+  return { firstName: words[0], lastName: words.slice(1).join(' '), idx, headlineHint };
+}
+
+function parseResumeText(text, hints) {
   const lines = text.split('\n').map(l => l.trim());
   const nonEmpty = lines.filter(Boolean);
+  const resumeBlocks = text.split(/\n\s*\n/)
+    .map(b => b.split('\n').map(l => l.trim()).filter(Boolean)).filter(b => b.length);
   const parsed = {};
 
   const emailMatch = text.match(/[\w.+-]+@[\w-]+\.[\w.-]+/);
@@ -1051,21 +1215,32 @@ function parseResumeText(text) {
   const githubMatch = text.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/[\w-]+/i);
   if (githubMatch) parsed.github = githubMatch[0].replace(/^https?:\/\//, '');
 
-  // Name: first non-empty line, if it reads like "First Last" (2-4 words, letters only)
-  if (nonEmpty[0] && nonEmpty[0].length < 50 && /^[A-Za-z.'-]+(\s+[A-Za-z.'-]+){1,3}$/.test(nonEmpty[0])) {
-    const parts = nonEmpty[0].split(/\s+/);
-    parsed.firstName = parts[0];
-    parsed.lastName = parts.slice(1).join(' ');
+  // Name: see parseResumeName / nameFromLargestText - tolerates credentials,
+  // accents, a "Dr." prefix, contact info or a title sharing the line, and
+  // (for PDFs) a name that isn't in the first lines.
+  let nameInfo = parseResumeName(nonEmpty);
+  if ((!nameInfo || nameInfo.headlineHint) && hints && hints.name) {
+    nameInfo = nameFromLargestText(nonEmpty, hints.name) || nameInfo;
   }
+  if (nameInfo) {
+    parsed.firstName = nameInfo.firstName;
+    parsed.lastName = nameInfo.lastName;
+  }
+  const nameIdx = nameInfo ? nameInfo.idx : -1;
 
-  // Headline: first short line after the name that isn't contact info
-  for (let i = 1; i < Math.min(nonEmpty.length, 5); i++) {
-    const l = nonEmpty[i];
-    if (isSectionHeading(l)) break;
-    if (isLocationOnlyLine(l) || STREET_ADDRESS_RE.test(l)) continue;
-    if (l.length < 90 && l.length > 3 && !/@/.test(l) && !/\d{3}[\s.-]?\d{3}[\s.-]?\d{4}/.test(l) && !/linkedin\.com|github\.com/i.test(l)) {
-      parsed.headline = l;
-      break;
+  // Headline: a title sharing the name's line, else the first short line
+  // after the name that isn't contact info, a section heading, or just a place.
+  if (nameInfo && nameInfo.headlineHint) {
+    parsed.headline = nameInfo.headlineHint;
+  } else {
+    for (let i = nameIdx + 1; i < Math.min(nonEmpty.length, nameIdx + 5); i++) {
+      const l = nonEmpty[i];
+      if (isSectionHeading(l)) break;
+      if (isLocationOnlyLine(l) || isContactLine(l)) continue;
+      if (l.length < 90 && l.length > 3) {
+        parsed.headline = l;
+        break;
+      }
     }
   }
 
@@ -1074,7 +1249,7 @@ function parseResumeText(text) {
   // onto a real "City, ST" that starts the next line (e.g. a job title
   // ending in "...Manager" immediately above a contact line beginning
   // "Austin, TX" was matching as one location, "Manager\nAustin, TX").
-  const parsedLocation = parseResumeLocation(lines);
+  const parsedLocation = parseResumeLocation(nonEmpty, nameIdx, resumeBlocks);
   if (parsedLocation) parsed.location = parsedLocation;
 
   const sections = findResumeSections(lines);
@@ -1258,7 +1433,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
   try {
     const text = await extractTextFromResumeFile(file);
     if (!text.trim()) throw new Error('Could not find any text in that file.');
-    const parsed = parseResumeText(text);
+    const parsed = parseResumeText(text, lastResumeHints);
     const filled = applyParsedResumeData(parsed);
     trackProfile('profile_resume_upload', { file_type: ext, autofill: filled.length ? 'filled' : 'nothing_found', fields_filled: filled.length, location: filled.includes('location') ? 'found' : 'missing' });
     box.classList.remove('parsing');
