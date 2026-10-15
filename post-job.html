@@ -85,7 +85,11 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .upload-box small{font-size:11px;color:var(--t3);margin-top:4px;display:block;}
 .upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .field small{display:block;font-size:11px;color:var(--t3);margin-top:4px;}
-.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.plan-card{position:relative;}
+.plan-badge{position:absolute;top:-9px;right:12px;background:var(--grn);color:#052e1e;font-size:10px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:999px;}
+.plan-foot{font-size:11.5px;color:var(--t3);margin-top:12px;line-height:1.5;}
+@media (max-width:640px){.plan-grid{grid-template-columns:1fr;}}
 .plan-card{background:#1A1A1A;border:1.5px solid var(--bdr2);border-radius:12px;padding:1.1rem;cursor:pointer;text-align:center;transition:border-color .15s;}
 .plan-card:hover{border-color:rgba(34,224,154,0.4);}
 .plan-card.on{border-color:var(--grn);background:rgba(34,224,154,0.06);}
@@ -205,17 +209,23 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
   </div>
 
   <div class="form-section">
-    <div class="fs-title"><i class="ti ti-calendar"></i>Choose a plan</div>
+    <div class="fs-title"><i class="ti ti-calendar"></i>Choose how to post</div>
     <div class="plan-grid" id="planGrid">
       <div class="plan-card on" data-days="30" data-cents="10000">
-        <div class="plan-days">30 days</div>
+        <div class="plan-days">Single posting</div>
         <div class="plan-price">$100</div>
-        <div class="plan-note">Standard listing</div>
+        <div class="plan-note">30-day listing</div>
       </div>
-      <div class="plan-card" data-days="60" data-cents="15000">
-        <div class="plan-days">60 days</div>
-        <div class="plan-price">$150</div>
-        <div class="plan-note">Extended reach</div>
+      <div class="plan-card" data-pack="5" data-cents="45000">
+        <div class="plan-days">5 postings</div>
+        <div class="plan-price">$450</div>
+        <div class="plan-note">$90 per posting</div>
+      </div>
+      <div class="plan-card" data-pack="10" data-cents="85000">
+        <span class="plan-badge">BEST VALUE</span>
+        <div class="plan-days">10 postings</div>
+        <div class="plan-price">$850</div>
+        <div class="plan-note">$85 per posting</div>
       </div>
       <div class="plan-card" id="creditPlanCard" data-credit="1" style="display:none;grid-column:1 / -1;">
         <div class="plan-days"><i class="ti ti-ticket" style="vertical-align:-2px;"></i> Use a posting credit</div>
@@ -223,6 +233,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
         <div class="plan-note">30-day listing, no payment needed</div>
       </div>
     </div>
+    <div class="plan-foot">Every posting runs for 30 days. Packs need a free employer account, can be used on any role, and stay valid for 12 months.</div>
   </div>
 
   <button type="button" class="btn-grn" id="submitBtn">Continue to payment →</button>
@@ -449,14 +460,147 @@ document.getElementById('job-location').addEventListener('input', updateSalaryRe
 
 let selectedDays = 30;
 let useCredit = false;
+let selectedPack = null;
+
+// The submit button and the line under it follow the chosen option, so it is
+// always clear whether the next click publishes, pays for one posting, or
+// buys a pack.
+function updateSubmitUi() {
+  const btn = document.getElementById('submitBtn');
+  const note = document.getElementById('submitNote');
+  note.style.color = '';
+  if (useCredit) {
+    btn.textContent = 'Publish with my credit →';
+    note.textContent = 'This uses one of your posting credits - no payment needed.';
+  } else if (selectedPack) {
+    const price = selectedPack === 10 ? '$850' : '$450';
+    btn.textContent = `Buy the ${selectedPack}-posting pack - ${price} →`;
+    note.textContent = "You'll pay on Stripe's secure checkout, then come back here and use a credit to publish this role. We keep your job details saved.";
+  } else {
+    btn.textContent = 'Continue to payment →';
+    note.textContent = "You'll enter payment details on Stripe's secure checkout page next.";
+  }
+}
+
 document.querySelectorAll('.plan-card').forEach(card => {
   card.addEventListener('click', function(){
     document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('on'));
     this.classList.add('on');
     useCredit = this.dataset.credit === '1';
-    selectedDays = useCredit ? 30 : Number(this.dataset.days);
+    selectedPack = this.dataset.pack ? Number(this.dataset.pack) : null;
+    selectedDays = 30;
+    updateSubmitUi();
   });
 });
+
+// Job details are kept in this browser while someone signs in or pays for a
+// pack, so leaving the page for either doesn't cost them the form they filled in.
+const DRAFT_KEY = 'vt_post_draft';
+const DRAFT_FIELDS = {
+  company: 'company-name', email: 'company-email', title: 'job-title', location: 'job-location',
+  description: 'job-description', sector: 'job-sector', type: 'job-type', applyUrl: 'apply-url',
+  salaryPeriod: 'salary-period', salaryMin: 'salary-min', salaryMax: 'salary-max',
+};
+function saveDraft(extra) {
+  try {
+    // A blank form must never overwrite a draft that already holds real job details.
+    const hasText = ['company', 'email', 'title', 'location', 'description']
+      .some(key => document.getElementById(DRAFT_FIELDS[key]).value.trim());
+    if (!hasText) return;
+    const draft = Object.assign({ ts: Date.now() }, extra);
+    for (const [key, id] of Object.entries(DRAFT_FIELDS)) draft[key] = document.getElementById(id).value;
+    draft.international = document.getElementById('job-international').checked;
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch (err) { /* storage unavailable - the form just won't be restored */ }
+}
+function loadDraft() {
+  try {
+    const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    if (!draft || Date.now() - draft.ts > 7 * 24 * 3600 * 1000) return null;
+    return draft;
+  } catch (err) { return null; }
+}
+function clearDraft() {
+  try { localStorage.removeItem(DRAFT_KEY); } catch (err) { /* ignore */ }
+}
+
+const pendingDraft = loadDraft();
+const draftHasText = !!pendingDraft && ['company', 'email', 'title', 'location', 'description'].some(key => (pendingDraft[key] || '').trim());
+if (draftHasText) {
+  // Only the free-text fields decide "untouched" - the dropdowns carry defaults like "Full-time".
+  const formEmpty = ['company', 'email', 'title', 'location', 'description']
+    .every(key => !document.getElementById(DRAFT_FIELDS[key]).value.trim());
+  if (formEmpty) {
+    for (const [key, id] of Object.entries(DRAFT_FIELDS)) {
+      if (pendingDraft[key]) document.getElementById(id).value = pendingDraft[key];
+    }
+    document.getElementById('job-international').checked = !!pendingDraft.international;
+    document.getElementById('salary-period').dispatchEvent(new Event('change'));
+    updateSalaryRequirement();
+    const note = document.getElementById('submitNote');
+    note.textContent = 'We kept the job details you entered.';
+    note.style.color = 'var(--grn)';
+  }
+}
+
+const CREATE_CREDIT_CHECKOUT_URL = `${SUPABASE_URL}/functions/v1/create-credit-checkout-session`;
+
+async function buyPack(btn, note) {
+  const packSize = selectedPack;
+  saveDraft({ afterPack: true });
+
+  const session = getEmployerSession();
+  if (!session) {
+    note.textContent = 'Taking you to sign in first. A free employer account is needed to use a pack, and your job details are saved.';
+    note.style.color = 'var(--t3)';
+    setTimeout(() => { window.location.href = 'employer-login.html?next=post-job.html'; }, 1200);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Redirecting to payment…';
+  note.textContent = '';
+  try {
+    const purchaseId = crypto.randomUUID();
+    const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/employer_credit_purchases`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify({
+        id: purchaseId,
+        employer_user_id: session.user_id,
+        pack_size: packSize,
+        price_cents: packSize === 10 ? 85000 : 45000,
+        credits_remaining: 0,
+        status: 'pending_payment',
+      }),
+    });
+    if (!insertRes.ok) throw new Error(await insertRes.text());
+
+    const checkoutRes = await fetch(CREATE_CREDIT_CHECKOUT_URL, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ purchase_id: purchaseId }),
+    });
+    const checkoutData = await checkoutRes.json();
+    if (!checkoutRes.ok || !checkoutData.url) throw new Error(checkoutData.error || 'Could not start checkout.');
+    window.location.href = checkoutData.url;
+  } catch (err) {
+    btn.disabled = false;
+    updateSubmitUi();
+    note.textContent = 'Something went wrong starting checkout - please try again. If it keeps happening, email contact@verdetalent.com.';
+    note.style.color = 'var(--cor)';
+    console.error('Pack purchase failed:', err);
+  }
+}
 
 const MANAGE_CREDITS_URL = `${SUPABASE_URL}/functions/v1/manage-credits`;
 
@@ -477,6 +621,7 @@ async function checkCreditBalance() {
     if (!res.ok || !data.totalAvailable) return;
     document.getElementById('creditBalanceText').textContent = `${data.totalAvailable} available`;
     document.getElementById('creditPlanCard').style.display = 'block';
+    if (draftHasText && pendingDraft.afterPack) document.getElementById('creditPlanCard').click();
   } catch (err) {
     console.error('Could not check credit balance:', err);
   }
@@ -486,6 +631,11 @@ checkCreditBalance();
 document.getElementById('submitBtn').addEventListener('click', async function(){
   const btn = this;
   const note = document.getElementById('submitNote');
+
+  if (selectedPack) {
+    await buyPack(btn, note);
+    return;
+  }
 
   const companyName = document.getElementById('company-name').value.trim();
   const companyEmail = document.getElementById('company-email').value.trim();
@@ -551,7 +701,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       salary_max: salaryPeriod ? salaryMax : null,
       salary_period: salaryPeriod,
       duration_days: selectedDays,
-      price_cents: useCredit ? 0 : (selectedDays === 60 ? 15000 : 10000),
+      price_cents: useCredit ? 0 : 10000,
       status: 'pending_payment',
       employer_user_id: getEmployerSession()?.user_id || null,
     };
@@ -583,6 +733,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       const redeemData = await redeemRes.json();
       if (!redeemRes.ok || !redeemData.success) throw new Error(redeemData.error || 'Could not redeem a credit.');
 
+      clearDraft();
       window.location.href = 'post-job-success.html';
       return;
     }
@@ -600,6 +751,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     const checkoutData = await checkoutRes.json();
     if (!checkoutRes.ok || !checkoutData.url) throw new Error(checkoutData.error || 'Could not start checkout.');
 
+    clearDraft();
     window.location.href = checkoutData.url;
   } catch (err) {
     btn.disabled = false;

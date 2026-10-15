@@ -180,7 +180,15 @@ document.getElementById('signOutLink').addEventListener('click', function(e){
 });
 
 const params = new URLSearchParams(location.search);
-if (params.get('credits_success')) document.getElementById('successNote').style.display = 'block';
+if (params.get('credits_success')) {
+  document.getElementById('successNote').style.display = 'block';
+  let hasDraft = false;
+  try { hasDraft = !!localStorage.getItem('vt_post_draft'); } catch (err) { /* ignore */ }
+  if (hasDraft) {
+    document.getElementById('successNote').insertAdjacentHTML('beforeend',
+      ' <a href="post-job.html" style="color:inherit;font-weight:600;text-decoration:underline;">Finish posting your job &rarr;</a>');
+  }
+}
 if (params.get('canceled')) document.getElementById('cancelNote').style.display = 'block';
 
 // ------------------------------------------------------------------ Intelligence -------
