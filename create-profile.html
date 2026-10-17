@@ -1730,79 +1730,14 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
   note.style.color = 'var(--t3)';
 
   try {
-    // 1. Create the account - or, if this email is already registered,
-    // sign in with it instead of failing outright. That covers the case
-    // where an earlier attempt got the auth account created but never
-    // saved a profile (e.g. a resume upload failure used to abort the
-    // whole flow before the profile save ran), which otherwise leaves the
-    // visitor stuck: they can't sign up again (email taken) and login.html
-    // won't show them anything (no profile exists yet either).
-    let accessToken, userId, refreshToken, expiresIn;
-    const signupRes = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
-      method: 'POST',
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const signupData = await signupRes.json();
-    if(signupRes.ok){
-      accessToken = signupData.access_token;
-      userId = signupData.user?.id;
-      refreshToken = signupData.refresh_token;
-      expiresIn = signupData.expires_in;
-      if(!accessToken || !userId){
-        throw new Error('Account created, but email confirmation is required before you can finish your profile. Check your inbox, confirm, then sign in.');
-      }
-    } else {
-      const msg = signupData?.msg || signupData?.error_description || signupData?.error || '';
-      if(!/already registered|already exists/i.test(msg)){
-        throw new Error(msg || 'Could not create account.');
-      }
-      const loginRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-        method: 'POST',
-        headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const loginData = await loginRes.json();
-      if(!loginRes.ok){
-        throw new Error('That email is already registered. Enter its matching password above to pick up where you left off, or sign in instead.');
-      }
-      accessToken = loginData.access_token;
-      userId = loginData.user?.id;
-      refreshToken = loginData.refresh_token;
-      expiresIn = loginData.expires_in;
-
-      // A profile already exists for this account - don't silently
-      // overwrite it, send them to sign in and manage it there instead.
-      const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?user_id=eq.${userId}&select=id`, {
-        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${accessToken}` },
-      });
-      const existing = await existingRes.json();
-      if(existingRes.ok && existing.length){
-        throw new Error('An account and profile already exist for that email — sign in instead to update it.');
-      }
-    }
-
-    // Persisted so jobs.html's "Apply" flow knows this candidate is already
-    // signed in right after they finish creating their profile.
-    localStorage.setItem('vt_session', JSON.stringify({
-      access_token: accessToken,
-      refresh_token: refreshToken,
-      user_id: userId,
-      email,
-      expires_at: Date.now() + (expiresIn || 3600) * 1000,
-    }));
-
-    // 2. Save the profile first, before touching the resume upload - a
-    // failed upload (bad filename, flaky connection) shouldn't be able to
-    // block the profile from being created at all, since that's what
-    // previously left accounts stranded with nothing to sign into.
-    btn.textContent = 'Saving profile…';
+    // 1. Create the login AND the profile in ONE server-side step. If the
+    // profile can't be saved the server removes the login again, so nobody is
+    // ever left half-created - and a failed attempt is always safe to retry,
+    // with any password.
     const resumeFile = document.getElementById('inp-resume').files[0];
     const salMin = document.getElementById('pf-sal-min').value;
     const salMax = document.getElementById('pf-sal-max').value;
     const payload = {
-      user_id: userId,
-      email,
       first_name: first,
       last_name: last,
       headline: document.getElementById('inp-headline').value.trim() || null,
@@ -1823,7 +1758,6 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       website_url: document.getElementById('link-site').value.trim() || null,
       github_url: document.getElementById('link-github').value.trim() || null,
       resume_filename: resumeFile?.name || null,
-      resume_path: null,
       visibility_recruiters: document.querySelector('[data-vis="recruiters"]').classList.contains('on'),
       visibility_salary: document.querySelector('[data-vis="salary"]').classList.contains('on'),
       visibility_employer: document.querySelector('[data-vis="employer"]').classList.contains('on'),
@@ -1831,27 +1765,68 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       email_job_alerts: document.querySelector('[data-vis="jobAlerts"]').classList.contains('on'),
     };
 
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/candidates`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        // return=representation (not minimal) so we get back this new
-        // candidate's id + auto-generated referral_code, needed for the
-        // referral row below and the "share your link" nudge - the id
-        // isn't knowable client-side beforehand since the DB assigns it.
-        'Prefer': 'return=representation',
-      },
-      body: JSON.stringify(payload),
-    });
-    if(!res.ok){
-      const errText = await res.text();
-      throw new Error(errText || res.statusText);
+    btn.textContent = 'Creating your profile…';
+    let created;
+    try {
+      const createRes = await fetch(`${SUPABASE_URL}/functions/v1/create-candidate-account`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, profile: payload, referral_code: REFERRAL_CODE || null }),
+      });
+      created = await createRes.json().catch(() => null);
+      if (!createRes.ok || !created || !created.success) {
+        const failure = new Error((created && created.message) || 'Something went wrong on our side. Nothing was saved - please try again.');
+        failure.code = (created && created.code) || 'server';
+        throw failure;
+      }
+    } catch (callErr) {
+      if (callErr.code) throw callErr;
+      const offline = new Error("We couldn't reach the server. Check your connection and try again - nothing was saved.");
+      offline.code = 'network';
+      throw offline;
     }
-    const [newCandidate] = await res.json();
-    // GA4 key event - fired once the profile row actually exists, not on
-    // the auth signup alone (that can succeed and still leave no profile).
+    const newCandidate = { id: created.candidate_id, referral_code: created.referral_code };
+
+    // The server hands back a signed-in session; if it couldn't, sign in here
+    // (the profile exists either way).
+    let session = created.session;
+    if (!session || !session.access_token) {
+      try {
+        const loginRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const loginData = await loginRes.json();
+        if (loginRes.ok && loginData.access_token) {
+          session = {
+            access_token: loginData.access_token,
+            refresh_token: loginData.refresh_token,
+            expires_in: loginData.expires_in,
+            user_id: loginData.user && loginData.user.id,
+          };
+        }
+      } catch (loginErr) { /* no session - they can sign in from the next page */ }
+    }
+    const accessToken = session && session.access_token;
+    const userId = session && session.user_id;
+    if (session) {
+      // Persisted so jobs.html's "Apply" flow and the dashboard know this
+      // candidate is already signed in.
+      localStorage.setItem('vt_session', JSON.stringify({
+        access_token: session.access_token,
+        refresh_token: session.refresh_token,
+        user_id: session.user_id,
+        email,
+        expires_at: Date.now() + (session.expires_in || 3600) * 1000,
+      }));
+    }
+
+    // GA4 key event - fired once the profile row actually exists.
     profileFunnel.submitted = true;
     trackProfile('sign_up', {
       method: 'email',
@@ -1862,54 +1837,76 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     note.textContent = 'Account created and profile saved. You can sign in anytime to update it.';
     note.style.color = 'var(--grn)';
 
-    // 3. Upload the resume now that the profile itself is safely saved -
-    // a failure here (bad file, flaky connection) is worth surfacing but
-    // shouldn't read as if the whole signup failed, since it didn't.
-    if(resumeFile){
-      try {
-        const resumePath = `${userId}/${sanitizeStorageFileName(resumeFile.name)}`;
-        const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/resumes/${resumePath}`, {
-          method: 'POST',
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': resumeFile.type || 'application/octet-stream',
-            'x-upsert': 'true',
-          },
-          body: resumeFile,
-        });
-        if(!uploadRes.ok) throw new Error(await uploadRes.text());
-        await fetch(`${SUPABASE_URL}/rest/v1/candidates?id=eq.${newCandidate.id}`, {
-          method: 'PATCH',
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=minimal',
-          },
-          body: JSON.stringify({ resume_path: resumePath }),
-        });
-      } catch (uploadErr) {
-        console.error('Resume upload failed:', uploadErr);
-        note.textContent = 'Account created and profile saved, but the resume upload failed — you can sign in anytime to try uploading it again.';
-        note.style.color = 'var(--gld, #d4a72c)';
-      }
-    }
-
-    // Credit whoever referred this signup, if anyone - failure here
-    // shouldn't surface as an error to the new candidate, their profile is
-    // already saved either way.
-    if (REFERRAL_CODE && newCandidate?.id) {
-      fetch(`${SUPABASE_URL}/rest/v1/referrals`, {
+    // 2. Attach the resume. The profile already exists, so a failure here
+    // never undoes the signup - but it is never silent either: the person
+    // stays on the page, is told, and can retry or carry on without it.
+    let resumeFailed = false;
+    async function attachResume() {
+      if (!accessToken || !userId) throw new Error('Not signed in.');
+      const resumePath = `${userId}/${sanitizeStorageFileName(resumeFile.name)}`;
+      const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/resumes/${resumePath}`, {
         method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': resumeFile.type || 'application/octet-stream',
+          'x-upsert': 'true',
+        },
+        body: resumeFile,
+      });
+      if (!uploadRes.ok) throw new Error(await uploadRes.text());
+      const linkRes = await fetch(`${SUPABASE_URL}/rest/v1/candidates?id=eq.${newCandidate.id}`, {
+        method: 'PATCH',
         headers: {
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal',
         },
-        body: JSON.stringify({ referrer_code: REFERRAL_CODE, referred_candidate_id: newCandidate.id }),
-      }).catch((err) => console.error('Could not record referral:', err));
+        body: JSON.stringify({ resume_path: resumePath }),
+      });
+      if (!linkRes.ok) throw new Error(await linkRes.text());
+    }
+    function showResumeRetry() {
+      note.textContent = 'Your profile was saved, but your resume could not be uploaded.';
+      note.style.color = 'var(--gld, #d4a72c)';
+      const retry = document.createElement('button');
+      retry.type = 'button';
+      retry.className = 'btn-grn';
+      retry.style.marginTop = '10px';
+      retry.textContent = 'Try uploading it again';
+      const skip = document.createElement('a');
+      skip.href = session ? 'dashboard.html' : 'login.html?created=1';
+      skip.textContent = 'Continue without it - you can add it from your profile';
+      skip.style.cssText = 'display:block;margin-top:10px;font-size:12.5px;color:var(--t2);text-align:center;';
+      retry.addEventListener('click', async function(){
+        retry.disabled = true;
+        retry.textContent = 'Uploading…';
+        try {
+          await attachResume();
+          retry.remove();
+          skip.remove();
+          note.textContent = 'Resume uploaded ✓';
+          note.style.color = 'var(--grn)';
+          setTimeout(() => { window.location.href = session ? 'dashboard.html' : 'login.html?created=1'; }, 1200);
+        } catch (retryErr) {
+          console.error('Resume retry failed:', retryErr);
+          retry.disabled = false;
+          retry.textContent = 'Try uploading it again';
+          note.textContent = 'That upload failed again. Check your connection and try once more - or continue and add it later.';
+        }
+      });
+      note.insertAdjacentElement('afterend', retry);
+      retry.insertAdjacentElement('afterend', skip);
+    }
+    if (resumeFile) {
+      try {
+        await attachResume();
+      } catch (uploadErr) {
+        console.error('Resume upload failed:', uploadErr);
+        resumeFailed = true;
+        showResumeRetry();
+      }
     }
 
     if (newCandidate?.referral_code) {
@@ -1972,24 +1969,24 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     // this page still asking for their attention (the referral card and,
     // especially, the "continue to your application" button above need a
     // click before it'd make sense to navigate away).
-    if(!pendingRaw){
-      setTimeout(() => { window.location.href = 'login.html?created=1'; }, 900);
+    // Straight to their profile - they are already signed in, so no second
+    // login. Held back if the resume still needs a retry.
+    if(!pendingRaw && !resumeFailed){
+      setTimeout(() => { window.location.href = session ? 'dashboard.html' : 'login.html?created=1'; }, 1200);
     }
   } catch(err){
     btn.disabled = false;
     btn.textContent = 'Submit profile →';
-    note.textContent = err.message || 'Something went wrong — please try again.';
     note.style.color = 'var(--cor)';
+    if (err.code === 'email_taken' || err.code === 'profile_exists') {
+      note.innerHTML = 'That email already has a Verde Talent account. <a href="login.html" style="color:inherit;text-decoration:underline;">Sign in</a>, or <a href="login.html?forgot=1" style="color:inherit;text-decoration:underline;">reset your password</a>.';
+    } else {
+      note.textContent = err.message || 'Something went wrong - please try again.';
+    }
     console.error('Candidate submit failed:', err);
     // A reason code, not the message itself - server messages can echo
     // back what was typed.
-    const msg = String(err.message || '');
-    trackProfile('profile_submit_error', {
-      reason: /already (exist|registered)/i.test(msg) ? 'account_exists'
-        : /confirm/i.test(msg) ? 'email_confirmation_required'
-        : /password/i.test(msg) ? 'password_rejected'
-        : 'other',
-    });
+    trackProfile('profile_submit_error', { reason: err.code || 'other' });
   }
 });
 </script>

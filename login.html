@@ -174,6 +174,7 @@ document.getElementById('navToggle').addEventListener('click', function(){
     <div class="field"><label>Password</label><input type="password" id="li-password" placeholder="Your password"/></div>
     <button type="button" class="btn-grn" id="loginBtn">Sign in →</button>
     <div class="note" id="loginNote"></div>
+    <div class="foot-link" style="margin-top:12px;"><a href="#" id="forgotLink">Forgot your password?</a></div>
     <div class="foot-link">Don't have a profile yet? <a href="create-profile.html">Create one</a></div>
   </div>
 
@@ -181,6 +182,39 @@ document.getElementById('navToggle').addEventListener('click', function(){
 <script>
 const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+
+// "Forgot your password?" - asks the server to email a one-time reset link.
+// The answer is the same whether or not the address has an account.
+async function sendPasswordReset(){
+  const email = document.getElementById('li-email').value.trim();
+  const note = document.getElementById('loginNote');
+  if(!email || !email.includes('@')){
+    note.textContent = 'Enter your email above first, then choose "Forgot your password?" again.';
+    note.style.color = 'var(--cor)';
+    document.getElementById('li-email').focus();
+    return;
+  }
+  note.textContent = 'Sending…';
+  note.style.color = 'var(--t3)';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/request-password-reset`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    if(!res.ok) throw new Error('reset request failed');
+    note.textContent = "If that email has a Verde Talent account, we've sent a link to reset your password. It can take a minute to arrive - check spam too.";
+    note.style.color = 'var(--grn)';
+  } catch(err){
+    console.error('Password reset request failed:', err);
+    note.textContent = 'Could not send that right now - please try again in a moment.';
+    note.style.color = 'var(--cor)';
+  }
+}
+document.getElementById('forgotLink').addEventListener('click', function(e){ e.preventDefault(); sendPasswordReset(); });
+if(new URLSearchParams(window.location.search).get('forgot') === '1'){
+  document.getElementById('li-email').focus();
+}
 
 if(new URLSearchParams(window.location.search).get('created') === '1'){
   document.getElementById('createdNote').style.display = 'block';
