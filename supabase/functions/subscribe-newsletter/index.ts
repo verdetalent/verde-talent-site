@@ -15,15 +15,69 @@
 // stays ON, same as the direct-to-PostgREST call it replaces: the
 // anon key sent as apikey/Authorization from news.html satisfies that.
 //
+// Each genuinely new subscriber also triggers a short alert email to the site
+// owner (never for a duplicate or failed signup, and never allowed to fail the
+// signup itself).
+//
 // Env vars required (set via `supabase secrets set`):
+//   RESEND_API_KEY            - same key the other Edge Functions use
 //   SUPABASE_URL              - auto-provided by Supabase
 //   SUPABASE_SERVICE_ROLE_KEY - auto-provided by Supabase
 
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { Resend } from "npm:resend@4";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
+const resend = new Resend(Deno.env.get("RESEND_API_KEY")!);
+
+const OWNER_EMAIL = "contact@verdetalent.com";
+
+// The signup form is public, so a bot could submit thousands of addresses. The
+// subscribers are still all saved - this only caps how many alert emails one
+// server instance will send (10 per 10 minutes) so the owner's inbox isn't
+// flooded. Per-instance and best-effort, which is plenty for that purpose.
+const ALERT_WINDOW_MS = 10 * 60 * 1000;
+const ALERT_MAX_PER_WINDOW = 10;
+const recentAlerts: number[] = [];
+
+function escapeHtml(s: unknown): string {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+async function alertOwner(email: string, stateCodeValue: string | null, locationInput: string, jobTitle: string) {
+  const now = Date.now();
+  while (recentAlerts.length && now - recentAlerts[0] > ALERT_WINDOW_MS) recentAlerts.shift();
+  if (recentAlerts.length >= ALERT_MAX_PER_WINDOW) {
+    console.warn("Newsletter owner alerts throttled (burst of signups):", email);
+    return;
+  }
+  recentAlerts.push(now);
+
+  const row = (k: string, v: string) =>
+    `<tr><td style="padding:3px 14px 3px 0;color:#6B7280;white-space:nowrap;">${escapeHtml(k)}</td><td style="padding:3px 0;">${escapeHtml(v || "-")}</td></tr>`;
+  const { error } = await resend.emails.send({
+    from: "Verde Talent Alerts <alerts@updates.verdetalent.com>",
+    to: OWNER_EMAIL,
+    subject: `New newsletter subscriber: ${email}`,
+    html: `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;color:#0A0A0A;">
+<p style="margin:0 0 10px;font-size:16px;font-weight:700;">New newsletter subscriber</p>
+<table cellpadding="0" cellspacing="0" style="font-size:13.5px;">
+${row("Email", email)}
+${row("Location entered", locationInput)}
+${row("State", stateCodeValue || "")}
+${row("Job title", jobTitle)}
+</table>
+<p style="margin:12px 0 0;color:#9CA3AF;font-size:12px;">Automatic alert - sent for each new newsletter subscriber.</p>
+</div>`,
+  });
+  if (error) console.error("Owner alert rejected:", error);
+}
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "https://verdetalent.com",
@@ -126,11 +180,12 @@ Deno.serve(async (req) => {
     // Optional too - newsletter-weekly uses it to match Featured jobs by role.
     const jobTitle = typeof job_title === "string" ? job_title.trim().slice(0, 100) : "";
 
+    const state = locationInput ? stateFromLocation(locationInput) : null;
     const { error } = await supabaseAdmin
       .from("newsletter_subscribers")
       .insert({
         email,
-        location: locationInput ? stateFromLocation(locationInput) : null,
+        location: state,
         location_input: locationInput || null,
         job_title: jobTitle || null,
       });
@@ -139,6 +194,13 @@ Deno.serve(async (req) => {
       if (error.code === "23505") return jsonResponse({ error: "Already subscribed." }, 409);
       console.error(error);
       return jsonResponse({ error: "Something went wrong." }, 500);
+    }
+
+    // Best-effort: the subscriber is saved either way.
+    try {
+      await alertOwner(email, state, locationInput, jobTitle);
+    } catch (alertErr) {
+      console.error("Owner alert failed:", alertErr);
     }
 
     return jsonResponse({ success: true }, 200);
