@@ -293,7 +293,17 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
     });
     const profiles = await profileRes.json();
     if(!profileRes.ok || !profiles.length){
-      throw new Error('Signed in, but no profile was found on this account.');
+      // A login with no candidate profile is usually an employer who used
+      // the candidate page. Don't leave a candidate session behind for it,
+      // and point them to the right sign-in instead of a dead end.
+      localStorage.removeItem('vt_session');
+      const isEmployer = tokenData.user?.user_metadata?.account_type === 'employer';
+      const noProfile = new Error(isEmployer
+        ? 'That email is an employer account.'
+        : 'Signed in, but no candidate profile was found on this account.');
+      noProfile.noCandidateProfile = true;
+      noProfile.isEmployer = isEmployer;
+      throw noProfile;
     }
     const p = profiles[0];
 
@@ -349,8 +359,14 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
   } catch(err){
     btn.disabled = false;
     btn.textContent = 'Sign in →';
-    note.textContent = err.message || 'Something went wrong — please try again.';
     note.style.color = 'var(--cor)';
+    if(err.noCandidateProfile){
+      // Static markup only - the message text above is ours, not user input.
+      note.innerHTML = err.message + ' <a href="employer-login.html" style="color:var(--amb);text-decoration:underline;">Sign in as an employer →</a>'
+        + (err.isEmployer ? '' : ' Or <a href="create-profile.html" style="color:inherit;text-decoration:underline;">create a candidate profile</a>.');
+    } else {
+      note.textContent = err.message || 'Something went wrong — please try again.';
+    }
     console.error('Login failed:', err);
   }
 });
