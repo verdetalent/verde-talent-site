@@ -95,6 +95,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <div class="field"><label>Password</label><input type="password" id="li-password" placeholder="Your password"/></div>
     <button type="button" class="btn-grn" id="loginBtn">Sign in →</button>
     <div class="note" id="loginNote"></div>
+    <div class="foot-link" id="forgotWrap" style="margin-top:4px;margin-bottom:10px;"><a href="#" id="forgotLink">Forgot your password?</a></div>
     <div class="foot-link" id="toggleLink">New here? <a>Create an employer account</a></div>
   </div>
 </div>
@@ -114,6 +115,7 @@ const toggleLink = document.getElementById('toggleLink');
 toggleLink.addEventListener('click', function(e){
   if (e.target.tagName !== 'A') return;
   mode = mode === 'signin' ? 'signup' : 'signin';
+  document.getElementById('forgotWrap').style.display = mode === 'signin' ? '' : 'none';
   if (mode === 'signup') {
     cardTitle.innerHTML = 'Create an <span style="color:var(--amb);">employer</span> account';
     cardSub.textContent = 'So you can manage your postings without hunting for an emailed link.';
@@ -124,6 +126,69 @@ toggleLink.addEventListener('click', function(e){
     cardSub.textContent = "Manage the jobs you've posted to Verde Talent.";
     loginBtn.textContent = 'Sign in →';
     toggleLink.innerHTML = 'New here? <a>Create an employer account</a>';
+  }
+});
+
+// Creating an employer account happens on the server: the account is tagged
+// as an employer, the employer gets a welcome email, and we get an alert.
+// Returns the same shape the sign-in endpoint does, so the code below is shared.
+async function createEmployerAccount(email, password){
+  let res, data;
+  try {
+    res = await fetch(`${SUPABASE_URL}/functions/v1/create-employer-account`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    data = await res.json().catch(() => null);
+  } catch(netErr){
+    throw new Error("We couldn't reach the server. Check your connection and try again.");
+  }
+  if(!res.ok || !data || !data.success){
+    throw new Error((data && data.message) || 'Something went wrong on our side - please try again.');
+  }
+  const s = data.session;
+  if(s && s.access_token){
+    return { access_token: s.access_token, refresh_token: s.refresh_token, expires_in: s.expires_in, user: { id: s.user_id, email: s.email || email } };
+  }
+  // The account exists but the server couldn't hand back a session - sign in here.
+  const loginRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+  const login = await loginRes.json().catch(() => ({}));
+  if(loginRes.ok && login.access_token) return login;
+  throw new Error('Your account was created - please sign in with the email and password you just chose.');
+}
+
+// "Forgot your password?" - emails a one-time reset link. The answer is the
+// same whether or not the address has an account.
+document.getElementById('forgotLink').addEventListener('click', async function(e){
+  e.preventDefault();
+  const note = document.getElementById('loginNote');
+  const email = document.getElementById('li-email').value.trim();
+  if(!email || !email.includes('@')){
+    note.textContent = 'Enter your email above first, then choose "Forgot your password?" again.';
+    note.style.color = 'var(--cor)';
+    document.getElementById('li-email').focus();
+    return;
+  }
+  note.textContent = 'Sending…';
+  note.style.color = 'var(--t3)';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/request-password-reset`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    if(!res.ok) throw new Error('reset request failed');
+    note.textContent = "If that email has a Verde Talent account, we've sent a link to reset your password. It can take a minute to arrive - check spam too.";
+    note.style.color = 'var(--grn)';
+  } catch(err){
+    console.error('Password reset request failed:', err);
+    note.textContent = 'Could not send that right now - please try again in a moment.';
+    note.style.color = 'var(--cor)';
   }
 });
 
@@ -148,17 +213,19 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
   note.textContent = '';
 
   try {
-    const endpoint = mode === 'signup' ? 'signup' : 'token?grant_type=password';
-    const authRes = await fetch(`${SUPABASE_URL}/auth/v1/${endpoint}`, {
-      method: 'POST',
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const authData = await authRes.json();
-    if(!authRes.ok){
-      throw new Error(authData?.msg || authData?.error_description || (mode === 'signup'
-        ? 'Could not create account — that email may already be registered. Try signing in instead.'
-        : 'Incorrect email or password.'));
+    let authData;
+    if (mode === 'signup') {
+      authData = await createEmployerAccount(email, password);
+    } else {
+      const authRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      authData = await authRes.json();
+      if(!authRes.ok){
+        throw new Error(authData?.error_description || authData?.msg || 'Incorrect email or password.');
+      }
     }
     const accessToken = authData.access_token;
     const userId = authData.user?.id;
