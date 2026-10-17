@@ -89,7 +89,15 @@ Deno.serve(async (req) => {
       email,
       options: { redirectTo: RESET_PAGE },
     });
-    const link = data?.properties?.action_link;
+    // The link only OPENS reset-password.html; the single-use code is redeemed
+    // there when the person submits a new password. That keeps an email
+    // security scanner or link previewer (common on corporate inboxes) from
+    // using the code up just by loading the URL. Falls back to Supabase's own
+    // hosted link if the hashed token is ever missing.
+    const hashedToken = data?.properties?.hashed_token;
+    const link = hashedToken
+      ? `${RESET_PAGE}?token_hash=${encodeURIComponent(hashedToken)}&type=recovery`
+      : data?.properties?.action_link;
     if (error || !link) {
       // Unknown address (or a lookup failure) - say nothing different.
       if (error) console.error("generateLink:", error.message);
