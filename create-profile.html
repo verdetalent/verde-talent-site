@@ -1565,22 +1565,23 @@ document.getElementById('leadSubmitBtn').addEventListener('click', async functio
   note.textContent = '';
 
   try {
-    const results = await Promise.all(sectors.map((sector) =>
-      fetch(`${SUPABASE_URL}/rest/v1/job_alert_leads`, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal',
-        },
-        body: JSON.stringify({ email, sector, location, job_title: jobTitle || null }),
-      }),
-    ));
+    // One request for the whole signup: the server saves a row per sector
+    // (unique per email + sector, as before) and notifies us once per person.
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/subscribe-job-alert`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, job_title: jobTitle, location, sectors }),
+    });
+    const result = await res.json().catch(() => null);
+    if (!res.ok || !result || !result.success) throw new Error((result && result.error) || 'All signups failed');
 
-    const okCount = results.filter((r) => r.ok).length;
-    const dupCount = results.filter((r) => r.status === 409).length;
-    const failCount = results.length - okCount - dupCount;
+    const okCount = result.added.length;
+    const dupCount = result.already.length;
+    const failCount = result.failed.length;
 
     if (okCount === 0 && dupCount === 0) throw new Error('All signups failed');
 
