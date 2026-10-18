@@ -19,6 +19,7 @@
 ## Find jobs
 - [Job search](https://verdetalent.com/jobs.html): every open role, filterable by sector, location, salary, seniority, work style and skills. Also covers remote and international roles.
 - [Browse by location and role](https://verdetalent.com/browse.html): pages for each sector, job function and state - for example solar jobs in Texas, or wind technician jobs nationally.
+- [Companies hiring engineers](https://verdetalent.com/browse/companies-hiring-engineers.html): the employers with the most open engineering roles across solar, wind, battery storage and grid.
 - [Companies hiring](https://verdetalent.com/companies.html): the 80 energy companies on Verde Talent, with their open role counts.
 - Employer profiles, one page each, at https://verdetalent.com/companies/<employer-slug>.html - for example [Vestas](https://verdetalent.com/companies/vestas.html) or [First Solar](https://verdetalent.com/companies/first-solar.html): open roles, where that employer is hiring, what it posts most and what its postings advertise.
 
