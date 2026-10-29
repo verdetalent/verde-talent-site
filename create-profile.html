@@ -103,6 +103,38 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .fs-title{font-size:15px;font-weight:500;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .fs-title i{font-size:18px;color:var(--grn);}
 .fs-hint{font-size:12px;font-weight:400;color:var(--t3);}
+.exp-years{font-size:13px;color:var(--t2);line-height:1.5;margin:0 0 .9rem;padding:.6rem .85rem;border-left:2px solid var(--grn);background:rgba(34,224,154,0.05);border-radius:0 8px 8px 0;}
+.exp-years b{color:var(--t1);font-weight:600;}
+.fold{padding:0;}
+.fold-sum{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:1.1rem 1.5rem;}
+.fold-sum::-webkit-details-marker{display:none;}
+.fold-sum .fs-title{margin-bottom:0;}
+.fold-hint{font-size:12px;font-weight:400;color:var(--t3);}
+.fold-hint.set{color:var(--grn);}
+.fold-chev{font-size:16px;color:var(--t3);transition:transform .15s;flex-shrink:0;}
+.fold[open] .fold-chev{transform:rotate(180deg);}
+.fold[open] .fold-sum{padding-bottom:.9rem;}
+.fold-body{padding:0 1.5rem 1.5rem;}
+.fold-sum:focus-visible{outline:2px solid var(--grn);outline-offset:-2px;border-radius:16px;}
+.cp-intro{margin:0 0 1.1rem;}
+.cp-intro h1{font-size:26px;font-weight:600;line-height:1.25;margin:0 0 .45rem;}
+.cp-intro p{font-size:14.5px;color:var(--t2);line-height:1.55;margin:0 0 .9rem;}
+.cp-steps{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;}
+.cp-steps li{font-size:12.5px;color:var(--t2);border:0.5px solid var(--bdr2);border-radius:20px;padding:5px 12px 5px 6px;display:flex;align-items:center;gap:7px;}
+.cp-steps li b{width:20px;height:20px;border-radius:50%;background:rgba(34,224,154,0.14);color:var(--grn);font-size:11px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;}
+.resume-hero{border-color:rgba(34,224,154,0.3);}
+.resume-lead{font-size:13.5px;color:var(--t2);line-height:1.55;margin-bottom:.9rem;}
+.resume-hero .upload-box{padding:2rem 1.25rem;}
+.resume-hero .upload-box p{font-size:15px;color:var(--t1);font-weight:500;}
+.manual-wrap{text-align:center;margin:-2px 0 14px;}
+.manual-link{background:none;border:0;color:var(--t3);font-size:12.5px;font-family:var(--font-sans);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px;}
+.manual-link:hover{color:var(--t1);}
+.import-banner{display:none;font-size:13.5px;color:var(--t1);line-height:1.55;padding:.8rem 1rem;margin:0 0 14px;border:0.5px solid rgba(34,224,154,0.3);border-left:3px solid var(--grn);background:rgba(34,224,154,0.06);border-radius:10px;}
+.import-banner.show{display:block;}
+.import-banner.working{border-left-color:var(--amb);background:rgba(255,181,71,0.06);border-color:rgba(255,181,71,0.3);}
+.import-banner b{font-weight:600;}
+.body.pre-import{grid-template-columns:minmax(0,640px);justify-content:center;}
+.pre-import .after-import{display:none;}
 .section-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(34,224,154,0.05);border:0.5px solid rgba(34,224,154,0.25);border-radius:10px;padding:.7rem .9rem;}
 .section-summary .ss-text{font-size:13px;color:var(--t1);line-height:1.5;}
 .section-summary .ss-edit{background:none;border:0.5px solid var(--bdr2);color:var(--t2);font-size:12px;padding:5px 11px;border-radius:7px;cursor:pointer;white-space:nowrap;font-family:var(--font-sans);flex-shrink:0;}
@@ -119,13 +151,6 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .upload-box p{font-size:13px;color:var(--t2);}
 .upload-box small{font-size:11px;color:var(--t3);margin-top:4px;display:block;}
 .upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-.avatar-row{display:flex;align-items:center;gap:1.25rem;margin-bottom:1.25rem;}
-.avatar-upload{width:72px;height:72px;border-radius:50%;background:#1A1A1A;border:1.5px dashed var(--bdr2);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;position:relative;overflow:hidden;}
-.avatar-upload input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
-.avatar-upload i{font-size:20px;color:var(--t3);transform:translateX(2px);}
-.avatar-hint{font-size:11px;color:var(--t3);margin-top:4px;}
-.avatar-info{font-size:13px;color:var(--t2);}
-.avatar-info small{display:block;font-size:11px;color:var(--t3);margin-top:3px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .form-row.full{grid-template-columns:1fr;}
 .field label{display:block;font-size:12px;color:var(--t3);margin-bottom:5px;}
@@ -222,7 +247,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .lite-alert-note{font-size:12px;margin-top:10px;min-height:14px;}
 @media (max-width:600px){.lite-alert-form{flex-direction:column;}.lite-alert-form input,.lite-alert-form select,.lite-alert-form button{width:100%;}}
 .submit-note{font-size:11px;color:var(--t3);margin-top:8px;text-align:center;}
-@media (max-width:820px){.body{grid-template-columns:1fr;}.sidebar{position:static;}}
+@media (max-width:820px){.body,.body.pre-import{grid-template-columns:1fr;}.sidebar{position:static;}}
 .site-footer{border-top:0.5px solid var(--bdr,rgba(255,255,255,0.08));padding:2rem 1.5rem;text-align:center;}
 .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.55rem 1.15rem;margin-bottom:1rem;}
 .footer-links a{font-size:12.5px;color:var(--t2,rgba(255,255,255,0.6));text-decoration:none;}
@@ -299,39 +324,30 @@ document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
 </script>
-<div class="body">
+<div class="body pre-import">
   <div>
-    <div class="form-section">
-      <div class="fs-title"><i class="ti ti-lock"></i>Account</div>
-      <div class="form-row">
-        <div class="field"><label for="acc-email">Email</label><input type="email" id="acc-email" placeholder="you@example.com" autocomplete="email"/></div>
-        <div class="field"><label for="acc-password">Password</label><input type="password" id="acc-password" placeholder="At least 6 characters" autocomplete="new-password"/></div>
-      </div>
-      <div style="font-size:12px;color:var(--t3);">This becomes your login — use it to sign back in and update your profile later.</div>
+    <div class="cp-intro">
+      <h1>Create your profile in about a minute</h1>
+      <p>Upload your resume and we'll fill in the rest - you just check it over.</p>
+      <ol class="cp-steps"><li><b>1</b> Upload your resume</li><li><b>2</b> Check it over</li><li><b>3</b> Create your login</li></ol>
     </div>
-    <div class="form-section">
-      <div class="fs-title"><i class="ti ti-file-text"></i>Resume / CV</div>
-      <div style="font-size:13px;color:var(--t2);margin-bottom:.9rem;line-height:1.5;">Upload your resume and we'll automatically fill in your profile below - you can review and edit before submitting.</div>
+    <div class="form-section resume-hero" id="resumeSection">
+      <div class="fs-title"><i class="ti ti-file-text"></i>Start with your resume</div>
+      <div class="resume-lead">We'll read it and fill in your name, headline, location, work history and more. It takes a few seconds.</div>
       <div class="upload-box" id="resumeBox">
         <label for="inp-resume" class="sr-only">Resume file</label>
         <input type="file" accept=".pdf,.doc,.docx" id="inp-resume"/>
         <i class="ti ti-upload upload-icon" id="resumeIcon"></i>
-        <p id="resumeText">Drag and drop your resume, or <span style="color:var(--grn);">browse files</span></p>
+        <p id="resumeText">Drop your resume here, or <span style="color:var(--grn);">browse files</span></p>
         <small id="resumeHint">PDF or DOCX · Max 10 MB</small>
       </div>
     </div>
-    <div class="form-section">
+    <div class="manual-wrap" id="manualWrap"><button type="button" class="manual-link" id="manualFill">No resume handy? Fill it in by hand instead</button></div>
+    <div class="import-banner after-import" id="importBanner" role="status" aria-live="polite"></div>
+    <div class="form-section after-import">
       <div class="fs-title"><i class="ti ti-user"></i>Basic information</div>
       <div class="section-summary" id="basicInfoSummary" style="display:none;"><div class="ss-text" id="basicInfoSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('basicInfoSummary','basicInfoDetail')">Edit</button></div>
       <div id="basicInfoDetail">
-      <div class="avatar-row">
-        <div class="avatar-upload" id="avatarUpload">
-          <label for="inp-avatar" class="sr-only">Profile photo</label>
-          <input type="file" accept="image/*" id="inp-avatar" autocomplete="photo"/>
-          <i class="ti ti-camera" id="avatarIcon"></i>
-        </div>
-        <div class="avatar-info">Add a profile photo<small>JPG or PNG · Max 5 MB</small><small id="avatarFilename" style="color:var(--grn);"></small></div>
-      </div>
       <div class="form-row">
         <div class="field"><label for="inp-first">First name</label><input type="text" id="inp-first" placeholder="Jamie" autocomplete="given-name"/></div>
         <div class="field"><label for="inp-last">Last name</label><input type="text" id="inp-last" placeholder="Reyes" autocomplete="family-name"/></div>
@@ -339,11 +355,8 @@ document.addEventListener('click', function(){
       <div class="form-row full">
         <div class="field"><label for="inp-headline">Professional headline</label><input type="text" id="inp-headline" placeholder="e.g. Senior Solar Design Engineer · Open to remote"/></div>
       </div>
-      <div class="form-row">
+      <div class="form-row full">
         <div class="field"><label for="inp-loc">Location</label><input type="text" id="inp-loc" placeholder="City, State, or ZIP" aria-describedby="inp-loc-hint"/><div id="inp-loc-hint" style="font-size:11.5px;color:var(--t3);margin-top:5px;">Outside the US? Enter your city and country.</div><div id="inp-loc-note" role="status" style="display:none;font-size:12px;color:var(--cor);margin-top:5px;"></div></div>
-        <div class="field"><label for="inp-exp">Years of experience</label>
-          <select id="inp-exp"><option value="">Select…</option><option value="Less than 1 year">Less than 1 year</option><option value="1–3 years">1–3 years</option><option value="3–5 years">3–5 years</option><option value="5–10 years">5–10 years</option><option value="10+ years">10+ years</option></select>
-        </div>
       </div>
       <div class="form-row full">
         <div class="field"><label for="inp-bio">Bio</label>
@@ -353,39 +366,11 @@ document.addEventListener('click', function(){
       </div>
       </div>
     </div>
-    <div class="form-section">
-      <div class="fs-title"><i class="ti ti-solar-panel"></i>Sectors you work in</div>
-      <div class="section-summary" id="sectorsSummary" style="display:none;"><div class="ss-text" id="sectorsSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('sectorsSummary','sectorsDetail')">Edit</button></div>
-      <div class="sector-grid" id="sectorsDetail">
-        <button type="button" class="sector-pill" data-sector="Solar"><i class="ti ti-solar-panel"></i>Solar</button>
-        <button type="button" class="sector-pill" data-sector="Wind"><i class="ti ti-wind"></i>Wind</button>
-        <button type="button" class="sector-pill" data-sector="Storage"><i class="ti ti-battery-charging"></i>Storage</button>
-        <button type="button" class="sector-pill" data-sector="Grid"><i class="ti ti-bolt"></i>Grid</button>
-        <button type="button" class="sector-pill" data-sector="EV"><i class="ti ti-plug"></i>EV</button>
-        <button type="button" class="sector-pill" data-sector="Hydrogen"><i class="ti ti-atom"></i>Hydrogen</button>
-        <button type="button" class="sector-pill" data-sector="Policy"><i class="ti ti-building-bank"></i>Policy</button>
-        <button type="button" class="sector-pill" data-sector="Sustainability"><i class="ti ti-leaf"></i>Sustainability</button>
-      </div>
-    </div>
-    <div class="form-section">
-      <div class="fs-title"><i class="ti ti-tools"></i>Skills</div>
-      <div class="section-summary" id="skillsSummary" style="display:none;"><div class="ss-text" id="skillsSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('skillsSummary','skillsDetail')">Edit</button></div>
-      <div id="skillsDetail">
-      <div class="field" style="margin-bottom:12px;"><label for="skillInput">Add a skill</label><input type="text" id="skillInput" placeholder="Type a skill and press Enter…"/></div>
-      <div class="skill-tags" id="skillTags"></div>
-      <div class="sugg-label">Suggested:</div>
-      <div id="suggArea">
-        <button type="button" class="skill-sugg" data-skill="NABCEP certified">+ NABCEP certified</button>
-        <button type="button" class="skill-sugg" data-skill="AutoCAD">+ AutoCAD</button>
-        <button type="button" class="skill-sugg" data-skill="PVsyst">+ PVsyst</button>
-        <button type="button" class="skill-sugg" data-skill="Grid interconnection">+ Grid interconnection</button>
-      </div>
-      </div>
-    </div>
-    <div class="form-section">
+    <div class="form-section after-import">
       <div class="fs-title"><i class="ti ti-briefcase"></i>Work experience</div>
       <div class="section-summary" id="expSummary" style="display:none;"><div class="ss-text" id="expSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('expSummary','expDetail')">Edit</button></div>
       <div id="expDetail">
+      <div class="exp-years" id="expYears" aria-live="polite" style="display:none;"></div>
       <div id="expList"><div class="empty-note" id="expEmpty">No experience added yet.</div></div>
       <div class="add-form" id="expForm">
         <div class="form-row"><div class="field"><label for="exp-title">Job title</label><input type="text" id="exp-title" placeholder="Solar Design Engineer"/></div><div class="field"><label for="exp-co">Company</label><input type="text" id="exp-co" placeholder="Company · City, State"/></div></div>
@@ -395,7 +380,7 @@ document.addEventListener('click', function(){
       <button type="button" class="add-btn" onclick="toggleForm('expForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add experience</button>
       </div>
     </div>
-    <div class="form-section">
+    <div class="form-section after-import">
       <div class="fs-title"><i class="ti ti-school"></i>Education</div>
       <div class="section-summary" id="eduSummary" style="display:none;"><div class="ss-text" id="eduSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('eduSummary','eduDetail')">Edit</button></div>
       <div id="eduDetail">
@@ -408,8 +393,47 @@ document.addEventListener('click', function(){
       <button type="button" class="add-btn" onclick="toggleForm('eduForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add education</button>
       </div>
     </div>
+    <div class="form-section after-import" id="accountSection">
+      <div class="fs-title"><i class="ti ti-lock"></i>Create your login</div>
+      <div class="form-row">
+        <div class="field"><label for="acc-email">Email</label><input type="email" id="acc-email" placeholder="you@example.com" autocomplete="email"/></div>
+        <div class="field"><label for="acc-password">Password</label><input type="password" id="acc-password" placeholder="At least 6 characters" autocomplete="new-password"/></div>
+      </div>
+      <div style="font-size:12px;color:var(--t3);">Last step. This becomes your login - use it to sign back in and update your profile later.</div>
+    </div>
+    <details class="form-section fold after-import" id="sectorsFold">
+      <summary class="fold-sum"><span class="fs-title"><i class="ti ti-solar-panel"></i>Sectors you work in <span class="fold-hint" id="sectorsHint">Optional</span></span><i class="ti ti-chevron-down fold-chev"></i></summary>
+      <div class="fold-body">
+      <div class="sector-grid" id="sectorsDetail">
+        <button type="button" class="sector-pill" data-sector="Solar"><i class="ti ti-solar-panel"></i>Solar</button>
+        <button type="button" class="sector-pill" data-sector="Wind"><i class="ti ti-wind"></i>Wind</button>
+        <button type="button" class="sector-pill" data-sector="Storage"><i class="ti ti-battery-charging"></i>Storage</button>
+        <button type="button" class="sector-pill" data-sector="Grid"><i class="ti ti-bolt"></i>Grid</button>
+        <button type="button" class="sector-pill" data-sector="EV"><i class="ti ti-plug"></i>EV</button>
+        <button type="button" class="sector-pill" data-sector="Hydrogen"><i class="ti ti-atom"></i>Hydrogen</button>
+        <button type="button" class="sector-pill" data-sector="Policy"><i class="ti ti-building-bank"></i>Policy</button>
+        <button type="button" class="sector-pill" data-sector="Sustainability"><i class="ti ti-leaf"></i>Sustainability</button>
+      </div>
+      </div>
+    </details>
+    <details class="form-section fold after-import" id="skillsFold">
+      <summary class="fold-sum"><span class="fs-title"><i class="ti ti-tools"></i>Skills <span class="fold-hint" id="skillsHint">Optional</span></span><i class="ti ti-chevron-down fold-chev"></i></summary>
+      <div class="fold-body">
+      <div id="skillsDetail">
+      <div class="field" style="margin-bottom:12px;"><label for="skillInput">Add a skill</label><input type="text" id="skillInput" placeholder="Type a skill and press Enter…"/></div>
+      <div class="skill-tags" id="skillTags"></div>
+      <div class="sugg-label">Suggested:</div>
+      <div id="suggArea">
+        <button type="button" class="skill-sugg" data-skill="NABCEP certified">+ NABCEP certified</button>
+        <button type="button" class="skill-sugg" data-skill="AutoCAD">+ AutoCAD</button>
+        <button type="button" class="skill-sugg" data-skill="PVsyst">+ PVsyst</button>
+        <button type="button" class="skill-sugg" data-skill="Grid interconnection">+ Grid interconnection</button>
+      </div>
+      </div>
+      </div>
+    </details>
   </div>
-  <div class="sidebar">
+  <div class="sidebar after-import">
     <div class="prefs-card">
       <div class="prefs-title"><i class="ti ti-settings"></i>Your preferences</div>
       <div class="prefs-sub">Help employers understand what you're looking for</div>
@@ -479,6 +503,7 @@ const skills = [];
 function renderSkills(){
   const wrap = document.getElementById('skillTags');
   wrap.innerHTML = skills.map((s,i)=>`<div class="skill-tag">${s} <i class="ti ti-x" onclick="removeSkill(${i})"></i></div>`).join('');
+  updateFoldHints();
 }
 function addSkill(name){
   name = name.trim();
@@ -501,6 +526,7 @@ document.querySelectorAll('.sector-pill').forEach(btn=>{
     this.classList.toggle('on');
     const s = this.dataset.sector;
     if(this.classList.contains('on')) sectors.add(s); else sectors.delete(s);
+    updateFoldHints();
   });
 });
 
@@ -525,13 +551,6 @@ document.querySelectorAll('.tog').forEach(btn=>{
 // --- Bio char count ---
 document.getElementById('inp-bio').addEventListener('input', function(){
   document.getElementById('bio-count').textContent = this.value.length + ' / 500';
-});
-
-// --- Avatar file selection (real filename capture, no parsing) ---
-document.getElementById('inp-avatar').addEventListener('change', function(){
-  const name = this.files[0]?.name;
-  document.getElementById('avatarFilename').textContent = name || '';
-  document.getElementById('avatarIcon').className = name ? 'ti ti-check' : 'ti ti-camera';
 });
 
 // --- Resume file selection + best-effort auto-fill of the fields below ---
@@ -1381,20 +1400,16 @@ function applyParsedResumeData(parsed) {
     collapseSection('basicInfoSummary', 'basicInfoDetail', bits.join(' · ') || 'Filled in from your resume');
   }
 
-  if (filled.includes('sectors')) {
-    collapseSection('sectorsSummary', 'sectorsDetail', [...sectors].join(', '));
-  }
-
-  if (filled.includes('skills')) {
-    const preview = skills.slice(0, 4).join(', ') + (skills.length > 4 ? ` +${skills.length - 4} more` : '');
-    collapseSection('skillsSummary', 'skillsDetail', `${skills.length} skill${skills.length === 1 ? '' : 's'} added: ${preview}`);
-  }
+  // Sectors and skills live in collapsed panels at the bottom; the resume fills
+  // them silently and the panel header says what was found.
+  updateFoldHints();
 
   if (filled.includes('work experience')) {
     const first = experience[0];
     const preview = first ? `${first.title}${first.co ? ' at ' + first.co : ''}` : '';
     const more = experience.length > 1 ? ` +${experience.length - 1} more` : '';
-    collapseSection('expSummary', 'expDetail', `${experience.length} role${experience.length === 1 ? '' : 's'} added${preview ? ': ' + preview + more : ''}`);
+    const yrs = yearsLabel(experienceYears());
+    collapseSection('expSummary', 'expDetail', `${experience.length} role${experience.length === 1 ? '' : 's'} added${preview ? ': ' + preview + more : ''}${yrs ? ' · ' + yrs + ' of experience' : ''}`);
   }
 
   if (filled.includes('education')) {
@@ -1406,6 +1421,39 @@ function applyParsedResumeData(parsed) {
   return filled;
 }
 
+// Until a resume is uploaded (or "fill it in by hand" is chosen) the page is just
+// the resume box. Everything else appears once there is something to check.
+function revealForm(smooth) {
+  const body = document.querySelector('.body');
+  if (!body.classList.contains('pre-import')) return;
+  body.classList.remove('pre-import');
+  document.getElementById('manualWrap').style.display = 'none';
+  if (smooth) {
+    const target = document.getElementById('importBanner');
+    try { target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); } catch (e) {}
+  }
+}
+function setImportBanner(html, working) {
+  const el = document.getElementById('importBanner');
+  el.innerHTML = html;
+  el.classList.toggle('working', !!working);
+  el.classList.toggle('show', !!html);
+}
+const FILLED_NAMES = { name: 'name', headline: 'headline', location: 'location', email: 'email', bio: 'bio',
+  'work experience': 'work experience', education: 'education', skills: 'skills', sectors: 'sectors', LinkedIn: 'LinkedIn link' };
+function filledSummary(filled) {
+  const order = ['name', 'headline', 'location', 'work experience', 'education', 'skills', 'sectors', 'email', 'LinkedIn', 'bio'];
+  const names = order.filter(k => filled.includes(k)).map(k => FILLED_NAMES[k]);
+  if (!names.length) return '';
+  if (names.length > 5) return names.slice(0, 5).join(', ') + ' and more';
+  return names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0];
+}
+document.getElementById('manualFill').addEventListener('click', function () {
+  trackProfile('profile_manual_start', {});
+  setImportBanner('', false);
+  revealForm(true);
+});
+
 document.getElementById('inp-resume').addEventListener('change', async function(){
   const file = this.files[0];
   if (!file) return;
@@ -1414,6 +1462,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
   const label = document.getElementById('resumeText');
   const hint = document.getElementById('resumeHint');
 
+  revealForm(true);
   box.classList.remove('error', 'parsing');
   box.classList.add('has-file');
   icon.className = 'ti ti-check upload-icon';
@@ -1423,12 +1472,14 @@ document.getElementById('inp-resume').addEventListener('change', async function(
   if (ext !== 'pdf' && ext !== 'docx') {
     trackProfile('profile_resume_upload', { file_type: ext, autofill: 'unsupported', fields_filled: 0 });
     hint.textContent = "Auto-fill only works with .pdf or .docx — your file is still attached, just fill in the fields below manually.";
+    setImportBanner("We can only read <b>.pdf</b> or <b>.docx</b> files automatically, but yours is attached. Fill in the basics below.", false);
     return;
   }
 
   box.classList.add('parsing');
   icon.className = 'ti ti-loader-2 upload-icon';
   hint.textContent = `Reading ${file.name} to auto-fill the fields below…`;
+  setImportBanner('<b>Reading your resume…</b> Your details will appear here in a moment.', true);
 
   try {
     const text = await extractTextFromResumeFile(file);
@@ -1441,6 +1492,10 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     hint.textContent = filled.length
       ? `Filled in ${filled.join(', ')} — review everything below before submitting.`
       : "Couldn't confidently pull details from that file — fill in the fields below manually.";
+    const said = filledSummary(filled);
+    setImportBanner(said
+      ? `<b>Done - we filled in your ${said}.</b> Check it over, fix anything that looks off, then add a password at the bottom to finish.`
+      : "<b>We couldn't pull details from that file.</b> It's attached - fill in the basics below.", false);
   } catch (err) {
     console.error('Resume parsing failed:', err);
     trackProfile('profile_resume_upload', { file_type: ext, autofill: 'failed', fields_filled: 0 });
@@ -1448,6 +1503,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     box.classList.add('error');
     icon.className = 'ti ti-alert-triangle upload-icon';
     hint.textContent = (err.message || 'Could not read that file automatically.') + ' Your resume is still attached — just fill in the fields below by hand.';
+    setImportBanner("<b>We couldn't read that file automatically.</b> It's attached - fill in the basics below.", false);
   }
 });
 
@@ -1468,6 +1524,78 @@ function addExperience(){
   toggleForm('expForm', false);
 }
 function removeExperience(i){ experience.splice(i,1); renderExperience(); }
+// --- Years of experience: worked out from the work history, never asked ---
+// The employer database filters on these exact bucket labels, so the value
+// sent is always one of them (or null when no dates could be read).
+const MONTHS = { jan:0, feb:1, mar:2, apr:3, may:4, jun:5, jul:6, aug:7, sep:8, sept:8, oct:9, nov:10, dec:11 };
+const DATE_TOKEN_RE = /(?:\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?,?\s+((?:19|20)\d{2}))|(?:\b(0?[1-9]|1[0-2])\s*[\/.-]\s*((?:19|20)\d{2}))|(?:\b((?:19|20)\d{2})\b)|(\b(?:present|current|currently|now|today|ongoing)\b)/gi;
+function parseDateRange(text) {
+  const tokens = [];
+  let m;
+  DATE_TOKEN_RE.lastIndex = 0;
+  while ((m = DATE_TOKEN_RE.exec(text || ''))) {
+    if (m[1]) tokens.push({ y: +m[2], mo: MONTHS[m[1].toLowerCase()], exact: true });
+    else if (m[3]) tokens.push({ y: +m[4], mo: +m[3] - 1, exact: true });
+    else if (m[5]) tokens.push({ y: +m[5], mo: 0, exact: false });
+    else tokens.push({ now: true });
+  }
+  if (!tokens.length || tokens[0].now) return null;
+  const start = tokens[0];
+  const now = new Date();
+  let endMonths;
+  const last = tokens.length > 1 ? tokens[tokens.length - 1] : null;
+  if (last && last.now) endMonths = now.getFullYear() * 12 + now.getMonth();
+  else if (last) endMonths = last.y * 12 + last.mo;
+  else return null;                       // a lone year says nothing about duration
+  const startMonths = start.y * 12 + start.mo;
+  if (endMonths <= startMonths || startMonths < 1960 * 12 || endMonths > now.getFullYear() * 12 + now.getMonth() + 1) return null;
+  return [startMonths, endMonths];
+}
+// Overlapping jobs are counted once.
+function experienceYears() {
+  const ranges = experience.map(e => parseDateRange(e.dates)).filter(Boolean).sort((a, b) => a[0] - b[0]);
+  if (!ranges.length) return null;
+  let total = 0, [cs, ce] = ranges[0];
+  for (const [s, e] of ranges.slice(1)) {
+    if (s <= ce) ce = Math.max(ce, e);
+    else { total += ce - cs; cs = s; ce = e; }
+  }
+  total += ce - cs;
+  return total / 12;
+}
+function yearsBucket(y) {
+  if (y == null) return null;
+  if (y < 1) return 'Less than 1 year';
+  if (y < 3) return '1–3 years';
+  if (y < 5) return '3–5 years';
+  if (y < 10) return '5–10 years';
+  return '10+ years';
+}
+function yearsLabel(y) {
+  if (y == null) return '';
+  if (y < 1) return 'less than a year';
+  const r = Math.round(y);
+  return `about ${r} year${r === 1 ? '' : 's'}`;
+}
+function updateYears() {
+  const el = document.getElementById('expYears');
+  if (!el) return;
+  const y = experienceYears();
+  if (y == null) { el.style.display = 'none'; el.textContent = ''; return; }
+  el.innerHTML = `<b>${yearsLabel(y).replace(/^./, c => c.toUpperCase())} of experience</b> - worked out from the dates below. Fix any date if it looks off.`;
+  el.style.display = 'block';
+}
+function setFoldHint(id, text) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text || 'Optional';
+  el.classList.toggle('set', !!text);
+}
+function updateFoldHints() {
+  setFoldHint('sectorsHint', sectors.size ? [...sectors].join(', ') : '');
+  setFoldHint('skillsHint', skills.length ? `${skills.length} skill${skills.length === 1 ? '' : 's'} added` : '');
+}
+
 function renderExperience(){
   const list = document.getElementById('expList');
   document.getElementById('expEmpty').style.display = experience.length ? 'none' : 'block';
@@ -1478,6 +1606,7 @@ function renderExperience(){
     card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${e.title}</div><div class="exp-co">${e.co}</div><div class="exp-dates">${e.dates}</div></div><button class="icon-btn" onclick="removeExperience(${i})"><i class="ti ti-trash"></i></button></div>`;
     list.appendChild(card);
   });
+  updateYears();
 }
 function addEducation(){
   const degree = document.getElementById('edu-degree').value.trim();
@@ -1743,7 +1872,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       last_name: last,
       headline: document.getElementById('inp-headline').value.trim() || null,
       location: document.getElementById('inp-loc').value.trim() || null,
-      years_experience: document.getElementById('inp-exp').value || null,
+      years_experience: yearsBucket(experienceYears()),
       bio: document.getElementById('inp-bio').value.trim() || null,
       sectors: [...sectors],
       skills: skills,
