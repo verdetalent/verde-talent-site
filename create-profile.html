@@ -129,10 +129,17 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .manual-wrap{text-align:center;margin:-2px 0 14px;}
 .manual-link{background:none;border:0;color:var(--t3);font-size:12.5px;font-family:var(--font-sans);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px;}
 .manual-link:hover{color:var(--t1);}
-.import-banner{display:none;font-size:13.5px;color:var(--t1);line-height:1.55;padding:.8rem 1rem;margin:0 0 14px;border:0.5px solid rgba(34,224,154,0.3);border-left:3px solid var(--grn);background:rgba(34,224,154,0.06);border-radius:10px;}
-.import-banner.show{display:block;}
-.import-banner.working{border-left-color:var(--amb);background:rgba(255,181,71,0.06);border-color:rgba(255,181,71,0.3);}
-.import-banner b{font-weight:600;}
+.import-banner{display:none;margin:0 0 14px;padding:1rem 1.2rem;border-radius:12px;line-height:1.45;}
+.import-banner.show{display:flex;align-items:center;gap:12px;}
+.import-banner .ib-icon{flex-shrink:0;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;}
+.import-banner .ib-title{display:block;font-size:16px;font-weight:700;}
+.import-banner .ib-sub{display:block;font-size:13.5px;margin-top:1px;}
+.import-banner.ok{background:var(--grn);color:#052e1e;box-shadow:0 0 0 4px rgba(34,224,154,0.14);}
+.import-banner.ok .ib-icon{background:#052e1e;color:var(--grn);}
+.import-banner.working{background:rgba(255,181,71,0.12);border:1px solid rgba(255,181,71,0.5);color:var(--t1);}
+.import-banner.working .ib-icon{background:rgba(255,181,71,0.25);color:var(--amb);}
+.import-banner.note{background:rgba(255,255,255,0.05);border:1px solid var(--bdr2);color:var(--t1);}
+.import-banner.note .ib-icon{background:rgba(255,255,255,0.1);color:var(--t2);}
 .body.pre-import{grid-template-columns:minmax(0,640px);justify-content:center;}
 .pre-import .after-import{display:none;}
 .section-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(34,224,154,0.05);border:0.5px solid rgba(34,224,154,0.25);border-radius:10px;padding:.7rem .9rem;}
@@ -1433,24 +1440,18 @@ function revealForm(smooth) {
     try { target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); } catch (e) {}
   }
 }
-function setImportBanner(html, working) {
+// kind: 'ok' (green, done), 'working' (amber, reading) or 'note' (neutral, nothing was filled).
+// Text is always ours, never the person's, so it is safe to set as markup.
+function setImportBanner(kind, icon, title, sub) {
   const el = document.getElementById('importBanner');
-  el.innerHTML = html;
-  el.classList.toggle('working', !!working);
-  el.classList.toggle('show', !!html);
-}
-const FILLED_NAMES = { name: 'name', headline: 'headline', location: 'location', email: 'email', bio: 'bio',
-  'work experience': 'work experience', education: 'education', skills: 'skills', sectors: 'sectors', LinkedIn: 'LinkedIn link' };
-function filledSummary(filled) {
-  const order = ['name', 'headline', 'location', 'work experience', 'education', 'skills', 'sectors', 'email', 'LinkedIn', 'bio'];
-  const names = order.filter(k => filled.includes(k)).map(k => FILLED_NAMES[k]);
-  if (!names.length) return '';
-  if (names.length > 5) return names.slice(0, 5).join(', ') + ' and more';
-  return names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0];
+  if (!kind) { el.className = 'import-banner after-import'; el.innerHTML = ''; return; }
+  el.className = 'import-banner after-import show ' + kind;
+  el.innerHTML = `<span class="ib-icon" aria-hidden="true">${icon}</span><span><span class="ib-title">${title}</span>` +
+    (sub ? `<span class="ib-sub">${sub}</span>` : '') + `</span>`;
 }
 document.getElementById('manualFill').addEventListener('click', function () {
   trackProfile('profile_manual_start', {});
-  setImportBanner('', false);
+  setImportBanner();
   revealForm(true);
 });
 
@@ -1472,14 +1473,14 @@ document.getElementById('inp-resume').addEventListener('change', async function(
   if (ext !== 'pdf' && ext !== 'docx') {
     trackProfile('profile_resume_upload', { file_type: ext, autofill: 'unsupported', fields_filled: 0 });
     hint.textContent = "Auto-fill only works with .pdf or .docx — your file is still attached, just fill in the fields below manually.";
-    setImportBanner("We can only read <b>.pdf</b> or <b>.docx</b> files automatically, but yours is attached. Fill in the basics below.", false);
+    setImportBanner('note', 'i', 'Resume attached', "We can only auto-fill .pdf and .docx files. Fill in the basics below.");
     return;
   }
 
   box.classList.add('parsing');
   icon.className = 'ti ti-loader-2 upload-icon';
   hint.textContent = `Reading ${file.name} to auto-fill the fields below…`;
-  setImportBanner('<b>Reading your resume…</b> Your details will appear here in a moment.', true);
+  setImportBanner('working', '…', 'Reading your resume…', 'Your details will appear below in a moment.');
 
   try {
     const text = await extractTextFromResumeFile(file);
@@ -1492,10 +1493,8 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     hint.textContent = filled.length
       ? `Filled in ${filled.join(', ')} — review everything below before submitting.`
       : "Couldn't confidently pull details from that file — fill in the fields below manually.";
-    const said = filledSummary(filled);
-    setImportBanner(said
-      ? `<b>Done - we filled in your ${said}.</b> Check it over, fix anything that looks off, then add a password at the bottom to finish.`
-      : "<b>We couldn't pull details from that file.</b> It's attached - fill in the basics below.", false);
+    if (filled.length) setImportBanner('ok', '✓', 'Resume imported', 'Check the details below, then add a password to finish.');
+    else setImportBanner('note', 'i', "We couldn't read details from that file", "It's attached - fill in the basics below.");
   } catch (err) {
     console.error('Resume parsing failed:', err);
     trackProfile('profile_resume_upload', { file_type: ext, autofill: 'failed', fields_filled: 0 });
@@ -1503,7 +1502,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     box.classList.add('error');
     icon.className = 'ti ti-alert-triangle upload-icon';
     hint.textContent = (err.message || 'Could not read that file automatically.') + ' Your resume is still attached — just fill in the fields below by hand.';
-    setImportBanner("<b>We couldn't read that file automatically.</b> It's attached - fill in the basics below.", false);
+    setImportBanner('note', 'i', "We couldn't read that file", "It's attached - fill in the basics below.");
   }
 });
 
