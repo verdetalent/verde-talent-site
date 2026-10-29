@@ -121,6 +121,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .cp-intro p{font-size:14.5px;color:var(--t2);line-height:1.55;margin:0 0 .9rem;}
 .cp-steps{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;}
 .cp-steps li{font-size:12.5px;color:var(--t2);border:0.5px solid var(--bdr2);border-radius:20px;padding:5px 12px 5px 6px;display:flex;align-items:center;gap:7px;}
+.cp-opt{color:var(--t3);}
+.login-submit{margin-top:16px;}
 .cp-steps li b{width:20px;height:20px;border-radius:50%;background:rgba(34,224,154,0.14);color:var(--grn);font-size:11px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;}
 .resume-hero{border-color:rgba(34,224,154,0.3);}
 .resume-lead{font-size:13.5px;color:var(--t2);line-height:1.55;margin-bottom:.9rem;}
@@ -335,8 +337,8 @@ document.addEventListener('click', function(){
   <div>
     <div class="cp-intro">
       <h1>Create your profile in about a minute</h1>
-      <p>Upload your resume and we'll fill in the rest - you just check it over.</p>
-      <ol class="cp-steps"><li><b>1</b> Upload your resume</li><li><b>2</b> Check it over</li><li><b>3</b> Create your login</li></ol>
+      <p>Upload your resume and we'll fill in the rest. Then just add a password.</p>
+      <ol class="cp-steps"><li><b>1</b> Upload your resume</li><li><b>2</b> Create your login</li><li><b>3</b> Your details</li></ol>
     </div>
     <div class="form-section resume-hero" id="resumeSection">
       <div class="fs-title"><i class="ti ti-file-text"></i>Start with your resume</div>
@@ -351,6 +353,18 @@ document.addEventListener('click', function(){
     </div>
     <div class="manual-wrap" id="manualWrap"><button type="button" class="manual-link" id="manualFill">No resume handy? Fill it in by hand instead</button></div>
     <div class="import-banner after-import" id="importBanner" role="status" aria-live="polite"></div>
+    <div class="form-section after-import" id="accountSection">
+      <div class="fs-title"><i class="ti ti-lock"></i>Create your login</div>
+      <div class="form-row">
+        <div class="field"><label for="acc-email">Email</label><input type="email" id="acc-email" placeholder="you@example.com" autocomplete="email"/></div>
+        <div class="field"><label for="acc-password">Password</label><input type="password" id="acc-password" placeholder="At least 6 characters" autocomplete="new-password"/></div>
+      </div>
+      <div style="font-size:12px;color:var(--t3);">This becomes your login - use it to sign back in and update your profile later.</div>
+          <div class="login-submit">
+        <button type="button" class="btn-grn" id="submitBtn">Create my profile →</button>
+        <div class="submit-note" id="submitNote">Creates your login and saves your profile. You can edit anything later from your dashboard.</div>
+      </div>
+    </div>
     <div class="form-section after-import">
       <div class="fs-title"><i class="ti ti-user"></i>Basic information</div>
       <div class="section-summary" id="basicInfoSummary" style="display:none;"><div class="ss-text" id="basicInfoSummaryText"></div><button type="button" class="ss-edit" onclick="expandSection('basicInfoSummary','basicInfoDetail')">Edit</button></div>
@@ -399,14 +413,6 @@ document.addEventListener('click', function(){
       </div>
       <button type="button" class="add-btn" onclick="toggleForm('eduForm',true)"><i class="ti ti-plus" style="font-size:15px;"></i> Add education</button>
       </div>
-    </div>
-    <div class="form-section after-import" id="accountSection">
-      <div class="fs-title"><i class="ti ti-lock"></i>Create your login</div>
-      <div class="form-row">
-        <div class="field"><label for="acc-email">Email</label><input type="email" id="acc-email" placeholder="you@example.com" autocomplete="email"/></div>
-        <div class="field"><label for="acc-password">Password</label><input type="password" id="acc-password" placeholder="At least 6 characters" autocomplete="new-password"/></div>
-      </div>
-      <div style="font-size:12px;color:var(--t3);">Last step. This becomes your login - use it to sign back in and update your profile later.</div>
     </div>
     <details class="form-section fold after-import" id="sectorsFold">
       <summary class="fold-sum"><span class="fs-title"><i class="ti ti-solar-panel"></i>Sectors you work in <span class="fold-hint" id="sectorsHint">Optional</span></span><i class="ti ti-chevron-down fold-chev"></i></summary>
@@ -469,8 +475,6 @@ document.addEventListener('click', function(){
       <div class="vis-row"><span style="color:var(--t2);">Profile searchable</span><button type="button" class="tog on" data-vis="searchable"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Email me weekly job matches</span><button type="button" class="tog on" data-vis="jobAlerts"></button></div>
     </div>
-    <button type="button" class="btn-grn" id="submitBtn">Submit profile →</button>
-    <div class="submit-note" id="submitNote">Saves everything above to our candidate database.</div>
   </div>
 </div>
 <div class="lite-alert-section" id="job-alerts" style="scroll-margin-top:90px;">
@@ -1493,7 +1497,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     hint.textContent = filled.length
       ? `Filled in ${filled.join(', ')} — review everything below before submitting.`
       : "Couldn't confidently pull details from that file — fill in the fields below manually.";
-    if (filled.length) setImportBanner('ok', '✓', 'Resume imported', 'Check the details below, then add a password to finish.');
+    if (filled.length) setImportBanner('ok', '✓', 'Resume imported', 'Add a password below to finish. Your profile details are below.');
     else setImportBanner('note', 'i', "We couldn't read details from that file", "It's attached - fill in the basics below.");
   } catch (err) {
     console.error('Resume parsing failed:', err);
@@ -2105,7 +2109,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     }
   } catch(err){
     btn.disabled = false;
-    btn.textContent = 'Submit profile →';
+    btn.textContent = 'Create my profile →';
     note.style.color = 'var(--cor)';
     if (err.code === 'email_taken' || err.code === 'profile_exists') {
       note.innerHTML = 'That email already has a Verde Talent account. <a href="login.html" style="color:inherit;text-decoration:underline;">Sign in</a>, or <a href="login.html?forgot=1" style="color:inherit;text-decoration:underline;">reset your password</a>.';
