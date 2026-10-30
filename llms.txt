@@ -9,10 +9,10 @@
 > employer discloses them, and the site publishes its own salary benchmarks and
 > hiring data. Contact: contact@verdetalent.com
 
-## Key facts (updated October 29, 2026)
-- 3,500+ open clean energy jobs, refreshed every day.
-- 87 energy companies represented, with open roles in 47 US states.
-- 120 salary benchmark pages, 44 career profiles and 62 employer profiles.
+## Key facts (updated October 30, 2026)
+- 5,400+ open clean energy jobs, refreshed every day.
+- 104 energy companies represented, with open roles in 48 US states.
+- 125 salary benchmark pages, 52 career profiles and 80 employer profiles.
 - 47 clean energy job terms defined in the glossary.
 - Free for job seekers; job postings for employers start at $100.
 
@@ -20,7 +20,7 @@
 - [Job search](https://verdetalent.com/jobs.html): every open role, filterable by sector, location, salary, seniority, work style and skills. Also covers remote and international roles.
 - [Browse by location and role](https://verdetalent.com/browse.html): pages for each sector, job function and state - for example solar jobs in Texas, or wind technician jobs nationally.
 - [Companies hiring engineers](https://verdetalent.com/browse/companies-hiring-engineers.html): the employers with the most open engineering roles across solar, wind, battery storage and grid.
-- [Companies hiring](https://verdetalent.com/companies.html): the 87 energy companies on Verde Talent, with their open role counts.
+- [Companies hiring](https://verdetalent.com/companies.html): the 104 energy companies on Verde Talent, with their open role counts.
 - Employer profiles, one page each, at https://verdetalent.com/companies/<employer-slug>.html - for example [Vestas](https://verdetalent.com/companies/vestas.html) or [First Solar](https://verdetalent.com/companies/first-solar.html): open roles, where that employer is hiring, what it posts most and what its postings advertise.
 
 ## Pay and career research
