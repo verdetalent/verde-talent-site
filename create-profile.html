@@ -201,6 +201,14 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .af-save{background:var(--grn);border:none;color:#052e1e;font-weight:500;}
 .empty-note{font-size:12px;color:var(--t3);padding:.5rem 0;}
 .sidebar{display:flex;flex-direction:column;gap:10px;position:sticky;top:16px;}
+.opt-head{display:flex;gap:10px;align-items:flex-start;padding:.2rem .15rem .4rem;}
+.opt-pill{flex-shrink:0;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#C9A8FF;background:rgba(181,136,255,0.14);border:1px solid rgba(181,136,255,0.5);border-radius:20px;padding:3px 10px;margin-top:1px;}
+.opt-head-text{font-size:12px;line-height:1.5;color:var(--t3);}
+.opt-head-text b{color:#C9A8FF;font-weight:600;}
+.opt-tag{margin-left:auto;font-size:10.5px;font-weight:500;color:#C9A8FF;background:rgba(181,136,255,0.1);border:1px solid rgba(181,136,255,0.35);border-radius:20px;padding:1px 8px;white-space:nowrap;}
+.vis-sub{font-size:11px;color:var(--t3);margin:-4px 0 10px;line-height:1.45;}
+.sidebar .visibility-card{border-top:2px solid rgba(255,255,255,0.22);}
+.sidebar .prefs-title,.sidebar .links-title,.sidebar .vis-title{display:flex;align-items:center;gap:6px;}
 .prefs-card{background:#121212;border:0.5px solid rgba(255,255,255,0.11);border-top:2px solid rgba(255,181,71,0.4);border-radius:14px;padding:1.1rem;}
 .prefs-title{font-size:13px;font-weight:500;color:var(--t1);display:flex;align-items:center;gap:6px;margin-bottom:2px;}
 .prefs-title i{font-size:15px;color:rgba(255,181,71,0.55);}
@@ -442,8 +450,12 @@ document.addEventListener('click', function(){
     </details>
   </div>
   <div class="sidebar after-import">
+    <div class="opt-head">
+      <span class="opt-pill">Optional</span>
+      <div class="opt-head-text"><b>You can skip everything in this column.</b> It helps employers find you, and you can fill it in or change it any time from your dashboard.</div>
+    </div>
     <div class="prefs-card">
-      <div class="prefs-title"><i class="ti ti-settings"></i>Your preferences</div>
+      <div class="prefs-title"><i class="ti ti-settings"></i>Your preferences<span class="opt-tag">optional</span></div>
       <div class="prefs-sub">Help employers understand what you're looking for</div>
       <div class="pf"><label id="ws-pills-label">Work style</label><div class="ws-pills" id="wsPills" role="group" aria-labelledby="ws-pills-label">
         <button type="button" class="ws-pill" data-ws="Remote">Remote</button>
@@ -456,14 +468,15 @@ document.addEventListener('click', function(){
       <div class="pf"><label for="pf-avail">Availability</label><select id="pf-avail"><option>Actively looking</option><option>Open to opportunities</option><option>Not currently looking</option></select></div>
     </div>
     <div class="links-card">
-      <div class="links-title"><i class="ti ti-link"></i>Links</div>
-      <div class="links-sub">Optional, but recommended</div>
+      <div class="links-title"><i class="ti ti-link"></i>Links<span class="opt-tag">optional</span></div>
+      <div class="links-sub">Add any that you have</div>
       <div class="link-row"><i class="ti ti-brand-linkedin"></i><label for="link-linkedin" class="sr-only">LinkedIn URL</label><input type="text" id="link-linkedin" placeholder="linkedin.com/in/you" autocomplete="url"/></div>
       <div class="link-row"><i class="ti ti-world"></i><label for="link-site" class="sr-only">Personal website URL</label><input type="text" id="link-site" placeholder="yoursite.com" autocomplete="url"/></div>
       <div class="link-row"><i class="ti ti-brand-github"></i><label for="link-github" class="sr-only">GitHub URL</label><input type="text" id="link-github" placeholder="github.com/username" autocomplete="url"/></div>
     </div>
     <div class="visibility-card">
-      <div class="vis-title">Visibility</div>
+      <div class="vis-title">Visibility<span class="opt-tag">defaults are fine</span></div>
+      <div class="vis-sub">As set, employers can find your profile. Change any of this later.</div>
       <div class="vis-row"><span style="color:var(--t2);">Open to recruiters</span><button type="button" class="tog on" data-vis="recruiters"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Show salary range</span><button type="button" class="tog on" data-vis="salary"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Show current employer</span><button type="button" class="tog off" data-vis="employer"></button></div>
