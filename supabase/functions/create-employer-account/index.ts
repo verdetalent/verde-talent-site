@@ -98,23 +98,23 @@ ${button(`${SITE_ORIGIN}/post-job.html`, "Post your first job")}
   );
 }
 
-function ownerAlertHtml(email: string): string {
+function ownerAlertHtml(email: string, company: string): string {
   const domain = email.split("@")[1] || "";
   const row = (k: string, v: string) =>
     `<tr><td style="padding:3px 14px 3px 0;color:${MUTED};white-space:nowrap;">${esc(k)}</td><td style="padding:3px 0;">${esc(v)}</td></tr>`;
   return shell(
     `<p style="margin:0 0 12px;font-size:16px;font-weight:700;">New employer account on Verde Talent</p>
 <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:13.5px;">
+${row("Company", company)}
 ${row("Email", email)}
 ${row("Company domain", domain)}
 ${row("Signed up", new Date().toUTCString())}
-</table>
-<p style="margin:14px 0 0;color:${MUTED};font-size:13px;">Employer sign-up only collects an email and password, so there is no company name yet.</p>`,
+</table>`,
     "Automatic alert - sent for each new employer account.",
   );
 }
 
-async function sendEmails(email: string) {
+async function sendEmails(email: string, company: string) {
   const results = await Promise.allSettled([
     resend.emails.send({
       from: "Verde Talent <welcome@updates.verdetalent.com>",
@@ -126,8 +126,8 @@ async function sendEmails(email: string) {
     resend.emails.send({
       from: "Verde Talent Alerts <alerts@updates.verdetalent.com>",
       to: OWNER_EMAIL,
-      subject: `New employer: ${email}`,
-      html: ownerAlertHtml(email),
+      subject: `New employer: ${company} (${email})`,
+      html: ownerAlertHtml(email, company),
     }),
   ]);
   results.forEach((r, i) => {
@@ -165,12 +165,19 @@ Deno.serve(async (req) => {
     return fail(400, "short_password", "Password must be between 6 and 72 characters.");
   }
 
+  // The company is how employer accounts get matched against candidates who hide their profile
+  // from their current employer, so it is required and kept on the account itself.
+  const company = typeof body.company_name === "string" ? body.company_name.replace(/\s+/g, " ").trim() : "";
+  if (company.length < 2 || company.length > 120) {
+    return fail(400, "missing_company", "Enter your company name.");
+  }
+
   try {
     const { data: created, error: createError } = await admin.auth.admin.createUser({
       email,
       password,
       email_confirm: true,
-      user_metadata: { account_type: "employer" },
+      user_metadata: { account_type: "employer", company_name: company },
     });
 
     if (!created?.user) {
@@ -194,7 +201,7 @@ Deno.serve(async (req) => {
       };
     }
 
-    await sendEmails(email);
+    await sendEmails(email, company);
 
     return json({ success: true, session });
   } catch (err) {
