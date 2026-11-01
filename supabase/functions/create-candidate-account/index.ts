@@ -111,7 +111,9 @@ function buildProfile(raw: Record<string, unknown>) {
     resume_path: null,
     visibility_recruiters: cleanBool(raw.visibility_recruiters, true),
     visibility_salary: cleanBool(raw.visibility_salary, true),
-    visibility_employer: cleanBool(raw.visibility_employer, false),
+    visibility_employer: false,   // retired: the old "show current employer" toggle no longer exists
+    hide_from_current_employer: cleanBool(raw.hide_from_current_employer, true),
+    current_employer: cleanText(raw.current_employer, 120),
     visibility_searchable: cleanBool(raw.visibility_searchable, true),
     email_job_alerts: cleanBool(raw.email_job_alerts, false),
   };

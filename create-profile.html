@@ -206,6 +206,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .opt-head-text{font-size:12px;line-height:1.5;color:var(--t3);}
 .opt-head-text b{color:#C9A8FF;font-weight:600;}
 .opt-tag{margin-left:auto;font-size:10.5px;font-weight:500;color:#C9A8FF;background:rgba(181,136,255,0.1);border:1px solid rgba(181,136,255,0.35);border-radius:20px;padding:1px 8px;white-space:nowrap;}
+.vis-employer{margin:-2px 0 11px;}
+.vis-employer input{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:7px;padding:6px 9px;font-size:12px;color:var(--t1);outline:none;font-family:var(--font-sans);}
 .vis-sub{font-size:11px;color:var(--t3);margin:-4px 0 10px;line-height:1.45;}
 .sidebar .visibility-card{border-top:2px solid rgba(255,255,255,0.22);}
 .sidebar .prefs-title,.sidebar .links-title,.sidebar .vis-title{display:flex;align-items:center;gap:6px;}
@@ -479,7 +481,12 @@ document.addEventListener('click', function(){
       <div class="vis-sub">As set, employers can find your profile. Change any of this later.</div>
       <div class="vis-row"><span style="color:var(--t2);">Open to recruiters</span><button type="button" class="tog on" data-vis="recruiters"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Show salary range</span><button type="button" class="tog on" data-vis="salary"></button></div>
-      <div class="vis-row"><span style="color:var(--t2);">Show current employer</span><button type="button" class="tog off" data-vis="employer"></button></div>
+      <div class="vis-row"><span style="color:var(--t2);">Hide my profile from my current employer</span><button type="button" class="tog on" data-vis="hideFromEmployer"></button></div>
+      <div class="vis-employer" id="curEmpWrap">
+        <label for="inp-curemp" class="sr-only">Current employer</label>
+        <input type="text" id="inp-curemp" placeholder="Your current employer, e.g. Sunrun" maxlength="120" autocomplete="organization"/>
+        <div class="vis-sub" style="margin:4px 0 0;">Accounts at this company won't be able to see your profile.</div>
+      </div>
       <div class="vis-row"><span style="color:var(--t2);">Profile searchable</span><button type="button" class="tog on" data-vis="searchable"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Email me weekly job matches</span><button type="button" class="tog on" data-vis="jobAlerts"></button></div>
     </div>
@@ -1396,6 +1403,8 @@ function applyParsedResumeData(parsed) {
     experience.push(...parsed.experience);
     renderExperience();
     filled.push('work experience');
+    const emp = document.getElementById('inp-curemp');
+    if (emp && !emp.value.trim()) emp.value = currentEmployerGuess(experience);
   }
 
   if (parsed.education && parsed.education.length && education.length === 0) {
@@ -1517,6 +1526,24 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     setImportBanner('note', 'i', "We couldn't read that file", "It's attached - fill in the basics below.");
   }
 });
+
+
+// --- "Hide my profile from my current employer" ---
+// The employer is the job on the resume that is still running (dates say Present/Current). Its company
+// name is what employer accounts will be matched against, so it can be edited.
+function companyOf(co) {
+  return String(co || '').split(/\s[·•|]\s|\s-\s|,/)[0].trim();
+}
+function currentEmployerGuess(list) {
+  const job = (list || []).find(e => /\b(present|current|now|ongoing)\b/i.test(e.dates || ''));
+  return job ? companyOf(job.co) : '';
+}
+function syncCurEmp() {
+  const on = document.querySelector('[data-vis="hideFromEmployer"]').classList.contains('on');
+  document.getElementById('curEmpWrap').style.display = on ? '' : 'none';
+}
+document.querySelector('[data-vis="hideFromEmployer"]').addEventListener('click', syncCurEmp);
+syncCurEmp();
 
 // --- Experience / education add-forms ---
 function toggleForm(id, show){ document.getElementById(id).style.display = show ? 'block' : 'none'; }
@@ -1901,7 +1928,8 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       resume_filename: resumeFile?.name || null,
       visibility_recruiters: document.querySelector('[data-vis="recruiters"]').classList.contains('on'),
       visibility_salary: document.querySelector('[data-vis="salary"]').classList.contains('on'),
-      visibility_employer: document.querySelector('[data-vis="employer"]').classList.contains('on'),
+      hide_from_current_employer: document.querySelector('[data-vis="hideFromEmployer"]').classList.contains('on'),
+      current_employer: document.getElementById('inp-curemp').value.trim() || null,
       visibility_searchable: document.querySelector('[data-vis="searchable"]').classList.contains('on'),
       email_job_alerts: document.querySelector('[data-vis="jobAlerts"]').classList.contains('on'),
     };

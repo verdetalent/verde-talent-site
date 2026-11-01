@@ -191,6 +191,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .field-note{font-size:11px;margin-top:6px;min-height:14px;}
 
 .visibility-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1rem;margin-bottom:14px;}
+.vis-employer{margin:-2px 0 11px;}
+.vis-employer input{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:7px;padding:6px 9px;font-size:12px;color:var(--t1);outline:none;font-family:var(--font-sans);}
+.vis-sub{font-size:11px;color:var(--t3);line-height:1.45;}
 .vis-title{font-size:12px;font-weight:500;margin-bottom:10px;}
 .vis-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:9px;}
 .vis-row:last-child{margin-bottom:0;}
@@ -354,7 +357,12 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="vis-title">Visibility</div>
       <div class="vis-row"><span style="color:var(--t2);">Open to recruiters</span><button type="button" class="tog on" data-vis="recruiters"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Show salary range</span><button type="button" class="tog on" data-vis="salary"></button></div>
-      <div class="vis-row"><span style="color:var(--t2);">Show current employer</span><button type="button" class="tog off" data-vis="employer"></button></div>
+      <div class="vis-row"><span style="color:var(--t2);">Hide my profile from my current employer</span><button type="button" class="tog on" data-vis="hideFromEmployer"></button></div>
+      <div class="vis-employer" id="curEmpWrap">
+        <label for="inp-curemp" class="sr-only">Current employer</label>
+        <input type="text" id="inp-curemp" placeholder="Your current employer, e.g. Sunrun" maxlength="120" autocomplete="organization"/>
+        <div class="vis-sub" style="margin:4px 0 0;">Accounts at this company won't be able to see your profile.</div>
+      </div>
       <div class="vis-row"><span style="color:var(--t2);">Profile searchable</span><button type="button" class="tog on" data-vis="searchable"></button></div>
       <div class="vis-row"><span style="color:var(--t2);">Email me weekly job matches</span><button type="button" class="tog on" data-vis="jobAlerts"></button></div>
     </div>
@@ -686,6 +694,24 @@ function renderEducation(){
 let SESSION = null;
 let CANDIDATE = null;
 
+
+// --- "Hide my profile from my current employer" ---
+// The employer is the job on the resume that is still running (dates say Present/Current). Its company
+// name is what employer accounts will be matched against, so it can be edited.
+function companyOf(co) {
+  return String(co || '').split(/\s[·•|]\s|\s-\s|,/)[0].trim();
+}
+function currentEmployerGuess(list) {
+  const job = (list || []).find(e => /\b(present|current|now|ongoing)\b/i.test(e.dates || ''));
+  return job ? companyOf(job.co) : '';
+}
+function syncCurEmp() {
+  const on = document.querySelector('[data-vis="hideFromEmployer"]').classList.contains('on');
+  document.getElementById('curEmpWrap').style.display = on ? '' : 'none';
+}
+document.querySelector('[data-vis="hideFromEmployer"]').addEventListener('click', syncCurEmp);
+syncCurEmp();
+
 function setVis(key, on){
   const btn = document.querySelector(`[data-vis="${key}"]`);
   btn.classList.toggle('on', !!on);
@@ -849,7 +875,8 @@ document.getElementById('saveBtn').addEventListener('click', async function(){
     github_url: document.getElementById('link-github').value.trim() || null,
     visibility_recruiters: getVis('recruiters'),
     visibility_salary: getVis('salary'),
-    visibility_employer: getVis('employer'),
+    hide_from_current_employer: getVis('hideFromEmployer'),
+    current_employer: document.getElementById('inp-curemp').value.trim() || null,
     visibility_searchable: getVis('searchable'),
     email_job_alerts: getVis('jobAlerts'),
   };
@@ -947,7 +974,9 @@ async function init(){
 
   setVis('recruiters', CANDIDATE.visibility_recruiters !== false);
   setVis('salary', CANDIDATE.visibility_salary !== false);
-  setVis('employer', !!CANDIDATE.visibility_employer);
+  setVis('hideFromEmployer', CANDIDATE.hide_from_current_employer !== false);
+  document.getElementById('inp-curemp').value = CANDIDATE.current_employer || currentEmployerGuess(CANDIDATE.experience) || '';
+  syncCurEmp();
   setVis('searchable', CANDIDATE.visibility_searchable !== false);
   setVis('jobAlerts', CANDIDATE.email_job_alerts !== false);
 
