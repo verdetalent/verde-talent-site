@@ -91,6 +91,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
   <div class="card">
     <h1 id="cardTitle"><span style="color:var(--amb);">Employer</span> sign in</h1>
     <p class="sub" id="cardSub">Manage the jobs you've posted to Verde Talent.</p>
+    <div class="field" id="companyField" style="display:none;"><label for="li-company">Company name</label><input type="text" id="li-company" placeholder="Acme Solar" maxlength="120" autocomplete="organization"/></div>
     <div class="field"><label>Email</label><input type="email" id="li-email" placeholder="hiring@acmesolar.com"/></div>
     <div class="field"><label>Password</label><input type="password" id="li-password" placeholder="Your password"/></div>
     <button type="button" class="btn-grn" id="loginBtn">Sign in →</button>
@@ -116,6 +117,7 @@ toggleLink.addEventListener('click', function(e){
   if (e.target.tagName !== 'A') return;
   mode = mode === 'signin' ? 'signup' : 'signin';
   document.getElementById('forgotWrap').style.display = mode === 'signin' ? '' : 'none';
+  document.getElementById('companyField').style.display = mode === 'signup' ? '' : 'none';
   if (mode === 'signup') {
     cardTitle.innerHTML = 'Create an <span style="color:var(--amb);">employer</span> account';
     cardSub.textContent = 'So you can manage your postings without hunting for an emailed link.';
@@ -132,13 +134,13 @@ toggleLink.addEventListener('click', function(e){
 // Creating an employer account happens on the server: the account is tagged
 // as an employer, the employer gets a welcome email, and we get an alert.
 // Returns the same shape the sign-in endpoint does, so the code below is shared.
-async function createEmployerAccount(email, password){
+async function createEmployerAccount(email, password, company){
   let res, data;
   try {
     res = await fetch(`${SUPABASE_URL}/functions/v1/create-employer-account`, {
       method: 'POST',
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, company_name: company }),
     });
     data = await res.json().catch(() => null);
   } catch(netErr){
@@ -202,6 +204,13 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
     note.style.color = 'var(--cor)';
     return;
   }
+  const company = document.getElementById('li-company').value.replace(/\s+/g, ' ').trim();
+  if (mode === 'signup' && company.length < 2) {
+    note.textContent = 'Enter your company name.';
+    note.style.color = 'var(--cor)';
+    document.getElementById('li-company').focus();
+    return;
+  }
   if (mode === 'signup' && password.length < 6) {
     note.textContent = 'Password must be at least 6 characters.';
     note.style.color = 'var(--cor)';
@@ -215,7 +224,7 @@ document.getElementById('loginBtn').addEventListener('click', async function(){
   try {
     let authData;
     if (mode === 'signup') {
-      authData = await createEmployerAccount(email, password);
+      authData = await createEmployerAccount(email, password, company);
     } else {
       const authRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
         method: 'POST',
