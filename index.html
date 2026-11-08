@@ -351,6 +351,21 @@ footer a:hover{color:var(--grn);}
 .pop-chip.picked{color:var(--grn);text-decoration-color:currentColor;}
 .sb-field.ask{border-color:rgba(34,224,154,0.6) !important;box-shadow:0 0 0 3px rgba(34,224,154,0.15);transition:box-shadow .2s,border-color .2s;}
 .sb-field.ask i{color:var(--grn);}
+/* Hero search: a clear second option under the upload button */
+.hr-search{max-width:720px;}
+.hr-search-label{font-size:14px;color:var(--t2);margin-bottom:.85rem;}
+.hr-search .search-box{gap:8px;}
+.hr-search .sb-field{background:var(--card2);border:0.5px solid var(--bdr2);padding:14px 20px;}
+.hr-search .sb-field:focus-within{border-color:rgba(34,224,154,0.5);}
+.hr-search .sb-field i{font-size:18px;}
+.hr-search .sb-field input{font-size:15px;}
+.hr-search .btn-search{background:transparent;color:var(--grn);border:1px solid rgba(34,224,154,0.55);padding:14px 28px;font-size:15px;font-weight:600;}
+.hr-search .btn-search:hover{background:rgba(34,224,154,0.08);border-color:var(--grn);}
+.hr-search .pop-searches{margin-top:1rem;}
+@media (max-width:940px){
+  .hr-search .sb-field{padding:13px 18px;}
+  .hr-search .btn-search{padding:13px 20px;}
+}
 </style>
 </head>
 <body>
