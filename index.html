@@ -334,6 +334,23 @@ footer a:hover{color:var(--grn);}
   .hr-search .search-box{flex-direction:column;}
   .hr-search .sb-field{max-width:none !important;}
 }
+/* Hero search: popular searches + sector job counts (counts refreshed daily by export_home_to_verde_talent.py) */
+.pop-searches{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 10px;margin-top:.8rem;font-size:12.5px;}
+.pop-label{color:var(--t3);margin-right:2px;}
+.pop-chip{color:var(--t2);text-decoration:underline;text-decoration-color:var(--bdr2);text-underline-offset:3px;padding:2px 4px;transition:color .15s;}
+.pop-chip:hover{color:var(--grn);text-decoration-color:currentColor;}
+.hr-search .sector-chips{margin-top:.7rem;}
+.s-count{font-size:10.5px;color:var(--t3);margin-left:3px;font-variant-numeric:tabular-nums;}
+.s-chip:hover .s-count,.s-chip.on .s-count{color:inherit;opacity:.75;}
+@media (max-width:940px){
+  .pop-searches{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin:.8rem -1rem 0;padding:0 1rem 2px;scrollbar-width:none;}
+  .pop-searches::-webkit-scrollbar{display:none;}
+  .pop-chip{white-space:nowrap;flex-shrink:0;}
+  .pop-label{flex-shrink:0;}
+}
+.pop-chip.picked{color:var(--grn);text-decoration-color:currentColor;}
+.sb-field.ask{border-color:rgba(34,224,154,0.6) !important;box-shadow:0 0 0 3px rgba(34,224,154,0.15);transition:box-shadow .2s,border-color .2s;}
+.sb-field.ask i{color:var(--grn);}
 </style>
 </head>
 <body>
@@ -416,16 +433,17 @@ document.addEventListener('click', function(){
     <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input type="text" id="home-search-location" placeholder="Location" autocomplete="off"/></div>
     <button class="btn-search" id="home-search-btn">Search jobs</button>
   </div>
+  <div class="pop-searches" aria-label="Popular searches"><span class="pop-label">Popular:</span><a class="pop-chip" href="jobs.html?q=wind+technician" data-q="wind technician">Wind technician</a><a class="pop-chip" href="jobs.html?q=solar+technician" data-q="solar technician">Solar technician</a><a class="pop-chip" href="jobs.html?q=energy+storage" data-q="energy storage">Energy storage</a><a class="pop-chip" href="jobs.html?q=project+manager" data-q="project manager">Project manager</a><a class="pop-chip" href="jobs.html?q=electrician" data-q="electrician">Electrician</a></div>
   <div class="sector-chips" role="group" aria-label="Filter by sector">
-    <button type="button" class="s-chip" data-sector="Solar" aria-pressed="false"><i class="ti ti-solar-panel" style="font-size:13px;"></i>Solar</button>
-    <button type="button" class="s-chip blu" data-sector="Wind" aria-pressed="false"><i class="ti ti-wind" style="font-size:13px;"></i>Wind</button>
-    <button type="button" class="s-chip amb" data-sector="Storage" aria-pressed="false"><i class="ti ti-battery-charging" style="font-size:13px;"></i>Storage</button>
-    <button type="button" class="s-chip" data-sector="Grid" aria-pressed="false"><i class="ti ti-bolt" style="font-size:13px;"></i>Grid</button>
-    <button type="button" class="s-chip pur" data-sector="EV" aria-pressed="false"><i class="ti ti-plug" style="font-size:13px;"></i>EV</button>
-    <button type="button" class="s-chip" data-sector="Hydrogen" aria-pressed="false"><i class="ti ti-atom" style="font-size:13px;"></i>Hydrogen</button>
-    <button type="button" class="s-chip cor" data-sector="Geothermal" aria-pressed="false"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.786 3 -2.791 3 -4 2z"/></svg>Geothermal</button>
-    <button type="button" class="s-chip" data-sector="Sustainability" aria-pressed="false"><i class="ti ti-leaf" style="font-size:13px;"></i>Sustainability</button>
-    <button type="button" class="s-chip cor" data-sector="Policy" aria-pressed="false"><i class="ti ti-building-bank" style="font-size:13px;"></i>Policy</button>
+    <button type="button" class="s-chip" data-sector="Solar" aria-pressed="false"><i class="ti ti-solar-panel" style="font-size:13px;"></i>Solar<span class="s-count" data-sector="Solar">1,797</span></button>
+    <button type="button" class="s-chip blu" data-sector="Wind" aria-pressed="false"><i class="ti ti-wind" style="font-size:13px;"></i>Wind<span class="s-count" data-sector="Wind">1,194</span></button>
+    <button type="button" class="s-chip amb" data-sector="Storage" aria-pressed="false"><i class="ti ti-battery-charging" style="font-size:13px;"></i>Storage<span class="s-count" data-sector="Storage">982</span></button>
+    <button type="button" class="s-chip" data-sector="Grid" aria-pressed="false"><i class="ti ti-bolt" style="font-size:13px;"></i>Grid<span class="s-count" data-sector="Grid">848</span></button>
+    <button type="button" class="s-chip pur" data-sector="EV" aria-pressed="false"><i class="ti ti-plug" style="font-size:13px;"></i>EV<span class="s-count" data-sector="EV">59</span></button>
+    <button type="button" class="s-chip" data-sector="Hydrogen" aria-pressed="false"><i class="ti ti-atom" style="font-size:13px;"></i>Hydrogen<span class="s-count" data-sector="Hydrogen">299</span></button>
+    <button type="button" class="s-chip cor" data-sector="Geothermal" aria-pressed="false"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.786 3 -2.791 3 -4 2z"/></svg>Geothermal<span class="s-count" data-sector="Geothermal">81</span></button>
+    <button type="button" class="s-chip" data-sector="Sustainability" aria-pressed="false"><i class="ti ti-leaf" style="font-size:13px;"></i>Sustainability<span class="s-count" data-sector="Sustainability">19</span></button>
+    <button type="button" class="s-chip cor" data-sector="Policy" aria-pressed="false"><i class="ti ti-building-bank" style="font-size:13px;"></i>Policy<span class="s-count" data-sector="Policy">23</span></button>
   </div>
   </div>
 </div>
@@ -712,6 +730,30 @@ function companyCardHtml(c) {
   ["dragleave", "drop"].forEach(e => drop.addEventListener(e, () => drop.classList.remove("drag")));
   drop.addEventListener("drop", ev => { ev.preventDefault(); const f = ev.dataTransfer.files[0]; if (f) handOff(f); });
   input.addEventListener("change", () => { if (input.files[0]) handOff(input.files[0]); });
+})();
+</script>
+<script>
+// Popular searches: a tap fills the keyword box. If a location is already
+// typed it searches straight away; otherwise it moves the cursor to Location
+// so the visitor adds where they want to work, then presses Search.
+// Without JavaScript the links still go to jobs.html?q=...
+(function wirePopularSearches() {
+  const q = document.getElementById("home-search-q");
+  const loc = document.getElementById("home-search-location");
+  const locField = loc.closest(".sb-field");
+  const defaultPh = loc.placeholder;
+  document.querySelectorAll(".pop-chip").forEach(chip => chip.addEventListener("click", ev => {
+    ev.preventDefault();
+    document.querySelectorAll(".pop-chip").forEach(c => c.classList.toggle("picked", c === chip));
+    q.value = chip.dataset.q;
+    if (loc.value.trim()) { document.getElementById("home-search-btn").click(); return; }
+    loc.placeholder = "Where? City, state or ZIP";
+    locField.classList.add("ask");
+    loc.focus({ preventScroll: true });
+    locField.scrollIntoView({ block: "center", behavior: "smooth" });
+  }));
+  loc.addEventListener("input", () => locField.classList.remove("ask"));
+  loc.addEventListener("blur", () => { if (!loc.value.trim()) loc.placeholder = defaultPh; locField.classList.remove("ask"); });
 })();
 </script>
 </body>
