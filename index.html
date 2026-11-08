@@ -289,6 +289,51 @@ footer a:hover{color:var(--grn);}
   .emp-section h2{font-size:22px;}
 }
 /*/emp-css*/
+/* Resume-first hero */
+.hero-resume{padding:3.25rem 2rem 2rem;}
+.hero-resume h1{margin-bottom:1rem;}
+.hero-resume .hr-pitch{font-size:19px;color:var(--t2);max-width:640px;margin:0 auto 2rem;}
+.hero-resume .hr-pitch strong{color:var(--t1);font-weight:600;}
+.hr-cta{display:inline-flex;flex-direction:column;align-items:center;gap:1rem;}
+.hr-drop{position:relative;display:inline-block;border-radius:999px;cursor:pointer;}
+.hr-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.hr-btn{display:inline-flex;align-items:center;gap:12px;background:var(--grn);color:#052e1e;font-size:18px;font-weight:700;padding:18px 34px;border-radius:999px;box-shadow:0 0 0 6px rgba(34,224,154,0.12),0 18px 50px -12px rgba(34,224,154,0.5);transition:transform .15s,box-shadow .15s;}
+.hr-btn i{font-size:20px;transform:translateX(3px);}
+.hr-drop:hover .hr-btn{transform:translateY(-1px);box-shadow:0 0 0 8px rgba(34,224,154,0.16),0 22px 60px -12px rgba(34,224,154,0.6);}
+.hr-drop.drag .hr-btn{outline:2px dashed var(--grn);outline-offset:6px;}
+.hr-drop:focus-within .hr-btn{outline:2px solid #fff;outline-offset:4px;}
+.hr-flow{list-style:none;display:flex;justify-content:center;align-items:center;margin-top:.2rem;font-size:13.5px;color:var(--t2);}
+.hr-flow li{display:inline-flex;align-items:center;gap:6px;}
+.hr-flow li i{color:var(--grn);font-size:14px;transform:translateX(2px);}
+.hr-flow li+li::before{content:"";width:22px;height:0.5px;background:var(--bdr2);margin:0 .7rem;}
+.hr-manual{font-size:12.5px;color:var(--t3);text-decoration:underline;text-underline-offset:3px;}
+.hr-manual:hover{color:var(--grn);}
+.hr-search{max-width:640px;margin:2.4rem auto 0;padding-top:1.6rem;border-top:0.5px solid var(--bdr);}
+.hr-search-label{font-size:12px;color:var(--t3);margin-bottom:.6rem;}
+.hr-search .search-box{background:transparent;border:none;padding:0;gap:6px;}
+.hr-search .sb-field{background:var(--card);border-radius:999px;padding:9px 16px;}
+.hr-search .sb-divider{display:none;}
+.hr-search .btn-search{background:var(--card2);color:var(--t1);border:0.5px solid var(--bdr2);border-radius:999px;padding:10px 18px;font-size:13px;}
+.hr-search .sector-chips{margin-top:.8rem;}
+.hr-search .s-chip{font-size:11.5px;padding:5px 11px;}
+@media (max-width:940px){
+  .hero-resume{padding:1.75rem 1rem 1.5rem;}
+  .hero-resume h1{font-size:31px;}
+  .hero-resume h1 br{display:none;}
+  .hero-resume h1 span{white-space:nowrap;}
+  .hero-resume .hr-pitch{font-size:16px;margin-bottom:1.4rem;}
+  .hr-cta{display:flex;align-items:stretch;}
+  .hr-drop{display:block;}
+  .hr-btn{display:flex;font-size:17px;padding:17px 26px;width:100%;justify-content:center;}
+  .hr-cta{gap:.7rem;}
+  .hr-flow{flex-wrap:wrap;gap:.3rem .9rem;font-size:12.5px;margin-top:.35rem;}
+  .hr-flow li{gap:4px;}
+  .hr-flow li i{font-size:13px;}
+  .hr-flow li+li::before{display:none;}
+  .hr-search{margin-top:1.8rem;}
+  .hr-search .search-box{flex-direction:column;}
+  .hr-search .sb-field{max-width:none !important;}
+}
 </style>
 </head>
 <body>
@@ -348,9 +393,23 @@ document.addEventListener('click', function(){
   document.getElementById('signinMenu').classList.remove('open');
 });
 </script>
-<div class="hero">
-  <h1>The job board built for<br><span>clean energy</span> careers</h1>
-  <p>No noise — just renewable energy. Solar, wind, storage, grid, EV, hydrogen — find your place in the transition.</p>
+<div class="hero hero-resume">
+  <h1>The job board built for<br> <span>clean energy</span> careers</h1>
+  <p class="hr-pitch">No noise — just renewable energy jobs, updated daily.</p>
+  <div class="hr-cta">
+    <label class="hr-drop" id="hrDrop">
+      <input type="file" accept=".pdf,.doc,.docx" id="hr-resume" aria-label="Upload your resume"/>
+      <span class="hr-btn"><i class="ti ti-upload"></i><span id="hrLabel">Upload your resume</span></span>
+    </label>
+    <ul class="hr-flow" aria-label="What happens next">
+      <li><i class="ti ti-clock"></i>Free, about a minute</li>
+      <li><i class="ti ti-check"></i>You get matched to roles</li>
+      <li><i class="ti ti-users"></i>Employers find you</li>
+    </ul>
+    <a class="hr-manual" href="create-profile.html?src=home-hero-manual">No resume? Fill it in by hand</a>
+  </div>
+  <div class="hr-search">
+  <div class="hr-search-label">Just browsing? Search <span id="hr-job-count">5,500+</span> open jobs</div>
   <div class="search-box">
     <div class="sb-field"><i class="ti ti-search"></i><input type="text" id="home-search-q" placeholder="Job title or keyword" autocomplete="off"/></div>
     <div class="sb-divider"></div>
@@ -368,16 +427,7 @@ document.addEventListener('click', function(){
     <button type="button" class="s-chip" data-sector="Sustainability" aria-pressed="false"><i class="ti ti-leaf" style="font-size:13px;"></i>Sustainability</button>
     <button type="button" class="s-chip cor" data-sector="Policy" aria-pressed="false"><i class="ti ti-building-bank" style="font-size:13px;"></i>Policy</button>
   </div>
-</div>
-<div class="profile-banner-slim">
-  <div class="pbs-left">
-    <div class="pbs-icon"><i class="ti ti-user-plus"></i></div>
-    <div>
-      <div class="pbs-text-title">Get new jobs matched to you, every week</div>
-      <div class="pbs-text-sub">Create a free profile and we'll email you roles that fit — and energy employers can find you</div>
-    </div>
   </div>
-  <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-grn" style="padding:9px 18px;font-size:13px;">Create your profile →</button></a>
 </div>
 <div class="stats-outer">
 <h2 class="stats-label">Verde Talent by the numbers</h2>
@@ -628,5 +678,41 @@ function companyCardHtml(c) {
   </div><!--/social-->
   <div>© 2026 Verde Talent · <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
 </footer>
+<script>
+// Resume-first hero: the picked (or dropped) file is kept in this browser's
+// IndexedDB for a moment and create-profile.html picks it up from there, so
+// the visitor doesn't have to choose it twice. Nothing is uploaded here.
+(function wireHeroResume() {
+  const drop = document.getElementById("hrDrop");
+  const input = document.getElementById("hr-resume");
+  const count = document.getElementById("stat-jobs");
+  if (count && count.textContent.trim()) document.getElementById("hr-job-count").textContent = count.textContent.trim();
+  const go = (extra) => { window.location.href = "create-profile.html?src=home-hero" + (extra || ""); };
+  function handOff(file) {
+    document.getElementById("hrLabel").textContent = "Opening " + file.name + "…";
+    gtag("event", "home_resume_pick", { file_type: file.name.toLowerCase().split(".").pop() });
+    let done = false;
+    const finish = (extra) => { if (!done) { done = true; go(extra); } };
+    setTimeout(() => finish(""), 2500);
+    try {
+      const req = indexedDB.open("vt-handoff", 1);
+      req.onupgradeneeded = () => req.result.createObjectStore("files");
+      req.onerror = () => finish("");
+      req.onsuccess = () => {
+        try {
+          const tx = req.result.transaction("files", "readwrite");
+          tx.objectStore("files").put({ file: file, at: Date.now() }, "resume");
+          tx.oncomplete = () => finish("&resume=handoff");
+          tx.onerror = () => finish("");
+        } catch (e) { finish(""); }
+      };
+    } catch (e) { finish(""); }
+  }
+  ["dragenter", "dragover"].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.add("drag"); }));
+  ["dragleave", "drop"].forEach(e => drop.addEventListener(e, () => drop.classList.remove("drag")));
+  drop.addEventListener("drop", ev => { ev.preventDefault(); const f = ev.dataTransfer.files[0]; if (f) handOff(f); });
+  input.addEventListener("change", () => { if (input.files[0]) handOff(input.files[0]); });
+})();
+</script>
 </body>
 </html>

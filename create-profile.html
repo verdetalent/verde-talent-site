@@ -2185,5 +2185,36 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
   </div><!--/social-->
   <div class="footer-copy">&copy; 2026 Verde Talent &middot; <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a></div>
 </footer>
+<script>
+// Hand-off from the homepage hero: pick up the resume the visitor already
+// chose there (kept in this browser's IndexedDB for up to 10 minutes) and run
+// it through the normal upload handler. If anything fails, the page simply
+// shows the usual upload box.
+(function pickUpHomepageResume() {
+  if (new URLSearchParams(window.location.search).get("resume") !== "handoff") return;
+  try {
+    const req = indexedDB.open("vt-handoff", 1);
+    req.onupgradeneeded = () => req.result.createObjectStore("files");
+    req.onsuccess = () => {
+      try {
+        const tx = req.result.transaction("files", "readwrite");
+        const store = tx.objectStore("files");
+        const get = store.get("resume");
+        get.onsuccess = () => {
+          const rec = get.result;
+          store.delete("resume");
+          if (!rec || !rec.file || Date.now() - rec.at > 10 * 60 * 1000) return;
+          const input = document.getElementById("inp-resume");
+          const dt = new DataTransfer();
+          dt.items.add(rec.file);
+          input.files = dt.files;
+          input.dispatchEvent(new Event("change"));
+          trackProfile("profile_resume_handoff", { from: "home-hero" });
+        };
+      } catch (e) {}
+    };
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
