@@ -23,7 +23,7 @@ const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, { auth: { per
 const resend = new Resend(Deno.env.get("RESEND_API_KEY")!);
 
 const OWNER_EMAIL = "contact@verdetalent.com";
-const ALLOWED_SECTORS = new Set(["Solar", "Wind", "Storage", "Grid", "EV", "Hydrogen", "Policy", "Sustainability"]);
+const ALLOWED_SECTORS = new Set(["Solar", "Wind", "Storage", "Grid", "EV", "Hydrogen", "Geothermal", "Policy", "Sustainability"]);
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "https://verdetalent.com",
