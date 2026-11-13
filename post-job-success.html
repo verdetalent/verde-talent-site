@@ -53,5 +53,14 @@ p{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:1.5rem;}
   <a class="btn-grn" href="jobs.html">Browse job search →</a>
   <p style="margin-top:1.25rem;"><a href="employer-dashboard.html" style="color:var(--grn);text-decoration:none;font-size:13px;">Manage your postings →</a></p>
 </div>
+<script>
+(function () {
+  var sid = new URLSearchParams(location.search).get('session_id');
+  if (!sid) return;
+  var key = 'vt_purchase_' + sid.slice(-24);
+  try { if (localStorage.getItem(key)) return; localStorage.setItem(key, '1'); } catch (e) {}
+  gtag('event', 'purchase', { item: 'single_post', value: 100, currency: 'USD', transaction_id: sid });
+})();
+</script>
 </body>
 </html>

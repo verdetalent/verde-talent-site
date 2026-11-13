@@ -428,9 +428,9 @@ document.addEventListener('click', function(){
   <div class="hr-search">
   <div class="hr-search-label">Just browsing? Search <span id="hr-job-count">5,500+</span> open jobs</div>
   <div class="search-box">
-    <div class="sb-field"><i class="ti ti-search"></i><input type="text" id="home-search-q" placeholder="Job title or keyword" autocomplete="off"/></div>
+    <div class="sb-field"><i class="ti ti-search"></i><input data-vt-unmask class="fs-unmask" type="text" id="home-search-q" placeholder="Job title or keyword" autocomplete="off"/></div>
     <div class="sb-divider"></div>
-    <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input type="text" id="home-search-location" placeholder="Location" autocomplete="off"/></div>
+    <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input data-vt-unmask class="fs-unmask" type="text" id="home-search-location" placeholder="Location" autocomplete="off"/></div>
     <button class="btn-search" id="home-search-btn">Search jobs</button>
   </div>
   <div class="pop-searches" aria-label="Popular searches"><span class="pop-label">Popular:</span><a class="pop-chip" href="jobs.html?q=engineer" data-q="engineer">Engineer</a><a class="pop-chip" href="jobs.html?q=wind+technician" data-q="wind technician">Wind technician</a><a class="pop-chip" href="jobs.html?q=solar+technician" data-q="solar technician">Solar technician</a><a class="pop-chip" href="jobs.html?q=project+manager" data-q="project manager">Project manager</a><a class="pop-chip" href="jobs.html?q=energy+storage" data-q="energy storage">Energy storage</a></div>
@@ -525,8 +525,7 @@ document.addEventListener("click", function (e) {
   var a = e.target.closest("[data-emp-cta]");
   if (!a) return;
   var params = { cta: a.dataset.empCta, placement: a.dataset.empPlace };
-  gtag("event", "employer_cta_click", params);
-  if (window.FS) FS("trackEvent", { name: "employer_cta_click", properties: params });
+  gtag("event", "employer_cta_click", params); // mirrored to Fullstory by fullstory.js
 });
 </script>
 <!--/emp-section-->

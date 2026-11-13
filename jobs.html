@@ -253,8 +253,8 @@ document.addEventListener('click', function(){
   <div class="sub">Search live openings in solar, wind, storage, grid, and EV infrastructure.</div>
 </div>
 <div class="search-bar">
-  <div class="sb-field"><i class="ti ti-search"></i><input type="text" id="job-search" placeholder="Job title or company" autocomplete="off"/></div>
-  <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input type="text" id="location-search" placeholder="Location" autocomplete="off"/></div>
+  <div class="sb-field"><i class="ti ti-search"></i><input data-vt-unmask class="fs-unmask" type="text" id="job-search" placeholder="Job title or company" autocomplete="off"/></div>
+  <div class="sb-field" style="max-width:220px;"><i class="ti ti-map-pin"></i><input data-vt-unmask class="fs-unmask" type="text" id="location-search" placeholder="Location" autocomplete="off"/></div>
   <select class="sb-select" id="radius-select" style="max-width:150px;">
     <option value="25">Within 25 miles</option>
     <option value="50">Within 50 miles</option>
@@ -842,7 +842,7 @@ function buildDateControls() {
     const count = ALL_JOBS.filter(j => daysAgo(jobDate(j)) <= b.maxDays).length;
     return `
     <div class="sf-check" data-bucket="${b.key}" onclick="selectDateBucket(this.dataset.bucket)">
-      <div class="sf-check-left"><input type="checkbox" ${currentDateBucket === b.key ? "checked" : ""}/>${b.label}</div>
+      <div class="sf-check-left"><input type="checkbox" data-vt-unmask class="fs-unmask" ${currentDateBucket === b.key ? "checked" : ""}/>${b.label}</div>
       <span class="sf-count">${count}</span>
     </div>`;
   }).join("");
@@ -854,7 +854,7 @@ function buildSalaryControls() {
     const count = ALL_JOBS.filter(j => j.salary_annual_max >= b.min).length;
     return `
     <div class="sf-check" data-bucket="${b.key}" onclick="selectSalaryBucket(this.dataset.bucket)">
-      <div class="sf-check-left"><input type="checkbox" ${currentSalaryBucket === b.key ? "checked" : ""}/>${b.label}</div>
+      <div class="sf-check-left"><input type="checkbox" data-vt-unmask class="fs-unmask" ${currentSalaryBucket === b.key ? "checked" : ""}/>${b.label}</div>
       <span class="sf-count">${count}</span>
     </div>`;
   }).join("");
@@ -870,7 +870,7 @@ function buildSkillsControls() {
   const checklist = document.getElementById("skills-checklist");
   checklist.innerHTML = ranked.map(([skill, count]) => `
     <div class="sf-check" data-skill="${escapeHtml(skill)}" onclick="toggleSkill(this.dataset.skill)">
-      <div class="sf-check-left"><input type="checkbox" ${currentSkills.has(skill) ? "checked" : ""}/>${escapeHtml(skill)}</div>
+      <div class="sf-check-left"><input type="checkbox" data-vt-unmask class="fs-unmask" ${currentSkills.has(skill) ? "checked" : ""}/>${escapeHtml(skill)}</div>
       <span class="sf-count">${count}</span>
     </div>`).join("");
 }
@@ -908,7 +908,7 @@ function buildKeywordFilterControls(containerId, field, order, currentSet, toggl
   const checklist = document.getElementById(containerId);
   checklist.innerHTML = keys.map(k => `
     <div class="sf-check" data-value="${escapeHtml(k)}" onclick="${toggleFnName}(this.dataset.value)">
-      <div class="sf-check-left"><input type="checkbox" ${currentSet.has(k) ? "checked" : ""}/>${escapeHtml(k)}</div>
+      <div class="sf-check-left"><input type="checkbox" data-vt-unmask class="fs-unmask" ${currentSet.has(k) ? "checked" : ""}/>${escapeHtml(k)}</div>
       <span class="sf-count">${counts[k]}</span>
     </div>`).join("");
 }
@@ -931,7 +931,7 @@ function buildEmploymentTypeControls() {
 function jobCategoryCheckRowHtml(key, count) {
   return `
     <div class="sf-check" data-value="${escapeHtml(key)}" onclick="toggleJobCategory(this.dataset.value)">
-      <div class="sf-check-left"><input type="checkbox" ${currentJobCategories.has(key) ? "checked" : ""}/>${escapeHtml(key)}</div>
+      <div class="sf-check-left"><input type="checkbox" data-vt-unmask class="fs-unmask" ${currentJobCategories.has(key) ? "checked" : ""}/>${escapeHtml(key)}</div>
       <span class="sf-count">${count}</span>
     </div>`;
 }

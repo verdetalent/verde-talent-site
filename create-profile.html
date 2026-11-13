@@ -508,16 +508,16 @@ document.addEventListener('click', function(){
     </div>
     <div id="lead-location-hint" style="font-size:11.5px;color:var(--t3);margin-top:8px;">Outside the US? Enter your city and country.</div>
     <div class="lite-alert-sectors" id="leadSectors">
-      <label class="lite-sector-chip all"><input type="checkbox" id="lead-sector-all"/>All</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="Solar"/>Solar</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="Wind"/>Wind</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="Storage"/>Storage</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="Grid"/>Grid</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="EV"/>EV</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="Hydrogen"/>Hydrogen</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="Geothermal"/>Geothermal</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="Policy"/>Policy</label>
-      <label class="lite-sector-chip"><input type="checkbox" value="Sustainability"/>Sustainability</label>
+      <label class="lite-sector-chip all"><input type="checkbox" data-vt-unmask class="fs-unmask" id="lead-sector-all"/>All</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="Solar"/>Solar</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="Wind"/>Wind</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="Storage"/>Storage</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="Grid"/>Grid</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="EV"/>EV</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="Hydrogen"/>Hydrogen</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="Geothermal"/>Geothermal</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="Policy"/>Policy</label>
+      <label class="lite-sector-chip"><input type="checkbox" data-vt-unmask class="fs-unmask" value="Sustainability"/>Sustainability</label>
     </div>
     <div class="lite-alert-note" id="leadNote"></div>
   </div>
@@ -1810,8 +1810,7 @@ function sanitizeStorageFileName(name){
 // codes are ever sent - never anything a person typed.
 function trackProfile(name, params) {
   params = params || {};
-  gtag('event', name, params);
-  if (window.FS) FS('trackEvent', { name: name, properties: params });
+  gtag('event', name, params); // mirrored to Fullstory by fullstory.js
 }
 
 // Checked after each interaction; each section reports once, the first

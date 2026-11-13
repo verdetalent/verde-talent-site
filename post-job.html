@@ -143,11 +143,11 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
   <div class="form-section">
     <div class="fs-title"><i class="ti ti-building"></i>Company</div>
     <div class="form-row">
-      <div class="field"><label>Company name <span class="req">*</span></label><input type="text" id="company-name" placeholder="Acme Solar"/></div>
+      <div class="field"><label>Company name <span class="req">*</span></label><input data-vt-unmask class="fs-unmask" type="text" id="company-name" placeholder="Acme Solar"/></div>
       <div class="field"><label>Contact email <span class="req">*</span></label><input type="email" id="company-email" placeholder="hiring@acmesolar.com"/></div>
     </div>
     <div class="form-row full">
-      <div class="field"><label>Application link (optional)</label><input type="text" id="apply-url" placeholder="https://acmesolar.com/careers/123"/>
+      <div class="field"><label>Application link (optional)</label><input data-vt-unmask class="fs-unmask" type="text" id="apply-url" placeholder="https://acmesolar.com/careers/123"/>
         <small>Leave blank and we'll automatically email applicant resumes to your email above.</small>
       </div>
     </div>
@@ -156,29 +156,29 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
   <div class="form-section">
     <div class="fs-title"><i class="ti ti-briefcase"></i>Role details</div>
     <div class="form-row">
-      <div class="field"><label>Job title <span class="req">*</span></label><input type="text" id="job-title" placeholder="Senior Solar Design Engineer"/></div>
-      <div class="field"><label>Location <span class="req">*</span></label><input type="text" id="job-location" placeholder="Austin, TX or Remote"/>
+      <div class="field"><label>Job title <span class="req">*</span></label><input data-vt-unmask class="fs-unmask" type="text" id="job-title" placeholder="Senior Solar Design Engineer"/></div>
+      <div class="field"><label>Location <span class="req">*</span></label><input data-vt-unmask class="fs-unmask" type="text" id="job-location" placeholder="Austin, TX or Remote"/>
         <small style="display:flex;align-items:center;gap:6px;margin-top:8px;">
-          <input type="checkbox" id="job-international" style="width:auto;"/>
+          <input data-vt-unmask class="fs-unmask" type="checkbox" id="job-international" style="width:auto;"/>
           <label for="job-international" style="margin:0;font-size:11px;color:var(--t2);">This role is based outside the U.S.</label>
         </small>
       </div>
     </div>
     <div class="form-row">
       <div class="field"><label>Sector</label>
-        <select id="job-sector">
+        <select data-vt-unmask class="fs-unmask" id="job-sector">
           <option value="">Select…</option>
           <option>Solar</option><option>Wind</option><option>Storage</option><option>Grid</option>
           <option>EV</option><option>Hydrogen</option><option>Geothermal</option><option>Policy</option><option>Sustainability</option>
         </select>
       </div>
       <div class="field"><label>Employment type</label>
-        <select id="job-type"><option>Full-time</option><option>Contract</option><option>Part-time</option><option>Internship</option></select>
+        <select data-vt-unmask class="fs-unmask" id="job-type"><option>Full-time</option><option>Contract</option><option>Part-time</option><option>Internship</option></select>
       </div>
     </div>
     <div class="form-row">
       <div class="field"><label id="salaryLabel">Salary (optional)</label>
-        <select id="salary-period">
+        <select data-vt-unmask class="fs-unmask" id="salary-period">
           <option value="">Prefer not to say</option>
           <option value="hour">Hourly</option>
           <option value="year">Annual</option>
@@ -188,9 +188,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="field" id="salaryRangeField" style="display:none;">
         <label>Range</label>
         <div style="display:flex;gap:8px;align-items:center;">
-          <input type="number" id="salary-min" placeholder="Min" min="0"/>
+          <input data-vt-unmask class="fs-unmask" type="number" id="salary-min" placeholder="Min" min="0"/>
           <span style="color:var(--t3);">–</span>
-          <input type="number" id="salary-max" placeholder="Max" min="0"/>
+          <input data-vt-unmask class="fs-unmask" type="number" id="salary-max" placeholder="Max" min="0"/>
         </div>
       </div>
     </div>
@@ -203,7 +203,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
           <p id="descUploadText">Drop a .txt, .docx, or .pdf file here to fill this in automatically, or type below</p>
           <small>Always double-check the extracted text before submitting — formatting from PDFs in particular can come through imperfectly.</small>
         </div>
-        <textarea id="job-description" placeholder="Paste or write the full job description…" style="margin-top:10px;"></textarea>
+        <textarea data-vt-unmask class="fs-unmask" id="job-description" placeholder="Paste or write the full job description…" style="margin-top:10px;"></textarea>
       </div>
     </div>
   </div>
@@ -592,6 +592,7 @@ async function buyPack(btn, note) {
     });
     const checkoutData = await checkoutRes.json();
     if (!checkoutRes.ok || !checkoutData.url) throw new Error(checkoutData.error || 'Could not start checkout.');
+    gtag('event', 'begin_checkout', { item: 'posting_pack', pack_size: packSize, value: packSize === 10 ? 850 : 450, currency: 'USD' });
     window.location.href = checkoutData.url;
   } catch (err) {
     btn.disabled = false;
@@ -734,6 +735,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       if (!redeemRes.ok || !redeemData.success) throw new Error(redeemData.error || 'Could not redeem a credit.');
 
       clearDraft();
+      gtag('event', 'job_posted', { method: 'credit' });
       window.location.href = 'post-job-success.html';
       return;
     }
@@ -752,6 +754,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     if (!checkoutRes.ok || !checkoutData.url) throw new Error(checkoutData.error || 'Could not start checkout.');
 
     clearDraft();
+    gtag('event', 'begin_checkout', { item: 'single_post', value: 100, currency: 'USD' });
     window.location.href = checkoutData.url;
   } catch (err) {
     btn.disabled = false;

@@ -181,6 +181,12 @@ document.getElementById('signOutLink').addEventListener('click', function(e){
 
 const params = new URLSearchParams(location.search);
 if (params.get('credits_success')) {
+  try {
+    if (!sessionStorage.getItem('vt_pack_purchase_logged')) {
+      sessionStorage.setItem('vt_pack_purchase_logged', '1');
+      gtag('event', 'purchase', { item: 'posting_pack', currency: 'USD' });
+    }
+  } catch (err) { /* ignore */ }
   document.getElementById('successNote').style.display = 'block';
   let hasDraft = false;
   try { hasDraft = !!localStorage.getItem('vt_post_draft'); } catch (err) { /* ignore */ }

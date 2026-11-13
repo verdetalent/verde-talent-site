@@ -69,41 +69,68 @@ footer a{color:var(--t2);text-decoration:none;}
 </nav>
 <div class="wrap">
   <h1>Privacy Policy</h1>
-  <div class="updated">Last updated: July 16, 2026</div>
+  <div class="updated">Last updated: November 13, 2026</div>
 
   <h2>Who we are</h2>
-  <p>Verde Talent ("we," "us") runs a job board connecting candidates with renewable energy employers. You can reach us at <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a>.</p>
+  <p>Verde Talent ("we," "us") runs the clean energy job board at verdetalent.com, connecting job seekers with clean energy employers. You can reach us at <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a>.</p>
 
-  <h2>Information we collect</h2>
-  <p>We only collect what you choose to give us:</p>
+  <h2>Information you give us</h2>
   <ul>
-    <li><strong>Account information:</strong> your email address and password, used to create and secure your candidate account.</li>
+    <li><strong>Candidate account:</strong> your email address and password, used to create and secure your account.</li>
     <li><strong>Profile information:</strong> name, headline, location, years of experience, bio, sectors, skills, work experience, education, job preferences, salary expectations, availability, and any links (LinkedIn, website, GitHub) you choose to add.</li>
-    <li><strong>Resume file:</strong> if you upload one, we store the file itself so it can be shared with employers you choose to be visible to.</li>
-    <li><strong>Contact form / email submissions:</strong> anything you send us directly, e.g. via a "Talk to our team" or newsletter signup link.</li>
+    <li><strong>Resume file:</strong> if you upload one, we store the file so it can be sent with your applications and, once that feature opens, shown to employers you choose to be visible to. To pre-fill your profile, the resume is read in your own browser.</li>
+    <li><strong>Applications:</strong> when you apply to a role posted directly on Verde Talent, we send your name, headline and resume to that employer. When a listing links to the employer's own site, you apply there and their privacy policy applies.</li>
+    <li><strong>Job alerts and newsletter:</strong> if you sign up without an account, your email address and the job title, location and sectors you choose.</li>
+    <li><strong>Employer accounts and job posts:</strong> your name, company name and contact email, and the details of the jobs you post.</li>
+    <li><strong>Payments:</strong> payments are handled by Stripe. We never see or store your full card number; Stripe tells us whether a payment succeeded, the amount and the email used.</li>
+    <li><strong>Messages:</strong> anything you send us directly, for example by email or a "Talk to our team" link.</li>
   </ul>
-  <p>We do not use third-party advertising trackers, and as of this writing we do not run analytics or tracking cookies on this site.</p>
+
+  <h2>Information collected automatically</h2>
+  <ul>
+    <li><strong>Analytics:</strong> we use Google Analytics, which uses cookies to record the pages you visit, how you arrived (for example from a search engine, an AI assistant or another website), your approximate location, and your device and browser.</li>
+    <li><strong>Session recording:</strong> we use FullStory to record how visitors use our pages (page views, clicks, scrolling and form interactions) so we can find and fix problems. What candidates type into profile and account fields is masked and never recorded; search terms and job-post details are recorded. When you are signed in, sessions are linked to your account ID and account type (candidate or employer), not your email address.</li>
+    <li><strong>How you found us:</strong> the first time you visit, we note in your browser where you came from (the referring site or campaign tag, such as a search engine or an AI assistant) and the page you landed on, and include it in our analytics.</li>
+    <li><strong>Technical logs:</strong> our hosting and security providers keep standard logs such as IP address and request times.</li>
+  </ul>
+  <p>We do not run advertising pixels, and we do not sell your personal information.</p>
 
   <h2>How we use your information</h2>
   <ul>
-    <li>To create and operate your candidate profile and account.</li>
-    <li>To let employers discover and evaluate your profile and resume, subject to the visibility settings you control (e.g. "Open to recruiters," "Profile searchable").</li>
-    <li>To respond to messages you send us.</li>
-    <li>To operate, maintain, and improve the site.</li>
+    <li>To create and operate your account and profile.</li>
+    <li>To send emails you have signed up for: job matches, job alerts, the newsletter, and messages about your account or posts.</li>
+    <li>To send your applications to the employers you apply to.</li>
+    <li>To publish and manage job posts, and to process payments.</li>
+    <li>To let employers discover your profile once that feature opens, subject to the visibility settings you control (for example "Open to recruiters" and "Profile searchable").</li>
+    <li>To understand how people find and use the site, including which search engines and AI assistants send visitors, and to improve it.</li>
+    <li>To respond to messages and to prevent abuse.</li>
   </ul>
-  <p>We do not sell your personal information.</p>
 
   <h2>Who can see your profile</h2>
-  <p>Your profile data is private by default and only accessible to your own account and to Verde Talent for site administration. Visibility toggles on your profile (recruiters, salary range, current employer, searchability) control what a future employer-facing view will show once that feature is publicly available. Until then, your data is not shown to any third party.</p>
+  <p>Your profile data is private by default and only accessible to your own account and to Verde Talent for site administration. Visibility toggles on your profile (recruiters, salary range, current employer, searchability) control what a future employer-facing view will show once that feature is publicly available. Until then, your profile is not shown to any employer, except that your name, headline and resume go to employers you apply to.</p>
 
-  <h2>Where your data is stored</h2>
-  <p>Your account, profile, and resume file are stored using Supabase, a third-party database and file storage provider. Supabase provides the infrastructure; Verde Talent controls access to your data through account-level security rules (nobody can read another person's profile or resume through the public-facing site).</p>
+  <h2>Service providers</h2>
+  <p>We use these providers to run the site. Each processes data only to provide its service to us:</p>
+  <ul>
+    <li><strong>Supabase</strong> stores accounts, profiles, resumes, job posts and alert sign-ups. Verde Talent controls access through account-level security rules, so nobody can read another person's profile or resume through the public site.</li>
+    <li><strong>Stripe</strong> processes payments.</li>
+    <li><strong>Resend</strong> sends our emails.</li>
+    <li><strong>Google Analytics</strong> and <strong>FullStory</strong> provide the analytics and session recording described above.</li>
+    <li><strong>GitHub Pages</strong> and <strong>Cloudflare</strong> host and deliver the site and its images.</li>
+  </ul>
+  <p>These providers may store and process data in the United States and other countries.</p>
+
+  <h2>Your choices</h2>
+  <ul>
+    <li>You can block or delete cookies in your browser settings, and opt out of Google Analytics with Google's <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener" target="_blank">browser add-on</a>.</li>
+    <li>Every email we send includes an unsubscribe link.</li>
+    <li>You can delete your resume or change your profile visibility settings at any time.</li>
+  </ul>
 
   <h2>Your rights</h2>
   <ul>
     <li>You can request a copy of the data we hold about you.</li>
     <li>You can request that we correct or delete your data at any time.</li>
-    <li>You can delete your resume or update your profile visibility settings whenever you like.</li>
   </ul>
   <p>To exercise any of these rights, email <a href="mailto:contact@verdetalent.com">contact@verdetalent.com</a> and we'll handle it directly, since self-service account deletion isn't built yet.</p>
 

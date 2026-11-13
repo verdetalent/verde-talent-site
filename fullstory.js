@@ -17,3 +17,78 @@ g.identifyAccount=b,g.clearUserCookie=b,g.setVars=d,g.event=function(b,d,j){h("t
 h("setIdentity",{consent:!arguments.length||b})}}(),u="fetch",a="XMLHttpRequest",g._w={},g._w[a]=m[a],g._w[u]=m[u],m[u]&&(m[u]=function(){
 return g._w[u].apply(this,arguments)}),g("init",{env:{orgId:o,host:e,script:t}}),g._v="2.1.0")
 }(window,document,"fullstory.com","edge.fullstory.com/s/fs.js","FS","o-254FDS-na1");
+
+/* --- Verde Talent tracking layer (added 2026-11-13) -------------------------
+   1. First touch: the first time a browser lands here we remember how it came
+      (utm_source, else the referring site's host, else "direct") and whether
+      that was an AI assistant. Stored only in this browser (vt_first_touch).
+   2. Identity: a signed-in employer or candidate is linked to their account ID
+      (never their email) and account type, so sessions can be found by account.
+   3. Events: every gtag('event', ...) on the site is mirrored to Fullstory with
+      the first-touch fields attached. Pages call gtag only, never FS directly,
+      so nothing is counted twice.
+   Never sends anything a person typed. */
+(function () {
+  var AI_HOSTS = /(^|\.)(chatgpt\.com|chat\.openai\.com|openai\.com|perplexity\.ai|gemini\.google\.com|bard\.google\.com|claude\.ai|copilot\.microsoft\.com|copilot\.com|you\.com|meta\.ai|deepseek\.com|grok\.com|x\.ai)$/i;
+  var store = {
+    get: function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+
+  // 1. First touch
+  var ft = store.get('vt_first_touch');
+  if (!ft || !ft.source) {
+    var q = new URLSearchParams(location.search);
+    var refHost = '';
+    try { refHost = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : ''; } catch (e) {}
+    if (refHost === location.hostname.replace(/^www\./, '')) refHost = '';
+    var src = (q.get('utm_source') || refHost || 'direct').toLowerCase().slice(0, 80);
+    var engine = '';
+    [src, refHost].forEach(function (h) { var m = h && h.match(AI_HOSTS); if (m && !engine) engine = m[2].toLowerCase(); });
+    ft = {
+      source: src,
+      medium: (q.get('utm_medium') || (refHost ? 'referral' : (q.get('utm_source') ? '' : 'none'))).slice(0, 80),
+      campaign: (q.get('utm_campaign') || '').slice(0, 80),
+      referrer: refHost,
+      landing: location.pathname.slice(0, 120),
+      ai: !!engine,
+      ai_engine: engine,
+      date: new Date().toISOString().slice(0, 10)
+    };
+    store.set('vt_first_touch', ft);
+  }
+  window.vtFirstTouch = ft;
+  var ftProps = {
+    first_touch_source: ft.source, first_touch_medium: ft.medium, first_touch_campaign: ft.campaign,
+    first_touch_landing: ft.landing, first_touch_ai: !!ft.ai, first_touch_ai_engine: ft.ai_engine || '',
+    first_touch_date: ft.date
+  };
+  FS('setProperties', { type: 'user', properties: ftProps });
+
+  // 2. Identity (employer wins if both sessions exist in one browser)
+  var now = Date.now();
+  var emp = store.get('vt_employer_session');
+  var cand = store.get('vt_session');
+  var who = (emp && emp.user_id && (!emp.expires_at || emp.expires_at > now)) ? { id: emp.user_id, type: 'employer' }
+          : (cand && cand.user_id && (!cand.expires_at || cand.expires_at > now)) ? { id: cand.user_id, type: 'candidate' }
+          : null;
+  if (who) FS('setIdentity', { uid: who.id, properties: { account_type: who.type } });
+
+  // 3. Mirror gtag events to Fullstory
+  var origGtag = window.gtag;
+  if (typeof origGtag === 'function' && !origGtag._vtMirrored) {
+    var wrapped = function () {
+      if (arguments[0] === 'event' && typeof arguments[1] === 'string') {
+        var p = {}, src = arguments[2] || {};
+        for (var k in src) {
+          if (Object.prototype.hasOwnProperty.call(src, k) && typeof src[k] !== 'function' && k !== 'event_timeout') p[k] = src[k];
+        }
+        for (var f in ftProps) p[f] = ftProps[f];
+        try { FS('trackEvent', { name: arguments[1], properties: p }); } catch (e) {}
+      }
+      return origGtag.apply(this, arguments);
+    };
+    wrapped._vtMirrored = true;
+    window.gtag = wrapped;
+  }
+})();
