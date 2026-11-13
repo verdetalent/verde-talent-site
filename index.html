@@ -143,6 +143,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .co-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
 .co-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:13px;padding:1.1rem;text-align:center;cursor:pointer;transition:border-color .15s;}
 .co-card:hover{border-color:var(--bdr2);}
+.home-faq-q{font-size:16px;margin:1.1rem 0 .35rem;}.home-about a{color:var(--grn);}
+.co-avatar.logo{width:96px;height:40px;border-radius:8px;background:#fff;padding:6px;box-sizing:border-box;}.jc-co-icon.logo{width:72px;height:38px;border-radius:8px;background:#fff;padding:5px;box-sizing:border-box;}.co-avatar.logo.dark,.jc-co-icon.logo.dark{background:#0B1F33;}.co-avatar.logo img,.jc-co-icon.logo img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
 .co-avatar{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;margin:0 auto .75rem;}
 .co-name{font-size:14px;font-weight:500;}
 .co-sector{font-size:11px;color:var(--t3);margin-top:3px;}
@@ -412,7 +414,7 @@ document.addEventListener('click', function(){
 </script>
 <div class="hero hero-resume">
   <h1>The job board built for<br> <span>clean energy</span> careers</h1>
-  <p class="hr-pitch">No noise — just renewable energy jobs, updated daily.</p>
+  <p class="hr-pitch">The clean energy job board — solar, wind, battery storage, grid, EV, hydrogen and geothermal jobs across the US and internationally. Free for job seekers, updated daily.</p>
   <div class="hr-cta">
     <label class="hr-drop" id="hrDrop">
       <input type="file" accept=".pdf,.doc,.docx" id="hr-resume" aria-label="Upload your resume"/>
@@ -475,7 +477,55 @@ document.addEventListener('click', function(){
     <h2 class="section-title">Featured jobs</h2>
     <a href="jobs.html" class="see-all">See all jobs →</a>
   </div>
-  <div class="jobs-grid" id="home-jobs-grid"></div>
+  <div class="jobs-grid" id="home-jobs-grid"><!--home-jobs-prerender-->
+  <a class="job-card" href="jobs/649907e1e96ae4395a84.html" style="text-decoration:none;color:inherit;">
+    <div class="jc-top">
+      <div class="jc-co-icon logo"><img src="/img/logos/avangrid-renewables.svg" alt="Avangrid Renewables logo" loading="lazy"></div>
+      <div class="jc-meta"><div class="jc-title">Experienced Wind Turbine Technician - Power</div><div class="jc-co">Avangrid Renewables</div><div class="jc-loc"><i class="ti ti-map-pin" style="font-size:11px;"></i>Jacksboro, TX</div></div>
+    </div>
+    <div class="jc-tags"><span class="jc-tag blu">Wind</span><span class="jc-tag blu">Wind Turbine Service Technician</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;"><span></span><span class="jc-date">Today</span></div>
+  </a>
+  <a class="job-card" href="jobs/262892eb0606cc752d31.html" style="text-decoration:none;color:inherit;">
+    <div class="jc-top">
+      <div class="jc-co-icon logo"><img src="/img/logos/commonwealth-fusion-systems.png" alt="Commonwealth Fusion Systems logo" loading="lazy"></div>
+      <div class="jc-meta"><div class="jc-title">Realtime Controls Software Engineer</div><div class="jc-co">Commonwealth Fusion Systems</div><div class="jc-loc"><i class="ti ti-map-pin" style="font-size:11px;"></i>Devens, MA</div></div>
+    </div>
+    <div class="jc-tags"><span class="jc-tag pur">Grid</span><span class="jc-tag pur">Software Engineer</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;"><span class="jc-salary">$107k–$160k</span><span class="jc-date">Today</span></div>
+  </a>
+  <a class="job-card" href="jobs/b4bcdeec3db54c5f9249.html" style="text-decoration:none;color:inherit;">
+    <div class="jc-top">
+      <div class="jc-co-icon logo dark"><img src="/img/logos/sunpower.svg" alt="SunPower logo" loading="lazy"></div>
+      <div class="jc-meta"><div class="jc-title">Solar installer</div><div class="jc-co">SunPower</div><div class="jc-loc"><i class="ti ti-map-pin" style="font-size:11px;"></i>Raleigh, NC</div></div>
+    </div>
+    <div class="jc-tags"><span class="jc-tag grn">Solar</span><span class="jc-tag grn">Solar Photovoltaic Installer</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;"><span></span><span class="jc-date">1 day ago</span></div>
+  </a>
+  <a class="job-card" href="jobs/bf807e90525f5f0947b7.html" style="text-decoration:none;color:inherit;">
+    <div class="jc-top">
+      <div class="jc-co-icon logo"><img src="/img/logos/pearce-services.png" alt="Pearce Services logo" loading="lazy"></div>
+      <div class="jc-meta"><div class="jc-title">Solar Field Service Technician (Operations and Maintenance)</div><div class="jc-co">Pearce Services</div><div class="jc-loc"><i class="ti ti-map-pin" style="font-size:11px;"></i>Pueblo, CO</div></div>
+    </div>
+    <div class="jc-tags"><span class="jc-tag grn">Solar</span><span class="jc-tag grn">Solar O&amp;M Technician</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;"><span></span><span class="jc-date">1 day ago</span></div>
+  </a>
+  <a class="job-card" href="jobs/bb38b37654db69f8c8be.html" style="text-decoration:none;color:inherit;">
+    <div class="jc-top">
+      <div class="jc-co-icon logo"><img src="/img/logos/sunrun.svg" alt="Sunrun logo" loading="lazy"></div>
+      <div class="jc-meta"><div class="jc-title">Solar Installer</div><div class="jc-co">Sunrun</div><div class="jc-loc"><i class="ti ti-map-pin" style="font-size:11px;"></i>Des Plaines, IL</div></div>
+    </div>
+    <div class="jc-tags"><span class="jc-tag grn">Solar</span><span class="jc-tag grn">Solar Photovoltaic Installer</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;"><span></span><span class="jc-date">1 day ago</span></div>
+  </a>
+  <a class="job-card" href="jobs/f36c774aab32e59e87f7.html" style="text-decoration:none;color:inherit;">
+    <div class="jc-top">
+      <div class="jc-co-icon logo"><img src="/img/logos/exelon.svg" alt="Exelon logo" loading="lazy"></div>
+      <div class="jc-meta"><div class="jc-title">Sr Project Manager-Transmission &amp; Substation</div><div class="jc-co">Exelon</div><div class="jc-loc"><i class="ti ti-map-pin" style="font-size:11px;"></i>OAKBROOK TERRACE, IL</div></div>
+    </div>
+    <div class="jc-tags"><span class="jc-tag pur">Grid</span><span class="jc-tag pur">Project Manager</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;"><span></span><span class="jc-date">2 days ago</span></div>
+  </a><!--/home-jobs-prerender--></div>
 </div>
 <!--emp-section-->
 <section class="emp-section" aria-labelledby="emp-heading">
@@ -534,9 +584,58 @@ document.addEventListener("click", function (e) {
     <h2 class="section-title">Top companies hiring</h2>
     <a href="companies.html" class="see-all">Browse all →</a>
   </div>
-  <div class="co-grid" id="home-co-grid"></div>
+  <div class="co-grid" id="home-co-grid"><!--home-companies-prerender-->
+  <a class="co-card" href="companies/vestas.html" style="text-decoration:none;color:inherit;">
+    <div class="co-avatar logo"><img src="/img/logos/vestas.svg" alt="Vestas logo" loading="lazy"></div>
+    <div class="co-name">Vestas</div>
+    <div class="co-sector">Wind Turbines</div>
+    <div class="co-roles">663 open roles</div>
+  </a>
+  <a class="co-card" href="companies/nextera-energy.html" style="text-decoration:none;color:inherit;">
+    <div class="co-avatar logo"><img src="/img/logos/nextera-energy.svg" alt="NextEra Energy logo" loading="lazy"></div>
+    <div class="co-name">NextEra Energy</div>
+    <div class="co-sector">Utility-Scale Wind &amp; Solar</div>
+    <div class="co-roles">324 open roles</div>
+  </a>
+  <a class="co-card" href="companies/first-solar.html" style="text-decoration:none;color:inherit;">
+    <div class="co-avatar logo"><img src="/img/logos/first-solar.svg" alt="First Solar logo" loading="lazy"></div>
+    <div class="co-name">First Solar</div>
+    <div class="co-sector">Solar Manufacturing</div>
+    <div class="co-roles">263 open roles</div>
+  </a>
+  <a class="co-card" href="companies/nextpower-formerly-nextracker.html" style="text-decoration:none;color:inherit;">
+    <div class="co-avatar logo dark"><img src="/img/logos/nextpower-formerly-nextracker.svg" alt="Nextpower (formerly Nextracker) logo" loading="lazy"></div>
+    <div class="co-name">Nextpower (formerly Nextracker)</div>
+    <div class="co-sector">Solar Manufacturing</div>
+    <div class="co-roles">248 open roles</div>
+  </a>
+  <a class="co-card" href="companies/sunrun.html" style="text-decoration:none;color:inherit;">
+    <div class="co-avatar logo"><img src="/img/logos/sunrun.svg" alt="Sunrun logo" loading="lazy"></div>
+    <div class="co-name">Sunrun</div>
+    <div class="co-sector">Residential Solar</div>
+    <div class="co-roles">245 open roles</div>
+  </a>
+  <a class="co-card" href="companies/eversource-energy.html" style="text-decoration:none;color:inherit;">
+    <div class="co-avatar logo"><img src="/img/logos/eversource-energy.svg" alt="Eversource Energy logo" loading="lazy"></div>
+    <div class="co-name">Eversource Energy</div>
+    <div class="co-sector">Utility</div>
+    <div class="co-roles">216 open roles</div>
+  </a>
+  <a class="co-card" href="companies/bloom-energy.html" style="text-decoration:none;color:inherit;">
+    <div class="co-avatar logo"><img src="/img/logos/bloom-energy.svg" alt="Bloom Energy logo" loading="lazy"></div>
+    <div class="co-name">Bloom Energy</div>
+    <div class="co-sector">Fuel Cells</div>
+    <div class="co-roles">213 open roles</div>
+  </a>
+  <a class="co-card" href="companies/form-energy.html" style="text-decoration:none;color:inherit;">
+    <div class="co-avatar logo"><img src="/img/logos/form-energy.png" alt="Form Energy logo" loading="lazy"></div>
+    <div class="co-name">Form Energy</div>
+    <div class="co-sector">Storage Manufacturing</div>
+    <div class="co-roles">209 open roles</div>
+  </a><!--/home-companies-prerender--></div>
 </div>
 <script id="home-jobs-data" type="application/json">[{"job_title": "Experienced Wind Turbine Technician - Power", "company": "Avangrid Renewables", "location": "United States Of America, Texas, Jacksboro", "region": "US", "job_url": "https://iberdrola.wd3.myworkdayjobs.com/Iberdrola/job/United-States-Of-America-Texas-Jacksboro/Experienced-Wind-Turbine-Technician---Power_R-34961", "salary": "$33.00 to $45.50", "first_seen": "2026-11-13T15:01:49.870259+00:00", "sector_bucket": "Wind", "occupation": "Wind Turbine Service Technician", "primary_place": {"raw": "United States Of America, Texas, Jacksboro", "city": "Jacksboro", "state": "TX", "census_region": "South", "is_remote": false, "is_international": false}, "page_slug": "649907e1e96ae4395a84"}, {"job_title": "Realtime Controls Software Engineer", "company": "Commonwealth Fusion Systems", "location": "Devens, MA", "region": "US", "job_url": "https://jobs.lever.co/cfsenergy/5aeb4472-1124-474a-a61e-997c74b16e45", "salary": "USD 107,000 - 160,000 (per year salary)", "first_seen": "2026-11-13T14:58:57.898255+00:00", "sector_bucket": "Grid", "occupation": "Software Engineer", "primary_place": {"raw": "Devens, MA", "city": "Devens", "state": "MA", "census_region": "Northeast", "is_remote": false, "is_international": false}, "page_slug": "262892eb0606cc752d31"}, {"job_title": "Solar installer", "company": "SunPower", "location": "Raleigh, NC", "region": "US", "job_url": "https://sunpower.breezy.hr/p/683d490f36da-solar-installer", "salary": "$60,000-$80,000/year", "first_seen": "2026-11-12T15:48:44.424365+00:00", "sector_bucket": "Solar", "occupation": "Solar Photovoltaic Installer", "primary_place": {"raw": "Raleigh, NC", "city": "Raleigh", "state": "NC", "census_region": "South", "is_remote": false, "is_international": false}, "page_slug": "b4bcdeec3db54c5f9249"}, {"job_title": "Solar Field Service Technician (Operations and Maintenance)", "company": "Pearce Services", "location": "Pueblo, Colorado", "region": "US", "job_url": "https://job-boards.greenhouse.io/pearceservices/jobs/5478861008", "salary": "$25.00-$35.00", "first_seen": "2026-11-12T15:46:25.695315+00:00", "sector_bucket": "Solar", "occupation": "Solar O&M Technician", "primary_place": {"raw": "Pueblo, Colorado", "city": "Pueblo", "state": "CO", "census_region": "West", "is_remote": false, "is_international": false}, "page_slug": "bf807e90525f5f0947b7"}, {"job_title": "Solar Installer", "company": "Sunrun", "location": "IL, Des Plaines", "region": "US", "job_url": "https://sunrun.wd5.myworkdayjobs.com/Sunrun_Careers/job/IL-Des-Plaines/Solar-Installer_R77981", "salary": "$21.82 to $29.09", "first_seen": "2026-11-12T15:40:40.847353+00:00", "sector_bucket": "Solar", "occupation": "Solar Photovoltaic Installer", "primary_place": {"raw": "IL, Des Plaines", "city": "Des Plaines", "state": "IL", "census_region": "Midwest", "is_remote": false, "is_international": false}, "page_slug": "bb38b37654db69f8c8be"}, {"job_title": "Sr Project Manager-Transmission & Substation", "company": "Exelon", "location": "OAKBROOK TERRACE, Illinois", "region": "US", "job_url": "https://jobs.exeloncorp.com/careers-home/jobs/29353", "salary": "$250K to $15", "first_seen": "2026-11-11T14:59:26.752514+00:00", "sector_bucket": "Grid", "occupation": "Project Manager", "primary_place": {"raw": "OAKBROOK TERRACE, Illinois", "city": "OAKBROOK TERRACE", "state": "IL", "census_region": "Midwest", "is_remote": false, "is_international": false}, "page_slug": "f36c774aab32e59e87f7"}]</script>
+<script id="home-logos-data" type="application/json">{"Vestas": {"src": "/img/logos/vestas.svg", "dark": false}, "NextEra Energy": {"src": "/img/logos/nextera-energy.svg", "dark": false}, "First Solar": {"src": "/img/logos/first-solar.svg", "dark": false}, "Nextpower (formerly Nextracker)": {"src": "/img/logos/nextpower-formerly-nextracker.svg", "dark": true}, "Sunrun": {"src": "/img/logos/sunrun.svg", "dark": false}, "Eversource Energy": {"src": "/img/logos/eversource-energy.svg", "dark": false}, "Bloom Energy": {"src": "/img/logos/bloom-energy.svg", "dark": false}, "Form Energy": {"src": "/img/logos/form-energy.png", "dark": false}, "Commonwealth Fusion Systems": {"src": "/img/logos/commonwealth-fusion-systems.png", "dark": false}, "SunPower": {"src": "/img/logos/sunpower.svg", "dark": true}, "Pearce Services": {"src": "/img/logos/pearce-services.png", "dark": false}, "Exelon": {"src": "/img/logos/exelon.svg", "dark": false}, "Avangrid Renewables": {"src": "/img/logos/avangrid-renewables.svg", "dark": false}}</script>
 <script id="home-companies-data" type="application/json">[{"name": "Vestas", "slug": "vestas", "sector": "Wind Turbines", "sector_bucket": "Wind", "open_postings_count": 663}, {"name": "NextEra Energy", "slug": "nextera-energy", "sector": "Utility-Scale Wind & Solar", "sector_bucket": null, "open_postings_count": 324}, {"name": "First Solar", "slug": "first-solar", "sector": "Solar Manufacturing", "sector_bucket": "Solar", "open_postings_count": 263}, {"name": "Nextpower (formerly Nextracker)", "slug": "nextpower-formerly-nextracker", "sector": "Solar Manufacturing", "sector_bucket": "Solar", "open_postings_count": 248}, {"name": "Sunrun", "slug": "sunrun", "sector": "Residential Solar", "sector_bucket": "Solar", "open_postings_count": 245}, {"name": "Eversource Energy", "slug": "eversource-energy", "sector": "Utility", "sector_bucket": null, "open_postings_count": 216}, {"name": "Bloom Energy", "slug": "bloom-energy", "sector": "Fuel Cells", "sector_bucket": "Hydrogen", "open_postings_count": 213}, {"name": "Form Energy", "slug": "form-energy", "sector": "Storage Manufacturing", "sector_bucket": "Storage", "open_postings_count": 209}]</script>
 <script>
 const SECTOR_COLORS = {
@@ -580,6 +679,12 @@ function fmtRelativeDate(iso) {
   return `${days} days ago`;
 }
 
+const HOME_LOGOS = JSON.parse((document.getElementById("home-logos-data") || {}).textContent || "{}");
+function logoBox(cls, name) {
+  const l = HOME_LOGOS[name];
+  return l ? `<div class="${cls} logo${l.dark ? " dark" : ""}"><img src="${escapeHtml(l.src)}" alt="${escapeHtml(name)} logo" loading="lazy"></div>` : "";
+}
+
 function jobCardHtml(job) {
   const color = SECTOR_COLORS[job.sector_bucket] || NEUTRAL_COLOR;
   const initial = (job.company || "?").charAt(0).toUpperCase();
@@ -589,7 +694,7 @@ function jobCardHtml(job) {
   return `
   <a class="job-card" href="${href}" style="text-decoration:none;color:inherit;">
     <div class="jc-top">
-      <div class="jc-co-icon" style="background:${colorVar(color)}22;color:${colorVar(color)};">${initial}</div>
+      ${logoBox("jc-co-icon", job.company) || `<div class="jc-co-icon" style="background:${colorVar(color)}22;color:${colorVar(color)};">${initial}</div>`}
       <div class="jc-meta"><div class="jc-title">${escapeHtml(job.job_title || "Untitled role")}</div><div class="jc-co">${escapeHtml(job.company)}</div><div class="jc-loc"><i class="ti ti-map-pin" style="font-size:11px;"></i>${escapeHtml(fmtLocation(job))}</div></div>
     </div>
     <div class="jc-tags">${tags.map(t => `<span class="jc-tag ${color}">${escapeHtml(t)}</span>`).join("")}</div>
@@ -603,7 +708,7 @@ function companyCardHtml(c) {
   const rolesLabel = c.open_postings_count === 1 ? "1 open role" : `${c.open_postings_count} open roles`;
   return `
   <a class="co-card" href="companies/${encodeURIComponent(c.slug)}.html" style="text-decoration:none;color:inherit;">
-    <div class="co-avatar" style="background:${colorVar(color)}22;color:${colorVar(color)};">${initial}</div>
+    ${logoBox("co-avatar", c.name) || `<div class="co-avatar" style="background:${colorVar(color)}22;color:${colorVar(color)};">${initial}</div>`}
     <div class="co-name">${escapeHtml(c.name)}</div>
     <div class="co-sector">${escapeHtml(c.sector || "Uncategorized")}</div>
     <div class="co-roles">${rolesLabel}</div>
@@ -664,8 +769,24 @@ function companyCardHtml(c) {
 <div class="home-about">
   <h2>A job board built specifically for clean energy</h2>
   <p>Generic job boards like Indeed and LinkedIn bury clean energy roles under millions of unrelated postings, and their filters aren't built for this industry. Verde Talent only lists jobs from solar, wind, battery storage, grid, EV infrastructure, hydrogen, and geothermal employers — real open roles from companies like NextEra Energy, Vestas, Sunrun, First Solar, and Bloom Energy — so every search result is actually relevant, no sifting through retail, hospitality, or software listings to find the handful of energy roles mixed in.</p>
-  <p>Whether you're searching for solar installer jobs, wind turbine technician jobs, battery storage engineer roles, EV charging infrastructure positions, or grid and utility engineering openings, Verde Talent organizes postings by sector and role so you can filter down to exactly what you're qualified for — across all 50 states, with dedicated filters for remote and international roles too.</p>
-  <p>We also show real salary ranges on postings whenever employers disclose them, and back every listing with our own Intelligence data — compensation benchmarks, hiring trends, and fill-difficulty by role, sourced from the same live postings you're browsing. Create a free candidate profile and employers hiring in solar, wind, storage, and grid can find and reach out to you directly.</p>
+  <p>Whether you're searching for <a href="/browse/solar-installer-jobs.html">solar installer jobs</a>, <a href="/browse/wind-technician-jobs.html">wind turbine technician jobs</a>, <a href="/browse/battery-storage-engineering-jobs.html">battery storage engineer roles</a>, EV charging infrastructure positions, or <a href="/browse/grid-engineering-jobs.html">grid and utility engineering openings</a>, Verde Talent organizes postings by sector and role so you can filter down to exactly what you're qualified for — across all 50 states, with dedicated filters for remote and international roles too.</p>
+  <p>We also show <a href="/salaries.html">real salary ranges</a> on postings whenever employers disclose them, and back every listing with <a href="/intelligence.html">our own Intelligence data</a> — compensation benchmarks, hiring trends, and fill-difficulty by role, sourced from the same live postings you're browsing. <a href="/create-profile.html">Create a free candidate profile</a> and employers hiring in solar, wind, storage, and grid can find and reach out to you directly.</p>
+</div>
+<div class="home-about home-faq" id="faq">
+  <h2>Questions about Verde Talent</h2>
+  <h3 class="home-faq-q">What is Verde Talent?</h3>
+  <p>Verde Talent is the clean energy job board: solar, wind, battery storage, grid, EV, hydrogen and geothermal jobs across the US and internationally. Job seekers search and apply free; employers post roles from $100. <a href="/about.html">About Verde Talent</a></p>
+  <h3 class="home-faq-q">Is Verde Talent a recruiting or staffing agency?</h3>
+  <p>No. Verde Talent is a job board, not a recruiter or staffing firm, and it charges no placement fees. Employers pay a flat price to post a role, and job seekers apply to the employer directly. Several unrelated recruiting firms also use the name "Verde"; Verde Talent is the clean energy job board at verdetalent.com.</p>
+  <h3 class="home-faq-q">Is Verde Talent free for job seekers?</h3>
+  <p>Yes, always. Searching and applying on Verde Talent are free and need no account. A free profile is optional: it adds weekly job-match emails and puts you in the talent pool employers will be able to search. <a href="/create-profile.html">Create a free profile</a></p>
+  <h3 class="home-faq-q">How much does it cost to post a job on Verde Talent?</h3>
+  <p>A single Verde Talent job post is $100 and runs for 30 days. Packs bring the price down: 5 posts for $450 ($90 each) or 10 posts for $850 ($85 each), usable on any role within 12 months. There are no placement fees or per-click charges. <a href="/post-job.html">Post a job</a></p>
+  <h3 class="home-faq-q">How is Verde Talent different from Indeed?</h3>
+  <p>Indeed covers every industry, so clean energy roles are a small share of any search and filters are generic. Verde Talent lists clean energy roles only, organised by sector and job function, with salary benchmarks beside every role. For employers, Verde Talent is a flat $100 for 30 days rather than a sponsored-job budget. <a href="/jobs.html">Search Verde Talent</a></p>
+  <h3 class="home-faq-q">Does Verde Talent list clean energy jobs outside the US?</h3>
+  <p>Yes. Verde Talent lists international clean energy roles alongside US ones - filter for them in job search, and employers can post roles based outside the US. Salary benchmarks, state pages and hiring data cover the US only. <a href="/jobs.html">Search international roles</a></p>
+  <p><a href="/answers.html">All answers about Verde Talent →</a></p>
 </div>
 <footer>
   <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
@@ -683,6 +804,7 @@ function companyCardHtml(c) {
     <a href="salaries.html">Salaries</a>
     <a href="careers.html">Career Profiles</a>
     <a href="glossary.html">Glossary</a>
+    <a href="answers.html">Answers</a>
     <a href="hire.html">Hire Talent</a>
     <a href="privacy.html">Privacy</a>
     <a href="terms.html">Terms</a>
@@ -755,5 +877,6 @@ function companyCardHtml(c) {
   loc.addEventListener("blur", () => { if (!loc.value.trim()) loc.placeholder = defaultPh; locField.classList.remove("ask"); });
 })();
 </script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Verde Talent?", "acceptedAnswer": {"@type": "Answer", "text": "Verde Talent is the clean energy job board: solar, wind, battery storage, grid, EV, hydrogen and geothermal jobs across the US and internationally. Job seekers search and apply free; employers post roles from $100. About Verde Talent"}}, {"@type": "Question", "name": "Is Verde Talent a recruiting or staffing agency?", "acceptedAnswer": {"@type": "Answer", "text": "No. Verde Talent is a job board, not a recruiter or staffing firm, and it charges no placement fees. Employers pay a flat price to post a role, and job seekers apply to the employer directly. Several unrelated recruiting firms also use the name \"Verde\"; Verde Talent is the clean energy job board at verdetalent.com."}}, {"@type": "Question", "name": "Is Verde Talent free for job seekers?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, always. Searching and applying on Verde Talent are free and need no account. A free profile is optional: it adds weekly job-match emails and puts you in the talent pool employers will be able to search. Create a free profile"}}, {"@type": "Question", "name": "How much does it cost to post a job on Verde Talent?", "acceptedAnswer": {"@type": "Answer", "text": "A single Verde Talent job post is $100 and runs for 30 days. Packs bring the price down: 5 posts for $450 ($90 each) or 10 posts for $850 ($85 each), usable on any role within 12 months. There are no placement fees or per-click charges. Post a job"}}, {"@type": "Question", "name": "How is Verde Talent different from Indeed?", "acceptedAnswer": {"@type": "Answer", "text": "Indeed covers every industry, so clean energy roles are a small share of any search and filters are generic. Verde Talent lists clean energy roles only, organised by sector and job function, with salary benchmarks beside every role. For employers, Verde Talent is a flat $100 for 30 days rather than a sponsored-job budget. Search Verde Talent"}}, {"@type": "Question", "name": "Does Verde Talent list clean energy jobs outside the US?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Verde Talent lists international clean energy roles alongside US ones - filter for them in job search, and employers can post roles based outside the US. Salary benchmarks, state pages and hiring data cover the US only. Search international roles"}}]}</script>
 </body>
 </html>

@@ -119,6 +119,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .follow-links a:hover,.follow-links a:focus-visible{border-color:var(--grn,#22E09A);color:var(--grn,#22E09A);}
 .follow-links svg{width:16px;height:16px;display:block;}
 /*/social-css*/
+.pj-proof{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 8px;}.pj-proof-item{border:0.5px solid var(--bdr2);border-radius:10px;padding:12px 14px;}.pj-proof-num{font-size:20px;font-weight:600;color:var(--grn);}.pj-proof-label{font-size:12px;color:var(--t2);margin-top:2px;}.pj-proof-note{font-size:12px;color:var(--t3);margin:0 0 6px;}@media(max-width:700px){.pj-proof{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
@@ -130,6 +131,13 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
   <div class="hero">
     <h1>Post a job to Verde Talent</h1>
     <p>Reach candidates actively looking for renewable energy roles. Your listing goes live immediately after payment.</p>
+    <div class="pj-proof" aria-label="Verde Talent at a glance">
+      <div class="pj-proof-item"><div class="pj-proof-num" id="postjob-stat-jobs">5,500+</div><div class="pj-proof-label">open clean energy roles</div></div>
+      <div class="pj-proof-item"><div class="pj-proof-num" id="postjob-stat-companies">104</div><div class="pj-proof-label">energy companies hiring</div></div>
+      <div class="pj-proof-item"><div class="pj-proof-num">287</div><div class="pj-proof-label">candidate profiles</div></div>
+      <div class="pj-proof-item"><div class="pj-proof-num">Weekly</div><div class="pj-proof-label">job-match emails to matching candidates</div></div>
+    </div>
+    <p class="pj-proof-note">Roles on Verde Talent come from clean energy employers such as NextEra Energy, Vestas, First Solar, Sunrun and Bloom Energy.</p>
   </div>
 
   <div class="note-banner" id="cancelNote" style="display:none;">
