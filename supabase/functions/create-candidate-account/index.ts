@@ -86,6 +86,20 @@ function cleanBool(value: unknown, fallback: boolean): boolean {
   return typeof value === "boolean" ? value : fallback;
 }
 
+// How this visitor first found the site, recorded in the browser by fullstory.js
+// (vt_first_touch). Only these keys, as short strings, are ever stored.
+function cleanFirstTouch(raw: unknown): Record<string, unknown> | null {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const r = raw as Record<string, unknown>;
+  const out: Record<string, unknown> = {};
+  for (const k of ["source", "medium", "campaign", "referrer", "landing", "ai_engine", "date"]) {
+    if (typeof r[k] === "string" && r[k]) out[k] = (r[k] as string).slice(0, 120);
+  }
+  if (typeof r.ai === "boolean") out.ai = r.ai;
+  return Object.keys(out).length ? out : null;
+}
+const HEARD_ABOUT = new Set(["ai_assistant", "search", "linkedin", "social", "referral", "job_board", "other"]);
+
 function buildProfile(raw: Record<string, unknown>) {
   return {
     first_name: cleanText(raw.first_name, 100),
@@ -116,6 +130,8 @@ function buildProfile(raw: Record<string, unknown>) {
     current_employer: cleanText(raw.current_employer, 120),
     visibility_searchable: cleanBool(raw.visibility_searchable, true),
     email_job_alerts: cleanBool(raw.email_job_alerts, false),
+    first_touch: cleanFirstTouch(raw.first_touch),
+    heard_about: typeof raw.heard_about === "string" && HEARD_ABOUT.has(raw.heard_about) ? raw.heard_about : null,
   };
 }
 

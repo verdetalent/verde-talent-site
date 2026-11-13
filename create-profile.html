@@ -365,6 +365,7 @@ document.addEventListener('click', function(){
         <div class="field"><label for="acc-password">Password</label><input type="password" id="acc-password" placeholder="At least 6 characters" autocomplete="new-password"/></div>
       </div>
       <div style="font-size:12px;color:var(--t3);">This becomes your login - use it to sign back in and update your profile later.</div>
+      <div class="field" style="margin-top:14px;"><label for="heard-about">How did you hear about Verde Talent?</label><select id="heard-about" data-vt-unmask class="fs-unmask"><option value="">Choose one (optional)</option><option value="ai_assistant">ChatGPT or another AI assistant</option><option value="search">Google or another search engine</option><option value="linkedin">LinkedIn</option><option value="social">Instagram or Facebook</option><option value="referral">A friend or colleague</option><option value="job_board">Another job board or newsletter</option><option value="other">Other</option></select></div>
           <div class="login-submit">
         <button type="button" class="btn-grn" id="submitBtn">Create my profile →</button>
         <div class="submit-note" id="submitNote">Creates your login and saves your profile. You can edit anything later from your dashboard.</div>
@@ -1744,7 +1745,7 @@ document.getElementById('leadSubmitBtn').addEventListener('click', async functio
         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, job_title: jobTitle, location, sectors }),
+      body: JSON.stringify({ email, job_title: jobTitle, location, sectors, first_touch: window.vtFirstTouch || null }),
     });
     const result = await res.json().catch(() => null);
     if (!res.ok || !result || !result.success) throw new Error((result && result.error) || 'All signups failed');
@@ -1908,6 +1909,8 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     const salMin = document.getElementById('pf-sal-min').value;
     const salMax = document.getElementById('pf-sal-max').value;
     const payload = {
+      first_touch: window.vtFirstTouch || null,
+      heard_about: (document.getElementById('heard-about') || {}).value || null,
       first_name: first,
       last_name: last,
       headline: document.getElementById('inp-headline').value.trim() || null,

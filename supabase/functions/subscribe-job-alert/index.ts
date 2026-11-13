@@ -25,6 +25,19 @@ const resend = new Resend(Deno.env.get("RESEND_API_KEY")!);
 const OWNER_EMAIL = "contact@verdetalent.com";
 const ALLOWED_SECTORS = new Set(["Solar", "Wind", "Storage", "Grid", "EV", "Hydrogen", "Geothermal", "Policy", "Sustainability"]);
 
+// How this visitor first found the site, recorded in the browser by fullstory.js
+// (vt_first_touch). Only these keys, as short strings, are ever stored.
+function cleanFirstTouch(raw: unknown): Record<string, unknown> | null {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const r = raw as Record<string, unknown>;
+  const out: Record<string, unknown> = {};
+  for (const k of ["source", "medium", "campaign", "referrer", "landing", "ai_engine", "date"]) {
+    if (typeof r[k] === "string" && r[k]) out[k] = (r[k] as string).slice(0, 120);
+  }
+  if (typeof r.ai === "boolean") out.ai = r.ai;
+  return Object.keys(out).length ? out : null;
+}
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "https://verdetalent.com",
   "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info",
@@ -94,6 +107,7 @@ Deno.serve(async (req) => {
     const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     const jobTitle = typeof body.job_title === "string" ? body.job_title.trim().slice(0, 100) : "";
     const location = typeof body.location === "string" ? body.location.trim().slice(0, 100) : "";
+    const firstTouch = cleanFirstTouch(body.first_touch);
     const sectors = Array.isArray(body.sectors)
       ? [...new Set(body.sectors.filter((s: unknown): s is string => typeof s === "string" && ALLOWED_SECTORS.has(s)))]
       : [];
@@ -108,7 +122,7 @@ Deno.serve(async (req) => {
     const results = await Promise.all(sectors.map(async (sector) => {
       const { error } = await supabaseAdmin
         .from("job_alert_leads")
-        .insert({ email, sector, location, job_title: jobTitle });
+        .insert({ email, sector, location, job_title: jobTitle, first_touch: firstTouch });
       if (!error) return { sector, status: "added" as const };
       if (error.code === "23505") return { sector, status: "already" as const };
       console.error("job_alert_leads insert failed:", sector, error);

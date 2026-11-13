@@ -151,6 +151,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
         <small>Leave blank and we'll automatically email applicant resumes to your email above.</small>
       </div>
     </div>
+    <div class="field" style="margin-top:14px;"><label for="heard-about">How did you hear about Verde Talent?</label><select id="heard-about" data-vt-unmask class="fs-unmask"><option value="">Choose one (optional)</option><option value="ai_assistant">ChatGPT or another AI assistant</option><option value="search">Google or another search engine</option><option value="linkedin">LinkedIn</option><option value="social">Instagram or Facebook</option><option value="referral">A friend or colleague</option><option value="job_board">Another job board or newsletter</option><option value="other">Other</option></select></div>
   </div>
 
   <div class="form-section">
@@ -698,6 +699,8 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       sector: document.getElementById('job-sector').value || null,
       employment_type: document.getElementById('job-type').value || null,
       apply_url: document.getElementById('apply-url').value.trim() || null,
+      first_touch: window.vtFirstTouch || null,
+      heard_about: document.getElementById('heard-about').value || null,
       salary_min: salaryPeriod ? salaryMin : null,
       salary_max: salaryPeriod ? salaryMax : null,
       salary_period: salaryPeriod,
