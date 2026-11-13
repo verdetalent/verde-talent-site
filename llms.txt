@@ -9,7 +9,7 @@
 > employer discloses them, and the site publishes its own salary benchmarks and
 > hiring data. Contact: contact@verdetalent.com
 
-## Key facts (updated November 12, 2026)
+## Key facts (updated November 13, 2026)
 - 5,500+ open clean energy jobs, refreshed every day.
 - 104 energy companies represented, with open roles in 50 US states.
 - 131 salary benchmark pages, 56 career profiles and 81 employer profiles.
@@ -33,6 +33,9 @@
 - [Clean Energy Hiring Reports](https://verdetalent.com/reports/): a monthly look at where US clean energy is being built, what field roles pay, how to get in, and a role of the month.
 - Latest: [November 2026: Going from solar tech to lineworker doubles your pay. Lineworker jobs almost never ask for a degree.](https://verdetalent.com/reports/2026-11-clean-energy-hiring.html)
 - [Press and media](https://verdetalent.com/press.html): quotable findings from the latest report, how to cite it, the founder's bio and media contact.
+
+## Questions about Verde Talent
+- [Verde Talent answers](https://verdetalent.com/answers.html): direct answers about what Verde Talent is (a job board, not a recruiting agency), what it costs, how posting and applying work, salaries, certifications, and how it compares with Indeed, LinkedIn and recruiters.
 
 ## Definitions
 - [Clean energy jobs glossary](https://verdetalent.com/glossary.html): 47 industry terms - NABCEP, GWO, BESS, interconnection, PPA, O&M, prevailing wage and others - defined plainly, each with the number of open postings using it today.
