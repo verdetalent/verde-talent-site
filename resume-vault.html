@@ -12,7 +12,7 @@
 </script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
 <script src="/fullstory.js"></script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
@@ -377,20 +377,44 @@ document.addEventListener('click', function(){
   }
   requestAnimationFrame(step);
 })();
-// Notify-me signup - no backend yet, so this opens a pre-filled email to us
-// instead of silently discarding the address.
-document.getElementById('notify-btn').addEventListener('click', function() {
-  const email = document.getElementById('notify-email').value.trim();
+// Notify-me signup: saved to the vault_waitlist table by the
+// subscribe-vault-waitlist edge function, which also alerts the owner.
+(function wireVaultWaitlist() {
+  const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+  const input = document.getElementById('notify-email');
+  const btn = document.getElementById('notify-btn');
   const fine = document.getElementById('notify-fine');
-  if (!email || !email.includes('@')) {
-    fine.textContent = 'Enter a valid email first.';
-    fine.style.color = 'var(--cor)';
-    return;
+  const row = input.closest('.email-row');
+  const say = (msg, color) => { fine.textContent = msg; fine.style.color = color || ''; };
+
+  async function submit() {
+    const email = input.value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { say('Enter a valid email first.', 'var(--cor)'); return; }
+    btn.disabled = true;
+    btn.textContent = 'Adding…';
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/subscribe-vault-waitlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({ email, first_touch: window.vtFirstTouch || null }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) throw new Error(data.error || 'Something went wrong.');
+      if (typeof gtag === 'function') gtag('event', 'vault_waitlist_signup', { already: !!data.already });
+      row.style.display = 'none';
+      say(data.already
+        ? "You're already on the list. We'll email you when the Resume Vault opens."
+        : "You're on the list. We'll email you once, when the Resume Vault opens.", 'var(--grn)');
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Notify me';
+      say("That didn't go through. Please try again, or email contact@verdetalent.com.", 'var(--cor)');
+    }
   }
-  const subject = encodeURIComponent('Resume Vault access notification');
-  const body = encodeURIComponent(`Please notify ${email} when the Resume Vault opens.`);
-  window.location.href = `mailto:contact@verdetalent.com?subject=${subject}&body=${body}`;
-});
+  btn.addEventListener('click', submit);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+})();
 </script>
 <footer>
   <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
