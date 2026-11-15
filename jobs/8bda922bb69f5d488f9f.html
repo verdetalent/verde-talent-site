@@ -73,6 +73,15 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
 .crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--t3);margin-bottom:1.5rem;}.crumbs a{color:var(--t3);text-decoration:none;}.crumbs a:hover{color:var(--t1);}.crumbs .sep{opacity:.6;}.crumbs [aria-current]{color:var(--t2);max-width:32ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.updated{font-size:12.5px;color:var(--t3);margin:.5rem 0 1.1rem;}
+.share-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-0.75rem 0 2rem;}
+.share-label{font-size:12px;color:var(--t3);margin-right:2px;}
+.share-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;min-width:34px;padding:0 10px;border-radius:9px;border:0.5px solid var(--bdr2);background:none;color:var(--t2);font-size:12.5px;text-decoration:none;cursor:pointer;font-family:var(--font-sans);}
+.share-btn:hover{border-color:var(--grn);color:var(--t1);}
+.share-btn svg{width:15px;height:15px;fill:currentColor;}
+.share-btn i{font-size:15px;}
+.share-btn.native{display:none;}
+.share-btn.copied{border-color:var(--grn);color:var(--grn);}
+
 .crumb-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;margin-bottom:1.5rem;}
 .crumb-row .crumbs,.crumb-row .back-link{margin-bottom:0;}
 .back-link[hidden]{display:none;}
@@ -242,9 +251,10 @@ footer a{color:var(--t3);text-decoration:none;}
     </button>
     <div class="apply-note">Applying takes you to GE Vernova's own careers site to complete your application.</div>
   </div>
+  <div class="share-row" id="shareRow" data-url="https://verdetalent.com/jobs/8bda922bb69f5d488f9f.html" data-text="Sr. Sales Manager - Grid Software at GE Vernova"><span class="share-label">Share this job</span><a class="share-btn" data-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fverdetalent.com%2Fjobs%2F8bda922bb69f5d488f9f.html%3Futm_source%3Dlinkedin%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on LinkedIn" title="Share on LinkedIn"><i class="ti ti-brand-linkedin"></i></a><a class="share-btn" data-share="whatsapp" href="https://wa.me/?text=Sr.%20Sales%20Manager%20-%20Grid%20Software%20at%20GE%20Vernova%20https%3A%2F%2Fverdetalent.com%2Fjobs%2F8bda922bb69f5d488f9f.html%3Futm_source%3Dwhatsapp%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on WhatsApp" title="Share on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a><a class="share-btn" data-share="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fverdetalent.com%2Fjobs%2F8bda922bb69f5d488f9f.html%3Futm_source%3Dfacebook%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on Facebook" title="Share on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.2c-.3 0-1.3-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.3v2.2H7.5V12h2.8v10H14V12h2.8l.4-3.5H14z"/></svg></a><a class="share-btn" data-share="x" href="https://twitter.com/intent/tweet?text=Sr.%20Sales%20Manager%20-%20Grid%20Software%20at%20GE%20Vernova&amp;url=https%3A%2F%2Fverdetalent.com%2Fjobs%2F8bda922bb69f5d488f9f.html%3Futm_source%3Dx%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on X" title="Share on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 3h3l-6.6 7.6L22 21h-6.1l-4.8-6.3L5.6 21h-3l7.1-8.1L2.2 3h6.2l4.4 5.8L17.8 3zm-1 16.2h1.7L7.3 4.7H5.5l11.3 14.5z"/></svg></a><a class="share-btn" data-share="email" href="mailto:?subject=Sr.%20Sales%20Manager%20-%20Grid%20Software%20at%20GE%20Vernova&amp;body=I%20saw%20this%20role%20on%20Verde%20Talent%3A%20https%3A%2F%2Fverdetalent.com%2Fjobs%2F8bda922bb69f5d488f9f.html%3Futm_source%3Demail%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on Email" title="Share on Email"><i class="ti ti-mail"></i></a><button type="button" class="share-btn" data-share="copy" title="Copy link"><i class="ti ti-link"></i><span>Copy link</span></button><button type="button" class="share-btn native" data-share="native" title="More ways to share"><span>More…</span></button></div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>*</strong><strong>*Job Description Summary</strong><strong>*</strong>*</p><p>Utilities across the Middle East, North Africa and Turkey (MENAT) are modernizing their grids, and they need software that delivers measurable results. As Senior Sales Manager, you are responsible for growing GE Vernova&#39;s Grid Software portfolio in your territory. You help utilities turn digital transformation and energy transition plans into reliable, resilient power networks. You report to the Regional Sales Director and work with teams across the region and around the world.</p><p><strong>**Job Description</strong>**</p><p><strong>Key Responsibilities</strong></p><ul><li>Deliver orders, revenue, and growth targets for your territory, guided by your own territory strategy and account plans.</li><li>Manage the full sales cycle for complex software deals, from prospecting through proposal, negotiation, and contract signature.</li><li>Build relationships with senior leaders at utilities, transmission and distribution companies, government-linked entities, engineering, procurement and construction (EPC) firms, and system integrators.</li><li>Turn customer challenges into value-based solutions for grid operations, network visibility, and asset performance.</li><li>Explain business value and return on investment (ROI) to executives.</li><li>Keep an accurate pipeline and forecast in the customer relationship management (CRM) system.</li><li>Guide bid strategy, pricing, and risk review.</li><li>Work with solution architects, pre-sales, product, legal, and delivery teams to build strong proposals.</li><li>Track market trends, regulation, and competitors, and share customer feedback with product teams.</li><li>Coach colleagues and follow GE Vernova commercial and integrity standards.</li></ul><p><strong>Required Qualifications</strong></p><ul><li>10 years of experience in enterprise software, solution sales, or business development, with a record of closing complex, high-value deals</li><li>Experience selling to energy, utilities, industrial, or infrastructure customers</li><li>Experience managing long sales cycles with many stakeholders and formal procurement, and influencing senior executives</li><li>Fluent English and Arabic, and willingness to travel across your territory</li></ul><p><strong>Desired Characteristics</strong></p><ul><li>Experience with grid or industrial software, such as Energy Management System (EMS), Distribution Management System (DMS), Advanced Distribution Management System (ADMS), Distributed Energy Resource Management System (DERMS), or Asset Performance Management (APM), and familiarity with information technology and operational technology (IT/OT) environments</li><li>Experience in a matrix organization, with channel partners, or across MENAT markets</li><li>Degree in Electrical Engineering or a related technical field</li></ul><p><strong>Work Arrangement and Benefits</strong></p><p>Applicants for the Dammam location must have the legal right to work in Saudi Arabia without company sponsorship or time restriction. GE Vernova offers competitive benefits suited to your employment status and local requirements. We also support your growth with on-the-job learning and development.</p><p><strong>*</strong><strong>*Additional Information</strong><strong>*</strong>*</p><p><strong>Relocation Assistance Provided:</strong>No</p></div>
-  <div class="more"><div class="more-h">Similar open roles</div><div class="more-jobs"><a class="more-job" href="/jobs/acaf2aea049d8e075289.html"><span class="more-job-t">Lead Engineer Turbine and Governing Commissioning</span><span class="more-job-m">GE Vernova &middot; Vadodara, India</span></a><a class="more-job" href="/jobs/ed05851a7798aac5cbbf.html"><span class="more-job-t">Product Owner, Telecom - Distribution &amp; Industrial</span><span class="more-job-m">GE Vernova &middot; Massy, France</span></a><a class="more-job" href="/jobs/92e8fec8381f2241cc8b.html"><span class="more-job-t">Service Director (m/f/d) Wind Energy - Central Europe</span><span class="more-job-m">GE Vernova &middot; Remote</span></a></div><div class="more-links"><a class="more-chip" href="/salaries/grid-sales-salary.html">What grid sales roles pay</a><a class="more-chip" href="/jobs.html?sector=Grid">All grid jobs</a></div></div>
+  <div class="more"><div class="more-h">Similar open roles</div><div class="more-jobs"><a class="more-job" href="/jobs/4ff4e7140a767ce876dc.html"><span class="more-job-t">Lead Power Systems Engineer - Grid Integration and Stability, Consulting Services</span><span class="more-job-m">GE Vernova &middot; Remote</span></a><a class="more-job" href="/jobs/acaf2aea049d8e075289.html"><span class="more-job-t">Lead Engineer Turbine and Governing Commissioning</span><span class="more-job-m">GE Vernova &middot; Vadodara, India</span></a><a class="more-job" href="/jobs/ed05851a7798aac5cbbf.html"><span class="more-job-t">Product Owner, Telecom - Distribution &amp; Industrial</span><span class="more-job-m">GE Vernova &middot; Massy, France</span></a></div><div class="more-links"><a class="more-chip" href="/salaries/grid-sales-salary.html">What grid sales roles pay</a><a class="more-chip" href="/jobs.html?sector=Grid">All grid jobs</a></div></div>
 </div>
 <div class="scrim" id="applyScrim">
   <div class="apply-modal">
@@ -433,6 +443,33 @@ document.addEventListener('click', function(){
   scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 })();
+
+(function(){
+  var row = document.getElementById('shareRow');
+  if (!row) return;
+  var url = row.dataset.url, text = row.dataset.text;
+  function tag(src){ return url + (url.indexOf('?') < 0 ? '?' : '&') + 'utm_source=' + src + '&utm_medium=social&utm_campaign=job_share'; }
+  var nativeBtn = row.querySelector('[data-share="native"]');
+  if (navigator.share) nativeBtn.style.display = 'inline-flex';
+  row.addEventListener('click', function(ev){
+    var b = ev.target.closest('[data-share]');
+    if (!b) return;
+    var method = b.dataset.share;
+    try { gtag('event', 'share', { method: method, content_type: 'job', item_id: location.pathname }); } catch (e) {}
+    if (method === 'copy') {
+      ev.preventDefault();
+      var done = function(){ b.classList.add('copied'); b.querySelector('span').textContent = 'Link copied'; setTimeout(function(){ b.classList.remove('copied'); b.querySelector('span').textContent = 'Copy link'; }, 2200); };
+      var link = tag('copy_link');
+      var ask = function(){ try { prompt('Copy this link:', link); } catch (e) {} };
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(done, ask);
+      else ask();
+    } else if (method === 'native') {
+      ev.preventDefault();
+      navigator.share({ title: text, text: text, url: tag('native_share') }).catch(function(){});
+    }
+  });
+})();
+
 </script>
 </body>
 </html>

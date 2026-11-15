@@ -73,6 +73,15 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .back-link{font-size:13px;color:var(--t3);text-decoration:none;display:inline-block;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--grn);}
 .crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--t3);margin-bottom:1.5rem;}.crumbs a{color:var(--t3);text-decoration:none;}.crumbs a:hover{color:var(--t1);}.crumbs .sep{opacity:.6;}.crumbs [aria-current]{color:var(--t2);max-width:32ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.updated{font-size:12.5px;color:var(--t3);margin:.5rem 0 1.1rem;}
+.share-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-0.75rem 0 2rem;}
+.share-label{font-size:12px;color:var(--t3);margin-right:2px;}
+.share-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;min-width:34px;padding:0 10px;border-radius:9px;border:0.5px solid var(--bdr2);background:none;color:var(--t2);font-size:12.5px;text-decoration:none;cursor:pointer;font-family:var(--font-sans);}
+.share-btn:hover{border-color:var(--grn);color:var(--t1);}
+.share-btn svg{width:15px;height:15px;fill:currentColor;}
+.share-btn i{font-size:15px;}
+.share-btn.native{display:none;}
+.share-btn.copied{border-color:var(--grn);color:var(--grn);}
+
 .crumb-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;margin-bottom:1.5rem;}
 .crumb-row .crumbs,.crumb-row .back-link{margin-bottom:0;}
 .back-link[hidden]{display:none;}
@@ -242,6 +251,7 @@ footer a{color:var(--t3);text-decoration:none;}
     </button>
     <div class="apply-note">Applying takes you to TPI Composites's own careers site to complete your application.</div>
   </div>
+  <div class="share-row" id="shareRow" data-url="https://verdetalent.com/jobs/14d11dfab4cbf40ad5e7.html" data-text="Technician, Field Service at TPI Composites"><span class="share-label">Share this job</span><a class="share-btn" data-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fverdetalent.com%2Fjobs%2F14d11dfab4cbf40ad5e7.html%3Futm_source%3Dlinkedin%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on LinkedIn" title="Share on LinkedIn"><i class="ti ti-brand-linkedin"></i></a><a class="share-btn" data-share="whatsapp" href="https://wa.me/?text=Technician%2C%20Field%20Service%20at%20TPI%20Composites%20https%3A%2F%2Fverdetalent.com%2Fjobs%2F14d11dfab4cbf40ad5e7.html%3Futm_source%3Dwhatsapp%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on WhatsApp" title="Share on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a><a class="share-btn" data-share="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fverdetalent.com%2Fjobs%2F14d11dfab4cbf40ad5e7.html%3Futm_source%3Dfacebook%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on Facebook" title="Share on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.2c-.3 0-1.3-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.3v2.2H7.5V12h2.8v10H14V12h2.8l.4-3.5H14z"/></svg></a><a class="share-btn" data-share="x" href="https://twitter.com/intent/tweet?text=Technician%2C%20Field%20Service%20at%20TPI%20Composites&amp;url=https%3A%2F%2Fverdetalent.com%2Fjobs%2F14d11dfab4cbf40ad5e7.html%3Futm_source%3Dx%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on X" title="Share on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 3h3l-6.6 7.6L22 21h-6.1l-4.8-6.3L5.6 21h-3l7.1-8.1L2.2 3h6.2l4.4 5.8L17.8 3zm-1 16.2h1.7L7.3 4.7H5.5l11.3 14.5z"/></svg></a><a class="share-btn" data-share="email" href="mailto:?subject=Technician%2C%20Field%20Service%20at%20TPI%20Composites&amp;body=I%20saw%20this%20role%20on%20Verde%20Talent%3A%20https%3A%2F%2Fverdetalent.com%2Fjobs%2F14d11dfab4cbf40ad5e7.html%3Futm_source%3Demail%26utm_medium%3Dsocial%26utm_campaign%3Djob_share" target="_blank" rel="noopener" aria-label="Share on Email" title="Share on Email"><i class="ti ti-mail"></i></a><button type="button" class="share-btn" data-share="copy" title="Copy link"><i class="ti ti-link"></i><span>Copy link</span></button><button type="button" class="share-btn native" data-share="native" title="More ways to share"><span>More…</span></button></div>
   <div class="desc-title">Full description</div>
   <div class="desc-body"><p><strong>Descripción genérica:</strong></p><p>▪El técnico de Field Service es el encargado de dar soporte de campo en todo lo relacionado con la operación técnica de instalación, mantenimiento y servicios adicionales.</p><p>▪Su principal objetivo es asegurar la calidad del producto en campo, así como lograr la satisfacción y garantizar que las necesidades del cliente se cumplan en tiempo y forma con el más alto nivel de calidad.</p><p><strong>Responsabilidades</strong>:</p><p>▪Implantación de parques</p><p>▪Reparación de cualquier tipo de componentes en campo (Palas, Nacelles, Torres)▪Elaboración de reportes internos y externos.</p><p>▪Asegurar que el producto terminado cumpla con los más altos estándares de calidad</p><p>▪Trabajar y respetar las normas de seguridad en todo momento</p><p>▪Debe cumplir y hacer cumplir cada uno de los puntos del Reglamento Interior de Trabajo de TPI</p><p>▪Velar por cumplir y hacer cumplir la Misión, Visión y Valores de TPI</p><p>▪Asegurar que se mantengan y mejoren los procesos de los Sistemas de Gestión (ISO 9001, ISO 140001, ISO 45000).</p><p>▪Enfoque al cliente mediante pensamiento basado en riesgo, manteniendo y mejorando los procesos de los Sistemas deGestión (ISO 9001, ISO 14001, ISO 45001).</p><p><strong>Escolaridad:</strong></p><p>✓Secundaria terminada</p><p><strong>Experiencia:</strong></p><p>✓1 año de experiencia en elaboración de palas (Cualquier Área)</p><p>✓Experiencia en el uso de Data loggers✓Manejo de gauge de vacio.</p><p><strong>Habilidades:</strong></p><p>✓Solución de problemas✓Organizado✓Ser creativo / Proactivo✓Facilidad de palabra✓Trabajo en ambiente bajo presión✓Orientado a Resultados✓Sin problemas para trabajar en alturas y espacios confinados✓Disponibilidad de horario✓Puntual✓Responsable✓Ingles intermedio (preferente)✓Conocimiento de Microsoft Office.</p><p><strong>Formación</strong></p><p>✓Conocimiento en compuestos</p></div>
   <div class="more"><div class="more-h">Similar open roles</div><div class="more-jobs"><a class="more-job" href="/jobs/4f1e951151dd5f915c48.html"><span class="more-job-t">Quality Supervisor (3rd Shift)</span><span class="more-job-m">TPI Composites &middot; Newton, IA</span></a><a class="more-job" href="/jobs/95e9da18d7758c3713c1.html"><span class="more-job-t">Inspector, Quality Assurance</span><span class="more-job-m">TPI Composites &middot; Location not listed</span></a><a class="more-job" href="/jobs/3fb1d3b675cd5dba0335.html"><span class="more-job-t">Specialist, Information Technology Infrastructure</span><span class="more-job-m">TPI Composites &middot; Location not listed</span></a></div><div class="more-links"><a class="more-chip" href="/salaries/wind-technician-salary.html">What wind technician roles pay</a><a class="more-chip" href="/careers/wind-technician.html">What a wind technician does</a><a class="more-chip" href="/jobs.html?sector=Wind">All wind jobs</a></div></div>
@@ -433,6 +443,33 @@ document.addEventListener('click', function(){
   scrim.addEventListener('click', function(e){ if(e.target === scrim) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 })();
+
+(function(){
+  var row = document.getElementById('shareRow');
+  if (!row) return;
+  var url = row.dataset.url, text = row.dataset.text;
+  function tag(src){ return url + (url.indexOf('?') < 0 ? '?' : '&') + 'utm_source=' + src + '&utm_medium=social&utm_campaign=job_share'; }
+  var nativeBtn = row.querySelector('[data-share="native"]');
+  if (navigator.share) nativeBtn.style.display = 'inline-flex';
+  row.addEventListener('click', function(ev){
+    var b = ev.target.closest('[data-share]');
+    if (!b) return;
+    var method = b.dataset.share;
+    try { gtag('event', 'share', { method: method, content_type: 'job', item_id: location.pathname }); } catch (e) {}
+    if (method === 'copy') {
+      ev.preventDefault();
+      var done = function(){ b.classList.add('copied'); b.querySelector('span').textContent = 'Link copied'; setTimeout(function(){ b.classList.remove('copied'); b.querySelector('span').textContent = 'Copy link'; }, 2200); };
+      var link = tag('copy_link');
+      var ask = function(){ try { prompt('Copy this link:', link); } catch (e) {} };
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(done, ask);
+      else ask();
+    } else if (method === 'native') {
+      ev.preventDefault();
+      navigator.share({ title: text, text: text, url: tag('native_share') }).catch(function(){});
+    }
+  });
+})();
+
 </script>
 </body>
 </html>
