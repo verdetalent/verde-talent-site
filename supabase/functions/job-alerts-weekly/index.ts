@@ -983,6 +983,17 @@ function unsubscribeHeaders(token: string): Record<string, string> {
 // so a JWT "role" check can't be used - and the public publishable/anon key
 // must never be enough. Instead, ask Supabase Auth to do one admin-only read
 // with whatever key the caller sent: only a secret or service-role key can.
+// Addresses that hard-bounced or reported spam (resend-webhook). Never emailed
+// again by the weekly sends; the accounts themselves are left alone.
+async function loadSuppressed(): Promise<Set<string>> {
+  const { data, error } = await supabaseAdmin.from("email_suppressions").select("email");
+  if (error) {
+    console.error("Could not load email_suppressions (sending to everyone):", error);
+    return new Set();
+  }
+  return new Set((data || []).map((r: { email: string }) => r.email.toLowerCase()));
+}
+
 async function isTrustedCaller(req: Request): Promise<boolean> {
   const bearer = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
   const key = bearer || (req.headers.get("apikey") || "").trim();
@@ -1051,7 +1062,13 @@ Deno.serve(async (req) => {
     let skippedNoMatch = 0;
     let failed = 0;
 
+    const suppressed = await loadSuppressed();
+    let skippedSuppressed = 0;
     for (const candidate of (candidates || []) as Candidate[]) {
+      if (suppressed.has((candidate.email || "").toLowerCase())) {
+        skippedSuppressed++;
+        continue;
+      }
       const jobs = pickJobs([{
         sectors: candidate.sectors || [],
         place: parsePersonLocation(candidate.location),
@@ -1110,6 +1127,10 @@ Deno.serve(async (req) => {
     }
 
     for (const [email, rows] of leadsByEmail) {
+      if (suppressed.has((email || "").toLowerCase())) {
+        skippedSuppressed++;
+        continue;
+      }
       const jobs = pickJobs(rows.map((lead) => ({
         sectors: [lead.sector],
         place: parsePersonLocation(lead.location),

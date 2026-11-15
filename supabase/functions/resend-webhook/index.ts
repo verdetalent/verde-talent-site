@@ -56,6 +56,23 @@ Deno.serve(async (req) => {
     return new Response("Invalid signature", { status: 400 });
   }
 
+  // Hard bounces (Resend only sends email.bounced for permanent failures) and
+  // spam complaints: stop emailing that address everywhere. Accounts and
+  // profiles are never touched beyond the flag - see email_suppressions.
+  if (payload.type === "email.bounced" || payload.type === "email.complained") {
+    const addr = (payload.data.to?.[0] || "").trim().toLowerCase();
+    if (addr) {
+      const reason = payload.type === "email.bounced" ? "bounced" : "complained";
+      const at = payload.data.created_at ?? payload.created_at ?? new Date().toISOString();
+      const { error: supErr } = await supabaseAdmin.from("email_suppressions")
+        .upsert({ email: addr, reason, event_at: at }, { onConflict: "email" });
+      if (supErr) console.error("Could not record suppression:", supErr);
+      const { error: candErr } = await supabaseAdmin.from("candidates")
+        .update({ email_bounced_at: at }).eq("email", addr);
+      if (candErr) console.error("Could not flag candidate:", candErr);
+    }
+  }
+
   const { error } = await supabaseAdmin.from("newsletter_events").insert({
     svix_id: svixId,
     event_type: payload.type,

@@ -84,10 +84,33 @@ function button(href: string, label: string): string {
 </td></tr></table>`;
 }
 
-function welcomeHtml(): string {
+
+// Optional "confirm your email" link. The account works either way - this only
+// records that the address is real and theirs (see confirm-email). The token is
+// an HMAC of the address with EMAIL_CONFIRM_SECRET, so nothing extra is stored
+// and a changed address simply starts unconfirmed. No secret set -> no button.
+const EMAIL_CONFIRM_SECRET = Deno.env.get("EMAIL_CONFIRM_SECRET") || "";
+async function confirmEmailUrl(email: string): Promise<string | null> {
+  if (!EMAIL_CONFIRM_SECRET) return null;
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(EMAIL_CONFIRM_SECRET),
+    { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sig = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(email.trim().toLowerCase())));
+  const token = btoa(String.fromCharCode(...sig)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return `${SUPABASE_URL}/functions/v1/confirm-email?e=${encodeURIComponent(email.trim().toLowerCase())}&t=${token}`;
+}
+
+function confirmBlock(url: string | null): string {
+  if (!url) return "";
+  return `<p style="margin:0 0 6px;">Please confirm this is your email address:</p>
+${button(url, "Confirm my email")}
+<p style="margin:6px 0 18px;font-size:12.5px;color:${MUTED};">Your account already works - this just makes sure we have the right address.</p>`;
+}
+
+function welcomeHtml(confirmUrl: string | null = null): string {
   return shell(
     `<p style="margin:0 0 14px;font-size:17px;font-weight:700;">Welcome to Verde Talent.</p>
 <p style="margin:0 0 14px;">Thanks for creating an employer account. Verde Talent is a job board built only for renewable energy, storage and grid roles, so your postings are seen by people looking for exactly this work.</p>
+${confirmBlock(confirmUrl)}
 <p style="margin:0 0 6px;">Ready when you are:</p>
 ${button(`${SITE_ORIGIN}/post-job.html`, "Post your first job")}
 <p style="margin:14px 0 14px;">You can post a single role or buy a pack of postings if you'll be hiring more than once. Everything you post can be managed and reposted from your account:
@@ -116,13 +139,14 @@ ${row("Signed up", new Date().toUTCString())}
 }
 
 async function sendEmails(email: string, company: string, contact: string) {
+  const confirmUrl = await confirmEmailUrl(email).catch(() => null);
   const results = await Promise.allSettled([
     resend.emails.send({
       from: "Verde Talent <welcome@updates.verdetalent.com>",
       to: email,
       replyTo: OWNER_EMAIL,
       subject: "Welcome to Verde Talent",
-      html: welcomeHtml(),
+      html: welcomeHtml(confirmUrl),
     }),
     resend.emails.send({
       from: "Verde Talent Alerts <alerts@updates.verdetalent.com>",

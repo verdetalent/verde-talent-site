@@ -107,6 +107,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .cc-loc i{font-size:13px;}
 .cc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;}
 .cc-tag{font-size:11px;padding:3px 9px;border-radius:10px;border:0.5px solid var(--bdr2);color:var(--t3);}
+.cc-email{font-size:11px;color:var(--t3);margin-top:6px;}
+.cc-email.bad{color:var(--cor);}
 .cc-tag.vet{border-color:rgba(181,136,255,0.35);color:var(--pur);background:rgba(181,136,255,0.08);}
 .cc-tag.grn{border-color:rgba(34,224,154,0.3);color:var(--grn);background:rgba(34,224,154,0.07);}
 .cc-tag.blu{border-color:rgba(79,179,255,0.3);color:var(--blu);background:rgba(79,179,255,0.07);}
@@ -518,6 +520,8 @@ function renderCandidateCard(c) {
           <div class="cc-meta"><div class="avail-dot ${availDotClass(c.availability)}"></div><span style="color:${availColorVar(c.availability)};">${escapeHtml(c.availability || 'Unspecified')}</span></div>
         </div>
         <div class="cc-tags">${tags.join('')}</div>
+        ${c.email_bounced_at ? `<div class="cc-email bad" title="Emails to this address bounce or were reported as spam - weekly emails to it are paused.">Email bounced</div>`
+          : c.email_confirmed_at ? `<div class="cc-email" title="Clicked the confirm link in the welcome email.">&#10003; Email confirmed</div>` : ''}
         <div style="margin-top:10px;">${resumeBtn}</div>
       </div>
     </div>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'self'; form-action 'self';"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<title>Email confirmed - Verde Talent</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0A0A0A;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-align:center;padding:1.5rem;box-sizing:border-box;}
+.card{max-width:420px;}
+.mark{width:56px;height:56px;border-radius:50%;background:rgba(34,224,154,0.15);color:#22E09A;font-size:28px;line-height:56px;margin:0 auto 18px;}
+.mark.no{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);}
+h1{font-size:22px;margin:0 0 10px;}
+p{color:rgba(255,255,255,0.65);font-size:14.5px;line-height:1.6;margin:0 0 22px;}
+a.btn{display:inline-block;background:#22E09A;color:#052e1e;font-weight:600;font-size:14px;padding:11px 20px;border-radius:10px;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="mark">&#10003;</div>
+  <h1>Your email is confirmed</h1>
+  <p>Thanks - you're all set. Your Verde Talent account works exactly as before.</p>
+  <a class="btn" href="/jobs.html">Browse clean energy jobs</a>
+</div>
+<script>
+if (new URLSearchParams(location.search).get('status') === 'invalid') {
+  document.getElementById('card').innerHTML =
+    '<div class="mark no">!</div><h1>That link didn\'t work</h1>' +
+    '<p>It may have been copied incompletely. Your account still works normally - nothing else is needed.</p>' +
+    '<a class="btn" href="/">Go to Verde Talent</a>';
+}
+</script>
+</body>
+</html>

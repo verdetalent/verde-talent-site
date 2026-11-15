@@ -183,7 +183,29 @@ function button(href: string, label: string): string {
 </td></tr></table>`;
 }
 
-function welcomeHtml(firstName: string, searchable: boolean, jobAlerts: boolean): string {
+
+// Optional "confirm your email" link. The account works either way - this only
+// records that the address is real and theirs (see confirm-email). The token is
+// an HMAC of the address with EMAIL_CONFIRM_SECRET, so nothing extra is stored
+// and a changed address simply starts unconfirmed. No secret set -> no button.
+const EMAIL_CONFIRM_SECRET = Deno.env.get("EMAIL_CONFIRM_SECRET") || "";
+async function confirmEmailUrl(email: string): Promise<string | null> {
+  if (!EMAIL_CONFIRM_SECRET) return null;
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(EMAIL_CONFIRM_SECRET),
+    { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sig = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(email.trim().toLowerCase())));
+  const token = btoa(String.fromCharCode(...sig)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return `${SUPABASE_URL}/functions/v1/confirm-email?e=${encodeURIComponent(email.trim().toLowerCase())}&t=${token}`;
+}
+
+function confirmBlock(url: string | null): string {
+  if (!url) return "";
+  return `<p style="margin:0 0 6px;">Please confirm this is your email address:</p>
+${button(url, "Confirm my email")}
+<p style="margin:6px 0 18px;font-size:12.5px;color:${MUTED};">Your account already works - this just makes sure we have the right address.</p>`;
+}
+
+function welcomeHtml(firstName: string, searchable: boolean, jobAlerts: boolean, confirmUrl: string | null = null): string {
   const visibility = searchable
     ? "Your profile is now in our resume database, so employers hiring across solar, wind, storage and the grid can find you."
     : "Your profile is saved and set to private for now - you can change who can see it any time from your profile.";
@@ -194,6 +216,7 @@ function welcomeHtml(firstName: string, searchable: boolean, jobAlerts: boolean)
     `<p style="margin:0 0 14px;font-size:17px;font-weight:700;">Welcome to Verde Talent, ${esc(firstName)}.</p>
 <p style="margin:0 0 14px;">Thanks for creating your profile. ${esc(visibility)}</p>
 ${alerts}
+${confirmBlock(confirmUrl)}
 <p style="margin:0 0 6px;">A good place to start:</p>
 ${button(`${SITE_ORIGIN}/jobs.html`, "Browse open clean energy jobs")}
 <p style="margin:14px 0 14px;">You can sign in any time to update your profile, resume or preferences:
@@ -224,13 +247,14 @@ ${row("Referred by code", referral)}
 }
 
 async function sendEmails(p: ReturnType<typeof buildProfile>, email: string, referral: string | null) {
+  const confirmUrl = await confirmEmailUrl(email).catch(() => null);
   const results = await Promise.allSettled([
     resend.emails.send({
       from: "Verde Talent <welcome@updates.verdetalent.com>",
       to: email,
       replyTo: OWNER_EMAIL,
       subject: `Welcome to Verde Talent, ${p.first_name}`,
-      html: welcomeHtml(p.first_name!, p.visibility_searchable, p.email_job_alerts),
+      html: welcomeHtml(p.first_name!, p.visibility_searchable, p.email_job_alerts, confirmUrl),
     }),
     resend.emails.send({
       from: "Verde Talent Alerts <alerts@updates.verdetalent.com>",
