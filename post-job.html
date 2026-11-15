@@ -186,6 +186,22 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       </div>
     </div>
     <div class="form-row">
+      <div class="field"><label for="job-workplace">Work arrangement</label>
+        <select data-vt-unmask class="fs-unmask" id="job-workplace">
+          <option value="On-site">On-site</option><option value="Hybrid">Hybrid</option><option value="Remote">Remote</option>
+        </select>
+      </div>
+      <div class="field"><label for="job-visa">Visa sponsorship</label>
+        <select data-vt-unmask class="fs-unmask" id="job-visa">
+          <option value="">Prefer not to say</option>
+          <option value="yes">Yes, we sponsor for this role</option>
+          <option value="case_by_case">Case by case</option>
+          <option value="no">No sponsorship</option>
+        </select>
+        <small style="color:var(--t3);">International candidates filter by this. Roles that sponsor are listed on our visa sponsorship jobs page.</small>
+      </div>
+    </div>
+    <div class="form-row">
       <div class="field"><label id="salaryLabel">Salary (optional)</label>
         <select data-vt-unmask class="fs-unmask" id="salary-period">
           <option value="">Prefer not to say</option>
@@ -321,6 +337,8 @@ async function prefillFromRepost(id) {
     document.getElementById('job-international').checked = !!p.is_international;
     document.getElementById('job-sector').value = p.sector || '';
     if (p.employment_type) document.getElementById('job-type').value = p.employment_type;
+    if (p.work_arrangement) document.getElementById('job-workplace').value = p.work_arrangement;
+    if (p.visa_sponsorship) document.getElementById('job-visa').value = p.visa_sponsorship;
     document.getElementById('job-description').value = p.job_description || '';
     if (p.salary_period) {
       document.getElementById('salary-period').value = p.salary_period;
@@ -706,6 +724,8 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       is_international: document.getElementById('job-international').checked,
       sector: document.getElementById('job-sector').value || null,
       employment_type: document.getElementById('job-type').value || null,
+      work_arrangement: document.getElementById('job-workplace').value || null,
+      visa_sponsorship: document.getElementById('job-visa').value || null,
       apply_url: document.getElementById('apply-url').value.trim() || null,
       first_touch: window.vtFirstTouch || null,
       heard_about: document.getElementById('heard-about').value || null,

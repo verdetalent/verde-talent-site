@@ -76,6 +76,10 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .crumb-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;margin-bottom:1.5rem;}
 .crumb-row .crumbs,.crumb-row .back-link{margin-bottom:0;}
 .back-link[hidden]{display:none;}
+.visa-note{font-size:13px;color:var(--t2);display:flex;gap:8px;align-items:flex-start;margin:4px 0 1.1rem;line-height:1.5;}
+.visa-note i{color:var(--blu);margin-top:2px;}
+.visa-note.no i{color:var(--t3);}
+.visa-note a{color:var(--blu);}
 .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;border:0.5px solid var(--bdr2);color:var(--t2);margin:0 6px 6px 0;}
 .tag.sector{font-weight:500;}
 h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
@@ -222,11 +226,13 @@ footer a{color:var(--t3);text-decoration:none;}
   <div class="meta-row">
     <span><i class="ti ti-map-pin"></i>Berkeley, CA</span>
     <span><i class='ti ti-briefcase'></i>Full-time</span>
+    <span><i class='ti ti-building'></i>Hybrid</span>
     <span><i class='ti ti-stairs'></i>Director+</span>
     <span><i class='ti ti-calendar'></i>Posted Sep 24, 2026</span>
     <span class='salary'><i class='ti ti-currency-dollar'></i>$199,950 - $293,835 per year</span>
   </div>
   <div><span class="tag sector" style="border-color:#FFB54766;color:#FFB547;background:#FFB5471a;">Storage</span></div>
+  <div class="visa-note"><i class="ti ti-world"></i><span>Form Energy had 18 H-1B visa petitions approved in FY2026 (USCIS). This posting doesn't say whether this role sponsors. <a href="/browse/visa-sponsorship-jobs.html">Visa sponsorship jobs</a></span></div>
   <div class="apply-row">
     <button type="button" class="btn-apply" id="applyBtn" data-url="https://jobs.ashbyhq.com/formenergy/2669be1a-dbf9-48e1-85e3-aeb08cd5e0fd">Apply on Form Energy's site &rarr;</button>
     <button type="button" class="btn-save" id="saveBtn" data-save-key="223b4f59852402533238"
