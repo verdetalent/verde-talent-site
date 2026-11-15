@@ -170,7 +170,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .prefs-sub,.links-sub,.account-sub{font-size:11px;color:var(--t3);margin-bottom:1rem;}
 .pf{margin-bottom:9px;}
 .pf:last-child{margin-bottom:0;}
-.pf label{display:block;font-size:10px;color:var(--t3);margin-bottom:4px;}
+.pf label{display:block;font-size:10px;color:var(--t3);margin-bottom:4px;}.pf-hint{display:block;font-size:11px;color:var(--t3);margin-top:5px;line-height:1.4;}
+
 .pf select,.pf input{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--t1);outline:none;font-family:var(--font-sans);}
 .ws-pills{display:flex;gap:4px;}
 .ws-pill{flex:1;padding:6px 3px;border-radius:7px;font-size:11px;border:0.5px solid var(--bdr2);color:var(--t3);cursor:pointer;text-align:center;background:none;font-family:var(--font-sans);}
@@ -342,6 +343,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       </div></div>
       <div class="pf"><label for="pf-jobtype">Job type</label><select id="pf-jobtype"><option>Full-time</option><option>Contract</option><option>Either</option></select></div>
       <div class="pf"><label for="pf-reloc">Open to relocation?</label><select id="pf-reloc"><option>Yes — anywhere</option><option>Yes — US only</option><option>No</option></select></div>
+      <div class="pf"><label for="pf-workauth">Work authorization (US)</label><select id="pf-workauth"><option value="">Prefer not to say</option><option value="authorized">Authorized to work in the US, no sponsorship needed</option><option value="needs_sponsorship">I will need visa sponsorship (e.g. H-1B)</option></select><small class="pf-hint">Used to put roles open to sponsorship first in your job-match emails.</small></div>
+      <div class="pf"><label for="pf-veteran">U.S. military service</label><select id="pf-veteran"><option value="">Prefer not to say</option><option value="veteran">Veteran</option><option value="transitioning">Currently serving or transitioning out</option><option value="no">No military service</option></select><small class="pf-hint">Optional. Many clean energy employers actively recruit veterans.</small></div>
       <div class="pf"><label for="pf-sal-min">Target salary range (USD/yr)</label><div class="salary-row"><input type="number" id="pf-sal-min" placeholder="Min" step="5000" aria-label="Minimum target salary"/><span>—</span><input type="number" id="pf-sal-max" placeholder="Max" step="5000" aria-label="Maximum target salary"/></div></div>
       <div class="pf"><label for="pf-avail">Availability</label><select id="pf-avail"><option>Actively looking</option><option>Open to opportunities</option><option>Not currently looking</option></select></div>
     </div>
@@ -867,6 +870,8 @@ document.getElementById('saveBtn').addEventListener('click', async function(){
     work_style: [...workStyles],
     job_type: document.getElementById('pf-jobtype').value,
     relocation: document.getElementById('pf-reloc').value,
+    work_authorization: document.getElementById('pf-workauth').value || null,
+    veteran_status: document.getElementById('pf-veteran').value || null,
     salary_min: salMin ? Number(salMin) : null,
     salary_max: salMax ? Number(salMax) : null,
     availability: document.getElementById('pf-avail').value,
@@ -951,6 +956,8 @@ async function init(){
   document.getElementById('bio-count').textContent = (CANDIDATE.bio || '').length + ' / 500';
   fillField('pf-jobtype', CANDIDATE.job_type);
   fillField('pf-reloc', CANDIDATE.relocation);
+  fillField('pf-workauth', CANDIDATE.work_authorization || '');
+  fillField('pf-veteran', CANDIDATE.veteran_status || '');
   fillField('pf-sal-min', CANDIDATE.salary_min);
   fillField('pf-sal-max', CANDIDATE.salary_max);
   fillField('pf-avail', CANDIDATE.availability);

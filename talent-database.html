@@ -107,6 +107,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .cc-loc i{font-size:13px;}
 .cc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;}
 .cc-tag{font-size:11px;padding:3px 9px;border-radius:10px;border:0.5px solid var(--bdr2);color:var(--t3);}
+.cc-tag.vet{border-color:rgba(181,136,255,0.35);color:var(--pur);background:rgba(181,136,255,0.08);}
 .cc-tag.grn{border-color:rgba(34,224,154,0.3);color:var(--grn);background:rgba(34,224,154,0.07);}
 .cc-tag.blu{border-color:rgba(79,179,255,0.3);color:var(--blu);background:rgba(79,179,255,0.07);}
 .cc-tag.amb{border-color:rgba(255,181,71,0.3);color:var(--amb);background:rgba(255,181,71,0.07);}
@@ -239,6 +240,8 @@ document.getElementById('navToggle').addEventListener('click', function(){
     <div id="filtersExperience"></div>
     <div class="sf-title">Work style</div>
     <div id="filtersWorkStyle"></div>
+    <div class="sf-title">Military service</div>
+    <div id="filtersVeteran"></div>
     <div class="sf-title">Submitted</div>
     <div id="filtersSubmitted"></div>
   </div>
@@ -379,6 +382,18 @@ function setSubmittedFilter(v) {
   renderResults();
 }
 
+// Veteran status is the candidate's own, optional answer ('veteran' |
+// 'transitioning' | 'no' | null). The filter narrows to veterans and people
+// leaving service; it never singles out anyone who chose not to say.
+const VETERAN_VALUES = ['veteran', 'transitioning'];
+let veteransOnly = false;
+function setVeteransOnly(on) {
+  veteransOnly = on;
+  currentPage = 1;
+  renderSidebar();
+  renderResults();
+}
+
 function renderSidebar() {
   const counts = { availability: {}, sector: {}, experience: {}, workStyle: {} };
   ALL_CANDIDATES.forEach(c => {
@@ -414,6 +429,10 @@ function renderSidebar() {
     .map(w => `<label class="sf-check"><input type="checkbox" ${excluded.workStyle.has(w) ? '' : 'checked'} onchange="toggleFacet('workStyle', ${JSON.stringify(w)}, this.checked)"/> ${escapeHtml(w)} (${counts.workStyle[w]})</label>`)
     .join('');
 
+  const vetCount = ALL_CANDIDATES.filter(c => VETERAN_VALUES.includes(c.veteran_status)).length;
+  document.getElementById('filtersVeteran').innerHTML =
+    `<label class="sf-check"><input type="checkbox" ${veteransOnly ? 'checked' : ''} onchange="setVeteransOnly(this.checked)"/> Veterans &amp; transitioning service members only (${vetCount})</label>`;
+
   const last30 = ALL_CANDIDATES.filter(c => daysAgo(c.created_at) <= 30).length;
   const last90 = ALL_CANDIDATES.filter(c => daysAgo(c.created_at) <= 90).length;
   document.getElementById('filtersSubmitted').innerHTML = `
@@ -431,6 +450,7 @@ function getFilteredList() {
     if (sectors.length && sectors.every(s => excluded.sector.has(s))) return false;
     const ws = c.work_style || [];
     if (ws.length && ws.every(w => excluded.workStyle.has(w))) return false;
+    if (veteransOnly && !VETERAN_VALUES.includes(c.veteran_status)) return false;
     if (submittedFilter !== 'all') {
       const limit = submittedFilter === '30' ? 30 : 90;
       if (daysAgo(c.created_at) > limit) return false;
@@ -477,6 +497,8 @@ function renderCandidateCard(c) {
   const colorKey = SECTOR_COLORS[(c.sectors || [])[0]] || 'grn';
   const tags = [];
   (c.sectors || []).forEach(s => tags.push(`<span class="cc-tag ${SECTOR_COLORS[s] || ''}">${escapeHtml(s)}</span>`));
+  if (c.veteran_status === 'veteran') tags.push(`<span class="cc-tag vet">Veteran</span>`);
+  else if (c.veteran_status === 'transitioning') tags.push(`<span class="cc-tag vet">Transitioning service member</span>`);
   if (c.years_experience) tags.push(`<span class="cc-tag">${escapeHtml(c.years_experience)}</span>`);
   (c.skills || []).slice(0, 4).forEach(s => tags.push(`<span class="cc-tag">${escapeHtml(s)}</span>`));
   const loc = [c.location, (c.work_style || []).join('/')].filter(Boolean).join(' · ');

@@ -592,7 +592,29 @@ function buildEmailHtml(items: FeedItem[], featuredJobs: FeaturedJob[], intelSta
   return emailShell(preheader, mainContent, unsubscribeUrl);
 }
 
-Deno.serve(async (_req) => {
+// Only the cron job (or us) may trigger this. The schedule calls it with a
+// project secret key (sb_secret_..., inline in cron.job), which is not a JWT,
+// so a JWT "role" check can't be used - and the public publishable/anon key
+// must never be enough. Instead, ask Supabase Auth to do one admin-only read
+// with whatever key the caller sent: only a secret or service-role key can.
+async function isTrustedCaller(req: Request): Promise<boolean> {
+  const bearer = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
+  const key = bearer || (req.headers.get("apikey") || "").trim();
+  if (!key) return false;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/users?page=1&per_page=1`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+Deno.serve(async (req) => {
+  if (!(await isTrustedCaller(req))) {
+    return new Response(JSON.stringify({ error: "forbidden" }), { status: 403, headers: { "Content-Type": "application/json" } });
+  }
   try {
     const feedRes = await fetch(FEED_URL);
     if (!feedRes.ok) throw new Error(`Could not fetch feed.xml: ${feedRes.status}`);

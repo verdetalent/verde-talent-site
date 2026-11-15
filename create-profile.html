@@ -125,6 +125,13 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .resume-hero .upload-box{padding:2rem 1.25rem;}
 .resume-hero .upload-box p{font-size:15px;color:var(--t1);font-weight:500;}
 .manual-wrap{text-align:center;margin:-2px 0 14px;}
+.li-import{margin-top:12px;font-size:13px;color:var(--t2);}
+.li-import summary{cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:var(--t2);list-style:none;}
+.li-import summary::-webkit-details-marker{display:none;}
+.li-import summary i{color:#4FB3FF;font-size:16px;}
+.li-import summary:hover{color:var(--t1);}
+.li-import ol{margin:10px 0 0 1.2rem;line-height:1.6;}
+.li-import a{color:var(--grn);}
 .manual-link{background:none;border:0;color:var(--t3);font-size:12.5px;font-family:var(--font-sans);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px;}
 .manual-link:hover{color:var(--t1);}
 .import-banner{display:none;margin:0 0 14px;padding:1rem 1.2rem;border-radius:12px;line-height:1.45;}
@@ -217,7 +224,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .prefs-sub{font-size:11px;color:var(--t3);margin-bottom:1rem;}
 .pf{margin-bottom:9px;}
 .pf:last-child{margin-bottom:0;}
-.pf label{display:block;font-size:10px;color:var(--t3);margin-bottom:4px;}
+.pf label{display:block;font-size:10px;color:var(--t3);margin-bottom:4px;}.pf-hint{display:block;font-size:11px;color:var(--t3);margin-top:5px;line-height:1.4;}
+
 .pf select,.pf input{width:100%;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--t1);outline:none;font-family:var(--font-sans);}
 .pf select option{background:#1A1A1A;}
 .ws-pills{display:flex;gap:4px;}
@@ -355,6 +363,14 @@ document.addEventListener('click', function(){
         <p id="resumeText">Drop your resume here, or <span style="color:var(--grn);">browse files</span></p>
         <small id="resumeHint">PDF or DOCX · Max 10 MB</small>
       </div>
+      <details class="li-import" id="liImport">
+        <summary><i class="ti ti-brand-linkedin"></i>No resume? Import your LinkedIn profile instead</summary>
+        <ol>
+          <li>Open <a href="https://www.linkedin.com/in/me/" target="_blank" rel="noopener">your LinkedIn profile</a>.</li>
+          <li>Click the <strong>&bull;&bull;&bull;</strong> button under your name and headline, then <strong>Save to PDF</strong>. LinkedIn downloads a file called <em>Profile.pdf</em>.</li>
+          <li>Drop that file in the box above. We'll fill in your headline, work history, education and top skills from it.</li>
+        </ol>
+      </details>
     </div>
     <div class="manual-wrap" id="manualWrap"><button type="button" class="manual-link" id="manualFill">No resume handy? Fill it in by hand instead</button></div>
     <div class="import-banner after-import" id="importBanner" role="status" aria-live="polite"></div>
@@ -468,6 +484,8 @@ document.addEventListener('click', function(){
       </div></div>
       <div class="pf"><label for="pf-jobtype">Job type</label><select id="pf-jobtype"><option>Full-time</option><option>Contract</option><option>Either</option></select></div>
       <div class="pf"><label for="pf-reloc">Open to relocation?</label><select id="pf-reloc"><option>Yes — anywhere</option><option>Yes — US only</option><option>No</option></select></div>
+      <div class="pf"><label for="pf-workauth">Work authorization (US)</label><select id="pf-workauth"><option value="">Prefer not to say</option><option value="authorized">Authorized to work in the US, no sponsorship needed</option><option value="needs_sponsorship">I will need visa sponsorship (e.g. H-1B)</option></select><small class="pf-hint">Used to put roles open to sponsorship first in your job-match emails.</small></div>
+      <div class="pf"><label for="pf-veteran">U.S. military service</label><select id="pf-veteran"><option value="">Prefer not to say</option><option value="veteran">Veteran</option><option value="transitioning">Currently serving or transitioning out</option><option value="no">No military service</option></select><small class="pf-hint">Optional. Many clean energy employers actively recruit veterans.</small></div>
       <div class="pf"><label for="pf-sal-min">Target salary range (USD/yr)</label><div class="salary-row"><input type="number" id="pf-sal-min" placeholder="Min" step="5000" aria-label="Minimum target salary"/><span>—</span><input type="number" id="pf-sal-max" placeholder="Max" step="5000" aria-label="Maximum target salary"/></div></div>
       <div class="pf"><label for="pf-avail">Availability</label><select id="pf-avail"><option>Actively looking</option><option>Open to opportunities</option><option>Not currently looking</option></select></div>
     </div>
@@ -817,12 +835,139 @@ function htmlToStructuredText(html) {
   return lines.join('\n');
 }
 
+
+// ---- LinkedIn "Save to PDF" export -----------------------------------------
+// See the note in apply_linkedin_import.py: fixed fonts and a page-1-only
+// sidebar, read directly instead of through the generic column splitter.
+let lastLinkedInParse = null;
+const LI_DATE_RE = /^((?:[A-Z][a-z]+\s+)?\d{4})\s*-\s*(Present|(?:[A-Z][a-z]+\s+)?\d{4})/;
+const LI_DURATION_ONLY_RE = /^\(?\s*(?:\d+\s+years?)?\s*(?:\d+\s+months?)?\s*\)?$/i;
+
+async function readLinkedInPdf(arrayBuffer) {
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const items = [];
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    content.items.forEach((it) => {
+      if (!it.str || !it.str.trim()) return;
+      items.push({ page: i, x: it.transform[4], y: it.transform[5], fs: Math.hypot(it.transform[0], it.transform[1]), str: it.str });
+    });
+  }
+  // Recognise the export: "Contact" sidebar heading on page 1, a big name to its right,
+  // and the member's linkedin.com/in/ address.
+  const p1 = items.filter((it) => it.page === 1);
+  const contact = p1.find((it) => it.x < 200 && /^Contact$/.test(it.str.trim()) && it.fs >= 12);
+  const nameItem = p1.filter((it) => it.x >= 200).sort((a, b) => b.fs - a.fs)[0];
+  if (!contact || !nameItem || nameItem.fs < 18 || !items.some((it) => /linkedin\.com\/in\//i.test(it.str))) return null;
+
+  // Group into lines per page + baseline, left to right.
+  function toLines(list) {
+    const map = new Map();
+    list.forEach((it) => {
+      const key = it.page + ':' + Math.round(it.y);
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(it);
+    });
+    return [...map.values()].map((row) => {
+      row.sort((a, b) => a.x - b.x);
+      return { page: row[0].page, y: row[0].y, fs: Math.max(...row.map((r) => r.fs)), text: row.map((r) => r.str.trim()).join(' ').replace(/\s+\(/g, ' (').trim() };
+    }).sort((a, b) => a.page - b.page || b.y - a.y);
+  }
+  const main = toLines(items.filter((it) => it.x >= 200 && it.fs >= 9.5));
+  const side = toLines(items.filter((it) => it.x < 200 && it.fs >= 9.5));
+  const out = { experience: [], education: [], skills: [] };
+
+  // Name, then headline lines, then location (the last ~12pt line before the first heading).
+  const nameIdx = main.findIndex((l) => l.fs >= 18);
+  const nameText = main[nameIdx].text.replace(/,.*$/, '').trim();
+  const nameParts = nameText.split(/\s+/);
+  out.firstName = nameParts[0];
+  out.lastName = nameParts.slice(1).join(' ');
+  const firstHeading = main.findIndex((l, i) => i > nameIdx && l.fs >= 14.5);
+  const intro = main.slice(nameIdx + 1, firstHeading < 0 ? undefined : firstHeading).map((l) => l.text);
+  if (intro.length >= 2) {
+    out.location = intro[intro.length - 1];
+    out.headline = intro.slice(0, -1).join(' ').replace(/\s+/g, ' ').slice(0, 200);
+  } else if (intro.length === 1) {
+    out.headline = intro[0];
+  }
+
+  // Sections of the main column.
+  let section = null, company = '', title = '', titleFs = 0, summary = [], school = null;
+  for (let i = (firstHeading < 0 ? main.length : firstHeading); i < main.length; i++) {
+    const l = main[i];
+    if (l.fs >= 14.5) { section = l.text.toLowerCase(); continue; }
+    if (section === 'summary') { summary.push(l.text); continue; }
+    if (section === 'experience') {
+      const dm = l.text.match(LI_DATE_RE);
+      if (dm && l.fs < 11.2) {
+        if (title) out.experience.push({ title, co: company, dates: `${dm[1]} - ${dm[2]}` });
+        title = '';
+        continue;
+      }
+      if (l.fs >= 11.8) { company = l.text; title = ''; continue; }           // company (~12pt)
+      if (l.fs >= 11.2) { title = l.text; titleFs = l.fs; continue; }          // job title (~11.5pt)
+      continue;                                                                // location, description
+    }
+    if (section === 'education') {
+      if (l.fs >= 11.8) { school = { degree: '', school: l.text, dates: '' }; out.education.push(school); continue; }
+      if (school && !school.degree) {
+        const m = l.text.match(/^(.*?)\s*·?\s*\((\d{4})\s*-\s*(\d{4}|Present)\)\s*$/);
+        if (m) { school.degree = m[1].replace(/[·\s]+$/, '').trim(); school.dates = `${m[2]} - ${m[3]}`; }
+        else school.degree = l.text.replace(/[·\s]+$/, '').trim();
+      }
+    }
+  }
+  out.education.forEach((e) => { if (!e.degree) e.degree = e.school; });
+  if (summary.length) {
+    let bio = summary.join(' ').replace(/\s+/g, ' ').trim();
+    if (bio.length > 500) bio = bio.slice(0, 500).replace(/\s+\S*$/, '') + '…';
+    out.bio = bio;
+  }
+
+  // Sidebar: Top Skills (LinkedIn exports up to three).
+  let sideSection = null;
+  side.forEach((l) => {
+    if (l.fs >= 12.5) { sideSection = l.text.toLowerCase(); return; }
+    if (sideSection === 'top skills' && l.text.length <= 60) out.skills.push(l.text);
+  });
+
+  // Plain text in reading order (main column, then sidebar) for everything the
+  // generic parser still handles: email, LinkedIn URL, sectors, skill keywords.
+  out.text = main.map((l) => l.text).join('\n') + '\n\n' + side.map((l) => l.text).join('\n');
+  return out;
+}
+
+// The generic parse fills what it can from out.text; the LinkedIn reading wins
+// wherever it found something, since it knows the layout.
+function mergeLinkedInParse(parsed, li) {
+  ['firstName', 'lastName', 'headline', 'location', 'bio'].forEach((k) => { if (li[k]) parsed[k] = li[k]; });
+  if (li.experience.length) parsed.experience = li.experience;
+  if (li.education.length) parsed.education = li.education;
+  if (li.skills.length) parsed.skills = [...new Set([...li.skills, ...(parsed.skills || [])])].slice(0, 12);
+  parsed.source = 'linkedin';
+  return parsed;
+}
+
 async function extractTextFromResumeFile(file) {
   lastResumeHints = null;
   const ext = file.name.toLowerCase().split('.').pop();
+  lastLinkedInParse = null;
   if (ext === 'pdf') {
+    const buffer = await file.arrayBuffer();
+    // pdf.js may detach the buffer it is given, so each reader gets its own copy.
+    try {
+      lastLinkedInParse = await withTimeout(readLinkedInPdf(buffer.slice(0)), 15000, 'timeout');
+    } catch (e) {
+      lastLinkedInParse = null;
+    }
+    if (lastLinkedInParse) {
+      lastResumeHints = { name: [lastLinkedInParse.firstName, lastLinkedInParse.lastName].join(' ') };
+      return lastLinkedInParse.text;
+    }
     return await withTimeout(
-      extractTextFromPdf(await file.arrayBuffer()),
+      extractTextFromPdf(buffer.slice(0)),
       15000,
       'Reading that PDF took too long.'
     );
@@ -1510,9 +1655,10 @@ document.getElementById('inp-resume').addEventListener('change', async function(
   try {
     const text = await extractTextFromResumeFile(file);
     if (!text.trim()) throw new Error('Could not find any text in that file.');
-    const parsed = parseResumeText(text, lastResumeHints);
+    let parsed = parseResumeText(text, lastResumeHints);
+    if (lastLinkedInParse) parsed = mergeLinkedInParse(parsed, lastLinkedInParse);
     const filled = applyParsedResumeData(parsed);
-    trackProfile('profile_resume_upload', { file_type: ext, autofill: filled.length ? 'filled' : 'nothing_found', fields_filled: filled.length, location: filled.includes('location') ? 'found' : 'missing' });
+    trackProfile('profile_resume_upload', { file_type: lastLinkedInParse ? 'linkedin_pdf' : ext, autofill: filled.length ? 'filled' : 'nothing_found', fields_filled: filled.length, location: filled.includes('location') ? 'found' : 'missing' });
     box.classList.remove('parsing');
     icon.className = 'ti ti-check upload-icon';
     hint.textContent = filled.length
@@ -1924,6 +2070,8 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       work_style: [...workStyles],
       job_type: document.getElementById('pf-jobtype').value,
       relocation: document.getElementById('pf-reloc').value,
+      work_authorization: document.getElementById('pf-workauth').value || null,
+      veteran_status: document.getElementById('pf-veteran').value || null,
       salary_min: salMin ? Number(salMin) : null,
       salary_max: salMax ? Number(salMax) : null,
       availability: document.getElementById('pf-avail').value,

@@ -115,6 +115,10 @@ function buildProfile(raw: Record<string, unknown>) {
     work_style: cleanStringArray(raw.work_style, 10, 40),
     job_type: cleanText(raw.job_type, 60),
     relocation: cleanText(raw.relocation, 60),
+    work_authorization: raw.work_authorization === "authorized" || raw.work_authorization === "needs_sponsorship"
+      ? raw.work_authorization : null,
+    veteran_status: ["veteran", "transitioning", "no"].includes(raw.veteran_status as string)
+      ? raw.veteran_status : null,
     salary_min: cleanInt(raw.salary_min, 10_000_000),
     salary_max: cleanInt(raw.salary_max, 10_000_000),
     availability: cleanText(raw.availability, 60),

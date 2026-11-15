@@ -57,6 +57,11 @@ interface JobListing {
   region: string | null;
   is_remote: boolean;
   sector_bucket: string | null;
+  // From the jobs feed (taxonomy/work_terms.py + taxonomy/h1b.py): what the
+  // posting itself says about sponsorship, and the employer's USCIS H-1B
+  // approvals (set only on US professional roles).
+  visa_sponsorship?: "offered" | "not_offered" | "case_by_case" | null;
+  employer_h1b?: number | null;
   job_category: string | null;
   first_seen: string | null;
   posted_date: string | null;
@@ -75,6 +80,7 @@ interface Candidate {
   experience: { title?: string }[] | null;
   location: string | null;
   relocation: string | null;
+  work_authorization?: string | null;
   unsubscribe_token: string;
 }
 
@@ -570,6 +576,15 @@ interface MatchRequest {
   place: Place;
   relocation: string | null;
   role: Role;
+  // Candidate said they will need visa sponsorship: postings that explicitly
+  // rule it out are dropped, and roles open to it rank first in each tier.
+  needsSponsorship?: boolean;
+}
+
+// Same rule as the "Open to sponsorship" filter on jobs.html.
+function openToSponsorship(job: JobListing): boolean {
+  return job.visa_sponsorship === "offered" || job.visa_sponsorship === "case_by_case" ||
+    (!!job.employer_h1b && job.visa_sponsorship !== "not_offered");
 }
 
 // Miles from the person to the nearest of the job's placeable locations,
@@ -595,9 +610,11 @@ function jobMiles(job: JobListing, place: Place): number | null {
 // following several.
 function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing[]>): JobListing[] {
   const best = new Map<string, { job: JobListing; tier: number; score: number; miles: number | null }>();
+  const needsSponsorship = requests.some((r) => r.needsSponsorship);
   for (const req of requests) {
     for (const sector of req.sectors) {
       for (const job of jobsBySector.get(sector) || []) {
+        if (req.needsSponsorship && job.visa_sponsorship === "not_offered") continue;
         const score = roleScore(job, req.role);
         if (score === null) continue;
         const tier = locationTier(job, req.place, req.relocation);
@@ -613,6 +630,7 @@ function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing
   const sorted = [...best.values()].sort((a, b) =>
     a.tier - b.tier ||
     Number(!!b.job.paid) - Number(!!a.job.paid) ||
+    (needsSponsorship ? Number(openToSponsorship(b.job)) - Number(openToSponsorship(a.job)) : 0) ||
     b.score - a.score ||
     (a.miles ?? Infinity) - (b.miles ?? Infinity) ||
     (b.job.first_seen || "").localeCompare(a.job.first_seen || ""));
@@ -827,11 +845,16 @@ function withSidebar(mainHtml: string, news: NewsItem[], intelStat: string | nul
 // page and carry a small "Promoted" label - they're only in the list because
 // they matched like any other job, but readers should still be able to tell
 // what's sponsored.
-function jobRowHtml(job: JobListing): string {
+function jobRowHtml(job: JobListing, showVisa = false): string {
   const href = job.link || `${SITE_ORIGIN}/jobs/${job.page_slug}.html`;
-  const badge = job.paid
+  let badge = job.paid
     ? ` <span style="display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:#F0FBF6;border:1px solid #BFEFD9;font-size:10.5px;font-weight:700;color:#0B7A55;vertical-align:2px;">Promoted</span>`
     : "";
+  if (showVisa && openToSponsorship(job)) {
+    const label = job.visa_sponsorship === "offered" || job.visa_sponsorship === "case_by_case"
+      ? "Visa sponsorship" : "Sponsors H-1B";
+    badge += ` <span style="display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:#EEF6FF;border:1px solid #C7E0FB;font-size:10.5px;font-weight:700;color:#1F5FA8;vertical-align:2px;">${label}</span>`;
+  }
   return `
     <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
       <a href="${escapeHtml(href)}" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(job.job_title || "Open role")}</a>${badge}
@@ -842,7 +865,8 @@ function jobRowHtml(job: JobListing): string {
 function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
   const firstName = candidate.first_name || "there";
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${candidate.unsubscribe_token}`;
-  const jobRows = jobs.map(jobRowHtml).join("");
+  const showVisa = candidate.work_authorization === "needs_sponsorship";
+  const jobRows = jobs.map((job) => jobRowHtml(job, showVisa)).join("");
 
   const jobsColumn = `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${jobRows}</table>
@@ -872,7 +896,7 @@ function sectorLabel(sectors: string[]): string {
 // any one of its rows - they share the email, and location is taken from it.
 function buildLeadEmailHtml(lead: Lead, label: string, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${lead.unsubscribe_token}`;
-  const jobRows = jobs.map(jobRowHtml).join("");
+  const jobRows = jobs.map((job) => jobRowHtml(job)).join("");
 
   // The upsell - these are zero-commitment leads, and full profiles are what
   // employers search in the talent database, so every send pushes toward one.
@@ -922,7 +946,7 @@ function buildLeadEmailHtml(lead: Lead, label: string, jobs: JobListing[], news:
 async function fetchPaidJobs(): Promise<JobListing[]> {
   const { data, error } = await supabaseAdmin
     .from("job_postings")
-    .select("id, company_name, job_title, location, sector, is_international, paid_at")
+    .select("id, company_name, job_title, location, sector, is_international, paid_at, visa_sponsorship")
     .eq("status", "paid")
     .gt("expires_at", new Date().toISOString());
   if (error) {
@@ -942,6 +966,7 @@ async function fetchPaidJobs(): Promise<JobListing[]> {
     job_category: mapJobCategory(p.job_title),
     first_seen: p.paid_at,
     posted_date: p.paid_at,
+    visa_sponsorship: ({ yes: "offered", no: "not_offered", case_by_case: "case_by_case" } as Record<string, JobListing["visa_sponsorship"]>)[p.visa_sponsorship || ""] || null,
     paid: true,
   }));
 }
@@ -953,7 +978,29 @@ function unsubscribeHeaders(token: string): Record<string, string> {
   };
 }
 
-Deno.serve(async (_req) => {
+// Only the cron job (or us) may trigger this. The schedule calls it with a
+// project secret key (sb_secret_..., inline in cron.job), which is not a JWT,
+// so a JWT "role" check can't be used - and the public publishable/anon key
+// must never be enough. Instead, ask Supabase Auth to do one admin-only read
+// with whatever key the caller sent: only a secret or service-role key can.
+async function isTrustedCaller(req: Request): Promise<boolean> {
+  const bearer = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
+  const key = bearer || (req.headers.get("apikey") || "").trim();
+  if (!key) return false;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/users?page=1&per_page=1`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+Deno.serve(async (req) => {
+  if (!(await isTrustedCaller(req))) {
+    return new Response(JSON.stringify({ error: "forbidden" }), { status: 403, headers: { "Content-Type": "application/json" } });
+  }
   try {
     const feedRes = await fetch(JOBS_FEED_URL);
     if (!feedRes.ok) {
@@ -992,7 +1039,7 @@ Deno.serve(async (_req) => {
     const cooldownCutoff = new Date(Date.now() - RESEND_COOLDOWN_DAYS * 24 * 60 * 60 * 1000).toISOString();
     const { data: candidates, error: candidatesError } = await supabaseAdmin
       .from("candidates")
-      .select("id, email, first_name, sectors, headline, experience, location, relocation, unsubscribe_token, last_job_alert_sent_at")
+      .select("id, email, first_name, sectors, headline, experience, location, relocation, work_authorization, unsubscribe_token, last_job_alert_sent_at")
       .eq("email_job_alerts", true)
       .neq("availability", "Not currently looking")
       .not("email", "is", null)
@@ -1010,6 +1057,7 @@ Deno.serve(async (_req) => {
         place: parsePersonLocation(candidate.location),
         relocation: candidate.relocation,
         role: candidateRole(candidate),
+        needsSponsorship: candidate.work_authorization === "needs_sponsorship",
       }], jobsBySector);
       if (jobs.length === 0) {
         skippedNoMatch++;
