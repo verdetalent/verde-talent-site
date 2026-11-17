@@ -61,5 +61,7 @@ User-agent: Amazonbot
 Allow: /
 
 Sitemap: https://verdetalent.com/sitemap.xml
+# The newest job pages, as RSS
+Sitemap: https://verdetalent.com/jobs-feed.xml
 # Page guide for AI assistants: https://verdetalent.com/llms.txt
 # deploy-trigger: 2026-08-06T18:06:40Z
