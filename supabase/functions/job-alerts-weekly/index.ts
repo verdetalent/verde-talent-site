@@ -1,5 +1,26 @@
-// Weekly job-match digest. Triggered on a schedule (Supabase Cron -> this
-// function), never by a browser - "Verify JWT" stays ON for this function
+// Job-alert digest - daily or weekly, per candidate. Triggered once a day by
+// Supabase Cron (14:00 UTC). Each run emails:
+//   - candidates on 'daily' (candidates.alert_frequency), and
+//   - candidates on 'weekly' (the default) and job_alert_leads, on Mondays only.
+// A candidate's email can have three sections, each holding only jobs that
+// are new to them (see "What counts as new" in the handler):
+//   1. Matching your profile - sector + role + location, as described below.
+//   2. New at companies they follow (candidate_company_follows).
+//   3. New for their saved searches (candidate_saved_searches), matched by
+//      search-match.js - an exact copy of the site's /search-match.js, so a
+//      saved search sends what the search itself shows on jobs.html.
+// A job appears once, in the first section it qualifies for. Nothing new in
+// any section = no email. The name "job-alerts-weekly" is kept so the cron
+// job and logs don't need renaming.
+//
+// Manual runs (trusted callers only, see isTrustedCaller):
+//   ?dry_run=1        build everything, send nothing, change nothing; returns
+//                     counts plus sample subjects.
+//   ?only=<email>     just that candidate, whatever their schedule (with
+//                     dry_run=1 it also returns the email's HTML). Skips leads.
+//   ?force_weekly=1   treat today as Monday.
+//
+// Originally the weekly job-match digest. Never triggered by a browser - "Verify JWT" stays ON for this function
 // in the dashboard, and the cron job's own service-role key satisfies that,
 // so no extra secret-header check is needed on top of it.
 //
@@ -30,6 +51,8 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { Resend } from "npm:resend@4";
+// Sets globalThis.VTSearchMatch. Must stay identical to the site's /search-match.js.
+import "./search-match.js";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -47,6 +70,21 @@ const NEW_JOB_WINDOW_DAYS = 7;
 // week (manual re-run, cron misfire) - not a hard weekly lock, just a
 // "already sent recently" skip.
 const RESEND_COOLDOWN_DAYS = 6;
+// Daily subscribers: skip anyone emailed in the last 20 hours (a cron run that
+// drifts a little, or a manual re-run the same day).
+const DAILY_COOLDOWN_HOURS = 20;
+const MAX_FOLLOW_JOBS_PER_COMPANY = 5;
+const MAX_FOLLOW_COMPANIES_PER_EMAIL = 5;
+const MAX_JOBS_PER_SEARCH = 5;
+
+// deno-lint-ignore no-explicit-any
+const SM = (globalThis as any).VTSearchMatch as {
+  normalizeCriteria: (raw: unknown) => Record<string, unknown>;
+  matchJob: (job: JobListing, criteria: Record<string, unknown>, geo: unknown) => boolean;
+  describe: (criteria: Record<string, unknown>) => string;
+  searchUrl: (criteria: Record<string, unknown>, origin: string) => string;
+  companyKey: (name: string | null | undefined) => string;
+};
 
 interface JobListing {
   job_id: string;
@@ -65,6 +103,13 @@ interface JobListing {
   job_category: string | null;
   first_seen: string | null;
   posted_date: string | null;
+  // Read only by saved-search matching (search-match.js) - the same fields jobs.html filters on.
+  sector_buckets?: string[] | null;
+  work_style?: string | null;
+  seniority_level?: string | null;
+  employment_type?: string | null;
+  skills?: string[] | null;
+  salary_annual_max?: number | null;
   // Set only on paid employer postings (see fetchPaidJobs) - they link to
   // their own page rather than jobs/<slug>.html.
   link?: string;
@@ -82,6 +127,11 @@ interface Candidate {
   relocation: string | null;
   work_authorization?: string | null;
   unsubscribe_token: string;
+  alert_frequency?: string | null;
+  availability?: string | null;
+  last_job_alert_sent_at?: string | null;
+  last_job_alert_watermark?: string | null;
+  alerts_paused_until?: string | null;
 }
 
 // Zero-commitment signup from create-profile.html's "get emailed when new
@@ -608,12 +658,13 @@ function jobMiles(job: JobListing, place: Place): number | null {
 // keeps its best tier/score. Within a tier, sectors take turns (after any
 // paid postings) so one busy sector can't fill every slot for someone
 // following several.
-function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing[]>): JobListing[] {
+function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing[]>, eligible: (job: JobListing) => boolean = () => true): JobListing[] {
   const best = new Map<string, { job: JobListing; tier: number; score: number; miles: number | null }>();
   const needsSponsorship = requests.some((r) => r.needsSponsorship);
   for (const req of requests) {
     for (const sector of req.sectors) {
       for (const job of jobsBySector.get(sector) || []) {
+        if (!eligible(job)) continue;
         if (req.needsSponsorship && job.visa_sponsorship === "not_offered") continue;
         const score = roleScore(job, req.role);
         if (score === null) continue;
@@ -862,27 +913,74 @@ function jobRowHtml(job: JobListing, showVisa = false): string {
     </td></tr>`;
 }
 
-function buildEmailHtml(candidate: Candidate, jobs: JobListing[], news: NewsItem[], intelStat: string | null): string {
+// One block of a candidate's email: profile matches, one followed company, or
+// one saved search.
+interface EmailSection {
+  kind: "profile" | "follow" | "search";
+  title: string;
+  jobs: JobListing[];
+  company?: string;
+  moreUrl?: string;
+  moreLabel?: string;
+}
+
+function countJobs(sections: EmailSection[]): number {
+  return sections.reduce((n, s) => n + s.jobs.length, 0);
+}
+
+function subjectFor(sections: EmailSection[]): string {
+  const total = countJobs(sections);
+  const s = total === 1 ? "" : "s";
+  if (sections.length === 1 && sections[0].kind === "profile") return `${total} new job${s} matching your profile on Verde Talent`;
+  if (sections.length === 1 && sections[0].kind === "follow") return `${sections[0].company} posted ${total} new job${s}`;
+  return `${total} new job${s} for you on Verde Talent`;
+}
+
+function buildEmailHtml(candidate: Candidate, sections: EmailSection[], news: NewsItem[], intelStat: string | null, cadence: "daily" | "weekly"): string {
   const firstName = candidate.first_name || "there";
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${candidate.unsubscribe_token}`;
   const showVisa = candidate.work_authorization === "needs_sponsorship";
-  const jobRows = jobs.map((job) => jobRowHtml(job, showVisa)).join("");
+  const total = countJobs(sections);
+  // A profile-only email looks exactly like the old weekly one (no section heading).
+  const showTitles = !(sections.length === 1 && sections[0].kind === "profile");
+
+  const blocks = sections.map((sec, i) => `
+    ${showTitles ? `<div style="font-size:11.5px;font-weight:700;color:${MUTED};letter-spacing:.04em;text-transform:uppercase;margin:${i ? "26px" : "0"} 0 2px;">${escapeHtml(sec.title)}</div>` : ""}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${sec.jobs.map((job) => jobRowHtml(job, showVisa)).join("")}</table>
+    ${sec.moreUrl ? `<p style="margin:10px 0 0;font-size:12.5px;"><a href="${escapeHtml(sec.moreUrl)}" style="color:#0B7A55;font-weight:600;text-decoration:none;">${escapeHtml(sec.moreLabel || "See all")} →</a></p>` : ""}`).join("");
 
   const jobsColumn = `
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${jobRows}</table>
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+    ${blocks}
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:22px;">
       <tr><td style="background:${GRN};border-radius:9px;">
         <a href="${SITE_ORIGIN}/jobs.html" style="display:inline-block;padding:11px 20px;font-size:13px;font-weight:600;color:#052e1e;text-decoration:none;">See all open roles →</a>
       </td></tr>
-    </table>`;
+    </table>
+    <p style="margin:18px 0 0;font-size:12px;color:${MUTED};line-height:1.55;">You get these ${cadence === "daily" ? "daily" : "every Monday"}. <a href="${SITE_ORIGIN}/dashboard.html#alerts" style="color:${MUTED};">Change how often, or follow companies and save searches</a>.</p>`;
 
+  const when = cadence === "daily" ? "since your last alert" : "this week";
   const greeting = `
     <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:${INK};">Hi ${escapeHtml(firstName)},</p>
-    <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${jobs.length === 1 ? "'s a new role" : "are " + jobs.length + " new roles"} matching your experience on Verde Talent this week.</p>`;
+    <p style="margin:0 0 20px;font-size:14px;color:${MUTED};line-height:1.5;">Here ${total === 1 ? "'s a new role" : "are " + total + " new roles"} for you on Verde Talent ${when}.</p>`;
 
   const mainContent = withSidebar(jobsColumn, news, intelStat);
 
-  return emailShell(`${jobs.length} new job${jobs.length === 1 ? "" : "s"} matching your profile`, greeting + mainContent, unsubscribeUrl);
+  return emailShell(`${total} new job${total === 1 ? "" : "s"} for you on Verde Talent`, greeting + mainContent, unsubscribeUrl);
+}
+
+// The feed can list the same posting twice (a company re-listing it).
+function dedupeJobs(jobs: JobListing[]): JobListing[] {
+  const seen = new Set<string>();
+  return jobs.filter((j) => {
+    const key = `${j.job_title}|${j.company}|${j.location}`.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function newestFirst(a: JobListing, b: JobListing): number {
+  return (b.first_seen || "").localeCompare(a.first_seen || "");
 }
 
 // "Solar", "Solar & Storage", "Solar, Storage & Grid" - for a lead's
@@ -944,16 +1042,22 @@ function buildLeadEmailHtml(lead: Lead, label: string, jobs: JobListing[], news:
 // match, and only rank ahead of free listings within the same location
 // tier (see pickJobs). A failed fetch just means no paid postings this run.
 async function fetchPaidJobs(): Promise<JobListing[]> {
-  const { data, error } = await supabaseAdmin
+  const base = "id, company_name, job_title, location, sector, is_international, paid_at, visa_sponsorship";
+  const query = (cols: string) => supabaseAdmin
     .from("job_postings")
-    .select("id, company_name, job_title, location, sector, is_international, paid_at, visa_sponsorship")
+    .select(cols)
     .eq("status", "paid")
     .gt("expires_at", new Date().toISOString());
+  // The extra columns are only for saved-search filters; if any is missing,
+  // fall back to the original set rather than losing paid postings.
+  let { data, error } = await query(`${base}, work_arrangement, employment_type, salary_max, salary_period`);
+  if (error) ({ data, error } = await query(base));
   if (error) {
     console.error("Could not fetch paid job postings (non-fatal):", error);
     return [];
   }
-  return (data || []).map((p) => ({
+  // deno-lint-ignore no-explicit-any
+  return ((data || []) as any[]).map((p) => ({
     job_id: `paid:${p.id}`,
     page_slug: "",
     link: `${SITE_ORIGIN}/employer-job.html?id=${p.id}`,
@@ -961,9 +1065,13 @@ async function fetchPaidJobs(): Promise<JobListing[]> {
     company: p.company_name,
     location: p.location,
     region: p.is_international ? "International" : "US",
-    is_remote: /\bremote\b/i.test(p.location || ""),
+    is_remote: p.work_arrangement === "Remote" || /\bremote\b/i.test(p.location || ""),
     sector_bucket: p.sector,
+    sector_buckets: p.sector ? [p.sector] : null,
     job_category: mapJobCategory(p.job_title),
+    work_style: p.work_arrangement || null,
+    employment_type: p.employment_type || null,
+    salary_annual_max: p.salary_max ? (p.salary_period === "hour" ? p.salary_max * 2080 : p.salary_max) : null,
     first_seen: p.paid_at,
     posted_date: p.paid_at,
     visa_sponsorship: ({ yes: "offered", no: "not_offered", case_by_case: "case_by_case" } as Record<string, JobListing["visa_sponsorship"]>)[p.visa_sponsorship || ""] || null,
@@ -1008,10 +1116,36 @@ async function isTrustedCaller(req: Request): Promise<boolean> {
   }
 }
 
+interface FollowRow { candidate_id: string; company_name: string; company_slug: string | null }
+interface SearchRow { candidate_id: string; label: string; criteria: unknown }
+
+// Rows for these candidates from a table keyed by candidate_id, grouped. A
+// failed read just leaves those sections out of this run.
+async function loadByCandidate<T extends { candidate_id: string }>(table: string, cols: string, ids: string[]): Promise<Map<string, T[]>> {
+  const out = new Map<string, T[]>();
+  for (let i = 0; i < ids.length; i += 200) {
+    const { data, error } = await supabaseAdmin.from(table).select(cols).in("candidate_id", ids.slice(i, i + 200)).order("created_at");
+    if (error) {
+      console.error(`Could not read ${table} (non-fatal):`, error);
+      return out;
+    }
+    for (const row of (data || []) as unknown as T[]) {
+      if (!out.has(row.candidate_id)) out.set(row.candidate_id, []);
+      out.get(row.candidate_id)!.push(row);
+    }
+  }
+  return out;
+}
+
 Deno.serve(async (req) => {
   if (!(await isTrustedCaller(req))) {
     return new Response(JSON.stringify({ error: "forbidden" }), { status: 403, headers: { "Content-Type": "application/json" } });
   }
+  const url = new URL(req.url);
+  const dryRun = url.searchParams.get("dry_run") === "1";
+  const only = (url.searchParams.get("only") || "").trim().toLowerCase() || null;
+  const now = new Date();
+  const isMonday = now.getUTCDay() === 1 || url.searchParams.get("force_weekly") === "1";
   try {
     const feedRes = await fetch(JOBS_FEED_URL);
     if (!feedRes.ok) {
@@ -1032,62 +1166,162 @@ Deno.serve(async (req) => {
     // Same deal for the intel stat - null just drops that sidebar section.
     // Geo data likewise: without it, matching runs at state level only.
     const [intelStat, paidJobs] = await Promise.all([fetchIntelStat(), fetchPaidJobs(), loadGeoData()]);
+    const geo = { cities: CITY_GEO, zip3: ZIP3_GEO };
 
-    const cutoff = new Date(Date.now() - NEW_JOB_WINDOW_DAYS * 24 * 60 * 60 * 1000);
-    const newJobs = allJobs.filter((job) => {
-      const seen = job.first_seen ? new Date(job.first_seen) : null;
-      return seen && seen >= cutoff;
-    });
+    // What counts as new. The site's job feed is republished once a day (the
+    // evening refresh), and a job's first_seen is when the crawler found it,
+    // which can be hours before it reaches the feed. So "first_seen after my
+    // last email" would miss jobs crawled before an email but published after
+    // it. Instead each candidate stores a watermark: the newest first_seen in
+    // the feed when their last email was built. Next time, crawled jobs newer
+    // than that are new to them. Paid postings go live the moment they're paid,
+    // so they're new when paid_at is after the last email. Never more than
+    // NEW_JOB_WINDOW_DAYS back.
+    const windowStartMs = now.getTime() - NEW_JOB_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+    const feedWatermark = allJobs.reduce((m, j) => (j.first_seen && j.first_seen > m ? j.first_seen : m), "");
+    const recentJobs = allJobs.filter((job) => job.first_seen && Date.parse(job.first_seen) >= windowStartMs);
+    const pool = [...recentJobs, ...paidJobs];
 
-    // Paid postings join whatever's new this week (see fetchPaidJobs).
     const jobsBySector = new Map<string, JobListing[]>();
-    for (const job of [...newJobs, ...paidJobs]) {
+    for (const job of pool) {
       if (!job.sector_bucket) continue;
       if (!jobsBySector.has(job.sector_bucket)) jobsBySector.set(job.sector_bucket, []);
       jobsBySector.get(job.sector_bucket)!.push(job);
     }
 
-    const cooldownCutoff = new Date(Date.now() - RESEND_COOLDOWN_DAYS * 24 * 60 * 60 * 1000).toISOString();
-    const { data: candidates, error: candidatesError } = await supabaseAdmin
+    let candQuery = supabaseAdmin
       .from("candidates")
-      .select("id, email, first_name, sectors, headline, experience, location, relocation, work_authorization, unsubscribe_token, last_job_alert_sent_at")
+      .select("id, email, first_name, sectors, headline, experience, location, relocation, work_authorization, unsubscribe_token, last_job_alert_sent_at, last_job_alert_watermark, alert_frequency, availability, alerts_paused_until")
       .eq("email_job_alerts", true)
-      .neq("availability", "Not currently looking")
-      .not("email", "is", null)
-      .or(`last_job_alert_sent_at.is.null,last_job_alert_sent_at.lt.${cooldownCutoff}`);
-
+      .not("email", "is", null);
+    if (only) candQuery = candQuery.ilike("email", only.replace(/[%_\\]/g, (c) => "\\" + c));
+    const { data: candidateRows, error: candidatesError } = await candQuery;
     if (candidatesError) throw candidatesError;
+
+    const dailyCutoffMs = now.getTime() - DAILY_COOLDOWN_HOURS * 60 * 60 * 1000;
+    const weeklyCutoffMs = now.getTime() - RESEND_COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
+    const weeklyCutoff = new Date(weeklyCutoffMs).toISOString();
+    const due = ((candidateRows || []) as Candidate[]).filter((c) => {
+      if (only) return true;
+      // Paused from the dashboard ("Pause for 30 days"): skip until the date passes.
+      if (c.alerts_paused_until && Date.parse(c.alerts_paused_until) > now.getTime()) return false;
+      const last = c.last_job_alert_sent_at ? Date.parse(c.last_job_alert_sent_at) : 0;
+      if (c.alert_frequency === "daily") return last < dailyCutoffMs;
+      return isMonday && last < weeklyCutoffMs;
+    });
+
+    const ids = due.map((c) => c.id);
+    const [followsBy, searchesBy] = await Promise.all([
+      loadByCandidate<FollowRow>("candidate_company_follows", "candidate_id, company_name, company_slug", ids),
+      loadByCandidate<SearchRow>("candidate_saved_searches", "candidate_id, label, criteria", ids),
+    ]);
 
     let sent = 0;
     let skippedNoMatch = 0;
     let failed = 0;
+    let dailySent = 0;
+    let followJobs = 0;
+    let searchJobs = 0;
+    // deno-lint-ignore no-explicit-any
+    const previews: any[] = [];
 
     const suppressed = await loadSuppressed();
     let skippedSuppressed = 0;
-    for (const candidate of (candidates || []) as Candidate[]) {
+    for (const candidate of due) {
       if (suppressed.has((candidate.email || "").toLowerCase())) {
         skippedSuppressed++;
         continue;
       }
-      const jobs = pickJobs([{
-        sectors: candidate.sectors || [],
-        place: parsePersonLocation(candidate.location),
-        relocation: candidate.relocation,
-        role: candidateRole(candidate),
-        needsSponsorship: candidate.work_authorization === "needs_sponsorship",
-      }], jobsBySector);
-      if (jobs.length === 0) {
+      const cadence: "daily" | "weekly" = candidate.alert_frequency === "daily" ? "daily" : "weekly";
+      const lastSentMs = candidate.last_job_alert_sent_at ? Date.parse(candidate.last_job_alert_sent_at) : 0;
+      const markMs = Math.max(windowStartMs, candidate.last_job_alert_watermark ? Date.parse(candidate.last_job_alert_watermark) : lastSentMs);
+      const paidCutoffMs = Math.max(windowStartMs, lastSentMs);
+      // Paid postings: a weekly email offers them for as long as they're live
+      // (what the employer paid for). A daily email only when newly paid, or on
+      // Mondays - otherwise one posting would repeat every day for a month.
+      const eligible = (job: JobListing) => job.paid
+        ? (cadence === "weekly" || isMonday || (!!job.first_seen && Date.parse(job.first_seen) > paidCutoffMs))
+        : (!!job.first_seen && Date.parse(job.first_seen) > markMs);
+
+      const shown = new Set<string>();
+      const sections: EmailSection[] = [];
+
+      // 1. Profile matches - not for people who said they're not looking.
+      if (candidate.availability !== "Not currently looking") {
+        const jobs = pickJobs([{
+          sectors: candidate.sectors || [],
+          place: parsePersonLocation(candidate.location),
+          relocation: candidate.relocation,
+          role: candidateRole(candidate),
+          needsSponsorship: candidate.work_authorization === "needs_sponsorship",
+        }], jobsBySector, eligible);
+        if (jobs.length) {
+          jobs.forEach((j) => shown.add(j.job_id));
+          sections.push({ kind: "profile", title: "Matching your profile", jobs });
+        }
+      }
+
+      // 2. Followed companies, any role they post.
+      let companies = 0;
+      for (const f of followsBy.get(candidate.id) || []) {
+        if (companies >= MAX_FOLLOW_COMPANIES_PER_EMAIL) break;
+        const key = SM.companyKey(f.company_name);
+        if (!key) continue;
+        const fresh = dedupeJobs(pool.filter((j) => eligible(j) && !shown.has(j.job_id) && SM.companyKey(j.company) === key)).sort(newestFirst);
+        if (!fresh.length) continue;
+        const list = fresh.slice(0, MAX_FOLLOW_JOBS_PER_COMPANY);
+        list.forEach((j) => shown.add(j.job_id));
+        followJobs += list.length;
+        companies++;
+        sections.push({
+          kind: "follow", company: f.company_name, title: `New at ${f.company_name}`, jobs: list,
+          moreUrl: fresh.length > list.length
+            ? (f.company_slug ? `${SITE_ORIGIN}/companies/${f.company_slug}.html` : `${SITE_ORIGIN}/jobs.html?company=${encodeURIComponent(f.company_name)}`)
+            : undefined,
+          moreLabel: `See all ${fresh.length} new roles at ${f.company_name}`,
+        });
+      }
+
+      // 3. Saved searches.
+      for (const s of searchesBy.get(candidate.id) || []) {
+        const criteria = SM.normalizeCriteria(s.criteria);
+        const matches = dedupeJobs(pool.filter((j) => eligible(j) && !shown.has(j.job_id) && SM.matchJob(j, criteria, geo))).sort(newestFirst);
+        if (!matches.length) continue;
+        const list = matches.slice(0, MAX_JOBS_PER_SEARCH);
+        list.forEach((j) => shown.add(j.job_id));
+        searchJobs += list.length;
+        sections.push({
+          kind: "search", title: `Your search: ${s.label}`, jobs: list,
+          moreUrl: SM.searchUrl(criteria, SITE_ORIGIN),
+          moreLabel: matches.length > list.length ? `See all ${matches.length} new matches` : "Open this search",
+        });
+      }
+
+      if (sections.length === 0) {
         skippedNoMatch++;
+        continue;
+      }
+
+      const subject = subjectFor(sections);
+      const html = buildEmailHtml(candidate, sections, newsItems, intelStat, cadence);
+      if (dryRun) {
+        if (only || previews.length < 10) {
+          previews.push({
+            candidate: candidate.id, cadence, subject,
+            sections: sections.map((s) => ({ kind: s.kind, title: s.title, jobs: s.jobs.length })),
+            ...(only ? { html } : {}),
+          });
+        }
+        sent++;
+        if (cadence === "daily") dailySent++;
         continue;
       }
 
       const { error: sendError } = await resend.emails.send({
         from: "Verde Talent Jobs <jobs@updates.verdetalent.com>",
         to: candidate.email,
-        subject: jobs.length === 1
-          ? `1 new job matching your profile on Verde Talent`
-          : `${jobs.length} new jobs matching your profile on Verde Talent`,
-        html: buildEmailHtml(candidate, jobs, newsItems, intelStat),
+        subject,
+        html,
         headers: unsubscribeHeaders(candidate.unsubscribe_token),
       });
 
@@ -1099,88 +1333,105 @@ Deno.serve(async (req) => {
 
       await supabaseAdmin
         .from("candidates")
-        .update({ last_job_alert_sent_at: new Date().toISOString() })
+        .update({ last_job_alert_sent_at: now.toISOString(), last_job_alert_watermark: feedWatermark || null })
         .eq("id", candidate.id);
       sent++;
+      if (cadence === "daily") dailySent++;
     }
 
-    const { data: leads, error: leadsError } = await supabaseAdmin
-      .from("job_alert_leads")
-      .select("id, email, sector, location, job_title, unsubscribe_token, last_alert_sent_at")
-      .eq("subscribed", true)
-      .or(`last_alert_sent_at.is.null,last_alert_sent_at.lt.${cooldownCutoff}`);
-
-    if (leadsError) throw leadsError;
-
+    // Email-only leads: weekly, Mondays, unchanged (jobs first seen in the
+    // last 7 days plus live paid postings).
     let leadsSent = 0;
     let leadsSkippedNoMatch = 0;
     let leadsFailed = 0;
 
-    // One email per address, not per row. job_alert_leads holds one row per
-    // (email, sector), so someone who ticked Solar + Storage + Grid used to
-    // get three separate digests every week. Each row is its own match
-    // request (its sector, location and title); pickJobs merges them.
-    const leadsByEmail = new Map<string, Lead[]>();
-    for (const lead of (leads || []) as Lead[]) {
-      if (!leadsByEmail.has(lead.email)) leadsByEmail.set(lead.email, []);
-      leadsByEmail.get(lead.email)!.push(lead);
-    }
-
-    for (const [email, rows] of leadsByEmail) {
-      if (suppressed.has((email || "").toLowerCase())) {
-        skippedSuppressed++;
-        continue;
-      }
-      const jobs = pickJobs(rows.map((lead) => ({
-        sectors: [lead.sector],
-        place: parsePersonLocation(lead.location),
-        relocation: null,
-        role: roleFromTitle(lead.job_title),
-      })), jobsBySector);
-
-      if (jobs.length === 0) {
-        leadsSkippedNoMatch++;
-        continue;
-      }
-
-      const sectors = [...new Set(rows.map((r) => r.sector))];
-      const label = sectorLabel(sectors);
-      const location = rows[0].location;
-      const { error: sendError } = await resend.emails.send({
-        from: "Verde Talent Jobs <jobs@updates.verdetalent.com>",
-        to: email,
-        subject: jobs.length === 1
-          ? `1 new ${label} job near ${location}`
-          : `${jobs.length} new ${label} jobs near ${location}`,
-        html: buildLeadEmailHtml(rows[0], label, jobs, newsItems, intelStat),
-        // Any one row's token works - unsubscribe-job-alerts turns off every
-        // row for that address, matching the one combined email.
-        headers: unsubscribeHeaders(rows[0].unsubscribe_token),
-      });
-
-      if (sendError) {
-        console.error(`Send failed for lead ${rows[0].id}:`, sendError);
-        leadsFailed++;
-        continue;
-      }
-
-      await supabaseAdmin
+    if (isMonday && !only) {
+      const { data: leads, error: leadsError } = await supabaseAdmin
         .from("job_alert_leads")
-        .update({ last_alert_sent_at: new Date().toISOString() })
-        .in("id", rows.map((r) => r.id));
-      leadsSent++;
+        .select("id, email, sector, location, job_title, unsubscribe_token, last_alert_sent_at")
+        .eq("subscribed", true)
+        .or(`last_alert_sent_at.is.null,last_alert_sent_at.lt.${weeklyCutoff}`);
+
+      if (leadsError) throw leadsError;
+
+      // One email per address, not per row. job_alert_leads holds one row per
+      // (email, sector), so someone who ticked Solar + Storage + Grid used to
+      // get three separate digests every week. Each row is its own match
+      // request (its sector, location and title); pickJobs merges them.
+      const leadsByEmail = new Map<string, Lead[]>();
+      for (const lead of (leads || []) as Lead[]) {
+        if (!leadsByEmail.has(lead.email)) leadsByEmail.set(lead.email, []);
+        leadsByEmail.get(lead.email)!.push(lead);
+      }
+
+      for (const [email, rows] of leadsByEmail) {
+        if (suppressed.has((email || "").toLowerCase())) {
+          skippedSuppressed++;
+          continue;
+        }
+        const jobs = pickJobs(rows.map((lead) => ({
+          sectors: [lead.sector],
+          place: parsePersonLocation(lead.location),
+          relocation: null,
+          role: roleFromTitle(lead.job_title),
+        })), jobsBySector);
+
+        if (jobs.length === 0) {
+          leadsSkippedNoMatch++;
+          continue;
+        }
+        if (dryRun) {
+          leadsSent++;
+          continue;
+        }
+
+        const sectors = [...new Set(rows.map((r) => r.sector))];
+        const label = sectorLabel(sectors);
+        const location = rows[0].location;
+        const { error: sendError } = await resend.emails.send({
+          from: "Verde Talent Jobs <jobs@updates.verdetalent.com>",
+          to: email,
+          subject: jobs.length === 1
+            ? `1 new ${label} job near ${location}`
+            : `${jobs.length} new ${label} jobs near ${location}`,
+          html: buildLeadEmailHtml(rows[0], label, jobs, newsItems, intelStat),
+          // Any one row's token works - unsubscribe-job-alerts turns off every
+          // row for that address, matching the one combined email.
+          headers: unsubscribeHeaders(rows[0].unsubscribe_token),
+        });
+
+        if (sendError) {
+          console.error(`Send failed for lead ${rows[0].id}:`, sendError);
+          leadsFailed++;
+          continue;
+        }
+
+        await supabaseAdmin
+          .from("job_alert_leads")
+          .update({ last_alert_sent_at: now.toISOString() })
+          .in("id", rows.map((r) => r.id));
+        leadsSent++;
+      }
     }
 
     return new Response(
       JSON.stringify({
         success: true,
-        new_jobs_found: newJobs.length,
+        dry_run: dryRun,
+        weekly_run: isMonday,
+        new_jobs_found: recentJobs.length,
+        candidates_due: due.length,
         sent,
+        daily_sent: dailySent,
+        follow_jobs: followJobs,
+        search_jobs: searchJobs,
         skipped_no_match: skippedNoMatch,
+        skipped_suppressed: skippedSuppressed,
         failed,
         leads_sent: leadsSent,
         leads_skipped_no_match: leadsSkippedNoMatch,
         leads_failed: leadsFailed,
+        ...(dryRun ? { previews } : {}),
       }),
       { status: 200, headers: { "Content-Type": "application/json" } },
     );

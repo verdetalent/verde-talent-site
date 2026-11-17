@@ -15,6 +15,8 @@
 <meta name="robots" content="noindex, nofollow"/>
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
 <script src="/fullstory.js"></script>
+<script src="/search-match.js"></script>
+<script src="/alerts.js" defer></script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
@@ -71,6 +73,30 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .dash-meter-pct{font-size:11px;color:var(--t2);margin-top:4px;text-align:right;}
 
 .dash-panel{padding:1.75rem 2rem;max-width:800px;}
+.alerts-card{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.25rem 1.35rem;margin-bottom:14px;}
+.al-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;margin-bottom:14px;}
+.al-title i{color:var(--grn);font-size:16px;}
+.al-sub{font-size:11px;color:var(--t3);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.04em;}
+.al-freq{display:flex;gap:8px;flex-wrap:wrap;}
+.al-pill{background:var(--card2);border:0.5px solid var(--bdr2);color:var(--t2);border-radius:999px;padding:8px 14px;font-size:13px;cursor:pointer;font-family:var(--font-sans);}
+.al-pill.on{background:rgba(34,224,154,0.1);border-color:rgba(34,224,154,0.5);color:var(--grn);}
+.al-offer{background:rgba(255,181,71,0.07);border:0.5px solid rgba(255,181,71,0.35);border-radius:10px;padding:12px 14px;margin:4px 0 6px;}
+.al-offer-q{font-size:13px;color:var(--t1);margin-bottom:10px;}
+.al-offer-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.al-pill.al-quiet{background:none;color:var(--t3);}
+.al-paused{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--amb);margin:4px 0 6px;}
+.al-paused[hidden],.al-offer[hidden]{display:none;}
+.al-note{font-size:12px;color:var(--t2);line-height:1.55;margin-top:14px;}
+.al-list{display:flex;flex-direction:column;}
+.al-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:0.5px solid var(--bdr);font-size:13px;}
+.al-item:first-child{border-top:none;padding-top:0;}
+.al-item a{color:var(--t1);text-decoration:none;}
+.al-item a:hover{color:var(--grn);}
+.al-item .al-meta{font-size:11.5px;color:var(--t3);margin-top:2px;}
+.al-rm{background:none;border:0.5px solid var(--bdr2);color:var(--t2);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:var(--font-sans);flex-shrink:0;}
+.al-rm:hover{border-color:var(--cor);color:var(--cor);}
+.al-empty{font-size:12.5px;color:var(--t2);line-height:1.55;}
+.al-empty a{color:var(--grn);}
 .dash-panel[hidden]{display:none;}
 .dash-prefs-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;}
 @media (max-width:640px){.dash-prefs-grid{grid-template-columns:1fr;}}
@@ -226,6 +252,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <button type="button" class="dash-nav-item on" data-tab="overview"><i class="ti ti-grid-dots"></i><span>Overview</span></button>
       <button type="button" class="dash-nav-item" data-tab="experience"><i class="ti ti-briefcase"></i><span>Experience</span></button>
       <button type="button" class="dash-nav-item" data-tab="preferences"><i class="ti ti-settings"></i><span>Preferences</span></button>
+      <button type="button" class="dash-nav-item" data-tab="alerts"><i class="ti ti-bell"></i><span>Job alerts</span></button>
       <button type="button" class="dash-nav-item" data-tab="account"><i class="ti ti-lock"></i><span>Account</span></button>
     </nav>
     <div class="dash-rail-foot">
@@ -367,7 +394,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
         <div class="vis-sub" style="margin:4px 0 0;">Accounts at this company won't be able to see your profile.</div>
       </div>
       <div class="vis-row"><span style="color:var(--t2);">Profile searchable</span><button type="button" class="tog on" data-vis="searchable"></button></div>
-      <div class="vis-row"><span style="color:var(--t2);">Email me weekly job matches</span><button type="button" class="tog on" data-vis="jobAlerts"></button></div>
+      <div class="vis-row"><span style="color:var(--t2);">Job alert emails</span><a href="#alerts" style="color:var(--grn);font-size:12px;text-decoration:none;">Settings &rarr;</a></div><!--jobAlerts moved-->
     </div>
     <div class="referral-card" id="referralCard" style="display:none;">
       <div class="rc-title">Know other clean energy job seekers?</div>
@@ -375,6 +402,37 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="rc-row"><input type="text" id="referralLink" readonly/><button type="button" id="referralCopyBtn">Copy link</button></div>
     </div>
     </div>
+    </div>
+    </section>
+
+    <section class="dash-panel" data-panel="alerts" hidden>
+    <div class="alerts-card">
+      <div class="al-title"><i class="ti ti-bell"></i>Job alert emails</div>
+      <div class="vis-row" style="font-size:13px;"><span style="color:var(--t1);">Email me job alerts</span><button type="button" class="tog on" data-vis="jobAlerts"></button></div>
+      <div class="al-offer" id="alOffPrompt" hidden>
+        <div class="al-offer-q">Getting too many emails? You can have fewer instead.</div>
+        <div class="al-offer-btns">
+          <button type="button" class="al-pill" id="alToWeekly">Switch to weekly</button>
+          <button type="button" class="al-pill" id="alPause30">Pause for 30 days</button>
+          <button type="button" class="al-pill al-quiet" id="alTurnOff">Turn off</button>
+          <button type="button" class="al-pill al-quiet" id="alKeep">Keep them</button>
+        </div>
+      </div>
+      <div class="al-paused" id="alPaused" hidden><span id="alPausedText"></span> <button type="button" class="al-pill" id="alResume">Resume now</button></div>
+      <div class="al-sub">How often</div>
+      <div class="al-freq" role="radiogroup" aria-label="How often">
+        <button type="button" class="al-pill" data-freq="daily" role="radio">Daily</button>
+        <button type="button" class="al-pill" data-freq="weekly" role="radio">Weekly, on Mondays</button>
+      </div>
+      <div class="al-note">Each email has new jobs from three places: roles that match your profile (your sectors, headline and location), new roles at companies you follow, and new jobs for your saved searches. Nothing new, no email. Changes on this tab save straight away.</div>
+    </div>
+    <div class="alerts-card">
+      <div class="al-title"><i class="ti ti-building"></i>Companies you follow</div>
+      <div id="followList" class="al-list"><div class="al-empty">Loading…</div></div>
+    </div>
+    <div class="alerts-card">
+      <div class="al-title"><i class="ti ti-search"></i>Saved searches</div>
+      <div id="searchList" class="al-list"><div class="al-empty">Loading…</div></div>
     </div>
     </section>
 
@@ -458,6 +516,108 @@ document.querySelectorAll('.sign-out-btn').forEach(btn => btn.addEventListener('
   localStorage.removeItem('vt_session');
   window.location.href = 'login.html';
 }));
+
+// --- Job alerts tab: frequency, followed companies, saved searches (alerts.js) ---
+let ALERT_FREQ = 'weekly';
+function setFreq(f){
+  ALERT_FREQ = f === 'daily' ? 'daily' : 'weekly';
+  document.querySelectorAll('.al-pill[data-freq]').forEach(b => {
+    const on = b.dataset.freq === ALERT_FREQ;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-checked', on ? 'true' : 'false');
+  });
+}
+// Changes on the alerts tab save straight away (same Save as the rest of the profile).
+function saveAlertsNow(){ const b = document.getElementById('saveBtn'); if (b && !b.disabled) b.click(); }
+document.querySelectorAll('.al-pill[data-freq]').forEach(b => b.addEventListener('click', () => {
+  setFreq(b.dataset.freq);
+  saveAlertsNow();
+}));
+
+// Pause: no alert emails until this date, then they resume by themselves.
+let ALERTS_PAUSED_UNTIL = null;
+function setPaused(iso){
+  ALERTS_PAUSED_UNTIL = iso && Date.parse(iso) > Date.now() ? iso : null;
+  const box = document.getElementById('alPaused');
+  if (!box) return;
+  box.hidden = !ALERTS_PAUSED_UNTIL;
+  if (ALERTS_PAUSED_UNTIL) {
+    const d = new Date(ALERTS_PAUSED_UNTIL).toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
+    document.getElementById('alPausedText').textContent = `Paused until ${d}. They start again on their own.`;
+  }
+}
+// Turning alerts off: offer fewer emails first. Capture phase, so this runs before the generic
+// toggle handler and can stop it.
+document.addEventListener('click', (e) => {
+  const tog = e.target.closest('[data-vis="jobAlerts"]');
+  if (!tog || !tog.classList.contains('on')) return;
+  e.stopImmediatePropagation();
+  e.preventDefault();
+  document.getElementById('alToWeekly').hidden = ALERT_FREQ !== 'daily';
+  document.getElementById('alOffPrompt').hidden = false;
+  if (typeof gtag === 'function') gtag('event', 'alerts_off_prompt_shown', {});
+}, true);
+function offPromptChoice(choice){
+  document.getElementById('alOffPrompt').hidden = true;
+  if (typeof gtag === 'function') gtag('event', 'alerts_off_prompt_choice', { choice });
+}
+document.getElementById('alToWeekly').addEventListener('click', () => { offPromptChoice('weekly'); setFreq('weekly'); saveAlertsNow(); });
+document.getElementById('alPause30').addEventListener('click', () => {
+  offPromptChoice('pause_30');
+  setPaused(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString());
+  saveAlertsNow();
+});
+document.getElementById('alTurnOff').addEventListener('click', () => { offPromptChoice('off'); setVis('jobAlerts', false); setPaused(null); saveAlertsNow(); });
+document.getElementById('alKeep').addEventListener('click', () => offPromptChoice('keep'));
+document.getElementById('alResume').addEventListener('click', () => { setPaused(null); saveAlertsNow(); });
+// Switching alerts back on also lifts any pause.
+document.addEventListener('click', (e) => {
+  const tog = e.target.closest('[data-vis="jobAlerts"]');
+  if (tog && tog.classList.contains('on')) { setPaused(null); saveAlertsNow(); }
+});
+function alertEsc(t){ return String(t || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+async function loadAlertLists(){
+  if (!window.VTAlerts) return;
+  try { await window.VTAlerts.ready; } catch (e) {}
+  const fl = document.getElementById('followList');
+  const sl = document.getElementById('searchList');
+  try {
+    const follows = await window.VTAlerts.listFollows();
+    fl.innerHTML = follows.length ? follows.map(f => `
+      <div class="al-item"><div><a href="${f.company_slug ? '/companies/' + alertEsc(f.company_slug) + '.html' : '/jobs.html?company=' + encodeURIComponent(f.company_name)}">${alertEsc(f.company_name)}</a></div>
+      <button type="button" class="al-rm" data-unfollow="${alertEsc(f.company_name)}">Unfollow</button></div>`).join('')
+      : '<div class="al-empty">You don\'t follow any companies yet. Press <strong>Follow</strong> on any <a href="/companies.html">company page</a> or job, and their new roles will come to you.</div>';
+  } catch (e) { fl.innerHTML = '<div class="al-empty">Couldn\'t load your followed companies. Refresh to try again.</div>'; }
+  try {
+    const searches = await window.VTAlerts.listSavedSearches();
+    sl.innerHTML = searches.length ? searches.map(s => `
+      <div class="al-item"><div><a href="${alertEsc(window.VTSearchMatch.searchUrl(window.VTSearchMatch.normalizeCriteria(s.criteria), ''))}">${alertEsc(s.label)}</a></div>
+      <button type="button" class="al-rm" data-delsearch="${alertEsc(s.id)}">Delete</button></div>`).join('')
+      : '<div class="al-empty">No saved searches yet. On <a href="/jobs.html">Find jobs</a>, set your filters and press <strong>Get alerts for this search</strong>. Up to 10.</div>';
+  } catch (e) { sl.innerHTML = '<div class="al-empty">Couldn\'t load your saved searches. Refresh to try again.</div>'; }
+}
+document.addEventListener('click', async (e) => {
+  const uf = e.target.closest('[data-unfollow]');
+  const ds = e.target.closest('[data-delsearch]');
+  if (!uf && !ds) return;
+  const btn = uf || ds;
+  btn.disabled = true;
+  try {
+    if (uf) await window.VTAlerts.unfollow(uf.dataset.unfollow);
+    else await window.VTAlerts.deleteSavedSearch(ds.dataset.delsearch);
+    btn.closest('.al-item').remove();
+    loadAlertLists();
+  } catch (err) {
+    btn.disabled = false;
+    window.VTAlerts.toast('Something went wrong - please try again.', true);
+  }
+});
+function openTabFromHash(){
+  const tab = (location.hash || '').replace('#', '');
+  const btn = tab && document.querySelector(`.dash-nav-item[data-tab="${tab}"]`);
+  if (btn) btn.click();
+}
+window.addEventListener('hashchange', openTabFromHash);
 
 // --- Tab navigation ---
 document.querySelectorAll('.dash-nav-item[data-tab]').forEach(btn => {
@@ -884,6 +1044,8 @@ document.getElementById('saveBtn').addEventListener('click', async function(){
     current_employer: document.getElementById('inp-curemp').value.trim() || null,
     visibility_searchable: getVis('searchable'),
     email_job_alerts: getVis('jobAlerts'),
+    alert_frequency: ALERT_FREQ,
+    alerts_paused_until: ALERTS_PAUSED_UNTIL,
   };
 
   try {
@@ -986,6 +1148,10 @@ async function init(){
   syncCurEmp();
   setVis('searchable', CANDIDATE.visibility_searchable !== false);
   setVis('jobAlerts', CANDIDATE.email_job_alerts !== false);
+  setFreq(CANDIDATE.alert_frequency);
+  setPaused(CANDIDATE.alerts_paused_until);
+  loadAlertLists();
+  openTabFromHash();
 
   await refreshResumeLink();
   updateCompleteness();
