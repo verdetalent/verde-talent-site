@@ -45,6 +45,16 @@ const INTELLIGENCE_URL = `${SITE_ORIGIN}/data/intelligence.json`;
 const JOBS_FEED_URL = `${SITE_ORIGIN}/data/jobs_feed.json`;
 const MIN_ITEMS = 5;
 const MAX_ITEMS = 10;
+// feed.xml is rebuilt by the weekly news crawl (Mondays) and this runs later in the week,
+// so a story is at most ~9 days old on a normal send. Anything older than this is a stale
+// feed (the crawl's publish step failed), not news - skip it rather than re-send it, and
+// let the MIN_ITEMS check below turn "no fresh stories" into "send nothing".
+const MAX_ITEM_AGE_DAYS = 10;
+// The age cap above alone isn't enough: after ONE missed crawl the feed is a week old
+// but still holds stories under 10 days old, so they'd be re-sent. The newest story
+// tells us whether the crawl ran this week - normally 2-3 days old at send time, 9+
+// days old after a missed run - so if even the newest is older than this, send nothing.
+const MAX_NEWEST_ITEM_AGE_DAYS = 5;
 const MAX_FEATURED_JOBS = 5;
 
 interface FeedItem {
@@ -53,6 +63,7 @@ interface FeedItem {
   description: string;
   category: string | null;
   isDomestic: boolean;
+  published: number | null; // ms since epoch, from <pubDate>
 }
 
 // Small hand-rolled RSS parser rather than pulling in an XML/DOM library
@@ -72,8 +83,11 @@ function parseFeed(xml: string): FeedItem[] {
     const description = block.match(/<description>([\s\S]*?)<\/description>/)?.[1]?.trim() || "";
     const category = block.match(/<category>([\s\S]*?)<\/category>/)?.[1]?.trim() || null;
     const isDomestic = block.match(/<domestic>([\s\S]*?)<\/domestic>/)?.[1]?.trim() !== "false";
+    const pubDate = block.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]?.trim();
+    const parsedDate = pubDate ? Date.parse(pubDate) : NaN;
+    const published = Number.isNaN(parsedDate) ? null : parsedDate;
     if (title && link) {
-      items.push({ title: decodeXml(title), link: decodeXml(link), description: decodeXml(description), category, isDomestic });
+      items.push({ title: decodeXml(title), link: decodeXml(link), description: decodeXml(description), category, isDomestic, published });
     }
   }
   return items;
@@ -629,15 +643,28 @@ Deno.serve(async (req) => {
   try {
     const feedRes = await fetch(FEED_URL);
     if (!feedRes.ok) throw new Error(`Could not fetch feed.xml: ${feedRes.status}`);
-    const rawItems = parseFeed(await feedRes.text());
+    const allItems = parseFeed(await feedRes.text());
 
-    // feed.xml isn't filtered to "this week only" - it's the most recent
-    // Approved rows regardless of age, so this floor is really just a "is
-    // there even enough real content" guard rather than something
-    // expected to trigger often.
-    if (rawItems.length < MIN_ITEMS) {
+    // Only stories from the last MAX_ITEM_AGE_DAYS are eligible, so a feed that
+    // stopped updating can never make this re-send last month's news. An item with
+    // no readable date is dropped too - it can't be shown to be fresh.
+    const cutoff = Date.now() - MAX_ITEM_AGE_DAYS * 24 * 60 * 60 * 1000;
+    const rawItems = allItems.filter((i) => i.published !== null && i.published >= cutoff);
+
+    const newest = rawItems.reduce((m, i) => Math.max(m, i.published!), 0);
+    const feedIsStale = newest < Date.now() - MAX_NEWEST_ITEM_AGE_DAYS * 24 * 60 * 60 * 1000;
+
+    // If too few fresh stories remain, or the feed hasn't had a new story in days
+    // (the weekly crawl missed), send nothing - a skipped week beats a repeated one.
+    if (rawItems.length < MIN_ITEMS || feedIsStale) {
       return new Response(
-        JSON.stringify({ success: true, sent: 0, note: `Only ${rawItems.length} feed item(s) available (need at least ${MIN_ITEMS}) - nothing sent.` }),
+        JSON.stringify({
+          success: true,
+          sent: 0,
+          note: feedIsStale
+            ? `Newest feed story is older than ${MAX_NEWEST_ITEM_AGE_DAYS} days - feed.xml is stale, so nothing sent to avoid repeating stories. Check the Weekly News Crawl workflow.`
+            : `Only ${rawItems.length} of ${allItems.length} feed item(s) are from the last ${MAX_ITEM_AGE_DAYS} days (need at least ${MIN_ITEMS}) - nothing sent.`,
+        }),
         { status: 200, headers: { "Content-Type": "application/json" } },
       );
     }
