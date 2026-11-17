@@ -57,6 +57,28 @@ const MAX_ITEM_AGE_DAYS = 10;
 const MAX_NEWEST_ITEM_AGE_DAYS = 5;
 const MAX_FEATURED_JOBS = 5;
 
+// Where "the newsletter didn't go out properly" alerts are emailed. Override with
+// `supabase secrets set NEWSLETTER_ALERT_EMAIL=...` without redeploying code.
+const ALERT_EMAIL = Deno.env.get("NEWSLETTER_ALERT_EMAIL") || "adam@verdetalent.com";
+
+// A skipped or broken send is otherwise silent - nothing reaches subscribers and nobody
+// is told. This emails ALERT_EMAIL through the same Resend setup. It never throws: a
+// failed alert must not turn a skipped week into a crashed function or hide the real
+// error that triggered it.
+async function sendAlert(subject: string, detail: string): Promise<void> {
+  try {
+    const { error } = await resend.emails.send({
+      from: "Verde Talent Alerts <newsletter@updates.verdetalent.com>",
+      to: ALERT_EMAIL,
+      subject: `[Verde Talent] ${subject}`,
+      html: `<p>${escapeHtml(detail)}</p><p style="color:#666;font-size:13px">Sent automatically by the newsletter-weekly function at ${new Date().toISOString()}.</p>`,
+    });
+    if (error) console.error("Alert email failed:", error);
+  } catch (err) {
+    console.error("Alert email threw:", err);
+  }
+}
+
 interface FeedItem {
   title: string;
   link: string;
@@ -660,14 +682,15 @@ Deno.serve(async (req) => {
     // If too few fresh stories remain, or the feed hasn't had a new story in days
     // (the weekly crawl missed), send nothing - a skipped week beats a repeated one.
     if (rawItems.length < MIN_ITEMS || feedIsStale) {
+      const note = feedIsStale
+        ? `Newest feed story is older than ${MAX_NEWEST_ITEM_AGE_DAYS} days - feed.xml is stale, so nothing sent to avoid repeating stories. Check the Weekly News Crawl workflow.`
+        : `Only ${rawItems.length} of ${allItems.length} feed item(s) are from the last ${MAX_ITEM_AGE_DAYS} days (need at least ${MIN_ITEMS}) - nothing sent.`;
+      await sendAlert(
+        "This week's newsletter was NOT sent",
+        `${note} Subscribers received nothing this week. Check the Weekly News Crawl workflow in GitHub (verdetalent/renewable-energy-jobs, Actions tab); once it's green, the newsletter function can be run again.`,
+      );
       return new Response(
-        JSON.stringify({
-          success: true,
-          sent: 0,
-          note: feedIsStale
-            ? `Newest feed story is older than ${MAX_NEWEST_ITEM_AGE_DAYS} days - feed.xml is stale, so nothing sent to avoid repeating stories. Check the Weekly News Crawl workflow.`
-            : `Only ${rawItems.length} of ${allItems.length} feed item(s) are from the last ${MAX_ITEM_AGE_DAYS} days (need at least ${MIN_ITEMS}) - nothing sent.`,
-        }),
+        JSON.stringify({ success: true, sent: 0, note }),
         { status: 200, headers: { "Content-Type": "application/json" } },
       );
     }
@@ -729,12 +752,23 @@ Deno.serve(async (req) => {
       sent++;
     }
 
+    if (failed > 0) {
+      await sendAlert(
+        `Newsletter sent with ${failed} failure(s)`,
+        `${sent} subscriber(s) were sent this week's newsletter and ${failed} failed. See the newsletter-weekly logs in Supabase (Edge Functions > newsletter-weekly > Logs) and the Resend dashboard for the reasons.`,
+      );
+    }
+
     return new Response(
       JSON.stringify({ success: true, items_included: items.length, paid_jobs: paidJobs.length, general_jobs_available: generalJobs.length, has_intel_stat: !!intelStat, sent, failed }),
       { status: 200, headers: { "Content-Type": "application/json" } },
     );
   } catch (err) {
     console.error(err);
+    await sendAlert(
+      "Newsletter function crashed - nothing may have been sent",
+      `The weekly newsletter function hit an error: ${String(err)}. Some or no subscribers may have been emailed. See Supabase > Edge Functions > newsletter-weekly > Logs.`,
+    );
     return new Response(JSON.stringify({ error: String(err) }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 });
