@@ -64,6 +64,7 @@ interface FeedItem {
   category: string | null;
   isDomestic: boolean;
   published: number | null; // ms since epoch, from <pubDate>
+  rank: number | null; // 1 = best story of the week, from <rank> (news_ranking.py); null on an older feed
 }
 
 // Small hand-rolled RSS parser rather than pulling in an XML/DOM library
@@ -86,8 +87,10 @@ function parseFeed(xml: string): FeedItem[] {
     const pubDate = block.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]?.trim();
     const parsedDate = pubDate ? Date.parse(pubDate) : NaN;
     const published = Number.isNaN(parsedDate) ? null : parsedDate;
+    const rankText = block.match(/<rank>([\s\S]*?)<\/rank>/)?.[1]?.trim();
+    const rank = rankText && /^\d+$/.test(rankText) ? Number(rankText) : null;
     if (title && link) {
-      items.push({ title: decodeXml(title), link: decodeXml(link), description: decodeXml(description), category, isDomestic, published });
+      items.push({ title: decodeXml(title), link: decodeXml(link), description: decodeXml(description), category, isDomestic, published, rank });
     }
   }
   return items;
@@ -669,7 +672,14 @@ Deno.serve(async (req) => {
       );
     }
 
-    const items = orderDomesticFirst(rawItems).slice(0, MAX_ITEMS);
+    // Best-first when the feed carries ranks (the weekly top 10, spread across the
+    // week and across outlets - see news_ranking.py). The feed generator already caps
+    // international stories in that top 10, so no domestic-first reshuffle on top of it.
+    // An older feed with no ranks falls back to the previous newest-first, domestic-first order.
+    const hasRanks = rawItems.some((i) => i.rank !== null);
+    const items = hasRanks
+      ? [...rawItems].sort((a, b) => (a.rank ?? 1e9) - (b.rank ?? 1e9)).slice(0, MAX_ITEMS)
+      : orderDomesticFirst(rawItems).slice(0, MAX_ITEMS);
     const [paidJobs, generalJobs, intelStat] = await Promise.all([
       fetchPaidListings(),
       fetchGeneralJobListings(),
