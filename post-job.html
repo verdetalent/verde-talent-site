@@ -95,6 +95,16 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .plan-card.on{border-color:var(--grn);background:rgba(34,224,154,0.06);}
 .plan-days{font-size:13px;color:var(--t2);margin-bottom:4px;}
 .plan-price{font-size:26px;font-weight:700;}
+.feat-box{display:flex;gap:12px;align-items:flex-start;background:rgba(255,181,71,0.06);border:0.5px solid rgba(255,181,71,0.4);border-radius:10px;padding:12px 14px;margin-top:12px;cursor:pointer;}
+.feat-box[hidden],.feat-later[hidden]{display:none;}
+.feat-box.off{opacity:.55;cursor:default;}
+.feat-box input{margin-top:3px;width:16px;height:16px;accent-color:var(--amb);flex-shrink:0;}
+.feat-body{display:flex;flex-direction:column;gap:3px;}
+.feat-title{font-size:13.5px;font-weight:600;color:var(--t1);}
+.feat-title .star{color:var(--amb);}
+.feat-title b{color:var(--amb);}
+.feat-sub{font-size:12px;color:var(--t2);line-height:1.5;}
+.feat-later{font-size:12px;color:var(--t3);margin-top:12px;line-height:1.5;}
 .plan-note{font-size:11px;color:var(--t3);margin-top:4px;}
 .plan-day{font-size:12px;color:var(--grn);margin-top:6px;font-weight:500;}
 .plan-compare{display:flex;gap:10px;align-items:flex-start;background:rgba(34,224,154,0.05);border:0.5px solid rgba(34,224,154,0.25);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:12.5px;color:var(--t2);line-height:1.5;}
@@ -267,6 +277,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       </div>
     </div>
     <div class="plan-compare"><i class="ti ti-check"></i><span><b>One flat price for 30 days.</b> No daily budget and no paying per click. Indeed and LinkedIn both recommend a daily budget for each job and charge you per click.</span></div>
+    <label class="feat-box" id="featBox"><input type="checkbox" id="featChk"/><span class="feat-body"><span class="feat-title"><span class="star">&#9733;</span> Feature it on the homepage <b>+$300</b></span><span class="feat-sub">The top of the homepage's Featured jobs for 30 days, plus a Featured badge in the job search. <span id="featSlots">Only 6 spots.</span></span></span></label>
+    <div class="feat-later" id="featLater" hidden>Want it featured on the homepage? Once it's live, use <b>Feature this job</b> on your dashboard ($300 for 30 days).</div>
     <div class="plan-foot">Every posting runs for 30 days. Packs need a free employer account, can be used on any role, and stay valid for 12 months.</div>
   </div>
 
@@ -501,10 +513,27 @@ let selectedPack = null;
 // The submit button and the line under it follow the chosen option, so it is
 // always clear whether the next click publishes, pays for one posting, or
 // buys a pack.
+// Featured add-on: only with a single paid posting; credit and pack buyers feature it later.
+const featBox = document.getElementById('featBox');
+const featChk = document.getElementById('featChk');
+let FEAT_LEFT = null;
+function wantsFeatured() { return !useCredit && !selectedPack && featChk.checked && !featChk.disabled; }
+featChk.addEventListener('change', () => { updateSubmitUi(); try { gtag('event', 'featured_toggle', { on: featChk.checked }); } catch (e) {} });
+fetch('https://iqcyofkosjopxsfdufvy.supabase.co/functions/v1/feature-posting', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }, body: JSON.stringify({ action: 'slots' }) })
+  .then(r => r.ok ? r.json() : null).then(d => {
+    if (!d) return;
+    FEAT_LEFT = d.slots_left;
+    const s = document.getElementById('featSlots');
+    if (FEAT_LEFT < 1) { s.textContent = 'All 6 spots are taken right now.'; featChk.checked = false; featChk.disabled = true; featBox.classList.add('off'); }
+    else s.textContent = `${FEAT_LEFT} of 6 spots left.`;
+    updateSubmitUi();
+  }).catch(() => {});
 function updateSubmitUi() {
   const btn = document.getElementById('submitBtn');
   const note = document.getElementById('submitNote');
   note.style.color = '';
+  featBox.hidden = useCredit || !!selectedPack;
+  document.getElementById('featLater').hidden = !useCredit;
   if (useCredit) {
     btn.textContent = 'Publish with my credit →';
     note.textContent = 'This uses one of your posting credits - no payment needed.';
@@ -513,7 +542,7 @@ function updateSubmitUi() {
     btn.textContent = `Buy the ${selectedPack}-posting pack - ${price} →`;
     note.textContent = "You'll pay on Stripe's secure checkout, then come back here and use a credit to publish this role. We keep your job details saved.";
   } else {
-    btn.textContent = 'Continue to payment →';
+    btn.textContent = wantsFeatured() ? 'Continue to payment - $400 →' : 'Continue to payment →';
     note.textContent = "You'll enter payment details on Stripe's secure checkout page next.";
   }
 }
@@ -788,13 +817,13 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ job_posting_id: jobPostingId, duration_days: selectedDays }),
+      body: JSON.stringify({ job_posting_id: jobPostingId, duration_days: selectedDays, featured: wantsFeatured() }),
     });
     const checkoutData = await checkoutRes.json();
     if (!checkoutRes.ok || !checkoutData.url) throw new Error(checkoutData.error || 'Could not start checkout.');
 
     clearDraft();
-    gtag('event', 'begin_checkout', { item: 'single_post', value: 100, currency: 'USD' });
+    gtag('event', 'begin_checkout', { item: wantsFeatured() ? 'single_post_featured' : 'single_post', value: wantsFeatured() ? 400 : 100, currency: 'USD' });
     window.location.href = checkoutData.url;
   } catch (err) {
     btn.disabled = false;

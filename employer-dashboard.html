@@ -77,6 +77,11 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .btn-repost{background:rgba(34,224,154,0.1);color:var(--grn);border:1px solid rgba(34,224,154,0.35);padding:7px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-sans);white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;}
 .btn-repost:hover{background:rgba(34,224,154,0.18);}
 
+.feat-row{margin-top:14px;padding:12px 14px;border-radius:10px;background:rgba(255,181,71,0.06);border:0.5px solid rgba(255,181,71,0.35);font-size:13px;color:var(--t2);line-height:1.5;}
+.feat-row b{color:var(--t1);}
+.feat-row .star{color:var(--amb);}
+.btn-feature{background:var(--amb);color:#2a1a00;border:none;padding:8px 14px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--font-sans);white-space:nowrap;margin-top:8px;}
+.btn-feature[disabled]{opacity:.55;cursor:default;}
 .card-note{font-size:12px;color:var(--t3);margin-top:8px;line-height:1.6;}
 .card-note.error{color:var(--cor);}
 .card-note.success{color:var(--grn);}
@@ -194,6 +199,39 @@ function statusPill(posting) {
   return `<span class="pill ${escapeHtml(posting.status)}"><i class="ti ${meta.icon}"></i>${escapeHtml(meta.label)}</span>`;
 }
 
+// --- Featured add-on (feature-posting function) ---
+const FEATURE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co/functions/v1/feature-posting';
+let FEAT_SLOTS = null;
+const featSlotsReady = fetch(FEATURE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }, body: JSON.stringify({ action: 'slots' }) })
+  .then(r => r.ok ? r.json() : null).then(d => { FEAT_SLOTS = d ? d.slots_left : null; }).catch(() => {});
+function isFeatured(p) { return !!(p.featured_until && Date.parse(p.featured_until) > Date.now()); }
+function featureRowHtml(p) {
+  if (p.status !== 'paid' || (p.expires_at && Date.parse(p.expires_at) < Date.now())) return '';
+  if (isFeatured(p)) {
+    return `<div class="feat-row"><span class="star">&#9733;</span> <b>Featured on the homepage</b> until ${new Date(p.featured_until).toLocaleDateString()}.</div>`;
+  }
+  const full = FEAT_SLOTS !== null && FEAT_SLOTS < 1;
+  return `<div class="feat-row"><span class="star">&#9733;</span> <b>Feature this job on the homepage - $300 for 30 days.</b> It goes to the top of the homepage's Featured jobs and gets a Featured badge in the job search.` +
+    (full ? ' All 6 spots are taken right now - check back in a few days.' : (FEAT_SLOTS !== null ? ` ${FEAT_SLOTS} of 6 spots left.` : '')) +
+    `<br><button type="button" class="btn-feature" data-action="feature"${full ? ' disabled' : ''}>Feature this job &rarr;</button><div class="feat-err"></div></div>`;
+}
+async function startFeature(btn, body, headers) {
+  btn.disabled = true;
+  btn.textContent = 'Opening checkout…';
+  try { gtag('event', 'featured_checkout_start', { place: location.pathname }); } catch (e) {}
+  try {
+    const res = await fetch(FEATURE_URL, { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }, headers || {}), body: JSON.stringify(body) });
+    const d = await res.json().catch(() => ({}));
+    if (!res.ok || !d.url) throw new Error(d.error || 'Something went wrong - please try again.');
+    window.location.href = d.url;
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = 'Feature this job &rarr;';
+    const e = btn.parentElement.querySelector('.feat-err');
+    if (e) { e.style.cssText = 'color:var(--cor);font-size:12px;margin-top:6px;'; e.textContent = err.message; }
+  }
+}
+
 function activeCardHtml(posting) {
   const expiresLine = posting.expires_at ? `Runs through ${new Date(posting.expires_at).toLocaleDateString()}` : '';
   const removeBtn = posting.status === 'paid' ? `<button type="button" class="btn-remove" data-action="remove">Remove</button>` : '';
@@ -207,6 +245,7 @@ function activeCardHtml(posting) {
         <div class="card-actions">${removeBtn}</div>
       </div>
       <div class="status-row">${statusPill(posting)}${expiresLine ? `<span>${expiresLine}</span>` : ''}</div>
+      ${featureRowHtml(posting)}
       <div class="card-note"></div>
     </div>`;
 }
@@ -239,6 +278,9 @@ function monthKey(iso) {
 let allPostings = [];
 
 function attachRemoveHandlers(container, afterRemove) {
+  container.querySelectorAll('[data-action="feature"]').forEach(btn => {
+    btn.addEventListener('click', () => startFeature(btn, { id: btn.closest('.card').dataset.id }, { Authorization: `Bearer ${session.access_token}` }));
+  });
   container.querySelectorAll('[data-action="remove"]').forEach(btn => {
     btn.addEventListener('click', async function(){
       const card = this.closest('.card');
@@ -267,6 +309,8 @@ function attachRemoveHandlers(container, afterRemove) {
 // there's no reason to hide any of them behind a month filter. It's the
 // expired/removed history that grows without bound over time and actually
 // benefits from being chunked by month instead of one long scroll.
+// Once the spots count is in, redraw so the cards show it (and disable the button when full).
+featSlotsReady.then(() => { if (allPostings.length) renderActive(); });
 function renderActive() {
   const content = document.getElementById('content');
   const active = allPostings.filter(p => !isInactive(p));

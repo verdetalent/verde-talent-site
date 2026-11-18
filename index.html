@@ -726,6 +726,45 @@ function companyCardHtml(c) {
     : `<div style="color:var(--t3);font-size:13px;">No companies tracked yet.</div>`;
 })();
 
+// Paid "Featured" postings (job_postings.featured_until) take the first spots in Featured jobs,
+// marked with the Featured badge; the newest crawled roles fill the rest. Up to 6 are sold.
+(async function homeFeatured() {
+  const grid = document.getElementById("home-jobs-grid");
+  if (!grid) return;
+  try {
+    const url = "https://iqcyofkosjopxsfdufvy.supabase.co/rest/v1/public_job_postings"
+      + "?select=id,job_title,company_name,location,sector,salary_min,salary_max,salary_period,featured_until,paid_at"
+      + "&featured_until=gt." + encodeURIComponent(new Date().toISOString()) + "&order=featured_until.asc&limit=6";
+    const key = "sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH";
+    const res = await fetch(url, { headers: { apikey: key, Authorization: "Bearer " + key } });
+    if (!res.ok) return;
+    const rows = await res.json();
+    if (!rows.length) return;
+    const money = (v, per) => per === "hour" ? "$" + v : (v >= 1000 ? "$" + Math.round(v / 1000) + "k" : "$" + v);
+    const cards = rows.map(p => {
+      const color = SECTOR_COLORS[p.sector] || NEUTRAL_COLOR;
+      const initial = (p.company_name || "?").charAt(0).toUpperCase();
+      const salary = p.salary_min ? money(p.salary_min, p.salary_period) + (p.salary_max ? "–" + money(p.salary_max, p.salary_period) : "") + (p.salary_period === "hour" ? "/hr" : "") : "";
+      return `
+  <a class="job-card featured" href="employer-job.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none;color:inherit;" data-featured-job>
+    <div class="jc-top">
+      ${logoBox("jc-co-icon", p.company_name) || `<div class="jc-co-icon" style="background:${colorVar(color)}22;color:${colorVar(color)};">${initial}</div>`}
+      <div class="jc-meta"><div class="jc-title">${escapeHtml(p.job_title || "Open role")}</div><div class="jc-co">${escapeHtml(p.company_name)}</div><div class="jc-loc"><i class="ti ti-map-pin" style="font-size:11px;"></i>${escapeHtml(p.location || "")}</div></div>
+    </div>
+    <div class="jc-tags">${p.sector ? `<span class="jc-tag ${color}">${escapeHtml(p.sector)}</span>` : ""}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">${salary ? `<span class="jc-salary">${salary}</span>` : "<span></span>"}<span class="featured-badge">Featured</span></div>
+  </a>`;
+    });
+    const keep = Math.max(grid.querySelectorAll(".job-card").length, cards.length);
+    grid.insertAdjacentHTML("afterbegin", cards.join(""));
+    const all = grid.querySelectorAll(".job-card");
+    for (let i = keep; i < all.length; i++) all[i].remove();
+    grid.querySelectorAll("[data-featured-job]").forEach(a => a.addEventListener("click", () => {
+      try { gtag("event", "featured_job_click", { place: "home" }); } catch (e) {}
+    }));
+  } catch (e) {}
+})();
+
 // The hero search box doesn't filter in place - it hands off to the full
 // search/filter experience on jobs.html, passing along whatever was typed.
 // Location accepts a city+state, a state alone, a ZIP code, or "remote";

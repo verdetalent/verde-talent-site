@@ -154,6 +154,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .sf-note a{color:var(--t2);}
 .jc-meta-right{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--t3);}
 .jc-salary{font-size:13px;color:var(--t2);}
+.jc-tag.featured .star{margin-right:2px;}
+.jc-tag.featured{background:rgba(255,181,71,0.14);color:var(--amb);border:0.5px solid rgba(255,181,71,0.4);font-weight:600;}
 .jc-why{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:9px;padding:7px 9px;border-radius:9px;}
 .jc-why.strong{background:rgba(34,224,154,0.07);border:0.5px solid rgba(34,224,154,0.35);}
 .jc-why.good{background:rgba(79,179,255,0.07);border:0.5px solid rgba(79,179,255,0.35);}
@@ -768,6 +770,7 @@ function jobCardHtml(job) {
   const badgeTags = [];
   if (job.region === "International") badgeTags.push(`<span class="jc-tag intl">International</span>`);
   badgeTags.push(...workplaceVisaTags(job));
+  if (job.is_featured) badgeTags.unshift(`<span class="jc-tag featured"><span class="star">&#9733;</span> Featured</span>`);
   const salary = fmtSalary(job);
   const fit = jobFit(job);
   const inner = `
@@ -981,6 +984,8 @@ function render() {
     // that pinned group.
     const pinDiff = (b.is_employer_posted ? 1 : 0) - (a.is_employer_posted ? 1 : 0);
     if (pinDiff) return pinDiff;
+    const featDiff = (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0);
+    if (featDiff) return featDiff;
     if (sortBy === "match") {
       const fd = fitRank(b) - fitRank(a);
       if (fd) return fd;
@@ -1492,6 +1497,7 @@ async function fetchEmployerPostings() {
       salary_annual_min: (p.salary_min && p.salary_period === "hour") ? p.salary_min * 2080 : (p.salary_min || null),
       salary_annual_max: (p.salary_max && p.salary_period === "hour") ? p.salary_max * 2080 : (p.salary_max || null),
       posted_date: p.paid_at,
+      is_featured: !!(p.featured_until && Date.parse(p.featured_until) > Date.now()),
       first_seen: p.paid_at,
       page_slug: null,
     }));

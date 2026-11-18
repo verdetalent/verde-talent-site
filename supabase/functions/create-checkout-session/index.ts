@@ -27,6 +27,11 @@ const PRICING: Record<number, { cents: number; label: string }> = {
   60: { cents: 15000, label: "60-day job posting" },
 };
 
+// "Featured" add-on: top of the homepage's Featured jobs for 30 days. Same price and limit as
+// feature-posting (for postings already live) - keep the two in step.
+const FEATURED_CENTS = 30000;
+const FEATURED_DAYS = 30;
+
 const SITE_ORIGIN = "https://verdetalent.com";
 
 const corsHeaders = {
@@ -40,7 +45,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { job_posting_id, duration_days } = await req.json();
+    const { job_posting_id, duration_days, featured } = await req.json();
 
     if (!job_posting_id || !PRICING[duration_days]) {
       return new Response(JSON.stringify({ error: "Invalid job_posting_id or duration_days" }), {
@@ -80,21 +85,50 @@ Deno.serve(async (req) => {
       .eq("id", job_posting_id);
     if (updateError) throw updateError;
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      payment_method_types: ["card", "us_bank_account"],
-      line_items: [{
+    // The Featured add-on is only sold while one of the 6 homepage spots is free.
+    let addFeatured = false;
+    if (featured === true) {
+      const { data: left, error: slotsError } = await supabase.rpc("featured_slots_left");
+      if (slotsError) throw slotsError;
+      if ((left ?? 0) < 1) {
+        return new Response(JSON.stringify({ error: "All 6 Featured spots are taken right now - untick Featured to post without it." }), {
+          status: 409,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      addFeatured = true;
+    }
+
+    const lineItems = [{
+      price_data: {
+        currency: "usd",
+        unit_amount: cents,
+        product_data: {
+          name: `Verde Talent: ${label}`,
+          description: `${posting.job_title} at ${posting.company_name}`,
+        },
+      },
+      quantity: 1,
+    }];
+    if (addFeatured) {
+      lineItems.push({
         price_data: {
           currency: "usd",
-          unit_amount: cents,
+          unit_amount: FEATURED_CENTS,
           product_data: {
-            name: `Verde Talent: ${label}`,
+            name: `Verde Talent: Featured on the homepage, ${FEATURED_DAYS} days`,
             description: `${posting.job_title} at ${posting.company_name}`,
           },
         },
         quantity: 1,
-      }],
-      metadata: { job_posting_id },
+      });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card", "us_bank_account"],
+      line_items: lineItems,
+      metadata: addFeatured ? { job_posting_id, featured: "1" } : { job_posting_id },
       success_url: `${SITE_ORIGIN}/post-job-success.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_ORIGIN}/post-job.html?canceled=1`,
     });

@@ -42,6 +42,11 @@ h1{font-size:22px;font-weight:700;margin-bottom:.5rem;}
 .status-row .status{font-weight:600;}
 .status.paid{color:var(--grn);}
 .status.removed{color:var(--cor);}
+.feat-row{margin-top:14px;padding:12px 14px;border-radius:10px;background:rgba(255,181,71,0.06);border:0.5px solid rgba(255,181,71,0.35);font-size:13px;color:var(--t2);line-height:1.5;}
+.feat-row b{color:var(--t1);}
+.feat-row .star{color:var(--amb);}
+.btn-feature{background:var(--amb);color:#2a1a00;border:none;padding:8px 14px;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--font-sans);white-space:nowrap;margin-top:8px;}
+.btn-feature[disabled]{opacity:.55;cursor:default;}
 .btn-remove{background:transparent;color:var(--cor);border:1px solid rgba(255,112,85,0.4);padding:11px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-sans);}
 .btn-remove:hover{background:rgba(255,112,85,0.08);}
 .btn-remove:disabled{opacity:.5;cursor:default;}
@@ -86,6 +91,39 @@ async function callManage(action) {
   return data;
 }
 
+// --- Featured add-on (feature-posting function) ---
+const FEATURE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co/functions/v1/feature-posting';
+let FEAT_SLOTS = null;
+const featSlotsReady = fetch(FEATURE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }, body: JSON.stringify({ action: 'slots' }) })
+  .then(r => r.ok ? r.json() : null).then(d => { FEAT_SLOTS = d ? d.slots_left : null; }).catch(() => {});
+function isFeatured(p) { return !!(p.featured_until && Date.parse(p.featured_until) > Date.now()); }
+function featureRowHtml(p) {
+  if (p.status !== 'paid' || (p.expires_at && Date.parse(p.expires_at) < Date.now())) return '';
+  if (isFeatured(p)) {
+    return `<div class="feat-row"><span class="star">&#9733;</span> <b>Featured on the homepage</b> until ${new Date(p.featured_until).toLocaleDateString()}.</div>`;
+  }
+  const full = FEAT_SLOTS !== null && FEAT_SLOTS < 1;
+  return `<div class="feat-row"><span class="star">&#9733;</span> <b>Feature this job on the homepage - $300 for 30 days.</b> It goes to the top of the homepage's Featured jobs and gets a Featured badge in the job search.` +
+    (full ? ' All 6 spots are taken right now - check back in a few days.' : (FEAT_SLOTS !== null ? ` ${FEAT_SLOTS} of 6 spots left.` : '')) +
+    `<br><button type="button" class="btn-feature" data-action="feature"${full ? ' disabled' : ''}>Feature this job &rarr;</button><div class="feat-err"></div></div>`;
+}
+async function startFeature(btn, body, headers) {
+  btn.disabled = true;
+  btn.textContent = 'Opening checkout…';
+  try { gtag('event', 'featured_checkout_start', { place: location.pathname }); } catch (e) {}
+  try {
+    const res = await fetch(FEATURE_URL, { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }, headers || {}), body: JSON.stringify(body) });
+    const d = await res.json().catch(() => ({}));
+    if (!res.ok || !d.url) throw new Error(d.error || 'Something went wrong - please try again.');
+    window.location.href = d.url;
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = 'Feature this job &rarr;';
+    const e = btn.parentElement.querySelector('.feat-err');
+    if (e) { e.style.cssText = 'color:var(--cor);font-size:12px;margin-top:6px;'; e.textContent = err.message; }
+  }
+}
+
 function renderCard(posting) {
   const statusLabel = posting.status === 'paid' ? 'Live' : posting.status === 'removed' ? 'Removed' : posting.status;
   const statusClass = posting.status === 'paid' ? 'paid' : posting.status === 'removed' ? 'removed' : '';
@@ -99,9 +137,12 @@ function renderCard(posting) {
       ${posting.status === 'paid'
         ? `<button type="button" class="btn-remove" id="removeBtn">Remove this posting</button><div class="note" id="manageNote"></div>`
         : `<div class="note">This posting is no longer live.</div>`}
+      ${new URLSearchParams(location.search).get('featured') === '1' && posting.status === 'paid' ? '<div class="feat-row"><span class="star">&#9733;</span> <b>Thanks!</b> Your job will show as Featured within a minute or two of payment.</div>' : featureRowHtml(posting)}
     </div>
   `;
 
+  const featBtn = document.querySelector('[data-action="feature"]');
+  if (featBtn) featBtn.addEventListener('click', () => startFeature(featBtn, { id: posting.id, token }));
   const removeBtn = document.getElementById('removeBtn');
   if (removeBtn) {
     removeBtn.addEventListener('click', async () => {

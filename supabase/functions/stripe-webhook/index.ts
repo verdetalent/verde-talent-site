@@ -112,6 +112,52 @@ async function syncIntelSubscription(subscriptionId: string, userIdHint?: string
   return ok();
 }
 
+// The "Featured" add-on bought for a posting that is already live (feature-posting function,
+// metadata.kind = "featured"): featured for 30 days from now, and the posting itself is kept live
+// at least that long so the employer gets the full 30 days they paid for.
+const FEATURED_DAYS = 30;
+async function handleFeaturedPurchase(session: Stripe.Checkout.Session, jobPostingId: string): Promise<Response> {
+  const { data: posting, error } = await supabase
+    .from("job_postings")
+    .select("expires_at, featured_session_id, company_email, job_title, company_name")
+    .eq("id", jobPostingId)
+    .single();
+  if (error || !posting) {
+    console.error("Featured purchase for unknown posting", jobPostingId, error);
+    return new Response("Job posting not found", { status: 404 });
+  }
+  // Idempotency: Stripe redelivers events.
+  if (posting.featured_session_id === session.id) {
+    return new Response(JSON.stringify({ received: true, already_processed: true }), { headers: { "Content-Type": "application/json" } });
+  }
+  const now = new Date();
+  const featuredUntil = new Date(now.getTime() + FEATURED_DAYS * 24 * 60 * 60 * 1000);
+  const expiresAt = posting.expires_at && Date.parse(posting.expires_at) > featuredUntil.getTime()
+    ? posting.expires_at : featuredUntil.toISOString();
+  const { error: updateError } = await supabase.from("job_postings").update({
+    featured_until: featuredUntil.toISOString(),
+    featured_paid_at: now.toISOString(),
+    featured_session_id: session.id,
+    expires_at: expiresAt,
+  }).eq("id", jobPostingId);
+  if (updateError) {
+    console.error("Failed to switch on Featured", jobPostingId, updateError);
+    return new Response("Database update failed", { status: 500 });
+  }
+  const { error: emailError } = await resend.emails.send({
+    from: "Verde Talent <postings@updates.verdetalent.com>",
+    to: posting.company_email,
+    subject: `Your job is now featured: ${posting.job_title}`,
+    text: [
+      `"${posting.job_title}" at ${posting.company_name} is now featured at the top of the Verde Talent homepage until ${featuredUntil.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" })}.`,
+      ``,
+      `It also carries a Featured badge in the job search. Thanks for supporting Verde Talent!`,
+    ].join("\n"),
+  });
+  if (emailError) console.error("Failed to send featured confirmation", jobPostingId, emailError);
+  return new Response(JSON.stringify({ received: true }), { headers: { "Content-Type": "application/json" } });
+}
+
 async function handleCreditPackPurchase(session: Stripe.Checkout.Session, purchaseId: string): Promise<Response> {
   const { data: purchase, error: fetchError } = await supabase
     .from("employer_credit_purchases")
@@ -201,6 +247,10 @@ Deno.serve(async (req) => {
       return await handleCreditPackPurchase(session, purchaseId);
     }
 
+    if (session.metadata?.kind === "featured" && jobPostingId) {
+      return await handleFeaturedPurchase(session, jobPostingId);
+    }
+
     if (!jobPostingId) {
       console.error("checkout.session.completed with no job_posting_id or purchase_id in metadata", session.id);
       return new Response("Missing metadata", { status: 400 });
@@ -226,7 +276,11 @@ Deno.serve(async (req) => {
     }
 
     const now = new Date();
-    const expiresAt = new Date(now.getTime() + posting.duration_days * 24 * 60 * 60 * 1000);
+    let expiresAt = new Date(now.getTime() + posting.duration_days * 24 * 60 * 60 * 1000);
+    // Bought with the "Featured" add-on at checkout (create-checkout-session).
+    const featured = session.metadata?.featured === "1";
+    const featuredUntil = new Date(now.getTime() + FEATURED_DAYS * 24 * 60 * 60 * 1000);
+    if (featured && featuredUntil > expiresAt) expiresAt = featuredUntil;
 
     const { error: updateError } = await supabase
       .from("job_postings")
@@ -236,6 +290,11 @@ Deno.serve(async (req) => {
         expires_at: expiresAt.toISOString(),
         stripe_checkout_session_id: session.id,
         stripe_payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id,
+        ...(featured ? {
+          featured_until: featuredUntil.toISOString(),
+          featured_paid_at: now.toISOString(),
+          featured_session_id: session.id,
+        } : {}),
       })
       .eq("id", jobPostingId);
 
