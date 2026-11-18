@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CNGTGW71QP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CNGTGW71QP');
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; base-uri 'self'; form-action 'self';"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<title>Your application - Verde Talent</title>
+<style>
+:root{--blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);--grn:#22E09A;--cor:#FF7055;--t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);--font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+*{box-sizing:border-box;}
+body{margin:0;min-height:100vh;background:var(--blk);color:var(--t1);font-family:var(--font-sans);padding:3rem 16px;}
+.logo{display:block;text-align:center;font-size:18px;font-weight:700;color:#fff;text-decoration:none;margin-bottom:2rem;}
+.logo span{color:var(--grn);}
+.card{max-width:460px;margin:0 auto;text-align:center;}
+.mark{width:56px;height:56px;border-radius:50%;background:rgba(34,224,154,0.15);color:var(--grn);font-size:26px;line-height:56px;margin:0 auto 18px;}
+.mark.no{background:rgba(255,255,255,0.08);color:var(--t2);}
+h1{font-size:22px;margin:0 0 10px;}
+p{color:rgba(255,255,255,0.65);font-size:14.5px;line-height:1.6;margin:0 0 22px;}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+a.btn,button.btn{display:inline-block;background:var(--grn);color:#052e1e;font-weight:600;font-size:14px;padding:11px 20px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;font-family:inherit;}
+a.ghost,button.ghost{background:none;color:var(--t2);border:0.5px solid var(--bdr2);}
+#form{max-width:460px;margin:0 auto;}
+</style>
+</head>
+<body>
+<a class="logo" href="/">Verde <span>Talent</span></a>
+<div class="card" id="card"><p>Loading…</p></div>
+<div id="form"></div>
+<script src="/outcomes.js"></script>
+<script>
+(function(){
+  const FN = 'https://iqcyofkosjopxsfdufvy.supabase.co/functions/v1/job-checkins';
+  const ANON = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+  const q = new URLSearchParams(location.search);
+  const card = document.getElementById('card');
+  const formEl = document.getElementById('form');
+  const esc = t => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function show(html){ card.innerHTML = html; }
+  function broken(){
+    show('<div class="mark no">!</div><h1>That link didn\'t work</h1><p>It may have been copied incompletely. You can tell us how it went from your dashboard instead.</p>' +
+      '<div class="btns"><a class="btn" href="/dashboard.html">Go to my dashboard</a></div>');
+  }
+
+  if (q.has('stopped')) {
+    if (q.get('stopped') === '1') {
+      show('<div class="mark">&#10003;</div><h1>No more check-in emails</h1><p>We won\'t ask about your applications by email again. Your job alerts and your profile are unchanged.</p>' +
+        '<div class="btns"><a class="btn" href="/jobs.html">Browse clean energy jobs</a></div>');
+    } else broken();
+    return;
+  }
+
+  const a = q.get('a'), t = q.get('t'), s = q.get('s');
+  if (!a || !t || !['hired', 'interviewing', 'no_luck', 'not_applied'].includes(s)) { broken(); return; }
+
+  async function call(body){
+    const res = await fetch(FN, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON, Authorization: 'Bearer ' + ANON },
+      body: JSON.stringify(Object.assign({ a, t }, body)) });
+    const d = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(d.error || 'Something went wrong - please try again.');
+    return d;
+  }
+  function report(info, forApplication){
+    return r => call({ action: 'report', for_application: forApplication, found_job: r.found_job, via_verde: r.via_verde,
+      job_title: r.job_title, company: r.company, quote: r.quote, share_consent: r.share_consent });
+  }
+  function finished(){
+    formEl.innerHTML = '';
+    show('<div class="mark">&#10003;</div><h1>Thank you</h1><p>Good luck with what comes next.</p>' +
+      '<div class="btns"><a class="btn" href="/dashboard.html">Go to my dashboard</a></div>');
+  }
+  function foundElsewhere(info){
+    card.innerHTML = '';
+    window.VTOutcomes.open({ inline: formEl, askedFrom: 'checkin_email', found: true, firstName: info.first_name,
+      submit: report(info, false), onClose: finished });
+  }
+
+  (async function(){
+    try {
+      // "Got the job!" only records once they press Send on the form (a link scanner opening the
+      // email never gets that far). The other answers are recorded on arrival.
+      const info = await call(s === 'hired' ? { action: 'info' } : { action: 'status', s });
+      try { gtag('event', 'application_news', { status: s, asked_from: 'checkin_email' }); } catch (e) {}
+      const at = info.company ? ' at ' + esc(info.company) : '';
+      if (s === 'hired') {
+        card.innerHTML = '';
+        window.VTOutcomes.open({ inline: formEl, askedFrom: 'checkin_email', firstName: info.first_name,
+          application: { id: a, job_title: info.job_title, company: info.company },
+          submit: report(info, true), onClose: finished });
+        return;
+      }
+      const msgs = {
+        interviewing: ['Good luck!', 'Thanks for letting us know. We hope the ' + esc(info.job_title || 'role') + at + ' works out.'],
+        no_luck: ['Sorry to hear that', 'Thanks for letting us know. New roles come in every day.'],
+        not_applied: ['Got it', 'Thanks - we won\'t ask about this one again.'],
+      };
+      const [h, p] = msgs[s];
+      show('<div class="mark">&#10003;</div><h1>' + h + '</h1><p>' + p + '</p>' +
+        '<div class="btns"><a class="btn" href="/jobs.html">Browse new jobs</a>' +
+        '<button type="button" class="btn ghost" id="elsewhere">I found a job somewhere else</button></div>');
+      document.getElementById('elsewhere').addEventListener('click', () => foundElsewhere(info));
+    } catch (e) {
+      broken();
+    }
+  })();
+})();
+</script>
+</body>
+</html>

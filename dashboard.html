@@ -17,6 +17,7 @@
 <script src="/fullstory.js"></script>
 <script src="/search-match.js"></script>
 <script src="/alerts.js" defer></script>
+<script src="/outcomes.js" defer></script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
@@ -86,6 +87,23 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .al-pill.al-quiet{background:none;color:var(--t3);}
 .al-paused{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--amb);margin:4px 0 6px;}
 .al-paused[hidden],.al-offer[hidden]{display:none;}
+.news-card{background:var(--card);border:0.5px solid rgba(34,224,154,0.3);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.news-card[hidden],.news-found[hidden]{display:none;}
+.news-title{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:.25rem;}
+.news-title i{color:var(--grn);}
+.news-sub{font-size:12px;color:var(--t3);margin-bottom:.6rem;}
+.news-item{padding:.75rem 0;border-top:0.5px solid var(--bdr);}
+.news-item:first-of-type{border-top:none;}
+.news-job{font-size:13px;color:var(--t1);margin-bottom:8px;line-height:1.45;}
+.news-job a{color:var(--t1);text-decoration:none;font-weight:600;}
+.news-job a:hover{color:var(--grn);}
+.news-job span{color:var(--t3);}
+.news-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.news-btns .al-pill{font-size:12px;padding:6px 12px;}
+.news-btns .news-hired{border-color:rgba(34,224,154,0.5);color:var(--grn);}
+.news-done{font-size:12.5px;color:var(--grn);}
+.news-found{font-size:12.5px;color:var(--t3);margin:1.25rem 0 .5rem;}
+.news-found button{background:none;border:none;color:var(--grn);font-size:12.5px;cursor:pointer;padding:0;font-family:var(--font-sans);}
 .al-note{font-size:12px;color:var(--t2);line-height:1.55;margin-top:14px;}
 .al-list{display:flex;flex-direction:column;}
 .al-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:0.5px solid var(--bdr);font-size:13px;}
@@ -280,6 +298,11 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 
     <div id="dashboardBody" style="display:none;">
     <section class="dash-panel" data-panel="overview">
+    <div class="news-card" id="newsCard" hidden>
+      <div class="news-title"><i class="ti ti-news"></i>Any news?</div>
+      <div class="news-sub">Jobs you applied to from Verde Talent. One click to tell us how it went - it only goes into your account, and employers never see it.</div>
+      <div id="newsList"></div>
+    </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-file-text"></i>Resume / CV</div>
       <div class="current-resume" id="currentResumeRow" style="display:none;"><a href="#" id="currentResumeLink" target="_blank" rel="noopener"><i class="ti ti-file-text"></i><span id="currentResumeName"></span></a></div>
@@ -403,6 +426,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     </div>
     </div>
     </div>
+    <div class="news-found" id="newsFound" hidden>Found a new job? <button type="button" id="newsFoundBtn">Tell us &rarr;</button></div>
     </section>
 
     <section class="dash-panel" data-panel="alerts" hidden>
@@ -414,6 +438,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
         <div class="al-offer-btns">
           <button type="button" class="al-pill" id="alToWeekly">Switch to weekly</button>
           <button type="button" class="al-pill" id="alPause30">Pause for 30 days</button>
+          <button type="button" class="al-pill" id="alFoundJob">I found a job</button>
           <button type="button" class="al-pill al-quiet" id="alTurnOff">Turn off</button>
           <button type="button" class="al-pill al-quiet" id="alKeep">Keep them</button>
         </div>
@@ -569,6 +594,12 @@ document.getElementById('alPause30').addEventListener('click', () => {
 });
 document.getElementById('alTurnOff').addEventListener('click', () => { offPromptChoice('off'); setVis('jobAlerts', false); setPaused(null); saveAlertsNow(); });
 document.getElementById('alKeep').addEventListener('click', () => offPromptChoice('keep'));
+// "I found a job": alerts go off (what they came here to do), then the found-a-job questions.
+document.getElementById('alFoundJob').addEventListener('click', () => {
+  offPromptChoice('found_job');
+  setVis('jobAlerts', false); setPaused(null); saveAlertsNow();
+  openJobReport({ askedFrom: 'alerts_off', found: true });
+});
 document.getElementById('alResume').addEventListener('click', () => { setPaused(null); saveAlertsNow(); });
 // Switching alerts back on also lifts any pause.
 document.addEventListener('click', (e) => {
@@ -612,6 +643,168 @@ document.addEventListener('click', async (e) => {
     window.VTAlerts.toast('Something went wrong - please try again.', true);
   }
 });
+// --- Candidate-side proof (outcomes.js): "Any news?" card + "Did you find a new job?" ---
+// Apply clicks are recorded by applies.js (candidate_applications); answers go to
+// candidate_job_reports. Nothing here is visible to employers.
+let APPLICATIONS = [];
+let LAST_REPORT_AT = null;
+const DAY_MS = 24 * 60 * 60 * 1000;
+function restHeaders(extra){
+  return Object.assign({ 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SESSION.access_token}` }, extra || {});
+}
+async function patchApplication(id, status){
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/candidate_applications?id=eq.${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    headers: restHeaders({ 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }),
+    body: JSON.stringify({ status, status_at: new Date().toISOString() }),
+  });
+  if (!res.ok) throw new Error('Something went wrong - please try again.');
+  const a = APPLICATIONS.find(x => x.id === id);
+  if (a) { a.status = status; a.status_at = new Date().toISOString(); }
+}
+async function submitJobReport(report){
+  SESSION = await getValidSession();
+  if (!SESSION) throw new Error('Please sign in again.');
+  if (report.application_id && report.found_job) await patchApplication(report.application_id, 'hired');
+  const row = {
+    candidate_id: CANDIDATE.id,
+    application_id: report.application_id || null,
+    found_job: !!report.found_job,
+    via_verde: report.found_job ? report.via_verde : null,
+    job_title: report.found_job ? (report.job_title || null) : null,
+    company: report.found_job ? (report.company || null) : null,
+    quote: report.found_job ? (report.quote || null) : null,
+    share_consent: report.share_consent || 'first_name',
+    asked_from: report.asked_from,
+  };
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/candidate_job_reports`, {
+    method: 'POST',
+    headers: restHeaders({ 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }),
+    body: JSON.stringify(row),
+  });
+  if (!res.ok) {
+    const d = await res.json().catch(() => ({}));
+    throw new Error(/Too many/.test(d.message || '') ? d.message : 'Something went wrong - please try again.');
+  }
+  LAST_REPORT_AT = new Date().toISOString();
+  renderNews();
+}
+function normCo(s){ return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
+// After "I got a job at X": offer to make X their current employer, so the hide-from-current-
+// employer setting covers it.
+function offerEmployerUpdate(report, el){
+  const co = (report.company || '').trim();
+  const cur = document.getElementById('inp-curemp').value.trim();
+  if (!report.found_job || !co || normCo(co) === normCo(cur)) return;
+  const hidden = getVis('hideFromEmployer');
+  el.innerHTML = `<p style="margin:0 0 .6rem;">Update your current employer to <b style="color:var(--t1);">${alertEsc(co)}</b>?${hidden ? ` Your profile then stays hidden from ${alertEsc(co)} in the Resume Vault.` : ''}</p>
+    <div class="vto-pills"><button type="button" class="vto-pill" data-emp="yes">Yes, update my profile</button><button type="button" class="vto-pill" data-emp="no">Not now</button></div>`;
+  el.querySelector('[data-emp="yes"]').addEventListener('click', () => {
+    document.getElementById('inp-curemp').value = co;
+    syncCurEmp();
+    saveAlertsNow();
+    el.innerHTML = '<p style="margin:0;color:var(--grn);">Current employer updated ✓</p>';
+  });
+  el.querySelector('[data-emp="no"]').addEventListener('click', () => { el.innerHTML = ''; });
+}
+function openJobReport(opts){
+  if (!window.VTOutcomes) return;
+  window.VTOutcomes.open(Object.assign({
+    firstName: CANDIDATE.first_name || '',
+    submit: submitJobReport,
+    afterDone: offerEmployerUpdate,
+  }, opts));
+}
+// Cards: applications with no answer after 5 days, or "interviewing" for 14 days. Newest 3.
+function newsDue(){
+  const now = Date.now();
+  return APPLICATIONS.filter(a =>
+    (a.status === 'applied' && now - Date.parse(a.applied_at) >= 5 * DAY_MS) ||
+    (a.status === 'interviewing' && now - Date.parse(a.status_at || a.applied_at) >= 14 * DAY_MS)
+  ).slice(0, 3);
+}
+const NEWS_DONE = {};
+function renderNews(){
+  const due = newsDue();
+  const ids = new Set(due.map(a => a.id).concat(Object.keys(NEWS_DONE)));
+  const items = APPLICATIONS.filter(a => ids.has(a.id)).slice(0, 4);
+  document.getElementById('newsCard').hidden = !items.length;
+  document.getElementById('newsFound').hidden = false;
+  document.getElementById('newsList').innerHTML = items.map(a => {
+    const when = new Date(a.applied_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    const title = alertEsc(a.job_title || 'A job');
+    const link = a.job_page ? `<a href="${alertEsc(a.job_page)}">${title}</a>` : `<b>${title}</b>`;
+    const body = NEWS_DONE[a.id]
+      ? `<div class="news-done">${alertEsc(NEWS_DONE[a.id])}</div>`
+      : `<div class="news-btns">
+          <button type="button" class="al-pill" data-news="interviewing" data-app="${alertEsc(a.id)}">${a.status === 'interviewing' ? 'Still interviewing' : 'Interviewing'}</button>
+          <button type="button" class="al-pill news-hired" data-news="hired" data-app="${alertEsc(a.id)}">Got the job!</button>
+          <button type="button" class="al-pill" data-news="no_luck" data-app="${alertEsc(a.id)}">No luck</button>
+          ${a.status === 'applied' ? `<button type="button" class="al-pill al-quiet" data-news="not_applied" data-app="${alertEsc(a.id)}">Didn't apply after all</button>` : ''}
+        </div>`;
+    return `<div class="news-item"><div class="news-job">You applied to ${link}${a.company ? ` at ${alertEsc(a.company)}` : ''} <span>· ${when}</span></div>${body}</div>`;
+  }).join('');
+}
+const NEWS_THANKS = {
+  interviewing: "Good luck! We'll check back in a couple of weeks.",
+  no_luck: 'Sorry to hear that. New roles come in every day - your alerts will keep them coming.',
+  not_applied: "Got it, we won't ask about this one again.",
+  hired: 'Congratulations! 🎉',
+};
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-news]');
+  if (!b) return;
+  const id = b.dataset.app, status = b.dataset.news;
+  const app = APPLICATIONS.find(a => a.id === id);
+  if (!app) return;
+  if (typeof gtag === 'function') gtag('event', 'application_news', { status, asked_from: 'dashboard_card' });
+  if (status === 'hired') {
+    openJobReport({ askedFrom: 'dashboard_card', application: app,
+      onClose: (r) => { if (r) { NEWS_DONE[id] = NEWS_THANKS.hired; renderNews(); } } });
+    return;
+  }
+  b.closest('.news-btns').querySelectorAll('button').forEach(x => { x.disabled = true; });
+  try {
+    SESSION = await getValidSession();
+    await patchApplication(id, status);
+    NEWS_DONE[id] = NEWS_THANKS[status];
+  } catch (err) {
+    window.VTAlerts && window.VTAlerts.toast('Something went wrong - please try again.', true);
+  }
+  renderNews();
+});
+document.getElementById('newsFoundBtn').addEventListener('click', () => openJobReport({ askedFrom: 'dashboard_link', found: true }));
+async function loadNews(){
+  try {
+    const [apps, reps] = await Promise.all([
+      fetch(`${SUPABASE_URL}/rest/v1/candidate_applications?candidate_id=eq.${CANDIDATE.id}&select=id,job_title,company,job_page,applied_at,status,status_at&order=applied_at.desc&limit=50`, { headers: restHeaders() }),
+      fetch(`${SUPABASE_URL}/rest/v1/candidate_job_reports?candidate_id=eq.${CANDIDATE.id}&select=created_at&order=created_at.desc&limit=1`, { headers: restHeaders() }),
+    ]);
+    APPLICATIONS = apps.ok ? await apps.json() : [];
+    const r = reps.ok ? await reps.json() : [];
+    LAST_REPORT_AT = r.length ? r[0].created_at : null;
+  } catch (e) { APPLICATIONS = []; }
+  renderNews();
+}
+// Asked after a save that marks them "Not currently looking" or changes their current employer -
+// the moments people actually tell us something happened. Not if they answered in the last 30 days.
+function maybeAskAfterStatusChange(prev, payload){
+  if (LAST_REPORT_AT && Date.now() - Date.parse(LAST_REPORT_AT) < 30 * DAY_MS) return;
+  const newEmp = payload.current_employer || '';
+  const empChanged = !!(prev.current_employer && newEmp && normCo(prev.current_employer) !== normCo(newEmp));
+  const notLooking = prev.availability !== 'Not currently looking' && payload.availability === 'Not currently looking';
+  if (!empChanged && !notLooking) return;
+  if (typeof gtag === 'function') gtag('event', 'job_report_prompt', { asked_from: 'status_change', reason: empChanged ? 'employer' : 'availability' });
+  if (empChanged) {
+    openJobReport({ askedFrom: 'status_change', prefill: { company: newEmp },
+      title: `New job at ${newEmp}?`, lede: 'Congratulations if so! Did you just start a new job?',
+      yesLabel: 'Yes!', noLabel: 'No, just updating my profile', noRecord: true });
+  } else {
+    openJobReport({ askedFrom: 'status_change', title: 'Did you find a new job?',
+      lede: 'You set your profile to "Not currently looking". Wherever you found it, we\'d love to know.',
+      noLabel: 'No, just taking a break' });
+  }
+}
 function openTabFromHash(){
   const tab = (location.hash || '').replace('#', '');
   const btn = tab && document.querySelector(`.dash-nav-item[data-tab="${tab}"]`);
@@ -1062,6 +1255,10 @@ document.getElementById('saveBtn').addEventListener('click', async function(){
     if(!res.ok) throw new Error(await res.text());
     note.textContent = 'Saved ✓';
     note.style.color = 'var(--grn)';
+    const prevStatus = { availability: CANDIDATE.availability, current_employer: CANDIDATE.current_employer };
+    CANDIDATE.availability = payload.availability;
+    CANDIDATE.current_employer = payload.current_employer;
+    maybeAskAfterStatusChange(prevStatus, payload);
     document.getElementById('dashHeadline').textContent = payload.headline || '';
     updateCompleteness();
   } catch (err) {
@@ -1151,6 +1348,7 @@ async function init(){
   setFreq(CANDIDATE.alert_frequency);
   setPaused(CANDIDATE.alerts_paused_until);
   loadAlertLists();
+  loadNews();
   openTabFromHash();
 
   await refreshResumeLink();

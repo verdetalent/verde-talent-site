@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co; base-uri 'self'; form-action 'self'; frame-ancestors 'none';"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<title>Job reports (admin) - Verde Talent</title>
+<style>
+:root{--blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);--grn:#22E09A;--amb:#FFB547;--cor:#FF7055;--blu:#4FB3FF;--t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);--font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--blk);color:var(--t1);font-family:var(--font-sans);padding:2rem 16px 4rem;}
+.wrap{max-width:900px;margin:0 auto;}
+h1{font-size:22px;margin:0 0 .25rem;}
+.sub{color:var(--t3);font-size:13px;margin:0 0 1.5rem;line-height:1.5;}
+.gate{max-width:360px;margin:4rem auto;background:var(--card);border:0.5px solid var(--bdr2);border-radius:14px;padding:1.5rem;}
+.gate input{width:100%;background:var(--card2);color:var(--t1);border:0.5px solid var(--bdr2);border-radius:9px;padding:10px 12px;font-size:14px;margin-bottom:10px;font-family:inherit;}
+.btn{background:var(--grn);color:#052e1e;border:none;border-radius:9px;padding:10px 16px;font-weight:600;font-size:13.5px;cursor:pointer;font-family:inherit;}
+.err{color:var(--cor);font-size:12.5px;min-height:1em;margin-top:8px;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:1.5rem;}
+.stat{background:var(--card);border:0.5px solid var(--bdr2);border-radius:12px;padding:1rem;}
+.stat b{display:block;font-size:24px;margin-bottom:4px;}
+.stat span{font-size:12px;color:var(--t2);line-height:1.45;}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;}
+.pill{background:var(--card2);color:var(--t2);border:0.5px solid var(--bdr2);border-radius:999px;padding:6px 12px;font-size:12.5px;cursor:pointer;font-family:inherit;}
+.pill.on{color:var(--grn);border-color:var(--grn);background:rgba(34,224,154,0.1);}
+.rep{background:var(--card);border:0.5px solid var(--bdr2);border-radius:12px;padding:1rem 1.1rem;margin-bottom:10px;}
+.rep-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;}
+.rep-who{font-weight:600;}
+.rep-meta{color:var(--t3);font-size:12px;}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;margin:6px 6px 0 0;border:0.5px solid var(--bdr2);color:var(--t2);}
+.tag.g{color:var(--grn);border-color:rgba(34,224,154,0.4);}
+.tag.a{color:var(--amb);border-color:rgba(255,181,71,0.4);}
+.tag.r{color:var(--cor);border-color:rgba(255,112,85,0.4);}
+.quote{margin:.75rem 0 0;padding:.6rem .8rem;border-left:2px solid var(--grn);background:var(--card2);border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.55;color:var(--t1);}
+.preview{font-size:12px;color:var(--t3);margin-top:6px;}
+.acts{display:flex;gap:6px;margin-top:.75rem;align-items:center;flex-wrap:wrap;}
+.acts button{font-size:12px;padding:6px 12px;border-radius:8px;cursor:pointer;font-family:inherit;border:0.5px solid var(--bdr2);background:none;color:var(--t2);}
+.acts button.ok{color:var(--grn);border-color:rgba(34,224,154,0.5);}
+.acts button.no{color:var(--cor);border-color:rgba(255,112,85,0.4);}
+.empty{color:var(--t3);font-size:13px;padding:2rem 0;text-align:center;}
+a{color:var(--grn);}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <h1 style="font-size:18px;margin-bottom:.75rem;">Job reports</h1>
+  <p class="sub" style="margin-bottom:1rem;">Admin only. Sign in with the admin account.</p>
+  <input type="email" id="gEmail" placeholder="Email" autocomplete="username"/>
+  <input type="password" id="gPw" placeholder="Password" autocomplete="current-password"/>
+  <button type="button" class="btn" id="gBtn">Sign in</button>
+  <div class="err" id="gErr"></div>
+</div>
+
+<div class="wrap" id="main" hidden>
+  <h1>Job reports</h1>
+  <p class="sub">Answers to "Did you find a new job?" and "Any news?" from candidates. Nothing appears on the site until you approve it, and employers never see any of this. Names here are for you only: a story is shown with the first name only, or no name, as the candidate chose. <a href="/talent-database.html">Resume Vault</a></p>
+  <div class="stats" id="stats"></div>
+  <div class="filters" id="filters">
+    <button type="button" class="pill on" data-f="found">Found a job</button>
+    <button type="button" class="pill" data-f="quotes">With a quote</button>
+    <button type="button" class="pill" data-f="new">Not reviewed</button>
+    <button type="button" class="pill" data-f="all">All answers</button>
+  </div>
+  <div id="list"></div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const ANON = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+let TOKEN = null, REPORTS = [], APPS = [], FILTER = 'found';
+const esc = t => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct = (a, b) => b ? Math.round(100 * a / b) + '%' : '-';
+const VIA = { yes: ['Through Verde Talent', 'g'], partly: ['Verde Talent helped', 'a'], no: ['Found elsewhere', ''] };
+const FROM = { dashboard_card: 'Dashboard "Any news?"', dashboard_link: 'Dashboard link', checkin_email: 'Check-in email', status_change: 'Profile change', alerts_off: 'Turning alerts off' };
+const SHARE = { first_name: 'OK to share with first name', anonymous: 'OK to share without name', none: "Don't share" };
+
+async function get(path){
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: { apikey: ANON, Authorization: `Bearer ${TOKEN}` } });
+  if (!r.ok) throw new Error('This account is not allowed to see job reports.');
+  return r.json();
+}
+
+document.getElementById('gBtn').addEventListener('click', async () => {
+  const err = document.getElementById('gErr');
+  err.textContent = '';
+  try {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST', headers: { apikey: ANON, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: document.getElementById('gEmail').value.trim(), password: document.getElementById('gPw').value }),
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error_description || d.msg || 'Incorrect email or password.');
+    TOKEN = d.access_token;
+    await load();
+    document.getElementById('gate').hidden = true;
+    document.getElementById('main').hidden = false;
+  } catch (e) { err.textContent = e.message; }
+});
+document.getElementById('gPw').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('gBtn').click(); });
+
+async function load(){
+  [REPORTS, APPS] = await Promise.all([
+    get('candidate_job_reports?select=*,candidates(first_name,last_name,email)&order=created_at.desc&limit=2000'),
+    get('candidate_applications?select=candidate_id,status&limit=20000'),
+  ]);
+  renderStats();
+  renderList();
+}
+
+function renderStats(){
+  // One answer per candidate: their latest.
+  const latest = new Map();
+  for (const r of REPORTS) if (!latest.has(r.candidate_id)) latest.set(r.candidate_id, r);
+  const answered = latest.size;
+  const everFound = new Set(REPORTS.filter(r => r.found_job).map(r => r.candidate_id));
+  const foundRows = [...latest.values()].filter(r => r.found_job);
+  const via = k => foundRows.filter(r => r.via_verde === k).length;
+  const appCands = new Set(APPS.map(a => a.candidate_id));
+  const answeredApps = APPS.filter(a => a.status !== 'applied').length;
+  const hiredApps = APPS.filter(a => a.status === 'hired').length;
+  const quotes = REPORTS.filter(r => r.found_job && r.quote && r.share_consent !== 'none');
+  const approved = quotes.filter(r => r.review_status === 'approved').length;
+  document.getElementById('stats').innerHTML = [
+    [pct(everFound.size, answered), `of the ${answered} candidates who answered found a job (${everFound.size})`],
+    [via('yes') + via('partly'), `found it through Verde Talent (${via('yes')}) or with its help (${via('partly')}); ${via('no')} found it elsewhere`],
+    [APPS.length, `Apply clicks recorded from ${appCands.size} candidates; ${answeredApps} answered "Any news?", ${hiredApps} got the job`],
+    [quotes.length, `shareable quotes, ${approved} approved`],
+  ].map(([b, s]) => `<div class="stat"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join('');
+}
+
+function renderList(){
+  const rows = REPORTS.filter(r =>
+    FILTER === 'all' ? true :
+    FILTER === 'found' ? r.found_job :
+    FILTER === 'quotes' ? (r.found_job && r.quote) :
+    r.found_job && r.review_status === 'new');
+  document.getElementById('list').innerHTML = rows.length ? rows.map(r => {
+    const c = r.candidates || {};
+    const name = [c.first_name, c.last_name].filter(Boolean).join(' ') || c.email || 'Candidate';
+    const when = new Date(r.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    const v = VIA[r.via_verde];
+    const job = [r.job_title, r.company].filter(Boolean).map(esc).join(' at ');
+    const byline = r.share_consent === 'first_name' ? (c.first_name || 'first name') : 'a Verde Talent candidate';
+    const status = r.review_status === 'approved' ? '<span class="tag g">Approved</span>' : r.review_status === 'declined' ? '<span class="tag r">Declined</span>' : '<span class="tag">Not reviewed</span>';
+    return `<div class="rep">
+      <div class="rep-top"><div><span class="rep-who">${esc(name)}</span> <span class="rep-meta">${esc(c.email || '')}</span></div><div class="rep-meta">${when} · ${esc(FROM[r.asked_from] || r.asked_from)}</div></div>
+      <div>${r.found_job ? '<span class="tag g">Found a job</span>' : '<span class="tag">Not yet</span>'}${v ? `<span class="tag ${v[1]}">${v[0]}</span>` : ''}${r.found_job ? `<span class="tag ${r.share_consent === 'none' ? 'r' : ''}">${esc(SHARE[r.share_consent])}</span>` : ''}${r.found_job ? status : ''}</div>
+      ${job ? `<div style="font-size:13px;color:var(--t2);margin-top:8px;">${job}</div>` : ''}
+      ${r.quote ? `<div class="quote">${esc(r.quote)}</div>${r.share_consent !== 'none' ? `<div class="preview">Would appear as: “…” - ${esc(byline)}</div>` : ''}` : ''}
+      ${r.found_job ? `<div class="acts">
+        <button type="button" class="ok" data-review="approved" data-id="${esc(r.id)}" ${r.review_status === 'approved' ? 'disabled' : ''}>Approve</button>
+        <button type="button" class="no" data-review="declined" data-id="${esc(r.id)}" ${r.review_status === 'declined' ? 'disabled' : ''}>Decline</button>
+        ${r.review_status !== 'new' ? `<button type="button" data-review="new" data-id="${esc(r.id)}">Undo</button>` : ''}
+      </div>` : ''}
+    </div>`;
+  }).join('') : '<div class="empty">Nothing here yet.</div>';
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  const b = e.target.closest('[data-f]');
+  if (!b) return;
+  FILTER = b.dataset.f;
+  document.querySelectorAll('[data-f]').forEach(x => x.classList.toggle('on', x === b));
+  renderList();
+});
+document.getElementById('list').addEventListener('click', async e => {
+  const b = e.target.closest('[data-review]');
+  if (!b) return;
+  b.disabled = true;
+  const status = b.dataset.review;
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/candidate_job_reports?id=eq.${encodeURIComponent(b.dataset.id)}`, {
+    method: 'PATCH',
+    headers: { apikey: ANON, Authorization: `Bearer ${TOKEN}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify({ review_status: status, reviewed_at: status === 'new' ? null : new Date().toISOString() }),
+  });
+  if (!r.ok) { b.disabled = false; alert('Could not save - please try again.'); return; }
+  const row = REPORTS.find(x => x.id === b.dataset.id);
+  if (row) row.review_status = status;
+  renderStats();
+  renderList();
+});
+</script>
+</body>
+</html>

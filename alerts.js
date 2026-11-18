@@ -320,6 +320,13 @@
     return saved;
   })();
 
+  // Job pages: remember Apply clicks for signed-in candidates (see applies.js).
+  if (document.getElementById("applyBtn") && !window.VTApplies) {
+    var ap = document.createElement("script");
+    ap.src = "/applies.js";
+    document.head.appendChild(ap);
+  }
+
   window.VTAlerts = {
     ready: ready,
     session: session,
