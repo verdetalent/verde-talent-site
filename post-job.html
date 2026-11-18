@@ -96,6 +96,11 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .plan-days{font-size:13px;color:var(--t2);margin-bottom:4px;}
 .plan-price{font-size:26px;font-weight:700;}
 .plan-note{font-size:11px;color:var(--t3);margin-top:4px;}
+.plan-day{font-size:12px;color:var(--grn);margin-top:6px;font-weight:500;}
+.plan-compare{display:flex;gap:10px;align-items:flex-start;background:rgba(34,224,154,0.05);border:0.5px solid rgba(34,224,154,0.25);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:12.5px;color:var(--t2);line-height:1.5;}
+.plan-compare i{color:var(--grn);font-size:15px;margin-top:1px;}
+.plan-compare b{color:var(--t1);font-weight:600;}
+.plan-compare a{color:var(--t3);}
 .btn-grn{background:var(--grn);color:#052e1e;border:none;padding:13px 22px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;width:100%;font-family:var(--font-sans);}
 .btn-grn:disabled{opacity:.6;cursor:default;}
 .submit-note{font-size:12px;color:var(--t3);margin-top:10px;text-align:center;}
@@ -240,17 +245,20 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
         <div class="plan-days">Single posting</div>
         <div class="plan-price">$100</div>
         <div class="plan-note">30-day listing</div>
+        <div class="plan-day">About $3.33 a day</div>
       </div>
       <div class="plan-card" data-pack="5" data-cents="45000">
         <div class="plan-days">5 postings</div>
         <div class="plan-price">$450</div>
         <div class="plan-note">$90 per posting</div>
+        <div class="plan-day">$3 a day each</div>
       </div>
       <div class="plan-card" data-pack="10" data-cents="85000">
         <span class="plan-badge">BEST VALUE</span>
         <div class="plan-days">10 postings</div>
         <div class="plan-price">$850</div>
         <div class="plan-note">$85 per posting</div>
+        <div class="plan-day">About $2.83 a day each</div>
       </div>
       <div class="plan-card" id="creditPlanCard" data-credit="1" style="display:none;grid-column:1 / -1;">
         <div class="plan-days"><i class="ti ti-ticket" style="vertical-align:-2px;"></i> Use a posting credit</div>
@@ -258,6 +266,7 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
         <div class="plan-note">30-day listing, no payment needed</div>
       </div>
     </div>
+    <div class="plan-compare"><i class="ti ti-check"></i><span><b>One flat price for 30 days.</b> No daily budget and no paying per click. Indeed and LinkedIn both recommend a daily budget for each job and charge you per click.</span></div>
     <div class="plan-foot">Every posting runs for 30 days. Packs need a free employer account, can be used on any role, and stay valid for 12 months.</div>
   </div>
 
