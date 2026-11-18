@@ -13,7 +13,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="robots" content="noindex, nofollow"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://edge.fullstory.com https://*.fullstory.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pub-06d02fe4791344f6b03eb9114d6889c3.r2.dev https://*.fullstory.com https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://rs.fullstory.com https://edge.fullstory.com https://fullstory.com https://*.fullstory.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
 <script src="/fullstory.js"></script>
 <script src="/search-match.js"></script>
 <script src="/alerts.js" defer></script>
@@ -166,6 +166,11 @@ a.app-title:hover{color:var(--grn);}
 .pay-row{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;}
 .pay-gauge{flex:0 0 240px;max-width:100%;}
 .pay-text{flex:1;min-width:200px;}
+.resume-fill{background:rgba(34,224,154,0.06);border:0.5px solid rgba(34,224,154,0.35);border-radius:10px;padding:12px 14px;margin-top:10px;font-size:13px;color:var(--t2);line-height:1.5;}
+.resume-fill[hidden]{display:none;}
+#fitAll[hidden]{display:none;}
+.resume-fill b{color:var(--t1);}
+.resume-fill-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
 .prof-nudge{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
 .prof-nudge-main{flex:1;min-width:220px;}
 .prof-nudge-text{font-size:12.5px;color:var(--t2);line-height:1.5;}
@@ -412,6 +417,7 @@ a.app-title:hover{color:var(--grn);}
         <small class="ub-hint">PDF or DOCX · Max 10 MB · Uploads immediately and replaces your current one</small>
       </div>
       <div class="field-note" id="resumeNote"></div>
+      <div class="resume-fill" id="resumeFill" hidden></div>
     </div>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-user"></i>Basic information</div>
@@ -1418,7 +1424,9 @@ async function renderFitCards(){
   if (!profile.hasRole) {
     fitCard.hidden = false;
     document.getElementById('fitAll').hidden = true;
-    document.getElementById('fitList').innerHTML = '<div class="al-empty">Add a headline (for example "Wind turbine technician") to <a href="#profile" data-goto="profile">your profile</a> and we\'ll show the jobs that match you here.</div>';
+    document.getElementById('fitList').innerHTML = '<div class="al-empty">Upload your resume and we\'ll fill in your profile and show the jobs that match you here, with the pay employers advertise for roles like yours.</div>' +
+      '<button type="button" class="btn-grn" data-upload-resume="matches" style="width:auto;display:inline-block;padding:8px 16px;margin-top:10px;">Upload your resume</button>';
+    renderProfileNudge();
   } else {
     const dated = j => j.posted_date || j.first_seen || '';
     const scored = jobs.map(j => ({ j, f: window.VTJobFit.score(j, profile) })).filter(x => x.f);
@@ -1462,9 +1470,120 @@ document.addEventListener('click', (e) => {
   const b = document.querySelector(`.dash-nav-item[data-tab="${g.dataset.goto}"]`);
   if (b) b.click();
 });
+// --- Fill the profile from an uploaded resume (shared /resume-reader.js) -----------------------
+// Same rule as sign-up: only empty fields are filled, nothing already in the profile is replaced,
+// and nothing is saved until they press "Fill in my profile". The reader and its libraries load
+// only when someone uploads a resume.
+let READER_LOADING = null;
+function loadScript(src){
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = () => reject(new Error('load ' + src));
+    document.head.appendChild(s);
+  });
+}
+function loadResumeReader(){
+  if (typeof extractTextFromResumeFile === 'function') return Promise.resolve();
+  if (!READER_LOADING) {
+    READER_LOADING = loadScript('https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js')
+      .then(() => loadScript('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js'))
+      .then(() => loadScript('/resume-reader.js'));
+  }
+  return READER_LOADING;
+}
+function resumeFillPlan(parsed){
+  const val = id => document.getElementById(id).value.trim();
+  const plan = [];
+  if (parsed.headline && !val('inp-headline')) plan.push(['headline', 'your headline']);
+  if (parsed.location && !val('inp-loc')) plan.push(['location', 'your location']);
+  if (parsed.bio && !val('inp-bio')) plan.push(['bio', 'a short bio']);
+  if (parsed.experience && parsed.experience.length && experience.length === 0) plan.push(['experience', `${parsed.experience.length} role${parsed.experience.length === 1 ? '' : 's'} of work experience`]);
+  if (parsed.education && parsed.education.length && education.length === 0) plan.push(['education', 'your education']);
+  if (parsed.skills && parsed.skills.length && skills.length === 0) plan.push(['skills', `${parsed.skills.length} skills`]);
+  if (parsed.sectors && parsed.sectors.size && sectors.size === 0) plan.push(['sectors', 'your sectors']);
+  if (parsed.linkedin && !val('link-linkedin')) plan.push(['linkedin', 'your LinkedIn']);
+  return plan;
+}
+function applyResumeFill(parsed, plan){
+  const keys = new Set(plan.map(x => x[0]));
+  if (keys.has('headline')) document.getElementById('inp-headline').value = parsed.headline;
+  if (keys.has('location')) document.getElementById('inp-loc').value = parsed.location;
+  if (keys.has('bio')) {
+    document.getElementById('inp-bio').value = parsed.bio;
+    document.getElementById('bio-count').textContent = parsed.bio.length + ' / 500';
+  }
+  if (keys.has('linkedin')) document.getElementById('link-linkedin').value = parsed.linkedin;
+  if (keys.has('skills')) parsed.skills.forEach(s => addSkill(s));
+  if (keys.has('sectors')) {
+    document.querySelectorAll('.sector-pill').forEach(btn => {
+      if (parsed.sectors.has(btn.dataset.sector)) { btn.classList.add('on'); sectors.add(btn.dataset.sector); }
+    });
+  }
+  if (keys.has('experience')) {
+    experience.push(...parsed.experience);
+    renderExperience();
+    const emp = document.getElementById('inp-curemp');
+    if (emp && !emp.value.trim()) { emp.value = currentEmployerGuess(experience); syncCurEmp(); }
+  }
+  if (keys.has('education')) { education.push(...parsed.education); renderEducation(); }
+  if (typeof updateYears === 'function') updateYears();
+  updateCompleteness();
+}
+async function offerResumeFill(file){
+  const box = document.getElementById('resumeFill');
+  box.hidden = true;
+  updateCompleteness();  // the profile card stops asking for a resume
+  if (!/\.(pdf|docx)$/i.test(file.name)) return;
+  try {
+    await loadResumeReader();
+    const text = await extractTextFromResumeFile(file);
+    let parsed = parseResumeText(text, lastResumeHints);
+    if (lastLinkedInParse) parsed = mergeLinkedInParse(parsed, lastLinkedInParse);
+    const plan = resumeFillPlan(parsed);
+    try { gtag('event', 'dashboard_resume_read', { can_fill: plan.length, file_type: lastLinkedInParse ? 'linkedin_pdf' : file.name.split('.').pop().toLowerCase() }); } catch (e) {}
+    if (!plan.length) return;
+    const list = plan.map(x => x[1]);
+    const said = list.length > 1 ? list.slice(0, -1).join(', ') + ' and ' + list[list.length - 1] : list[0];
+    box.innerHTML = `<b>We read your resume.</b> It has ${alertEsc(said)}, which your profile is missing. Fill them in? Nothing you've already entered changes, and you can edit everything after.` +
+      '<div class="resume-fill-btns"><button type="button" class="btn-grn" id="resumeFillYes" style="width:auto;padding:8px 16px;">Fill in my profile</button>' +
+      '<button type="button" class="al-pill al-quiet" id="resumeFillNo">No thanks</button></div>';
+    box.hidden = false;
+    document.getElementById('resumeFillYes').addEventListener('click', () => {
+      applyResumeFill(parsed, plan);
+      saveAlertsNow();
+      box.innerHTML = '<b>Done ✓</b> Your profile is filled in from your resume - check it here and on the Experience tab, then edit anything that needs it.';
+      try { gtag('event', 'dashboard_resume_fill', { fields: plan.length }); } catch (e) {}
+    });
+    document.getElementById('resumeFillNo').addEventListener('click', () => { box.hidden = true; });
+  } catch (err) {
+    console.error('Reading the resume failed (the upload itself worked):', err);
+  }
+}
+// "Upload your resume" buttons on Overview: open the Profile tab's resume picker.
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-upload-resume]');
+  if (!b) return;
+  e.preventDefault();
+  const tab = document.querySelector('.dash-nav-item[data-tab="profile"]');
+  if (tab) tab.click();
+  history.replaceState(null, '', '#profile');
+  const inp = document.getElementById('inp-resume');
+  if (inp) { inp.closest('.form-section').scrollIntoView({ block: 'center' }); inp.click(); }
+  try { gtag('event', 'dashboard_resume_prompt_click', { from: b.dataset.uploadResume }); } catch (err) {}
+});
 // Overview's "Your profile" card: how complete the profile is (same score as the top bar).
 function renderProfileNudge(){
   const pct = parseInt(document.getElementById('completenessPct').textContent, 10) || 0;
+  const btn = document.getElementById('profNudgeBtn');
+  // No resume: ask for one - unless the matches card above is already asking.
+  if (typeof CANDIDATE !== 'undefined' && CANDIDATE && !CANDIDATE.resume_path && !document.querySelector('#fitList [data-upload-resume]')) {
+    document.getElementById('profNudgeText').textContent = `Your profile is ${pct}% complete. Upload your resume and we fill in the rest for you - better job matches and a pay range for your role.`;
+    btn.innerHTML = 'Upload your resume &rarr;';
+    btn.dataset.uploadResume = 'profile_card';
+    return;
+  }
+  btn.innerHTML = 'Edit your profile &rarr;';
+  delete btn.dataset.uploadResume;
   document.getElementById('profNudgeText').textContent = pct >= 100
     ? 'Your profile is complete. Keep it up to date - it is what your job alerts are matched on.'
     : `Your profile is ${pct}% complete. Adding your resume, experience and skills gets you better-matched job alerts.`;
@@ -1548,6 +1667,7 @@ document.getElementById('inp-resume').addEventListener('change', async function(
     await refreshResumeLink();
     note.textContent = 'Resume updated ✓';
     note.style.color = 'var(--grn)';
+    offerResumeFill(file);
   } catch (err) {
     console.error('Resume upload failed:', err);
     note.textContent = 'Upload failed — try a different file.';
