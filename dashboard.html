@@ -102,6 +102,49 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .news-btns .al-pill{font-size:12px;padding:6px 12px;}
 .news-btns .news-hired{border-color:rgba(34,224,154,0.5);color:var(--grn);}
 .news-done{font-size:12.5px;color:var(--grn);}
+.dash-nav-count{margin-left:auto;font-size:11px;font-weight:600;background:rgba(34,224,154,0.14);color:var(--grn);border-radius:999px;padding:1px 7px;}
+.dash-nav-count[hidden]{display:none;}
+@media (max-width:860px){.dash-nav-count{display:none;}}
+.apps-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.apps-head .al-title{margin-bottom:4px;}
+.apps-sub{font-size:12.5px;color:var(--t3);line-height:1.5;max-width:560px;}
+.apps-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0;}
+.apps-stat{background:var(--card2);border:0.5px solid var(--bdr);border-radius:10px;padding:10px 12px;}
+.apps-stat b{display:block;font-size:20px;font-weight:600;}
+.apps-stat span{font-size:11.5px;color:var(--t3);}
+.apps-stat.s-int b{color:var(--blu);}.apps-stat.s-hired b{color:var(--grn);}
+@media (max-width:600px){.apps-stats{grid-template-columns:repeat(2,1fr);}}
+.apps-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+.apps-filters .al-pill{font-size:12px;padding:6px 12px;}
+.app-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:0.5px solid var(--bdr);}
+.app-row:first-child{border-top:none;}
+.app-main{flex:1;min-width:0;}
+.app-title{font-size:13.5px;font-weight:600;color:var(--t1);text-decoration:none;}
+a.app-title:hover{color:var(--grn);}
+.app-meta{font-size:12px;color:var(--t3);margin-top:3px;line-height:1.45;}
+.app-tag{display:inline-block;font-size:10.5px;color:var(--t3);border:0.5px solid var(--bdr2);border-radius:5px;padding:0 6px;margin-left:6px;vertical-align:1px;}
+.app-status{background:var(--card2);color:var(--t1);border:0.5px solid var(--bdr2);border-radius:8px;padding:7px 10px;font-size:12.5px;font-family:var(--font-sans);cursor:pointer;flex-shrink:0;}
+.app-status.st-interviewing{color:var(--blu);border-color:rgba(79,179,255,0.45);}
+.app-status.st-hired{color:var(--grn);border-color:rgba(34,224,154,0.5);}
+.app-status.st-no_luck,.app-status.st-not_applied{color:var(--t3);}
+.app-rm{background:none;border:none;color:var(--t3);cursor:pointer;font-size:15px;padding:4px;flex-shrink:0;}
+.app-rm:hover{color:var(--cor);}
+@media (max-width:600px){.app-row{flex-wrap:wrap;}.app-main{flex-basis:100%;}}
+.app-add{margin-top:12px;}
+.app-form{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:12px;padding:14px;margin-top:12px;}
+.app-form[hidden]{display:none;}
+.app-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media (max-width:600px){.app-form .form-row{grid-template-columns:1fr;}}
+.app-form-btns{display:flex;gap:8px;align-items:center;}
+.app-form-note{font-size:12px;color:var(--cor);}
+.news-all{display:inline-block;margin-top:10px;font-size:12.5px;color:var(--grn);background:none;border:none;padding:0;cursor:pointer;font-family:var(--font-sans);}
+.apps-sum-head{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+#appsSummary[hidden]{display:none;}
+#appsRecent .al-empty{padding-top:2px;}
+.prof-nudge{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.prof-nudge-main{flex:1;min-width:220px;}
+.prof-nudge-text{font-size:12.5px;color:var(--t2);line-height:1.5;}
+#appsEmpty[hidden]{display:none;}
 .news-found{font-size:12.5px;color:var(--t3);margin:1.25rem 0 .5rem;}
 .news-found button{background:none;border:none;color:var(--grn);font-size:12.5px;cursor:pointer;padding:0;font-family:var(--font-sans);}
 .al-note{font-size:12px;color:var(--t2);line-height:1.55;margin-top:14px;}
@@ -268,6 +311,8 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     <a class="dash-logo" href="/"><img src="logo.webp" alt="Verde Talent"></a>
     <nav class="dash-nav">
       <button type="button" class="dash-nav-item on" data-tab="overview"><i class="ti ti-grid-dots"></i><span>Overview</span></button>
+      <button type="button" class="dash-nav-item" data-tab="profile"><i class="ti ti-user"></i><span>Profile</span></button>
+      <button type="button" class="dash-nav-item" data-tab="applications"><i class="ti ti-list"></i><span>Applications</span><b class="dash-nav-count" id="appsNavCount" hidden></b></button>
       <button type="button" class="dash-nav-item" data-tab="experience"><i class="ti ti-briefcase"></i><span>Experience</span></button>
       <button type="button" class="dash-nav-item" data-tab="preferences"><i class="ti ti-settings"></i><span>Preferences</span></button>
       <button type="button" class="dash-nav-item" data-tab="alerts"><i class="ti ti-bell"></i><span>Job alerts</span></button>
@@ -303,6 +348,26 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
       <div class="news-sub">Jobs you applied to from Verde Talent. One click to tell us how it went - it only goes into your account, and employers never see it.</div>
       <div id="newsList"></div>
     </div>
+    <div class="alerts-card" id="appsSummary" hidden>
+      <div class="apps-sum-head"><div class="al-title" style="margin-bottom:0;"><i class="ti ti-list"></i>Your applications</div><button type="button" class="news-all" id="newsAllBtn" style="margin-top:0;">See all &rarr;</button></div>
+      <div class="apps-stats" id="appsStatsMini"></div>
+      <div id="appsRecent" class="al-list"></div>
+    </div>
+    <div class="alerts-card" id="appsEmpty" hidden>
+      <div class="al-title"><i class="ti ti-list"></i>Your applications</div>
+      <div class="al-empty">Nothing here yet. When you press <strong>Apply</strong> on a job while signed in, it shows up here so you can keep track of where it stands. <a href="/jobs.html">Find jobs &rarr;</a></div>
+    </div>
+    <div class="alerts-card prof-nudge" id="profNudge">
+      <div class="prof-nudge-main">
+        <div class="al-title" style="margin-bottom:6px;"><i class="ti ti-user"></i>Your profile</div>
+        <div class="prof-nudge-text" id="profNudgeText"></div>
+      </div>
+      <button type="button" class="al-pill" id="profNudgeBtn">Edit your profile &rarr;</button>
+    </div>
+    <div class="news-found" id="newsFound" hidden>Found a new job? <button type="button" id="newsFoundBtn">Tell us &rarr;</button></div>
+    </section>
+
+    <section class="dash-panel" data-panel="profile" hidden>
     <div class="form-section">
       <div class="fs-title"><i class="ti ti-file-text"></i>Resume / CV</div>
       <div class="current-resume" id="currentResumeRow" style="display:none;"><a href="#" id="currentResumeLink" target="_blank" rel="noopener"><i class="ti ti-file-text"></i><span id="currentResumeName"></span></a></div>
@@ -426,7 +491,36 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
     </div>
     </div>
     </div>
-    <div class="news-found" id="newsFound" hidden>Found a new job? <button type="button" id="newsFoundBtn">Tell us &rarr;</button></div>
+    </section>
+
+    <section class="dash-panel" data-panel="applications" hidden>
+    <div class="alerts-card">
+      <div class="apps-head">
+        <div>
+          <div class="al-title"><i class="ti ti-list"></i>My applications</div>
+          <div class="apps-sub">Every job you apply to on Verde Talent is added here automatically. Add ones you applied to elsewhere too, and keep track of where each one stands. Only you can see this list - employers never do.</div>
+        </div>
+        <button type="button" class="al-pill" id="appAddBtn"><i class="ti ti-plus" style="font-size:13px;margin-right:4px;"></i>Add an application</button>
+      </div>
+      <div class="app-form" id="appForm" hidden>
+        <div class="form-row">
+          <div class="field"><label for="appRole">Role</label><input type="text" id="appRole" maxlength="300" autocomplete="off"/></div>
+          <div class="field"><label for="appCo">Company</label><input type="text" id="appCo" maxlength="200" autocomplete="organization"/></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="appDate">Date you applied</label><input type="date" id="appDate"/></div>
+          <div class="field"><label for="appLink">Link to the job (optional)</label><input type="text" id="appLink" maxlength="2000" placeholder="https://" autocomplete="url"/></div>
+        </div>
+        <div class="app-form-btns"><button type="button" class="btn-grn" id="appSave" style="width:auto;padding:9px 18px;">Add</button><button type="button" class="al-pill al-quiet" id="appCancel">Cancel</button><span class="app-form-note" id="appFormNote"></span></div>
+      </div>
+      <div class="apps-stats" id="appsStats"></div>
+      <div class="apps-filters" id="appsFilters">
+        <button type="button" class="al-pill on" data-appf="active">In progress</button>
+        <button type="button" class="al-pill" data-appf="all">All</button>
+        <button type="button" class="al-pill" data-appf="closed">Closed</button>
+      </div>
+      <div id="appsList" class="al-list"></div>
+    </div>
     </section>
 
     <section class="dash-panel" data-panel="alerts" hidden>
@@ -718,10 +812,10 @@ function openJobReport(opts){
 // Cards: applications with no answer after 5 days, or "interviewing" for 14 days. Newest 3.
 function newsDue(){
   const now = Date.now();
-  return APPLICATIONS.filter(a =>
+  return APPLICATIONS.filter(a => a.apply_path !== 'manual' && (
     (a.status === 'applied' && now - Date.parse(a.applied_at) >= 5 * DAY_MS) ||
     (a.status === 'interviewing' && now - Date.parse(a.status_at || a.applied_at) >= 14 * DAY_MS)
-  ).slice(0, 3);
+  )).slice(0, 3);
 }
 const NEWS_DONE = {};
 function renderNews(){
@@ -744,6 +838,7 @@ function renderNews(){
         </div>`;
     return `<div class="news-item"><div class="news-job">You applied to ${link}${a.company ? ` at ${alertEsc(a.company)}` : ''} <span>· ${when}</span></div>${body}</div>`;
   }).join('');
+  renderTracker();
 }
 const NEWS_THANKS = {
   interviewing: "Good luck! We'll check back in a couple of weeks.",
@@ -777,7 +872,7 @@ document.getElementById('newsFoundBtn').addEventListener('click', () => openJobR
 async function loadNews(){
   try {
     const [apps, reps] = await Promise.all([
-      fetch(`${SUPABASE_URL}/rest/v1/candidate_applications?candidate_id=eq.${CANDIDATE.id}&select=id,job_title,company,job_page,applied_at,status,status_at&order=applied_at.desc&limit=50`, { headers: restHeaders() }),
+      fetch(`${SUPABASE_URL}/rest/v1/candidate_applications?candidate_id=eq.${CANDIDATE.id}&select=id,job_title,company,job_page,location,job_url,applied_at,status,status_at,apply_path&order=applied_at.desc&limit=500`, { headers: restHeaders() }),
       fetch(`${SUPABASE_URL}/rest/v1/candidate_job_reports?candidate_id=eq.${CANDIDATE.id}&select=created_at&order=created_at.desc&limit=1`, { headers: restHeaders() }),
     ]);
     APPLICATIONS = apps.ok ? await apps.json() : [];
@@ -786,6 +881,186 @@ async function loadNews(){
   } catch (e) { APPLICATIONS = []; }
   renderNews();
 }
+// --- Applications tab: the candidate's own tracker -----------------------------------------
+const APP_STATUS = [
+  ['applied', 'Applied'], ['interviewing', 'Interviewing'], ['hired', 'Got the job!'],
+  ['no_luck', 'No luck'], ['not_applied', "Didn't apply"],
+];
+let APP_FILTER = 'active';
+function appIsOpen(a){ return a.status === 'applied' || a.status === 'interviewing'; }
+function renderTracker(){
+  const list = document.getElementById('appsList');
+  if (!list) return;
+  const count = s => APPLICATIONS.filter(a => a.status === s).length;
+  const real = APPLICATIONS.filter(a => a.status !== 'not_applied');
+  const open = APPLICATIONS.filter(appIsOpen).length;
+  const nav = document.getElementById('appsNavCount');
+  nav.hidden = !open;
+  nav.textContent = open;
+  document.getElementById('appsStats').innerHTML = appsStatsHtml();
+  const rows = APPLICATIONS.filter(a =>
+    APP_FILTER === 'all' ? true : APP_FILTER === 'active' ? appIsOpen(a) : !appIsOpen(a));
+  if (!APPLICATIONS.length) {
+    renderAppsSummary();
+    list.innerHTML = '<div class="al-empty">Nothing here yet. When you press <strong>Apply</strong> on a job while signed in, it shows up here so you can keep track of it. <a href="/jobs.html">Find jobs</a></div>';
+    return;
+  }
+  if (!rows.length) {
+    list.innerHTML = `<div class="al-empty">${APP_FILTER === 'active' ? 'No applications in progress right now.' : 'No closed applications yet.'}</div>`;
+    renderAppsSummary();
+    return;
+  }
+  list.innerHTML = rows.map(appRowHtml).join('');
+  renderAppsSummary();
+}
+function appRowHtml(a){
+  {
+    const when = new Date(a.applied_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: new Date(a.applied_at).getFullYear() === new Date().getFullYear() ? undefined : 'numeric' });
+    const title = alertEsc(a.job_title || 'A job');
+    const href = a.job_page || (a.apply_path === 'manual' && /^https?:\/\//i.test(a.job_url || '') ? a.job_url : '');
+    const ext = href && !a.job_page ? ' target="_blank" rel="noopener nofollow"' : '';
+    const head = href ? `<a class="app-title" href="${alertEsc(href)}"${ext}>${title}</a>` : `<span class="app-title">${title}</span>`;
+    const meta = [a.company, a.location].filter(Boolean).map(alertEsc).join(' · ');
+    const opts = APP_STATUS.map(([v, l]) => `<option value="${v}"${a.status === v ? ' selected' : ''}>${l}</option>`).join('');
+    return `<div class="app-row">
+      <div class="app-main">${head}${a.apply_path === 'manual' ? '<span class="app-tag">Added by you</span>' : ''}
+        <div class="app-meta">${meta ? meta + ' · ' : ''}Applied ${when}</div></div>
+      <select class="app-status st-${a.status}" data-appst="${alertEsc(a.id)}" aria-label="Status of ${title}">${opts}</select>
+      <button type="button" class="app-rm" data-apprm="${alertEsc(a.id)}" title="Remove from your list" aria-label="Remove ${title}"><i class="ti ti-trash"></i></button>
+    </div>`;
+  }
+}
+function appsStatsHtml(){
+  const count = s => APPLICATIONS.filter(a => a.status === s).length;
+  const real = APPLICATIONS.filter(a => a.status !== 'not_applied');
+  return [
+    [real.length, 'Applied', ''], [count('interviewing'), 'Interviewing', 's-int'],
+    [count('hired'), 'Got the job', 's-hired'], [count('no_luck'), 'No luck', ''],
+  ].map(([n, l, c]) => `<div class="apps-stat ${c}"><b>${n}</b><span>${l}</span></div>`).join('');
+}
+// Overview: totals and the 3 newest jobs still in progress (not the ones "Any news?" is asking about).
+function renderAppsSummary(){
+  const box = document.getElementById('appsSummary');
+  if (!box) return;
+  box.hidden = !APPLICATIONS.length;
+  document.getElementById('appsEmpty').hidden = !!APPLICATIONS.length;
+  if (!APPLICATIONS.length) return;
+  document.getElementById('appsStatsMini').innerHTML = appsStatsHtml();
+  const asked = new Set(newsDue().map(a => a.id).concat(Object.keys(NEWS_DONE)));
+  const recent = APPLICATIONS.filter(a => appIsOpen(a) && !asked.has(a.id)).slice(0, 3);
+  document.getElementById('appsRecent').innerHTML = recent.length
+    ? recent.map(appRowHtml).join('')
+    : '<div class="al-empty">Nothing else in progress.</div>';
+}
+document.getElementById('appsFilters').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-appf]');
+  if (!b) return;
+  APP_FILTER = b.dataset.appf;
+  document.querySelectorAll('[data-appf]').forEach(x => x.classList.toggle('on', x === b));
+  renderTracker();
+});
+document.addEventListener('change', async (e) => {
+  const sel = e.target.closest('[data-appst]');
+  if (!sel) return;
+  const app = APPLICATIONS.find(a => a.id === sel.dataset.appst);
+  if (!app) return;
+  const status = sel.value, before = app.status;
+  if (typeof gtag === 'function') gtag('event', 'application_news', { status, asked_from: 'tracker' });
+  if (status === 'hired') {
+    // Same questions as everywhere else; the status only changes if they press Send.
+    openJobReport({ askedFrom: 'dashboard_card', application: app,
+      onClose: (r) => { if (!r) { sel.value = before; } renderNews(); } });
+    return;
+  }
+  sel.disabled = true;
+  try {
+    SESSION = await getValidSession();
+    await patchApplication(app.id, status);
+  } catch (err) {
+    sel.value = before;
+    window.VTAlerts && window.VTAlerts.toast('Something went wrong - please try again.', true);
+  }
+  sel.disabled = false;
+  renderNews();
+});
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-apprm]');
+  if (!b) return;
+  const app = APPLICATIONS.find(a => a.id === b.dataset.apprm);
+  if (!app || !confirm(`Remove "${app.job_title || 'this job'}" from your list?`)) return;
+  b.disabled = true;
+  try {
+    SESSION = await getValidSession();
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/candidate_applications?id=eq.${encodeURIComponent(app.id)}`, {
+      method: 'DELETE', headers: restHeaders({ 'Prefer': 'return=minimal' }),
+    });
+    if (!res.ok) throw new Error();
+    APPLICATIONS = APPLICATIONS.filter(a => a.id !== app.id);
+    renderNews();
+  } catch (err) {
+    b.disabled = false;
+    window.VTAlerts && window.VTAlerts.toast('Something went wrong - please try again.', true);
+  }
+});
+function toggleAppForm(show){
+  document.getElementById('appForm').hidden = !show;
+  document.getElementById('appFormNote').textContent = '';
+  if (show) {
+    ['appRole', 'appCo', 'appLink'].forEach(id => { document.getElementById(id).value = ''; });
+    const d = document.getElementById('appDate');
+    d.value = new Date().toISOString().slice(0, 10);
+    d.max = d.value;
+    document.getElementById('appRole').focus();
+  }
+}
+document.getElementById('appAddBtn').addEventListener('click', () => toggleAppForm(document.getElementById('appForm').hidden));
+document.getElementById('appCancel').addEventListener('click', () => toggleAppForm(false));
+document.getElementById('appSave').addEventListener('click', async function(){
+  const note = document.getElementById('appFormNote');
+  const role = document.getElementById('appRole').value.trim();
+  const co = document.getElementById('appCo').value.trim();
+  const day = document.getElementById('appDate').value;
+  let link = document.getElementById('appLink').value.trim();
+  if (!role || !co) { note.textContent = 'Add the role and the company.'; return; }
+  if (link && !/^https?:\/\//i.test(link)) link = 'https://' + link;
+  // Noon UTC on the chosen day, so the date shows the same in every timezone.
+  const appliedAt = day ? new Date(day + 'T12:00:00Z') : new Date();
+  if (appliedAt.getTime() > Date.now() + 86400000) { note.textContent = "That date hasn't happened yet."; return; }
+  this.disabled = true;
+  try {
+    SESSION = await getValidSession();
+    const row = {
+      candidate_id: CANDIDATE.id,
+      job_key: 'manual:' + (crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random()),
+      job_title: role.slice(0, 300), company: co.slice(0, 200),
+      job_url: link ? link.slice(0, 2000) : null,
+      apply_path: 'manual',
+      applied_at: appliedAt.toISOString(),
+    };
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/candidate_applications`, {
+      method: 'POST',
+      headers: restHeaders({ 'Content-Type': 'application/json', 'Prefer': 'return=representation' }),
+      body: JSON.stringify(row),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok || !Array.isArray(data)) throw new Error((data && /up to/.test(data.message || '')) ? data.message : '');
+    APPLICATIONS.push(data[0]);
+    APPLICATIONS.sort((x, y) => Date.parse(y.applied_at) - Date.parse(x.applied_at));
+    if (typeof gtag === 'function') gtag('event', 'application_added', {});
+    toggleAppForm(false);
+    APP_FILTER = 'active';
+    document.querySelectorAll('[data-appf]').forEach(x => x.classList.toggle('on', x.dataset.appf === 'active'));
+    renderNews();
+  } catch (err) {
+    note.textContent = err.message || 'Something went wrong - please try again.';
+  }
+  this.disabled = false;
+});
+document.getElementById('newsAllBtn').addEventListener('click', () => {
+  const b = document.querySelector('.dash-nav-item[data-tab="applications"]');
+  if (b) b.click();
+  history.replaceState(null, '', '#applications');
+});
 // Asked after a save that marks them "Not currently looking" or changes their current employer -
 // the moments people actually tell us something happened. Not if they answered in the last 30 days.
 function maybeAskAfterStatusChange(prev, payload){
@@ -1080,6 +1355,18 @@ function getVis(key){
 // A simple filled/total checklist rather than anything weighted - good
 // enough to nudge a candidate toward a fuller profile without needing to
 // justify why one field counts more than another.
+// Overview's "Your profile" card: how complete the profile is (same score as the top bar).
+function renderProfileNudge(){
+  const pct = parseInt(document.getElementById('completenessPct').textContent, 10) || 0;
+  document.getElementById('profNudgeText').textContent = pct >= 100
+    ? 'Your profile is complete. Keep it up to date - it is what your job alerts are matched on.'
+    : `Your profile is ${pct}% complete. Adding your resume, experience and skills gets you better-matched job alerts.`;
+}
+document.getElementById('profNudgeBtn').addEventListener('click', () => {
+  const b = document.querySelector('.dash-nav-item[data-tab="profile"]');
+  if (b) b.click();
+  history.replaceState(null, '', '#profile');
+});
 function updateCompleteness(){
   const checks = [
     !!document.getElementById('inp-headline').value.trim(),
@@ -1095,6 +1382,7 @@ function updateCompleteness(){
   const pct = Math.round((checks.filter(Boolean).length / checks.length) * 100);
   document.getElementById('completenessFill').style.width = pct + '%';
   document.getElementById('completenessPct').textContent = pct + '%';
+  renderProfileNudge();
 }
 
 async function refreshResumeLink(){

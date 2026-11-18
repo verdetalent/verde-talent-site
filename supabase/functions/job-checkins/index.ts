@@ -233,6 +233,8 @@ async function runSend(url: URL): Promise<Response> {
   let q = db.from("candidate_applications")
     .select("id, candidate_id, job_title, company, job_page, status, status_at, answered_by_email_at, applied_at")
     .eq("status", "applied").is("checkin_sent_at", null)
+    // Jobs they added to their tracker themselves weren't applied to from Verde Talent.
+    .or("apply_path.is.null,apply_path.neq.manual")
     .gte("applied_at", new Date(now - ASK_UNTIL_DAYS * DAY_MS).toISOString())
     .order("applied_at", { ascending: false }).limit(5000);
   if (!only) q = q.lte("applied_at", new Date(now - ASK_AFTER_DAYS * DAY_MS).toISOString());

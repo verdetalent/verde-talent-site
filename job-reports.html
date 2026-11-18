@@ -103,7 +103,7 @@ document.getElementById('gPw').addEventListener('keydown', e => { if (e.key === 
 async function load(){
   [REPORTS, APPS] = await Promise.all([
     get('candidate_job_reports?select=*,candidates(first_name,last_name,email)&order=created_at.desc&limit=2000'),
-    get('candidate_applications?select=candidate_id,status&limit=20000'),
+    get('candidate_applications?select=candidate_id,status&or=(apply_path.is.null,apply_path.neq.manual)&limit=20000'),
   ]);
   renderStats();
   renderList();
