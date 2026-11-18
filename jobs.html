@@ -16,6 +16,8 @@
 <script src="/fullstory.js"></script>
 <script src="/search-match.js"></script>
 <script src="/alerts.js" defer></script>
+<script src="/job-fit.js" defer></script>
+<script src="/salary-check.js" defer></script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
@@ -152,6 +154,39 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .sf-note a{color:var(--t2);}
 .jc-meta-right{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--t3);}
 .jc-salary{font-size:13px;color:var(--t2);}
+.jc-why{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:9px;padding:7px 9px;border-radius:9px;}
+.jc-why.strong{background:rgba(34,224,154,0.07);border:0.5px solid rgba(34,224,154,0.35);}
+.jc-why.good{background:rgba(79,179,255,0.07);border:0.5px solid rgba(79,179,255,0.35);}
+.jc-fit{font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap;color:#052e1e;}
+.jc-why.strong .jc-fit{background:var(--grn);}
+.jc-why.good .jc-fit{background:var(--blu);color:#04223a;}
+.jc-chip{font-size:12px;color:var(--t1);background:rgba(255,255,255,0.06);border-radius:6px;padding:2px 8px;white-space:nowrap;}
+.jc-chip b{color:var(--grn);font-weight:700;margin-right:4px;}
+.jc-why.good .jc-chip b{color:var(--blu);}
+.sf-worth{display:block;font-size:12px;color:var(--grn);text-decoration:none;margin:8px 0 4px;}
+.sf-worth:hover{text-decoration:underline;}
+.pbs-eg{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.pbs-eg-fit{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--grn);color:#052e1e;}
+.pbs-eg-chip{font-size:11.5px;color:var(--t1);background:rgba(255,255,255,0.06);border-radius:6px;padding:1px 7px;}
+.pbs-eg-chip b{color:var(--grn);margin-right:4px;}
+.pbs-eg-pay{font-size:11.5px;color:var(--t1);background:rgba(34,224,154,0.1);border:0.5px solid rgba(34,224,154,0.35);border-radius:6px;padding:1px 8px;margin-left:4px;}
+.pbs-blur{filter:blur(4px);user-select:none;}
+.pay-strip{display:flex;align-items:center;gap:1rem;background:var(--card);border:0.5px solid rgba(34,224,154,0.3);border-radius:13px;padding:.6rem 1.1rem .6rem .6rem;margin:0 0 1rem;flex-wrap:wrap;}
+.pay-strip[hidden]{display:none;}
+.ps-gauge{flex:0 0 150px;}
+.ps-gauge .vtg{max-width:150px;}
+.ps-text{flex:1;min-width:200px;}
+.ps-k{font-size:11.5px;color:var(--t3);}
+.ps-big{font-size:18px;font-weight:700;color:var(--grn);letter-spacing:-.01em;margin:1px 0 2px;}
+.ps-big span{font-size:12px;font-weight:500;color:var(--t2);letter-spacing:0;}
+.ps-sub{font-size:12px;color:var(--t2);line-height:1.45;}
+.ps-link{font-size:12.5px;color:var(--grn);text-decoration:none;white-space:nowrap;}
+.ps-link:hover{text-decoration:underline;}
+.ps-blur{filter:blur(5px);opacity:.75;user-select:none;pointer-events:none;}
+.ps-cta{background:var(--grn);color:#052e1e;border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap;}
+.fit-nudge{font-size:12.5px;color:var(--t3);margin:-0.4rem 0 .9rem;}
+.fit-nudge[hidden]{display:none;}
+.fit-nudge a{color:var(--grn);}
 .load-more{display:block;width:100%;padding:11px;background:var(--card);border:0.5px solid var(--bdr2);border-radius:10px;font-size:14px;color:var(--t2);cursor:pointer;margin-top:4px;font-family:var(--font-sans);}
 .empty-note{font-size:13px;color:var(--t3);padding:2rem 0;text-align:center;}
 footer{border-top:0.5px solid var(--bdr);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;font-size:12px;color:var(--t3);}
@@ -280,15 +315,16 @@ document.addEventListener('click', function(){
   </div>
   <button class="btn-search" id="search-btn"><i class="ti ti-search" style="font-size:15px;margin-right:4px;"></i>Search</button>
 </div>
-<div class="profile-banner-slim">
+<div class="profile-banner-slim" id="profileBanner">
   <div class="pbs-left">
     <div class="pbs-icon"><i class="ti ti-user-plus"></i></div>
     <div>
-      <div class="pbs-text-title">Create your profile</div>
-      <div class="pbs-text-sub">Get matched to roles and let energy employers find you</div>
+      <div class="pbs-text-title">See which jobs match you, and what you should be paid</div>
+      <div class="pbs-text-sub">Upload your resume and we label every job that fits you, and show the pay employers advertise for roles like yours in your state. Free, and it takes seconds.</div>
+      <div class="pbs-eg" aria-hidden="true"><span class="pbs-eg-fit">Strong match</span><span class="pbs-eg-chip"><b>&#10003;</b>Your role</span><span class="pbs-eg-chip"><b>&#10003;</b>Wind</span><span class="pbs-eg-chip"><b>&#10003;</b>Near you</span><span class="pbs-eg-chip"><b>&#10003;</b>Your level</span><span class="pbs-eg-pay">Your pay range: <span class="pbs-blur">$00 &ndash; $00</span> an hour</span></div>
     </div>
   </div>
-  <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-grn" style="padding:9px 18px;font-size:13px;">Create your profile →</button></a>
+  <a href="create-profile.html" style="text-decoration:none;"><button class="btn btn-grn" style="padding:9px 18px;font-size:13px;">Upload your resume &rarr;</button></a>
 </div>
 <div class="layout">
   <div class="sidebar">
@@ -324,6 +360,7 @@ document.addEventListener('click', function(){
     <div class="sf-group">
       <div class="sf-title">Salary <button id="clear-salary-btn">Clear</button></div>
       <div id="salary-checklist"></div>
+      <a class="sf-worth" href="/salary-check.html">What am I worth? Check your pay &rarr;</a>
     </div>
     <div class="sf-group" id="skills-group" style="display:none;">
       <div class="sf-title">Skills <button id="clear-skills-btn">Clear</button></div>
@@ -342,6 +379,8 @@ document.addEventListener('click', function(){
       </select>
       </div>
     </div>
+    <div class="pay-strip" id="payStrip" hidden></div>
+    <div class="fit-nudge" id="fitNudge" hidden></div>
     <div id="job-list"><!--prerender--><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--pur);" href="jobs/7dbc2a9732cb4ba79c1b.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(181,136,255,0.15);color:var(--pur);">E</div><div class="jc-info"><div class="jc-title">Design Basis Engineer II - Sr. (Trans)(Protection &amp; Control)</div><div class="jc-co-loc">Entergy · New Orleans, LA</div><div class="jc-snippet">This position resides within the Transmission Design Basis department and focuses on the development, governance, and continuous improvement of Transmission Engineering Standards…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag pur">Grid</span><span class="jc-tag skill">NERC</span><span class="jc-tag skill">PMP</span><span class="jc-tag skill">Professional Engineer</span><span class="jc-tag skill">substation design</span><span class="jc-tag visa" title="This employer has had H-1B visa petitions approved by USCIS">Sponsors H-1B</span></div><div class="jc-meta-right"><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--grn);" href="jobs/12f15b6532133054b3eb.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(34,224,154,0.15);color:var(--grn);">P</div><div class="jc-info"><div class="jc-title">Executive Assistant</div><div class="jc-co-loc">Paradise Energy Solutions · Paradise, PA</div><div class="jc-snippet">About the Role Optimal Services LLC is seeking a highly organized, detail-oriented, and proactive Executive Assistant to support our Asset &amp; Development Manager and the day-to-day…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag grn">Solar</span></div><div class="jc-meta-right"><span class="jc-salary">$24–$30/hr</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--blu);" href="jobs/cfdf2ed19b913cc193dd.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(79,179,255,0.15);color:var(--blu);">C</div><div class="jc-info"><div class="jc-title">Senior Analyst, Strategy</div><div class="jc-co-loc">Clearway Energy · Scottsdale, AZ</div><div class="jc-snippet">The Senior Analyst, Strategy provides quantitative and qualitative analysis informing enterprise-level decision-making with broad responsibilities in gathering, organizing,…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag blu">Wind</span><span class="jc-tag grn">Solar</span><span class="jc-tag amb">Storage</span><span class="jc-tag skill">Excel</span><span class="jc-tag skill">Python</span><span class="jc-tag skill">SQL</span><span class="jc-tag hybrid">Hybrid</span></div><div class="jc-meta-right"><span class="jc-salary">$81k–$94k</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--pur);" href="jobs/0f113e9d73be674ba4bc.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(181,136,255,0.15);color:var(--pur);">D</div><div class="jc-info"><div class="jc-title">Associate Engineer/Engineer - Transmission Line Design</div><div class="jc-co-loc">Dominion Energy · GLEN ALLEN, VA</div><div class="jc-snippet">There are two positions that will be filled at the Associate Engineer or Engineer level, commensurate with the successful candidate&#x27;s knowledge, skills, abilities, experience, and…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag pur">Grid</span><span class="jc-tag skill">AutoCAD</span><span class="jc-tag skill">Excel</span><span class="jc-tag skill">MATLAB</span><span class="jc-tag skill">Professional Engineer</span><span class="jc-tag hybrid">Hybrid</span></div><div class="jc-meta-right"><span class="jc-salary">$73k–$95k</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--pur);" href="jobs/6a05c851da12e5367305.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(181,136,255,0.15);color:var(--pur);">D</div><div class="jc-info"><div class="jc-title">Electric Transmission Field Ops Technical Assistant I/II/III (Fishersville)</div><div class="jc-co-loc">Dominion Energy · FISHERSVILLE, VA</div><div class="jc-snippet">Dominion Energy is committed to supporting employees in furthering their education and professional development. Through our partnerships with accredited colleges and…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag pur">Grid</span><span class="jc-tag skill">Excel</span></div><div class="jc-meta-right"><span class="jc-salary">$38k–$50k</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--grn);" href="jobs/c03b59c8e4b6429b401f.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(34,224,154,0.15);color:var(--grn);">F</div><div class="jc-info"><div class="jc-title">Multi-State Government Relations Manager (Located in Southeast US Region - remote)</div><div class="jc-co-loc">First Solar · New Iberia, LA</div><div class="jc-snippet">We are seeking a strategic and proactive Manager of State Government Relations to manage and advance our state-level legislative and regulatory priorities across key…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag grn">Solar</span><span class="jc-tag skill">Excel</span></div><div class="jc-meta-right"><span class="jc-salary">$112k–$160k</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--grn);" href="jobs/82a12efbc44da43a7755.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(34,224,154,0.15);color:var(--grn);">F</div><div class="jc-info"><div class="jc-title">Supervisor- Technical I USA (Crew B/ PM Shift)</div><div class="jc-co-loc">First Solar · New Iberia, LA</div><div class="jc-snippet">Effective communication and supervisory skills. Efficient Microsoft Word, Excel, and PowerPoint Skills. Proven decision-making skills. Solid people skills and a positive, outgoing…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag grn">Solar</span><span class="jc-tag skill">Excel</span></div><div class="jc-meta-right"><span class="jc-salary">$56k–$80k</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--amb);" href="jobs/b1bf00fb1c8d869fc746.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(255,181,71,0.15);color:var(--amb);">F</div><div class="jc-info"><div class="jc-title">Staff Electrical Engineer</div><div class="jc-co-loc">Form Energy · Somerville, MA</div><div class="jc-snippet">We work ahead of our production programs, translating breakthrough electrochemistry and system requirements into electrical, controls, and test systems that can scale to…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag amb">Storage</span><span class="jc-tag amb">Electrical Engineer</span><span class="jc-tag skill">AutoCAD</span><span class="jc-tag skill">PLC</span><span class="jc-tag visa" title="This employer has had H-1B visa petitions approved by USCIS">Sponsors H-1B</span></div><div class="jc-meta-right"><span class="jc-salary">$148k–$194k</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--pur);" href="jobs/109fafe05c347ebbfb2f.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(181,136,255,0.15);color:var(--pur);">N</div><div class="jc-info"><div class="jc-title">Field Operations HV Technician II - HV Strike Team (TX)</div><div class="jc-co-loc">NextEra Energy · Mt Calm, TX</div><div class="jc-snippet">NextEra Energy is seeking an experienced, safety-focused individual to join the High Voltage Operations team as an HV Strike Team Technician II, supporting the NextEra Energy…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag pur">Grid</span><span class="jc-tag skill">NERC</span><span class="jc-tag skill">SCADA</span></div><div class="jc-meta-right"><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--t3);" href="jobs/cdaddf0b793df6270fd3.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(255,255,255,0.06);color:var(--t3);">N</div><div class="jc-info"><div class="jc-title">PGD Field Engineer - North FL Region</div><div class="jc-co-loc">NextEra Energy · Green Cove Springs, FL</div><div class="jc-snippet">NextEra Energy is seeking a technical individual to be part of the Power Generation Solar Operations Team. PGD Field Engineer shall be responsible for the daily operation and…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag visa" title="This employer has had H-1B visa petitions approved by USCIS">Sponsors H-1B</span></div><div class="jc-meta-right"><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--blu);" href="jobs/cc17aa636cf033e3f9a2.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(79,179,255,0.15);color:var(--blu);">N</div><div class="jc-info"><div class="jc-title">Wind Technician I (All Levels) at Roadrunner Wind in Cisco, TX</div><div class="jc-co-loc">NextEra Energy · Cisco, TX</div><div class="jc-snippet">This is a stationary wind tech position in the Cisco, TX area. Join the world’s leading generator of renewable energy as a Wind Technician at NextEra Energy. As a Wind Technician…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag blu">Wind</span><span class="jc-tag skill">OSHA</span><span class="jc-tag skill">SCADA</span></div><div class="jc-meta-right"><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--amb);" href="jobs/aec8660548124e8575fc.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(255,181,71,0.15);color:var(--amb);">N</div><div class="jc-info"><div class="jc-title">Business Central and Integration Lead</div><div class="jc-co-loc">NovaSource Power · Houston, TX</div><div class="jc-snippet">The Technical Product Owner is the single point of technical accountability for the two platforms that carry NovaSource&#x27;s field and financial transactions. You will be the…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag amb">Storage</span><span class="jc-tag skill">Excel</span><span class="jc-tag skill">Salesforce</span><span class="jc-tag skill">energy storage systems</span></div><div class="jc-meta-right"><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--amb);" href="jobs/dfc449ed8cfa1eea8069.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(255,181,71,0.15);color:var(--amb);">N</div><div class="jc-info"><div class="jc-title">Senior Manager, Enterprise Apps &amp; Architecture</div><div class="jc-co-loc">NovaSource Power · Houston, TX</div><div class="jc-snippet">NovaSource Power Services is looking for a Senior Manager to lead our Enterprise Applications team and own enterprise architecture governance across the company. You own what…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag amb">Storage</span><span class="jc-tag skill">Excel</span><span class="jc-tag skill">Salesforce</span><span class="jc-tag skill">energy storage systems</span></div><div class="jc-meta-right"><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--blu);" href="jobs/213118af39e7a12118c1.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(79,179,255,0.15);color:var(--blu);">V</div><div class="jc-info"><div class="jc-title">Stock Keeper Mount Storm, WV</div><div class="jc-co-loc">Vestas · Mount Storm, WV</div><div class="jc-snippet">In this position you’ll use your skills and experience to perform activities that support the management of inventory at Service sites: Managing all shipping and receiving duties…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag blu">Wind</span><span class="jc-tag skill">Excel</span><span class="jc-tag skill">Power BI</span></div><div class="jc-meta-right"><span class="jc-salary">$22.5–$32/hr</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--blu);" href="jobs/0497cdb3d0b6d6bac361.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(79,179,255,0.15);color:var(--blu);">V</div><div class="jc-info"><div class="jc-title">Wind Technician II Mount Storm, WV</div><div class="jc-co-loc">Vestas · Mount Storm, WV</div><div class="jc-snippet">· At least 6 months with a Wind Technician certificate, or 1 year of wind turbine experience, or 2 years in mechanical or electrical fields. · Highly developed problem-solving…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag blu">Wind</span></div><div class="jc-meta-right"><span class="jc-salary">$28.25–$33.43/hr</span><span>Posted Nov 18</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--pur);" href="jobs/364f0d09e634ec9476ba.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(181,136,255,0.15);color:var(--pur);">E</div><div class="jc-info"><div class="jc-title">Journeyman Lineman</div><div class="jc-co-loc">Entergy · Huntsville, TX</div><div class="jc-snippet">A. JOB QUALIFICATIONS: Under Class 3 supervision, with some latitude for planning or laying out of working details, must be able to do the most complicated construction and…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag pur">Grid</span></div><div class="jc-meta-right"><span>Posted Nov 17</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--pur);" href="jobs/f9eafe939c99b4fec998.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(181,136,255,0.15);color:var(--pur);">E</div><div class="jc-info"><div class="jc-title">Journeyman Lineman - Serviceman</div><div class="jc-co-loc">Entergy · Conroe, TX</div><div class="jc-snippet">This position can be filled as a Journeyman Lineman or Journeyman Serviceman, depending on qualifying candidate&#x27;s experience. JOURNEYMAN LINEMAN A. JOB QUALIFICATIONS: Under Class…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag pur">Grid</span></div><div class="jc-meta-right"><span>Posted Nov 17</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--pur);" href="jobs/63c3847e5b3d6b662ced.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(181,136,255,0.15);color:var(--pur);">D</div><div class="jc-info"><div class="jc-title">Principal Engineer - Grid Operations Support</div><div class="jc-co-loc">DTE Energy · Detroit, MI</div><div class="jc-snippet">Senior level engineer responsible for planning and conducting intermediate to more complex engineering related activities requiring the use of creative techniques, as well as…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag pur">Grid</span><span class="jc-tag skill">SCADA</span><span class="jc-tag hybrid">Hybrid</span></div><div class="jc-meta-right"><span>Posted Nov 17</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--grn);" href="jobs/560304681b31d9330939.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(34,224,154,0.15);color:var(--grn);">D</div><div class="jc-info"><div class="jc-title">Senior Solar Tech (GREC/Redford)</div><div class="jc-co-loc">DTE Energy · Breckenridge, MI</div><div class="jc-snippet">Leads the operation and maintenance of utility-scale solar photovoltaic and energy storage systems to support safe, reliable, and efficient asset performance. Performs complex…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag grn">Solar</span><span class="jc-tag skill">OSHA</span><span class="jc-tag skill">energy storage systems</span></div><div class="jc-meta-right"><span>Posted Nov 17</span></div></div></a></div><div class="job-card-wrap"><a class="job-card" style="border-left:3px solid var(--blu);" href="jobs/9756bd899d4254d06e92.html"><div class="jc-row1"><div class="co-icon" style="background:rgba(79,179,255,0.15);color:var(--blu);">M</div><div class="jc-info"><div class="jc-title">Wind Carpenter - Swift Plains Wind Project</div><div class="jc-co-loc">Mortenson · Nazareth, TX</div><div class="jc-snippet">Mortenson is currently seeking a carpenter that will be responsible for the construction and repair of wood and wallboard fixtures in compliance with local building codes and…</div></div></div><div class="jc-row2"><div class="jc-tags"><span class="jc-tag blu">Wind</span></div><div class="jc-meta-right"><span>Posted Nov 17</span></div></div></a></div><!--/prerender--></div>
     <div id="load-more-row"></div>
   </div>
@@ -730,12 +769,14 @@ function jobCardHtml(job) {
   if (job.region === "International") badgeTags.push(`<span class="jc-tag intl">International</span>`);
   badgeTags.push(...workplaceVisaTags(job));
   const salary = fmtSalary(job);
+  const fit = jobFit(job);
   const inner = `
     <div class="jc-row1">
       <div class="co-icon" style="background:${bgTint(color)};color:${colorVar(color)};">${initial}</div>
       <div class="jc-info">
         <div class="jc-title">${escapeHtml(job.job_title || "Untitled role")}</div>
         <div class="jc-co-loc">${escapeHtml(job.company)} · ${escapeHtml(job.location)}</div>
+        ${fit ? `<div class="jc-why ${fit.level}"><span class="jc-fit">${fit.level === "strong" ? "Strong match" : "Good match"}</span>${fit.reasons.map(r => `<span class="jc-chip"><b>&#10003;</b>${escapeHtml(r)}</span>`).join("")}</div>` : ""}
         ${job.description_snippet ? `<div class="jc-snippet">${escapeHtml(job.description_snippet)}</div>` : ""}
       </div>
     </div>
@@ -772,6 +813,113 @@ function jobCardHtml(job) {
     </a>
     ${saveBtn}
   </div>`;
+}
+
+
+// --- Match labels (job-fit.js) ------------------------------------------------------------
+// Only for a signed-in candidate whose profile says what kind of job they do. Scores are
+// cached per job; a profile load clears them.
+let FIT_ON = false;
+let FIT_CACHE = new WeakMap();
+function jobFit(job) {
+  if (!FIT_ON || !window.VTJobFit) return null;
+  if (!FIT_CACHE.has(job)) FIT_CACHE.set(job, window.VTJobFit.score(job));
+  return FIT_CACHE.get(job);
+}
+function fitRank(job) {
+  const f = jobFit(job);
+  return f ? (f.level === "strong" ? 2 : 1) : 0;
+}
+async function loadJobFit() {
+  const nudge = document.getElementById("fitNudge");
+  if (!window.VTJobFit) return;
+  let signedIn = false;
+  try { const s = JSON.parse(localStorage.getItem("vt_session") || "null"); signedIn = !!(s && s.candidate_id); } catch (e) {}
+  // The banner above the results is the ask for signed-out visitors ("See which of these jobs
+  // match you"); a signed-in candidate already has a profile, so it goes.
+  if (!signedIn) { schedulePayStrip(); return; }
+  const banner = document.getElementById("profileBanner");
+  if (banner) banner.style.display = "none";
+  const profile = await window.VTJobFit.loadProfile();
+  if (!profile) return;
+  if (!profile.hasRole) {
+    nudge.innerHTML = 'Add your headline or experience to <a href="/dashboard.html#profile">your profile</a> to see which jobs match you.';
+    nudge.hidden = false;
+    return;
+  }
+  FIT_ON = true;
+  FIT_CACHE = new WeakMap();
+  const wantMatch = new URLSearchParams(location.search).get("sort") === "match";
+  const sel = document.getElementById("sort-select");
+  if (!sel.querySelector('option[value="match"]')) {
+    const opt = document.createElement("option");
+    opt.value = "match";
+    opt.textContent = "Best match for you";
+    sel.insertBefore(opt, sel.firstChild);
+  }
+  // From the dashboard's "See all matches": open sorted by best match.
+  if (wantMatch && !sortManuallyChanged) sel.value = "match";
+  const strong = ALL_JOBS.filter(j => fitRank(j) === 2).length;
+  try { gtag("event", "job_fit_shown", { strong_matches: strong }); } catch (e) {}
+  render();
+}
+
+// --- Pay strip (salary-check.js's VTPay + gauge) ----------------------------------------------
+// Typical advertised pay for what's being searched: the search box's title, else the signed-in
+// candidate's own headline; the location box's state, else theirs. Same rules as the salary
+// check (8+ postings from 3+ employers, else nothing). Signed out, the figures are held back for a
+// free profile: a blurred gauge with placeholder numbers and the resume ask.
+let PAY_READY = false, PAY_TIMER = null;
+const STATE_NAMES = {};
+function stateFromQuery(text) {
+  if (!window.VTPay) return null;
+  if (!Object.keys(STATE_NAMES).length) Object.entries(window.VTPay.STATES).forEach(([k, v]) => { STATE_NAMES[v.toLowerCase()] = k; });
+  const s = String(text || "").trim();
+  if (!s) return null;
+  const m = s.match(/(?:^|,\s*)([A-Za-z]{2})$/);
+  if (m && window.VTPay.STATES[m[1].toUpperCase()]) return m[1].toUpperCase();
+  return STATE_NAMES[s.toLowerCase()] || STATE_NAMES[(s.split(",").pop() || "").trim().toLowerCase()] || null;
+}
+function schedulePayStrip() { clearTimeout(PAY_TIMER); PAY_TIMER = setTimeout(renderPayStrip, 250); }
+function renderPayStrip() {
+  const box = document.getElementById("payStrip");
+  if (!box || !window.VTPay || !window.VTJobFit || !ALL_JOBS.length) return;
+  if (!PAY_READY) { window.VTPay.prepare(ALL_JOBS); PAY_READY = true; }
+  let signedIn = false;
+  try { const s = JSON.parse(localStorage.getItem("vt_session") || "null"); signedIn = !!(s && s.candidate_id); } catch (e) {}
+  const prof = window.VTJobFit.profile();
+  const c = prof && prof.raw;
+  const typed = document.getElementById("job-search").value.trim();
+  const title = typed || (c && (c.headline || ((c.experience || [])[0] || {}).title)) || "";
+  const state = stateFromQuery(document.getElementById("location-search").value) || (!typed && prof ? prof.state : null) || null;
+  if (!title) { box.hidden = true; return; }
+  const res = window.VTPay.compare(title, state, !typed && c ? c.years_experience : "");
+  const s = res && window.VTPay.summary(res);
+  if (!s) { box.hidden = true; return; }
+  const hourly = s.hourlyShare > 0.5;
+  const fmt = v => hourly ? "$" + (v / 2080).toFixed(2) : window.VTPay.money(v);
+  const unit = hourly ? "an hour" : "a year";
+  const where = s.state ? "in " + window.VTPay.STATES[s.state] : "across the US";
+  const label = `Typical pay for “${escapeHtml(title)}” jobs ${where}`;
+  box.hidden = false;
+  if (signedIn) {
+    box.innerHTML =
+      `<div class="ps-gauge">${window.VTPay.gauge({ min: s.p10, max: s.p90, lo: s.lo, hi: s.hi, mid: s.mid, fmt, unit, label: label, readout: false })}</div>` +
+      `<div class="ps-text"><div class="ps-k">${label}</div>` +
+      `<div class="ps-big">${fmt(s.lo)} – ${fmt(s.hi)} <span>${unit}</span></div>` +
+      `<div class="ps-sub">The middle half of ${s.n} postings that list pay · median ${fmt(s.mid)}</div></div>` +
+      `<a class="ps-link" href="/salary-check.html">Check your own pay &rarr;</a>`;
+  } else {
+    const fake = () => hourly ? "$00.00" : "$00,000";
+    box.innerHTML =
+      `<div class="ps-gauge" aria-hidden="true">${window.VTPay.gauge({ min: 0, max: 100, lo: 30, hi: 68, mid: 52, fmt: () => "", unit: "", locked: true })}</div>` +
+      `<div class="ps-text"><div class="ps-k">${label}</div>` +
+      `<div class="ps-big"><span class="ps-blur" aria-hidden="true">${fake()} – ${fake()}</span> <span>${unit}</span></div>` +
+      `<div class="ps-sub">Upload your resume to see the range and where your pay stands.</div></div>` +
+      `<a class="ps-cta" href="/create-profile.html" data-pay-unlock>Unlock free &rarr;</a>`;
+    const a = box.querySelector("[data-pay-unlock]");
+    if (a) a.addEventListener("click", () => { try { gtag("event", "pay_strip_unlock_click", {}); } catch (e) {} });
+  }
 }
 
 function render() {
@@ -833,6 +981,10 @@ function render() {
     // that pinned group.
     const pinDiff = (b.is_employer_posted ? 1 : 0) - (a.is_employer_posted ? 1 : 0);
     if (pinDiff) return pinDiff;
+    if (sortBy === "match") {
+      const fd = fitRank(b) - fitRank(a);
+      if (fd) return fd;
+    }
     if (sortBy === "title") return (a.job_title || "").localeCompare(b.job_title || "");
     if (sortBy === "distance") {
       const da = jobDistanceFromOrigin(a, origin);
@@ -847,6 +999,7 @@ function render() {
 
   currentFiltered = filtered;
   visibleCount = PAGE_SIZE;
+  schedulePayStrip();
   renderList();
 }
 
@@ -1396,6 +1549,8 @@ function logSearch(source) {
   // more than what's cached locally (e.g. saved from another device) -
   // loadAccountSavedJobs() re-renders once if it finds any.
   loadAccountSavedJobs();
+  // Fire-and-forget: match labels appear once the signed-in candidate's profile has loaded.
+  loadJobFit();
   // Fire-and-forget: don't block the initial render on a ~1MB fetch. If a
   // radius is already selected by the time this resolves, re-render so the
   // distance-based filter actually takes effect instead of silently falling

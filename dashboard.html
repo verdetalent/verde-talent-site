@@ -18,6 +18,8 @@
 <script src="/search-match.js"></script>
 <script src="/alerts.js" defer></script>
 <script src="/outcomes.js" defer></script>
+<script src="/job-fit.js" defer></script>
+<script src="/salary-check.js" defer></script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
@@ -141,6 +143,29 @@ a.app-title:hover{color:var(--grn);}
 .apps-sum-head{display:flex;justify-content:space-between;align-items:center;gap:12px;}
 #appsSummary[hidden]{display:none;}
 #appsRecent .al-empty{padding-top:2px;}
+.fit-row{display:block;padding:11px 0;border-top:0.5px solid var(--bdr);text-decoration:none;color:inherit;}
+.fit-row:first-child{border-top:none;padding-top:2px;}
+.fit-row-t{font-size:13.5px;font-weight:600;color:var(--t1);}
+.fit-row:hover .fit-row-t{color:var(--grn);}
+.fit-row-m{font-size:12px;color:var(--t3);margin-top:2px;}
+.jc-why{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;padding:7px 9px;border-radius:9px;}
+.jc-why.strong{background:rgba(34,224,154,0.07);border:0.5px solid rgba(34,224,154,0.35);}
+.jc-why.good{background:rgba(79,179,255,0.07);border:0.5px solid rgba(79,179,255,0.35);}
+.jc-fit{font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap;color:#052e1e;}
+.jc-why.strong .jc-fit{background:var(--grn);}
+.jc-why.good .jc-fit{background:var(--blu);color:#04223a;}
+.jc-chip{font-size:12px;color:var(--t1);background:rgba(255,255,255,0.06);border-radius:6px;padding:2px 8px;white-space:nowrap;}
+.jc-chip b{color:var(--grn);font-weight:700;margin-right:4px;}
+.jc-why.good .jc-chip b{color:var(--blu);}
+#fitCard[hidden],#payCard[hidden]{display:none;}
+.pay-big{font-size:1.5rem;font-weight:700;color:var(--grn);letter-spacing:-.02em;margin:2px 0 4px;font-variant-numeric:tabular-nums;}
+.pay-big span{font-size:13px;font-weight:500;color:var(--t2);letter-spacing:0;}
+.pay-sub{font-size:12.5px;color:var(--t2);line-height:1.5;}
+.pay-link{display:inline-block;margin-top:10px;font-size:12.5px;color:var(--grn);text-decoration:none;}
+.pay-link:hover{text-decoration:underline;}
+.pay-row{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;}
+.pay-gauge{flex:0 0 240px;max-width:100%;}
+.pay-text{flex:1;min-width:200px;}
 .prof-nudge{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
 .prof-nudge-main{flex:1;min-width:220px;}
 .prof-nudge-text{font-size:12.5px;color:var(--t2);line-height:1.5;}
@@ -356,6 +381,14 @@ a.app-title:hover{color:var(--grn);}
     <div class="alerts-card" id="appsEmpty" hidden>
       <div class="al-title"><i class="ti ti-list"></i>Your applications</div>
       <div class="al-empty">Nothing here yet. When you press <strong>Apply</strong> on a job while signed in, it shows up here so you can keep track of where it stands. <a href="/jobs.html">Find jobs &rarr;</a></div>
+    </div>
+    <div class="alerts-card" id="fitCard" hidden>
+      <div class="apps-sum-head"><div class="al-title" style="margin-bottom:0;"><i class="ti ti-search"></i>Jobs that match you</div><a class="news-all" id="fitAll" href="/jobs.html?sort=match" style="margin-top:0;text-decoration:none;">See all &rarr;</a></div>
+      <div id="fitList" class="al-list" style="margin-top:10px;"></div>
+    </div>
+    <div class="alerts-card" id="payCard" hidden>
+      <div class="al-title" style="margin-bottom:8px;"><i class="ti ti-currency-dollar"></i>What you could earn</div>
+      <div id="payBody"></div>
     </div>
     <div class="alerts-card prof-nudge" id="profNudge">
       <div class="prof-nudge-main">
@@ -1355,6 +1388,80 @@ function getVis(key){
 // A simple filled/total checklist rather than anything weighted - good
 // enough to nudge a candidate toward a fuller profile without needing to
 // justify why one field counts more than another.
+// --- Overview: "Jobs that match you" + "What you could earn" (job-fit.js, salary-check.js) ---
+// Built from the same listings the job search uses, loaded after everything else on the page so
+// the dashboard itself stays fast. Recomputed after each profile save.
+let FIT_JOBS = null;
+async function loadFitJobs(){
+  if (FIT_JOBS) return FIT_JOBS;
+  try {
+    const res = await fetch('/data/jobs_list.json');
+    FIT_JOBS = res.ok ? await res.json() : [];
+  } catch (e) { FIT_JOBS = []; }
+  if (window.VTPay) window.VTPay.prepare(FIT_JOBS);
+  return FIT_JOBS;
+}
+function fitStrip(f){
+  return `<div class="jc-why ${f.level}"><span class="jc-fit">${f.level === 'strong' ? 'Strong match' : 'Good match'}</span>` +
+    f.reasons.map(r => `<span class="jc-chip"><b>&#10003;</b>${alertEsc(r)}</span>`).join('') + '</div>';
+}
+async function renderFitCards(){
+  // job-fit.js / salary-check.js load deferred - wait for them if the profile arrived first.
+  if (!window.VTJobFit && document.readyState === 'loading') {
+    await new Promise(r => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  if (!window.VTJobFit || !CANDIDATE) return;
+  const jobs = await loadFitJobs();
+  if (!jobs.length) return;
+  const profile = window.VTJobFit.prepare(CANDIDATE);
+  const fitCard = document.getElementById('fitCard');
+  if (!profile.hasRole) {
+    fitCard.hidden = false;
+    document.getElementById('fitAll').hidden = true;
+    document.getElementById('fitList').innerHTML = '<div class="al-empty">Add a headline (for example "Wind turbine technician") to <a href="#profile" data-goto="profile">your profile</a> and we\'ll show the jobs that match you here.</div>';
+  } else {
+    const dated = j => j.posted_date || j.first_seen || '';
+    const scored = jobs.map(j => ({ j, f: window.VTJobFit.score(j, profile) })).filter(x => x.f);
+    const strong = scored.filter(x => x.f.level === 'strong');
+    // Newest 4, at most 2 from any one company.
+    const perCo = {};
+    const pick = (strong.length ? strong : scored).slice().sort((a, b) => dated(b.j).localeCompare(dated(a.j)))
+      .filter(x => { const c = (x.j.company || '').toLowerCase(); perCo[c] = (perCo[c] || 0) + 1; return perCo[c] <= 2; }).slice(0, 4);
+    fitCard.hidden = false;
+    const all = document.getElementById('fitAll');
+    all.hidden = !scored.length;
+    all.innerHTML = strong.length ? `See all ${strong.length.toLocaleString()} strong matches &rarr;` : `See all ${scored.length.toLocaleString()} matches &rarr;`;
+    document.getElementById('fitList').innerHTML = pick.length ? pick.map(({ j, f }) => {
+      const href = j.page_slug ? `/jobs/${encodeURIComponent(j.page_slug)}.html` : '/jobs.html';
+      return `<a class="fit-row" href="${href}"><div class="fit-row-t">${alertEsc(j.job_title)}</div>` +
+        `<div class="fit-row-m">${alertEsc(j.company)} · ${alertEsc(j.location)}${j.salary ? ' · ' + alertEsc(j.salary) : ''}</div>${fitStrip(f)}</a>`;
+    }).join('') : '<div class="al-empty">No close matches open right now. New jobs come in every day - your <a href="#alerts" data-goto="alerts">job alerts</a> will send them to you.</div>';
+  }
+  // What you could earn: their headline, state and experience through the salary check's rules.
+  const payCard = document.getElementById('payCard');
+  const title = CANDIDATE.headline || ((CANDIDATE.experience || [])[0] || {}).title || '';
+  const state = window.VTJobFit.stateOf(CANDIDATE.location);
+  const years = CANDIDATE.years_experience || '';
+  const res = window.VTPay && title ? window.VTPay.compare(title, state, years) : null;
+  const s = res && window.VTPay.summary(res);
+  if (!s) { payCard.hidden = true; return; }
+  const hourly = s.hourlyShare > 0.5;
+  const fmt = v => hourly ? '$' + (v / 2080).toFixed(2) : window.VTPay.money(v);
+  const where = s.state ? 'in ' + window.VTPay.STATES[s.state] : 'across the US';
+  payCard.hidden = false;
+  document.getElementById('payBody').innerHTML =
+    `<div class="pay-row"><div class="pay-gauge">${window.VTPay.gauge({ min: s.p10, max: s.p90, lo: s.lo, hi: s.hi, mid: s.mid, fmt, unit: hourly ? 'an hour' : 'a year', label: 'Typical advertised pay ' + fmt(s.lo) + ' to ' + fmt(s.hi) })}</div>` +
+    `<div class="pay-text"><div class="pay-sub">What employers advertise for roles like "${alertEsc(title)}" ${where}${s.level ? ' at your level' : ''}. Green is the middle half of ${s.n} postings; the tick is the median, ${fmt(s.mid)}.</div>` +
+    `<a class="pay-link" href="/salary-check.html">Compare your own pay &rarr;</a></div></div>`;
+  try { gtag('event', 'dashboard_fit_cards', { strong_matches: profile.hasRole ? document.querySelectorAll('#fitList .jc-why.strong').length : 0, pay_shown: true }); } catch (e) {}
+}
+document.addEventListener('click', (e) => {
+  const g = e.target.closest('[data-goto]');
+  if (!g) return;
+  e.preventDefault();
+  const b = document.querySelector(`.dash-nav-item[data-tab="${g.dataset.goto}"]`);
+  if (b) b.click();
+});
 // Overview's "Your profile" card: how complete the profile is (same score as the top bar).
 function renderProfileNudge(){
   const pct = parseInt(document.getElementById('completenessPct').textContent, 10) || 0;
@@ -1542,11 +1649,15 @@ document.getElementById('saveBtn').addEventListener('click', async function(){
     });
     if(!res.ok) throw new Error(await res.text());
     note.textContent = 'Saved ✓';
+    try { sessionStorage.removeItem('vt_fit_profile'); } catch (e) {}
     note.style.color = 'var(--grn)';
     const prevStatus = { availability: CANDIDATE.availability, current_employer: CANDIDATE.current_employer };
     CANDIDATE.availability = payload.availability;
     CANDIDATE.current_employer = payload.current_employer;
     maybeAskAfterStatusChange(prevStatus, payload);
+    // Matches and pay follow the profile as it is now.
+    Object.assign(CANDIDATE, payload);
+    renderFitCards();
     document.getElementById('dashHeadline').textContent = payload.headline || '';
     updateCompleteness();
   } catch (err) {
@@ -1637,6 +1748,7 @@ async function init(){
   setPaused(CANDIDATE.alerts_paused_until);
   loadAlertLists();
   loadNews();
+  renderFitCards();
   openTabFromHash();
 
   await refreshResumeLink();
