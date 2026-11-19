@@ -16,6 +16,9 @@
 <script src="/fullstory.js"></script>
 <script src="/search-match.js" defer></script>
 <script src="/alerts.js" defer></script>
+<script src="/job-fit.js" defer></script>
+<script src="/salary-check.js" defer></script>
+<script src="/job-page-fit.js" defer></script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
@@ -247,6 +250,8 @@ footer a{color:var(--t3);text-decoration:none;}
   </div>
   <div><span class="tag sector" style="border-color:#4FB3FF66;color:#4FB3FF;background:#4FB3FF1a;">Wind</span></div>
   
+  <div class="jp-fit" id="jpFit" hidden></div>
+  <script type="application/json" id="vt-job">{"job_title": "Technician III", "company": "Vestas", "location": "Stuart, IA", "region": "US", "sector_buckets": ["Wind"], "job_category": "Construction/Field", "seniority_level": "Individual Contributor", "work_style": "On-site", "is_remote": false}</script>
   <div class="apply-row">
     <button type="button" class="btn-apply" id="applyBtn" data-url="https://careers.vestas.com/job/Stuart-Technician-III-IA/1453057133/">Apply on Vestas&#39; site &rarr;</button>
     <button type="button" class="btn-save" id="saveBtn" data-save-key="a919214245ede2e1ff60"
@@ -267,7 +272,7 @@ footer a{color:var(--t3);text-decoration:none;}
     <button type="button" class="am-close" id="applyModalClose" aria-label="Close">&#10005;</button>
     <div class="am-icon"><i class="ti ti-user"></i></div>
     <h2>Get matched to more roles like this</h2>
-    <p>Create a free Verde Talent profile &mdash; get weekly email alerts for jobs like this, and let renewable energy employers find and reach out to you directly. Only takes 2 minutes.</p>
+    <p>Create a free Verde Talent profile and every job shows whether it's a match for you and what roles like it pay. You also get alerts for jobs like this, and energy employers can find you. Your profile is built in less than a minute.</p>
     <div class="am-btns">
       <button type="button" class="am-primary" id="applyCreateProfile">Create free profile</button>
       <button type="button" class="am-login" id="applyLogin">Already have an account? Sign in</button>
