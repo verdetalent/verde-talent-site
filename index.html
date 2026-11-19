@@ -304,6 +304,7 @@ footer a:hover{color:var(--grn);}
 .trust-item b{display:block;font-size:14px;color:var(--t1);margin-bottom:3px;}
 .trust-item span{font-size:12.5px;color:var(--t2);line-height:1.5;}
 @media (max-width:760px){.trust-row{grid-template-columns:1fr;}.hr-flow{flex-direction:column;gap:6px;}.hr-flow li+li::before{display:none;}}
+.hr-alt{font-size:12.5px;color:var(--t3);}
 .hr-manual{font-size:12.5px;color:var(--t3);text-decoration:underline;text-underline-offset:3px;}
 .hr-manual:hover{color:var(--grn);}
 .hr-search{max-width:640px;margin:2.4rem auto 0;padding-top:1.6rem;border-top:0.5px solid var(--bdr);}
@@ -437,7 +438,7 @@ document.addEventListener('click', function(){
       <li><i class="ti ti-currency-dollar"></i>See what you should be paid</li>
       <li><i class="ti ti-lock"></i>Stay hidden from current employer</li>
     </ul>
-    <a class="hr-manual" href="create-profile.html?src=home-hero-manual">No resume? Fill it in by hand</a>
+    <div class="hr-alt">No resume? <a class="hr-manual" href="create-profile.html?src=home-hero-linkedin&amp;li=1">Use your LinkedIn profile</a> or <a class="hr-manual" href="create-profile.html?src=home-hero-manual">fill it in by hand</a></div>
   </div>
   <div class="hr-search">
   <div class="hr-search-label">Just browsing? Search <span id="hr-job-count">5,400+</span> open jobs &middot; <a class="hr-new" href="jobs.html?posted=week"><b id="hr-new-week">291</b> new this week</a></div>

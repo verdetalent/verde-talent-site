@@ -748,6 +748,10 @@ function setImportBanner(kind, icon, title, sub) {
   el.innerHTML = `<span class="ib-icon" aria-hidden="true">${icon}</span><span><span class="ib-title">${title}</span>` +
     (sub ? `<span class="ib-sub">${sub}</span>` : '') + `</span>`;
 }
+if (new URLSearchParams(location.search).get('li') === '1') {
+  const li = document.getElementById('liImport');
+  if (li) li.open = true;
+}
 document.getElementById('manualFill').addEventListener('click', function () {
   trackProfile('profile_manual_start', {});
   setImportBanner();
