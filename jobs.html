@@ -388,7 +388,7 @@ document.addEventListener('click', function(){
   </div>
 </div>
 
-<script id="job-listings-data" type="application/json" data-src="data/jobs_list.json?v=d3cfc8fa4b">[]</script>
+<script id="job-listings-data" type="application/json" data-src="data/jobs_list.json?v=8c4c486ff8" data-snippets="data/jobs_snippets.json?v=7b429a5032">[]</script>
 <script>
 const SECTOR_COLORS = {
   "Solar": "grn", "Wind": "blu", "Storage": "amb", "Grid": "pur", "EV": "cor",
@@ -636,6 +636,8 @@ function matchesLocationQuery(job, parsed) {
 // (offline, blocked, etc.) radius search just falls back to the existing
 // exact-match text filtering - it never blocks or breaks the page.
 let CITY_GEO = null;
+// Loaded the first time a radius is picked (render() asks) - most searches never need it.
+let GEO_REQUESTED = false;
 let ZIP3_GEO = null;
 const JOB_GEO_CACHE = new Map();
 
@@ -929,6 +931,12 @@ function render() {
   const query = document.getElementById("job-search").value.trim().toLowerCase();
   const locationQuery = parseLocationQuery(document.getElementById("location-search").value);
   const radiusMiles = parseInt(document.getElementById("radius-select").value, 10) || null;
+  // Radius search (a location typed in) needs the city/ZIP map data: fetch it once, then render
+  // again with it (until then the location box filters by text, as it does if it can't load).
+  if (radiusMiles && !GEO_REQUESTED && document.getElementById("location-search").value.trim()) {
+    GEO_REQUESTED = true;
+    loadGeoData().then(() => { if (CITY_GEO || ZIP3_GEO) render(); });
+  }
   // The default "US + Remote" scope excludes every International-region job
   // outright, so a location search for a non-US country would otherwise
   // silently return nothing no matter how well it matches. Auto-switch scope
@@ -1536,6 +1544,10 @@ function logSearch(source) {
   // stays small and the newest roles - prerendered into #job-list - show
   // before the full list arrives. Fetched alongside the employer postings.
   const dataEl = document.getElementById("job-listings-data");
+  // Card descriptions are half the list's size, so they come in their own file, after it.
+  const snippetsReady = dataEl.dataset.snippets
+    ? fetch(dataEl.dataset.snippets).then(r => r.ok ? r.json() : null).catch(() => null)
+    : Promise.resolve(null);
   const [crawledJobs, employerJobs] = await Promise.all([
     dataEl.dataset.src
       ? fetch(dataEl.dataset.src).then(r => r.ok ? r.json() : null).catch(() => null)
@@ -1549,6 +1561,18 @@ function logSearch(source) {
     return;
   }
   ALL_JOBS = employerJobs.concat(crawledJobs);
+  const fillSnippets = (map) => {
+    for (const j of crawledJobs) if (!j.description_snippet && j.page_slug && map[j.page_slug]) j.description_snippet = map[j.page_slug];
+  };
+  // The newest roles were prerendered with their descriptions - keep them on the first render.
+  const pre = {};
+  document.querySelectorAll("#job-list a.job-card").forEach(a => {
+    const m = (a.getAttribute("href") || "").match(/jobs\/([^/]+)\.html$/);
+    const s = a.querySelector(".jc-snippet");
+    if (m && s) pre[m[1]] = s.textContent;
+  });
+  fillSnippets(pre);
+  snippetsReady.then(map => { if (map) { fillSnippets(map); renderList(); } });
   SAVED_KEYS = new Set(loadLocalSavedJobs().map(j => j.save_key));
   updateSavedJobsCount();
   // Fire-and-forget: a signed-in candidate's account saves may include
@@ -1557,13 +1581,7 @@ function logSearch(source) {
   loadAccountSavedJobs();
   // Fire-and-forget: match labels appear once the signed-in candidate's profile has loaded.
   loadJobFit();
-  // Fire-and-forget: don't block the initial render on a ~1MB fetch. If a
-  // radius is already selected by the time this resolves, re-render so the
-  // distance-based filter actually takes effect instead of silently falling
-  // back to exact-match text filtering forever.
-  loadGeoData().then(() => {
-    if (document.getElementById("radius-select").value) render();
-  });
+  // Radius map data now loads on demand - see the top of render().
   buildSectorControls();
   buildJobCategoryControls();
   buildDateControls();
