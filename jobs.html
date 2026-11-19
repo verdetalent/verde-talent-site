@@ -1589,6 +1589,12 @@ function logSearch(source) {
   }
   // ?sector=Solar,Wind from the homepage sector chips - pre-select those in
   // the Sector filter, ignoring any name that isn't a real sector here.
+  // ?posted=week from the homepage's "N new this week" - pre-select that Date posted filter.
+  const postedParam = params.get("posted");
+  if (postedParam && DATE_BUCKETS.some(b => b.key === postedParam)) {
+    currentDateBucket = postedParam;
+    syncDateControls();
+  }
   const sectorParam = params.get("sector");
   if (sectorParam) {
     const known = new Set([...document.querySelectorAll("#sector-checklist .sf-pill")].map(p => p.dataset.sector));
