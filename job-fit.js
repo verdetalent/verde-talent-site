@@ -9,7 +9,9 @@
 // Pages call gtag only (never FullStory directly).
 (function () {
   "use strict";
-  if (window.VTJobFit) return;
+  // In a browser this is window; in the job-alert function (Deno) it's globalThis.
+  var ROOT = typeof window !== "undefined" ? window : globalThis;
+  if (ROOT.VTJobFit) return;
   var SUPABASE_URL = "https://iqcyofkosjopxsfdufvy.supabase.co";
   var ANON_KEY = "sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH";
   var CACHE_KEY = "vt_fit_profile";
@@ -228,7 +230,7 @@
       PROFILE = prepare(cached.c);
       return PROFILE;
     }
-    if (window.VTAlerts && window.VTAlerts.session) s = await window.VTAlerts.session();
+    if (ROOT.VTAlerts && ROOT.VTAlerts.session) s = await window.VTAlerts.session();
     if (!s || !s.access_token) return null;
     try {
       var res = await fetch(SUPABASE_URL + "/rest/v1/candidates?id=eq." + encodeURIComponent(s.candidate_id) +
@@ -246,7 +248,7 @@
   // A profile edit should show up straight away on the next search.
   function forget() { try { sessionStorage.removeItem(CACHE_KEY); } catch (e) {} PROFILE = null; }
 
-  window.VTJobFit = {
+  ROOT.VTJobFit = {
     loadProfile: loadProfile,
     forget: forget,
     prepare: prepare,

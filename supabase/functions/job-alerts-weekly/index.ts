@@ -53,6 +53,9 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { Resend } from "npm:resend@4";
 // Sets globalThis.VTSearchMatch. Must stay identical to the site's /search-match.js.
 import "./search-match.js";
+// Sets globalThis.VTJobFit - an exact copy of the site's /job-fit.js, so "Strong match" in the
+// email means exactly what it means on jobs.html and the job pages.
+import "./job-fit.js";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -86,6 +89,16 @@ const SM = (globalThis as any).VTSearchMatch as {
   companyKey: (name: string | null | undefined) => string;
 };
 
+// deno-lint-ignore no-explicit-any
+const FIT = (globalThis as any).VTJobFit as {
+  // deno-lint-ignore no-explicit-any
+  prepare: (c: any) => any;
+  // deno-lint-ignore no-explicit-any
+  score: (job: JobListing, profile: any) => { level: "strong" | "good"; reasons: string[] } | null;
+  stateOf: (text: string | null | undefined) => string | null;
+  roleFromTitle: (title: string) => { category: string | null };
+};
+
 interface JobListing {
   job_id: string;
   page_slug: string;
@@ -110,6 +123,8 @@ interface JobListing {
   employment_type?: string | null;
   skills?: string[] | null;
   salary_annual_max?: number | null;
+  // The pay the posting lists, as text ("$28–$36/hr"), when it lists any.
+  salary?: string | null;
   // Set only on paid employer postings (see fetchPaidJobs) - they link to
   // their own page rather than jobs/<slug>.html.
   link?: string;
@@ -126,6 +141,10 @@ interface Candidate {
   location: string | null;
   relocation: string | null;
   work_authorization?: string | null;
+  // For the match labels (job-fit.js): the same profile fields the site scores on.
+  skills?: string[] | null;
+  years_experience?: string | null;
+  salary_min?: number | null;
   unsubscribe_token: string;
   alert_frequency?: string | null;
   availability?: string | null;
@@ -896,7 +915,20 @@ function withSidebar(mainHtml: string, news: NewsItem[], intelStat: string | nul
 // page and carry a small "Promoted" label - they're only in the list because
 // they matched like any other job, but readers should still be able to tell
 // what's sponsored.
-function jobRowHtml(job: JobListing, showVisa = false): string {
+type Fit = { level: "strong" | "good"; reasons: string[] } | null;
+
+function fitHtml(fit: Fit): string {
+  if (!fit) return "";
+  const strong = fit.level === "strong";
+  const pill = strong
+    ? `<span style="display:inline-block;padding:2px 9px;border-radius:999px;background:${GRN};font-size:11px;font-weight:700;color:#052e1e;">Strong match</span>`
+    : `<span style="display:inline-block;padding:2px 9px;border-radius:999px;background:#EEF6FF;border:1px solid #C7E0FB;font-size:11px;font-weight:700;color:#1F5FA8;">Good match</span>`;
+  const tick = strong ? "#0B7A55" : "#1F5FA8";
+  const reasons = fit.reasons.map((r) => `<span style="white-space:nowrap;margin-left:8px;"><b style="color:${tick};">&#10003;</b> ${escapeHtml(r)}</span>`).join("");
+  return `<div style="margin-top:7px;font-size:12px;color:${INK};line-height:1.9;">${pill}${reasons}</div>`;
+}
+
+function jobRowHtml(job: JobListing, showVisa = false, fit: Fit = null): string {
   const href = job.link || `${SITE_ORIGIN}/jobs/${job.page_slug}.html`;
   let badge = job.paid
     ? ` <span style="display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:#F0FBF6;border:1px solid #BFEFD9;font-size:10.5px;font-weight:700;color:#0B7A55;vertical-align:2px;">Promoted</span>`
@@ -909,7 +941,8 @@ function jobRowHtml(job: JobListing, showVisa = false): string {
   return `
     <tr><td style="padding:14px 0;border-bottom:1px solid ${BORDER};">
       <a href="${escapeHtml(href)}" style="font-size:15px;font-weight:600;color:${INK};text-decoration:none;">${escapeHtml(job.job_title || "Open role")}</a>${badge}
-      <div style="font-size:13px;color:${MUTED};margin-top:3px;">${escapeHtml(job.company || "")}${job.location ? " · " + escapeHtml(job.location) : ""}</div>
+      <div style="font-size:13px;color:${MUTED};margin-top:3px;">${escapeHtml(job.company || "")}${job.location ? " · " + escapeHtml(job.location) : ""}${job.salary ? ` · <span style="color:#0B7A55;font-weight:600;">${escapeHtml(job.salary)}</span>` : ""}</div>
+      ${fitHtml(fit)}
     </td></tr>`;
 }
 
@@ -936,21 +969,56 @@ function subjectFor(sections: EmailSection[]): string {
   return `${total} new job${s} for you on Verde Talent`;
 }
 
+// "What should you be paid?" - the salary check opened with their role and state filled in
+// (salary-check.html reads ?role=&state=). Only when we know their role.
+function payLinkHtml(candidate: Candidate): string {
+  const exp = Array.isArray(candidate.experience) ? candidate.experience : [];
+  // A job title the salary check can match: the first piece of the headline ("Wind Technician |
+  // GWO certified" -> "Wind Technician"), else a past job title - the first that maps to a role
+  // type, as the match labels decide. A headline like "Energy Professional" alone gets no box.
+  const tidy = (t: unknown) => String(t || "").split(/\s+[|•·–—-]\s+|\s*\|\s*/)[0].replace(/\s+/g, " ").trim();
+  const options = [tidy(candidate.headline), ...exp.map((e) => tidy(e && e.title))]
+    .filter((t) => t && t.length <= 60);
+  const role = options.find((t) => FIT.roleFromTitle(t).category) || "";
+  if (!role) return "";
+  const state = FIT.stateOf(candidate.location);
+  const url = `${SITE_ORIGIN}/salary-check.html?role=${encodeURIComponent(role)}${state ? "&state=" + state : ""}&src=alert-email`;
+  return `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:18px;">
+      <tr><td style="background:#F0FBF6;border:1px solid #BFEFD9;border-radius:10px;padding:12px 14px;">
+        <div style="font-size:13.5px;font-weight:700;color:${INK};">What should you be paid?</div>
+        <div style="font-size:12.5px;color:${MUTED};margin-top:2px;line-height:1.5;">See the pay employers advertise for ${escapeHtml(role)} roles${state ? " in " + state : ""}.</div>
+        <a href="${escapeHtml(url)}" style="display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;color:#0B7A55;text-decoration:none;">Check your pay &rarr;</a>
+      </td></tr>
+    </table>`;
+}
+
 function buildEmailHtml(candidate: Candidate, sections: EmailSection[], news: NewsItem[], intelStat: string | null, cadence: "daily" | "weekly"): string {
   const firstName = candidate.first_name || "there";
   const unsubscribeUrl = `${SUPABASE_URL}/functions/v1/unsubscribe-job-alerts?token=${candidate.unsubscribe_token}`;
   const showVisa = candidate.work_authorization === "needs_sponsorship";
   const total = countJobs(sections);
+  const profile = FIT.prepare(candidate);
+  const fitOf = (job: JobListing): Fit => (profile && profile.hasRole ? FIT.score(job, profile) : null);
+  const rank = (f: Fit) => (f ? (f.level === "strong" ? 2 : 1) : 0);
+  for (const sec of sections) {
+    if (sec.kind !== "profile") continue;
+    // Stable sort: newest-first order is kept within each label.
+    sec.jobs = sec.jobs.map((j, i) => ({ j, i, r: rank(fitOf(j)) }))
+      .sort((a, b) => b.r - a.r || a.i - b.i).map((x) => x.j);
+  }
+  const payBlock = payLinkHtml(candidate);
   // A profile-only email looks exactly like the old weekly one (no section heading).
   const showTitles = !(sections.length === 1 && sections[0].kind === "profile");
 
   const blocks = sections.map((sec, i) => `
     ${showTitles ? `<div style="font-size:11.5px;font-weight:700;color:${MUTED};letter-spacing:.04em;text-transform:uppercase;margin:${i ? "26px" : "0"} 0 2px;">${escapeHtml(sec.title)}</div>` : ""}
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${sec.jobs.map((job) => jobRowHtml(job, showVisa)).join("")}</table>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${sec.jobs.map((job) => jobRowHtml(job, showVisa, fitOf(job))).join("")}</table>
     ${sec.moreUrl ? `<p style="margin:10px 0 0;font-size:12.5px;"><a href="${escapeHtml(sec.moreUrl)}" style="color:#0B7A55;font-weight:600;text-decoration:none;">${escapeHtml(sec.moreLabel || "See all")} →</a></p>` : ""}`).join("");
 
   const jobsColumn = `
     ${blocks}
+    ${payBlock}
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:22px;">
       <tr><td style="background:${GRN};border-radius:9px;">
         <a href="${SITE_ORIGIN}/jobs.html" style="display:inline-block;padding:11px 20px;font-size:13px;font-weight:600;color:#052e1e;text-decoration:none;">See all open roles →</a>
@@ -1191,7 +1259,7 @@ Deno.serve(async (req) => {
 
     let candQuery = supabaseAdmin
       .from("candidates")
-      .select("id, email, first_name, sectors, headline, experience, location, relocation, work_authorization, unsubscribe_token, last_job_alert_sent_at, last_job_alert_watermark, alert_frequency, availability, alerts_paused_until")
+      .select("id, email, first_name, sectors, headline, experience, location, relocation, work_authorization, skills, years_experience, salary_min, unsubscribe_token, last_job_alert_sent_at, last_job_alert_watermark, alert_frequency, availability, alerts_paused_until")
       .eq("email_job_alerts", true)
       .not("email", "is", null);
     if (only) candQuery = candQuery.ilike("email", only.replace(/[%_\\]/g, (c) => "\\" + c));
