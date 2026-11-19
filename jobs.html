@@ -1544,8 +1544,9 @@ function logSearch(source) {
   // stays small and the newest roles - prerendered into #job-list - show
   // before the full list arrives. Fetched alongside the employer postings.
   const dataEl = document.getElementById("job-listings-data");
-  // Card descriptions are half the list's size, so they come in their own file, after it.
-  const snippetsReady = dataEl.dataset.snippets
+  // Card descriptions are half the list's size, so they come in their own file, fetched once
+  // the list is in (fetching both at once would slow the list on a phone connection).
+  const loadSnippets = () => dataEl.dataset.snippets
     ? fetch(dataEl.dataset.snippets).then(r => r.ok ? r.json() : null).catch(() => null)
     : Promise.resolve(null);
   const [crawledJobs, employerJobs] = await Promise.all([
@@ -1572,7 +1573,7 @@ function logSearch(source) {
     if (m && s) pre[m[1]] = s.textContent;
   });
   fillSnippets(pre);
-  snippetsReady.then(map => { if (map) { fillSnippets(map); renderList(); } });
+  loadSnippets().then(map => { if (map) { fillSnippets(map); renderList(); } });
   SAVED_KEYS = new Set(loadLocalSavedJobs().map(j => j.save_key));
   updateSavedJobsCount();
   // Fire-and-forget: a signed-in candidate's account saves may include
