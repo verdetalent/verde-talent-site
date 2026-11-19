@@ -311,6 +311,20 @@
     $("scGo").addEventListener("click", render);
     $("scRole").addEventListener("keydown", function (e) { if (e.key === "Enter") render(); });
     try { await load(); } catch (e) { $("scOut").innerHTML = '<div class="sc-note">Couldn\'t load the latest postings. Please refresh the page.</div>'; return; }
+    // From a job page's "Typical pay for roles like this" link: ?role=...&state=TX.
+    var q = new URLSearchParams(location.search);
+    if (q.get("role")) {
+      $("scRole").value = q.get("role").slice(0, 120);
+      var qs = (q.get("state") || "").toUpperCase();
+      if (qs && $("scState").querySelector('option[value="' + qs + '"]')) $("scState").value = qs;
+      try {
+        var pp = window.VTJobFit && await window.VTJobFit.loadProfile();
+        var yy = pp && pp.raw && pp.raw.years_experience;
+        if (yy && LEVELS[yy]) $("scYears").value = yy;
+      } catch (e) {}
+      render();
+      return;
+    }
     // Signed in: start from their own profile (their headline, state and experience).
     try {
       var p = window.VTJobFit && await window.VTJobFit.loadProfile();

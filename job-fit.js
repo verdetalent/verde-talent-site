@@ -198,7 +198,7 @@
     var levelOk = true;
     if (p.years && job.seniority_level && LEVEL_FITS[p.years]) {
       levelOk = LEVEL_FITS[p.years].indexOf(job.seniority_level) >= 0;
-      if (levelOk) reasons.push("Your level");
+      if (levelOk) reasons.push("Experience level");
     }
     if (p.payMin && job.salary_annual_max && job.salary_annual_max >= p.payMin) reasons.push("Meets your pay");
     var skills = null;
