@@ -407,6 +407,7 @@ document.addEventListener('click', function(){
   // bounce. `path` records how they got here: already signed in, or
   // skipping the create-a-profile pitch.
   function goToApplication(path){
+    
     gtag('event', 'apply_click', {
       job_title: "Supervisor - Corrosion",
       company: "Avangrid Renewables",
@@ -430,6 +431,7 @@ document.addEventListener('click', function(){
     return !!(session && session.candidate_id && session.expires_at && session.expires_at > Date.now());
   }
   applyBtn.addEventListener('click', function(){
+    
     if (hasSignedInProfile()) goToApplication('signed_in');
     else openModal();
   });

@@ -407,6 +407,7 @@ document.addEventListener('click', function(){
   // bounce. `path` records how they got here: already signed in, or
   // skipping the create-a-profile pitch.
   function goToApplication(path){
+    
     gtag('event', 'apply_click', {
       job_title: "Stage Ing\u00e9nieur(e) BAC+5    Interface de visualisation & analyse de donn\u00e9es d\u2019essais r\u00e9seau pour turbine \u00e0 combustion   F\u00e9vrier 2027 / Ao\u00fbt 2027 (6 mois)",
       company: "GE Vernova",
@@ -430,6 +431,7 @@ document.addEventListener('click', function(){
     return !!(session && session.candidate_id && session.expires_at && session.expires_at > Date.now());
   }
   applyBtn.addEventListener('click', function(){
+    
     if (hasSignedInProfile()) goToApplication('signed_in');
     else openModal();
   });
