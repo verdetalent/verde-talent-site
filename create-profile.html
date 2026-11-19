@@ -1084,6 +1084,33 @@ function sanitizeStorageFileName(name){
 // event (for a funnel exploration) mirrored to Fullstory (for its funnels
 // and session search). Only field ids, section names, counts and reason
 // codes are ever sent - never anything a person typed.
+// Which ask brought this person to the profile page - the signup_source dimension on
+// profile_created, so GA can split new profiles by where they came from. Read once, on load
+// (the URL and referrer don't change while the form is filled in).
+const SIGNUP_SOURCE = (function signupSource() {
+  const q = new URLSearchParams(window.location.search);
+  const src = q.get('src') || '';
+  if (sessionStorage.getItem('vt_pending_application')) return 'apply_popup';
+  if (src === 'job-page-fit') return 'job_page';
+  if (src.startsWith('hub-')) return 'browse_page';
+  if (src.startsWith('home-') || q.get('resume') === 'handoff') return 'homepage';
+  if (q.get('utm_medium') === 'alerts') return 'alerts_prompt';
+  if (q.get('ref')) return 'referral';
+  let ref = null;
+  try { ref = document.referrer ? new URL(document.referrer) : null; } catch (e) {}
+  if (!ref) return 'direct';
+  if (ref.origin !== location.origin) return 'external';
+  const path = ref.pathname;
+  if (path === '/' || path === '/index.html') return 'homepage';
+  if (path.startsWith('/jobs/')) return 'job_page';
+  if (path === '/jobs.html') return 'job_search';
+  if (path.startsWith('/salary-check')) return 'salary_check';
+  if (path.startsWith('/salaries')) return 'salary_pages';
+  if (path.startsWith('/browse/')) return 'browse_page';
+  if (path.startsWith('/dashboard')) return 'dashboard';
+  return 'other_page';
+})();
+
 function trackProfile(name, params) {
   params = params || {};
   gtag('event', name, params); // mirrored to Fullstory by fullstory.js
@@ -1122,6 +1149,7 @@ let profileCheckTimer = null;
   if (!profileFunnel.started) {
     profileFunnel.started = true;
     trackProfile('profile_form_start', {
+      signup_source: SIGNUP_SOURCE,
       first_field: control.id || control.dataset.sector || control.className.split(' ')[0] || 'unknown',
       from_apply: !!sessionStorage.getItem('vt_pending_application'),
     });
@@ -1283,6 +1311,12 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
       method: 'email',
       account_type: 'candidate',
       from_apply: !!sessionStorage.getItem('vt_pending_application'),
+    });
+    // Candidate profiles only (sign_up also counts employers and job alert sign-ups) - the
+    // key event for the Visitor -> Profile funnel.
+    trackProfile('profile_created', {
+      signup_source: SIGNUP_SOURCE,
+      with_resume: !!(document.getElementById('inp-resume') && document.getElementById('inp-resume').files && document.getElementById('inp-resume').files.length),
     });
     btn.textContent = 'Submitted ✓';
     note.textContent = 'Account created and profile saved. You can sign in anytime to update it.';
