@@ -258,7 +258,24 @@ document.addEventListener('click', function(){
 
 let pendingApplyUrl = null, pendingApplyTitle = null, pendingApplyCompany = null;
 let currentJob = null;  // set once the posting loads - labels the apply_click event
+// "No Apply clicks? Free 30 more days": every press of an Apply button on this page is recorded
+// (once per visitor per posting) so the posting-guarantee job can tell. Internal only.
+function logPostingApply(){
+  try {
+    const id = new URLSearchParams(location.search).get('id');
+    if (!id) return;
+    let v = localStorage.getItem('vt_visitor');
+    if (!v) { v = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2)); localStorage.setItem('vt_visitor', v); }
+    const key = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+    fetch('https://iqcyofkosjopxsfdufvy.supabase.co/rest/v1/rpc/log_posting_apply', {
+      method: 'POST', keepalive: true,
+      headers: { apikey: key, Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_posting: id, p_visitor: v }),
+    }).catch(() => {});
+  } catch (e) {}
+}
 function openApplyModal(url, title, company){
+  logPostingApply();
   pendingApplyUrl = url; pendingApplyTitle = title; pendingApplyCompany = company;
   document.getElementById('applyScrim').classList.add('open');
 }
@@ -342,6 +359,7 @@ function getStoredSession() {
 }
 
 async function handleApplyClick(btn, jobPostingId) {
+  logPostingApply();
   const note = document.getElementById('applyNote');
   note.className = 'apply-note';
   note.innerHTML = '';
