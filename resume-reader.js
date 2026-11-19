@@ -450,7 +450,44 @@ function looksLikeBulletLine(line) {
   // - those are proper nouns and always capitalized. This catches short
   // wrapped fragments a word-count check alone would miss.
   if (/^[a-z]/.test(line)) return true;
+  if (/^[•·▪●◦*]\s/.test(line)) return true;
   return /[.!?]$/.test(line) && line.split(/\s+/).filter(Boolean).length > 4;
+}
+
+// Telling a job title from a company name, and a degree from a school, so each entry comes out
+// the right way round whatever order the resume uses ("Company | Title", or the title on the line
+// above "Company | Dates"). Positive = looks like the title/degree, negative = the company/school.
+const ROLE_WORD_RE = /\b(engineer|engineering|technician|tech|manager|analyst|director|specialist|coordinator|intern|lead|supervisor|consultant|developer|associate|assistant|operator|electrician|installer|fore(?:man|woman|person)|superintendent|representative|officer|president|vp|head|administrator|planner|designer|scientist|architect|estimator|inspector|mechanic|apprentice|journeyman|lineman|lineworker|advisor|accountant|controller|recruiter|executive|owner|founder|clerk|agent|trainer|instructor|teacher|researcher|fellow|attorney|counsel|millwright|welder|carpenter|laborer|driver|scheduler|buyer|nurse|sergeant|captain|lieutenant)s?\b/i;
+const ORG_WORD_RE = /\b(inc|llc|l\.l\.c|ltd|corp|corporation|co|company|group|services|solutions|partners|energy|power|renewables|electric|utilities|utility|systems|technologies|technology|holdings|industries|international|associates|construction|contractors|foundation|agency|department|army|navy|air force|marine corps|county)\b\.?/i;
+const DEGREE_WORD_RE = /(^|[\s(])(b\.?s\.?c?|b\.?a\.?|m\.?s\.?c?|m\.?a\.?|mba|ph\.?d\.?|a\.?a\.?s\.?|a\.?s\.?|bachelor'?s?|master'?s?|associate'?s?|doctorate|diploma|degree|certificate|certification|ged)(?=$|[\s,.)])/i;
+const SCHOOL_WORD_RE = /\b(university|college|institute|school|academy|polytechnic)\b/i;
+function headScore(s, kind) {
+  if (!s) return 0;
+  return kind === 'experience'
+    ? (ROLE_WORD_RE.test(s) ? 2 : 0) - (ORG_WORD_RE.test(s) ? 1 : 0)
+    : (DEGREE_WORD_RE.test(s) ? 2 : 0) - (SCHOOL_WORD_RE.test(s) ? 2 : 0);
+}
+function isBulletOrHeading(line) {
+  return !line || /^[•·▪●◦*–-]\s/.test(line) || looksLikeBulletLine(line) || line.length > 80
+    || isSectionHeading(line) || DATE_RANGE_RE.test(line);
+}
+// [title, company] (or [degree, school]) from what was found on the entry's line, borrowing the
+// missing half from a line just above or below when that line is clearly the other kind.
+function orderEntryParts(parts, i, lines, kind) {
+  let a = parts[0], b = parts[1] || '';
+  if (b) {
+    if (headScore(b, kind) > headScore(a, kind)) [a, b] = [b, a];
+    return [a, b];
+  }
+  const sa = headScore(a, kind);
+  for (const j of [i - 1, i + 1, i - 2, i + 2]) {
+    const c = lines[j];
+    if (j < 0 || j >= lines.length || isBulletOrHeading(c) || c === a) continue;
+    const sc = headScore(c, kind);
+    if (sc >= 2 && sc > sa) return [c, a];         // the neighbour is the title; ours is the company
+    if (sa >= 2 && sc < 0) return [a, c];          // ours is the title; the neighbour is the company
+  }
+  return [a, b];
 }
 
 function parseEntriesFromLines(lines, kind) {
@@ -501,9 +538,10 @@ function parseEntriesFromLines(lines, kind) {
     const parts = headLine.split(/\s+(?:at|@)\s+|\s*[|–—]\s*|,\s*/).filter(Boolean);
     if (!parts.length) continue;
     const dates = dateMatch[0].replace(/\s+/g, ' ');
+    const [first, second] = orderEntryParts(parts, i, trimmed, kind);
     entries.push(kind === 'experience'
-      ? { title: parts[0], co: parts[1] || '', dates }
-      : { degree: parts[0], school: parts[1] || '', dates });
+      ? { title: first, co: second, dates }
+      : { degree: first, school: second, dates });
   }
   return entries;
 }
