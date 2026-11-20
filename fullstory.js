@@ -133,3 +133,48 @@ return g._w[u].apply(this,arguments)}),g("init",{env:{orgId:o,host:e,script:t}})
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();
 })();
+
+/* --- 5. Nav fit (added 2026-11-20) -----------------------------------------
+   Each page switches to the menu button below 940px, but between roughly 940
+   and 1100px the links ran into the Saved / Sign in buttons (and at ~960px the
+   page scrolled sideways). Measure instead of guessing a width: if the last
+   link comes within 16px of the buttons, or the bar overflows, use the same
+   menu-button layout the pages use on phones. Re-checked on resize. */
+(function () {
+  var CSS =
+    '.nav-right{margin-left:16px;}' +
+    'html.vt-nav-compact .nav-toggle{display:flex;}' +
+    'html.vt-nav-compact .nav-groups{display:none;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--blk);border-bottom:0.5px solid var(--bdr);padding:1rem 1.5rem 1.25rem;z-index:50;margin:0;}' +
+    'html.vt-nav-compact .nav-groups.open{display:flex;}' +
+    'html.vt-nav-compact .nav-group{width:100%;padding-top:.85rem;margin-top:.85rem;border-top:0.5px solid var(--bdr2);}' +
+    'html.vt-nav-compact .nav-group:first-child{padding-top:0;margin-top:0;border-top:none;}' +
+    'html.vt-nav-compact .nav-group + .nav-group{margin-left:0;padding-left:0;border-left:none;}' +
+    'html.vt-nav-compact .nav-links{flex-direction:column;align-items:flex-start;gap:.7rem;margin-top:.5rem;}';
+  var root = document.documentElement;
+  function check() {
+    var nav = document.querySelector('.nav'), groups = document.querySelector('.nav-groups'), right = document.querySelector('.nav-right');
+    if (!nav || !groups || !right) return;
+    var wasOpen = groups.classList.contains('open');
+    root.classList.remove('vt-nav-compact');
+    var links = groups.querySelectorAll('.nav-links a');
+    var last = links.length ? links[links.length - 1].getBoundingClientRect() : null;
+    var tight = false;
+    if (last && last.width) {
+      tight = right.getBoundingClientRect().left - last.right < 16 || nav.scrollWidth > nav.clientWidth + 1;
+    }
+    if (tight) root.classList.add('vt-nav-compact');
+    else if (wasOpen && getComputedStyle(groups).position !== 'absolute') groups.classList.remove('open');
+  }
+  function run() {
+    var st = document.createElement('style');
+    st.textContent = CSS;
+    document.head.appendChild(st);
+    check();
+    var t = null;
+    window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(check, 80); });
+    window.addEventListener('load', check);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+})();
