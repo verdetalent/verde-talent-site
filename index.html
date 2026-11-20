@@ -358,6 +358,22 @@ footer a:hover{color:var(--grn);}
 .hr-search .sb-field:focus-within{border-color:rgba(34,224,154,0.5);}
 .hr-search .sb-field i{font-size:18px;}
 .hr-search .sb-field input{font-size:15px;}
+/* Hero: job search above the fold (2026-11-20). Tighter spacing so the search box shows on the
+   first screen of a laptop (1366x657) - the upload button stays first and largest. */
+.hero-resume{padding:1.4rem 2rem 1.5rem;}
+.hero-resume h1{font-size:46px;line-height:1.1;margin-bottom:.7rem;}
+.hero-resume .hr-pitch{font-size:16.5px;line-height:1.55;max-width:720px;margin:0 auto 1.3rem;}
+.hr-btn{padding:15px 32px;}
+.hr-cta{gap:.65rem;}
+.hr-search{margin-top:1.15rem;padding-top:1rem;}
+.hr-search-label{margin-bottom:.6rem;}
+.hr-search .sb-field{padding:12px 20px;}
+@media (max-width:940px){
+  .hero-resume{padding:1.1rem 1rem 1.25rem;}
+  .hero-resume h1{font-size:30px;}
+  .hero-resume .hr-pitch{font-size:15px;margin-bottom:1rem;}
+  .hr-search{margin-top:1rem;padding-top:.9rem;}
+}
 .hr-search .btn-search{background:transparent;color:var(--grn);border:1px solid rgba(34,224,154,0.55);padding:14px 28px;font-size:15px;font-weight:600;}
 .hr-search .btn-search:hover{background:rgba(34,224,154,0.08);border-color:var(--grn);}
 .hr-search .pop-searches{margin-top:1rem;}
