@@ -186,6 +186,16 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .ps-link:hover{text-decoration:underline;}
 .ps-blur{filter:blur(5px);opacity:.75;user-select:none;pointer-events:none;}
 .ps-cta{background:var(--grn);color:#052e1e;border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap;}
+.jc-lock{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:7px;padding:5px 10px;border-radius:8px;background:rgba(34,224,154,0.06);border:0.5px dashed rgba(34,224,154,0.35);font-size:12px;color:var(--t2);width:fit-content;max-width:100%;}
+.jc-lock:hover{background:rgba(34,224,154,0.12);}
+.jc-lock .ti-lock{font-size:13px;color:var(--grn);}
+.jc-lock-k{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+.jc-lock-bars{display:inline-flex;align-items:flex-end;gap:2px;height:13px;filter:blur(1.8px);}
+.jc-lock-bars i{display:block;width:5px;border-radius:1.5px;background:var(--grn);}
+.jc-lock-bars i:nth-child(1){height:5px;}.jc-lock-bars i:nth-child(2){height:7px;}.jc-lock-bars i:nth-child(3){height:9px;}
+.jc-lock-bars i:nth-child(4){height:11px;opacity:.35;}.jc-lock-bars i:nth-child(5){height:13px;opacity:.35;}
+.jc-lock-blur{filter:blur(4px);user-select:none;color:var(--grn);font-weight:700;}
+.jc-lock-cta{color:var(--grn);font-weight:700;white-space:nowrap;}
 .fit-nudge{font-size:12.5px;color:var(--t3);margin:-0.4rem 0 .9rem;}
 .fit-nudge[hidden]{display:none;}
 .fit-nudge a{color:var(--grn);}
@@ -758,6 +768,27 @@ function toggleVisa(value) {
   render();
 }
 
+// Signed out, every card carries a locked teaser: a blurred match meter and a blurred pay range
+// (no real figures - same rule as the banner and job pages). Clicking it goes to Create Profile.
+let JC_LOCKED = true;
+function refreshSignedIn() {
+  try { const s = JSON.parse(localStorage.getItem("vt_session") || "null"); JC_LOCKED = !(s && s.candidate_id); } catch (e) { JC_LOCKED = true; }
+}
+refreshSignedIn();
+const JC_LOCK_HTML = `<div class="jc-lock" data-unlock role="link" tabindex="0" aria-label="Upload your resume to see your match and pay range">` +
+  `<span class="jc-lock-k"><i class="ti ti-lock"></i>Your match <span class="jc-lock-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>` +
+  `<span class="jc-lock-k">Your pay <span class="jc-lock-blur" aria-hidden="true">$00 &ndash; $00</span></span>` +
+  `<span class="jc-lock-cta">Unlock free &rarr;</span></div>`;
+document.addEventListener("click", e => {
+  const el = e.target.closest && e.target.closest("[data-unlock]");
+  if (!el) return;
+  e.preventDefault(); e.stopPropagation();
+  try { gtag("event", "job_card_unlock_click", {}); } catch (err) {}
+  location.href = "/create-profile.html";
+}, true);
+document.addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches("[data-unlock]")) { e.preventDefault(); e.target.click(); }
+});
 function jobCardHtml(job) {
   const sectors = (job.sector_buckets && job.sector_buckets.length) ? job.sector_buckets : [];
   const color = colorFor(sectors[0]);
@@ -782,6 +813,7 @@ function jobCardHtml(job) {
         <div class="jc-title">${escapeHtml(job.job_title || "Untitled role")}</div>
         <div class="jc-co-loc">${escapeHtml(job.company)} · ${escapeHtml(job.location)}</div>
         ${fit ? `<div class="jc-why ${fit.level}"><span class="jc-fit">${fit.level === "strong" ? "Strong match" : "Good match"}</span>${fit.reasons.map(r => `<span class="jc-chip"><b>&#10003;</b>${escapeHtml(r)}</span>`).join("")}</div>` : ""}
+        ${!fit && JC_LOCKED ? JC_LOCK_HTML : ""}
         ${job.description_snippet ? `<div class="jc-snippet">${escapeHtml(job.description_snippet)}</div>` : ""}
       </div>
     </div>
