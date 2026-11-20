@@ -95,6 +95,14 @@
       svg += '<text class="vtg-big" x="' + cx + '" y="' + (cy - 26) + '" text-anchor="middle" style="font-size:' + size + 'px">' + esc(range) + "</text>" +
         '<text class="vtg-small" x="' + cx + '" y="' + (cy - 7) + '" text-anchor="middle">' + esc(o.unit || "") + "</text>" +
         '<text class="vtg-medl" x="' + cx + '" y="' + (cy + 22) + '" text-anchor="middle">median ' + esc(o.fmt(o.mid)) + "</text>";
+    } else if (o.readout === false) {
+      // Compact dial (readout: false - the job search strip, drawn ~150px wide with the figures in
+      // text beside it): no unit, and the two end figures drawn large enough to read at that size,
+      // pinned to the outer edges so they never meet.
+      return svg.replace(' 152" role', ' 160" role') +
+        '<text class="vtg-end vtg-end-lg" x="' + (cx - r - sw / 2) + '" y="' + (cy + 29) + '" text-anchor="start">' + esc(o.fmt(o.min)) + "</text>" +
+        '<text class="vtg-end vtg-end-lg" x="' + (cx + r + sw / 2) + '" y="' + (cy + 29) + '" text-anchor="end">' + esc(o.fmt(o.max)) + "</text>" +
+        "</svg>";
     } else {
       svg += '<text class="vtg-small" x="' + cx + '" y="' + (cy + 22) + '" text-anchor="middle">' + esc(o.unit || "") + "</text>";
     }
@@ -112,7 +120,8 @@
     ".vtg-you{fill:#fff;font-size:12px;font-weight:700;font-family:inherit;}" +
     ".vtg-big{fill:var(--t1,#fff);font-weight:700;font-family:inherit;letter-spacing:0;}" +
     ".vtg-small{fill:var(--t2,rgba(255,255,255,.6));font-size:11.5px;font-family:inherit;}" +
-    ".vtg-end{fill:var(--t3,rgba(255,255,255,.35));font-size:10.5px;font-family:inherit;}";
+    ".vtg-end{fill:var(--t3,rgba(255,255,255,.35));font-size:10.5px;font-family:inherit;}" +
+    ".vtg-end.vtg-end-lg{font-size:20px;font-weight:600;fill:var(--t2,rgba(255,255,255,.6));}";
   (function () {
     if (document.getElementById("vtg-css")) return;
     var st = document.createElement("style");
