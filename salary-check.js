@@ -61,13 +61,14 @@
       return "M" + f(a[0]) + " " + f(a[1]) + " A" + r + " " + r + " 0 0 1 " + f(b[0]) + " " + f(b[1]);
     };
     var lo = t(o.lo), hi = t(o.hi), md = t(o.mid);
-    // Median: a tick across the arc that pokes out past it, labelled on the inside.
-    var m1 = pt(md, r - sw / 2 - 2), m2 = pt(md, r + sw / 2 + 7), ml = pt(md, r - sw / 2 - 14);
+    // Median: a tick across the arc (no word on the arc - it ran into the range text when the
+    // median sat near either end). The dial's readout names it at the bottom; elsewhere the text
+    // beside the dial does.
+    var m1 = pt(md, r - sw / 2 - 2), m2 = pt(md, r + sw / 2 + 7);
     var svg = '<svg class="vtg" viewBox="0 0 ' + W + ' 152" role="img" aria-label="' + esc(o.label || "") + '">' +
       '<path class="vtg-track" d="' + arc(0, 1) + '" stroke-width="' + sw + '" fill="none" stroke-linecap="round"/>' +
       '<path class="vtg-band" d="' + arc(lo, Math.max(hi, lo + 0.01)) + '" stroke-width="' + sw + '" fill="none" stroke-linecap="round"/>' +
-      '<line class="vtg-med" x1="' + f(m1[0]) + '" y1="' + f(m1[1]) + '" x2="' + f(m2[0]) + '" y2="' + f(m2[1]) + '" stroke-width="3" stroke-linecap="round"/>' +
-      '<text class="vtg-medl" x="' + f(ml[0]) + '" y="' + f(ml[1] + 3) + '" text-anchor="middle">median</text>';
+      '<line class="vtg-med" x1="' + f(m1[0]) + '" y1="' + f(m1[1]) + '" x2="' + f(m2[0]) + '" y2="' + f(m2[1]) + '" stroke-width="3" stroke-linecap="round"/>';
     if (o.you) {
       var ty = t(o.you), tip = pt(ty, r - sw / 2 - 4), lab = pt(ty, r + sw / 2 + 16);
       svg += '<line class="vtg-needle" x1="' + cx + '" y1="' + cy + '" x2="' + f(tip[0]) + '" y2="' + f(tip[1]) + '" stroke-width="3.5" stroke-linecap="round"/>' +
@@ -86,21 +87,30 @@
     }
     // With a needle the figures sit beside the dial (they'd collide inside it); without one the
     // range is the dial's readout.
-    if (!o.you && o.readout !== false) {
-      svg += '<text class="vtg-big" x="' + cx + '" y="' + (cy - 14) + '" text-anchor="middle">' + esc(o.fmt(o.lo)) + " – " + esc(o.fmt(o.hi)) + "</text>";
+    var readout = !o.you && o.readout !== false;
+    if (readout) {
+      var range = o.fmt(o.lo) + " – " + o.fmt(o.hi);
+      // About 0.6em a character in bold digits; keep the line inside the dial's inner edge (~170 wide).
+      var size = Math.min(18, Math.floor(170 / (range.length * 0.6)));
+      svg += '<text class="vtg-big" x="' + cx + '" y="' + (cy - 26) + '" text-anchor="middle" style="font-size:' + size + 'px">' + esc(range) + "</text>" +
+        '<text class="vtg-small" x="' + cx + '" y="' + (cy - 7) + '" text-anchor="middle">' + esc(o.unit || "") + "</text>" +
+        '<text class="vtg-medl" x="' + cx + '" y="' + (cy + 22) + '" text-anchor="middle">median ' + esc(o.fmt(o.mid)) + "</text>";
+    } else {
+      svg += '<text class="vtg-small" x="' + cx + '" y="' + (cy + 22) + '" text-anchor="middle">' + esc(o.unit || "") + "</text>";
     }
-    svg += '<text class="vtg-small" x="' + cx + '" y="' + (o.you || o.readout === false ? cy + 22 : cy + 4) + '" text-anchor="middle">' + esc(o.unit || "") + "</text>" +
+    svg +=
       '<text class="vtg-end" x="' + (cx - r) + '" y="' + (cy + 22) + '" text-anchor="middle">' + esc(o.fmt(o.min)) + "</text>" +
       '<text class="vtg-end" x="' + (cx + r) + '" y="' + (cy + 22) + '" text-anchor="middle">' + esc(o.fmt(o.max)) + "</text>" +
       "</svg>";
     return svg;
   }
   // The CSS the gauge needs, for pages that don't carry it.
-  var GAUGE_CSS = ".vtg{width:100%;max-width:300px;height:auto;display:block;}" +
+  var GAUGE_CSS = ".vtg{width:100%;max-width:300px;height:auto;display:block;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;font-variant-numeric:tabular-nums;}" +
+    ".vtg text{font-family:inherit;}" +
     ".vtg-track{stroke:rgba(255,255,255,0.09);}.vtg-band{stroke:var(--grn,#22E09A);}" +
-    ".vtg-med{stroke:#fff;}.vtg-lock{stroke:var(--t1,#fff);}.vtg-lockb{fill:var(--t1,#fff);}.vtg-medl{fill:var(--t2,rgba(255,255,255,.6));font-size:10px;font-family:inherit;}.vtg-needle{stroke:#fff;}.vtg-hub{fill:#fff;}" +
+    ".vtg-med{stroke:#fff;}.vtg-lock{stroke:var(--t1,#fff);}.vtg-lockb{fill:var(--t1,#fff);}.vtg-medl{fill:var(--t2,rgba(255,255,255,.6));font-size:11px;font-weight:600;font-family:inherit;}.vtg-needle{stroke:#fff;}.vtg-hub{fill:#fff;}" +
     ".vtg-you{fill:#fff;font-size:12px;font-weight:700;font-family:inherit;}" +
-    ".vtg-big{fill:var(--t1,#fff);font-size:19px;font-weight:700;font-family:inherit;letter-spacing:-.02em;}" +
+    ".vtg-big{fill:var(--t1,#fff);font-weight:700;font-family:inherit;letter-spacing:0;}" +
     ".vtg-small{fill:var(--t2,rgba(255,255,255,.6));font-size:11.5px;font-family:inherit;}" +
     ".vtg-end{fill:var(--t3,rgba(255,255,255,.35));font-size:10.5px;font-family:inherit;}";
   (function () {
