@@ -92,3 +92,44 @@ return g._w[u].apply(this,arguments)}),g("init",{env:{orgId:o,host:e,script:t}})
     window.gtag = wrapped;
   }
 })();
+
+/* --- 4. Signed-in nav (added 2026-11-20) ------------------------------------
+   Every page's top bar is static HTML that always says "Sign in". When this
+   browser holds a candidate or employer session, relabel it "My account", put
+   Dashboard + Sign out in its menu for that account type, and drop the
+   "Create profile" button for a signed-in candidate. Uses the same test as the
+   job search's match labels (a stored session with an id), so the two agree. */
+(function () {
+  function get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+  function run() {
+    var btn = document.getElementById('signinToggle');
+    var menu = document.getElementById('signinMenu');
+    if (!btn || !menu) return;
+    var cand = get('vt_session'), emp = get('vt_employer_session');
+    var isCand = !!(cand && cand.candidate_id), isEmp = !!(emp && emp.user_id);
+    if (!isCand && !isEmp) return;
+    var first = btn.firstChild;
+    if (first && first.nodeType === 3) first.nodeValue = 'My account ';
+    var html = '<div class="si-label grn">Candidates</div>' +
+      (isCand ? '<a href="/dashboard.html">Dashboard</a><a href="#" data-vt-signout="vt_session">Sign out</a>'
+              : '<a href="/login.html">Sign in</a>') +
+      '<div class="si-label amb">Employers</div>' +
+      (isEmp ? '<a href="/employer-dashboard.html">Dashboard</a><a href="#" data-vt-signout="vt_employer_session">Sign out</a>'
+             : '<a href="/employer-login.html">Sign in</a>');
+    menu.innerHTML = html;
+    menu.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('[data-vt-signout]');
+      if (!a) return;
+      e.preventDefault();
+      try { localStorage.removeItem(a.getAttribute('data-vt-signout')); } catch (err) {}
+      location.reload();
+    });
+    if (isCand) {
+      var nav = btn.closest('.nav-right') || document;
+      var cp = nav.querySelector('a[href="create-profile.html"], a[href="/create-profile.html"]');
+      if (cp) cp.style.display = 'none';
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+})();
