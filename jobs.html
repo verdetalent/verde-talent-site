@@ -945,7 +945,9 @@ function renderPayStrip() {
       `<div class="ps-text"><div class="ps-k">${label}</div>` +
       `<div class="ps-big">${fmt(s.lo)} – ${fmt(s.hi)} <span>${unit}</span></div>` +
       `<div class="ps-sub">The middle half of ${s.n} postings that list pay · median ${fmt(s.mid)}</div></div>` +
-      `<a class="ps-link" href="/salary-check.html">Check your own pay &rarr;</a>`;
+      `<a class="ps-link" data-pay-compare href="/salary-check.html?role=${encodeURIComponent(title)}${s.state ? "&state=" + s.state : ""}&ask=pay">Where does your pay fall? &rarr;</a>`;
+    const cmp = box.querySelector("[data-pay-compare]");
+    if (cmp) cmp.addEventListener("click", () => { try { gtag("event", "pay_strip_compare_click", {}); } catch (e) {} });
   } else {
     const fake = () => hourly ? "$00.00" : "$00,000";
     box.innerHTML =

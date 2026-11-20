@@ -121,6 +121,8 @@
     ".vtg-big{fill:var(--t1,#fff);font-weight:700;font-family:inherit;letter-spacing:0;}" +
     ".vtg-small{fill:var(--t2,rgba(255,255,255,.6));font-size:11.5px;font-family:inherit;}" +
     ".vtg-end{fill:var(--t3,rgba(255,255,255,.35));font-size:10.5px;font-family:inherit;}" +
+    ".sc-ask input{border-color:var(--grn,#22E09A)!important;box-shadow:0 0 0 3px rgba(34,224,154,.18);}" +
+    ".sc-ask-hint{font-size:12px;color:var(--grn,#22E09A);margin-top:6px;}" +
     ".vtg-end.vtg-end-lg{font-size:20px;font-weight:600;fill:var(--t2,rgba(255,255,255,.6));}";
   (function () {
     if (document.getElementById("vtg-css")) return;
@@ -323,12 +325,32 @@
 
   window.VTPay = { prepare: prepare, compare: compare, summary: summary, money: money, gauge: gauge, STATES: STATES };
 
+  function askForPay() {
+    var pay = $("scPay");
+    if (!pay) return;
+    var field = pay.closest(".sc-field");
+    if (field) {
+      field.classList.add("sc-ask");
+      var lab = field.querySelector("label");
+      if (lab && !field.querySelector(".sc-ask-hint")) {
+        var h = document.createElement("div");
+        h.className = "sc-ask-hint";
+        h.textContent = "Enter your pay and press Enter to see where you fall.";
+        field.appendChild(h);
+      }
+    }
+    pay.scrollIntoView({ block: "center" });
+    try { pay.focus({ preventScroll: true }); } catch (e) { pay.focus(); }
+    pay.addEventListener("input", function () { if (field) { field.classList.remove("sc-ask"); var hh = field.querySelector(".sc-ask-hint"); if (hh) hh.remove(); } }, { once: true });
+  }
+
   document.addEventListener("DOMContentLoaded", async function () {
     if (!$("scForm")) return;  // loaded by the dashboard for VTPay only
     var dl = $("scRoleList");
     SUGGESTIONS.forEach(function (s) { var o = document.createElement("option"); o.value = s; dl.appendChild(o); });
     $("scGo").addEventListener("click", render);
     $("scRole").addEventListener("keydown", function (e) { if (e.key === "Enter") render(); });
+    $("scPay").addEventListener("keydown", function (e) { if (e.key === "Enter") render(); });
     try { await load(); } catch (e) { $("scOut").innerHTML = '<div class="sc-note">Couldn\'t load the latest postings. Please refresh the page.</div>'; return; }
     // From a job page's "Typical pay for roles like this" link: ?role=...&state=TX.
     var q = new URLSearchParams(location.search);
@@ -342,6 +364,7 @@
         if (yy && LEVELS[yy]) $("scYears").value = yy;
       } catch (e) {}
       render();
+      if (q.get("ask") === "pay") askForPay();
       return;
     }
     // Signed in: start from their own profile (their headline, state and experience).
