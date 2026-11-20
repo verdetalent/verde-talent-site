@@ -317,6 +317,9 @@ function roleScore(job: JobListing, role: Role): number | null {
   if (role.category) {
     if (job.job_category === role.category) return shared;
     if (!job.job_category && plainMatch) return shared;
+    // Two shared title words outrank the job's filed category: "Strategic Account Executive,
+    // Engineering and Construction" is filed under Engineering but is a sales job.
+    if (shared >= 2) return shared;
     return null;
   }
   return plainMatch ? shared : null;

@@ -385,6 +385,7 @@ document.addEventListener('click', function(){
       <div class="rh-right">
       <button type="button" class="save-search-btn" data-vt-save-search data-vt-unmask title="Email me new jobs that match these filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Get alerts for this search</button>
       <select class="sort-sel" id="sort-select">
+        <option value="relevance">Best match</option>
         <option value="recent">Most recent</option>
         <option value="distance">Distance</option>
         <option value="title">Title A–Z</option>
@@ -886,16 +887,8 @@ async function loadJobFit() {
   }
   FIT_ON = true;
   FIT_CACHE = new WeakMap();
-  const wantMatch = new URLSearchParams(location.search).get("sort") === "match";
-  const sel = document.getElementById("sort-select");
-  if (!sel.querySelector('option[value="match"]')) {
-    const opt = document.createElement("option");
-    opt.value = "match";
-    opt.textContent = "Best match for you";
-    sel.insertBefore(opt, sel.firstChild);
-  }
-  // From the dashboard's "See all matches": open sorted by best match.
-  if (wantMatch && !sortManuallyChanged) sel.value = "match";
+  // "Best match" (the default sort) now ranks your matches first; ?sort=match from the
+  // dashboard's "See all matches" lands there too.
   const strong = ALL_JOBS.filter(j => fitRank(j) === 2).length;
   try { gtag("event", "job_fit_shown", { strong_matches: strong }); } catch (e) {}
   render();
@@ -961,6 +954,33 @@ function renderPayStrip() {
   }
 }
 
+// --- Ranking ("Best match") ----------------------------------------------------------------
+// How closely a job's title matches what was typed: the whole title, the start of it, the
+// phrase as whole words, the words in any order, then a company-name hit. Shorter titles win
+// ties (an "account executive" search ranks "Account Executive" above "Strategic Account
+// Executive, Data Center Integrators").
+function searchRelevance(job, q) {
+  if (!q) return 0;
+  const t = (job.job_title || "").toLowerCase().trim();
+  const words = q.split(/\s+/).filter(Boolean);
+  let r = 0;
+  if (t === q) r = 5;
+  else if (t.startsWith(q)) r = 4;
+  else if (new RegExp("(^|[^a-z0-9])" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "($|[^a-z0-9])").test(t)) r = 3;
+  else if (t.includes(q)) r = 2.5;
+  else if (words.length > 1 && words.every(w => t.includes(w))) r = 2;
+  else if ((job.company || "").toLowerCase().includes(q)) r = 1;
+  const extra = Math.max(0, t.split(/[^a-z0-9]+/).filter(Boolean).length - words.length);
+  return r - Math.min(1, extra * 0.08);
+}
+// Best match = your fit first (Strong, then Good - signed in with a role), then how well the
+// title matches the search, then how recent the posting is (fades out over ~4 months).
+function bestMatchScore(job, q) {
+  const days = daysAgo(jobDate(job));
+  const fresh = days == null || isNaN(days) ? 0 : Math.max(0, 1 - days / 120);
+  return fitRank(job) * 10 + searchRelevance(job, q) * 1.5 + fresh;
+}
+
 function render() {
   const query = document.getElementById("job-search").value.trim().toLowerCase();
   const locationQuery = parseLocationQuery(document.getElementById("location-search").value);
@@ -993,6 +1013,12 @@ function render() {
   // it in that scope even if a location happens to be typed in.
   if (origin && !sortManuallyChanged && currentScope !== "remote") {
     document.getElementById("sort-select").value = "distance";
+  }
+  // Otherwise Best match is the default whenever it has something to rank on - a search typed,
+  // or a signed-in profile the match labels work from - until the visitor picks a sort.
+  const wantBest = !!query || FIT_ON;
+  if (!origin && !sortManuallyChanged) {
+    document.getElementById("sort-select").value = wantBest ? "relevance" : "recent";
   }
   const sortBy = document.getElementById("sort-select").value;
   const dateBucket = DATE_BUCKETS.find(b => b.key === currentDateBucket);
@@ -1028,6 +1054,11 @@ function render() {
     if (pinDiff) return pinDiff;
     const featDiff = (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0);
     if (featDiff) return featDiff;
+    if (sortBy === "relevance") {
+      const d = bestMatchScore(b, query) - bestMatchScore(a, query);
+      if (d) return d;
+      return (jobDate(b) || "").localeCompare(jobDate(a) || "");
+    }
     if (sortBy === "match") {
       const fd = fitRank(b) - fitRank(a);
       if (fd) return fd;
