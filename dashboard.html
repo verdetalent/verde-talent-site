@@ -133,6 +133,15 @@ a.app-title:hover{color:var(--grn);}
 .app-rm:hover{color:var(--cor);}
 @media (max-width:600px){.app-row{flex-wrap:wrap;}.app-main{flex-basis:100%;}}
 /* "To finish": Apply clicks the candidate hasn't confirmed yet (019_applications_started.sql). */
+/* "Follow up?": an optional note for applications 7+ days old with no answer yet. Never emailed. */
+.fu-link{background:none;border:0;padding:0;margin-left:8px;font:inherit;font-size:12px;color:var(--grn);cursor:pointer;}
+.fu-link:hover{text-decoration:underline;}
+.fu-box{flex-basis:100%;margin-top:8px;padding:12px 14px;border:0.5px solid var(--bdr2);border-radius:10px;background:var(--card2);}
+.fu-box textarea{width:100%;box-sizing:border-box;min-height:168px;resize:vertical;background:var(--bg,#0b0f0d);color:var(--t1);border:0.5px solid var(--bdr2);border-radius:8px;padding:10px;font:13px/1.5 var(--font-sans);}
+.fu-tip{font-size:12px;color:var(--t3);margin:0 0 8px;line-height:1.5;}
+.fu-btns{display:flex;gap:8px;align-items:center;margin-top:8px;}
+.fu-btns span{font-size:12px;color:var(--t3);}
+.app-row{flex-wrap:wrap;}
 .fin-box{border:0.5px dashed rgba(255,181,71,0.45);border-radius:12px;padding:10px 14px 4px;margin:4px 0 12px;background:rgba(255,181,71,0.04);}
 .fin-h{font-size:13px;font-weight:700;color:var(--t1);}
 .fin-sub{font-size:12px;color:var(--t3);margin:2px 0 4px;}
@@ -1011,12 +1020,59 @@ function appRowHtml(a){
     const opts = APP_STATUS.map(([v, l]) => `<option value="${v}"${a.status === v ? ' selected' : ''}>${l}</option>`).join('');
     return `<div class="app-row">
       <div class="app-main">${head}${a.apply_path === 'manual' ? '<span class="app-tag">Added by you</span>' : ''}
-        <div class="app-meta">${meta ? meta + ' · ' : ''}${a.status === 'started' ? 'Opened' : 'Applied'} ${when}</div></div>
+        <div class="app-meta">${meta ? meta + ' · ' : ''}${a.status === 'started' ? 'Opened' : 'Applied'} ${when}${followUpDue(a) ? `<button type="button" class="fu-link" data-fu="${alertEsc(a.id)}">Follow up?</button>` : ''}</div></div>
       <select class="app-status st-${a.status}" data-appst="${alertEsc(a.id)}" aria-label="Status of ${title}">${opts}</select>
       <button type="button" class="app-rm" data-apprm="${alertEsc(a.id)}" title="Remove from your list" aria-label="Remove ${title}"><i class="ti ti-trash"></i></button>
     </div>`;
   }
 }
+// "Follow up?" - a ready-to-edit note for an application that's been waiting a week. Offered in
+// the tracker only (no email, no reminder): follow-ups help most when there's a real person to
+// write to, and big-company portals rarely pass them on, so the note says so.
+const FU_AFTER_DAYS = 7;
+function followUpDue(a){ return a.status === 'applied' && Date.now() - Date.parse(a.applied_at) >= FU_AFTER_DAYS * DAY_MS; }
+function followUpNote(a){
+  const first = (CANDIDATE && CANDIDATE.first_name) || '';
+  const exp = (CANDIDATE && Array.isArray(CANDIDATE.experience) ? CANDIDATE.experience : []).find(e => e && e.title);
+  const mine = (exp && exp.title) || (CANDIDATE && CANDIDATE.headline) || '';
+  const when = new Date(a.applied_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const role = a.job_title || 'the open role';
+  return `Hi [name],
+
+I applied for the ${role} position${a.company ? ` at ${a.company}` : ''} on ${when} and wanted to let you know I'm still very interested.` +
+    (mine ? ` My experience as ${/^[aeiou]/i.test(mine) ? 'an' : 'a'} ${mine} lines up well with what the role needs, and` : ' I') +
+    ` I'd welcome the chance to talk.
+
+Thank you for your time,
+${first}`;
+}
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-fu]');
+  if (b) {
+    const row = b.closest('.app-row');
+    const open = row.querySelector('.fu-box');
+    if (open) { open.remove(); return; }
+    const a = APPLICATIONS.find(x => x.id === b.dataset.fu);
+    if (!a) return;
+    const box = document.createElement('div');
+    box.className = 'fu-box';
+    box.innerHTML = `<p class="fu-tip">A short note can help when you can reach a real person - look for the recruiter or hiring manager on the job post or on LinkedIn. Big-company application portals rarely pass these on. Edit it to sound like you.</p>
+      <textarea aria-label="Follow-up note"></textarea>
+      <div class="fu-btns"><button type="button" class="al-pill" data-fu-copy>Copy note</button><span>Nothing is sent for you.</span></div>`;
+    box.querySelector('textarea').value = followUpNote(a);
+    row.appendChild(box);
+    if (typeof gtag === 'function') gtag('event', 'follow_up_open', {});
+    return;
+  }
+  const c = e.target.closest('[data-fu-copy]');
+  if (c) {
+    const ta = c.closest('.fu-box').querySelector('textarea');
+    try { await navigator.clipboard.writeText(ta.value); } catch (err) { ta.select(); document.execCommand && document.execCommand('copy'); }
+    c.textContent = 'Copied ✓';
+    setTimeout(() => { c.textContent = 'Copy note'; }, 2000);
+    if (typeof gtag === 'function') gtag('event', 'follow_up_copy', {});
+  }
+});
 function appsStatsHtml(){
   const count = s => APPLICATIONS.filter(a => a.status === s).length;
   const real = APPLICATIONS.filter(a => a.status !== 'not_applied' && a.status !== 'started');
