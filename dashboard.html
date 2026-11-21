@@ -132,6 +132,18 @@ a.app-title:hover{color:var(--grn);}
 .app-rm{background:none;border:none;color:var(--t3);cursor:pointer;font-size:15px;padding:4px;flex-shrink:0;}
 .app-rm:hover{color:var(--cor);}
 @media (max-width:600px){.app-row{flex-wrap:wrap;}.app-main{flex-basis:100%;}}
+/* "To finish": Apply clicks the candidate hasn't confirmed yet (019_applications_started.sql). */
+.fin-box{border:0.5px dashed rgba(255,181,71,0.45);border-radius:12px;padding:10px 14px 4px;margin:4px 0 12px;background:rgba(255,181,71,0.04);}
+.fin-h{font-size:13px;font-weight:700;color:var(--t1);}
+.fin-sub{font-size:12px;color:var(--t3);margin:2px 0 4px;}
+.fin-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:0.5px solid var(--bdr);}
+.fin-row:first-of-type{border-top:0;}
+.fin-main{flex:1;min-width:0;font-size:13.5px;}
+.fin-main a,.fin-main b{color:var(--t1);font-weight:600;text-decoration:none;}
+.fin-main span{color:var(--t3);font-size:12px;}
+.fin-btns{display:flex;gap:6px;flex-shrink:0;}
+.fin-done{font-size:12.5px;color:var(--t2);}
+@media (max-width:600px){.fin-row{flex-wrap:wrap;}.fin-main{flex-basis:100%;}}
 .app-add{margin-top:12px;}
 .app-form{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:12px;padding:14px;margin-top:12px;}
 .app-form[hidden]{display:none;}
@@ -922,16 +934,50 @@ async function loadNews(){
 }
 // --- Applications tab: the candidate's own tracker -----------------------------------------
 const APP_STATUS = [
-  ['applied', 'Applied'], ['interviewing', 'Interviewing'], ['hired', 'Got the job!'],
+  ['started', 'Started'], ['applied', 'Applied'], ['interviewing', 'Interviewing'], ['hired', 'Got the job!'],
   ['no_luck', 'No luck'], ['not_applied', "Didn't apply"],
 ];
 let APP_FILTER = 'active';
-function appIsOpen(a){ return a.status === 'applied' || a.status === 'interviewing'; }
+function appIsOpen(a){ return a.status === 'started' || a.status === 'applied' || a.status === 'interviewing'; }
+// Apply clicks to an employer's own site start as "Started" until the candidate says they sent
+// the application (one tap here, or on the page when they came back from the employer's site).
+const FIN_DONE = {};
+function finishHtml(apps){
+  const items = apps.filter(a => a.status === 'started' || FIN_DONE[a.id]);
+  if (!items.length) return '';
+  return `<div class="fin-box"><div class="fin-h">To finish</div>
+    <div class="fin-sub">You opened these on the employer's site. Did you send the application?</div>` +
+    items.map(a => {
+      const when = new Date(a.applied_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      const title = alertEsc(a.job_title || 'A job');
+      const head = a.job_page ? `<a href="${alertEsc(a.job_page)}">${title}</a>` : `<b>${title}</b>`;
+      const right = FIN_DONE[a.id]
+        ? `<div class="fin-done">${alertEsc(FIN_DONE[a.id])}</div>`
+        : `<div class="fin-btns"><button type="button" class="al-pill" data-fin="applied" data-app="${alertEsc(a.id)}">Applied</button>
+           <button type="button" class="al-pill al-quiet" data-fin="not_applied" data-app="${alertEsc(a.id)}">Not for me</button></div>`;
+      return `<div class="fin-row"><div class="fin-main">${head}${a.company ? ` <span>at</span> ${alertEsc(a.company)}` : ''} <span>· opened ${when}</span></div>${right}</div>`;
+    }).join('') + '</div>';
+}
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-fin]');
+  if (!b) return;
+  const id = b.dataset.app, status = b.dataset.fin;
+  b.closest('.fin-btns').querySelectorAll('button').forEach(x => { x.disabled = true; });
+  if (typeof gtag === 'function') gtag('event', 'apply_finish_tracker', { answer: status });
+  try {
+    SESSION = await getValidSession();
+    await patchApplication(id, status);
+    FIN_DONE[id] = status === 'applied' ? 'Added to your applications' : "Got it - we won't ask again";
+  } catch (err) {
+    window.VTAlerts && window.VTAlerts.toast('Something went wrong - please try again.', true);
+  }
+  renderNews();
+});
 function renderTracker(){
   const list = document.getElementById('appsList');
   if (!list) return;
   const count = s => APPLICATIONS.filter(a => a.status === s).length;
-  const real = APPLICATIONS.filter(a => a.status !== 'not_applied');
+  const real = APPLICATIONS.filter(a => a.status !== 'not_applied' && a.status !== 'started');
   const open = APPLICATIONS.filter(appIsOpen).length;
   const nav = document.getElementById('appsNavCount');
   nav.hidden = !open;
@@ -949,7 +995,9 @@ function renderTracker(){
     renderAppsSummary();
     return;
   }
-  list.innerHTML = rows.map(appRowHtml).join('');
+  // "To finish" sits on top of In progress / All; the rest of the list is everything else.
+  const fin = APP_FILTER === 'closed' ? '' : finishHtml(APPLICATIONS);
+  list.innerHTML = fin + rows.filter(a => a.status !== 'started' && !FIN_DONE[a.id]).map(appRowHtml).join('');
   renderAppsSummary();
 }
 function appRowHtml(a){
@@ -963,7 +1011,7 @@ function appRowHtml(a){
     const opts = APP_STATUS.map(([v, l]) => `<option value="${v}"${a.status === v ? ' selected' : ''}>${l}</option>`).join('');
     return `<div class="app-row">
       <div class="app-main">${head}${a.apply_path === 'manual' ? '<span class="app-tag">Added by you</span>' : ''}
-        <div class="app-meta">${meta ? meta + ' · ' : ''}Applied ${when}</div></div>
+        <div class="app-meta">${meta ? meta + ' · ' : ''}${a.status === 'started' ? 'Opened' : 'Applied'} ${when}</div></div>
       <select class="app-status st-${a.status}" data-appst="${alertEsc(a.id)}" aria-label="Status of ${title}">${opts}</select>
       <button type="button" class="app-rm" data-apprm="${alertEsc(a.id)}" title="Remove from your list" aria-label="Remove ${title}"><i class="ti ti-trash"></i></button>
     </div>`;
@@ -971,7 +1019,7 @@ function appRowHtml(a){
 }
 function appsStatsHtml(){
   const count = s => APPLICATIONS.filter(a => a.status === s).length;
-  const real = APPLICATIONS.filter(a => a.status !== 'not_applied');
+  const real = APPLICATIONS.filter(a => a.status !== 'not_applied' && a.status !== 'started');
   return [
     [real.length, 'Applied', ''], [count('interviewing'), 'Interviewing', 's-int'],
     [count('hired'), 'Got the job', 's-hired'], [count('no_luck'), 'No luck', ''],
@@ -986,10 +1034,11 @@ function renderAppsSummary(){
   if (!APPLICATIONS.length) return;
   document.getElementById('appsStatsMini').innerHTML = appsStatsHtml();
   const asked = new Set(newsDue().map(a => a.id).concat(Object.keys(NEWS_DONE)));
-  const recent = APPLICATIONS.filter(a => appIsOpen(a) && !asked.has(a.id)).slice(0, 3);
-  document.getElementById('appsRecent').innerHTML = recent.length
+  const recent = APPLICATIONS.filter(a => appIsOpen(a) && a.status !== 'started' && !FIN_DONE[a.id] && !asked.has(a.id)).slice(0, 3);
+  const fin = finishHtml(APPLICATIONS.filter(a => a.status === 'started' || FIN_DONE[a.id]).slice(0, 3));
+  document.getElementById('appsRecent').innerHTML = fin + (recent.length
     ? recent.map(appRowHtml).join('')
-    : '<div class="al-empty">Nothing else in progress.</div>';
+    : (fin ? '' : '<div class="al-empty">Nothing else in progress.</div>'));
 }
 document.getElementById('appsFilters').addEventListener('click', (e) => {
   const b = e.target.closest('[data-appf]');
