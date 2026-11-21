@@ -25,14 +25,16 @@
 // so no extra secret-header check is needed on top of it.
 //
 // Every job sent must match on sector, role type AND location - see the
-// "Matching" section below (pickJobs) for the tiers: within 100 miles, then
-// elsewhere in their state, then remote, then - only for candidates open to
-// relocating - further afield, last. A person with zero matching jobs this
+// "Matching" section below (pickJobs) for the tiers: within 100 miles or
+// remote, then elsewhere in their state, then - only for candidates open to
+// relocating - further afield, last. Within each, jobs fitting their most
+// recent resume role come first. A person with zero matching jobs this
 // week gets no email at all, rather than an empty one.
 //
 // Two audiences, same matching:
-//   - candidates: full profiles. Role from headline (or latest experience
-//     title), location from the profile, plus their relocation answer.
+//   - candidates: full profiles. Roles from the job titles on their resume
+//     (the headline only if there are none), location from the profile, plus
+//     their relocation answer.
 //   - job_alert_leads: zero-commitment signups from create-profile.html's
 //     alerts box (email + job title + location + sector(s), no account).
 //     One combined email per address, and every one carries a "Complete
@@ -137,7 +139,7 @@ interface Candidate {
   first_name: string | null;
   sectors: string[] | null;
   headline: string | null;
-  experience: { title?: string }[] | null;
+  experience: { title?: string; dates?: string }[] | null;
   location: string | null;
   relocation: string | null;
   work_authorization?: string | null;
@@ -173,9 +175,10 @@ interface Lead {
 // Matching. Every job sent has to fit on all three:
 //   1. Sector   - one of the person's sectors (candidates.sectors[], or the
 //                 lead row's sector).
-//   2. Role     - the same job function (role type) as the title they gave
-//                 us: a lead's job_title, or a candidate's headline (falling
-//                 back to their latest experience title).
+//   2. Role     - the same job function (role type) as a title they gave
+//                 us: a lead's job_title, or any job title on a candidate's
+//                 resume, most recent ranked first (the headline only if they have
+//                 none - headlines are often a tagline, not a job title).
 //   3. Location - in one of these tiers, which is also the send order:
 //        NEARBY    within NEARBY_MILES of their city or ZIP
 //        STATE     elsewhere in their state
@@ -262,6 +265,10 @@ const GENERIC_TITLE_WORDS = new Set([
 const TITLE_WORD_ALIASES: Record<string, string> = {
   tech: "technician", techs: "technician", mgr: "manager", engr: "engineer", eng: "engineer",
   admin: "administrator", coord: "coordinator",
+  // Resume shorthand, so "Acct Exec" lines up with "Senior Account Executive".
+  acct: "account", exec: "executive", rep: "representative", reps: "representative",
+  ops: "operations", mgmt: "management", dir: "director", supv: "supervisor", supvr: "supervisor",
+  spec: "specialist", svc: "service", svcs: "service", asst: "assistant", tchn: "technician",
 };
 
 function titleWords(title: string | null | undefined): Set<string> {
@@ -284,18 +291,75 @@ function roleFromTitle(title: string | null | undefined): Role {
   return { category: mapJobCategory(title), words: titleWords(title) };
 }
 
-// Prefers the headline (what the candidate explicitly said they are) over
-// past experience titles, falling back to the most recent listed job only
-// if the headline itself doesn't resolve to a role type.
-function candidateRole(candidate: Candidate): Role {
-  const headlineRole = roleFromTitle(candidate.headline);
-  if (headlineRole.category) return headlineRole;
-  for (const exp of candidate.experience || []) {
-    const expRole = roleFromTitle(exp.title);
-    if (expRole.category) return expRole;
+// Every job title on the resume counts. Recency is handled by ranking, not a
+// cut-off: within a location tier, jobs fitting their most recent title come
+// first (see bestRoleScore), so an older role only fills spare slots. The cap
+// is just a guard against a runaway profile.
+const MAX_EXPERIENCE_ROLES = 15;
+
+// Year a role ended, from the free-text dates on the profile ("2019 - Present",
+// "Jan 2020 – Mar 2023"). Present/current = still in it. null = no year given.
+function experienceEndYear(dates: unknown): number | null {
+  const d = String(dates || "").toLowerCase();
+  if (/\b(present|current|now|today)\b/.test(d)) return 9999;
+  const years = d.match(/\b(19|20)\d{2}\b/g);
+  return years ? Math.max(...years.map(Number)) : null;
+}
+
+// Job titles from their work history (the resume), most recent first. Kept in
+// the order they were entered unless every entry has a year to sort by - a
+// resume already lists newest first, and guessing from half the dates could
+// scramble it.
+function experienceTitles(candidate: Candidate): string[] {
+  const exp = (Array.isArray(candidate.experience) ? candidate.experience : [])
+    .filter((e) => e && String(e.title || "").trim());
+  const ends = exp.map((e) => experienceEndYear((e as { dates?: string }).dates));
+  const ordered = ends.every((y) => y !== null)
+    ? exp.map((e, i) => ({ e, i, y: ends[i] as number })).sort((a, b) => b.y - a.y || a.i - b.i).map((x) => x.e)
+    : exp;
+  return ordered.map((e) => String(e.title).trim());
+}
+
+// The roles a candidate is matched on: every job title on their resume, most
+// recent first. Headlines are often a tagline
+// ("Passionate about the energy transition") rather than a job title, and
+// used to decide every match. Now the headline only adds a role when it
+// clearly names a job type (a career changer's "Aspiring Solar Installer"),
+// ranked after their resume titles - or stands in when there's no job history.
+function candidateRoles(candidate: Candidate): Role[] {
+  const roles: Role[] = [];
+  const seen = new Set<string>();
+  const add = (role: Role) => {
+    const key = `${role.category}|${[...role.words].sort().join(" ")}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    roles.push(role);
+  };
+  for (const title of experienceTitles(candidate)) {
+    const role = roleFromTitle(title);
+    if (!role.category && role.words.size === 0) continue;
+    add(role);
+    if (roles.length >= MAX_EXPERIENCE_ROLES) break;
   }
-  if (headlineRole.words.size) return headlineRole;
-  return roleFromTitle(candidate.experience?.[0]?.title);
+  const headlineRole = roleFromTitle(candidate.headline);
+  if (!roles.length) return [headlineRole];
+  if (headlineRole.category) add(headlineRole);
+  return roles;
+}
+
+// Best fit across someone's roles: null if the job fits none of them. Otherwise
+// recency first - a job fitting their most recent title outranks one that only
+// fits an older title - then shared title words within that role.
+const ROLE_RECENCY_WEIGHT = 100;
+function bestRoleScore(job: JobListing, roles: Role[]): number | null {
+  let best: number | null = null;
+  roles.forEach((role, i) => {
+    const s = roleScore(job, role);
+    if (s === null) return;
+    const scored = (roles.length - i) * ROLE_RECENCY_WEIGHT + s;
+    if (best === null || scored > best) best = scored;
+  });
+  return best;
 }
 
 // null = not the same kind of job, drop it. Otherwise the number of title
@@ -647,7 +711,9 @@ interface MatchRequest {
   sectors: string[];
   place: Place;
   relocation: string | null;
-  role: Role;
+  // One role for a lead (their typed job title); a candidate's are the job
+  // titles on their resume, most recent first - a job may fit any of them.
+  roles: Role[];
   // Candidate said they will need visa sponsorship: postings that explicitly
   // rule it out are dropped, and roles open to it rank first in each tier.
   needsSponsorship?: boolean;
@@ -672,8 +738,10 @@ function jobMiles(job: JobListing, place: Place): number | null {
   return min;
 }
 
-// Up to MAX_JOBS_PER_EMAIL jobs, best first: location tier, then paid
-// postings, then how closely the title matches, then nearest, then newest.
+// Up to MAX_JOBS_PER_EMAIL jobs, best first: location group (nearby and remote
+// together, then state, then relocate), then how recent the resume role it
+// fits is, then paid postings, then how closely the title matches, then
+// nearest, then newest.
 // A paid posting only gets here by matching sector, role type and location
 // like any other job; its edge is going first *within its own tier* - it
 // never jumps ahead of a closer free listing. A job several requests match
@@ -688,7 +756,7 @@ function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing
       for (const job of jobsBySector.get(sector) || []) {
         if (!eligible(job)) continue;
         if (req.needsSponsorship && job.visa_sponsorship === "not_offered") continue;
-        const score = roleScore(job, req.role);
+        const score = bestRoleScore(job, req.roles);
         if (score === null) continue;
         const tier = locationTier(job, req.place, req.relocation);
         if (tier === null) continue;
@@ -700,8 +768,16 @@ function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing
     }
   }
 
+  // Ranking order: location group, then how recent the role it fits is, then
+  // the existing paid / sponsorship / title / distance / date order. Remote
+  // jobs sit in the nearby group - distance means nothing for them, so a
+  // remote job fitting someone's current role isn't pushed below a nearby job
+  // that only fits an older one.
+  const rankOf = (tier: number) => (tier === TIER_REMOTE ? TIER_NEARBY : tier);
+  const levelOf = (score: number) => Math.floor(score / ROLE_RECENCY_WEIGHT);
   const sorted = [...best.values()].sort((a, b) =>
-    a.tier - b.tier ||
+    rankOf(a.tier) - rankOf(b.tier) ||
+    levelOf(b.score) - levelOf(a.score) ||
     Number(!!b.job.paid) - Number(!!a.job.paid) ||
     (needsSponsorship ? Number(openToSponsorship(b.job)) - Number(openToSponsorship(a.job)) : 0) ||
     b.score - a.score ||
@@ -718,14 +794,24 @@ function pickJobs(requests: MatchRequest[], jobsBySector: Map<string, JobListing
     return true;
   });
 
+  // Filled group by group in ranked order - (location group, role recency) -
+  // so sector rotation below can never put an older-role job ahead of one
+  // fitting a more recent role.
+  const groups = new Map<string, typeof ranked>();
+  for (const r of ranked) {
+    const key = `${rankOf(r.tier)}|${levelOf(r.score)}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(r);
+  }
   const picked: JobListing[] = [];
-  for (let tier = TIER_NEARBY; tier <= TIER_RELOCATE && picked.length < MAX_JOBS_PER_EMAIL; tier++) {
-    for (const r of ranked) {
-      if (r.tier === tier && r.job.paid && picked.length < MAX_JOBS_PER_EMAIL) picked.push(r.job);
+  for (const group of groups.values()) {
+    if (picked.length >= MAX_JOBS_PER_EMAIL) break;
+    for (const r of group) {
+      if (r.job.paid && picked.length < MAX_JOBS_PER_EMAIL) picked.push(r.job);
     }
     const bySector = new Map<string, JobListing[]>();
-    for (const r of ranked) {
-      if (r.tier !== tier || r.job.paid) continue;
+    for (const r of group) {
+      if (r.job.paid) continue;
       const s = r.job.sector_bucket || "";
       if (!bySector.has(s)) bySector.set(s, []);
       bySector.get(s)!.push(r.job);
@@ -975,12 +1061,11 @@ function subjectFor(sections: EmailSection[]): string {
 // "What should you be paid?" - the salary check opened with their role and state filled in
 // (salary-check.html reads ?role=&state=). Only when we know their role.
 function payLinkHtml(candidate: Candidate): string {
-  const exp = Array.isArray(candidate.experience) ? candidate.experience : [];
-  // A job title the salary check can match: the first piece of the headline ("Wind Technician |
-  // GWO certified" -> "Wind Technician"), else a past job title - the first that maps to a role
-  // type, as the match labels decide. A headline like "Energy Professional" alone gets no box.
+  // A job title the salary check can match: their most recent resume job title that maps to a role
+  // type, else the first piece of the headline ("Wind Technician | GWO certified" -> "Wind
+  // Technician"). A headline like "Energy Professional" with no job history gets no box.
   const tidy = (t: unknown) => String(t || "").split(/\s+[|•·–—-]\s+|\s*\|\s*/)[0].replace(/\s+/g, " ").trim();
-  const options = [tidy(candidate.headline), ...exp.map((e) => tidy(e && e.title))]
+  const options = [...experienceTitles(candidate).map(tidy), tidy(candidate.headline)]
     .filter((t) => t && t.length <= 60);
   const role = options.find((t) => FIT.roleFromTitle(t).category) || "";
   if (!role) return "";
@@ -1323,7 +1408,7 @@ Deno.serve(async (req) => {
           sectors: candidate.sectors || [],
           place: parsePersonLocation(candidate.location),
           relocation: candidate.relocation,
-          role: candidateRole(candidate),
+          roles: candidateRoles(candidate),
           needsSponsorship: candidate.work_authorization === "needs_sponsorship",
         }], jobsBySector, eligible);
         if (jobs.length) {
@@ -1444,7 +1529,7 @@ Deno.serve(async (req) => {
           sectors: [lead.sector],
           place: parsePersonLocation(lead.location),
           relocation: null,
-          role: roleFromTitle(lead.job_title),
+          roles: [roleFromTitle(lead.job_title)],
         })), jobsBySector);
 
         if (jobs.length === 0) {

@@ -64,6 +64,10 @@
   var TITLE_WORD_ALIASES = {
     tech: "technician", techs: "technician", mgr: "manager", engr: "engineer", eng: "engineer",
     admin: "administrator", coord: "coordinator",
+    // Resume shorthand, so "Acct Exec" lines up with "Senior Account Executive".
+    acct: "account", exec: "executive", rep: "representative", reps: "representative",
+    ops: "operations", mgmt: "management", dir: "director", supv: "supervisor", supvr: "supervisor",
+    spec: "specialist", svc: "service", svcs: "service", asst: "assistant", tchn: "technician",
   };
 
   function mapJobCategory(title) {
@@ -86,17 +90,48 @@
     return words;
   }
   function roleFromTitle(title) { return { category: mapJobCategory(title), words: titleWords(title) }; }
-  // Headline first (what they say they are), then their experience titles - as the alerts do.
-  function candidateRole(c) {
-    var h = roleFromTitle(c.headline);
-    if (h.category) return h;
-    var exp = Array.isArray(c.experience) ? c.experience : [];
-    for (var i = 0; i < exp.length; i++) {
-      var r = roleFromTitle(exp[i] && exp[i].title);
-      if (r.category) return r;
+  // The roles a candidate is matched on - the same rules as the alert emails: every job title on
+  // their resume, most recent first. Headlines are often a tagline ("Passionate about the energy
+  // transition"), so the headline only adds a role when it clearly names a job type (a career
+  // changer's "Aspiring Solar Installer"), after their resume titles - or stands in when there is
+  // no job history at all.
+  var MAX_EXPERIENCE_ROLES = 15;
+  function experienceEndYear(dates) {
+    var d = String(dates || "").toLowerCase();
+    if (/\b(present|current|now|today)\b/.test(d)) return 9999;
+    var years = d.match(/\b(19|20)\d{2}\b/g);
+    return years ? Math.max.apply(null, years.map(Number)) : null;
+  }
+  // Resume order (newest first) unless every entry has a year to sort by.
+  function experienceTitles(c) {
+    var exp = (Array.isArray(c.experience) ? c.experience : list(c.experience))
+      .filter(function (e) { return e && String(e.title || "").trim(); });
+    var ends = exp.map(function (e) { return experienceEndYear(e.dates); });
+    if (ends.every(function (y) { return y !== null; })) {
+      exp = exp.map(function (e, i) { return { e: e, i: i, y: ends[i] }; })
+        .sort(function (a, b) { return b.y - a.y || a.i - b.i; })
+        .map(function (x) { return x.e; });
     }
-    if (h.words.size) return h;
-    return roleFromTitle(exp[0] && exp[0].title);
+    return exp.map(function (e) { return String(e.title).trim(); });
+  }
+  function candidateRoles(c) {
+    var roles = [];
+    var seen = new Set();
+    function add(role) {
+      var key = role.category + "|" + Array.from(role.words).sort().join(" ");
+      if (seen.has(key)) return;
+      seen.add(key);
+      roles.push(role);
+    }
+    var titles = experienceTitles(c);
+    for (var i = 0; i < titles.length && roles.length < MAX_EXPERIENCE_ROLES; i++) {
+      var r = roleFromTitle(titles[i]);
+      if (r.category || r.words.size) add(r);
+    }
+    var h = roleFromTitle(c.headline);
+    if (!roles.length) return [h];
+    if (h.category) add(h);
+    return roles;
   }
   // null = not the same kind of job; otherwise how many title words are shared.
   function roleScore(job, role) {
@@ -165,10 +200,11 @@
   var PROFILE = null;
   function prepare(c) {
     if (!c) return null;
-    var role = candidateRole(c);
+    var roles = candidateRoles(c);
     return {
-      role: role,
-      hasRole: !!(role.category || role.words.size),
+      roles: roles,
+      role: roles[0],
+      hasRole: roles.some(function (r) { return !!(r.category || r.words.size); }),
       sectors: new Set(list(c.sectors)),
       skills: list(c.skills).map(normSkill).filter(Boolean),
       state: stateOf(c.location),
@@ -186,12 +222,15 @@
   function score(job, profile) {
     var p = profile || PROFILE;
     if (!p || !p.hasRole) return null;
-    var shared = roleScore(job, p.role);
-    if (shared === null) return null;
-    // Stricter than the alerts: a label needs the job title to share a word with theirs
+    // Stricter than the alerts: a label needs the job title to share a word with one of theirs
     // ("technician", "engineer"), not just the same broad role type - a wind technician isn't a
-    // match for "Wind Carpenter" just because both are construction/field jobs.
-    if (p.role.words.size && shared < 1) return null;
+    // match for "Wind Carpenter" just because both are construction/field jobs. Any of their
+    // roles counts (every resume title, plus a headline that names a job).
+    var fits = (p.roles || [p.role]).some(function (role) {
+      var shared = roleScore(job, role);
+      return shared !== null && !(role.words.size && shared < 1);
+    });
+    if (!fits) return null;
     var reasons = ["Your role"];
     var jobSectors = list(job.sector_buckets);
     var sectorHit = jobSectors.filter(function (s) { return p.sectors.has(s); });
