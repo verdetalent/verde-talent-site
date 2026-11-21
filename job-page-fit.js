@@ -82,12 +82,46 @@
     try { var s = JSON.parse(localStorage.getItem("vt_session") || "null"); return !!(s && s.candidate_id); } catch (e) { return false; }
   }
 
+  // A note under the job's details, for everyone, only when the job is behind: "Last confirmed
+  // open on <company>'s careers site 3 days ago", amber after a week.
+  // The date is the company's last clean crawl (/data/job_checked.json, rebuilt nightly) -
+  // the pages themselves are static, and a per-job date would rewrite all of them every night.
+  var FRESH_CSS =
+    ".jp-fresh{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t3,rgba(255,255,255,.45));margin:-.6rem 0 1rem;}" +
+    ".jp-fresh.ok{color:var(--grn,#22E09A);}.jp-fresh.old{color:var(--amb,#FFB547);}";
+  function freshLine(job) {
+    var meta = document.querySelector(".meta-row");
+    if (!meta || !job.company) return;
+    fetch("/data/job_checked.json").then(function (r) { return r.ok ? r.json() : null; }).then(function (map) {
+      var day = map && map[job.company];
+      if (!day) return;
+      var t = new Date();
+      var d = Math.max(0, Math.round((Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate()) - Date.parse(day + "T00:00:00Z")) / 86400000));
+      // A healthy crawl re-confirms every job daily, so there's nothing to say until one is behind.
+      if (d <= 1) return;
+      var site = esc(job.company) + "&rsquo;s careers site";
+      var cls = d >= 7 ? "old" : "";
+      var text = d < 7 ? "Last confirmed open on " + site + " " + d + " days ago"
+        : "We haven&rsquo;t been able to recheck this on " + site + " for " + d + " days &mdash; it may have been filled";
+      var st = document.createElement("style");
+      st.textContent = FRESH_CSS;
+      document.head.appendChild(st);
+      var el = document.createElement("div");
+      el.className = "jp-fresh " + cls;
+      el.innerHTML = text;
+      meta.insertAdjacentElement("afterend", el);
+      track("job_page_fresh_shown", { days: d });
+    }).catch(function () {});
+  }
+
   async function run() {
     var box = document.getElementById("jpFit");
     var dataEl = document.getElementById("vt-job");
-    if (!box || !dataEl || !window.VTJobFit) return;
+    if (!box || !dataEl) return;
     var job;
     try { job = JSON.parse(dataEl.textContent); } catch (e) { return; }
+    freshLine(job);
+    if (!window.VTJobFit) return;
     var st = document.createElement("style");
     st.textContent = CSS;
     document.head.appendChild(st);

@@ -153,6 +153,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .sf-note{font-size:11px;color:var(--t3);line-height:1.45;margin-top:6px;}
 .sf-note a{color:var(--t2);}
 .jc-meta-right{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--t3);}
+/* One honest line under the results count when every job shown was re-found on its employer's
+   own site in the last day (job.checked); it simply doesn't appear when that isn't true. */
+.rh-fresh{display:block;margin-top:3px;font-size:12px;color:var(--grn);}
 .jc-salary{font-size:13px;color:var(--t2);}
 .jc-tag.featured .star{margin-right:2px;}
 .jc-tag.featured{background:rgba(255,181,71,0.14);color:var(--amb);border:0.5px solid rgba(255,181,71,0.4);font-weight:600;}
@@ -479,6 +482,41 @@ function fmtRelativeDate(iso) {
   if (days <= 0) return "Today";
   if (days === 1) return "1 day ago";
   return `${days} days ago`;
+}
+
+// --- Freshness ("Confirmed open") -----------------------------------------------------------
+// job.checked = the last day the crawler found the posting still up on the employer's own
+// careers site (a clean crawl of a company re-confirms all its open jobs; a failed one confirms
+// nothing and closes nothing). Postings employers make on Verde Talent have no crawl.
+const HIDE_CHECK_DAYS = 7;     // not re-found on the employer's site for a week: left out of search
+function checkedDays(job) {
+  if (!job.checked) return null;
+  const t = new Date();
+  const today = Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate());
+  return Math.max(0, Math.round((today - Date.parse(job.checked + "T00:00:00Z")) / 86400000));
+}
+// The oldest confirmation among the crawled jobs in a list: 0 = every one was re-found on its
+// employer's site today, 1 = yesterday or today, null = some are older (or none were crawled).
+// Employer postings made on Verde Talent have no crawl and don't count either way.
+function oldestConfirmed(jobs) {
+  let worst = -1;
+  for (const j of jobs) {
+    if (j.job_posting_id) continue;
+    const d = checkedDays(j);
+    if (d == null || d > 1) return null;
+    worst = Math.max(worst, d);
+  }
+  return worst < 0 ? null : worst;
+}
+// The posted date, except a long-running posting we've just confirmed is still up reads as
+// that ("Posted 3 months ago · still open") instead of looking abandoned.
+function postedText(job) {
+  const days = daysAgo(jobDate(job));
+  const d = checkedDays(job);
+  if (isFinite(days) && days >= 90 && d != null && d < HIDE_CHECK_DAYS) {
+    return `Posted ${Math.floor(days / 30)} months ago &middot; still open`;
+  }
+  return fmtRelativeDate(jobDate(job));
 }
 
 const MAX_SKILL_FILTERS_SHOWN = 15;
@@ -823,7 +861,7 @@ function jobCardHtml(job) {
     </div>
     <div class="jc-row2">
       <div class="jc-tags">${categoryTags.join("")}${skillTags.join("")}${badgeTags.join("")}</div>
-      <div class="jc-meta-right">${salary ? `<span class="jc-salary">${salary}</span>` : ""}<span>${fmtRelativeDate(jobDate(job))}</span></div>
+      <div class="jc-meta-right">${salary ? `<span class="jc-salary">${salary}</span>` : ""}<span>${postedText(job)}</span></div>
     </div>`;
 
   // A paid employer posting with no external apply_url - the Apply action
@@ -1034,6 +1072,9 @@ function render() {
   const salaryBucket = SALARY_BUCKETS.find(b => b.key === currentSalaryBucket);
 
   let filtered = ALL_JOBS.filter(j => {
+    // Not re-found on the employer's site for a week (their careers site keeps refusing our
+    // crawl): too likely filled to show. A clean crawl brings it straight back.
+    if ((checkedDays(j) ?? 0) >= HIDE_CHECK_DAYS) return false;
     if (currentSectors.size) {
       const jobSectors = (j.sector_buckets && j.sector_buckets.length) ? j.sector_buckets : ["Unclassified"];
       if (!jobSectors.some(s => currentSectors.has(s))) return false;
@@ -1094,7 +1135,9 @@ function renderList() {
   const filtered = currentFiltered;
   const scopeLabels = {remote: "Remote", us_remote: "U.S. + Remote", international: "International"};
   document.getElementById("results-count").innerHTML =
-    `<strong>${filtered.length}</strong> ${filtered.length === 1 ? "job" : "jobs"} · ${scopeLabels[currentScope]}`;
+    `<strong>${filtered.length}</strong> ${filtered.length === 1 ? "job" : "jobs"} · ${scopeLabels[currentScope]}` +
+    ((oc => oc == null ? ""
+      : `<span class="rh-fresh" title="We check every employer's careers site daily and take down jobs that are gone">&#10003; All confirmed open on employers' own sites ${oc ? "since yesterday" : "today"}</span>`)(oldestConfirmed(filtered)));
 
   const shown = filtered.slice(0, visibleCount);
   const remaining = filtered.length - shown.length;
