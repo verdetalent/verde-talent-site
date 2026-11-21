@@ -210,8 +210,101 @@
       state: stateOf(c.location),
       years: c.years_experience || null,
       payMin: Number(c.salary_min) || null,
+      relocate: /^yes/i.test(String(c.relocation || "")),
       raw: c,
     };
+  }
+
+  // --- What's missing ("how to get there") ------------------------------------------------------
+  // The other side of the reasons: what keeps a job from being a (stronger) match, each with the
+  // one thing the candidate can do about it - add it to their profile if they already have it, or
+  // the Training page section that teaches it. Only things we can actually check; never a guess.
+  var TRAINING = "/professional-development.html";
+  var SECTOR_TRAINING = {
+    Solar: "#sector-solar", Wind: "#sector-wind", Storage: "#sector-storage", Grid: "#sector-grid",
+    EV: "#sector-ev", Policy: "#sector-policy", Sustainability: "#sector-sustainability",
+  };
+  // Job skill tags the Training page has a course for.
+  var SKILL_TRAINING = [
+    [/^osha\b/, "OSHA 10 / 30", "#jobsite-safety"],
+    [/^nabcep\b/, "NABCEP prep", "#sector-solar"],
+    [/energy storage systems|battery management system/, "Battery storage courses", "#sector-storage"],
+  ];
+  var LEVEL_ORDER = ["Entry Level", "Individual Contributor", "Manager+", "Director+"];
+  function money(n) { return "$" + Math.round(n / 1000) + "k"; }
+  var PROFILE_LINK = "/dashboard.html#profile";
+
+  // -> [{ kind, short (card chip), text (job page), fixes: [{label, href}] }]
+  function gaps(job, profile) {
+    var p = profile || PROFILE;
+    if (!p || !p.hasRole) return [];
+    var out = [];
+    var jobSectors = list(job.sector_buckets);
+    if (jobSectors.length) {
+      var s = jobSectors[0];
+      var fixes = [{ label: "Worked in " + s + "? Add it to your profile", href: PROFILE_LINK }];
+      if (SECTOR_TRAINING[s]) fixes.push({ label: s + " training", href: TRAINING + SECTOR_TRAINING[s] });
+      if (!p.sectors.size) {
+        out.push({ kind: "sector", short: "Add your sectors", text: "Your profile doesn't list any sectors yet, so we can't check this " + s + " job against them.", fixes: fixes });
+      } else if (!jobSectors.some(function (x) { return p.sectors.has(x); })) {
+        out.push({ kind: "sector", short: s + " not on profile", text: s + " isn't one of the sectors on your profile.", fixes: fixes });
+      }
+    }
+    if (!isRemote(job)) {
+      var js = stateOf(job.location);
+      if (js && !p.state) {
+        out.push({ kind: "place", short: "Add your location", text: "This job is on-site in " + js + ", and your profile has no location to compare.", fixes: [{ label: "Add your location", href: PROFILE_LINK }] });
+      } else if (js && p.state && js !== p.state) {
+        out.push(p.relocate
+          ? { kind: "place", short: "On-site in " + js, text: "On-site in " + js + ". You're in " + p.state + ", but your profile says you're open to relocating.", fixes: [] }
+          : { kind: "place", short: "On-site in " + js, text: "On-site in " + js + ", and you're in " + p.state + ".", fixes: [{ label: "Open to moving? Tell employers in your preferences", href: "/dashboard.html#preferences" }] });
+      }
+    }
+    if (p.years && job.seniority_level && LEVEL_FITS[p.years] && LEVEL_FITS[p.years].indexOf(job.seniority_level) < 0) {
+      var fitsTop = Math.max.apply(null, LEVEL_FITS[p.years].map(function (l) { return LEVEL_ORDER.indexOf(l); }));
+      var above = LEVEL_ORDER.indexOf(job.seniority_level) > fitsTop;
+      out.push({ kind: "level", short: above ? "More senior role" : "More junior role",
+        text: (above ? "A " + job.seniority_level + " role - more senior than your " : "An " + job.seniority_level + " role - junior for your ") + p.years + " of experience.",
+        fixes: [{ label: "Experience years wrong? Update them", href: PROFILE_LINK }] });
+    }
+    if (p.payMin && job.salary_annual_max && job.salary_annual_max < p.payMin) {
+      out.push({ kind: "pay", short: "Under your pay", text: "Pays up to " + money(job.salary_annual_max) + ", under your " + money(p.payMin) + " minimum.", fixes: [] });
+    }
+    var jobSkills = list(job.skills);
+    if (jobSkills.length) {
+      if (!p.skills.length) {
+        out.push({ kind: "skills", short: "Add your skills", text: "This job asks for " + jobSkills.join(", ") + ". Add your skills to see which you have.", fixes: [{ label: "Add your skills", href: PROFILE_LINK }] });
+      } else {
+        var missing = jobSkills.filter(function (s) { return !skillMatch(s, p.skills); });
+        if (missing.length) {
+          var sf = [{ label: "Have " + (missing.length > 1 ? "them" : "it") + "? Add to your profile", href: PROFILE_LINK }];
+          var seen = {};
+          missing.forEach(function (m) {
+            var n = normSkill(m);
+            SKILL_TRAINING.forEach(function (t) {
+              if (t[0].test(n) && !seen[t[1]]) { seen[t[1]] = 1; sf.push({ label: t[1], href: TRAINING + t[2] }); }
+            });
+          });
+          out.push({ kind: "skills", short: "Missing " + missing[0] + (missing.length > 1 ? " +" + (missing.length - 1) : ""),
+            text: "Not on your profile: " + missing.join(", ") + ".", fixes: sf });
+        }
+      }
+    }
+    return out;
+  }
+  // Why a job isn't a match at all when the role is the reason: "This is a Sales role; your
+  // experience is in Engineering." null when the role fits (gaps() then explains the rest).
+  function roleMiss(job, profile) {
+    var p = profile || PROFILE;
+    if (!p || !p.hasRole) return null;
+    var fits = (p.roles || [p.role]).some(function (role) {
+      var shared = roleScore(job, role);
+      return shared !== null && !(role.words.size && shared < 1);
+    });
+    if (fits) return null;
+    var cat = job.job_category || mapJobCategory(job.job_title);
+    var mine = p.role && p.role.category;
+    return { jobCategory: cat || null, yourCategory: mine || null };
   }
 
   // -> { level: 'strong' | 'good', reasons: [short labels], skills: {have, of} | null } or null.
@@ -276,7 +369,7 @@
     if (!s || !s.access_token) return null;
     try {
       var res = await fetch(SUPABASE_URL + "/rest/v1/candidates?id=eq." + encodeURIComponent(s.candidate_id) +
-        "&select=headline,experience,sectors,skills,location,years_experience,salary_min", {
+        "&select=headline,experience,sectors,skills,location,years_experience,salary_min,relocation", {
         headers: { apikey: ANON_KEY, Authorization: "Bearer " + s.access_token },
       });
       if (!res.ok) return null;
@@ -295,6 +388,8 @@
     forget: forget,
     prepare: prepare,
     score: score,
+    gaps: gaps,
+    roleMiss: roleMiss,
     profile: function () { return PROFILE; },
     roleFromTitle: roleFromTitle,
     roleScore: roleScore,

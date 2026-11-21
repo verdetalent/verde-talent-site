@@ -165,6 +165,9 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .jc-chip{font-size:12px;color:var(--t1);background:rgba(255,255,255,0.06);border-radius:6px;padding:2px 8px;white-space:nowrap;}
 .jc-chip b{color:var(--grn);font-weight:700;margin-right:4px;}
 .jc-why.good .jc-chip b{color:var(--blu);}
+/* What keeps it from a (stronger) match - job-fit.js gaps(); the job page says how to close it. */
+.jc-gap{font-size:12px;color:var(--t2);border:0.5px dashed rgba(255,181,71,0.45);border-radius:6px;padding:1px 8px;white-space:nowrap;}
+.jc-gap b{color:var(--amb);font-weight:700;margin-right:4px;}
 .sf-worth{display:block;font-size:12px;color:var(--grn);text-decoration:none;margin:8px 0 4px;}
 .sf-worth:hover{text-decoration:underline;}
 .pbs-eg{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
@@ -813,7 +816,7 @@ function jobCardHtml(job) {
       <div class="jc-info">
         <div class="jc-title">${escapeHtml(job.job_title || "Untitled role")}</div>
         <div class="jc-co-loc">${escapeHtml(job.company)} · ${escapeHtml(job.location)}</div>
-        ${fit ? `<div class="jc-why ${fit.level}"><span class="jc-fit">${fit.level === "strong" ? "Strong match" : "Good match"}</span>${fit.reasons.map(r => `<span class="jc-chip"><b>&#10003;</b>${escapeHtml(r)}</span>`).join("")}</div>` : ""}
+        ${fit ? `<div class="jc-why ${fit.level}"><span class="jc-fit">${fit.level === "strong" ? "Strong match" : "Good match"}</span>${fit.reasons.map(r => `<span class="jc-chip"><b>&#10003;</b>${escapeHtml(r)}</span>`).join("")}${jobGaps(job).map(g => `<span class="jc-gap" title="${escapeHtml(g.text)}"><b>&#9675;</b>${escapeHtml(g.short)}</span>`).join("")}</div>` : ""}
         ${!fit && JC_LOCKED ? JC_LOCK_HTML : ""}
         ${job.description_snippet ? `<div class="jc-snippet">${escapeHtml(job.description_snippet)}</div>` : ""}
       </div>
@@ -863,6 +866,12 @@ function jobFit(job) {
   if (!FIT_ON || !window.VTJobFit) return null;
   if (!FIT_CACHE.has(job)) FIT_CACHE.set(job, window.VTJobFit.score(job));
   return FIT_CACHE.get(job);
+}
+// The gaps a card shows: only ones about this job (on-site elsewhere, missing skills, level,
+// pay) - "add your sectors" would repeat on every card, so that lives on the job page. Two max.
+function jobGaps(job) {
+  if (!FIT_ON || !window.VTJobFit || !window.VTJobFit.gaps) return [];
+  return window.VTJobFit.gaps(job).filter(g => !/^Add /.test(g.short)).slice(0, 2);
 }
 function fitRank(job) {
   const f = jobFit(job);

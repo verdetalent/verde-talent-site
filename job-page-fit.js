@@ -45,7 +45,32 @@
     ".jp-ask-cta a{border:1.5px solid var(--grn,#22E09A);color:var(--grn,#22E09A);background:transparent;font-weight:700;font-size:13.5px;border-radius:999px;padding:8px 16px;text-decoration:none;white-space:nowrap;}" +
     ".jp-ask-cta a:hover{background:rgba(34,224,154,0.1);}" +
     ".jp-ask-cta span{font-size:12px;color:var(--t3,rgba(255,255,255,.35));}" +
-    "@media (max-width:560px){.jp-ask{flex-direction:column;align-items:stretch;}.jp-ask-gauge{margin:0 auto;}}";
+    "@media (max-width:560px){.jp-ask{flex-direction:column;align-items:stretch;}.jp-ask-gauge{margin:0 auto;}}" +
+    // What's missing + how to get there (job-fit.js gaps()).
+    ".jp-gaps{margin-top:8px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.025);border:0.5px dashed rgba(255,255,255,0.18);}" +
+    ".jp-gaps-h{font-size:12.5px;font-weight:700;color:var(--t1,#fff);margin-bottom:6px;}" +
+    ".jp-gap{display:flex;gap:8px;align-items:flex-start;padding:5px 0;font-size:13px;line-height:1.45;color:var(--t2,rgba(255,255,255,.7));}" +
+    ".jp-gap+.jp-gap{border-top:0.5px solid rgba(255,255,255,0.06);}" +
+    ".jp-gap-dot{flex:0 0 auto;width:7px;height:7px;margin-top:6px;border-radius:50%;border:1.5px solid var(--amb,#FFB547);}" +
+    ".jp-gap-fixes{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;}" +
+    ".jp-gap-fixes a{font-size:12px;font-weight:600;color:var(--grn,#22E09A);text-decoration:none;border:0.5px solid rgba(34,224,154,0.35);border-radius:999px;padding:2px 10px;}" +
+    ".jp-gap-fixes a:hover{background:rgba(34,224,154,0.1);}" +
+    ".jp-gap-fixes a.train{color:var(--amb,#FFB547);border-color:rgba(255,181,71,0.4);}" +
+    ".jp-gap-fixes a.train:hover{background:rgba(255,181,71,0.1);}";
+
+  // The gaps box under the match strip: each thing that's missing, with what to do about it.
+  function gapsHtml(title, rows) {
+    if (!rows.length) return "";
+    return '<div class="jp-gaps"><div class="jp-gaps-h">' + esc(title) + "</div>" +
+      rows.map(function (g) {
+        return '<div class="jp-gap" data-kind="' + esc(g.kind) + '"><span class="jp-gap-dot"></span><div>' + esc(g.text) +
+          (g.fixes.length ? '<div class="jp-gap-fixes">' + g.fixes.map(function (f) {
+            var train = f.href.indexOf("/professional-development") === 0;
+            return '<a href="' + esc(f.href) + '"' + (train ? ' class="train"' : "") + " data-jp-fix=\"" + esc(g.kind) + "\">" + esc(f.label) + " &rarr;</a>";
+          }).join("") + "</div>" : "") +
+          "</div></div>";
+      }).join("") + "</div>";
+  }
 
   function esc(t) {
     return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
@@ -106,18 +131,33 @@
       .split(/\s+(?:at|in|@)\s+|\s+[-–—|]\s+|,\s*/)[0].replace(/\s+/g, " ").trim() || job.job_title || "";
     var payUrl = "/salary-check.html?role=" + encodeURIComponent(role) + (state ? "&state=" + state : "");
     var payLink = '<a class="jp-pay" href="' + esc(payUrl) + '" data-jp-pay>Typical pay for roles like this' + (state ? " in " + esc(state) : "") + " &rarr;</a>";
+    var gaps = window.VTJobFit.gaps ? window.VTJobFit.gaps(job, profile) : [];
     if (!fit) {
-      // Not a match for their profile: no label, but the pay link is still useful.
-      box.innerHTML = payLink;
+      // Not a match: say why, and what would change that - the kind of work first (nothing else
+      // matters if the role is different), else the gaps that kept it from a label.
+      var miss = window.VTJobFit.roleMiss ? window.VTJobFit.roleMiss(job, profile) : null;
+      var rows = miss
+        ? [{ kind: "role", text: miss.jobCategory && miss.yourCategory && miss.jobCategory !== miss.yourCategory
+              ? "This is " + (/^[AEIOU]/.test(miss.jobCategory) ? "an " : "a ") + miss.jobCategory + " role; the experience on your profile is in " + miss.yourCategory + "."
+              : "None of the job titles on your profile line up with this one.",
+            fixes: [{ label: "Done this kind of work? Add it to your experience", href: "/dashboard.html#experience" }] }]
+        : gaps;
+      box.innerHTML = gapsHtml("Not a match for your profile yet", rows) + payLink;
     } else {
       box.innerHTML =
         '<div class="jp-why ' + fit.level + '"><span class="jp-fit-label">' + (fit.level === "strong" ? "Strong match" : "Good match") + "</span>" +
-        fit.reasons.map(function (r) { return '<span class="jp-chip"><b>&#10003;</b>' + esc(r) + "</span>"; }).join("") + "</div>" + payLink;
+        fit.reasons.map(function (r) { return '<span class="jp-chip"><b>&#10003;</b>' + esc(r) + "</span>"; }).join("") + "</div>" +
+        gapsHtml(fit.level === "strong" ? "To stand out for this one" : "What's holding this back", gaps) + payLink;
     }
     box.hidden = false;
-    track("job_page_fit_shown", { level: fit ? fit.level : "none" });
+    track("job_page_fit_shown", { level: fit ? fit.level : "none", gaps: gaps.length });
     var pl = box.querySelector("[data-jp-pay]");
     if (pl) pl.addEventListener("click", function () { track("job_page_pay_click", {}); });
+    Array.prototype.forEach.call(box.querySelectorAll("[data-jp-fix]"), function (a) {
+      a.addEventListener("click", function () {
+        track("job_fit_gap_click", { kind: a.getAttribute("data-jp-fix"), training: a.classList.contains("train") });
+      });
+    });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
