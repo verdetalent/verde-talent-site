@@ -195,6 +195,7 @@ border-top:0.5px solid var(--bdr);padding-top:1rem;}
 .cardx ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
 .cardx li{font-size:13.5px;color:var(--t2);line-height:1.5;}
 .cardx li a{color:var(--grn);text-decoration:none;font-weight:600;}
+.tr-sub{font-size:12.5px;color:var(--t3);margin:-4px 0 12px;line-height:1.5;}.tr-list{display:flex;flex-direction:column;gap:8px;}.tr{display:flex;align-items:center;justify-content:space-between;gap:12px;border:0.5px solid var(--bdr2);border-radius:10px;padding:10px 12px;text-decoration:none;transition:border-color .15s,background .15s;}.tr:hover{border-color:var(--grn);background:rgba(34,224,154,0.06);}.tr-t{display:flex;flex-direction:column;gap:2px;min-width:0;}.tr-t b{font-size:13.5px;font-weight:650;color:var(--t1);}.tr-t span{font-size:12.5px;color:var(--t2);line-height:1.45;}.tr-go{flex:none;font-size:12px;font-weight:700;color:#00140C;background:var(--grn);border-radius:999px;padding:5px 11px;white-space:nowrap;}
 .prof{margin-top:2.4rem;background:linear-gradient(135deg,rgba(34,224,154,0.10),rgba(34,224,154,0.02));border:0.5px solid rgba(34,224,154,0.35);border-radius:14px;padding:20px 22px;}
 .prof h2{margin:0 0 .5rem;font-size:17px;}
 .prof p{font-size:14px;color:var(--t2);line-height:1.65;margin-bottom:14px;max-width:62ch;}
@@ -328,11 +329,11 @@ border-top:0.5px solid var(--bdr);padding-top:1rem;}
   <div class="cards2">
     <div class="cardx"><h3>You likely already have</h3><div class="rows"><div class="row"><span class="row-name">OSHA <span class="dim">&middot; Safety training</span></span><span class="row-n">named in 236 postings</span></div><div class="row"><span class="row-name">SCADA <span class="dim">&middot; Control systems</span></span><span class="row-n">named in 133 postings</span></div><div class="row"><span class="row-name">PLC <span class="dim">&middot; Control systems</span></span><span class="row-n">named in 66 postings</span></div><div class="row"><span class="row-name">NERC <span class="dim">&middot; Grid operations</span></span><span class="row-n">named in 31 postings</span></div></div>
       <ul style="margin-top:10px;"><li>Also valued, though postings rarely list them: H2S, lockout/tagout, confined space, working at height, rotating equipment, rotation schedules.</li></ul></div>
-    <div class="cardx"><h3>Worth adding</h3><ul>
-      <li><a href="/professional-development.html#sector-wind">GWO Basic Safety Training</a> - the standard entry ticket for wind sites.</li>
-      <li><a href="/professional-development.html#sector-solar">NABCEP PV Associate</a> - the common first solar credential.</li>
-      <li><a href="/professional-development.html#jobsite-safety">NFPA 70E</a> - electrical safety for storage, solar and grid work.</li>
-    </ul></div>
+    <div class="cardx"><h3>Get the training</h3><p class="tr-sub">Click any of these to see courses on our Training page.</p><div class="tr-list">
+      <a class="tr" href="/professional-development.html#sector-wind" onclick="gtag('event','switch_training_click',{course:'gwo_basic_safety_training'})"><span class="tr-t"><b>GWO Basic Safety Training</b><span>The standard entry ticket for wind sites</span></span><span class="tr-go">Find a course &rarr;</span></a>
+      <a class="tr" href="/professional-development.html#sector-solar" onclick="gtag('event','switch_training_click',{course:'nabcep_pv_associate'})"><span class="tr-t"><b>NABCEP PV Associate</b><span>The common first solar credential</span></span><span class="tr-go">Find a course &rarr;</span></a>
+      <a class="tr" href="/professional-development.html#jobsite-safety" onclick="gtag('event','switch_training_click',{course:'nfpa_70e'})"><span class="tr-t"><b>NFPA 70E</b><span>Electrical safety for storage, solar and grid work</span></span><span class="tr-go">Find a course &rarr;</span></a>
+    </div></div>
   </div>
 
   <h2>Who is hiring for these roles</h2><div class="cmp"><a class="cmp-row" href="/companies/first-solar.html"><span class="cmp-name">First Solar</span><span class="cmp-v">153</span></a><a class="cmp-row" href="/companies/vestas.html"><span class="cmp-name">Vestas</span><span class="cmp-v">132</span></a><a class="cmp-row" href="/companies/solv-energy.html"><span class="cmp-name">SOLV Energy</span><span class="cmp-v">89</span></a><a class="cmp-row" href="/companies/bloom-energy.html"><span class="cmp-name">Bloom Energy</span><span class="cmp-v">82</span></a><a class="cmp-row" href="/companies/invenergy.html"><span class="cmp-name">Invenergy</span><span class="cmp-v">72</span></a><a class="cmp-row" href="/companies/sunrun.html"><span class="cmp-name">Sunrun</span><span class="cmp-v">67</span></a><a class="cmp-row" href="/companies/mortenson.html"><span class="cmp-name">Mortenson</span><span class="cmp-v">65</span></a><a class="cmp-row" href="/companies/nextera-energy.html"><span class="cmp-name">NextEra Energy</span><span class="cmp-v">60</span></a></div>
