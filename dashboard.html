@@ -957,6 +957,14 @@ async function loadNews(){
     LAST_REPORT_AT = r.length ? r[0].created_at : null;
   } catch (e) { APPLICATIONS = []; }
   renderNews();
+  // Arrived from "Share your story" (/switch/military.html links here with ?story=1): open the
+  // found-a-job questions straight away, once. Survives the trip through login.html.
+  let story = null;
+  try { story = sessionStorage.getItem('vt_open_story'); sessionStorage.removeItem('vt_open_story'); } catch (e) {}
+  if (story) {
+    try { if (typeof gtag === 'function') gtag('event', 'story_form_open', { source: story }); } catch (e) {}
+    openJobReport({ askedFrom: 'dashboard_link', found: true });
+  }
 }
 // --- Applications tab: the candidate's own tracker -----------------------------------------
 const APP_STATUS = [
@@ -1964,9 +1972,13 @@ function fillField(id, value){
 }
 
 async function init(){
+  const storyFrom = new URLSearchParams(location.search).get('story');
+  if (storyFrom) { try { sessionStorage.setItem('vt_open_story', storyFrom); } catch (e) {} }
   SESSION = await getValidSession();
   if(!SESSION){
-    document.getElementById('gate').innerHTML = 'Please <a href="login.html">sign in</a> to view your profile.';
+    document.getElementById('gate').innerHTML = storyFrom
+      ? 'Please <a href="login.html">sign in</a> to share your story. No account? <a href="mailto:adam@verdetalent.com?subject=My%20path%20from%20the%20military%20to%20clean%20energy">Email it to us</a>.'
+      : 'Please <a href="login.html">sign in</a> to view your profile.';
     return;
   }
 
