@@ -192,6 +192,18 @@ a.app-title:hover{color:var(--grn);}
 #fitAll[hidden]{display:none;}
 .resume-fill b{color:var(--t1);}
 .resume-fill-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+/* "Get more matches": profile changes that would really add matches, counted by re-running the match engine. */
+.ul-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:0.5px solid var(--bdr);}
+.ul-row:first-of-type{border-top:0;}
+.ul-num{flex:0 0 auto;min-width:54px;text-align:center;font-size:18px;font-weight:700;color:var(--grn);line-height:1.1;}
+.ul-num small{display:block;font-size:10.5px;font-weight:500;color:var(--t3);}
+.ul-txt{flex:1;min-width:0;font-size:13.5px;color:var(--t1);line-height:1.45;}
+.ul-txt span{display:block;font-size:12px;color:var(--t3);}
+.ul-go{flex-shrink:0;}
+.ul-skills{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;}
+.ul-skills b{font-size:11.5px;font-weight:500;color:var(--t1);background:rgba(255,255,255,0.06);border-radius:6px;padding:2px 8px;}
+.ul-skills b i{font-style:normal;color:var(--t3);margin-left:4px;}
+@media (max-width:600px){.ul-row{flex-wrap:wrap;}.ul-txt{flex-basis:calc(100% - 70px);}.ul-go{margin-left:66px;}}
 .prof-nudge{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
 .prof-nudge-main{flex:1;min-width:220px;}
 .prof-nudge-text{font-size:12.5px;color:var(--t2);line-height:1.5;}
@@ -411,6 +423,11 @@ a.app-title:hover{color:var(--grn);}
     <div class="alerts-card" id="fitCard" hidden>
       <div class="apps-sum-head"><div class="al-title" style="margin-bottom:0;"><i class="ti ti-search"></i>Jobs that match you</div><a class="news-all" id="fitAll" href="/jobs.html?sort=match" style="margin-top:0;text-decoration:none;">See all &rarr;</a></div>
       <div id="fitList" class="al-list" style="margin-top:10px;"></div>
+    </div>
+    <div class="alerts-card" id="unlockCard" hidden>
+      <div class="al-title" style="margin-bottom:4px;"><i class="ti ti-bolt"></i>Get more matches</div>
+      <div class="news-sub" style="margin-bottom:4px;">Counts are based on the jobs open on Verde Talent right now. Only add what's true for you - employers see your profile.</div>
+      <div id="unlockList"></div>
     </div>
     <div class="alerts-card" id="payCard" hidden>
       <div class="al-title" style="margin-bottom:8px;"><i class="ti ti-currency-dollar"></i>What you could earn</div>
@@ -1512,6 +1529,51 @@ async function loadFitJobs(){
   if (window.VTPay) window.VTPay.prepare(FIT_JOBS);
   return FIT_JOBS;
 }
+// --- "Get more matches" ------------------------------------------------------------------------
+// Re-runs the match engine (job-fit.js) on today's jobs with one profile change at a time and
+// shows only the changes that really add matches, with the real count. Skills never change a
+// match (they're reasons only), so they get a plainer prompt: what their matching jobs ask for.
+function renderUnlock(jobs, profile){
+  const card = document.getElementById('unlockCard');
+  const VT = window.VTJobFit;
+  const rank = f => f ? (f.level === 'strong' ? 2 : 1) : 0;
+  const base = jobs.map(j => rank(VT.score(j, profile)));
+  const rows = [];
+  const goto = (tab, label) => `<button type="button" class="al-pill ul-go" data-goto="${tab}">${label}</button>`;
+  const num = (n, l) => `<div class="ul-num">${n > 999 ? Math.round(n / 100) / 10 + 'k' : n}<small>${l}</small></div>`;
+
+  // Location: without a state, on-site jobs can't be "near you". We can't guess the state, so
+  // this counts the on-site jobs that already fit their kind of work.
+  if (!profile.state) {
+    const onsite = jobs.filter(j => !VT.isRemote(j) && !VT.roleMiss(j, profile) && VT.stateOf(j.location)).length;
+    if (onsite) rows.push(`<div class="ul-row">${num(onsite, 'jobs')}<div class="ul-txt">Add your location<span>${onsite.toLocaleString()} on-site jobs fit your kind of work. With your city we can mark the ones near you as matches.</span></div>${goto('profile', 'Add location')}</div>`);
+  }
+  // Sectors: only for profiles that already list some - an empty list already counts as "any
+  // sector", so adding the first one would narrow their matches, not widen them.
+  if (profile.sectors.size) {
+    const all = [...new Set(jobs.flatMap(j => VT.list(j.sector_buckets)))].filter(x => !profile.sectors.has(x));
+    const gains = all.map(sec => {
+      const p2 = VT.prepare(Object.assign({}, CANDIDATE, { sectors: [...profile.sectors, sec] }));
+      let added = 0, up = 0;
+      jobs.forEach((j, i) => { const r = rank(VT.score(j, p2)); if (r > base[i]) { if (base[i] === 0) added++; else up++; } });
+      return { sec, added, up };
+    }).filter(g => g.added + g.up > 0).sort((a, b) => (b.added + b.up) - (a.added + a.up)).slice(0, 2);
+    gains.forEach(g => rows.push(`<div class="ul-row">${num(g.added + g.up, 'matches')}<div class="ul-txt">Worked in ${alertEsc(g.sec)}? Add it to your sectors<span>${g.added ? g.added + ' new match' + (g.added === 1 ? '' : 'es') : ''}${g.added && g.up ? ', plus ' : ''}${g.up ? g.up + ' upgraded to Strong' : ''}.</span></div>${goto('profile', 'Add ' + alertEsc(g.sec))}</div>`));
+  }
+  // Earlier jobs: each title is another kind of role they can match. We can't count what we
+  // can't guess, so this only shows when their history is thin.
+  const expCount = (Array.isArray(CANDIDATE.experience) ? CANDIDATE.experience : []).filter(e => e && e.title).length;
+  if (expCount < 2) rows.push(`<div class="ul-row"><div class="ul-num">+<small>roles</small></div><div class="ul-txt">Add your earlier jobs<span>Each job title on your profile is another kind of role we can match you to.</span></div>${goto('experience', 'Add a job')}</div>`);
+  // Skills: what the jobs they already match ask for most, that their profile doesn't list.
+  const counts = {};
+  jobs.forEach((j, i) => { if (base[i]) VT.list(j.skills).forEach(sk => { if (!VT.hasSkill(sk, profile)) counts[sk] = (counts[sk] || 0) + 1; }); });
+  const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5).filter(([, n]) => n >= 3);
+  if (top.length) rows.push(`<div class="ul-row"><div class="ul-num">${top[0][1]}<small>ask</small></div><div class="ul-txt">Skills your matching jobs ask for<div class="ul-skills">${top.map(([k, n]) => `<b>${alertEsc(k)}<i>${n}</i></b>`).join('')}</div><span>Have any of these? Add them - employers search by skill, and job pages will show what you're missing.</span></div>${goto('profile', 'Add skills')}</div>`);
+
+  card.hidden = !rows.length;
+  document.getElementById('unlockList').innerHTML = rows.join('');
+  if (rows.length) { try { gtag('event', 'unlock_matches_shown', { rows: rows.length }); } catch (e) {} }
+}
 function fitStrip(f){
   return `<div class="jc-why ${f.level}"><span class="jc-fit">${f.level === 'strong' ? 'Strong match' : 'Good match'}</span>` +
     f.reasons.map(r => `<span class="jc-chip"><b>&#10003;</b>${alertEsc(r)}</span>`).join('') + '</div>';
@@ -1550,6 +1612,7 @@ async function renderFitCards(){
         `<div class="fit-row-m">${alertEsc(j.company)} · ${alertEsc(j.location)}${j.salary ? ' · ' + alertEsc(j.salary) : ''}</div>${fitStrip(f)}</a>`;
     }).join('') : '<div class="al-empty">No close matches open right now. New jobs come in every day - your <a href="#alerts" data-goto="alerts">job alerts</a> will send them to you.</div>';
   }
+  if (profile.hasRole) renderUnlock(jobs, profile);
   // What you could earn: their headline, state and experience through the salary check's rules.
   const payCard = document.getElementById('payCard');
   const title = CANDIDATE.headline || ((CANDIDATE.experience || [])[0] || {}).title || '';

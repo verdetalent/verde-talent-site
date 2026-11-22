@@ -390,6 +390,9 @@
     score: score,
     gaps: gaps,
     roleMiss: roleMiss,
+    // Whether a job's skill tag is one the profile already lists (same rule as the reasons).
+    hasSkill: function (skill, profile) { var p = profile || PROFILE; return !!p && skillMatch(skill, p.skills); },
+    isRemote: isRemote,
     profile: function () { return PROFILE; },
     roleFromTitle: roleFromTitle,
     roleScore: roleScore,
