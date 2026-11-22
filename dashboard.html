@@ -1661,6 +1661,8 @@ async function renderFitCards(){
   const jobs = await loadFitJobs();
   if (!jobs.length) return;
   const profile = window.VTJobFit.prepare(CANDIDATE);
+  // City coordinates for "near you" (their state and the ones next to it).
+  if (window.VTJobFit.loadPlaces) await window.VTJobFit.loadPlaces(profile);
   const fitCard = document.getElementById('fitCard');
   if (!profile.hasRole) {
     fitCard.hidden = false;

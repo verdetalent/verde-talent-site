@@ -151,9 +151,85 @@
     return plain ? shared : null;
   }
 
+  // "Rochester, NY" -> "NY"; also a bare "NY" and a written-out state ("New York, New York",
+  // "Austin, Texas") - about 400 postings list their location that way.
+  var STATES = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado",
+    CT: "Connecticut", DE: "Delaware", DC: "District of Columbia", FL: "Florida", GA: "Georgia", HI: "Hawaii",
+    ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana",
+    ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi",
+    MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey",
+    NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma",
+    OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota",
+    TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington",
+    WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming", PR: "Puerto Rico" };
+  var STATE_BY_NAME = {};
+  Object.keys(STATES).forEach(function (k) { STATE_BY_NAME[STATES[k].toLowerCase()] = k; });
+  // Longest names first so "West Virginia" wins over "Virginia".
+  var STATE_NAME_RE = new RegExp("\\b(" + Object.keys(STATE_BY_NAME)
+    .sort(function (a, b) { return b.length - a.length; }).join("|") + ")\\b", "gi");
+  var ABROAD = /\b(canada|india|brazil|spain|mexico|germany|united kingdom|england|scotland|australia|chile|ireland|france|italy|poland|philippines|japan|china|netherlands|portugal|south africa|ind|bra|esp|mex|gbr|can|aus)\b/i;
   function stateOf(text) {
-    var m = String(text || "").match(/,\s*([A-Z]{2})\b/);
-    return m ? m[1] : null;
+    var t = String(text || "").trim();
+    var m = t.match(/,\s*([A-Z]{2})\b/);
+    if (m) return m[1];
+    if (/^[A-Z]{2}$/.test(t)) return STATES[t] ? t : null;
+    if (ABROAD.test(t)) return null;
+    // The last state named: "Kansas City, Missouri" is in Missouri.
+    var names = t.match(STATE_NAME_RE);
+    return names ? STATE_BY_NAME[names[names.length - 1].toLowerCase()] : null;
+  }
+
+  // --- Distance ----------------------------------------------------------------------------------
+  // "Near you" = within NEAR_MILES in a straight line, whatever state each side is in (Newark, NJ
+  // is local to New York, NY). City coordinates come from /data/places/<ST>.json (Census
+  // Gazetteer, rebuilt by build_places.py); loadPlaces() fetches the candidate's state and the
+  // states within reach of it (near.json) before scoring. Until they load - or when a city isn't
+  // in the list, or a posting gives only a state - the match falls back to comparing states.
+  var NEAR_MILES = 60;
+  var PLACES = {};      // ST -> { city: [lat, lon] }
+  var NEAR = null;      // ST -> [ST, ...] within reach
+  var PLACES_BASE = (typeof location !== "undefined" && /^https?:/.test(location.protocol || "")) ? "" : "https://verdetalent.com";
+  function cityOf(text) {
+    var t = String(text || "").trim();
+    var st = stateOf(t);
+    if (!st) return null;
+    var parts = t.split(",");
+    if (parts.length < 2) return { state: st, city: null };
+    var city = parts[parts.length - 2].toLowerCase().replace(/^\s*(greater|downtown)\s+/, "").replace(/\s+(area|metro)\s*$/, "").trim()
+      .replace(/^ft\.?\s+/, "fort ").replace(/^mt\.?\s+/, "mount ").replace(/^st\s+/, "st. ");
+    return { state: st, city: city || null };
+  }
+  function pointOf(text) {
+    var c = cityOf(text);
+    var d = c && c.city && PLACES[c.state];
+    return d && d[c.city] ? d[c.city] : null;
+  }
+  function milesBetween(a, b) {
+    var r = Math.PI / 180;
+    var h = Math.pow(Math.sin((b[0] - a[0]) * r / 2), 2) +
+      Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.pow(Math.sin((b[1] - a[1]) * r / 2), 2);
+    return 3958.8 * 2 * Math.asin(Math.sqrt(h));
+  }
+  // -> miles from the candidate to the job, or null when either side can't be placed.
+  function milesTo(job, p) {
+    if (!p || !p.point) return null;
+    var q = pointOf(job.location);
+    return q ? milesBetween(p.point, q) : null;
+  }
+  function nearState(a, b) { return !!(NEAR && NEAR[a] && NEAR[a].indexOf(b) >= 0); }
+  async function loadPlaces(profile) {
+    var p = profile || PROFILE;
+    if (!p || !p.state) return p;
+    try {
+      if (!NEAR) NEAR = await (await fetch(PLACES_BASE + "/data/places/near.json")).json();
+      var want = [p.state].concat(NEAR[p.state] || []).filter(function (s) { return !PLACES[s]; });
+      await Promise.all(want.map(function (s) {
+        return fetch(PLACES_BASE + "/data/places/" + s + ".json").then(function (r) { return r.ok ? r.json() : {}; })
+          .then(function (d) { PLACES[s] = d; }).catch(function () { PLACES[s] = {}; });
+      }));
+      p.point = pointOf(p.raw && p.raw.location);
+    } catch (e) {}
+    return p;
   }
   function isRemote(job) { return job.work_style === "Remote" || job.is_remote === true || /\bremote\b/i.test(job.location || ""); }
   function list(v) {
@@ -208,6 +284,8 @@
       sectors: new Set(list(c.sectors)),
       skills: list(c.skills).map(normSkill).filter(Boolean),
       state: stateOf(c.location),
+      // Set once loadPlaces() has fetched their state's cities (null until then).
+      point: pointOf(c.location),
       years: c.years_experience || null,
       payMin: Number(c.salary_min) || null,
       relocate: /^yes/i.test(String(c.relocation || "")),
@@ -234,6 +312,11 @@
   function money(n) { return "$" + Math.round(n / 1000) + "k"; }
   var PROFILE_LINK = "/dashboard.html#profile";
 
+  // "energy storage systems" -> "Energy storage systems"; two or more joined with "and".
+  function tagList(tags) {
+    var t = tags.map(function (x) { x = String(x); return x.charAt(0).toUpperCase() + x.slice(1); });
+    return t.length > 1 ? t.slice(0, -1).join(", ") + " and " + t[t.length - 1] : t[0];
+  }
   // -> [{ kind, short (card chip), text (job page), fixes: [{label, href}] }]
   function gaps(job, profile) {
     var p = profile || PROFILE;
@@ -252,12 +335,27 @@
     }
     if (!isRemote(job)) {
       var js = stateOf(job.location);
+      var jc = cityOf(job.location);
+      var where = jc && jc.city ? String(job.location).split(",").slice(-2).join(",").trim() : js;
+      var mi = milesTo(job, p);
+      var moveFix = [{ label: "Open to moving? Tell employers in your preferences", href: "/dashboard.html#preferences" }];
+      var far = function (text) {
+        return p.relocate
+          ? { kind: "place", short: "On-site in " + js, text: text + " Your profile says you're open to relocating.", fixes: [] }
+          : { kind: "place", short: "On-site in " + js, text: text, fixes: moveFix };
+      };
       if (js && !p.state) {
         out.push({ kind: "place", short: "Add your location", text: "This job is on-site in " + js + ", and your profile has no location to compare.", fixes: [{ label: "Add your location", href: PROFILE_LINK }] });
+      } else if (mi !== null) {
+        if (mi > NEAR_MILES) out.push(far("On-site in " + where + ", about " + (Math.round(mi / 10) * 10) + " miles from you."));
       } else if (js && p.state && js !== p.state) {
-        out.push(p.relocate
-          ? { kind: "place", short: "On-site in " + js, text: "On-site in " + js + ". You're in " + p.state + ", but your profile says you're open to relocating.", fixes: [] }
-          : { kind: "place", short: "On-site in " + js, text: "On-site in " + js + ", and you're in " + p.state + ".", fixes: [{ label: "Open to moving? Tell employers in your preferences", href: "/dashboard.html#preferences" }] });
+        if (!(jc && jc.city) && nearState(p.state, js)) {
+          // A posting that names only a state next door: could be close, could be hours away.
+          out.push({ kind: "place-unsure", short: "On-site in " + js, text: "On-site in " + js + ", next to you in " + p.state +
+            ". The posting doesn't give a city, so check the description for the exact area.", fixes: [] });
+        } else {
+          out.push(far("On-site in " + where + ", and you're in " + p.state + "."));
+        }
       }
     }
     if (p.years && job.seniority_level && LEVEL_FITS[p.years] && LEVEL_FITS[p.years].indexOf(job.seniority_level) < 0) {
@@ -277,7 +375,7 @@
       } else {
         var missing = jobSkills.filter(function (s) { return !skillMatch(s, p.skills); });
         if (missing.length) {
-          var sf = [{ label: "Have " + (missing.length > 1 ? "them" : "it") + "? Add to your profile", href: PROFILE_LINK }];
+          var sf = [{ label: "Have this experience? Add it to your profile", href: PROFILE_LINK }];
           var seen = {};
           missing.forEach(function (m) {
             var n = normSkill(m);
@@ -286,7 +384,7 @@
             });
           });
           out.push({ kind: "skills", short: "Missing " + missing[0] + (missing.length > 1 ? " +" + (missing.length - 1) : ""),
-            text: "Not on your profile: " + missing.join(", ") + ".", fixes: sf });
+            text: "This job is tagged " + tagList(missing) + ", and your profile doesn’t mention " + (missing.length > 1 ? "them" : "it") + " yet.", fixes: sf });
         }
       }
     }
@@ -331,7 +429,15 @@
     if (sectorHit.length) reasons.push(sectorHit[0]);
     var placeOk = false;
     if (isRemote(job)) { placeOk = true; reasons.push("Remote"); }
-    else if (p.state && stateOf(job.location) === p.state) { placeOk = true; reasons.push("In " + p.state); }
+    else {
+      var miles = milesTo(job, p);
+      var jst = stateOf(job.location);
+      if (miles !== null) {
+        if (miles <= NEAR_MILES) { placeOk = true; reasons.push(miles < 15 ? "Near you" : "Near you (" + Math.round(miles / 5) * 5 + " mi)"); }
+      } else if (p.state && jst === p.state) { placeOk = true; reasons.push("In " + p.state); }
+      // Only a state next door, no city: not marked down - it may well be close.
+      else if (p.state && jst && !cityOf(job.location).city && nearState(p.state, jst)) placeOk = true;
+    }
     var levelOk = true;
     if (p.years && job.seniority_level && LEVEL_FITS[p.years]) {
       levelOk = LEVEL_FITS[p.years].indexOf(job.seniority_level) >= 0;
@@ -363,7 +469,7 @@
     var cached = readJson(CACHE_KEY);
     if (cached && cached.id === s.candidate_id && Date.now() - cached.at < 600000) {
       PROFILE = prepare(cached.c);
-      return PROFILE;
+      return loadPlaces(PROFILE);
     }
     if (ROOT.VTAlerts && ROOT.VTAlerts.session) s = await window.VTAlerts.session();
     if (!s || !s.access_token) return null;
@@ -377,7 +483,7 @@
       if (!rows.length) return null;
       try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ id: s.candidate_id, at: Date.now(), c: rows[0] })); } catch (e) {}
       PROFILE = prepare(rows[0]);
-      return PROFILE;
+      return loadPlaces(PROFILE);
     } catch (e) { return null; }
   }
   // A profile edit should show up straight away on the next search.
@@ -385,6 +491,8 @@
 
   ROOT.VTJobFit = {
     loadProfile: loadProfile,
+    loadPlaces: loadPlaces,
+    milesTo: milesTo,
     forget: forget,
     prepare: prepare,
     score: score,

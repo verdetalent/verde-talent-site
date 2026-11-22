@@ -181,7 +181,11 @@
       box.innerHTML =
         '<div class="jp-why ' + fit.level + '"><span class="jp-fit-label">' + (fit.level === "strong" ? "Strong match" : "Good match") + "</span>" +
         fit.reasons.map(function (r) { return '<span class="jp-chip"><b>&#10003;</b>' + esc(r) + "</span>"; }).join("") + "</div>" +
-        gapsHtml(fit.level === "strong" ? "To stand out for this one" : "What's holding this back", gaps) + payLink;
+        gapsHtml(
+          // Only sector, location and level decide Strong vs Good - skills and pay never do - so
+          // "To get a Strong match" only when one of those is on the list.
+          fit.level === "good" && gaps.some(function (g) { return g.kind === "sector" || g.kind === "place" || g.kind === "level"; })
+            ? "To get a Strong match" : "To stand out for this one", gaps) + payLink;
     }
     box.hidden = false;
     track("job_page_fit_shown", { level: fit ? fit.level : "none", gaps: gaps.length });

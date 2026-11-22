@@ -98,6 +98,8 @@ const FIT = (globalThis as any).VTJobFit as {
   // deno-lint-ignore no-explicit-any
   score: (job: JobListing, profile: any) => { level: "strong" | "good"; reasons: string[] } | null;
   stateOf: (text: string | null | undefined) => string | null;
+  // deno-lint-ignore no-explicit-any
+  loadPlaces: (profile: any) => Promise<any>;
   roleFromTitle: (title: string) => { category: string | null };
 };
 
@@ -1459,6 +1461,8 @@ Deno.serve(async (req) => {
       }
 
       const subject = subjectFor(sections);
+      // City coordinates for "near you" (cached across candidates); prepare() then picks them up.
+      await FIT.loadPlaces(FIT.prepare(candidate));
       const html = buildEmailHtml(candidate, sections, newsItems, intelStat, cadence);
       if (dryRun) {
         if (only || previews.length < 10) {
