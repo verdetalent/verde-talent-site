@@ -93,6 +93,18 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-heig
 .news-card[hidden],.news-found[hidden]{display:none;}
 .news-title{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:.25rem;}
 .news-title i{color:var(--grn);}
+.sw-card{position:relative;}
+.sw-x{position:absolute;top:10px;right:10px;background:none;border:0;color:var(--t3);font-size:14px;cursor:pointer;padding:4px 6px;}
+.sw-x:hover{color:var(--t1);}
+.sw-item{display:flex;gap:14px;align-items:flex-start;padding-right:22px;}
+.sw-item + .sw-item{margin-top:14px;padding-top:14px;border-top:0.5px solid var(--bdr);}
+.sw-ic{flex:none;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);}
+.sw-ic svg{width:24px;height:auto;border-radius:2px;}
+.sw-ic i{font-size:18px;color:#FFB547;}
+.sw-h{font-size:14px;font-weight:600;margin-bottom:3px;}
+.sw-p{font-size:13px;color:var(--t2);line-height:1.55;margin-bottom:8px;}
+.sw-go{font-size:13px;font-weight:600;color:var(--grn);text-decoration:none;}
+.sw-go:hover{text-decoration:underline;}
 .news-sub{font-size:12px;color:var(--t3);margin-bottom:.6rem;}
 .news-item{padding:.75rem 0;border-top:0.5px solid var(--bdr);}
 .news-item:first-of-type{border-top:none;}
@@ -428,6 +440,10 @@ a.app-title:hover{color:var(--grn);}
       <div class="al-title" style="margin-bottom:4px;"><i class="ti ti-bolt" style="color:#FFCC4D;"></i>Get more matches</div>
       <div class="news-sub" style="margin-bottom:4px;">Counts are based on the jobs open on Verde Talent right now. Only add what's true for you - employers see your profile.</div>
       <div id="unlockList"></div>
+    </div>
+    <div class="alerts-card sw-card" id="switchCard" hidden>
+      <button type="button" class="sw-x" id="switchX" aria-label="Hide this">&#10005;</button>
+      <div id="switchList"></div>
     </div>
     <div class="alerts-card" id="payCard" hidden>
       <div class="al-title" style="margin-bottom:8px;"><i class="ti ti-currency-dollar"></i>What you could earn</div>
@@ -1586,7 +1602,57 @@ function fitStrip(f){
   return `<div class="jc-why ${f.level}"><span class="jc-fit">${f.level === 'strong' ? 'Strong match' : 'Good match'}</span>` +
     f.reasons.map(r => `<span class="jc-chip"><b>&#10003;</b>${alertEsc(r)}</span>`).join('') + '</div>';
 }
+// --- "Coming from oil & gas / the military?" -------------------------------------------------
+// Points career changers at /switch/ pages: veterans by the military-service answer on their
+// profile, oil & gas people by a job title or employer in their work history. Hidden for good
+// once closed.
+const OG_TITLE = /\b(oil|petroleum|drilling|driller|rig hand|roustabout|roughneck|refinery|refining|landman|frac|fracking|wellsite|well site|oilfield|midstream|upstream|downstream|wireline|coiled tubing|mud logger|pipeline (welder|inspector|construction|technician|operator|engineer|integrity|superintendent))\b/i;
+const OG_EMPLOYER = /\b(halliburton|schlumberger|slb|baker hughes|chevron|exxon|exxonmobil|conocophillips|occidental|eog resources|devon energy|pioneer natural|marathon oil|marathon petroleum|phillips 66|valero|kinder morgan|enterprise products|transocean|nabors|helmerich|patterson-uti|weatherford|diamondback|continental resources|hess)\b/i;
+function oilGasRole(){
+  const exp = Array.isArray(CANDIDATE && CANDIDATE.experience) ? CANDIDATE.experience : [];
+  const hit = exp.find(e => e && ((e.title && OG_TITLE.test(e.title)) || (e.co && OG_EMPLOYER.test(e.co))));
+  if (hit) return hit.title ? (hit.co ? `${hit.title} at ${hit.co}` : hit.title) : hit.co;
+  if (CANDIDATE && CANDIDATE.headline && OG_TITLE.test(CANDIDATE.headline)) return CANDIDATE.headline;
+  return null;
+}
+function renderSwitchCard(){
+  const card = document.getElementById('switchCard');
+  if (!card || !CANDIDATE) return;
+  let hidden = false;
+  try { hidden = localStorage.getItem('vt_switch_card_closed') === '1'; } catch (e) {}
+  const items = [];
+  const vet = CANDIDATE.veteran_status;
+  if (!hidden && (vet === 'veteran' || vet === 'transitioning')) {
+    items.push(`<div class="sw-item"><div class="sw-ic"><svg viewBox="0 0 190 100" aria-hidden="true"><rect width="190" height="100" fill="#fff"/><rect y="0.00" width="190" height="7.69" fill="#B22234"/><rect y="15.38" width="190" height="7.69" fill="#B22234"/><rect y="30.77" width="190" height="7.69" fill="#B22234"/><rect y="46.15" width="190" height="7.69" fill="#B22234"/><rect y="61.54" width="190" height="7.69" fill="#B22234"/><rect y="76.92" width="190" height="7.69" fill="#B22234"/><rect y="92.31" width="190" height="7.69" fill="#B22234"/><rect width="76" height="53.85" fill="#3C3B6E"/></svg></div><div>
+      <div class="sw-h">${vet === 'transitioning' ? 'Getting out soon?' : 'Thank you for your service'}</div>
+      <div class="sw-p">See which clean energy roles military jobs lead to, what they pay, and which employers ask for military experience in their postings.</div>
+      <a class="sw-go" href="/switch/military.html" data-sw="military">See where your service fits &rarr;</a></div></div>`);
+  }
+  const og = hidden ? null : oilGasRole();
+  if (og) {
+    items.push(`<div class="sw-item"><div class="sw-ic"><i class="ti ti-bolt"></i></div><div>
+      <div class="sw-h">Coming from oil &amp; gas?</div>
+      <div class="sw-p">Your time as ${escapeHtml(og)} carries over. See which clean energy roles oil &amp; gas experience leads to, and what they pay.</div>
+      <a class="sw-go" href="/switch/oil-and-gas.html" data-sw="oil-and-gas">See where your experience fits &rarr;</a></div></div>`);
+  }
+  card.hidden = !items.length;
+  document.getElementById('switchList').innerHTML = items.join('');
+  if (items.length) {
+    try { if (typeof gtag === 'function') gtag('event', 'switch_card_shown', { military: !!(vet === 'veteran' || vet === 'transitioning'), oil_gas: !!og }); } catch (e) {}
+  }
+}
+document.getElementById('switchList').addEventListener('click', e => {
+  const a = e.target.closest('a[data-sw]');
+  if (a) { try { if (typeof gtag === 'function') gtag('event', 'switch_link_click', { background: a.dataset.sw, place: 'dashboard' }); } catch (err) {} }
+});
+document.getElementById('switchX').addEventListener('click', () => {
+  try { localStorage.setItem('vt_switch_card_closed', '1'); } catch (e) {}
+  document.getElementById('switchCard').hidden = true;
+  try { if (typeof gtag === 'function') gtag('event', 'switch_card_closed'); } catch (e) {}
+});
+
 async function renderFitCards(){
+  renderSwitchCard();
   // job-fit.js / salary-check.js load deferred - wait for them if the profile arrived first.
   if (!window.VTJobFit && document.readyState === 'loading') {
     await new Promise(r => document.addEventListener('DOMContentLoaded', r, { once: true }));
