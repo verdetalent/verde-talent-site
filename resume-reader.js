@@ -51,7 +51,14 @@ async function extractTextFromPdf(arrayBuffer) {
     // large skipped run (e.g. the wide gap in a "date ......... title"
     // header line), and that bounding box can span clean across a real
     // column gutter, masking it from detection below.
-    const items = content.items.filter((it) => it.str && it.str.trim());
+    // ...but they still mark a word break. PDFs printed from a web page (Chrome) draw the space
+    // between words as its own item, so dropping it would glue "led six stores" into "ledsixstores".
+    const raw = content.items;
+    for (let k = 0; k + 1 < raw.length; k++) {
+      const a = raw[k], b = raw[k + 1];
+      if (a.str && a.str.trim() && b.str && !b.str.trim() && Math.abs(b.transform[5] - a.transform[5]) < 2) a.spaceAfter = true;
+    }
+    const items = raw.filter((it) => it.str && it.str.trim());
     if (i === 1) lastResumeHints = { name: largestTopLine(items, viewport.height) };
     pagesColumns.push(splitIntoColumns(items, viewport.width));
   }
@@ -143,6 +150,13 @@ function splitIntoColumns(items, pageWidth) {
 // once a page has been split into columns, the items belonging to one
 // column are no longer guaranteed to already be in that order in the
 // original stream.
+// The header/footer a browser adds when a web page is printed to PDF: the file path or URL,
+// the print date/time with the page title, and "2/3" page counters. Never resume content.
+function isPrintChrome(l) {
+  return /^(file:\/\/\/|https?:\/\/\S+\s*$)/i.test(l)
+    || /^\d{1,2}\/\d{1,2}\/\d{2,4},?\s+\d{1,2}:\d{2}\s*(AM|PM)?\b/i.test(l)
+    || /^\d{1,2}\s*\/\s*\d{1,2}$/.test(l);
+}
 function itemsToLines(items) {
   const sorted = [...items].sort((a, b) => {
     const dy = b.transform[5] - a.transform[5];
@@ -155,9 +169,25 @@ function itemsToLines(items) {
   let lastY = null;
   let lastEndX = null;
   let lastHeight = null;
+  let lastSpaceAfter = false;
+  let parts = [];   // this line's pieces: [text, real space before it (from the PDF's own space item)]
   const pushLine = () => {
-    const cleaned = currentLine.replace(/\s+/g, ' ').trim();
-    if (cleaned) lines.push(collapseTrackedLine(cleaned));
+    let cleaned = currentLine.replace(/\s+/g, ' ').trim();
+    // Letter-spaced text ("E N T E R P R I S E  S A L E S") comes out one letter per piece. When the
+    // PDF drew real spaces between the words, those are the only word breaks to keep; otherwise a
+    // word break is a gap clearly wider than the usual gap between letters.
+    const toks = cleaned.split(' ');
+    if (toks.length >= 6 && toks.filter(t => t.length === 1).length / toks.length >= 0.6) {
+      let brk;
+      if (parts.some(x => x[1])) brk = x => x[1];
+      else {
+        const gaps = parts.slice(1).map(x => x[2]).filter(g => g != null).sort((a, b) => a - b);
+        const med = gaps.length ? gaps[Math.floor(gaps.length / 2)] : 0;
+        brk = x => x[2] != null && x[2] > Math.max(med * 1.6, med + 1.5);
+      }
+      cleaned = parts.map((x, k) => (k && brk(x) ? ' ' : '') + x[0]).join('').replace(/\s+/g, ' ').replace(/\s*·\s*/g, ' · ').trim();
+    }
+    if (cleaned && !isPrintChrome(cleaned)) lines.push(collapseTrackedLine(cleaned));
   };
   for (const item of sorted) {
     const y = item.transform[5];
@@ -165,6 +195,7 @@ function itemsToLines(items) {
     if (lastY !== null && Math.abs(y - lastY) > 2) {
       pushLine();
       currentLine = '';
+      parts = [];
       lastEndX = null;
     }
     if (item.str && lastEndX !== null) {
@@ -180,12 +211,14 @@ function itemsToLines(items) {
       // "P R O F I L E", which fails every downstream regex.
       const gap = x - lastEndX;
       const threshold = Math.max(lastHeight || 0, item.height || 0) * 0.3;
-      if (gap > threshold && !/^\s/.test(item.str) && !/\s$/.test(currentLine)) {
+      if ((gap > threshold || lastSpaceAfter) && !/^\s/.test(item.str) && !/\s$/.test(currentLine)) {
         currentLine += ' ';
       }
     }
     currentLine += item.str;
+    parts.push([item.str, lastEndX !== null && lastSpaceAfter, lastEndX !== null ? x - lastEndX : null]);
     lastEndX = x + (item.width || 0);
+    lastSpaceAfter = !!item.spaceAfter;
     lastHeight = item.height || lastHeight;
     lastY = y;
   }
@@ -633,6 +666,14 @@ function companyFromLine(l) {
 // Bullets and description lines as a list: a bullet glyph starts a new item, a line that carries on a
 // sentence (starts lowercase, or the last one didn't end) joins it; short sub-headings like
 // "Key Contributions & Results:" are dropped. At most 8 per job, each at most 300 characters.
+// A short line where every word is capitalised ("Heugel Executive Coaching", "VP of Sales · Two
+// Tenures", "YRS SALES YRS LEADING") is a company name, sub-title or sidebar label, not a highlight.
+const HEADING_MINOR_RE = /^(of|and|the|for|in|at|to|a|an|on|with|by|or)$/i;
+function isHeadingLike(t) {
+  const words = t.split(/\s+/).filter(w => /[A-Za-z]/.test(w));
+  if (words.length > 8 || /[.!?;]$/.test(t)) return false;
+  return words.every(w => HEADING_MINOR_RE.test(w) || !/^[^A-Za-z]*[a-z]/.test(w));
+}
 function bulletsFrom(body) {
   const items = [];
   body.forEach(l => {
@@ -648,6 +689,8 @@ function bulletsFrom(body) {
   });
   return items.map(x => x.t)
     .filter(t => !(t.length <= 60 && /:$/.test(t)) && t.split(/\s+/).length >= 3)
+    .filter(t => !/file:\/\/|https?:\/\//i.test(t) && !t.split(/\s+/).some(w => w.length > 24))
+    .filter(t => !isHeadingLike(t))
     .map(t => t.length > 300 ? t.slice(0, 300).replace(/\s+\S*$/, '') + '…' : t)
     .slice(0, 8);
 }
@@ -896,8 +939,10 @@ const isNotNameWord = w => NAME_NOT_NAME_WORDS.has(w.toLowerCase().replace(/\.$/
 // A title following the name on the same line, after a separator
 // ("Jane Doe | Solar Engineer | Austin, TX") - the first piece that isn't
 // contact info, a place, or a section heading.
+// "E N T E R P R I S E  S A L E S" - letter-spaced text whose word breaks were lost; no headline beats a wrong one.
+function isLetterSpaced(p) { const t = p.split(/\s+/); return t.length >= 6 && t.filter(w => w.length === 1).length / t.length >= 0.6; }
 function usableHeadline(p) {
-  return p.length >= 4 && p.length < 90 && !isContactLine(p) && !isLocationOnlyLine(p) && !isSectionHeading(p);
+  return p.length >= 4 && p.length < 90 && !isContactLine(p) && !isLocationOnlyLine(p) && !isSectionHeading(p) && !isLetterSpaced(p);
 }
 function headlineFromLineTail(line) {
   for (const piece of line.split(CONTACT_SEPARATOR_RE).slice(1)) {
@@ -986,7 +1031,7 @@ function parseResumeText(text, hints) {
     for (let i = nameIdx + 1; i < Math.min(nonEmpty.length, nameIdx + 5); i++) {
       const l = nonEmpty[i];
       if (isSectionHeading(l)) break;
-      if (isLocationOnlyLine(l) || isContactLine(l)) continue;
+      if (isLocationOnlyLine(l) || isContactLine(l) || isLetterSpaced(l)) continue;
       if (l.length < 90 && l.length > 3) {
         parsed.headline = l;
         break;
