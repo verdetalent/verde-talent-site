@@ -215,10 +215,26 @@ function collapseTrackedLine(line) {
 // A block's text as lines: a soft line break (Shift+Enter) inside a Word
 // paragraph is a line break, not nothing - textContent would glue
 // "Jane Doe<br>Austin, TX" into "Jane DoeAustin, TX".
+// A tab inside a line is kept (as one \t): Word resumes use tabs to push the dates or the city to the
+// right margin ("Company<tab><tab>Chicago, IL"), and it's the only thing separating the two.
 function textLinesOf(node) {
   const clone = node.cloneNode(true);
   clone.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
-  return clone.textContent.split('\n').map(t => t.replace(/\s+/g, ' ').trim()).filter(Boolean);
+  return clone.textContent.split('\n').map(tidyLine).filter(Boolean);
+}
+function tidyLine(t) {
+  return t.replace(/[  ]*\t[\s]*/g, '\t').replace(/[^\S\t]+/g, ' ').trim();
+}
+// List items as bullets, one per line - a nested list's items are their own bullets, not glued onto
+// the end of the parent ("...customer centric:Implemented Zoho + Salesforce CRM...").
+function listLines(list, out) {
+  for (const li of list.querySelectorAll(':scope > li')) {
+    const own = li.cloneNode(true);
+    own.querySelectorAll('ul, ol').forEach(n => n.remove());
+    const text = own.textContent.replace(/\s+/g, ' ').trim();
+    if (text) out.push('• ' + text);
+    li.querySelectorAll(':scope > ul, :scope > ol').forEach(n => listLines(n, out));
+  }
 }
 
 function htmlToStructuredText(html) {
@@ -228,10 +244,7 @@ function htmlToStructuredText(html) {
   for (const node of container.children) {
     const tag = node.tagName.toLowerCase();
     if (tag === 'ul' || tag === 'ol') {
-      for (const li of node.querySelectorAll(':scope > li')) {
-        const text = li.textContent.replace(/\s+/g, ' ').trim();
-        if (text) lines.push('• ' + text);
-      }
+      listLines(node, lines);
     } else if (tag === 'table') {
       // Header tables are a common Word template (name in one cell, contact
       // details in another); textContent runs the cells together
@@ -401,8 +414,9 @@ async function extractTextFromResumeFile(file) {
 // fills stays fully editable — the submit note below still tells people
 // to double-check before submitting.
 const RESUME_SECTION_HEADERS = {
-  summary: /^(professional\s+)?summary$|^objective$|^about(\s+me)?$|^profile$/i,
-  skills: /^(technical\s+|core\s+)?skills?(\s*&\s*\w+)?$/i,
+  summary: /^(professional\s+|career\s+|executive\s+|profile\s+)?summary$|^summary\s+of\s+qualifications$|^(qualifications|professional|career|executive)\s+(overview|profile|summary)$|^overview$|^(career\s+)?objective$|^about(\s+me)?$|^(professional\s+)?profile$/i,
+  skills: /^(technical\s+|core\s+|key\s+)?skills?(\s*(&|and)\s*\w+)?$|^core\s+competenc(y|ies)$|^areas\s+of\s+expertise$|^technical\s+proficienc(y|ies)$|^tools(\s*(&|and)\s*technologies)?$/i,
+  certs: /^(licen[cs]es?\s*(&|and)\s*)?certifications?(\s*(&|and)\s*(licen[cs]es?|training))?$|^licen[cs]es$/i,
   experience: /^(professional\s+|work\s+)?experience$|^employment(\s+history)?$/i,
   education: /^education(\s+&\s+\w+)?$/i,
 };
@@ -493,13 +507,21 @@ function orderEntryParts(parts, i, lines, kind) {
 function parseEntriesFromLines(lines, kind) {
   const trimmed = lines.map(l => l.trim());
   const entries = [];
+  const spans = [];   // which lines each entry's title/company/date used: [first, last]
   for (let i = 0; i < trimmed.length; i++) {
     const line = trimmed[i];
     if (!line) continue;
     const dateMatch = line.match(DATE_RANGE_RE);
     if (!dateMatch) continue;
     const withoutDate = line.replace(DATE_RANGE_RE, '').replace(/[|,–—-]\s*$/, '').trim();
-    let headLine;
+    // A second date range right under an entry's own title-and-date line is the same job held
+    // twice ("VP Sales  2017 - 2019 \n 2014 - 2016 \n Company") - not a new entry.
+    if (withoutDate.length <= 3 && entries.length && spans[spans.length - 1][1] === i - 1
+        && DATE_RANGE_RE.test(trimmed[i - 1]) && trimmed[i - 1].replace(DATE_RANGE_RE, '').trim().length > 3) {
+      spans[spans.length - 1][1] = i;
+      continue;
+    }
+    let headLine, first = i, last = i;
     if (withoutDate.length > 3) {
       headLine = withoutDate; // date shared the line with the title/company
     } else {
@@ -518,32 +540,107 @@ function parseEntriesFromLines(lines, kind) {
       const fwdLine = fwd < trimmed.length && !DATE_RANGE_RE.test(trimmed[fwd]) ? trimmed[fwd] : null;
 
       if (backLine && !looksLikeBulletLine(backLine)) {
-        headLine = backLine;
+        headLine = backLine; first = back;
       } else if (fwdLine && !looksLikeBulletLine(fwdLine)) {
         // Forward layouts commonly split title and company across two
         // lines rather than one ("Title \n Company"); grab the next line
         // too, when it also isn't a bullet, and treat it as the company.
         const secondLine = trimmed[fwd + 1] ? trimmed[fwd + 1].trim() : '';
-        headLine = secondLine && !looksLikeBulletLine(secondLine) && !DATE_RANGE_RE.test(secondLine)
-          ? `${fwdLine} | ${secondLine}`
-          : fwdLine;
+        const two = secondLine && !looksLikeBulletLine(secondLine) && !DATE_RANGE_RE.test(secondLine);
+        headLine = two ? `${fwdLine} | ${secondLine}` : fwdLine;
+        last = two ? fwd + 1 : fwd;
       } else if (backLine) {
-        headLine = backLine;
+        headLine = backLine; first = back;
       } else if (fwdLine) {
-        headLine = fwdLine;
+        headLine = fwdLine; last = fwd;
       } else {
         continue;
       }
     }
-    const parts = headLine.split(/\s+(?:at|@)\s+|\s*[|–—]\s*|,\s*/).filter(Boolean);
+    const parts = headLine.split(/\s+(?:at|@)\s+|\s*[|–—\t]\s*|,\s*/).filter(Boolean);
     if (!parts.length) continue;
     const dates = dateMatch[0].replace(/\s+/g, ' ');
-    const [first, second] = orderEntryParts(parts, i, trimmed, kind);
+    const [a, b] = orderEntryParts(parts, i, trimmed, kind);
     entries.push(kind === 'experience'
-      ? { title: first, co: second, dates }
-      : { degree: first, school: second, dates });
+      ? { title: a, co: isPlaceOnly(b) ? '' : b, dates }
+      : { degree: a, school: b, dates });
+    spans.push([first, last]);
+  }
+  // What sits between one entry's heading and the next: the company line (when the heading didn't
+  // have one), then a description and bullets.
+  if (kind === 'experience') {
+    entries.forEach((e, k) => {
+      const end = k + 1 < spans.length ? spans[k + 1][0] : trimmed.length;
+      let body = trimmed.slice(spans[k][1] + 1, end).filter(l => l && !isBareDateLine(l));
+      if (!e.co && body.length && isCompanyLine(body[0])) {
+        e.co = companyFromLine(body[0]);
+        body = body.slice(1);
+      }
+      const bullets = bulletsFrom(body);
+      if (bullets.length) e.bullets = bullets;
+    });
   }
   return entries;
+}
+
+// "Chicago, IL", "IL", "Remote" on their own - a place, not a company.
+function isPlaceOnly(s) {
+  if (!s) return false;
+  const t = s.trim();
+  return /^(remote|hybrid|on-?site)$/i.test(t) || isStateExact(t)
+    || (/^[A-Za-z .'-]+,\s*[A-Za-z]{2}$/.test(t) && isStateExact(t.split(',').pop()));
+}
+// Exactly a state ("IL", "Illinois") - not "Texas Instruments".
+function isStateExact(s) {
+  const t = s.trim();
+  return (/^[A-Z]{2}$/.test(t) && US_STATE_ABBRS.has(t)) || !!US_STATES[t.toLowerCase()];
+}
+function isBareDateLine(l) {
+  return DATE_RANGE_RE.test(l) && l.replace(DATE_RANGE_RE, '').replace(/[\s|,–—-]/g, '').length <= 3;
+}
+// A short, capitalised, non-sentence line straight under the title: "Monster Worldwide<tab>Chicago, IL".
+function isCompanyLine(l) {
+  if (l.length > 80 || /^[•·▪●◦*–-]\s/.test(l) || looksLikeBulletLine(l) || /:$/.test(l)) return false;
+  if (l.split(/\s+/).length > 9) return false;
+  // Ends in a place ("... Chicago, IL", "...<tab>Remote") - the company line, whatever its words.
+  const tail = l.split(/\t|\s+[|•·]\s+/).pop().trim();
+  const endsInPlace = (l !== tail && isPlaceOnly(tail)) || /,\s*([A-Z]{2})$/.test(l) && isStateExact(l.slice(-2));
+  return endsInPlace || headScore(l, 'experience') <= 0 || ORG_WORD_RE.test(l);
+}
+// The company from that line, minus the place at the end: split on the tab or bar when there is one,
+// else drop a trailing "City, ST" (one-word city - "Green Clean Chicago, IL" -> "Green Clean").
+function companyFromLine(l) {
+  const parts = l.split(/\s*[\t|•·]\s*|\s+[–—]\s+/).map(s => s.trim()).filter(Boolean);
+  if (parts.length > 1) {
+    const kept = parts.filter(p => !isPlaceOnly(p));
+    if (kept.length) return kept[0];
+  }
+  const m = l.match(/^(.*\S)\s+([A-Za-z.'-]+),\s*([A-Za-z]{2})$/);
+  if (m && isStateExact(m[3].toUpperCase())) return m[1];
+  const m2 = l.match(/^(.*\S)\s+([A-Z]{2})$/);
+  if (m2 && isStateExact(m2[2]) && m2[1].length > 2) return m2[1].replace(/\s+(central|north|south|east|west|northern|southern|greater)$/i, '');
+  return l;
+}
+// Bullets and description lines as a list: a bullet glyph starts a new item, a line that carries on a
+// sentence (starts lowercase, or the last one didn't end) joins it; short sub-headings like
+// "Key Contributions & Results:" are dropped. At most 8 per job, each at most 300 characters.
+function bulletsFrom(body) {
+  const items = [];
+  body.forEach(l => {
+    const glyph = /^[•·▪●◦*–-]\s*/.test(l);
+    const text = l.replace(/^[•·▪●◦*–-]\s*/, '').replace(/\t+/g, ' ').trim();
+    if (!text) return;
+    const prev = items[items.length - 1];
+    if (prev && !glyph && (/^[a-z(&]/.test(text) || !/[.!?:;)]$/.test(prev.t) && !prev.g && prev.t.length > 40)) {
+      prev.t += ' ' + text;
+      return;
+    }
+    items.push({ t: text, g: glyph });
+  });
+  return items.map(x => x.t)
+    .filter(t => !(t.length <= 60 && /:$/.test(t)) && t.split(/\s+/).length >= 3)
+    .map(t => t.length > 300 ? t.slice(0, 300).replace(/\s+\S*$/, '') + '…' : t)
+    .slice(0, 8);
 }
 
 const SECTOR_KEYWORDS = {
@@ -898,14 +995,27 @@ function parseResumeText(text, hints) {
 
   const sections = findResumeSections(lines);
 
-  if (sections.skills) {
-    const skillsText = sections.skills.filter(Boolean).join(', ');
-    parsed.skills = skillsText.split(/[,•|;]/).map(s => s.trim()).filter(s => s && s.length < 40).slice(0, 25);
+  // Skills, then certifications ("OSHA 30", "NABCEP PV Associate") - both end up in the skills list.
+  const skillLines = [].concat(sections.skills || [], sections.certs || []).filter(Boolean);
+  if (skillLines.length) {
+    const skillsText = skillLines.map(l => l.replace(/^[•·▪●◦*–-]\s*/, '')).join(', ');
+    const seen = new Set();
+    parsed.skills = skillsText.split(/[,•|;\t]/).map(s => s.replace(/^[A-Za-z &]{2,30}:\s*/, '').trim())
+      .filter(s => s && s.length < 40 && !seen.has(s.toLowerCase()) && seen.add(s.toLowerCase())).slice(0, 25);
   }
 
   if (sections.summary) {
-    const summary = sections.summary.filter(Boolean).join(' ').trim();
-    if (summary) parsed.bio = summary.slice(0, 500);
+    // Short lines ("16 years of sales experience", "7 promotions") read as a list, so they're
+    // joined with " · "; wrapped sentences are joined with a space.
+    const sl = sections.summary.filter(Boolean).map(l => l.replace(/^[•·▪●◦*–-]\s*/, '').replace(/\t+/g, ' '));
+    let summary = '';
+    sl.forEach((l, k) => {
+      const prev = sl[k - 1];
+      const listy = prev && prev.length < 60 && !/[.!?:;,]$/.test(prev) && !/^[a-z]/.test(l);
+      summary += !prev ? l : (listy ? ' · ' : ' ') + l;
+    });
+    summary = summary.trim();
+    if (summary) parsed.bio = summary.length > 500 ? summary.slice(0, 498).replace(/\s+\S*$/, '') + '…' : summary;
   }
 
   if (sections.experience) {

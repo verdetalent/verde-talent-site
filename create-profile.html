@@ -924,7 +924,7 @@ function renderExperience(){
   experience.forEach((e,i)=>{
     const card = document.createElement('div');
     card.className = 'exp-card';
-    card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${e.title}</div><div class="exp-co">${e.co}</div><div class="exp-dates">${e.dates}</div></div><button class="icon-btn" onclick="removeExperience(${i})"><i class="ti ti-trash"></i></button></div>`;
+    card.innerHTML = `<div class="exp-header"><div><div class="exp-title-text">${e.title}</div><div class="exp-co">${e.co}</div><div class="exp-dates">${e.dates}</div>${e.bullets && e.bullets.length ? `<div class="exp-dates">${e.bullets.length} highlight${e.bullets.length === 1 ? '' : 's'} from your resume - edit them on your dashboard</div>` : ''}</div><button class="icon-btn" onclick="removeExperience(${i})"><i class="ti ti-trash"></i></button></div>`;
     list.appendChild(card);
   });
   updateYears();
