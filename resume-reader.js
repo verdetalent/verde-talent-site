@@ -561,8 +561,17 @@ function parseEntriesFromLines(lines, kind) {
     if (!parts.length) continue;
     const dates = dateMatch[0].replace(/\s+/g, ' ');
     const [a, b] = orderEntryParts(parts, i, trimmed, kind);
+    // The other half came from a line just above or below: that line is part of the heading too
+    // (not a bullet), and for a job its place at the end is dropped ("Acme Solar<tab>Austin, TX").
+    const borrowed = b && !parts.includes(b);
+    if (borrowed) {
+      for (const j of [i - 1, i + 1, i - 2, i + 2]) {
+        if (trimmed[j] === b) { first = Math.min(first, j); last = Math.max(last, j); break; }
+      }
+    }
+    const co = kind === 'experience' && borrowed ? companyFromLine(b) : b;
     entries.push(kind === 'experience'
-      ? { title: a, co: isPlaceOnly(b) ? '' : b, dates }
+      ? { title: a, co: isPlaceOnly(co) ? '' : co, dates }
       : { degree: a, school: b, dates });
     spans.push([first, last]);
   }
