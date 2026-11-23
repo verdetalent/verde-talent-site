@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Resume backfill · Verde Talent Admin</title>
+<meta name="robots" content="noindex,nofollow"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; worker-src 'self' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://iqcyofkosjopxsfdufvy.supabase.co https://cdn.jsdelivr.net; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="stylesheet" href="/tabler-icons.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blk:#0A0A0A;--card:#131313;--card2:#1A1A1A;--bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.14);
+  --grn:#22E09A;--amb:#FFB547;--cor:#FF7055;
+  --t1:#FFFFFF;--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);min-height:100vh;font-size:14px;}
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;}
+.gate-card{background:var(--card);border:0.5px solid var(--bdr2);border-radius:16px;padding:2rem;width:100%;max-width:380px;display:flex;flex-direction:column;gap:10px;}
+.gate-card h1{font-size:20px;font-weight:600;}
+.gate-card p{color:var(--t2);font-size:13px;line-height:1.5;margin-bottom:6px;}
+.gate-card input{background:var(--card2);border:0.5px solid var(--bdr2);border-radius:8px;padding:10px 12px;color:var(--t1);font-size:14px;}
+.btn{padding:9px 16px;border-radius:8px;font-size:13px;cursor:pointer;border:none;font-weight:500;}
+.btn-grn{background:var(--grn);color:#052e1e;}
+.btn-grn:disabled{opacity:.45;cursor:default;}
+.btn-ghost{background:none;border:0.5px solid var(--bdr2);color:var(--t2);}
+.gate-error{color:var(--cor);font-size:13px;min-height:1em;}
+.wrap{max-width:960px;margin:0 auto;padding:28px 16px 120px;}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.badge{font-size:11px;background:rgba(255,181,71,0.15);color:var(--amb);border:0.5px solid rgba(255,181,71,0.3);padding:2px 8px;border-radius:6px;}
+h2{font-size:22px;font-weight:600;}
+.lede{color:var(--t2);line-height:1.55;margin:6px 0 18px;max-width:720px;}
+.status{background:var(--card);border:0.5px solid var(--bdr);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.bar{flex:1;min-width:160px;height:6px;background:var(--card2);border-radius:4px;overflow:hidden;}
+.bar i{display:block;height:100%;background:var(--grn);width:0;transition:width .2s;}
+.sum{font-size:13px;color:var(--t2);}
+.sum b{color:var(--t1);font-weight:600;}
+.tbl{border:0.5px solid var(--bdr);border-radius:12px;overflow:hidden;}
+.row{border-top:0.5px solid var(--bdr);}
+.row:first-child{border-top:none;}
+.rh{display:grid;grid-template-columns:28px 1fr auto 26px;gap:10px;align-items:center;padding:12px 14px;cursor:pointer;}
+.rh:hover{background:var(--card);}
+.rh input{width:16px;height:16px;accent-color:var(--grn);}
+.nm{font-weight:500;}
+.nm small{display:block;color:var(--t3);font-weight:400;font-size:12px;margin-top:2px;}
+.chg{font-size:13px;color:var(--t2);text-align:right;}
+.chg .g{color:var(--grn);}
+.chg .a{color:var(--amb);}
+.chev{color:var(--t3);transition:transform .15s;}
+.row.open .chev{transform:rotate(90deg);}
+.rd{display:none;padding:2px 14px 16px 52px;}
+.row.open .rd{display:block;}
+.job{background:var(--card);border:0.5px solid var(--bdr);border-radius:10px;padding:10px 12px;margin-top:8px;}
+.job h4{font-size:13px;font-weight:600;}
+.job h4 span{color:var(--t3);font-weight:400;}
+.job ul{margin:6px 0 0 0;list-style:none;}
+.job li{font-size:13px;color:var(--t2);line-height:1.5;padding-left:16px;position:relative;}
+.job li::before{content:"+";position:absolute;left:0;color:var(--grn);font-weight:600;}
+.job.keep{opacity:.6;}
+.job.keep p,.note{font-size:12px;color:var(--t3);margin-top:4px;}
+.tag{display:inline-block;font-size:12px;background:var(--card2);border:0.5px solid var(--bdr2);border-radius:6px;padding:2px 8px;margin:4px 4px 0 0;color:var(--t2);}
+.lbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin-top:12px;}
+.bio{font-size:13px;color:var(--t2);line-height:1.5;margin-top:6px;background:var(--card);border:0.5px solid var(--bdr);border-radius:10px;padding:10px 12px;}
+.row.skip .nm{color:var(--t2);}
+.res{font-size:12px;margin-left:6px;}
+.res.ok{color:var(--grn);}
+.res.no{color:var(--amb);}
+.foot{position:fixed;left:0;right:0;bottom:0;background:rgba(10,10,10,.94);border-top:0.5px solid var(--bdr2);padding:12px 16px;}
+.foot .in{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;}
+.foot p{font-size:12px;color:var(--t3);max-width:560px;line-height:1.45;}
+@media (max-width:600px){.rh{grid-template-columns:24px 1fr 20px}.chg{grid-column:2;text-align:left}.chev{grid-row:1;grid-column:3}.rd{padding-left:14px}}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <h1>Resume backfill</h1>
+    <p>Admin only. Sign in with the admin account.</p>
+    <input type="email" id="g-email" placeholder="you@example.com" autocomplete="username"/>
+    <input type="password" id="g-pass" placeholder="Password" autocomplete="current-password"/>
+    <button class="btn btn-grn" id="g-go">Sign in &rarr;</button>
+    <div class="gate-error" id="g-err"></div>
+  </div>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <div class="top"><h2>Resume backfill</h2><span class="badge">Admin</span></div>
+  <p class="lede">Your browser re-reads each stored resume with the site's new reader and suggests what to add.
+    It only fills what's empty: bullets for jobs that have none, plus a summary or skills when the profile has none.
+    Nothing is saved until you click Apply.</p>
+  <div class="status"><div class="bar"><i id="bar"></i></div><div class="sum" id="sum">Starting…</div></div>
+  <div class="tbl" id="tbl"></div>
+</div>
+
+<div class="foot" id="foot" hidden>
+  <div class="in">
+    <p>Saves only to empty fields, checked again at save time. Each profile's previous version is kept, so any change can be undone.</p>
+    <button class="btn btn-grn" id="apply" disabled>Apply</button>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://iqcyofkosjopxsfdufvy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8fNT-RdlQa_K6O9dxPYxkA__mHmbJNH';
+const MOCK = false;  // the mock-up only lives in the scratch copy
+let token = null;
+const ROWS = [];   // {c, prop, skip, checked, result}
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const api = (path, opts = {}) => fetch(SUPABASE_URL + path, { ...opts,
+  headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+
+function loadScript(src) {
+  return new Promise((ok, bad) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => bad(new Error('load ' + src)); document.head.appendChild(s); });
+}
+
+// --- Matching: a resume job fills a profile job only when the titles agree and start years agree ---
+const norm = s => String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').trim();
+const startYear = d => { const m = String(d || '').match(/\b(19|20)\d{2}\b/); return m ? m[0] : ''; };
+const hasBullets = e => Array.isArray(e && e.bullets) && e.bullets.length > 0;
+
+function propose(c, parsed) {
+  const exp = Array.isArray(c.experience) ? c.experience : [];
+  const pool = (parsed.experience || []).filter(hasBullets).map(p => ({ p, used: false }));
+  const jobs = [], kept = [];
+  exp.forEach((e, i) => {
+    if (!e || !e.title) return;
+    if (hasBullets(e)) { kept.push({ e, why: 'already has bullets' }); return; }
+    const t = norm(e.title), y = startYear(e.dates);
+    let best = null, bestScore = 0;
+    for (const o of pool) {
+      if (o.used) continue;
+      const pt = norm(o.p.title), py = startYear(o.p.dates);
+      if (y && py && y !== py) continue;
+      const score = pt === t ? 2 : (pt && t && (pt.includes(t) || t.includes(pt))) ? 1 : 0;
+      if (score > bestScore) { best = o; bestScore = score; }
+    }
+    if (best) { best.used = true; jobs.push({ i, title: e.title, co: e.co, dates: e.dates, bullets: best.p.bullets }); }
+    else kept.push({ e, why: "no matching job in the resume (edited or added by hand)" });
+  });
+  const bio = !String(c.bio || '').trim() && parsed.bio ? parsed.bio : '';
+  const skills = !(c.skills || []).length && (parsed.skills || []).length ? parsed.skills.slice(0, 25) : [];
+  return { jobs, kept, bio, skills, bullets: jobs.reduce((n, j) => n + j.bullets.length, 0) };
+}
+
+async function readResume(c) {
+  const r = await api(`/storage/v1/object/sign/resumes/${c.resume_path}`, { method: 'POST', body: JSON.stringify({ expiresIn: 120 }) });
+  const d = await r.json();
+  if (!r.ok || !d.signedURL) throw new Error("couldn't open the stored file");
+  const blob = await (await fetch(SUPABASE_URL + '/storage/v1' + d.signedURL)).blob();
+  const name = c.resume_path.split('/').pop();
+  if (!/\.(pdf|docx)$/i.test(name)) throw new Error('not a .pdf or .docx file');
+  const text = await extractTextFromResumeFile(new File([blob], name));
+  if (!text || text.replace(/\s+/g, '').length < 80) throw new Error('no readable text (likely a scanned image)');
+  let parsed = parseResumeText(text, lastResumeHints);
+  if (lastLinkedInParse) parsed = mergeLinkedInParse(parsed, lastLinkedInParse);
+  return parsed;
+}
+
+// --- Rendering ---
+function changeText(row) {
+  if (row.skip) return `<span class="a">Skipped: ${esc(row.skip)}</span>`;
+  if (!row.prop) return '…';
+  const p = row.prop, bits = [];
+  if (p.bullets) bits.push(`<span class="g">${p.jobs.length} job${p.jobs.length === 1 ? '' : 's'} · ${p.bullets} bullets</span>`);
+  if (p.bio) bits.push('<span class="g">summary</span>');
+  if (p.skills.length) bits.push(`<span class="g">${p.skills.length} skills</span>`);
+  return bits.length ? bits.join(' + ') : 'Nothing new to add';
+}
+function rowHtml(row, k) {
+  const c = row.c, p = row.prop;
+  const can = !row.skip && p && (p.bullets || p.bio || p.skills.length);
+  const res = row.result ? `<span class="res ${row.result.ok ? 'ok' : 'no'}">${esc(row.result.text)}</span>` : '';
+  let det = '';
+  if (row.skip) det = `<p class="note">The profile stays exactly as it is.</p>`;
+  else if (!p) det = '<p class="note">Reading…</p>';
+  else {
+    det += p.jobs.map(j => `<div class="job"><h4>${esc(j.title)} <span>· ${esc(j.co || '')} · ${esc(j.dates || '')}</span></h4><ul>${j.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`).join('');
+    det += p.kept.map(x => `<div class="job keep"><h4>${esc(x.e.title)} <span>· ${esc(x.e.co || '')}</span></h4><p>Left alone: ${esc(x.why)}</p></div>`).join('');
+    if (p.bio) det += `<div class="lbl">Summary (profile has none)</div><div class="bio">${esc(p.bio)}</div>`;
+    if (p.skills.length) det += `<div class="lbl">Skills (profile has none)</div><div>${p.skills.map(s => `<span class="tag">${esc(s)}</span>`).join('')}</div>`;
+    if (!det) det = '<p class="note">The resume had nothing the profile is missing.</p>';
+  }
+  const when = c.created_at ? new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+  return `<div class="row${row.skip ? ' skip' : ''}" data-k="${k}">
+    <div class="rh"><input type="checkbox" ${can ? '' : 'disabled'} ${can && row.checked ? 'checked' : ''} ${row.result ? 'disabled' : ''}/>
+      <div class="nm">${esc(c.first_name)} ${esc((c.last_name || '').slice(0, 1))}.${res}<small>${esc(c.headline || '')}${when ? ' · joined ' + when : ''}</small></div>
+      <div class="chg">${changeText(row)}</div><i class="ti ti-chevron-right chev"></i></div>
+    <div class="rd">${det}</div></div>`;
+}
+function render(done, total) {
+  $('tbl').innerHTML = ROWS.map(rowHtml).join('');
+  $('bar').style.width = (total ? Math.round(done / total * 100) : 100) + '%';
+  const ready = ROWS.filter(r => !r.skip && r.prop && (r.prop.bullets || r.prop.bio || r.prop.skills.length));
+  const sel = ready.filter(r => r.checked && !r.result);
+  const bl = ready.reduce((n, r) => n + r.prop.bullets, 0);
+  const bios = ready.filter(r => r.prop.bio).length, sk = ready.filter(r => r.prop.skills.length).length;
+  const skipped = ROWS.filter(r => r.skip).length;
+  $('sum').innerHTML = done < total ? `Reading resumes… <b>${done} of ${total}</b>`
+    : `<b>${ready.length}</b> profiles get <b>${bl}</b> bullets` + (bios ? `, <b>${bios}</b> summaries` : '') + (sk ? `, <b>${sk}</b> skills lists` : '')
+      + (skipped ? ` · ${skipped} skipped` : '');
+  $('apply').textContent = sel.length ? `Apply to ${sel.length} profile${sel.length === 1 ? '' : 's'}` : 'Apply';
+  $('apply').disabled = done < total || !sel.length;
+}
+document.addEventListener('click', e => {
+  const row = e.target.closest('.row'); if (!row) return;
+  const r = ROWS[+row.dataset.k];
+  if (e.target.matches('input[type=checkbox]')) { r.checked = e.target.checked; render(1, 1); return; }
+  if (e.target.closest('.rh')) row.classList.toggle('open');
+});
+
+// --- Apply ---
+$('apply').addEventListener('click', async () => {
+  const sel = ROWS.filter(r => r.checked && !r.result && !r.skip);
+  $('apply').disabled = true;
+  for (const r of sel) {
+    $('apply').textContent = `Saving ${sel.indexOf(r) + 1} of ${sel.length}…`;
+    try {
+      if (MOCK) { await new Promise(ok => setTimeout(ok, 150)); r.result = { ok: true, text: '✓ saved' }; continue; }
+      const res = await api('/rest/v1/rpc/admin_backfill_profile', { method: 'POST', body: JSON.stringify({
+        p_id: r.c.id, p_jobs: r.prop.jobs.map(j => ({ i: j.i, title: j.title, bullets: j.bullets })),
+        p_bio: r.prop.bio || null, p_skills: r.prop.skills.length ? r.prop.skills : null }) });
+      const d = await res.json();
+      if (!res.ok) throw new Error(d.message || 'save failed');
+      r.result = d.changed ? { ok: true, text: `✓ saved` } : { ok: false, text: 'unchanged: the candidate filled it in meanwhile' };
+    } catch (err) { r.result = { ok: false, text: 'not saved: ' + err.message }; }
+  }
+  render(1, 1);
+  const ok = sel.filter(r => r.result.ok).length;
+  $('apply').textContent = `Done: ${ok} of ${sel.length} saved`;
+});
+
+// --- Run ---
+async function run(cands) {
+  $('gate').hidden = true; $('gate').style.display = 'none'; $('app').hidden = false; $('foot').hidden = false;
+  const list = cands.filter(c => c.resume_path);
+  list.forEach(c => ROWS.push({ c, prop: null, skip: null, checked: true }));
+  render(0, list.length);
+  if (!MOCK) {
+    await loadScript('https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js');
+    await loadScript('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js');
+    await loadScript('/resume-reader.js');
+  }
+  for (let k = 0; k < ROWS.length; k++) {
+    const r = ROWS[k];
+    try {
+      const parsed = MOCK ? MOCK_PARSED[k] : await readResume(r.c);
+      if (parsed.error) throw new Error(parsed.error);
+      r.prop = propose(r.c, parsed);
+    }
+    catch (err) { r.skip = err.message; r.checked = false; }
+    render(k + 1, ROWS.length);
+  }
+}
+
+$('g-go').addEventListener('click', async () => {
+  const email = $('g-email').value.trim(), password = $('g-pass').value;
+  $('g-err').textContent = '';
+  try {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, { method: 'POST',
+      headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error_description || d.msg || 'Incorrect email or password.');
+    token = d.access_token;
+    const lr = await api('/rest/v1/candidates?select=id,first_name,last_name,headline,created_at,experience,bio,skills,resume_path&order=created_at.asc');
+    const cands = await lr.json();
+    if (!lr.ok) throw new Error('Signed in, but this account cannot read profiles.');
+    run(cands);
+  } catch (err) { $('g-err').textContent = err.message; }
+});
+$('g-pass').addEventListener('keydown', e => { if (e.key === 'Enter') $('g-go').click(); });
+</script>
+</body>
+</html>
