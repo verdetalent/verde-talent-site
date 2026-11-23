@@ -629,6 +629,17 @@ function expandSection(summaryId, detailId) {
   document.getElementById(detailId).style.display = '';
   document.getElementById(summaryId).style.display = 'none';
 }
+// A blocked submit names a field - open its section if it was folded away,
+// bring it into view, outline it until they type, and put the cursor in it.
+function showField(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (id === 'inp-first' || id === 'inp-last') expandSection('basicInfoSummary', 'basicInfoDetail');
+  el.style.borderColor = 'var(--cor)';
+  el.addEventListener('input', function clear() { el.style.borderColor = ''; el.removeEventListener('input', clear); });
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(function () { try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } }, 350);
+}
 
 function setLocationNote(show) {
   const note = document.getElementById('inp-loc-note');
@@ -696,8 +707,14 @@ function applyParsedResumeData(parsed) {
   // was blank. Leave it open and say so when no location was found.
   const locationMissing = !document.getElementById('inp-loc').value.trim();
   setLocationNote(locationMissing);
+  // Same for the name: if the resume didn't give us both names, keep the boxes
+  // in view. Collapsing hid them, and submit then stopped at "Add your first and
+  // last name first" with no name box on screen (2026-11-23: 15 of 26 people who
+  // clicked Create in two weeks were blocked).
+  const nameMissing = !document.getElementById('inp-first').value.trim() ||
+    !document.getElementById('inp-last').value.trim();
 
-  if (!locationMissing && (filled.includes('name') || filled.includes('headline') || filled.includes('location') || filled.includes('bio'))) {
+  if (!locationMissing && !nameMissing && (filled.includes('name') || filled.includes('headline') || filled.includes('location') || filled.includes('bio'))) {
     const first = document.getElementById('inp-first').value.trim();
     const last = document.getElementById('inp-last').value.trim();
     const headline = document.getElementById('inp-headline').value.trim();
@@ -1187,18 +1204,21 @@ document.getElementById('submitBtn').addEventListener('click', async function(){
     trackProfile('profile_submit_blocked', { reason: 'missing_name' });
     note.textContent = 'Add your first and last name first.';
     note.style.color = 'var(--cor)';
+    showField(!first ? 'inp-first' : 'inp-last');
     return;
   }
   if(!email || !email.includes('@')){
     trackProfile('profile_submit_blocked', { reason: 'invalid_email' });
     note.textContent = 'Enter a valid email to create your account.';
     note.style.color = 'var(--cor)';
+    showField('acc-email');
     return;
   }
   if(!password || password.length < 6){
     trackProfile('profile_submit_blocked', { reason: 'short_password' });
     note.textContent = 'Choose a password with at least 6 characters.';
     note.style.color = 'var(--cor)';
+    showField('acc-password');
     return;
   }
 
