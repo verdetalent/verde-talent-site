@@ -189,6 +189,23 @@ list-style:none;}
 .footer-social a:hover,.footer-social a:focus-visible{color:var(--grn);}
 .footer-social svg{width:17px;height:17px;display:block;}
 /*/social-css*/
+
+.pulse{background:var(--card);border:0.5px solid var(--bdr);border-radius:14px;padding:1.1rem 1.25rem 1rem;margin:1.5rem 0 0;}
+.pulse h2{margin:0 0 .6rem!important;font-size:16px!important;}
+.pulse-verdict{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--t2);line-height:1.5;}
+.pulse-verdict b{color:var(--t1);font-weight:600;}
+.pv{flex-shrink:0;display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;border:0.5px solid var(--bdr2);color:var(--t1);background:rgba(255,255,255,0.05);margin-top:1px;}
+.pv.up{border-color:rgba(34,224,154,0.45);color:var(--grn);}
+.pv.down{border-color:rgba(255,181,71,0.45);color:#FFB547;}
+.pulse-chart{position:relative;margin-top:.9rem;}
+.pulse-chart svg{display:block;width:100%;height:auto;overflow:visible;}
+.pulse-cap{font-size:12px;color:var(--t3);margin-top:.15rem;display:flex;justify-content:space-between;gap:8px;}
+.pulse-tip{position:absolute;pointer-events:none;background:#1A1A1A;border:0.5px solid var(--bdr2);border-radius:8px;padding:5px 8px;font-size:12px;color:var(--t1);white-space:nowrap;transform:translate(-50%,-115%);display:none;}
+.pulse-tip span{color:var(--t3);}
+@media (max-width:560px){.pulse-cap{flex-wrap:wrap;}.pulse-cap .pc-mid{order:3;width:100%;text-align:center;}}
+.pulse-new{font-size:13px;color:var(--t2);margin-top:.75rem;line-height:1.5;}
+.pulse-new b{color:var(--t1);font-weight:600;}
+.pulse-note{font-size:11.5px;color:var(--t3);margin-top:.6rem;}
 </style>
 </head>
 <body>
@@ -238,10 +255,12 @@ list-style:none;}
   <div class="co-head"><h1>Mortenson Jobs and Careers</h1>
   <div class="co-follow"><button type="button" data-vt-follow data-company="Mortenson" data-slug="mortenson">Follow</button>
   <span class="co-follow-note">Get an email when they post a new role</span></div></div>
-  <div class="updated">Updated November 22, 2026</div>
+  <div class="updated">Updated November 23, 2026</div>
   <p class="lede">165 open Mortenson roles are tracked on Verde Talent right now. Most of the US roles are in Texas, Minnesota and Colorado. Each one links through to the full posting.</p>
 
   <div class="stats"><div class="stat"><div class="stat-n">165</div><div class="stat-k">roles open now</div></div><div class="stat"><div class="stat-n">8</div><div class="stat-k">locations tracked</div></div></div>
+
+  <section class="pulse"><h2>Hiring pulse</h2><div class="pulse-verdict"><span class="pv down">&darr; Hiring less</span><div><b>53 new roles posted in the last 4 weeks</b>, down from 81 in the 4 weeks before.</div></div><div class="pulse-chart" data-pts="[[24.5, 53.6, &quot;Sep 7&quot;, 15], [79.6, 26.2, &quot;Sep 14&quot;, 21], [134.7, 53.6, &quot;Sep 21&quot;, 15], [189.8, 30.8, &quot;Sep 28&quot;, 20], [244.9, 39.9, &quot;Oct 5&quot;, 18], [300.0, 8.0, &quot;Oct 12&quot;, 25], [355.1, 39.9, &quot;Oct 19&quot;, 18], [410.2, 21.7, &quot;Oct 26&quot;, 22], [465.3, 58.2, &quot;Nov 2&quot;, 14], [520.4, 94.6, &quot;Nov 9&quot;, 6], [575.5, 71.8, &quot;Nov 16&quot;, 11]]"><svg viewBox="0 0 600 130" role="img" aria-label="New roles posted each week: week of Sep 7: 15, week of Sep 14: 21, week of Sep 21: 15, week of Sep 28: 20, week of Oct 5: 18, week of Oct 12: 25, week of Oct 19: 18, week of Oct 26: 22, week of Nov 2: 14, week of Nov 9: 6, week of Nov 16: 11"><path d="M0.0,122 V57.6 Q0.0,53.6 4.0,53.6 H45.1 Q49.1,53.6 49.1,57.6 V122 Z" fill="rgba(34,224,154,0.35)"/><path d="M55.1,122 V30.2 Q55.1,26.2 59.1,26.2 H100.2 Q104.2,26.2 104.2,30.2 V122 Z" fill="rgba(34,224,154,0.35)"/><path d="M110.2,122 V57.6 Q110.2,53.6 114.2,53.6 H155.3 Q159.3,53.6 159.3,57.6 V122 Z" fill="rgba(34,224,154,0.35)"/><path d="M165.3,122 V34.8 Q165.3,30.8 169.3,30.8 H210.4 Q214.4,30.8 214.4,34.8 V122 Z" fill="rgba(34,224,154,0.35)"/><path d="M220.4,122 V43.9 Q220.4,39.9 224.4,39.9 H265.5 Q269.5,39.9 269.5,43.9 V122 Z" fill="rgba(34,224,154,0.35)"/><path d="M275.5,122 V12.0 Q275.5,8.0 279.5,8.0 H320.5 Q324.5,8.0 324.5,12.0 V122 Z" fill="rgba(34,224,154,0.35)"/><path d="M330.5,122 V43.9 Q330.5,39.9 334.5,39.9 H375.6 Q379.6,39.9 379.6,43.9 V122 Z" fill="rgba(34,224,154,0.35)"/><path d="M385.6,122 V25.7 Q385.6,21.7 389.6,21.7 H430.7 Q434.7,21.7 434.7,25.7 V122 Z" fill="#22E09A"/><path d="M440.7,122 V62.2 Q440.7,58.2 444.7,58.2 H485.8 Q489.8,58.2 489.8,62.2 V122 Z" fill="#22E09A"/><path d="M495.8,122 V98.6 Q495.8,94.6 499.8,94.6 H540.9 Q544.9,94.6 544.9,98.6 V122 Z" fill="#22E09A"/><path d="M550.9,122 V75.8 Q550.9,71.8 554.9,71.8 H596.0 Q600.0,71.8 600.0,75.8 V122 Z" fill="#22E09A"/><line x1="0" y1="122" x2="600" y2="122" stroke="rgba(255,255,255,0.14)" stroke-width="1"/><circle class="pulse-hdot" r="0" style="display:none"/><rect x="0" y="0" width="600" height="130" fill="transparent"/></svg><div class="pulse-tip"></div><div class="pulse-cap"><span>Sep 7</span><span class="pc-mid">New roles posted each week &middot; last 4 weeks in bright green</span><span>Nov 22</span></div></div><div class="pulse-new">Most new posts: <b>Construction &amp; Field</b> (17), <b>Engineering</b> (9), <b>Project &amp; Program Management</b> (4)</div><div class="pulse-note">From Mortenson&#39;s own careers site, checked every day. Tracked since Aug 27, 2026.</div></section>
 
   
 
@@ -259,7 +278,7 @@ list-style:none;}
   <p class="method">Counts are open roles tracked on Verde Talent today, rebuilt daily from
   Mortenson&#39;s live postings. Pay figures are what the postings advertise, not offers made.</p>
 </div>
-<p class="data-updated" style="max-width:1180px;margin:0 auto;padding:0 1.5rem 2rem;font-size:12px;color:var(--t3);">Data updated November 22, 2026</p>
+<p class="data-updated" style="max-width:1180px;margin:0 auto;padding:0 1.5rem 2rem;font-size:12px;color:var(--t3);">Data updated November 23, 2026</p>
 <footer class="site-footer">
   <div class="footer-links">
     <a href="/jobs.html">Jobs</a>
@@ -301,6 +320,13 @@ document.addEventListener('click', function(){
 </script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Mortenson", "industry": "EPC", "url": "https://www.mortenson.com/careers/search"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Mortenson hiring?", "acceptedAnswer": {"@type": "Answer", "text": "Yes - 165 open roles from Mortenson are tracked on Verde Talent today. The list is rebuilt daily, so roles that close drop off and new postings appear the day after they go up."}}, {"@type": "Question", "name": "What kinds of jobs does Mortenson post?", "acceptedAnswer": {"@type": "Answer", "text": "Mostly construction & field (56), engineering (25) and project & program management (17), counted across every open Mortenson posting tracked today."}}, {"@type": "Question", "name": "Where does Mortenson hire in the US?", "acceptedAnswer": {"@type": "Answer", "text": "Today the most Mortenson postings are in Texas (36), Minnesota (29) and Colorado (11)."}}, {"@type": "Question", "name": "What does Mortenson pay?", "acceptedAnswer": {"@type": "Answer", "text": "106 of the open Mortenson postings advertise pay, and their median is $100,100 a year. That is advertised pay rather than offers made, and postings without a published range are not counted."}}, {"@type": "Question", "name": "Does Mortenson hire remote?", "acceptedAnswer": {"@type": "Answer", "text": "Of the 165 open roles, 9 are remote and 12 are hybrid, going by each posting's own location and wording. The rest are on site or don't say."}}, {"@type": "Question", "name": "Does Mortenson sponsor visas?", "acceptedAnswer": {"@type": "Answer", "text": "Mortenson has a record of sponsoring: USCIS approved 36 H-1B visa petitions for it in fiscal year 2026. 165 say the role does not offer sponsorship; the rest don't say, so check each posting."}}]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "url": "https://verdetalent.com/companies/mortenson.html", "name": "Mortenson", "dateModified": "2026-11-22", "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://verdetalent.com/"}, {"@type": "ListItem", "position": 2, "name": "Companies", "item": "https://verdetalent.com/companies.html"}, {"@type": "ListItem", "position": 3, "name": "Mortenson", "item": "https://verdetalent.com/companies/mortenson.html"}]}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "url": "https://verdetalent.com/companies/mortenson.html", "name": "Mortenson", "dateModified": "2026-11-23", "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://verdetalent.com/"}, {"@type": "ListItem", "position": 2, "name": "Companies", "item": "https://verdetalent.com/companies.html"}, {"@type": "ListItem", "position": 3, "name": "Mortenson", "item": "https://verdetalent.com/companies/mortenson.html"}]}}</script>
+<script>
+(function(){var c=document.querySelector('.pulse-chart');if(!c)return;var tip=c.querySelector('.pulse-tip'),dot=c.querySelector('.pulse-hdot'),
+pts=JSON.parse(c.dataset.pts);c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*600,
+best=pts[0];pts.forEach(function(p){if(Math.abs(p[0]-x)<Math.abs(best[0]-x))best=p;});tip.innerHTML=best[3]+' new <span>&middot; week of '+best[2]+'</span>';
+tip.style.left=(best[0]/600*100)+'%';tip.style.top=(best[1]/130*100)+'%';tip.style.display='block';dot.setAttribute('cx',best[0]);dot.setAttribute('cy',best[1]);dot.style.display='';});
+c.addEventListener('mouseleave',function(){tip.style.display='none';dot.style.display='none';});})();
+</script>
 </body>
 </html>
