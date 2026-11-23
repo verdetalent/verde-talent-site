@@ -210,6 +210,9 @@ a.app-title:hover{color:var(--grn);}
 .hl-job ul{margin:4px 0 0 18px;}
 .hl-job li{font-size:13px;color:var(--t2);line-height:1.5;}
 #hlYes:disabled{opacity:.4;cursor:not-allowed;}
+.app-closed{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--t2);background:rgba(255,255,255,0.06);border:0.5px solid var(--bdr2);border-radius:6px;padding:1px 7px;margin-left:8px;vertical-align:2px;}
+.app-closed-note{font-size:12.5px;color:var(--t3);margin-top:5px;}
+.app-closed-note a{color:var(--grn);text-decoration:none;}
 .resume-fill-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
 /* "Get more matches": profile changes that would really add matches, counted by re-running the match engine. */
 .ul-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:0.5px solid var(--bdr);}
@@ -1057,6 +1060,23 @@ function renderTracker(){
   const fin = APP_FILTER === 'closed' ? '' : finishHtml(APPLICATIONS);
   list.innerHTML = fin + rows.filter(a => a.status !== 'started' && !FIN_DONE[a.id]).map(appRowHtml).join('');
   renderAppsSummary();
+  markClosedApps();
+}
+// Tracked jobs whose posting has closed: a tag and a pointer to similar open roles. Their own
+// status is left alone - a closed posting doesn't mean they were turned down.
+async function markClosedApps(){
+  if (!window.VTClosed) { window.addEventListener('load', markClosedApps, { once: true }); return; }
+  const rows = [...document.querySelectorAll('#appsList .app-row[data-jp]')];
+  const keyOf = r => { const m = (r.dataset.jp || '').match(/^\/jobs\/([\w-]+)\.html$/); return m && m[1]; };
+  const closed = await window.VTClosed.check(rows.map(keyOf).filter(Boolean));
+  rows.forEach(r => {
+    const k = keyOf(r), c = k && closed[k];
+    if (!c || r.querySelector('.app-closed')) return;
+    r.querySelector('.app-title').insertAdjacentHTML('afterend', `<span class="app-closed">Job ${alertEsc(window.VTClosed.label(c).toLowerCase())}</span>`);
+    const more = c.similar && c.similar.length
+      ? ` <a href="/jobs/${encodeURIComponent(k)}.html">See similar open roles &rarr;</a>` : ' <a href="/jobs.html">Browse open jobs &rarr;</a>';
+    r.querySelector('.app-meta').insertAdjacentHTML('afterend', `<div class="app-closed-note">The posting is closed, but your application can still be in progress.${more}</div>`);
+  });
 }
 function appRowHtml(a){
   {
@@ -1067,7 +1087,7 @@ function appRowHtml(a){
     const head = href ? `<a class="app-title" href="${alertEsc(href)}"${ext}>${title}</a>` : `<span class="app-title">${title}</span>`;
     const meta = [a.company, a.location].filter(Boolean).map(alertEsc).join(' · ');
     const opts = APP_STATUS.map(([v, l]) => `<option value="${v}"${a.status === v ? ' selected' : ''}>${l}</option>`).join('');
-    return `<div class="app-row">
+    return `<div class="app-row" data-jp="${alertEsc(a.job_page || '')}">
       <div class="app-main">${head}${a.apply_path === 'manual' ? '<span class="app-tag">Added by you</span>' : ''}
         <div class="app-meta">${meta ? meta + ' · ' : ''}${a.status === 'started' ? 'Opened' : 'Applied'} ${when}${followUpDue(a) ? `<button type="button" class="fu-link" data-fu="${alertEsc(a.id)}">Follow up?</button>` : ''}</div></div>
       <select class="app-status st-${a.status}" data-appst="${alertEsc(a.id)}" aria-label="Status of ${title}">${opts}</select>
@@ -2254,5 +2274,6 @@ async function init(){
 
 init();
 </script>
+<script src="/closed-jobs.js" defer></script>
 </body>
 </html>

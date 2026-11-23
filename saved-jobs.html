@@ -74,6 +74,12 @@ body{background:var(--blk);color:var(--t1);font-family:var(--font-sans);}
 .sc-title:hover{color:var(--grn);}
 .sc-co-loc{font-size:13px;color:var(--t2);margin-top:3px;}
 .sc-saved-at{font-size:11.5px;color:var(--t3);margin-top:6px;}
+.saved-card.closed .sc-title{color:var(--t2);}
+.sc-closed{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--t2);background:rgba(255,255,255,0.06);border:0.5px solid var(--bdr2);border-radius:6px;padding:2px 7px;margin-right:8px;vertical-align:2px;}
+.sc-sim{margin-top:10px;padding-top:10px;border-top:0.5px solid var(--bdr);}
+.sc-sim-h{font-size:12px;color:var(--t3);margin-bottom:6px;}
+.sc-sim a{display:block;font-size:13px;color:var(--grn);text-decoration:none;padding:3px 0;}
+.sc-sim a span{color:var(--t3);}
 .sc-remove{background:none;border:0.5px solid var(--bdr2);color:var(--t3);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
 .sc-remove:hover{color:var(--cor);border-color:rgba(255,112,85,0.4);}
 .sc-remove svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
@@ -267,6 +273,27 @@ function renderList(jobs) {
         <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>`).join('');
+  markClosed(jobs);
+}
+
+// Saved jobs that have closed: a "Closed Nov 18" tag and similar roles that are still open.
+async function markClosed(jobs) {
+  if (!window.VTClosed) { window.addEventListener('load', () => markClosed(jobs), { once: true }); return; }
+  const keys = jobs.map(j => j.save_key).filter(k => k && !k.startsWith('employer:'));
+  if (!keys.length) return;
+  const closed = await window.VTClosed.check(keys);
+  Object.keys(closed).forEach(key => {
+    const card = document.querySelector(`.saved-card[data-save-key="${CSS.escape(key)}"]`);
+    if (!card || card.classList.contains('closed')) return;
+    const r = closed[key];
+    card.classList.add('closed');
+    card.querySelector('.sc-title').insertAdjacentHTML('beforebegin', `<span class="sc-closed">${escapeHtml(window.VTClosed.label(r))}</span>`);
+    const sim = (r.similar || []).map(([slug, title, company, loc]) =>
+      `<a href="/jobs/${encodeURIComponent(slug)}.html">${escapeHtml(title)} <span>&middot; ${escapeHtml(company)}${loc ? ' &middot; ' + escapeHtml(loc) : ''}</span></a>`).join('');
+    card.querySelector('.sc-saved-at').insertAdjacentHTML('afterend', `<div class="sc-sim"><div class="sc-sim-h">This job is no longer taking applications.${sim ? ' Similar roles that are still open:' : ''}</div>${sim || '<a href="/jobs.html">Browse open jobs &rarr;</a>'}</div>`);
+    if (!r.date) card.querySelector('.sc-title').removeAttribute('href');
+    try { gtag('event', 'saved_job_closed_shown'); } catch (e) {}
+  });
 }
 
 async function removeSavedJob(key) {
@@ -314,5 +341,6 @@ async function removeSavedJob(key) {
   }
 })();
 </script>
+<script src="/closed-jobs.js" defer></script>
 </body>
 </html>
