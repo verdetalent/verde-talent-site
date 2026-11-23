@@ -58,6 +58,30 @@
     ".jp-gap-fixes a.train{color:var(--amb,#FFB547);border-color:rgba(255,181,71,0.4);}" +
     ".jp-gap-fixes a.train:hover{background:rgba(255,181,71,0.1);}";
 
+  // The resume check (job-resume-check.js) reads the ad itself, so on job pages it decides the
+  // skills line: skill tags that only come from the company blurb ("energy storage systems" in
+  // "Pearce is a leader in ... energy storage systems") never count, and when the check is marking
+  // the ad, the box points there instead of listing tags.
+  function resumeCheck() { return window.VTResumeCheck ? window.VTResumeCheck.result() : null; }
+  function tagsFromAd(job) {
+    var rc = resumeCheck();
+    if (!rc || !Array.isArray(job.skills)) return job;
+    var j = {};
+    Object.keys(job).forEach(function (k) { j[k] = job[k]; });
+    j.skills = job.skills.filter(function (s) { return rc.reqText.indexOf(String(s).toLowerCase()) >= 0; });
+    return j;
+  }
+  function adGaps(gaps) {
+    var rc = resumeCheck();
+    if (!rc || !rc.ok) return gaps;
+    var out = gaps.filter(function (g) { return g.kind !== "skills"; });
+    var n = rc.missing.length;
+    if (n) out.push({ kind: "skills",
+      text: n + (n > 1 ? " things this ad asks for aren’t" : " thing this ad asks for isn’t") + " on your profile yet. They’re underlined in the description.",
+      fixes: [{ label: "See " + (n > 1 ? "them" : "it") + " in the ad", href: "#resume-check" }] });
+    return out;
+  }
+
   // The gaps box under the match strip: each thing that's missing, with what to do about it.
   function gapsHtml(title, rows) {
     if (!rows.length) return "";
@@ -157,7 +181,13 @@
 
     var profile = await window.VTJobFit.loadProfile();
     if (!profile || !profile.hasRole) return;
-    var fit = window.VTJobFit.score(job, profile);
+    var fit = window.VTJobFit.score(tagsFromAd(job), profile);
+    var rc = resumeCheck();
+    // The resume check's count replaces the tag count, so the page never shows two different scores.
+    if (fit && rc && rc.ok) {
+      fit.reasons = fit.reasons.filter(function (r) { return !/ skills$/.test(r); });
+      if (rc.have) fit.reasons.push("Resume check: " + rc.have + " of " + rc.total);
+    }
     var state = window.VTJobFit.stateOf(job.location);
     // The role alone for the salary check: "Wind Technician I (All Levels) at Roadrunner Wind in
     // Cisco, TX" -> "Wind Technician I".
@@ -165,7 +195,7 @@
       .split(/\s+(?:at|in|@)\s+|\s+[-–—|]\s+|,\s*/)[0].replace(/\s+/g, " ").trim() || job.job_title || "";
     var payUrl = "/salary-check.html?role=" + encodeURIComponent(role) + (state ? "&state=" + state : "");
     var payLink = '<a class="jp-pay" href="' + esc(payUrl) + '" data-jp-pay>Typical pay for roles like this' + (state ? " in " + esc(state) : "") + " &rarr;</a>";
-    var gaps = window.VTJobFit.gaps ? window.VTJobFit.gaps(job, profile) : [];
+    var gaps = window.VTJobFit.gaps ? adGaps(window.VTJobFit.gaps(tagsFromAd(job), profile)) : [];
     if (!fit) {
       // Not a match: say why, and what would change that - the kind of work first (nothing else
       // matters if the role is different), else the gaps that kept it from a label.

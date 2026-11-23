@@ -475,7 +475,7 @@
     if (!s || !s.access_token) return null;
     try {
       var res = await fetch(SUPABASE_URL + "/rest/v1/candidates?id=eq." + encodeURIComponent(s.candidate_id) +
-        "&select=headline,experience,sectors,skills,location,years_experience,salary_min,relocation", {
+        "&select=headline,bio,experience,education,sectors,skills,location,years_experience,salary_min,relocation", {
         headers: { apikey: ANON_KEY, Authorization: "Bearer " + s.access_token },
       });
       if (!res.ok) return null;
