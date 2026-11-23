@@ -203,6 +203,13 @@ a.app-title:hover{color:var(--grn);}
 .resume-fill[hidden]{display:none;}
 #fitAll[hidden]{display:none;}
 .resume-fill b{color:var(--t1);}
+.hl-prev{margin-top:10px;}
+.hl-prev summary{cursor:pointer;color:var(--grn);font-size:13px;}
+.hl-job{margin-top:8px;}
+.hl-job b{font-size:13px;}
+.hl-job ul{margin:4px 0 0 18px;}
+.hl-job li{font-size:13px;color:var(--t2);line-height:1.5;}
+#hlYes:disabled{opacity:.4;cursor:not-allowed;}
 .resume-fill-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
 /* "Get more matches": profile changes that would really add matches, counted by re-running the match engine. */
 .ul-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:0.5px solid var(--bdr);}
@@ -418,6 +425,7 @@ a.app-title:hover{color:var(--grn);}
 
     <div id="dashboardBody" style="display:none;">
     <section class="dash-panel" data-panel="overview">
+    <div class="resume-fill" id="hlOffer" hidden style="margin:0 0 14px;"></div>
     <div class="news-card" id="newsCard" hidden>
       <div class="news-title"><i class="ti ti-news"></i>Any news?</div>
       <div class="news-sub">Jobs you applied to from Verde Talent. One click to tell us how it went - it only goes into your account, and employers never see it.</div>
@@ -1803,6 +1811,103 @@ async function offerResumeFill(file){
     console.error('Reading the resume failed (the upload itself worked):', err);
   }
 }
+// --- Resume highlights offer (2026-11-23) -------------------------------------------------------
+// Profiles made before the reader kept bullets only have job titles. This reads the candidate's OWN
+// stored resume and OFFERS the extra lines. Nothing changes unless they click "Add to my profile",
+// and it only fills jobs/fields that are empty. "No thanks" means we never ask again for that resume.
+function hlNorm(s){ return String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').trim(); }
+function hlYear(d){ const m = String(d || '').match(/\b(19|20)\d{2}\b/); return m ? m[0] : ''; }
+function hlPlan(parsed){
+  const pool = (parsed.experience || []).filter(p => p.bullets && p.bullets.length).map(p => ({ p, used: false }));
+  const jobs = [];
+  experience.forEach((e, i) => {
+    if (!e || !e.title || (e.bullets && e.bullets.length)) return;
+    const t = hlNorm(e.title), y = hlYear(e.dates);
+    let best = null, bestScore = 0;
+    for (const o of pool) {
+      if (o.used) continue;
+      const pt = hlNorm(o.p.title), py = hlYear(o.p.dates);
+      if (y && py && y !== py) continue;
+      const sc = pt === t ? 2 : (pt && t && (pt.includes(t) || t.includes(pt))) ? 1 : 0;
+      if (sc > bestScore) { best = o; bestScore = sc; }
+    }
+    if (best) { best.used = true; jobs.push({ i, title: e.title, bullets: best.p.bullets }); }
+  });
+  const bio = !document.getElementById('inp-bio').value.trim() && parsed.bio ? parsed.bio : '';
+  const sk = !skills.length && (parsed.skills || []).length ? parsed.skills.slice(0, 25) : [];
+  return { jobs, bio, skills: sk };
+}
+async function offerResumeHighlights(){
+  const box = document.getElementById('hlOffer');
+  if (!box || !CANDIDATE || !CANDIDATE.resume_path || !/\.(pdf|docx)$/i.test(CANDIDATE.resume_path)) return;
+  const key = 'vt_hl_offer:' + CANDIDATE.resume_path;
+  try { if (localStorage.getItem(key)) return; } catch (e) {}
+  if (!experience.some(e => e && e.title && !(e.bullets && e.bullets.length))) return;
+  try {
+    let parsed = window.HL_MOCK_PARSED;
+    if (!parsed) {
+      const r = await fetch(`${SUPABASE_URL}/storage/v1/object/sign/resumes/${CANDIDATE.resume_path}`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SESSION.access_token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expiresIn: 120 }),
+      });
+      const d = await r.json();
+      if (!r.ok || !d.signedURL) return;
+      const blob = await (await fetch(`${SUPABASE_URL}/storage/v1${d.signedURL}`)).blob();
+      await loadResumeReader();
+      const text = await extractTextFromResumeFile(new File([blob], CANDIDATE.resume_path.split('/').pop()));
+      parsed = parseResumeText(text, lastResumeHints);
+      if (lastLinkedInParse) parsed = mergeLinkedInParse(parsed, lastLinkedInParse);
+    }
+    const plan = hlPlan(parsed);
+    const lines = plan.jobs.reduce((n, j) => n + j.bullets.length, 0);
+    if (!lines && !plan.bio && !plan.skills.length) return;
+    const what = [];
+    if (lines) what.push(`${lines} highlight${lines === 1 ? '' : 's'} for ${plan.jobs.length === 1 ? 'your ' + alertEsc(plan.jobs[0].title) + ' job' : plan.jobs.length + ' of your jobs'}`);
+    if (plan.bio) what.push('a short summary');
+    if (plan.skills.length) what.push(`${plan.skills.length} skills`);
+    const said = what.length > 1 ? what.slice(0, -1).join(', ') + ' and ' + what[what.length - 1] : what[0];
+    let prev = plan.jobs.map(j => `<div class="hl-job"><b>${alertEsc(j.title)}</b><ul>${j.bullets.map(b => `<li>${alertEsc(b)}</li>`).join('')}</ul></div>`).join('');
+    if (plan.bio) prev += `<div class="hl-job"><b>Summary</b><div style="margin-top:4px;">${alertEsc(plan.bio)}</div></div>`;
+    if (plan.skills.length) prev += `<div class="hl-job"><b>Skills</b><div style="margin-top:4px;">${plan.skills.map(alertEsc).join(', ')}</div></div>`;
+    box.innerHTML = `<b>Add your resume highlights?</b> We recommend adding ${said} from your resume to your profile. Nothing changes unless you click Add.` +
+      `<details class="hl-prev"><summary>See exactly what would be added</summary>${prev}</details>` +
+      '<div class="resume-fill-btns"><button type="button" class="btn-grn" id="hlYes" style="width:auto;padding:8px 16px;" disabled title="Look at what would be added first">Add to my profile</button>' +
+      '<button type="button" class="al-pill al-quiet" id="hlNo">No thanks</button>' +
+      '<span id="hlHint" style="align-self:center;font-size:12px;color:var(--t3);">Look at the list first, then you can add it.</span></div>';
+    box.hidden = false;
+    try { gtag('event', 'resume_highlights_offer', { lines, bio: !!plan.bio, skills: plan.skills.length }); } catch (e) {}
+    const done = () => { try { localStorage.setItem(key, '1'); } catch (e) {} };
+    // They have to open the list and see what would be added before Add works.
+    box.querySelector('details').addEventListener('toggle', () => {
+      document.getElementById('hlYes').disabled = false;
+      document.getElementById('hlYes').removeAttribute('title');
+      document.getElementById('hlHint').remove();
+      try { gtag('event', 'resume_highlights_preview'); } catch (e) {}
+    }, { once: true });
+    document.getElementById('hlYes').addEventListener('click', () => {
+      if (!box.querySelector('details').open && document.getElementById('hlYes').disabled) return;
+      plan.jobs.forEach(j => { const e = experience[j.i]; if (e && e.title === j.title && !(e.bullets && e.bullets.length)) e.bullets = j.bullets.slice(); });
+      if (plan.bio && !document.getElementById('inp-bio').value.trim()) {
+        document.getElementById('inp-bio').value = plan.bio;
+        document.getElementById('bio-count').textContent = plan.bio.length + ' / 500';
+      }
+      if (plan.skills.length && !skills.length) plan.skills.forEach(s => addSkill(s));
+      renderExperience();
+      updateCompleteness();
+      saveAlertsNow();
+      done();
+      box.innerHTML = '<b>Added ✓</b> You can edit or remove any of it on the Experience and Profile tabs.';
+      try { gtag('event', 'resume_highlights_add', { lines }); } catch (e) {}
+    });
+    document.getElementById('hlNo').addEventListener('click', () => {
+      done(); box.hidden = true;
+      try { gtag('event', 'resume_highlights_dismiss'); } catch (e) {}
+    });
+  } catch (err) {
+    console.warn('Resume highlights offer skipped:', err);
+  }
+}
 // "Upload your resume" buttons on Overview: open the Profile tab's resume picker.
 document.addEventListener('click', (e) => {
   const b = e.target.closest('[data-upload-resume]');
@@ -2121,6 +2226,7 @@ async function init(){
 
   await refreshResumeLink();
   updateCompleteness();
+  offerResumeHighlights();
 
   if(CANDIDATE.referral_code){
     const shareLink = `${window.location.origin}/create-profile.html?ref=${CANDIDATE.referral_code}`;
