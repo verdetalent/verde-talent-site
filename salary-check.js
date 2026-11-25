@@ -349,7 +349,23 @@
     var dl = $("scRoleList");
     SUGGESTIONS.forEach(function (s) { var o = document.createElement("option"); o.value = s; dl.appendChild(o); });
     $("scGo").addEventListener("click", render);
-    $("scRole").addEventListener("keydown", function (e) { if (e.key === "Enter") render(); });
+    // A filled-in role hides the suggestion list (the browser only lists options matching the
+    // current text). On focus, park the current role in the placeholder and empty the box so the
+    // full list opens again; if they leave without choosing or typing, put the old role back.
+    var roleIn = $("scRole"), roleHint = roleIn.placeholder;
+    function restoreRole() {
+      if (!roleIn.value.trim() && roleIn.dataset.prev) roleIn.value = roleIn.dataset.prev;
+      roleIn.dataset.prev = ""; roleIn.placeholder = roleHint;
+    }
+    roleIn.addEventListener("focus", function () {
+      if (!roleIn.value.trim()) return;
+      roleIn.dataset.prev = roleIn.value; roleIn.placeholder = roleIn.value; roleIn.value = "";
+    });
+    roleIn.addEventListener("blur", restoreRole);
+    roleIn.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { restoreRole(); roleIn.blur(); }
+      if (e.key === "Enter") { restoreRole(); render(); }
+    });
     $("scPay").addEventListener("keydown", function (e) { if (e.key === "Enter") render(); });
     try { await load(); } catch (e) { $("scOut").innerHTML = '<div class="sc-note">Couldn\'t load the latest postings. Please refresh the page.</div>'; return; }
     // From a job page's "Typical pay for roles like this" link: ?role=...&state=TX.
