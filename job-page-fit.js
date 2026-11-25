@@ -163,13 +163,14 @@
         '<div class="jp-ask">' +
           (gauge ? '<div class="jp-ask-gauge" aria-hidden="true">' + gauge + "</div>" : "") +
           '<div class="jp-ask-body">' +
-            '<div class="jp-ask-t">See your match and pay range for this job</div>' +
+            '<div class="jp-ask-t">See your match, pay range and skills to highlight</div>' +
             // The same example strip as the job search banner ("See which jobs match you...").
             '<div class="jp-ask-eg" aria-hidden="true"><span class="jp-eg-fit">Strong match</span>' +
               '<span class="jp-eg-chip"><b>&#10003;</b>Your role</span>' +
               '<span class="jp-eg-chip"><b>&#10003;</b>' + esc((window.VTJobFit.list(job.sector_buckets)[0]) || "Your sector") + "</span>" +
               '<span class="jp-eg-chip"><b>&#10003;</b>Near you</span><span class="jp-eg-chip"><b>&#10003;</b>Experience level</span>' +
-              '<span class="jp-eg-pay">Your pay range: <span class="jp-eg-blur">$00 &ndash; $00</span></span></div>' +
+              '<span class="jp-eg-pay">Your pay range: <span class="jp-eg-blur">$00 &ndash; $00</span></span>' +
+              '<span class="jp-eg-chip"><i class="ti ti-file-text" style="color:var(--grn,#22E09A);margin-right:4px"></i>Skills to highlight: <span class="jp-eg-blur">9 of 17</span> they ask for</span></div>' +
             '<div class="jp-ask-cta"><a href="/create-profile.html?src=job-page-fit" data-jp-ask>Unlock free with your resume &rarr;</a>' +
               "<span>Profile built in less than a minute</span></div>" +
           "</div>" +
