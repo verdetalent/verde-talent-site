@@ -113,7 +113,7 @@ h1{font-size:26px;font-weight:700;line-height:1.3;margin-bottom:.5rem;}
 .meta-row{font-size:13px;color:var(--t3);display:flex;flex-wrap:wrap;gap:14px;margin-bottom:1.25rem;}
 .meta-row span{display:flex;align-items:center;gap:5px;}
 .meta-row span.salary{color:var(--grn);font-weight:600;}
-.jh{background:var(--card);border:0.5px solid var(--bdr);border-radius:12px;padding:12px 14px;margin:1.1rem 0 0;}.jh-h{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin-bottom:6px;}.jh-row{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--t2);line-height:1.5;padding:4px 0;}.jh-row b{color:var(--t1);font-weight:600;}.jh-row i{font-size:16px;margin-top:2px;color:var(--t3);flex-shrink:0;}.jh-ok i{color:var(--grn);}.jh-info i,.jh-rep i{color:#FFB547;}
+.meta-row .mh{cursor:help;}.meta-row .mh-ok,.meta-row .mh-ok i{color:var(--grn);}.meta-row .mh-warn,.meta-row .mh-warn i{color:#FFB547;}
 .apply-row{margin:1.5rem 0 2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .btn-apply{background:var(--grn);color:#052e1e;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-family:var(--font-sans);}
 .apply-row [data-vt-follow]{padding:11px 16px;font-size:14px;border-radius:10px;}
@@ -256,15 +256,15 @@ footer a{color:var(--t3);text-decoration:none;}
     <span><i class='ti ti-briefcase'></i>Full-time</span>
     <span><i class='ti ti-building'></i>Hybrid</span>
     <span><i class='ti ti-stairs'></i>Manager+</span>
-    <span><i class='ti ti-calendar'></i>Posted Aug 11, 2026</span>
     <span class='salary'><i class='ti ti-currency-dollar'></i>$108,460.00-$120,510.00</span>
+    <span><i class='ti ti-calendar'></i>Posted Aug 11, 2026</span>
+    <!--vt-history--><span class="mh mh-ok" tabindex="0" title="We found this posting on Eversource Energy&#39;s own careers site yesterday." aria-label="Confirmed open yesterday. We found this posting on Eversource Energy&#39;s own careers site yesterday."><i class="ti ti-circle-check"></i>Confirmed open yesterday</span><span class="mh mh-warn" tabindex="0" title="Most Eversource Energy roles close within about 3 weeks." aria-label="Open 106 days. Most Eversource Energy roles close within about 3 weeks."><i class="ti ti-clock"></i>Open 106 days</span><!--/vt-history-->
   </div>
   <div><span class="tag sector" style="border-color:#B588FF66;color:#B588FF;background:#B588FF1a;">Grid</span></div>
   <div class="visa-note no"><i class="ti ti-world"></i><span>This posting says the role does not offer visa sponsorship.</span></div>
   
   <div class="jp-fit" id="jpFit" hidden></div>
   <script type="application/json" id="vt-job">{"job_title": "Project Manager I, Transmission (Hybrid Schedule)", "company": "Eversource Energy", "location": "Westwood, MA", "region": "US", "sector_buckets": ["Grid"], "job_category": "Project/Program Management", "seniority_level": "Manager+", "work_style": "Hybrid", "is_remote": false, "salary_annual_max": 120510.0}</script>
-  <!--vt-history--><div class="jh"><div class="jh-h">Job history</div><div class="jh-row jh-ok"><i class="ti ti-circle-check"></i><span><b>Confirmed open yesterday</b> on Eversource Energy&#39;s own careers site.</span></div><div class="jh-row jh-cal"><i class="ti ti-calendar"></i><span><b>Open 106 days.</b> Most Eversource Energy roles close within about 3 weeks.</span></div></div><!--/vt-history-->
   <div class="apply-row">
     <button type="button" class="btn-apply" id="applyBtn" data-url="https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Westwood-MA/Project-Manager-I--Transmission--Hybrid-Schedule-_R-031548">Apply on Eversource Energy&#39;s site &rarr;</button>
     <button type="button" class="btn-save" id="saveBtn" data-save-key="ca7c4eee33f34fc4c621"
