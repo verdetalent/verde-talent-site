@@ -115,6 +115,25 @@
       "</div></div>";
   }
 
+  // Signed out: the reply email is there to see but not read - placeholder wording only (never the
+  // real figure or perks), blurred, with the unlock button on top (Adam, 2026-11-25).
+  function lockedLetterCard(a) {
+    var co = a.company ? esc(a.company) : "the company";
+    var role = a.title ? esc(a.title) : "this";
+    var paras = ["Hi Alex,",
+      "Thank you for the offer for the " + role + " role at " + co + ". I'm excited about the team and want to make this work.",
+      "Before I accept, I'd like to talk about the pay. Similar roles are advertising around $00.00, and with my experience, I'd be glad to accept at $00.00.",
+      "Could you also tell me whether the role includes the benefits that similar offers usually include?",
+      "Thank you again,<br>Your name"];
+    return '<div class="sc-card oc-lockcard"><h2>What to say back <span class="oc-tag">Written for your offer</span></h2>' +
+      '<p class="oc-sub">A polite counter with the figure to ask for, based on what similar roles pay. Copy it or download it for Word.</p>' +
+      '<div class="oc-lockwrap"><div class="oc-letter oc-blur" aria-hidden="true">' + paras.map(function (p) { return "<p>" + p + "</p>"; }).join("") + "</div>" +
+        '<div class="oc-lockover"><span class="oc-lockico">' + LOCK + '</span><b>Your reply is ready</b><span>Free with a Verde Talent profile</span>' +
+        '<a class="btn btn-primary" href="/create-profile.html?src=offer-check-reply" data-lock-cta="reply">Unlock my reply - it&#39;s free</a>' +
+        '<a class="oc-signin" href="/login.html" data-lock-cta="signin_reply">I have a profile - sign in</a></div></div>' +
+    "</div>";
+  }
+
   function perksCard(a) {
     if (!a.shares) return "";
     var rows = PERKS.filter(function (p) { return a.ticked[p[0]] || a.shares[p[0]] >= SHOW_MIN; })
@@ -260,7 +279,7 @@
       if (a.target && a.target <= a.offer) a.target = null;
       a.shares = perkShares(res.rows);
     }
-    out.innerHTML = a.signedIn ? payCard(a) + perksCard(a) + letterCard(a) + questionsCard(a) : lockedCard(a) + questionsCard(a);
+    out.innerHTML = a.signedIn ? payCard(a) + perksCard(a) + letterCard(a) + questionsCard(a) : lockedCard(a) + lockedLetterCard(a) + questionsCard(a);
     if (a.signedIn) wireLetter(a);
     out.querySelectorAll("[data-lock-cta]").forEach(function (l) {
       l.addEventListener("click", function () { track("offer_check_unlock_click", { cta: l.dataset.lockCta }); });
