@@ -165,6 +165,42 @@ footer a:hover{color:var(--grn);}
 .follow-links a:hover,.follow-links a:focus-visible{border-color:var(--grn,#22E09A);color:var(--grn,#22E09A);}
 .follow-links svg{width:16px;height:16px;display:block;}
 /*/social-css*/
+
+.candidate-card.clickable{cursor:pointer;}
+.cc-open{font-size:11px;color:var(--grn);margin-left:10px;}
+.vp-scrim{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;display:none;justify-content:flex-end;}
+.vp-scrim.open{display:flex;}
+.vp-panel{width:min(620px,100%);height:100%;background:var(--blk);border-left:0.5px solid var(--bdr2);display:flex;flex-direction:column;}
+.vp-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:0.5px solid var(--bdr);}
+.vp-bar button{background:none;border:0.5px solid var(--bdr2);color:var(--t2);border-radius:8px;height:32px;min-width:32px;padding:0 10px;cursor:pointer;font-size:13px;}
+.vp-bar button:disabled{opacity:.35;cursor:default;}
+.vp-count{font-size:12px;color:var(--t3);margin-right:auto;}
+#vpBody{overflow-y:auto;padding:20px 22px 40px;flex:1;}
+.vp-head{display:flex;gap:14px;align-items:flex-start;}
+.vp-av{width:52px;height:52px;font-size:17px;background:rgba(34,224,154,0.15);color:var(--grn);}
+.vp-name{font-size:20px;font-weight:600;}
+.vp-headline{font-size:14px;color:var(--t2);margin-top:2px;}
+.vp-loc{font-size:13px;color:var(--t3);margin-top:4px;display:flex;align-items:center;gap:4px;}
+.vp-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:16px;}
+.vp-actions .btn-sm{display:inline-flex;align-items:center;gap:6px;text-decoration:none;}
+.vp-link{font-size:13px;color:var(--t2);text-decoration:none;display:inline-flex;align-items:center;gap:4px;padding:6px 8px;}
+.vp-link:hover{color:var(--grn);}
+.vp-none{font-size:12px;color:var(--t3);}
+.vp-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--bdr);border:0.5px solid var(--bdr);border-radius:12px;overflow:hidden;margin-top:18px;}
+.vp-fact{background:var(--card);padding:10px 12px;}
+.vp-k{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;}
+.vp-v{font-size:14px;margin-top:3px;}
+.vp-sec{margin-top:22px;}
+.vp-sec h3{font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+.vp-bio{font-size:14px;color:var(--t2);line-height:1.6;}
+.vp-job{padding:10px 0;border-top:0.5px solid var(--bdr);}
+.vp-job:first-of-type{border-top:none;padding-top:0;}
+.vp-jt{font-size:14px;font-weight:600;}
+.vp-jm{font-size:13px;color:var(--t3);margin-top:2px;}
+.vp-job ul{margin:6px 0 0 18px;}
+.vp-job li{font-size:13.5px;color:var(--t2);line-height:1.55;margin-top:2px;}
+.vp-foot{font-size:12px;color:var(--t3);margin-top:26px;}
+@media (max-width:640px){.vp-panel{border-left:none;}.vp-facts{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -283,6 +319,8 @@ const EXP_MIDPOINT = { 'Less than 1 year':0.5, '1–3 years':2, '3–5 years':4,
 
 let accessToken = null;
 let ALL_CANDIDATES = [];
+let SHOWN_LIST = [];
+window.vaultOpenResume = c => c.resume_path && viewResume(c.resume_path);
 let currentPage = 1;
 const excluded = { availability: new Set(), sector: new Set(), experience: new Set(), workStyle: new Set() };
 let submittedFilter = 'all';
@@ -506,10 +544,10 @@ function renderCandidateCard(c) {
   (c.skills || []).slice(0, 4).forEach(s => tags.push(`<span class="cc-tag">${escapeHtml(s)}</span>`));
   const loc = [c.location, (c.work_style || []).join('/')].filter(Boolean).join(' · ');
   const resumeBtn = c.resume_path
-    ? `<button type="button" class="btn-sm btn-ghost" style="font-size:11px;" onclick="viewResume('${c.resume_path}')"><i class="ti ti-file-text" style="font-size:12px;margin-right:4px;"></i>View resume</button>`
+    ? `<button type="button" class="btn-sm btn-ghost" style="font-size:11px;" onclick="event.stopPropagation();viewResume('${c.resume_path}')"><i class="ti ti-file-text" style="font-size:12px;margin-right:4px;"></i>View resume</button>`
     : `<span style="font-size:11px;color:var(--t3);">No resume uploaded</span>`;
   return `
-    <div class="candidate-card" style="cursor:default;">
+    <div class="candidate-card clickable" onclick="VaultProfile.open(SHOWN_LIST, '${c.id}')">
       <div class="avatar" style="background:${AVATAR_BG[colorKey]};color:${AVATAR_FG[colorKey]};">${initials(c)}</div>
       <div class="cc-body">
         <div class="cc-top">
@@ -523,7 +561,7 @@ function renderCandidateCard(c) {
         <div class="cc-tags">${tags.join('')}</div>
         ${c.email_bounced_at ? `<div class="cc-email bad" title="Emails to this address bounce or were reported as spam - weekly emails to it are paused.">Email bounced</div>`
           : c.email_confirmed_at ? `<div class="cc-email" title="Clicked the confirm link in the welcome email.">&#10003; Email confirmed</div>` : ''}
-        <div style="margin-top:10px;">${resumeBtn}</div>
+        <div style="margin-top:10px;display:flex;align-items:center;">${resumeBtn}<span class="cc-open">View profile &rarr;</span></div>
       </div>
     </div>
   `;
@@ -569,6 +607,7 @@ function renderPagination(totalItems) {
 
 function renderResults() {
   const filtered = getFilteredList();
+  SHOWN_LIST = filtered;
   document.getElementById('emptyState').style.display = filtered.length ? 'none' : 'block';
   const start = (currentPage - 1) * PAGE_SIZE;
   const pageItems = filtered.slice(start, start + PAGE_SIZE);
@@ -581,6 +620,127 @@ function renderResults() {
 
 document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; renderResults(); });
 document.getElementById('sortSelect').addEventListener('change', () => { currentPage = 1; renderResults(); });
+</script>
+<div class="vp-scrim" id="vpScrim" role="dialog" aria-modal="true" aria-label="Candidate profile">
+  <div class="vp-panel">
+    <div class="vp-bar"><span class="vp-count" id="vpCount"></span>
+      <button type="button" id="vpPrev" aria-label="Previous candidate"><i class="ti ti-chevron-left"></i></button>
+      <button type="button" id="vpNext" aria-label="Next candidate"><i class="ti ti-chevron-right"></i></button>
+      <button type="button" id="vpClose" aria-label="Close"><i class="ti ti-x"></i></button></div>
+    <div id="vpBody"></div>
+  </div>
+</div>
+<script>
+// Candidate profile panel for the Resume Vault (2026-11-25). Clicking a candidate opens their
+// profile; the resume is one button inside it. Shows only the fields the employer Vault is allowed
+// to return (vault_candidate), so the same panel works on the employer page.
+(function () {
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const money = n => '$' + Number(n).toLocaleString('en-US');
+  const fmtDate = iso => { try { return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); } catch (e) { return ''; } };
+  let order = [], idx = -1;
+
+  function pay(c) {
+    if (!c.salary_min && !c.salary_max) return '';
+    if (c.salary_min && c.salary_max) return `${money(c.salary_min)} – ${money(c.salary_max)}`;
+    return c.salary_min ? `From ${money(c.salary_min)}` : `Up to ${money(c.salary_max)}`;
+  }
+  function vet(v) { return v === 'veteran' ? 'Veteran' : v === 'transitioning' ? 'Transitioning service member' : ''; }
+  function fact(k, v) { return v ? `<div class="vp-fact"><div class="vp-k">${k}</div><div class="vp-v">${esc(v)}</div></div>` : ''; }
+  function link(href, label, icon) {
+    if (!href || !/^https?:\/\//i.test(href)) return '';
+    return `<a class="vp-link" href="${esc(href)}" target="_blank" rel="noopener nofollow"><i class="ti ${icon}"></i>${label}</a>`;
+  }
+
+  function render(c) {
+    const exp = (Array.isArray(c.experience) ? c.experience : []).filter(e => e && (e.title || e.co));
+    const edu = (Array.isArray(c.education) ? c.education : []).filter(e => e && (e.degree || e.school));
+    const tags = (list, cls) => (list || []).map(s => `<span class="cc-tag ${cls ? cls(s) : ''}">${esc(s)}</span>`).join('');
+    const facts = [
+      fact('Experience', c.years_experience), fact('Available', c.availability),
+      fact('Looking for', c.job_type), fact('Work style', (c.work_style || []).join(', ')),
+      fact('Relocation', c.relocation), fact('Pay expectation', pay(c)),
+      fact('Work authorization', c.work_authorization), fact('Military', vet(c.veteran_status)),
+    ].join('');
+    const links = [link(c.linkedin_url, 'LinkedIn', 'ti-brand-linkedin'), link(c.website_url, 'Website', 'ti-world'),
+                   link(c.github_url, 'GitHub', 'ti-brand-github')].join('');
+    const hasResume = c.has_resume || !!c.resume_path;
+    return `
+      <div class="vp-head">
+        <div class="avatar vp-av">${esc(((c.first_name || '')[0] || '') + ((c.last_name || '')[0] || '')).toUpperCase()}</div>
+        <div class="vp-id">
+          <div class="vp-name">${esc(c.first_name)} ${esc(c.last_name)}</div>
+          ${c.headline ? `<div class="vp-headline">${esc(c.headline)}</div>` : ''}
+          ${c.location ? `<div class="vp-loc"><i class="ti ti-map-pin"></i>${esc(c.location)}</div>` : ''}
+        </div>
+      </div>
+      <div class="vp-actions">
+        ${hasResume ? `<button type="button" class="btn-sm btn-grn" data-vp-resume><i class="ti ti-file-text"></i> View resume</button>` : `<span class="vp-none">No resume uploaded</span>`}
+        ${c.email ? `<a class="btn-sm btn-ghost vp-mail" href="mailto:${esc(c.email)}"><i class="ti ti-mail"></i> Email</a>
+          <button type="button" class="btn-sm btn-ghost" data-vp-copy="${esc(c.email)}" title="${esc(c.email)}"><span>Copy email</span></button>` : ''}
+        ${links}
+      </div>
+      ${facts ? `<div class="vp-facts">${facts}</div>` : ''}
+      ${(c.sectors || []).length ? `<div class="vp-sec"><h3>Sectors</h3><div class="cc-tags">${tags(c.sectors, s => (typeof SECTOR_COLORS !== 'undefined' ? SECTOR_COLORS : {})[s] || '')}</div></div>` : ''}
+      ${c.bio ? `<div class="vp-sec"><h3>About</h3><p class="vp-bio">${esc(c.bio)}</p></div>` : ''}
+      ${exp.length ? `<div class="vp-sec"><h3>Experience</h3>${exp.map(e => `
+        <div class="vp-job"><div class="vp-jt">${esc(e.title || '')}</div>
+          <div class="vp-jm">${esc([e.co, e.dates].filter(Boolean).join(' · '))}</div>
+          ${(e.bullets || []).length ? `<ul>${e.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}</div>`).join('')}</div>` : ''}
+      ${(c.skills || []).length ? `<div class="vp-sec"><h3>Skills &amp; certifications</h3><div class="cc-tags">${tags(c.skills)}</div></div>` : ''}
+      ${edu.length ? `<div class="vp-sec"><h3>Education</h3>${edu.map(e => `
+        <div class="vp-job"><div class="vp-jt">${esc(e.degree || '')}</div><div class="vp-jm">${esc([e.school, e.dates].filter(Boolean).join(' · '))}</div></div>`).join('')}</div>` : ''}
+      ${c.created_at ? `<div class="vp-foot">On Verde Talent since ${fmtDate(c.created_at)}</div>` : ''}`;
+  }
+
+  function show(i) {
+    idx = i;
+    const c = order[i];
+    if (!c) return;
+    document.getElementById('vpBody').innerHTML = render(c);
+    document.getElementById('vpBody').scrollTop = 0;
+    document.getElementById('vpPrev').disabled = i <= 0;
+    document.getElementById('vpNext').disabled = i >= order.length - 1;
+    document.getElementById('vpCount').textContent = `${i + 1} of ${order.length}`;
+    const r = document.querySelector('#vpBody [data-vp-resume]');
+    if (r) r.addEventListener('click', () => window.vaultOpenResume && window.vaultOpenResume(c));
+    document.getElementById('vpScrim').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    try { gtag('event', 'vault_profile_open'); } catch (e) {}
+  }
+  function close() {
+    document.getElementById('vpScrim').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // list: the candidates in the order they're shown (so Next/Previous follow the filtered list).
+  window.VaultProfile = {
+    open(list, id) { order = list; const i = list.findIndex(c => String(c.id) === String(id)); if (i >= 0) show(i); },
+    close,
+  };
+  document.addEventListener('click', e => {
+    const cp = e.target.closest('[data-vp-copy]');
+    if (cp) {
+      const addr = cp.dataset.vpCopy, label = cp.querySelector('span');
+      const done = ok => { label.textContent = ok ? 'Copied ✓' : addr; setTimeout(() => { label.textContent = 'Copy email'; }, 2000); };
+      // Clipboard can be blocked (old browsers, insecure pages): then show the address to copy by hand.
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(() => done(true), () => done(false));
+      else done(false);
+      try { gtag('event', 'vault_copy_email'); } catch (err) {}
+      return;
+    }
+    if (e.target.id === 'vpScrim' || e.target.closest('#vpClose')) close();
+    else if (e.target.closest('#vpPrev')) show(idx - 1);
+    else if (e.target.closest('#vpNext')) show(idx + 1);
+  });
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('vpScrim').classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight' && idx < order.length - 1) show(idx + 1);
+    if (e.key === 'ArrowLeft' && idx > 0) show(idx - 1);
+  });
+})();
+
 </script>
 <footer>
   <div class="logo" style="font-size:14px;"><div class="dot" style="width:8px;height:8px;"></div>Verde Talent</div>
