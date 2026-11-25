@@ -73,7 +73,7 @@
       var ty = t(o.you), tip = pt(ty, r - sw / 2 - 4), lab = pt(ty, r + sw / 2 + 16);
       svg += '<line class="vtg-needle" x1="' + cx + '" y1="' + cy + '" x2="' + f(tip[0]) + '" y2="' + f(tip[1]) + '" stroke-width="3.5" stroke-linecap="round"/>' +
         '<circle class="vtg-hub" cx="' + cx + '" cy="' + cy + '" r="7"/>' +
-        '<text class="vtg-you" x="' + f(lab[0]) + '" y="' + f(lab[1] + 4) + '" text-anchor="middle">You</text>';
+        '<text class="vtg-you" x="' + f(lab[0]) + '" y="' + f(lab[1] + 4) + '" text-anchor="middle">' + (o.youLabel || "You") + "</text>";
     }
     // Locked (signed out): the dial is drawn sharp so it reads as a pay gauge, but with a made-up
     // band, no figures at all and a padlock in the middle - nothing in it is real data.

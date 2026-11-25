@@ -1089,7 +1089,7 @@ function appRowHtml(a){
     const opts = APP_STATUS.map(([v, l]) => `<option value="${v}"${a.status === v ? ' selected' : ''}>${l}</option>`).join('');
     return `<div class="app-row" data-jp="${alertEsc(a.job_page || '')}">
       <div class="app-main">${head}${a.apply_path === 'manual' ? '<span class="app-tag">Added by you</span>' : ''}
-        <div class="app-meta">${meta ? meta + ' · ' : ''}${a.status === 'started' ? 'Opened' : 'Applied'} ${when}${followUpDue(a) ? `<button type="button" class="fu-link" data-fu="${alertEsc(a.id)}">Follow up?</button>` : ''}</div></div>
+        <div class="app-meta">${meta ? meta + ' · ' : ''}${a.status === 'started' ? 'Opened' : 'Applied'} ${when}${followUpDue(a) ? `<button type="button" class="fu-link" data-fu="${alertEsc(a.id)}">Follow up?</button>` : ''}${a.status === 'interviewing' ? `<a class="fu-link" href="/offer-check.html?role=${encodeURIComponent(a.job_title || '')}&co=${encodeURIComponent(a.company || '')}" data-offer-check>Got an offer?</a>` : ''}</div></div>
       <select class="app-status st-${a.status}" data-appst="${alertEsc(a.id)}" aria-label="Status of ${title}">${opts}</select>
       <button type="button" class="app-rm" data-apprm="${alertEsc(a.id)}" title="Remove from your list" aria-label="Remove ${title}"><i class="ti ti-trash"></i></button>
     </div>`;
